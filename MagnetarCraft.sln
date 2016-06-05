@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Storm", "Storm\Storm.vcxproj", "{89A54D74-7D0F-4528-98C2-E97A01A32A7B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Magnetorm", "Magnetorm\Magnetorm.vcxproj", "{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -26,6 +28,14 @@ Global
 		{89A54D74-7D0F-4528-98C2-E97A01A32A7B}.Release|x64.Build.0 = Release|x64
 		{89A54D74-7D0F-4528-98C2-E97A01A32A7B}.Release|x86.ActiveCfg = Release|Win32
 		{89A54D74-7D0F-4528-98C2-E97A01A32A7B}.Release|x86.Build.0 = Release|Win32
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Debug|x64.ActiveCfg = Debug|x64
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Debug|x64.Build.0 = Debug|x64
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Debug|x86.ActiveCfg = Debug|Win32
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Debug|x86.Build.0 = Debug|Win32
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Release|x64.ActiveCfg = Release|x64
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Release|x64.Build.0 = Release|x64
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Release|x86.ActiveCfg = Release|Win32
+		{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
