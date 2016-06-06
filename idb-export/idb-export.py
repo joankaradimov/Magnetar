@@ -202,7 +202,7 @@ CPP_TEMPLATE = """#include "starcraft_exe_types.h"
 #undef DECL_FUNC
 """
 
-def export():
+def export(root_dir):
     declaration_macros = []
     definitions = []
     export_functions(definitions, declaration_macros)
@@ -212,7 +212,6 @@ def export():
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
-    root_dir = """C:\dev\work\star-plus\star-plus\\"""
     with open(root_dir + 'starcraft_exe.cpp', 'wt') as cpp_file:
         cpp_file.write(CPP_TEMPLATE.format(declarations = ''.join(declaration_macros)))
 
@@ -470,4 +469,4 @@ def sort_topologically(local_types):
 
     return sorted_local_types
 
-export()
+# export("""C:\dev\work\MagnetarCraft\MagntarCraft\\""")
