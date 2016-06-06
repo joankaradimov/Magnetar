@@ -42,8 +42,6 @@ static BOOL _VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* user
 	return VirtualProtect(address, size, MEM_RESET, &old_protect);
 }
 
-DWORD(__stdcall*sub_4E0380)(LPCSTR lpClassName) = (DWORD(__stdcall*)(LPCSTR))0x4E0380;
-
 void init_stacraftexe_clib()
 {
 	int(*_ioinit)() = (int(*)())0x405725;
