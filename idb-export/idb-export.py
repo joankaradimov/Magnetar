@@ -111,6 +111,7 @@ TYPES_HEADER_TEMPLATE = """#pragma once
 #include <stdio.h>
 #include <Windows.h>
 #include <ddraw.h>
+#include <Mmreg.h>
 #include <DSound.h>
 
 // Some convenience macros to make partial accesses nicer
