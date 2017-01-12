@@ -1,5 +1,153 @@
 import re
 
+class FunctionArgument:
+    def __init__(self, signature):
+        self.signature = signature
+
+class Function:
+    def __init__(self, ref):
+        self.ref = ref
+        self.ref_type = GetType(ref) or GuessType(ref)
+        self.ref_name = GetFunctionName(ref)
+        self.skip = False
+
+        # TODO: handle properly
+        if self.ref_type == None:
+            # TODO: there might be a bug in GuessType
+            # Use the hex rays python bindings in IDA 6.6
+            self.skip = True
+            return
+
+        func_flags = GetFunctionAttr(ref, FUNCATTR_FLAGS)
+        is_lib = func_flags & FUNC_LIB
+        if is_lib:
+            self.skip = True
+            return
+
+        self.__init_signature()
+
+    def __init_signature(self):
+        signature = self.ref_type
+        signature = signature.replace('__far', '')
+        signature = signature.replace('this,', 'this_,')
+        signature = signature.replace('this@', 'this_@')
+        signature = signature.replace('this)', 'this_)')
+        signature = signature.replace(' __noreturn ', ' ')
+
+        if '__cdecl' in signature:
+            self.name = self.ref_name
+            self.signature = signature.replace('__cdecl(', '(__cdecl*%s)(' % self.ref_name, 1)
+        elif '__usercall' in signature:
+            self.name = self.ref_name
+            signature = re.sub(r'@<[^>]*>', '', signature)
+            signature = signature.replace('__usercall(', '%s(' % self.ref_name, 1)
+            signature += ' { throw "not implemented"; }' # TODO: handle this and get rid of `has_body` checks
+            self.signature = signature
+        elif '__userpurge' in signature:
+            self.name = self.ref_name
+            signature = re.sub(r'@<[^>]*>', '', signature).replace('__userpurge(', '%s(' % self.ref_name, 1)
+            self.signature = signature
+        elif '__stdcall' in signature:
+            self.name = re.sub(r'\@\d+', '', self.ref_name)
+            signature = signature.replace('__stdcall(', '(__stdcall*%s)(' % self.name, 1)
+            self.signature = signature
+        elif '__thiscall' in signature:
+            self.name = self.ref_name
+            signature = signature.replace('__thiscall(', '(__thiscall*%s)(' % self.ref_name, 1)
+            self.signature = signature
+        elif '__fastcall' in signature:
+            self.name = self.ref_name
+            signature = signature.replace('__fastcall(', '(__fastcall*%s)(' % self.ref_name, 1)
+            self.signature = signature
+        else:
+            self.name = self.ref_name
+            signature = signature.replace('(', '(*%s)(' % self.ref_name, 1)
+            self.signature = signature
+
+    def build_export_declaration(self):
+        if self.skip:
+            return ''
+
+        if self.name.find('@') >= 0:
+            raise 'Function name contains invalid character: %s' % self.name
+
+        has_body = re.search(r'\{.*\}', self.signature)
+        if has_body:
+            return self.signature + '\n'
+        elif is_function_pointer(self.signature):
+            return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = self.signature, name = self.name, address = hex(self.ref))
+        else:
+            return get_userpurge_wrapper(self.signature, self.ref_type, self.name, self.ref)
+
+    def build_export_definition(self):
+        if self.skip:
+            return ''
+
+        has_body = re.search(r'\{.*\}', self.signature)
+        if has_body:
+            return re.sub(r'\{.*\}', '', self.signature) + ';\n'
+        elif is_function_pointer(self.signature):
+            return 'extern ' + self.signature + ';\n'
+        else:
+            return self.signature + ';\n'
+
+def split_args(arguments_str):
+    """
+    Accepts a string that looks like:
+      > int a1, int a2, int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>
+
+    and returns an array with arguments.
+    (e.g. ['int a1', 'int a2', 'int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>']
+
+    NOTE: in case of function pointers it only works with one level of nesting
+    """
+
+    return map(str.strip, filter(None, re.findall(r'(?:[^\(\,]|(?:\([^\)]*\)))*', arguments_str)))
+
+
+arg_name_pattern = re.compile(r'(\w+)$')
+func_ptr_arg_name_pattern = re.compile(r'\*\s*(?P<name>\w+)\)\(.*\)$')
+
+def extract_arg_name(argument):
+    """
+    Accepts a string that looks like:
+      > int a2
+    or
+      > int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>
+
+    and extracts its name (e.g. 'a2' in the above cases)
+    """
+
+    is_passed_in_register = '@' in argument
+    if is_passed_in_register:
+        argument = re.sub(r'@<\w*>$', '', argument)
+
+    if is_function_pointer(argument):
+        result = func_ptr_arg_name_pattern.search(argument).group('name')
+    else:
+        result = arg_name_pattern.search(argument).group(1)
+
+    if result == 'this':
+        # TODO: fix this mess
+        result = 'this_'
+
+    return result
+
+def extract_function_return_type(ref_type):
+    """
+    Accpets a string (IDA ref type) that looks like:
+      > void __userpurge(char a1@<al>, char a2@<cl>)
+
+    and extracts the return type for it
+    """
+
+    return re.search('^\s*(\w+(?:\s*\*)*)', ref_type).group(1).strip()
+
+def is_function_pointer(declaration):
+    # TODO: add documentation
+
+    return re.search(r'^\s*[\w\s\*]*\s*\(\w*\s*\*\s*\w+\)\(.*\)', declaration) != None
+
 def get_code_refs(ea):
     refs = []
     ref = Rfirst(ea)
@@ -35,74 +183,75 @@ def get_referred_funcs(ea):
 
     return result
 
-def get_type(ref):
-    ref_type = GetType(ref) or GuessType(ref)
-    ref_name = GetFunctionName(ref)
+def get_function_args(declaration):
+    declaration = declaration.strip()
+    depth = 0
 
-    if ref_type == None:
-        # TODO: there might be a bug in GuessType
-        # Use the hex rays python bindings in IDA 6.6
-        return None
+    i = len(declaration) - 1
+    while i >= 0:
+        if declaration[i] == ')':
+            depth += 1
+        if declaration[i] == '(':
+            depth -= 1
+        if depth == 0:
+            return declaration[i + 1: -1]
+        i -= 1
+    raise 'Trying to get args when none seem to be present: %s' % declaration
 
-    func_flags = GetFunctionAttr(ref, FUNCATTR_FLAGS)
-    is_lib = func_flags & FUNC_LIB
-    if is_lib:
-        return None
+register_arg_pattern = re.compile(r'@<(\w+)>')
 
-    ref_type = ref_type.replace('__far', '')
-    ref_type = ref_type.replace('this,', 'this_,')
-    ref_type = ref_type.replace('this@', 'this_@')
-    ref_type = ref_type.replace('this)', 'this_)')
-    ref_type = ref_type.replace(' __noreturn ', ' ')
+def get_userpurge_wrapper(signature, ref_type, ref_name, address):
+    result = signature
+    function_args = get_function_args(ref_type)
+    args = map(str.strip, split_args(function_args))
 
-    if '__cdecl' in ref_type:
-        ref_type = ref_type.replace('__cdecl(', '(__cdecl*%s)(' % ref_name, 1)
-    elif '__usercall' in ref_type:
-        ref_type = re.sub(r'@<[^>]*>', '', ref_type)
-        ref_type = ref_type.replace('__usercall(', '%s(' % ref_name, 1)
-        ref_type += ' { throw "not implemented"; }' # TODO: handle this
-    elif '__userpurge' in ref_type:
-        ref_type = re.sub(r'@<[^>]*>', '', ref_type)
-        ref_type = ref_type.replace('__userpurge(', '%s(' % ref_name, 1)
-        ref_type += ' { throw "not implemented"; }' # TODO: handle this
-    elif '__stdcall' in ref_type:
-        ref_name = re.sub(r'\@\d+', '', ref_name)
-        ref_type = ref_type.replace('__stdcall(', '(__stdcall*%s)(' % ref_name, 1)
-    elif '__thiscall' in ref_type:
-        ref_type = ref_type.replace('__thiscall(', '(__thiscall*%s)(' % ref_name, 1)
-    elif '__fastcall' in ref_type:
-        ref_type = ref_type.replace('__fastcall(', '(__fastcall*%s)(' % ref_name, 1)
-    else:
-        ref_type = ref_type.replace('(', '(*%s)(' % ref_name, 1)
+    return_type = extract_function_return_type(signature)
+    if return_type == '__int64':
+        # TODO: handle properly
+        return result + '{ throw "not implemented"; }\n'
 
-    return ref_type
+    has_return_value = return_type != 'void'
+    result += ' {\n'
+    result += '    int address = '
+    result += hex(address)
+    result += ';\n'
+    if has_return_value:
+        result += '    ' + return_type + ' result_;\n'
 
-def get_declaration(ref):
-    ref_type = get_type(ref)
-    if ref_type == None:
-        return ''
+    result += '    __asm {\n'
 
-    ref_name = GetFunctionName(ref)
-    ref_name = re.sub(r'\@\d+', '', ref_name)
-    if ref_name.find('@') >= 0:
-        return ''
+    stack_args = []
+    for arg in args:
+        is_passed_in_register = '@' in arg
+        if is_passed_in_register:
+            register_name = register_arg_pattern.search(arg).group(1)
+            arg_name = extract_arg_name(arg)
+            result += '        mov ' + register_name + ', ' + arg_name + '\n'
+        else:
+            if arg == '...':
+                continue # TODO: handle this
 
-    has_body = re.search(r'\{.*\}', ref_type)
-    if has_body:
-        return ref_type + '\n'
-    else:
-        return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = ref_type, name = ref_name, address = hex(ref))
+            stack_args.append(extract_arg_name(arg))
 
-def get_definition(ref):
-    ref_type = get_type(ref)
-    if ref_type == None:
-        return ''
+    for arg_name in reversed(stack_args):
+        result += '        push ' + arg_name + '\n'
 
-    has_body = re.search(r'\{.*\}', ref_type)
-    if has_body:
-        return re.sub(r'\{.*\}', '', ref_type) + ';\n'
-    else:
-        return 'extern ' + ref_type + ';\n'
+    result += '        call address\n'
+    if has_return_value:
+        # TODO: use the proper register for the return value
+        if return_type in {'char', 'u8', 'bool', 'Order'}:
+            result += '        mov result_, al\n'
+        elif return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
+            result += '        mov result_, ax\n'
+        else:
+            result += '        mov result_, eax\n'
+    result += '    }\n'
+
+    if has_return_value:
+        result += '    return result_;\n'
+
+    result += '}\n'
+    return result
 
 TYPES_HEADER_TEMPLATE = """#pragma once
 
@@ -245,8 +394,9 @@ def is_blacklisted(text):
 def export_functions(definitions, declaration_macros):
     text_segment = idaapi.get_segm_by_name('.text')
     for function_ea in Functions(text_segment.startEA, text_segment.endEA):
-        declaration = get_declaration(function_ea)
-        definition = get_definition(function_ea)
+        function = Function(function_ea)
+        declaration = function.build_export_declaration()
+        definition = function.build_export_definition()
 
         if is_blacklisted(declaration):
             continue
@@ -387,7 +537,7 @@ class TypedefType(Type):
         if function_ptr_type_match:
             result = set()
             result.add(function_ptr_type_match.group('return_type'))
-            for argument in function_ptr_type_match.group('args').split(','):
+            for argument in split_args(function_ptr_type_match.group('args')):
                 argument = self.type_qualifier_pattern.sub('', argument)
                 argument = argument.replace('*', '')
                 argument_name = re.split('\s+', argument)[-1]
@@ -413,7 +563,7 @@ def export_types(declarations, definitions):
     for type_ordinal in range(1, GetMaxLocalType()):
         if is_type_blacklisted(type_ordinal):
             continue
-        
+
         type_name = GetLocalTypeName(type_ordinal)
 
         if type_name in existing_type_names:
@@ -470,4 +620,4 @@ def sort_topologically(local_types):
 
     return sorted_local_types
 
-# export("""C:\dev\work\MagnetarCraft\MagntarCraft\\""")
+export("""C:\dev\work\MagnetarCraft\MagntarCraft\\""")
