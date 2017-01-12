@@ -36,31 +36,36 @@ class Function:
 
         if '__cdecl' in signature:
             self.name = self.ref_name
+            self.calling_convention = 'cdecl'
             self.signature = signature.replace('__cdecl(', '(__cdecl*%s)(' % self.ref_name, 1)
         elif '__usercall' in signature:
             self.name = self.ref_name
-            signature = re.sub(r'@<[^>]*>', '', signature)
-            signature = signature.replace('__usercall(', '%s(' % self.ref_name, 1)
-            signature += ' { throw "not implemented"; }' # TODO: handle this and get rid of `has_body` checks
+            self.calling_convention = 'usercall'
+            signature = re.sub(r'@<[^>]*>', '', signature).replace('__usercall(', '%s(' % self.ref_name, 1)
             self.signature = signature
         elif '__userpurge' in signature:
             self.name = self.ref_name
+            self.calling_convention = 'userpurge'
             signature = re.sub(r'@<[^>]*>', '', signature).replace('__userpurge(', '%s(' % self.ref_name, 1)
             self.signature = signature
         elif '__stdcall' in signature:
             self.name = re.sub(r'\@\d+', '', self.ref_name)
+            self.calling_convention = 'stdcall'
             signature = signature.replace('__stdcall(', '(__stdcall*%s)(' % self.name, 1)
             self.signature = signature
         elif '__thiscall' in signature:
             self.name = self.ref_name
+            self.calling_convention = 'thiscall'
             signature = signature.replace('__thiscall(', '(__thiscall*%s)(' % self.ref_name, 1)
             self.signature = signature
         elif '__fastcall' in signature:
             self.name = self.ref_name
+            self.calling_convention = 'fastcall'
             signature = signature.replace('__fastcall(', '(__fastcall*%s)(' % self.ref_name, 1)
             self.signature = signature
         else:
             self.name = self.ref_name
+            self.calling_convention = 'cdecl' # TODO: maybe use 'default' instead of cdecl
             signature = signature.replace('(', '(*%s)(' % self.ref_name, 1)
             self.signature = signature
 
@@ -71,22 +76,16 @@ class Function:
         if self.name.find('@') >= 0:
             raise 'Function name contains invalid character: %s' % self.name
 
-        has_body = re.search(r'\{.*\}', self.signature)
-        if has_body:
-            return self.signature + '\n'
-        elif is_function_pointer(self.signature):
+        if is_function_pointer(self.signature):
             return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = self.signature, name = self.name, address = hex(self.ref))
         else:
-            return get_userpurge_wrapper(self.signature, self.ref_type, self.name, self.ref)
+            return get_usercall_wrapper(self.signature, self.ref_type, self.name, self.ref, self.calling_convention)
 
     def build_export_definition(self):
         if self.skip:
             return ''
 
-        has_body = re.search(r'\{.*\}', self.signature)
-        if has_body:
-            return re.sub(r'\{.*\}', '', self.signature) + ';\n'
-        elif is_function_pointer(self.signature):
+        if is_function_pointer(self.signature):
             return 'extern ' + self.signature + ';\n'
         else:
             return self.signature + ';\n'
@@ -200,7 +199,7 @@ def get_function_args(declaration):
 
 register_arg_pattern = re.compile(r'@<(\w+)>')
 
-def get_userpurge_wrapper(signature, ref_type, ref_name, address):
+def get_usercall_wrapper(signature, ref_type, ref_name, address, calling_convention):
     result = signature
     function_args = get_function_args(ref_type)
     args = map(str.strip, split_args(function_args))
@@ -245,6 +244,13 @@ def get_userpurge_wrapper(signature, ref_type, ref_name, address):
             result += '        mov result_, ax\n'
         else:
             result += '        mov result_, eax\n'
+
+    if calling_convention == 'usercall' and len(stack_args) != 0:
+        # Clean up the stack
+        # TODO: handle args larger than a single register
+        # TODO: handle non 32-bit architectures
+        result += '        add esp, %d\n' % (len(stack_args) * 4)
+
     result += '    }\n'
 
     if has_return_value:
