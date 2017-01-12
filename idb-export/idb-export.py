@@ -225,7 +225,12 @@ def get_usercall_wrapper(signature, ref_type, ref_name, address, calling_convent
         if is_passed_in_register:
             register_name = register_arg_pattern.search(arg).group(1)
             arg_name = extract_arg_name(arg)
-            result += '        mov ' + register_name + ', ' + arg_name + '\n'
+            if register_name in {'sil', 'dil'}:
+                # TODO: handle 64 bit case
+                # 32-bit assembly does not have the SIL/DIL registers
+                result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
+            else:
+                result += '        mov ' + register_name + ', ' + arg_name + '\n'
         else:
             if arg == '...':
                 continue # TODO: handle this
