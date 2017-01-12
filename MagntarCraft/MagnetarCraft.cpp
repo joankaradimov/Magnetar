@@ -1,6 +1,7 @@
 #include <Windows.h>
 #include <stdio.h>
 #include "../MemoryModule/MemoryModule.h"
+#include "starcraft.h"
 #include <exception>
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
@@ -90,10 +91,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	init_stacraftexe_clib();
-
-	typedef int (WINAPI* WinMain_t)(HINSTANCE, HINSTANCE, LPSTR, int);
-	WinMain_t starcraft_main = (WinMain_t) 0x4E0AE0;
-	starcraft_main(starcraftExeData, hPrevInstance, lpCmdLine, nShowCmd);
+	main(starcraftExeData);
 
 	return 0;
 }
