@@ -24,50 +24,142 @@ class Function:
             self.skip = True
             return
 
-        self.__init_signature()
+    @property
+    def calling_convention(self):
+        if not hasattr(self, '_calling_convention'):
+            # Strip the register annotations from the type
+            ref_type = re.sub(r'@<[^>]*>', '', self.ref_type)
 
-    def __init_signature(self):
-        signature = self.ref_type
-        signature = signature.replace('__far', '')
-        signature = signature.replace('this,', 'this_,')
-        signature = signature.replace('this@', 'this_@')
-        signature = signature.replace('this)', 'this_)')
-        signature = signature.replace(' __noreturn ', ' ')
+            # TODO: proper implementation
+            if '__cdecl' in ref_type:
+                self._calling_convention = 'cdecl'
+            elif '__usercall' in ref_type:
+                self._calling_convention = 'usercall'
+            elif '__userpurge' in ref_type:
+                self._calling_convention = 'userpurge'
+            elif '__stdcall' in ref_type:
+                self._calling_convention = 'stdcall'
+            elif '__thiscall' in ref_type:
+                self._calling_convention = 'thiscall'
+            elif '__fastcall' in ref_type:
+                self._calling_convention = 'fastcall'
+            else:
+                self._calling_convention = None
 
-        if '__cdecl' in signature:
-            self.name = self.ref_name
-            self.calling_convention = 'cdecl'
-            self.signature = signature.replace('__cdecl(', '(__cdecl*%s)(' % self.ref_name, 1)
-        elif '__usercall' in signature:
-            self.name = self.ref_name
-            self.calling_convention = 'usercall'
-            signature = re.sub(r'@<[^>]*>', '', signature).replace('__usercall(', '%s(' % self.ref_name, 1)
-            self.signature = signature
-        elif '__userpurge' in signature:
-            self.name = self.ref_name
-            self.calling_convention = 'userpurge'
-            signature = re.sub(r'@<[^>]*>', '', signature).replace('__userpurge(', '%s(' % self.ref_name, 1)
-            self.signature = signature
-        elif '__stdcall' in signature:
-            self.name = re.sub(r'\@\d+', '', self.ref_name)
-            self.calling_convention = 'stdcall'
-            signature = signature.replace('__stdcall(', '(__stdcall*%s)(' % self.name, 1)
-            self.signature = signature
-        elif '__thiscall' in signature:
-            self.name = self.ref_name
-            self.calling_convention = 'thiscall'
-            signature = signature.replace('__thiscall(', '(__thiscall*%s)(' % self.ref_name, 1)
-            self.signature = signature
-        elif '__fastcall' in signature:
-            self.name = self.ref_name
-            self.calling_convention = 'fastcall'
-            signature = signature.replace('__fastcall(', '(__fastcall*%s)(' % self.ref_name, 1)
-            self.signature = signature
-        else:
-            self.name = self.ref_name
-            self.calling_convention = 'cdecl' # TODO: maybe use 'default' instead of cdecl
-            signature = signature.replace('(', '(*%s)(' % self.ref_name, 1)
-            self.signature = signature
+        return self._calling_convention
+
+    @property
+    def name(self):
+        if not hasattr(self, '_name'):
+            if self.calling_convention == 'stdcall':
+                self._name = re.sub(r'\@\d+', '', self.ref_name)
+            else:
+                self._name = self.ref_name
+
+        return self._name
+
+    @property
+    def signature(self):
+        if not hasattr(self, '_signature'):
+            signature = self.ref_type
+            signature = signature.replace('__far', '')
+            signature = signature.replace(' __noreturn ', ' ')
+            signature = signature.replace('this,', 'this_,')
+            signature = signature.replace('this@', 'this_@')
+            signature = signature.replace('this)', 'this_)')
+
+            if self.calling_convention in {'usercall', 'userpurge'}:
+                signature = re.sub(r'@<[^>]*>', '', signature)
+                cc_replacement = '%s(' % self.name
+                self._signature = signature.replace('__%s(' % self.calling_convention, cc_replacement, 1)
+            elif self.calling_convention == None:
+                self._signature = signature.replace('(', '(*%s)(' % self.name, 1)
+            else:
+                cc_replacement = '(__{cc}*{name})('.format(cc = self.calling_convention, name = self.name)
+                self._signature = signature.replace('__%s(' % self.calling_convention, cc_replacement, 1)
+
+        return self._signature
+
+    @property
+    def arguments(self):
+        depth = 0
+
+        i = len(self.ref_type) - 1
+        while i >= 0:
+            if self.ref_type[i] == ')':
+                depth += 1
+            if self.ref_type[i] == '(':
+                depth -= 1
+            if depth == 0:
+                return self.ref_type[i + 1: -1]
+            i -= 1
+        raise 'Trying to get args when none seem to be present: %s' % self.ref_type
+
+    register_arg_pattern = re.compile(r'@<(\w+)>')
+
+    def get_usercall_wrapper(self):
+        result = self.signature
+        arguments = map(str.strip, split_args(self.arguments))
+
+        return_type = extract_function_return_type(self.signature)
+        if return_type == '__int64':
+            # TODO: handle properly
+            return result + '{ throw "not implemented"; }\n'
+
+        has_return_value = return_type != 'void'
+        result += ' {\n'
+        result += '    int address = '
+        result += hex(self.ref)
+        result += ';\n'
+        if has_return_value:
+            result += '    ' + return_type + ' result_;\n'
+
+        result += '    __asm {\n'
+
+        stack_args = []
+        for arg in arguments:
+            is_passed_in_register = '@' in arg
+            if is_passed_in_register:
+                register_name = self.register_arg_pattern.search(arg).group(1)
+                arg_name = extract_arg_name(arg)
+                if register_name in {'sil', 'dil'}:
+                    # TODO: handle 64 bit case
+                    # 32-bit assembly does not have the SIL/DIL registers
+                    result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
+                else:
+                    result += '        mov ' + register_name + ', ' + arg_name + '\n'
+            else:
+                if arg == '...':
+                    continue # TODO: handle this
+
+                stack_args.append(extract_arg_name(arg))
+
+        for arg_name in reversed(stack_args):
+            result += '        push ' + arg_name + '\n'
+
+        result += '        call address\n'
+        if has_return_value:
+            # TODO: use the proper register for the return value
+            if return_type in {'char', 'u8', 'bool', 'Order'}:
+                result += '        mov result_, al\n'
+            elif return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
+                result += '        mov result_, ax\n'
+            else:
+                result += '        mov result_, eax\n'
+
+        if self.calling_convention == 'usercall' and len(stack_args) != 0:
+            # Clean up the stack
+            # TODO: handle args larger than a single register
+            # TODO: handle non 32-bit architectures
+            result += '        add esp, %d\n' % (len(stack_args) * 4)
+
+        result += '    }\n'
+
+        if has_return_value:
+            result += '    return result_;\n'
+
+        result += '}\n'
+        return result
 
     def build_export_declaration(self):
         if self.skip:
@@ -79,7 +171,7 @@ class Function:
         if is_function_pointer(self.signature):
             return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = self.signature, name = self.name, address = hex(self.ref))
         else:
-            return get_usercall_wrapper(self.signature, self.ref_type, self.name, self.ref, self.calling_convention)
+            return self.get_usercall_wrapper()
 
     def build_export_definition(self):
         if self.skip:
@@ -180,88 +272,6 @@ def get_referred_funcs(ea):
         if ref_func and ref_func.startEA == ref:
             result.append(ref)
 
-    return result
-
-def get_function_args(declaration):
-    declaration = declaration.strip()
-    depth = 0
-
-    i = len(declaration) - 1
-    while i >= 0:
-        if declaration[i] == ')':
-            depth += 1
-        if declaration[i] == '(':
-            depth -= 1
-        if depth == 0:
-            return declaration[i + 1: -1]
-        i -= 1
-    raise 'Trying to get args when none seem to be present: %s' % declaration
-
-register_arg_pattern = re.compile(r'@<(\w+)>')
-
-def get_usercall_wrapper(signature, ref_type, ref_name, address, calling_convention):
-    result = signature
-    function_args = get_function_args(ref_type)
-    args = map(str.strip, split_args(function_args))
-
-    return_type = extract_function_return_type(signature)
-    if return_type == '__int64':
-        # TODO: handle properly
-        return result + '{ throw "not implemented"; }\n'
-
-    has_return_value = return_type != 'void'
-    result += ' {\n'
-    result += '    int address = '
-    result += hex(address)
-    result += ';\n'
-    if has_return_value:
-        result += '    ' + return_type + ' result_;\n'
-
-    result += '    __asm {\n'
-
-    stack_args = []
-    for arg in args:
-        is_passed_in_register = '@' in arg
-        if is_passed_in_register:
-            register_name = register_arg_pattern.search(arg).group(1)
-            arg_name = extract_arg_name(arg)
-            if register_name in {'sil', 'dil'}:
-                # TODO: handle 64 bit case
-                # 32-bit assembly does not have the SIL/DIL registers
-                result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
-            else:
-                result += '        mov ' + register_name + ', ' + arg_name + '\n'
-        else:
-            if arg == '...':
-                continue # TODO: handle this
-
-            stack_args.append(extract_arg_name(arg))
-
-    for arg_name in reversed(stack_args):
-        result += '        push ' + arg_name + '\n'
-
-    result += '        call address\n'
-    if has_return_value:
-        # TODO: use the proper register for the return value
-        if return_type in {'char', 'u8', 'bool', 'Order'}:
-            result += '        mov result_, al\n'
-        elif return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
-            result += '        mov result_, ax\n'
-        else:
-            result += '        mov result_, eax\n'
-
-    if calling_convention == 'usercall' and len(stack_args) != 0:
-        # Clean up the stack
-        # TODO: handle args larger than a single register
-        # TODO: handle non 32-bit architectures
-        result += '        add esp, %d\n' % (len(stack_args) * 4)
-
-    result += '    }\n'
-
-    if has_return_value:
-        result += '    return result_;\n'
-
-    result += '}\n'
     return result
 
 TYPES_HEADER_TEMPLATE = """#pragma once
