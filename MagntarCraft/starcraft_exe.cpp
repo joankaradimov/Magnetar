@@ -12347,7 +12347,6 @@ int sub_4B26B0(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4B26E0)(), sub_4B26E0, 0x4b26e0);
-DECL_FUNC(int(*sub_4B27A0)(), sub_4B27A0, 0x4b27a0);
 DECL_FUNC(int (__stdcall*sub_4B2810)(int), sub_4B2810, 0x4b2810);
 DECL_FUNC(int (__fastcall*gluCmpgn_Main)(dialog *a3, struct dlgEvent *evt), gluCmpgn_Main, 0x4b28b0);
 DECL_FUNC(int(*loadMenu_gluCmpgn)(), loadMenu_gluCmpgn, 0x4b2930);
@@ -12488,7 +12487,16 @@ int sub_4B57B0(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*gluOK_Dlg_Interact_CB)(dialog *dlg, struct dlgEvent *evt), gluOK_Dlg_Interact_CB, 0x4b5920);
 DECL_FUNC(int(*sub_4B59A0)(), sub_4B59A0, 0x4b59a0);
-DECL_FUNC(int(*sub_4B5B20)(), sub_4B5B20, 0x4b5b20);
+bool sub_4B5B20(const char *a1) {
+    int address = 0x4b5b20;
+    bool result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4B5CC0)(), sub_4B5CC0, 0x4b5cc0);
 DECL_FUNC(int(*sub_4B5E80)(), sub_4B5E80, 0x4b5e80);
 DECL_FUNC(int(*sub_4B5EB0)(), sub_4B5EB0, 0x4b5eb0);
@@ -14732,7 +14740,16 @@ int CreateCampaignGame(MapData a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*LoadCampaignWithCharacter)(), LoadCampaignWithCharacter, 0x4dc0b0);
+int LoadCampaignWithCharacter(int a1) {
+    int address = 0x4dc0b0;
+    int result_;
+    __asm {
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*_CreateNextCampaignGame)(), _CreateNextCampaignGame, 0x4dc1c0);
 DECL_FUNC(int (__stdcall*ContinueCampaign)(int), ContinueCampaign, 0x4dc320);
 DECL_FUNC(int(*RandomizeShort)(), RandomizeShort, 0x4dc4a0);
