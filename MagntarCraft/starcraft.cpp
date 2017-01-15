@@ -752,34 +752,23 @@ void GameRun_(MenuPosition a1)
 
 int sub_4B5110_(int a1)
 {
-	char *v3;
 	int result = 0;
 
 	if (!dword_59A0D4[a1])
 	{
 		result = LoadCampaignWithCharacter(a1) != 0;
 	}
-	else
-	{
-		WORD v2 = (a1 != 1) + 142;
-		if ((a1 != 1) != -143)
-		{
-			if (v2 < *dword_6D1220) {
-				v3 = (char *)dword_6D1220 + dword_6D1220[v2 + 1];
-			}
-			else
-			{
-				v3 = "";
-			}
-		}
-		else {
-			v3 = NULL;
-		}
-		if (sub_4B5B20(v3)) {
+	else {
+		WORD v2;
+		char *v3;
+
+		if ((v2 = (a1 != 1) + 142, (a1 != 1) != ~142)
+			? (v2 < *dword_6D1220 ? (v3 = (char *)dword_6D1220 + dword_6D1220[v2 + 1]) : (v3 = ""))
+			: (v3 = 0),
+			sub_4B5B20(v3)) {
 			result = LoadCampaignWithCharacter(a1) != 0;
 		}
 	}
-
 	return result;
 }
 
