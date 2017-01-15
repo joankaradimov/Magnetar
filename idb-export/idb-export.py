@@ -135,7 +135,7 @@ class Function:
                 stack_args.append(extract_arg_name(arg))
 
         for arg_name in reversed(stack_args):
-            result += '        push ' + arg_name + '\n'
+            result += '        push dword ptr ' + arg_name + '\n'
 
         result += '        call address\n'
         if has_return_value:

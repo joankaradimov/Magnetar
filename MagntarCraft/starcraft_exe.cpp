@@ -11,7 +11,7 @@ void somePlayImageCrapThatCrashes(char a1, char a2, CImage *a3, CSprite *edi0, i
         mov cl, a2
         mov ebx, a3
         mov edi, edi0
-        push a4
+        push dword ptr a4
         call address
     }
 }
@@ -32,7 +32,7 @@ CUnit *setAllOverlayDirectionsGeneric(CUnit *result, unsigned int a2, unsigned _
     __asm {
         mov eax, result
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -76,8 +76,8 @@ BOOL isDistanceGreaterThanHaltDistance(int a1, CUnit *a2, unsigned int a3, int a
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -102,7 +102,7 @@ signed int SetUnitEnergy(CUnit *a1, unsigned __int8 a2) {
     signed result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -209,7 +209,7 @@ BOOL unitCanSeeCloakedTarget(CUnit *a1, CUnit *a2) {
     BOOL result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -239,7 +239,7 @@ int getImageAttackFrame(int result, CSprite *a2, int a3, unsigned __int8 a4) {
         mov eax, result
         mov ecx, a2
         mov edi, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -250,8 +250,8 @@ int setSpriteMainImgOffset(CSprite *a1, char a2, char a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -370,7 +370,7 @@ int sub_4029B0(CSprite *a1, int a2, int a3) {
     __asm {
         mov eax, a1
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -382,7 +382,7 @@ int sub_402A00(int a1, int a2, CUnit *a3) {
     __asm {
         mov ebx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -407,7 +407,7 @@ int getDoubleUnitBoundingBoxMashup(int result, CUnit *a2, CUnit *a3, __int16 a4,
         mov edx, a2
         mov ecx, a3
         mov di, a4
-        push a5
+        push dword ptr a5
         call address
         mov result_, eax
     }
@@ -530,9 +530,9 @@ char imageRenderFxn0_0(int a1, int a2, int a3, int a4, tagRECT *a5, int a6) {
         mov edx, a1
         mov ecx, a2
         mov ebp, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, al
     }
@@ -546,9 +546,9 @@ char sub_40AE63(int a1, int a2, int a3, grpFrame *a4, int a5, int a6) {
         mov edx, a1
         mov ecx, a2
         mov ebp, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, al
     }
@@ -748,7 +748,7 @@ signed int sub_4135C0(ChkSectionLoader *a1, int a2, int a3) {
     __asm {
         mov ecx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -764,8 +764,8 @@ signed int ReadChunkNodes(int a1, int a2, ChkSectionLoader *chk_section_loader, 
         mov eax, a1
         mov edx, a2
         mov ecx, chk_section_loader
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -808,8 +808,8 @@ int sub_414180(UnitType a1, int a2, int a3, int a4, int a5, int a6) {
         mov ebx, a2
         mov edi, a3
         mov esi, a4
-        push a6
-        push a5
+        push dword ptr a6
+        push dword ptr a5
         call address
         mov result_, eax
     }
@@ -831,9 +831,9 @@ int InitTerrainGraphicsAndCreep(struct_a1 *a1, TileID *a2, int a3, int a4, void 
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -905,7 +905,7 @@ int sub_4153B0(dialog *a1, rect *a2) {
     int result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -918,7 +918,7 @@ dialog *updateScroller(dialog *result, dlgEvent *a2) {
     dialog * result_;
     __asm {
         mov eax, result
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -929,9 +929,9 @@ int selectNextScrollerElement(dialog *a1, dlgEvent *a2, __int16 a3, int a4) {
     int result_;
     __asm {
         mov esi, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -958,9 +958,9 @@ int loadTBL(int a1, int a2, char *a3, char *a4, char **a5, FastFileRead a6) {
         mov eax, a1
         mov edx, a2
         mov ecx, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -995,8 +995,8 @@ int *SetCallbackTimer(__int16 a1, dialog *a2, int a3, int a4) {
     __asm {
         mov ax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1042,7 +1042,7 @@ void sub_416690(dialog *a1, char a2) {
     int address = 0x416690;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -1050,7 +1050,7 @@ void sub_416710(dialog *a1, char a2) {
     int address = 0x416710;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -1082,9 +1082,9 @@ int DrawTransparencies(int a1, int a2, RECT *a3, int a4, int a5, int a6) {
         mov eax, a1
         mov ecx, a2
         mov edi, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -1097,10 +1097,10 @@ int sub_417A10(unsigned __int8 a1, char *a2, int a3, int a4, int a5) {
     int result_;
     __asm {
         mov al, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -1128,7 +1128,7 @@ int DLG_IterateChildren(dialog *a1, int (__fastcall *a2)(_DWORD, _DWORD), int a3
     __asm {
         mov eax, a1
         mov ebx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1182,7 +1182,7 @@ dialog *sub_4180D0(dialog *result, int a2) {
     dialog * result_;
     __asm {
         mov eax, result
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -1264,7 +1264,7 @@ int passUppercaseKeyDwnToUserChrEvent(dlgEvent *a1, int a2, dialog *a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1275,7 +1275,7 @@ int passLowercaseKeyDwnToUserChrEvent(dlgEvent *a1, dialog *a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -1402,7 +1402,7 @@ u32 genericDlgCharEventHandler(dlgEvent *evt, dialog *dlg) {
     u32 result_;
     __asm {
         mov eax, evt
-        push dlg
+        push dword ptr dlg
         call address
         mov result_, eax
     }
@@ -1447,9 +1447,9 @@ void AllocInitDialogData(dialog *result, dialog *a2, FnAllocBackgroundImage a3, 
     __asm {
         mov eax, result
         mov ebx, a2
-        push source_line
-        push source_filename
-        push a3
+        push dword ptr source_line
+        push dword ptr source_filename
+        push dword ptr a3
         call address
     }
 }
@@ -1499,7 +1499,7 @@ int gluLoadBINDlg(dialog *a1, FnInteract fn_interact) {
     int result_;
     __asm {
         mov eax, a1
-        push fn_interact
+        push dword ptr fn_interact
         call address
         mov result_, eax
     }
@@ -1616,7 +1616,7 @@ bool listboxLButtonDown(dialog *a1, dlgEvent *a2) {
     bool result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -1628,7 +1628,7 @@ unsigned __int8 dlgComboboxUpdate(dialog *a1, rect *a2) {
     unsigned result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -1705,8 +1705,8 @@ void sub_41B620(const char *a1, dialog *dlg, unsigned __int8 a3, char a4) {
     __asm {
         mov eax, a1
         mov ecx, dlg
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -1716,7 +1716,7 @@ char AddItemToListing(char *a1, dialog *a2, char a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -1816,8 +1816,8 @@ int BWFXN_PrintIcon(int a1, Bitmap *a2, __int16 a3, __int16 a4) {
     __asm {
         mov eax, a1
         mov edi, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1832,8 +1832,8 @@ int BlitSurface(int a1, Bitmap *a2, __int16 a3, __int16 a4) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1909,7 +1909,7 @@ int __snprintf(char *buff, size_t size_, const char *format, ...) {
     __asm {
         mov edi, buff
         mov esi, size_
-        push format
+        push dword ptr format
         call address
         mov result_, eax
         add esp, 4
@@ -1937,7 +1937,7 @@ Font *LoadFont(char *font_name, Font *(__fastcall *a2)(char *, _DWORD, _DWORD, _
     Font * result_;
     __asm {
         mov eax, font_name
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -1951,7 +1951,7 @@ int BWFXN_DrawXY(char *a1, signed int a2, signed int a3) {
     __asm {
         mov eax, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -1965,7 +1965,7 @@ FILE *_pfopen(char *filename, __int16 flags) {
     FILE * result_;
     __asm {
         mov ax, flags
-        push filename
+        push dword ptr filename
         call address
         mov result_, eax
     }
@@ -2005,8 +2005,8 @@ void ErrorDDrawInit(char *source_file, char *function_name, unsigned int last_er
         mov ecx, source_file
         mov eax, function_name
         mov ebx, last_error
-        push source_line
-        push resource
+        push dword ptr source_line
+        push dword ptr resource
         call address
     }
 }
@@ -2014,7 +2014,7 @@ void SysWarn_FileNotFound(char *a1, int last_error) {
     int address = 0x4212c0;
     __asm {
         mov ebx, last_error
-        push a1
+        push dword ptr a1
         call address
     }
 }
@@ -2172,7 +2172,7 @@ void sub_425310(dialog *a1, unsigned __int16 a2) {
     int address = 0x425310;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -2180,7 +2180,7 @@ void StatHangerCount(dialog *a1, unsigned __int16 a2) {
     int address = 0x4253d0;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -2188,7 +2188,7 @@ void sub_425510(dialog *a1, unsigned __int16 a2) {
     int address = 0x425510;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -2198,7 +2198,7 @@ void sub_425600(dialog *a1, int a2, int a3, unsigned __int16 a4) {
         mov eax, a1
         mov edx, a2
         mov ecx, a3
-        push a4
+        push dword ptr a4
         call address
     }
 }
@@ -2206,8 +2206,8 @@ void sub_425790(dialog *a1, unsigned __int16 a2, WeaponType weapon_type) {
     int address = 0x425790;
     __asm {
         mov eax, a1
-        push weapon_type
-        push a2
+        push dword ptr weapon_type
+        push dword ptr a2
         call address
     }
 }
@@ -2216,7 +2216,7 @@ void AddTextToDialog(dialog *a1, __int16 a2, char *a3) {
     __asm {
         mov eax, a1
         mov cx, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -2273,7 +2273,7 @@ signed int StatSpidermineCount(dialog *a1, unsigned __int16 a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2406,7 +2406,7 @@ BOOL InitializeSightValues(int max_sight_range, SightStruct *sight_data, int map
     __asm {
         mov eax, max_sight_range
         mov ecx, sight_data
-        push map_tile_width
+        push dword ptr map_tile_width
         call address
         mov result_, eax
     }
@@ -2471,7 +2471,7 @@ char getUnitCostInfo(int *mineral_cost_ptr, int *supply_cost_ptr, UnitType unit_
         mov eax, mineral_cost_ptr
         mov edx, supply_cost_ptr
         mov cx, unit_type
-        push gas_cost_ptr
+        push dword ptr gas_cost_ptr
         call address
         mov result_, al
     }
@@ -2522,7 +2522,7 @@ int sub_42D140(UnitType a1, u8 a2, int a3, int a4) {
         mov dx, a1
         mov bl, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -2547,9 +2547,9 @@ BOOL sub_42D6B0(CUnit *a1, __int16 a2, __int16 a3, unsigned __int16 a4, __int16 
         mov eax, a1
         mov cx, a2
         mov bx, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -2593,9 +2593,9 @@ signed int sub_42DB50(CUnit *a1, int a2, int a3, int a4) {
     signed result_;
     __asm {
         mov ebx, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2628,9 +2628,9 @@ int sub_42E000(__int16 a1, CUnit *a2, int a3, int a4) {
     int result_;
     __asm {
         mov ax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2727,7 +2727,7 @@ signed int isLargePath(CUnit *a1, int a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2740,8 +2740,8 @@ signed int sub_42FC10(CUnit *a1, int a2, int a3) {
     signed result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2804,7 +2804,7 @@ int calcUnitStrength(int a1, WeaponType weapon_type) {
     int result_;
     __asm {
         mov eax, a1
-        push weapon_type
+        push dword ptr weapon_type
         call address
         mov result_, eax
     }
@@ -2881,7 +2881,7 @@ unsigned int getUnitStrength(CUnit *a1, int a2) {
     unsigned result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2893,10 +2893,10 @@ CUnit *GetStrongestUnitInX_AirOrGround(int *a1, int a2, CUnit *a3, int a4, int a
     CUnit * result_;
     __asm {
         mov eax, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -2935,11 +2935,11 @@ int AI_BuildAndTechAndUpgrade(_DWORD a1, char a2, char a3, __int16 a4, char a5, 
     int result_;
     __asm {
         mov esi, a1
-        push a6
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3065,7 +3065,7 @@ char AI_AutoHarvest(CUnit *a1, CUnit *a2, CUnit *a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -3153,7 +3153,7 @@ signed int DetachUnitTaskFromTown(CUnit *a1, int a2) {
     signed result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3179,7 +3179,7 @@ int AI_ConstructAddonBehaviour(int a1, CUnit *a2, int a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3191,8 +3191,8 @@ signed int AI_MorphBehaviour(int a1, int a2, CUnit *a3, int a4) {
     __asm {
         mov edx, a1
         mov ebx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3485,7 +3485,7 @@ signed int sub_43B6D0(int unit_type, CUnit *a2, int a3) {
     __asm {
         mov ecx, unit_type
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3497,7 +3497,7 @@ CUnit *sub_43B790(CUnit *a1, CUnit *a2, CUnit *a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3520,7 +3520,7 @@ int AI_EnterTransport(int a1, int playerID) {
     int result_;
     __asm {
         mov eax, a1
-        push playerID
+        push dword ptr playerID
         call address
         mov result_, eax
     }
@@ -3561,7 +3561,7 @@ char AI_RespondToCloaked(CUnit *a1, CUnit *a2) {
     char result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -3616,7 +3616,7 @@ char sub_43DA20(AiCaptain *a1, CUnit *a2, int a3) {
     __asm {
         mov eax, a1
         mov ebx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -3627,7 +3627,7 @@ int sub_43DB10(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3672,8 +3672,8 @@ signed int sub_43E2E0(AiCaptain *a1, int a2, unsigned int a3) {
     signed result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3684,7 +3684,7 @@ signed int sub_43E400(CUnit *a1, CUnit *a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3696,9 +3696,9 @@ CUnit *sub_43E580(AiCaptain *a1, AiCaptain *a2, CUnit *a3, int a4, int a5) {
     __asm {
         mov edi, a1
         mov esi, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3720,7 +3720,7 @@ int sub_43E760(unsigned __int16 *a1, AiCaptain *a2, int a3) {
     __asm {
         mov eax, a1
         mov ebx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -3736,9 +3736,9 @@ int sub_43F100(AiCaptain *a1, int a2, int a3, unsigned int a4) {
     int result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -3903,7 +3903,7 @@ bool *checkArbiterCloakingRange(CUnit *a1, unsigned __int16 a2) {
     bool * result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -4272,9 +4272,9 @@ int reserveStaticBuildingOnPlacemap(CUnit *a1, int a2, int a3, __int16 a4, int a
     __asm {
         mov eax, a1
         mov edx, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -4305,9 +4305,9 @@ int sub_445820(int a1, CUnit *a2, int x, int a4, int a5) {
     __asm {
         mov edi, a1
         mov esi, a2
-        push a5
-        push a4
-        push x
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr x
         call address
         mov result_, eax
     }
@@ -4444,8 +4444,8 @@ char AI_MergeMorph(UnitType unit_type, int a2, char a3, char a4, int a5) {
         mov ax, unit_type
         mov edx, a2
         mov cl, a3
-        push a5
-        push a4
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, al
     }
@@ -4471,8 +4471,8 @@ char AIGetMultiCost(int a1, int a2, int a3, int a4, char a5, int arg_4) {
         mov edx, a2
         mov edi, a3
         mov esi, a4
-        push arg_4
-        push a5
+        push dword ptr arg_4
+        push dword ptr a5
         call address
         mov result_, al
     }
@@ -4506,7 +4506,7 @@ int sub_4486C0(int a1, Tech a2) {
     int result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -4691,7 +4691,7 @@ void sub_450560(dialog *a1, int a2) {
     int address = 0x450560;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -4702,7 +4702,7 @@ void CreateRaceDropdown(dialog *a1, Race race) {
     int address = 0x450ab0;
     __asm {
         mov eax, a1
-        push race
+        push dword ptr race
         call address
     }
 }
@@ -4728,9 +4728,9 @@ void sub_451940(UnknownPlayerRelated *a1, int a2, int a3, char a4) {
     int address = 0x451940;
     __asm {
         mov ebx, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -4738,9 +4738,9 @@ void sub_451AA0(UnknownPlayerRelated *a1, int a2, int a3, int a4) {
     int address = 0x451aa0;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -4824,7 +4824,7 @@ void sub_4535A0(CUnit *a1, int a2) {
     int address = 0x4535a0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -4843,8 +4843,8 @@ int sub_453BA0(const void *a1, size_t a2, const void *a3, size_t size_) {
     __asm {
         mov ecx, a1
         mov eax, a2
-        push size_
-        push a3
+        push dword ptr size_
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -4940,7 +4940,7 @@ void ApplySpeedUpgradeFromUpgradeType(__int16 a1, CUnit *unit) {
     int address = 0x454540;
     __asm {
         mov ax, a1
-        push unit
+        push dword ptr unit
         call address
     }
 }
@@ -5013,8 +5013,8 @@ char IrradiateHit(CUnit *a1, CUnit *a2, char a3) {
     char result_;
     __asm {
         mov edi, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -5064,7 +5064,7 @@ int OpticalFlareHit(CUnit *a1, char a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -5085,7 +5085,7 @@ int LockdownHit(CUnit *a1, unsigned __int8 a2) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -5096,7 +5096,7 @@ int SetMaelstromTimer(CUnit *a1, unsigned __int8 a2) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -5178,8 +5178,8 @@ bool sub_455F20(CUnit *a1, int a2, __int16 a3, __int16 a4, unsigned __int16 a5) 
         mov eax, a1
         mov ecx, a2
         mov di, a3
-        push a5
-        push a4
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, al
     }
@@ -5199,7 +5199,7 @@ int sub_456490(int a1, __int16 a2, CUnit *a3) {
     __asm {
         mov eax, a1
         mov di, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -5270,7 +5270,7 @@ void DLGsetProgressBarValue(dialog *a1, __int16 a2, __int16 a3) {
     __asm {
         mov eax, a1
         mov cx, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -5279,7 +5279,7 @@ void sub_457250(dialog *a1, __int16 a2, __int16 a3) {
     __asm {
         mov eax, a1
         mov cx, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -5302,7 +5302,7 @@ int CreateContextHelpFromDialog(dialog *a1, char *a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -5363,7 +5363,7 @@ void statdataMouseOverInteract(dialog *a1, dialog *a2) {
     int address = 0x457ce0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -5371,7 +5371,7 @@ void sub_457DE0(dialog *a1, struct dlgEvent *a2) {
     int address = 0x457de0;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -5448,7 +5448,7 @@ void getTooltipInfo(dialog *a1, dialog *a2) {
     int address = 0x4593a0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -5464,7 +5464,7 @@ void sub_4597C0(dialog *a1, struct dlgEvent *a2) {
     int address = 0x4597c0;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -5666,7 +5666,7 @@ __int16 sub_45E400(Bitmap *a1, int a2, char a3) {
     __asm {
         mov edx, a1
         mov ebx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, ax
     }
@@ -5699,8 +5699,8 @@ void displayUpdatePortrait(int a1, int a2, CUnit *a3, __int16 a4) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -5719,8 +5719,8 @@ int *DoUnitEventNotify(CUnit *a1, int a2, char a3, int a4, int *a5, unsigned int
         mov ecx, a2
         mov bl, a3
         mov edi, a4
-        push a6
-        push a5
+        push dword ptr a6
+        push dword ptr a5
         call address
         mov result_, eax
     }
@@ -5877,7 +5877,7 @@ bool DLG_loadsave_Destroy(dialog *a1, char *a2, dlgEvent *a3) {
     __asm {
         mov eax, a1
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -5971,7 +5971,7 @@ signed int AI_Guard_AttackTarget_Proc(CUnit *a1, int a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6078,7 +6078,7 @@ BOOL sub_463A10(UnitType a1, CUnit *a2) {
     BOOL result_;
     __asm {
         mov bx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6089,7 +6089,7 @@ char doMedicHeal(CUnit *a1, CUnit *a2) {
     char result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -6270,8 +6270,8 @@ signed int carrierReaverIdle(CUnit *a1, CUnit *a2, int a3, int a4) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -6384,9 +6384,9 @@ int getRepairInfo(CUnit *a1, int a2, int a3, int a4) {
     int result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6431,7 +6431,7 @@ signed int HasMoneyCanMake(int a1, CUnit *a2, UnitType a3) {
     __asm {
         mov ecx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -6485,7 +6485,7 @@ CUnit *CreateUnitOnGeyser(CUnit *a1, unsigned __int8 a2) {
     CUnit * result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6497,7 +6497,7 @@ int buildingAddon(CUnit *a1, int a2, int a3) {
     __asm {
         mov eax, a1
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -6520,7 +6520,7 @@ CUnit *attemptTrainHatchUnit(UnitType unit_type, CUnit *a2, int a3) {
     __asm {
         mov di, unit_type
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -6712,7 +6712,7 @@ unsigned int finderIdxFromValue_binary_search(int a1, UnitFinderData *a2, int a3
     __asm {
         mov edx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -6754,8 +6754,8 @@ int updateBuildingLandFog2(CUnit *a1, __int16 a2, __int16 a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6776,8 +6776,8 @@ char *updateBuildingLandFog(CUnit *a1, __int16 a2, __int16 a3) {
     char * result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -6790,7 +6790,7 @@ int updateUnitSortingInfo(int result, CUnit *a2, int a3) {
     __asm {
         mov eax, result
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -7154,7 +7154,7 @@ void BRF_displayText(char *a1, unsigned int a2) {
     int address = 0x46cdd0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -7172,7 +7172,7 @@ char BriefingStart(dialog *a1, int a2) {
     char result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -7214,9 +7214,9 @@ signed int parseRequirementOpcodes(int a1, int a2, CUnit *a3, Tech2 a4, int a5, 
         mov eax, a1
         mov edx, a2
         mov esi, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -7228,7 +7228,7 @@ int OrderAllowed(CUnit *a1, unsigned __int16 order, int a3) {
     __asm {
         mov eax, a1
         mov bx, order
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -7240,7 +7240,7 @@ bool CanUseTech(CUnit *unit, Tech2 tech_id, int player_id) {
     __asm {
         mov eax, unit
         mov di, tech_id
-        push player_id
+        push dword ptr player_id
         call address
         mov result_, al
     }
@@ -7252,7 +7252,7 @@ int ReasearchAllowed(Tech2 a1, int a2, CUnit *a3) {
     __asm {
         mov bx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -7264,7 +7264,7 @@ int UpgradeAllowed(unsigned __int16 a1, int player_id, CUnit *a3) {
     __asm {
         mov bx, a1
         mov edi, player_id
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -7280,7 +7280,7 @@ signed int TTAllowed(UnitType unit_type, CUnit *a2, int player_id) {
     __asm {
         mov ax, unit_type
         mov esi, a2
-        push player_id
+        push dword ptr player_id
         call address
         mov result_, eax
     }
@@ -7320,10 +7320,10 @@ void sub_46F5B0(int esi0, int a1, int a2, CUnit *a3, signed int a4) {
     int address = 0x46f5b0;
     __asm {
         mov esi, esi0
-        push a4
-        push a3
-        push a2
-        push a1
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        push dword ptr a1
         call address
     }
 }
@@ -7472,7 +7472,7 @@ char playSubunitIscript(CUnit *a1, Anims a2) {
     char result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -7513,8 +7513,8 @@ void *unknownSpecialOrder(u16 a1, Order a2, COrder *a3, CUnit *a4, Position a5, 
         mov bl, a2
         mov edi, a3
         mov esi, a4
-        push a6
-        push a5
+        push dword ptr a6
+        push dword ptr a5
         call address
         mov result_, eax
     }
@@ -7528,8 +7528,8 @@ COrder *QueueOrderEx(Order a1, COrder *a2, CUnit *a3, u16 dx0, Position a4, CUni
         mov edi, a2
         mov esi, a3
         mov dx, dx0
-        push a5
-        push a4
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -7571,9 +7571,9 @@ Order order(int a1, CUnit *a2, Order a3, Position a4, CUnit *a5, u16 a6) {
         mov eax, a1
         mov edx, a2
         mov cl, a3
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, al
     }
@@ -7602,7 +7602,7 @@ char *sub_474A20(Order a1, __int16 a2, __int16 a3, CUnit *a4) {
         mov al, a1
         mov dx, a2
         mov cx, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -7625,8 +7625,8 @@ COrder *sub_474AF0(Order a1, CUnit *a2, Position a3, CUnit *a4) {
     __asm {
         mov al, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -7638,9 +7638,9 @@ void orderInterrupt(CUnit *unit, Order order_id, Position a3, CUnit *a4) {
     int address = 0x474c30;
     __asm {
         mov esi, unit
-        push a4
-        push a3
-        push order_id
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr order_id
         call address
     }
 }
@@ -7652,9 +7652,9 @@ Order issueQueuedOrderTarget(CUnit *a1, CUnit *a2, Order order_id, int a4) {
     Order result_;
     __asm {
         mov eax, a1
-        push a4
-        push order_id
-        push a2
+        push dword ptr a4
+        push dword ptr order_id
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -7668,7 +7668,7 @@ signed int isOrderValid(char a1, CUnit *a2, CUnit *a3, int a4) {
         mov al, a1
         mov ebx, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -7678,10 +7678,10 @@ void sub_474FB0(CUnit *a1, Order order_id, u16 a3, __int16 pos_x, __int16 pos_y)
     int address = 0x474fb0;
     __asm {
         mov esi, a1
-        push pos_y
-        push pos_x
-        push a3
-        push order_id
+        push dword ptr pos_y
+        push dword ptr pos_x
+        push dword ptr a3
+        push dword ptr order_id
         call address
     }
 }
@@ -7690,10 +7690,10 @@ void sub_475220(CUnit *a1, Order order_id, Position position, CUnit *a4, u16 a5)
     int address = 0x475220;
     __asm {
         mov esi, a1
-        push a5
-        push a4
-        push position
-        push order_id
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr position
+        push dword ptr order_id
         call address
     }
 }
@@ -7701,9 +7701,9 @@ void OrderToPos(CUnit *a1, Order order_id, __int16 pos_x, __int16 pos_y) {
     int address = 0x475260;
     __asm {
         mov esi, a1
-        push pos_y
-        push pos_x
-        push order_id
+        push dword ptr pos_y
+        push dword ptr pos_x
+        push dword ptr order_id
         call address
     }
 }
@@ -7712,7 +7712,7 @@ void UnitOrderTo(CUnit *unit, CUnit *target, Order order_id) {
     __asm {
         mov esi, unit
         mov eax, target
-        push order_id
+        push dword ptr order_id
         call address
     }
 }
@@ -7729,8 +7729,8 @@ char sub_475350(CUnit *a1, __int16 a2, __int16 a3) {
     char result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -7762,11 +7762,11 @@ void OrderQueuedCommand(__int16 a1, __int16 a2, Order a3, COrder *a4, CUnit *a5,
         mov dx, a2
         mov cl, a3
         mov edi, a4
-        push a9
-        push a8
-        push a7
-        push a6
-        push a5
+        push dword ptr a9
+        push dword ptr a8
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
         call address
     }
 }
@@ -7777,12 +7777,12 @@ void ExecuteQueuedOrder(__int16 a1, __int16 a2, u16 a3, CUnit *a4, _DWORD a5, in
         mov dx, a2
         mov bx, a3
         mov esi, a4
-        push a10
-        push a9
-        push a8
-        push order
-        push a6
-        push a5
+        push dword ptr a10
+        push dword ptr a9
+        push dword ptr a8
+        push dword ptr order
+        push dword ptr a6
+        push dword ptr a5
         call address
     }
 }
@@ -7873,7 +7873,7 @@ signed int unitIsPositionInAttackAngle(int a1, int a2, CUnit *a3, unsigned __int
         mov eax, a1
         mov ecx, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -7896,7 +7896,7 @@ int CanWeaponTargetUnit(WeaponType weaponId, CUnit *target, CUnit *attacker) {
     __asm {
         mov al, weaponId
         mov edx, target
-        push attacker
+        push dword ptr attacker
         call address
         mov result_, eax
     }
@@ -7975,7 +7975,7 @@ signed int isUnitTargetOutOfMaxRange(CUnit *a1, CUnit *a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -8016,7 +8016,7 @@ signed int sub_476640(CUnit *a1, WeaponType weapon_type) {
     signed result_;
     __asm {
         mov eax, a1
-        push weapon_type
+        push dword ptr weapon_type
         call address
         mov result_, eax
     }
@@ -8029,7 +8029,7 @@ signed int unitCanAttackTarget(CUnit *a1, CUnit *a2, int a3) {
     __asm {
         mov ebx, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -8040,7 +8040,7 @@ int isUnitInWeaponRange(CUnit *a1, CUnit *a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -8077,7 +8077,7 @@ signed int doWeaponIscript(CUnit *a1, WeaponType a2, int a3, Anims a4) {
         mov eax, a1
         mov bl, a2
         mov edi, a3
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -8115,8 +8115,8 @@ int SetAttackTarget(CUnit *a1, CUnit *a2, int a3, int a4) {
     __asm {
         mov eax, a1
         mov edi, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -8263,8 +8263,8 @@ void DoWeaponHit(CUnit *a1, CUnit *a2, int a3) {
     int address = 0x4795d0;
     __asm {
         mov ebx, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -8274,8 +8274,8 @@ char attackOverlayAndNotify(CUnit *a1, CUnit *a2, unsigned __int8 weapon_type, c
     __asm {
         mov eax, a1
         mov esi, a2
-        push a4
-        push weapon_type
+        push dword ptr a4
+        push dword ptr weapon_type
         call address
         mov result_, al
     }
@@ -8287,9 +8287,9 @@ char DamageUnitHp(s32 a1, CUnit *a2, CUnit *a3, int a4, int a5) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -8301,11 +8301,11 @@ unsigned int DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_ty
     __asm {
         mov eax, result
         mov edi, a2
-        push a7
-        push a6
-        push a5
-        push a4
-        push weapon_type
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr weapon_type
         call address
         mov result_, eax
     }
@@ -8317,7 +8317,7 @@ char WeaponBulletShot(CUnit *a1, CBullet *a2, unsigned int a3) {
     __asm {
         mov eax, a1
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -8344,7 +8344,7 @@ void ISCRIPT_UseWeapon(CUnit *a1, WeaponType weapon_type) {
     int address = 0x479c30;
     __asm {
         mov esi, a1
-        push weapon_type
+        push dword ptr weapon_type
         call address
     }
 }
@@ -8352,7 +8352,7 @@ void FireUnitWeapon(CUnit *unit, u8 weapon_id) {
     int address = 0x479c90;
     __asm {
         mov esi, unit
-        push weapon_id
+        push dword ptr weapon_id
         call address
     }
 }
@@ -8368,7 +8368,7 @@ void ISCRIPT_AttackWith(CUnit *attacker, bool is_ground_weapon) {
     int address = 0x479d60;
     __asm {
         mov eax, attacker
-        push is_ground_weapon
+        push dword ptr is_ground_weapon
         call address
     }
 }
@@ -8398,8 +8398,8 @@ CSprite *sub_47A010(char a1, __int16 a2, char player_id, CUnit *unit, FlingyID f
         mov dx, a2
         mov bl, player_id
         mov esi, unit
-        push a6
-        push flingy_id
+        push dword ptr a6
+        push dword ptr flingy_id
         call address
         mov result_, eax
     }
@@ -8426,7 +8426,7 @@ void sub_47AB40(LO_Overlays *a1, signed int a2) {
     int address = 0x47ab40;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -8667,7 +8667,7 @@ void GiveAllUnitPropertiesToPlayerAndMakeIdle(CUnit *a1, int a2) {
     int address = 0x47c9f0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -8880,8 +8880,8 @@ int CreateContextHelp(int a1, int a2, char *a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -9045,10 +9045,10 @@ int *initializeThingyArray(unsigned __int16 count, CThingy **a2, CThingy **a3, C
     int * result_;
     __asm {
         mov ax, count
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -9063,7 +9063,7 @@ bool isThingyOnMap(signed int a1, signed int a2, CThingy *a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -9103,7 +9103,7 @@ BOOL sub_4881E0(char player_id, int a2, int position_x, int a4, unsigned __int16
         mov edx, a2
         mov ecx, position_x
         mov esi, a4
-        push position_y
+        push dword ptr position_y
         call address
         mov result_, eax
     }
@@ -9114,9 +9114,9 @@ CThingy *CreateThingy(int sprite_id, int position_x, unsigned __int16 position_y
     CThingy * result_;
     __asm {
         mov di, position_y
-        push playerID
-        push position_x
-        push sprite_id
+        push dword ptr playerID
+        push dword ptr position_x
+        push dword ptr sprite_id
         call address
         mov result_, eax
     }
@@ -9180,7 +9180,7 @@ void incrementUnitScores(CUnit *a1, int a2) {
     int address = 0x488bf0;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -9189,7 +9189,7 @@ void incrementUnitScoresEx(int a1, CUnit *a2, int a3) {
     __asm {
         mov ecx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -9315,7 +9315,7 @@ int packBulletData(CBullet *a1, int a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -9424,10 +9424,10 @@ signed int InitializeBullet(CUnit *a1, __int16 a2, char player_id, CBullet *a4, 
         mov eax, a1
         mov dx, a2
         mov cl, player_id
-        push a7
-        push a6
-        push weapon_type
-        push a4
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr weapon_type
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -9439,10 +9439,10 @@ CBullet *CreateBullet(CUnit *a1, int weapon_id, int a3, __int16 a4, char a5, int
     __asm {
         mov eax, a1
         mov ecx, weapon_id
-        push a6
-        push a5
-        push a4
-        push a3
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -9475,9 +9475,9 @@ void PrintText(const char *text, u8 color, int tick_count, char a4) {
     int address = 0x48cd30;
     __asm {
         mov eax, text
-        push a4
-        push tick_count
-        push color
+        push dword ptr a4
+        push dword ptr tick_count
+        push dword ptr color
         call address
     }
 }
@@ -9511,7 +9511,7 @@ int getUnitPlaceboxSize(UnitType a1, int a2, int a3) {
     __asm {
         mov ax, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -9542,9 +9542,9 @@ void sub_48DE70(CUnit *a1, Order a2, int a3, UnitType a4) {
     int address = 0x48de70;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -9603,8 +9603,8 @@ int PlaySound(SfxData sfxId, CUnit *sourceUnit, int a3, signed int a4) {
     __asm {
         mov ebx, sfxId
         mov esi, sourceUnit
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -9802,7 +9802,7 @@ CUnit *Unit__SpendEnergy(CUnit *result, __int16 a2) {
     CUnit * result_;
     __asm {
         mov eax, result
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -9814,7 +9814,7 @@ signed __int16 getSpecialOrderErrorStatstring(int tech, UnitType unit_type) {
     signed result_;
     __asm {
         mov eax, tech
-        push unit_type
+        push dword ptr unit_type
         call address
         mov result_, eax
     }
@@ -9906,7 +9906,7 @@ __int16 getTargetUnitAbilityErrorStatString(CUnit *a1, char a2, int tech) {
     __asm {
         mov eax, a1
         mov bl, a2
-        push tech
+        push dword ptr tech
         call address
         mov result_, ax
     }
@@ -9919,10 +9919,10 @@ signed int getOrderTargetErrorString(Tech2 tech, CUnit *a2, UnitType a3, CUnit *
         mov dx, tech
         mov edi, a2
         mov si, a3
-        push a7
-        push a6
-        push a5
-        push a4
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -9944,7 +9944,7 @@ int RemoveOverlaysBetween(unsigned int a1, CUnit *a2, unsigned int a3) {
     __asm {
         mov eax, a1
         mov ebx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -9968,9 +9968,9 @@ signed int sub_4926D0(int a1, CUnit *a2, Tech2 tech, int a4, int a5) {
     __asm {
         mov eax, a1
         mov ebx, a2
-        push a5
-        push a4
-        push tech
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr tech
         call address
         mov result_, eax
     }
@@ -9992,7 +9992,7 @@ int EMPShockwaveHit(__int16 a1, __int16 a2, CUnit *a3) {
     __asm {
         mov ax, a1
         mov cx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -10118,7 +10118,7 @@ char PrepareUnitMoveClearRefs(CUnit *unit, bool hideUnit) {
     char result_;
     __asm {
         mov edi, unit
-        push hideUnit
+        push dword ptr hideUnit
         call address
         mov result_, al
     }
@@ -10157,7 +10157,7 @@ void doRecallMoveUnit(CUnit *unit, CUnit *a2) {
     int address = 0x4942d0;
     __asm {
         mov ebx, unit
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -10242,7 +10242,7 @@ signed int GetAngle(int x_start, int y_start, int x_end, int y_end) {
         mov edx, x_start
         mov ecx, x_end
         mov eax, y_end
-        push y_start
+        push dword ptr y_start
         call address
         mov result_, eax
     }
@@ -10390,9 +10390,9 @@ CSprite *sub_496360(int flingyID, __int16 a2, int position_y, CUnit *a4, char a5
         mov eax, flingyID
         mov dx, a2
         mov ecx, position_y
-        push a6
-        push a5
-        push a4
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -10405,7 +10405,7 @@ CUnit *ISCRIPT_CreateFlingy(char a1, __int16 a2, int a3, FlingyID flingy_id) {
         mov al, a1
         mov dx, a2
         mov ecx, a3
-        push flingy_id
+        push dword ptr flingy_id
         call address
         mov result_, eax
     }
@@ -10462,7 +10462,7 @@ char refreshAllVisibleImagesAtScreenPosition(CSprite *a1, char a2) {
     char result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -10561,8 +10561,8 @@ signed int sub_497E10(CSprite *a1, int a2, int a3) {
     signed result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10593,8 +10593,8 @@ int sub_497FD0(char a1, CSprite *a2, unsigned __int8 a3, char a4) {
     __asm {
         mov al, a1
         mov esi, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -10659,7 +10659,7 @@ CSprite *sub_498B20(CSprite *result, char a2) {
     CSprite * result_;
     __asm {
         mov eax, result
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10669,7 +10669,7 @@ void sub_498B50(CSprite *a1, unsigned __int8 a2) {
     int address = 0x498b50;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -10692,9 +10692,9 @@ CImage *sub_498D70(CSprite *a1, char a2, char a3, char a4) {
     CImage * result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10705,9 +10705,9 @@ CImage *CreateImageOverlay(CSprite *a1, char a2, char a3, char a4) {
     CImage * result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10718,9 +10718,9 @@ CImage *CreateOverlay(CSprite *a1, char a2, char a3, char a4) {
     CImage * result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10731,10 +10731,10 @@ CImage *sub_498F40(CSprite *a1, int a2, char a3, char a4, unsigned int a5) {
     CImage * result_;
     __asm {
         mov eax, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -10748,7 +10748,7 @@ signed int initSpriteData(unsigned __int16 a1, int a2, char a3, unsigned __int16
         mov edx, a2
         mov cl, a3
         mov di, a4
-        push a5
+        push dword ptr a5
         call address
         mov result_, eax
     }
@@ -10759,9 +10759,9 @@ CSprite *createSprite(int a1, int position_x, unsigned __int16 position_y, char 
     CSprite * result_;
     __asm {
         mov di, position_y
-        push player_id
-        push position_x
-        push a1
+        push dword ptr player_id
+        push dword ptr position_x
+        push dword ptr a1
         call address
         mov result_, eax
     }
@@ -10787,10 +10787,10 @@ int CreateSpriteEx(int result, CSprite *a2, unsigned __int8 a3, int a4, int a5, 
     __asm {
         mov eax, result
         mov ebx, a2
-        push a6
-        push a5
-        push a4
-        push a3
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -10810,7 +10810,7 @@ char sub_4997A0(int a1, CSprite *a2, int a3) {
     __asm {
         mov ecx, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -10855,8 +10855,8 @@ char ReplaceSpriteOverlayImage(CSprite *a1, int a2, char a3) {
     char result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -10930,7 +10930,7 @@ void CreateNewUnitSelectionsFromList(CUnit **a1, int unit_count) {
     int address = 0x49ae40;
     __asm {
         mov eax, a1
-        push unit_count
+        push dword ptr unit_count
         call address
     }
 }
@@ -11028,10 +11028,10 @@ int drawScreenRowTiles(int a1, TileID *a2, int a3, int a4, int a5) {
     int result_;
     __asm {
         mov eax, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -11077,8 +11077,8 @@ BOOL HasPathToPos(CUnit *a1, signed int y, signed int x) {
     BOOL result_;
     __asm {
         mov eax, a1
-        push x
-        push y
+        push dword ptr x
+        push dword ptr y
         call address
         mov result_, eax
     }
@@ -11106,11 +11106,11 @@ bool CheckUnitCollisionPos(__int16 *move_area, CUnit *unit, Position *inPos, Pos
     bool result_;
     __asm {
         mov eax, move_area
-        push flags
-        push hideErrorMsg
-        push outPos
-        push inPos
-        push unit
+        push dword ptr flags
+        push dword ptr hideErrorMsg
+        push dword ptr outPos
+        push dword ptr inPos
+        push dword ptr unit
         call address
         mov result_, al
     }
@@ -11321,7 +11321,7 @@ CSprite *selectNewGUIUnitPortrait(int a1, CUnit *a2, CSprite *a3) {
     __asm {
         mov ecx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -11343,9 +11343,9 @@ signed int sub_49ECF0(CUnit *a1, __int16 a2, UnitType unit_type, int a4, char a5
     __asm {
         mov eax, a1
         mov dx, a2
-        push a5
-        push a4
-        push unit_type
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr unit_type
         call address
         mov result_, eax
     }
@@ -11367,7 +11367,7 @@ int sub_49F170(CUnit *a1, UnitType a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -11389,7 +11389,7 @@ int sub_49F6A0(CUnit *a1, UnitType a2) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -11410,7 +11410,7 @@ int sub_49F860(CUnit *a1, UnitType a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -11450,7 +11450,7 @@ u8 replaceUnitWithType(CUnit *a1, UnitType a2) {
     u8 result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -11479,9 +11479,9 @@ signed int sub_4A0320(UnitType a1, CUnit *a2, int a3, __int16 a4, int a5) {
     __asm {
         mov ax, a1
         mov ecx, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -11494,7 +11494,7 @@ CUnit *UnitConstructor(UnitType unit_type, int position_x, int position_y, int p
         mov di, unit_type
         mov esi, position_x
         mov edx, position_y
-        push player_id
+        push dword ptr player_id
         call address
         mov result_, eax
     }
@@ -11518,8 +11518,8 @@ CUnit *CreateUnit(UnitType unit_type, int position_x, int position_y, int player
     __asm {
         mov cx, unit_type
         mov eax, position_x
-        push player_id
-        push position_y
+        push dword ptr player_id
+        push dword ptr position_y
         call address
         mov result_, eax
     }
@@ -11563,7 +11563,7 @@ bool CanCastSpellOrder(CUnit *unit, Tech2 tech_id, Order order_id) {
     __asm {
         mov eax, unit
         mov di, tech_id
-        push order_id
+        push dword ptr order_id
         call address
         mov result_, al
     }
@@ -11595,7 +11595,7 @@ signed int AI_CastSpellBehaviour(CUnit *a1, int unknown_flag) {
     signed result_;
     __asm {
         mov eax, a1
-        push unknown_flag
+        push dword ptr unknown_flag
         call address
         mov result_, eax
     }
@@ -11756,7 +11756,7 @@ char minimap_dlg_MouseMove(dialog *a1, struct dlgEvent *a2) {
     char result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -11911,9 +11911,9 @@ signed int sub_4AADF0(GotFileValues *got_template_values, char *template_label, 
         mov eax, got_template_values
         mov edx, template_label
         mov cl, a3
-        push a6
-        push template_name
-        push template_constructor
+        push dword ptr a6
+        push dword ptr template_name
+        push dword ptr template_constructor
         call address
         mov result_, eax
     }
@@ -11940,8 +11940,8 @@ GotFileValues *readTemplate(char *template_name, char *got_template_name, char *
     GotFileValues * result_;
     __asm {
         mov eax, template_name
-        push got_template_label
-        push got_template_name
+        push dword ptr got_template_label
+        push dword ptr got_template_name
         call address
         mov result_, eax
     }
@@ -12325,7 +12325,7 @@ signed int CommandLineCheatCompare(CheatFlags *game_cheats, const char *a2) {
     signed result_;
     __asm {
         mov ebx, game_cheats
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -12382,9 +12382,9 @@ int sub_4B3600(dialog *a1, int a2, int a3, int a4) {
     int result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -12589,7 +12589,7 @@ __int16 sub_4B6B10(dialog *a1, struct dlgEvent *evt) {
     __int16 result_;
     __asm {
         mov esi, a1
-        push evt
+        push dword ptr evt
         call address
         mov result_, ax
     }
@@ -12671,7 +12671,7 @@ void updateMinimapPreviewDisplayOffOn(int a1, dialog *a2, int a3) {
     __asm {
         mov ebx, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -12899,13 +12899,13 @@ signed int sub_4BBAF0(struct_5 *a1, int a2, int a3, SfxData sfx_id, UnitType uni
     signed result_;
     __asm {
         mov ebx, a1
-        push sfxdata_flags_1
-        push a7
-        push sfxdata_flags_2
-        push unit_type
-        push sfx_id
-        push a3
-        push a2
+        push dword ptr sfxdata_flags_1
+        push dword ptr a7
+        push dword ptr sfxdata_flags_2
+        push dword ptr unit_type
+        push dword ptr sfx_id
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -12921,9 +12921,9 @@ signed int sub_4BBEB0(SfxData a1, int a2, int a3, UnitType a4) {
     signed result_;
     __asm {
         mov esi, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -12935,9 +12935,9 @@ signed int PlayTransmissionLocation(SfxData a1, int a2, int a3, CUnit *a4) {
     signed result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -12982,7 +12982,7 @@ IDirectSoundBuffer *LoadSoundProc(char *a1, int a2, struct_5 *a3) {
     __asm {
         mov eax, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -12994,7 +12994,7 @@ IDirectSoundBuffer *sub_4BCA30(SfxData a1, struct_5 *a2) {
     IDirectSoundBuffer * result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13013,7 +13013,7 @@ signed int DSoundInit(AudioVideoInitializationError *a1, HWND a2) {
     signed result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13126,8 +13126,8 @@ int templarMergePartner(int a1, CUnit *a2, int a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13255,8 +13255,8 @@ int CompressWrite(_DWORD a1, int a2, FILE *a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13601,7 +13601,7 @@ char sub_4CBF60(int a1, CUnit *a2, __int16 a3) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -13615,7 +13615,7 @@ signed int ReadMapChunks(int a1, int a2, int *out_version_loader_index, int a4) 
         mov eax, a1
         mov ecx, a2
         mov ebx, out_version_loader_index
-        push a4
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -13632,8 +13632,8 @@ char CHK_UNIT_ApplyOtherFlags(CUnit *a1, char a2, int a3) {
     char result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -13643,8 +13643,8 @@ void sub_4CC610(CUnit *a1, char a2, int a3) {
     int address = 0x4cc610;
     __asm {
         mov esi, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -13678,8 +13678,8 @@ CUnit *CHK_UNIT_ApplyBurrowFlag(CUnit *result, char a2, CUnit *a3) {
     CUnit * result_;
     __asm {
         mov eax, result
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13695,7 +13695,7 @@ char setHangerCount(CUnit *a1, CUnit *a2, unsigned __int8 a3) {
     __asm {
         mov eax, a1
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -13707,8 +13707,8 @@ CUnit *CreateUnitAtPos(__int16 player_id, unsigned int unit_type, __int16 x, __i
     __asm {
         mov ax, player_id
         mov ecx, unit_type
-        push y
-        push x
+        push dword ptr y
+        push dword ptr x
         call address
         mov result_, eax
     }
@@ -13737,8 +13737,8 @@ int UpdateCancelButton(dialog *a1, unsigned __int16 a2, int a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13749,8 +13749,8 @@ int UpdateOKButton(dialog *a1, unsigned __int16 a2, int a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -13875,7 +13875,7 @@ void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int
         mov eax, a1
         mov edi, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
     }
 }
@@ -13885,7 +13885,7 @@ void BWFXN_Game_ButtonDown(int result, void (__thiscall *a2)(dlgEvent *), unsign
         mov eax, result
         mov edi, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
     }
 }
@@ -13895,7 +13895,7 @@ void Game_BtnDoubleClick(int result, void (__thiscall *a2)(dlgEvent *), unsigned
         mov eax, result
         mov edi, a2
         mov esi, a3
-        push a4
+        push dword ptr a4
         call address
     }
 }
@@ -13933,11 +13933,11 @@ void *fastFileRead(int *bytes_read, int searchScope, char *filename, int default
     __asm {
         mov eax, bytes_read
         mov ecx, searchScope
-        push logline
-        push logfilename
-        push bytes_to_read
-        push defaultValue
-        push filename
+        push dword ptr logline
+        push dword ptr logfilename
+        push dword ptr bytes_to_read
+        push dword ptr defaultValue
+        push dword ptr filename
         call address
         mov result_, eax
     }
@@ -13949,7 +13949,7 @@ void LoadGameData(DatLoad *a1, char *a2) {
     int address = 0x4d2e80;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -13987,7 +13987,7 @@ int sub_4D37C0(dialog *a1, int (__stdcall *a2)(_DWORD, _DWORD)) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14122,8 +14122,8 @@ char imageRenderFxn12_Main(rect *a1, int a2, int a3) {
     char result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -14218,8 +14218,8 @@ int InitializeImageData(CImage *a1, CSprite *a2, int a3, char a4, char a5) {
         mov eax, a1
         mov edi, a2
         mov esi, a3
-        push a5
-        push a4
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -14270,7 +14270,7 @@ CImage *updateImageDirection(CImage *result, unsigned int a2, unsigned __int8 a3
     __asm {
         mov eax, result
         mov edx, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -14290,7 +14290,7 @@ char setImageDirection(unsigned int a1, CImage *a2, unsigned __int8 a3) {
     __asm {
         mov edx, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, al
     }
@@ -14300,7 +14300,7 @@ void compileHealthBar(CImage *a1, CSprite *a2) {
     int address = 0x4d6010;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -14351,9 +14351,9 @@ void sub_4D6740(CImage *a1, CSprite *a2, unsigned int a3, unsigned int a4) {
     int address = 0x4d6740;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -14362,8 +14362,8 @@ int sub_4D67D0(CImage *a1, unsigned __int16 a2, int a3) {
     int result_;
     __asm {
         mov ebx, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14374,8 +14374,8 @@ void createSelectionCircleImage(CSprite *a1, CImage *a2, unsigned __int8 a3, __i
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -14398,9 +14398,9 @@ CImage *sub_4D6F90(CSprite *a1, unsigned __int16 a2, unsigned int a3, unsigned _
     CImage * result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14411,8 +14411,8 @@ CImage **CreateSelectionCircle(CSprite *a1, unsigned __int8 a2, __int16 a3) {
     CImage ** result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14423,10 +14423,10 @@ CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 a2, int a3, int a4, c
     CThingy * result_;
     __asm {
         mov eax, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14439,9 +14439,9 @@ void BWFXN_PlayIscript(CImage *a1, StatusFlags a2, int a3, int a4, int a5) {
     __asm {
         mov ecx, a1
         mov edx, a2
-        push a5
-        push a4
-        push a3
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -14449,7 +14449,7 @@ void PlayIscriptAnim(CImage *this_, Anims anim) {
     int address = 0x4d8470;
     __asm {
         mov ecx, this_
-        push anim
+        push dword ptr anim
         call address
     }
 }
@@ -14489,7 +14489,7 @@ int runCreditsScriptCommands(char *a1, unsigned int a2, dialog *a3) {
     __asm {
         mov ecx, a1
         mov eax, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -14592,7 +14592,7 @@ int KeyVerification(char *a1, char *a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14640,7 +14640,7 @@ signed int InitializeCDArchives(const char *filename, int a2) {
     signed result_;
     __asm {
         mov eax, filename
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14805,7 +14805,7 @@ void **DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
     __asm {
         mov edx, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -14816,8 +14816,8 @@ void DlgSwooshin(__int16 a1, swishTimer *a2, dialog *a3, signed __int16 a4) {
     __asm {
         mov ax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -14828,9 +14828,9 @@ int registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
     int result_;
     __asm {
         mov eax, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -14932,7 +14932,7 @@ char sub_4DF740(dialog *a1, struct dlgEvent *evt) {
     char result_;
     __asm {
         mov edi, a1
-        push evt
+        push dword ptr evt
         call address
         mov result_, al
     }
@@ -15006,7 +15006,7 @@ void sub_4E1020(dialog *a1, char a2) {
     int address = 0x4e1020;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -15155,7 +15155,7 @@ bool *unpackUnitData(CUnit *a1, bool *a2) {
     bool * result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15166,7 +15166,7 @@ int packUnitData(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15283,10 +15283,10 @@ void printStatresInfo(dialog *a1, __int16 a2, int a3, int a4, int a5) {
     int address = 0x4e52e0;
     __asm {
         mov ebx, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -15294,9 +15294,9 @@ void showSupplyInfo(dialog *a1, __int16 a2, unsigned __int16 a3, unsigned __int1
     int address = 0x4e53b0;
     __asm {
         mov ebx, a1
-        push a4
-        push a3
-        push a2
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -15418,7 +15418,7 @@ char CreateUnitSelection(CUnit *a1, char a2) {
     char result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -15482,7 +15482,7 @@ int SetConstructionGraphic(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15550,8 +15550,8 @@ signed int iterateLoadedUnits(CUnit *a1, int (__fastcall *a2)(_DWORD, _DWORD), i
     signed result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15563,7 +15563,7 @@ int CanBeEnteredBy(CUnit *transport, CUnit *unit) {
     int result_;
     __asm {
         mov eax, transport
-        push unit
+        push dword ptr unit
         call address
         mov result_, eax
     }
@@ -15574,7 +15574,7 @@ signed int sub_4E6EF0(CUnit *a1, int a2) {
     signed result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15638,7 +15638,7 @@ BOOL canUnload(int a1, CUnit *unit, Position *outPos) {
     __asm {
         mov eax, a1
         mov esi, unit
-        push outPos
+        push dword ptr outPos
         call address
         mov result_, eax
     }
@@ -15681,7 +15681,7 @@ int sub_4E7E10(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15713,7 +15713,7 @@ CUnit *IterateUnitsAtLocationTargetProc(int (__fastcall *a1)(CUnit *, CUnit *), 
     __asm {
         mov ebx, a1
         mov eax, eax0
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15726,8 +15726,8 @@ CUnit *_CreateSplashWeaponProc(__int16 a1, __int16 a2, __int16 a3, int (__fastca
         mov ax, a1
         mov dx, a2
         mov cx, a3
-        push a5
-        push a4
+        push dword ptr a5
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -15738,15 +15738,15 @@ CUnit *GetNearest(int a1, CUnit *a2, __int16 a3, __int16 a4, signed int a5, sign
     CUnit * result_;
     __asm {
         mov eax, a1
-        push data
-        push a9
-        push a8
-        push a7
-        push a6
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr data
+        push dword ptr a9
+        push dword ptr a8
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15757,10 +15757,10 @@ CUnit *sub_4E8660(__int16 a1, __int16 a2, int a3, int (__fastcall *a4)(_DWORD, _
     CUnit * result_;
     __asm {
         mov bx, a1
-        push unit_type
-        push a4
-        push a3
-        push a2
+        push dword ptr unit_type
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15773,8 +15773,8 @@ CUnit *GetNearestUnitFrom(__int16 a1, __int16 a2, __int16 a3, int (__fastcall *a
         mov ax, a1
         mov bx, a2
         mov si, a3
-        push unit_type
-        push a4
+        push dword ptr unit_type
+        push dword ptr a4
         call address
         mov result_, eax
     }
@@ -15785,9 +15785,9 @@ CUnit *AI_ClosestUnit(CUnit *a1, int a2, int (__fastcall *a3)(CUnit *, CUnit *),
     CUnit * result_;
     __asm {
         mov esi, a1
-        push unit_type
-        push a3
-        push a2
+        push dword ptr unit_type
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15799,8 +15799,8 @@ CUnit *AI_BestUnit_InBox(__int16 a1, CUnit *a2, int (__fastcall *a3)(CUnit *, CU
     __asm {
         mov ax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -15866,8 +15866,8 @@ signed int ChkLarvaStray(CUnit *a1, unsigned int a2, unsigned int a3) {
     signed result_;
     __asm {
         mov ebx, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -15994,7 +15994,7 @@ BOOL writeUnitPointer(int a1, CUnit *a2, FILE *a3) {
     __asm {
         mov ecx, a1
         mov esi, a2
-        push a3
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -16141,7 +16141,7 @@ char RefreshSprite(CSprite *a1, unsigned __int8 a2) {
     char result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -16305,10 +16305,10 @@ int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, int a5) {
     int result_;
     __asm {
         mov esi, a1
-        push a5
-        push a4
-        push a3
-        push a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16323,8 +16323,8 @@ void DlgDrawText(rect *a1, dialog *a2, int a3, int a4) {
     __asm {
         mov eax, a1
         mov ecx, a2
-        push a4
-        push a3
+        push dword ptr a4
+        push dword ptr a3
         call address
     }
 }
@@ -16338,7 +16338,7 @@ void DrawStandardButtonGraphic(dialog *a2, rect *a3) {
     int address = 0x4efd90;
     __asm {
         mov edi, a2
-        push a3
+        push dword ptr a3
         call address
     }
 }
@@ -16346,7 +16346,7 @@ void DrawAlternateButtonGraphic(dialog *a1, rect *a2) {
     int address = 0x4efeb0;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -16354,7 +16354,7 @@ void DrawButtonImage(dialog *a1, rect *a2) {
     int address = 0x4f0050;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
     }
 }
@@ -16385,7 +16385,7 @@ int sub_4F1C70(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16417,8 +16417,8 @@ int sub_4F2260(CUnit *a1, int a2, CUnit *a3) {
     int result_;
     __asm {
         mov eax, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16429,7 +16429,7 @@ int sub_4F29E0(CUnit *a1, int a2) {
     int result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16478,8 +16478,8 @@ void onSendText(dialog *a1, dlgEvent *a2, int a3) {
     int address = 0x4f32d0;
     __asm {
         mov edi, a1
-        push a3
-        push a2
+        push dword ptr a3
+        push dword ptr a2
         call address
     }
 }
@@ -16667,7 +16667,7 @@ char setActiveDlgElement(dialog *a1, struct dlgEvent *a2) {
     char result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -16716,7 +16716,7 @@ bool sub_4F59E0(dialog *a1, dlgEvent *a2) {
     bool result_;
     __asm {
         mov eax, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, al
     }
@@ -16766,7 +16766,7 @@ CThingy *replaceFeedbackSprite(CUnit *a1, int a2) {
     CThingy * result_;
     __asm {
         mov ebx, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16778,7 +16778,7 @@ int sub_4F65B0(CUnit *a1, CUnit *a2) {
     int result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16800,7 +16800,7 @@ int StasisFieldOverlay(CUnit *a1, unsigned __int8 a2) {
     int result_;
     __asm {
         mov edi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -16822,7 +16822,7 @@ signed int MindControl_Hit(CUnit *a1, CUnit *a2) {
     signed result_;
     __asm {
         mov esi, a1
-        push a2
+        push dword ptr a2
         call address
         mov result_, eax
     }
