@@ -750,11 +750,44 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+int sub_4B5110_(int a1)
+{
+	char *v3;
+	int result = 0;
+
+	if (!dword_59A0D4[a1])
+	{
+		result = LoadCampaignWithCharacter(a1) != 0;
+	}
+	else
+	{
+		WORD v2 = (a1 != 1) + 142;
+		if ((a1 != 1) != -143)
+		{
+			if (v2 < *dword_6D1220) {
+				v3 = (char *)dword_6D1220 + dword_6D1220[v2 + 1];
+			}
+			else
+			{
+				v3 = "";
+			}
+		}
+		else {
+			v3 = NULL;
+		}
+		if (sub_4B5B20(v3)) {
+			result = LoadCampaignWithCharacter(a1) != 0;
+		}
+	}
+
+	return result;
+}
+
 signed int __stdcall sub_4B5180_(dialog *a1)
 {
 	if (LastControlID == 6)
 	{
-		if (!sub_4B5110(2))
+		if (!sub_4B5110_(2))
 			return 1;
 		LastControlID = 6;
 	}
@@ -762,7 +795,7 @@ signed int __stdcall sub_4B5180_(dialog *a1)
 	{
 		if (LastControlID == 7)
 		{
-			if (sub_4B5110(1))
+			if (sub_4B5110_(1))
 			{
 				LastControlID = 7;
 				return (unsigned __int8)DLG_SwishOut(a1);
@@ -771,7 +804,7 @@ signed int __stdcall sub_4B5180_(dialog *a1)
 		}
 		if (LastControlID == 8)
 		{
-			if (sub_4B5110(0))
+			if (sub_4B5110_(0))
 			{
 				LastControlID = 8;
 				return (unsigned __int8)DLG_SwishOut(a1);
