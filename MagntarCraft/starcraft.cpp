@@ -750,6 +750,44 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+int CreateCampaignGame_(MapData a1)
+{
+	int result; // eax@1
+	GotFileValues *v2; // eax@2
+	MapChunks a4; // [sp+0h] [bp-D0h]@1
+	struct_game_140 v4; // [sp+20h] [bp-B0h]@2
+	char v5[32]; // [sp+B0h] [bp-20h]@2
+
+	CampaignIndex = a1;
+	result = ReadMapData(MapdataFilenames[a1], &a4, 1);
+	if (result)
+	{
+		memset(&v4, 0, 140u);
+		v4.got_file_values.unused3[4] = 0;
+		SStrCopy(v4.player_name, CurrentPlayer, 24u);
+		SStrCopy(v4.map_name, CurrentMapName, 32u);
+		v4.game_speed = GameSpeed;
+		v4.data231 = 1;
+		v4.number_of_open_slots = 1;
+		v2 = readTemplate("Use Map Settings(1)", v5, v5);
+		if (v2
+			&& (memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values)),
+				SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0),
+				sub_4DBE50()))
+		{
+			dword_596888 = 0;
+			return CreateGame(&v4) != 0;
+		}
+		else
+		{
+			return 0;
+		}
+	}
+	else {
+		return 0;
+	}
+}
+
 int LoadCampaignWithCharacter_(int a1)
 {
 	const char *v1; // eax@3
