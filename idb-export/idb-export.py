@@ -377,7 +377,8 @@ def export(root_dir):
     function_declarations = []
     function_definitions = []
     export_functions(function_declarations, function_definitions)
-    export_data(function_declarations, function_definitions)
+    export_data('.rdata', function_declarations, function_definitions)
+    export_data('.data', function_declarations, function_definitions)
 
     type_declarations = []
     type_definitions = []
@@ -425,8 +426,8 @@ def export_functions(declarations, definitions):
         declarations.append(declaration)
         definitions.append(definition)
 
-def export_data(declarations, definitions):
-    data_segment = idaapi.get_segm_by_name('.data')
+def export_data(segment, declarations, definitions):
+    data_segment = idaapi.get_segm_by_name(segment)
 
     ea = data_segment.startEA
     while ea != idc.BADADDR:
