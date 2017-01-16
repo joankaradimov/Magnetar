@@ -182,6 +182,7 @@ struct UnitDimentions;
 struct dialog_list;
 struct fontMemStruct;
 struct RenderFunction;
+struct CharacterData;
 struct TriggerList;
 struct FontChar;
 struct _EH3_EXCEPTION_REGISTRATION;
@@ -3461,6 +3462,18 @@ struct RenderFunction
   int index;
   void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
   void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
+};
+
+struct CharacterData
+{
+  int char0;
+  _BYTE has_ophelia_cheat;
+  _BYTE gap5[3];
+  _DWORD last_access_time;
+  char player_name[24];
+  int gap0;
+  int gap[3];
+  _BYTE more_data[60];
 };
 
 struct TriggerList

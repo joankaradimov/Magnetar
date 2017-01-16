@@ -4755,7 +4755,16 @@ DECL_FUNC(int (__stdcall*sub_452370)(char), sub_452370, 0x452370);
 DECL_FUNC(int(*sub_4523C0)(), sub_4523C0, 0x4523c0);
 DECL_FUNC(int(*sub_452410)(), sub_452410, 0x452410);
 DECL_FUNC(int(*_startGame)(), _startGame, 0x452460);
-DECL_FUNC(int(*sub_452530)(), sub_452530, 0x452530);
+BOOL sub_452530(char *a1) {
+    int address = 0x452530;
+    BOOL result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_452570)(), sub_452570, 0x452570);
 DECL_FUNC(int(*sub_452590)(), sub_452590, 0x452590);
 DECL_FUNC(int(*sub_4525A0)(), sub_4525A0, 0x4525a0);
@@ -11828,8 +11837,60 @@ DECL_FUNC(void (__stdcall*sub_4A7F50)(HWND, UINT, UINT, DWORD), sub_4A7F50, 0x4a
 DECL_FUNC(int(*sub_4A7FC0)(), sub_4A7FC0, 0x4a7fc0);
 DECL_FUNC(int (__stdcall*sub_4A8050)(char *source, int, int, int, char *dest), sub_4A8050, 0x4a8050);
 DECL_FUNC(int (__stdcall*sub_4A8710)(char *source), sub_4A8710, 0x4a8710);
-DECL_FUNC(int(*sub_4A8850)(), sub_4A8850, 0x4a8850);
-DECL_FUNC(int (__stdcall*LoadCharacterData)(char *), LoadCharacterData, 0x4a8940);
+int sub_4A8790(DWORD a1, CHAR *esi0, char *a2) {
+    int address = 0x4a8790;
+    int result_;
+    __asm {
+        mov edi, a1
+        mov esi, esi0
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+BOOL sub_4A8850(char *a1) {
+    int address = 0x4a8850;
+    BOOL result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+FILE *CreateCharacterFile(CharacterData *a1) {
+    int address = 0x4a8880;
+    FILE * result_;
+    __asm {
+        mov ebx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int LoadCharacterData(CharacterData *character_data, char *source) {
+    int address = 0x4a8940;
+    int result_;
+    __asm {
+        mov ebx, character_data
+        push dword ptr source
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+FILE *verifyCharacterFile(CharacterData *a1, const char *player_name) {
+    int address = 0x4a8a40;
+    FILE * result_;
+    __asm {
+        mov eax, a1
+        mov esi, player_name
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*enumFiles)(int), enumFiles, 0x4a8ab0);
 DECL_FUNC(int(*sub_4A8B70)(), sub_4A8B70, 0x4a8b70);
 DECL_FUNC(int(*getPlayerForce)(), getPlayerForce, 0x4a8b90);
@@ -12621,7 +12682,17 @@ DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t si
 DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
 DECL_FUNC(int(*BWFXN_gluPOKCancel_MBox)(), BWFXN_gluPOKCancel_MBox, 0x4b73b0);
 DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
-DECL_FUNC(int(*loadmenu_GluHist)(), loadmenu_GluHist, 0x4b7820);
+int loadmenu_GluHist(int a1, int a2) {
+    int address = 0x4b7820;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*load_gluPOKSplitBINDLG)(), load_gluPOKSplitBINDLG, 0x4b7a70);
 DECL_FUNC(int(*sub_4B7C90)(), sub_4B7C90, 0x4b7c90);
 DECL_FUNC(int(*sub_4B7CB0)(), sub_4B7CB0, 0x4b7cb0);
@@ -12841,6 +12912,19 @@ DECL_FUNC(int (__thiscall*sub_4BB1A0)(char *string, int), sub_4BB1A0, 0x4bb1a0);
 DECL_FUNC(int (__fastcall*sub_4BB260)(BYTE **data, int *senderplayerid), sub_4BB260, 0x4bb260);
 DECL_FUNC(int (__thiscall*sub_4BB2A0)(char *data), sub_4BB2A0, 0x4bb2a0);
 DECL_FUNC(int (__fastcall*sendMessage_Fast)(char *data, unsigned int playerID), sendMessage_Fast, 0x4bb2d0);
+char doNetTBLError(int a1, const CHAR *error_message, char *file_name, int a4) {
+    int address = 0x4bb300;
+    char result_;
+    __asm {
+        mov eax, a1
+        mov edx, error_message
+        mov ecx, file_name
+        push dword ptr a4
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*BigPacketError)(int, int, int), BigPacketError, 0x4bb430);
 DECL_FUNC(int(*sub_4BB4B0)(), sub_4BB4B0, 0x4bb4b0);
 DECL_FUNC(int (__fastcall*ReceiveTurns)(unsigned int *arraydatabytes, char **arraydata, int a1, int arraysize), ReceiveTurns, 0x4bb530);
@@ -13790,6 +13874,19 @@ DECL_FUNC(int(*createNewGameActionDataBlock)(), createNewGameActionDataBlock, 0x
 DECL_FUNC(int(*closeLoadGameFile)(), closeLoadGameFile, 0x4ce440);
 DECL_FUNC(int(*nullsub_60)(), nullsub_60, 0x4ce460);
 DECL_FUNC(int(*sub_4CE4A0)(), sub_4CE4A0, 0x4ce4a0);
+signed int getSaveDirectory(char *a1, unsigned int esi0, char *a2, int a4) {
+    int address = 0x4ce5b0;
+    signed result_;
+    __asm {
+        mov edi, a1
+        mov esi, esi0
+        push dword ptr a4
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*SetMapStartStatus)(), SetMapStartStatus, 0x4ce6b0);
 DECL_FUNC(int(*getMapStartStatus)(), getMapStartStatus, 0x4ce6c0);
 DECL_FUNC(int(*sub_4CE700)(), sub_4CE700, 0x4ce700);
@@ -13837,7 +13934,16 @@ DECL_FUNC(int (__thiscall*getSavePath)(char *base, int a2), getSavePath, 0x4cf2a
 DECL_FUNC(int (__stdcall*enumSaveLoadFiles)(int, int, int, int, int), enumSaveLoadFiles, 0x4cf330);
 DECL_FUNC(int (__stdcall*createSaveLoadList)(int, int), createSaveLoadList, 0x4cf5a0);
 DECL_FUNC(int(*sub_4CF5F0)(), sub_4CF5F0, 0x4cf5f0);
-DECL_FUNC(int(*sub_4CF7B0)(), sub_4CF7B0, 0x4cf7b0);
+signed int sub_4CF7B0(char *a1) {
+    int address = 0x4cf7b0;
+    signed result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4CF820)(int a2), sub_4CF820, 0x4cf820);
 DECL_FUNC(int (__thiscall*Saved_Game_Node_Constructor)(char *source, int, int), Saved_Game_Node_Constructor, 0x4cfb00);
 DECL_FUNC(int (__thiscall*sub_4CFCC0)(char *source, int, int), sub_4CFCC0, 0x4cfcc0);
@@ -16247,6 +16353,16 @@ char ordersEntries(CUnit *a1, int ecx0) {
 DECL_FUNC(int (__thiscall*UpdateUnitOrderData)(CUnit *this_), UpdateUnitOrderData, 0x4ecf70);
 DECL_FUNC(int(*UpdateUnits)(), UpdateUnits, 0x4ed000);
 DECL_FUNC(int(*initializeDefaultPlayerNames)(), initializeDefaultPlayerNames, 0x4ed2b0);
+signed int gluLogin_CharacterCreate_CheckDuplicate(char *a1) {
+    int address = 0x4ed3a0;
+    signed result_;
+    __asm {
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4ED3E0)(), sub_4ED3E0, 0x4ed3e0);
 signed int gluLogin_Activate(dialog *a1) {
     int address = 0x4ed3f0;
@@ -16259,7 +16375,7 @@ signed int gluLogin_Activate(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4ED440)(), sub_4ED440, 0x4ed440);
-DECL_FUNC(int (__stdcall*ID_Constructor)(int), ID_Constructor, 0x4ed490);
+DECL_FUNC(void (__stdcall*ID_Constructor)(CharacterData *a1), ID_Constructor, 0x4ed490);
 DECL_FUNC(int(*sub_4ED500)(), sub_4ED500, 0x4ed500);
 DECL_FUNC(int(*sub_4ED530)(), sub_4ED530, 0x4ed530);
 u32 gluLogin_SetSelect_Evt(dialog *a1) {
@@ -17329,8 +17445,8 @@ char* aGluePalmm = (decltype(aGluePalmm + 0)) 0x50e06c;
 int* dword_50E170 = (decltype(dword_50E170 + 0)) 0x50e170;
 char& byte_50E174 = * ((decltype(&byte_50E174)) 0x50e174);
 void *& off_50E176 = * ((decltype(&off_50E176)) 0x50e176);
-void *& off_5122A0 = * ((decltype(&off_5122A0)) 0x5122a0);
-wchar_t ** off_5122AC = (decltype(off_5122AC + 0)) 0x5122ac;
+int* off_5122A0 = (decltype(off_5122A0 + 0)) 0x5122a0;
+int* off_5122AC = (decltype(off_5122AC + 0)) 0x5122ac;
 unsigned int& dword_5122B8 = * ((decltype(&dword_5122B8)) 0x5122b8);
 char* byte_5122BC = (decltype(byte_5122BC + 0)) 0x5122bc;
 char* byte_5122C0 = (decltype(byte_5122C0 + 0)) 0x5122c0;
