@@ -160,6 +160,7 @@ struct __declspec(align(2)) PlayerInfo;
 struct dialog_scroll;
 struct pt;
 struct PMD;
+struct MapChunks;
 struct Condition;
 struct TransVectorEntry;
 struct CUnitFinder;
@@ -204,6 +205,7 @@ struct CPPEH_RECORD;
 struct baseLocation;
 struct Target_;
 struct CUnitWorker;
+struct MiniTileMaps_type;
 struct Location;
 struct dialog_btn;
 struct grpHead;
@@ -213,10 +215,10 @@ struct RTTIBaseClassDescriptor;
 struct CUnitRally;
 struct CSprite;
 struct AllScoresStruct;
-struct __declspec(align(1)) GotFile;
+struct struct_game_140;
 struct CImage;
 struct dlgEvent;
-struct MiniTileMaps_type;
+struct __declspec(align(1)) GotFile;
 struct CUnitPowerup;
 struct CBullet;
 union dialog_fields;
@@ -3241,6 +3243,18 @@ struct PMD
   int vdisp;
 };
 
+struct MapChunks
+{
+  int data0;
+  int data1;
+  int data2;
+  int data3;
+  int data4;
+  int data5;
+  int data6;
+  int data7;
+};
+
 struct Condition
 {
   DWORD dwLocation;
@@ -3635,6 +3649,11 @@ struct CUnitWorker
   u8 resourceCarryCount;
 };
 
+struct MiniTileMaps_type
+{
+  MiniTileFlagArray tile[65536];
+};
+
 struct Location
 {
   Box32 dimensions;
@@ -3774,12 +3793,27 @@ struct AllScoresStruct
   Counts unitCounts;
 };
 
-struct __declspec(align(1)) GotFile
+struct struct_game_140
 {
-  u8 version;
-  char name[32];
-  char label[32];
-  GotFileValues values;
+  int data;
+  char player_name[24];
+  int data21;
+  __int16 width;
+  __int16 height;
+  char data231;
+  char number_of_open_slots;
+  char game_speed;
+  char data234;
+  char game_type;
+  char data242;
+  __int16 data243;
+  int data25;
+  __int16 tileset;
+  __int16 data262;
+  int data27[6];
+  char data3;
+  char map_name[32];
+  GotFileValues got_file_values;
 };
 
 struct CImage
@@ -3821,9 +3855,12 @@ struct dlgEvent
   u16 wUnk_0x12;
 };
 
-struct MiniTileMaps_type
+struct __declspec(align(1)) GotFile
 {
-  MiniTileFlagArray tile[65536];
+  u8 version;
+  char name[32];
+  char label[32];
+  GotFileValues values;
 };
 
 struct CUnitPowerup

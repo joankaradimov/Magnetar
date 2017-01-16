@@ -718,19 +718,19 @@ void GameRun_(MenuPosition a1)
 	IsInGameLoop = 0;
 	if (!InReplay)
 	{
-		if (!word_596818)
-			word_596818 = map_size.width;
-		if (!word_59681A)
-			word_59681A = map_size.height;
-		if (!word_596828)
-			word_596828 = CurrentTileSet;
-		if (!gameType)
-			gameType = got_template.template_id;
-		if (!byte_596821)
-			byte_596821 = got_template.unused1;
-		if (!word_596822)
-			word_596822 = got_template.variation_id;
-		SetReplayData(&dword_5967F8, Players, dword_57F21C);
+		if (!stru_5967F8.width)
+			stru_5967F8.width = map_size.width;
+		if (!stru_5967F8.height)
+			stru_5967F8.height = map_size.height;
+		if (!stru_5967F8.tileset)
+			stru_5967F8.tileset = CurrentTileSet;
+		if (!stru_5967F8.game_type)
+			stru_5967F8.game_type = stru_5967F8.got_file_values.template_id;
+		if (!stru_5967F8.data242)
+			stru_5967F8.data242 = stru_5967F8.got_file_values.unused1;
+		if (!stru_5967F8.data243)
+			stru_5967F8.data243 = stru_5967F8.got_file_values.variation_id;
+		SetReplayData(&stru_5967F8, Players, dword_57F21C);
 	}
 	if (dword_6D1218)
 	{
@@ -795,14 +795,16 @@ int LoadCampaignWithCharacter_(int a1)
 			CampaignIndex = v7;
 			byte_57F246[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
-			result = (WORD *)1;
+			return 1;
 		}
 		else
 		{
-			result = (WORD *)CreateCampaignGame((MapData)result[1]);
+			return CreateCampaignGame((MapData)result[1]);
 		}
 	}
-	return (int)result;
+	else {
+		return 0;
+	}
 }
 
 int sub_4B5110_(int a1)
@@ -979,9 +981,9 @@ int loadMenu_gluCustm_(int is_multiplayer)
 		{
 			if (LOBYTE(OpheliaCheat2[0]) == v1)
 			{
-				if (got_template.victory_conditions != v1
-					|| got_template.starting_units != v1
-					|| got_template.tournament_mode != v1
+				if (stru_5967F8.got_file_values.victory_conditions != v1
+					|| stru_5967F8.got_file_values.starting_units != v1
+					|| stru_5967F8.got_file_values.tournament_mode != v1
 					|| InReplay)
 				{
 					gwGameMode = GAME_RUNINIT;
