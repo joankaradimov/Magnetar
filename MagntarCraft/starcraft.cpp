@@ -750,6 +750,103 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+int ReadMapData_(char *source, MapChunks *a4, int a5)
+{
+	int v3; // ecx@0
+	int v5; // edi@4
+	int v6; // esi@4
+	char *v8; // esi@7
+	int v9; // ecx@11
+	int *v10; // eax@11
+	bool v11; // zf@12
+	__int16 v12; // ax@20
+	char *v13; // eax@22
+	u16 v14; // ax@23
+	int v15; // [sp+0h] [bp-4h]@1
+
+	v15 = v3;
+	CurrentMapFileName[0] = 0;
+	if (!a5)
+		CampaignIndex = MD_none;
+	memset(LobbyPlayers, 0, sizeof(LobbyPlayers));
+	dword_59BDA8 = 0;
+	dword_59BDAC = 0;
+	a4->data0 = 0;
+	a4->data1 = 0;
+	a4->data2 = 0;
+	a4->data3 = 0;
+	a4->data4 = 0;
+	a4->data5 = 0;
+	a4->data6 = 0;
+	a4->data7 = 0;
+	if (InReplay)
+	{
+		v5 = dword_6D0F20;
+		v6 = (int)dword_6D0F24;
+		v15 = MD_none;
+		if (!ReadMapChunks(a4, (int)dword_6D0F24, &v15, dword_6D0F20)
+			|| !ReadChunkNodes(chk_loaders[v15].i1, v5, chk_loaders[v15].ptr1, v6, a4))
+			return 0;
+		v8 = source;
+	}
+	else
+	{
+		v8 = source;
+		if (!*source || !sub_4CCAC0(source, a4))
+			return 0;
+	}
+	v9 = 12;
+	PlayerInfo* v10_ = LobbyPlayers + 12;
+	do
+	{
+		--v10_;
+		--v9;
+		v11 = v10_->nRace == Race::RACE_Select;
+		v10_->dwPlayerID = v9;
+		v10_->dwStormId = -1;
+		if (v11)
+		{
+			v10_->nRace = Race::RACE_Random;
+			if (v9 < 8u)
+				*((_BYTE *)&dword_59BDA8 + (unsigned __int8)v9) = 1;
+		}
+		if (v10_ >= LobbyPlayers + 8)
+		{
+			v10_->nType = PlayerType::PT_NotUsed;
+			v10_->nRace = Race::RACE_Zerg;
+			v10_->nTeam = 0;
+		}
+	} while (v10_ != LobbyPlayers);
+	sub_4A91E0();
+	sub_45AC10(&a4->data1);
+	updatePlayerForce();
+	strrchr(v8, '\\');
+	SStrCopy(CurrentMapFileName, v8, 0x104u);
+	if (!a5)
+		CampaignIndex = MD_none;
+	v12 = LOWORD(a4->data0);
+	v11 = LOWORD(a4->data0) == 0;
+	dword_5994DC = 1;
+	if (v11)
+		goto LABEL_25;
+	if (MapStringTbl.buffer)
+	{
+		v14 = v12 - 1;
+		if (v14 < *MapStringTbl.buffer)
+		{
+			v13 = (char *)MapStringTbl.buffer + MapStringTbl.buffer[v14 + 1];
+			goto LABEL_26;
+		}
+	LABEL_25:
+		v13 = "";
+		goto LABEL_26;
+	}
+	v13 = 0;
+LABEL_26:
+	SStrCopy(CurrentMapName, v13, 32u);
+	return 1;
+}
+
 int CreateCampaignGame_(MapData a1)
 {
 	int result; // eax@1
@@ -759,7 +856,7 @@ int CreateCampaignGame_(MapData a1)
 	char v5[32]; // [sp+B0h] [bp-20h]@2
 
 	CampaignIndex = a1;
-	result = ReadMapData(MapdataFilenames[a1], &a4, 1);
+	result = ReadMapData_(MapdataFilenames[a1], &a4, 1);
 	if (result)
 	{
 		memset(&v4, 0, 140u);
