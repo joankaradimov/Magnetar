@@ -750,13 +750,68 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+int LoadCampaignWithCharacter_(int a1)
+{
+	const char *v1; // eax@3
+	int v2; // ecx@9
+	char *v3; // esi@9
+	WORD *result; // eax@11
+	unsigned int v5; // ecx@12
+	WORD v6; // cx@14
+	MapData v7; // dx@15
+	CharacterData v8; // [sp+8h] [bp-70h]@1
+
+	byte_57F1E3 = 0;
+	dword_51CA1C = 0;
+	if (!LoadCharacterData(&v8, CurrentPlayer))
+	{
+		v1 = (const char *)(*dword_6D1220 > 71u ? ((char *)dword_6D1220 + dword_6D1220[72]) : "");
+		if ((_stricmp(CurrentPlayer, v1) || !verifyCharacterFile(&v8, CurrentPlayer)) && !byte_6D5A10)
+			doNetTBLError(0, 0, 0, 88);
+	}
+	v2 = off_5122A0[a1];
+	v3 = (char *)&v8.gap[a1];
+	if (IsExpansion)
+	{
+		v2 = off_5122AC[a1];
+		v3 = &v8.more_data[4 * a1];
+	}
+	result = (WORD *)loadmenu_GluHist(*(_DWORD *)v3, v2);
+	dword_6D11CC = (int)result;
+	if (result)
+	{
+		v5 = result[1];
+		if (*(_DWORD *)v3 < v5)
+		{
+			*(_DWORD *)v3 = v5;
+			CreateCharacterFile(&v8);
+			result = (WORD *)dword_6D11CC;
+		}
+		v6 = result[2];
+		if (v6)
+		{
+			v7 = (MapData) result[1];
+			dword_5122B8 = v6;
+			CampaignIndex = v7;
+			byte_57F246[0] = 0;
+			gwGameMode = GAME_CINEMATIC;
+			result = (WORD *)1;
+		}
+		else
+		{
+			result = (WORD *)CreateCampaignGame((MapData)result[1]);
+		}
+	}
+	return (int)result;
+}
+
 int sub_4B5110_(int a1)
 {
 	int result = 0;
 
 	if (!dword_59A0D4[a1])
 	{
-		result = LoadCampaignWithCharacter(a1) != 0;
+		result = LoadCampaignWithCharacter_(a1) != 0;
 	}
 	else {
 		WORD v2;
@@ -766,7 +821,7 @@ int sub_4B5110_(int a1)
 			? (v2 < *dword_6D1220 ? (v3 = (char *)dword_6D1220 + dword_6D1220[v2 + 1]) : (v3 = ""))
 			: (v3 = 0),
 			sub_4B5B20(v3)) {
-			result = LoadCampaignWithCharacter(a1) != 0;
+			result = LoadCampaignWithCharacter_(a1) != 0;
 		}
 	}
 	return result;
