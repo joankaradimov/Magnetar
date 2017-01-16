@@ -406,6 +406,8 @@ def is_blacklisted(text):
         'GetFileVersionInfoSizeA',
         'GetFileVersionInfoA',
         'RtlUnwind',
+        '__int128',
+        '__IMPORT_DESCRIPTOR',
     ]
 
     for identifier in blacklisted_identifiers:
@@ -460,9 +462,11 @@ def is_type_blacklisted(type_ordinal):
     local_type_name = GetLocalTypeName(type_ordinal)
     if local_type_name == None:
         return False # TODO: determine when this happens
-    if local_type_name in {'RECT', 'POINT', '_GUID'}:
+    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128'}:
         return True
     if local_type_name.startswith('IDirectDraw'):
+        return True
+    if local_type_name.endswith('_Ref_count_base'):
         return True
     return False
 
