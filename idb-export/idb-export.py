@@ -161,7 +161,7 @@ class Function:
         result += '}\n'
         return result
 
-    def build_export_declaration(self):
+    def build_export_definition(self):
         if self.skip:
             return ''
 
@@ -173,7 +173,7 @@ class Function:
         else:
             return self.get_usercall_wrapper()
 
-    def build_export_definition(self):
+    def build_export_declaration(self):
         if self.skip:
             return ''
 
@@ -363,34 +363,34 @@ HEADER_TEMPLATE = """#pragma once
 
 #include "starcraft_exe_types.h"
 
-{definitions}"""
+{declarations}"""
 
 CPP_TEMPLATE = """#include "starcraft_exe_types.h"
 
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
-{declarations}
+{definitions}
 #undef DECL_FUNC
 """
 
 def export(root_dir):
-    declaration_macros = []
-    definitions = []
-    export_functions(definitions, declaration_macros)
-    export_data(definitions, declaration_macros)
+    function_declarations = []
+    function_definitions = []
+    export_functions(function_declarations, function_definitions)
+    export_data(function_declarations, function_definitions)
 
     type_declarations = []
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
     with open(root_dir + 'starcraft_exe.cpp', 'wt') as cpp_file:
-        cpp_file.write(CPP_TEMPLATE.format(declarations = ''.join(declaration_macros)))
+        cpp_file.write(CPP_TEMPLATE.format(definitions = ''.join(function_definitions)))
 
     with open(root_dir + 'starcraft_exe.h', 'wt') as header_file:
-        header_file.write(HEADER_TEMPLATE.format(definitions = ''.join(definitions)))
+        header_file.write(HEADER_TEMPLATE.format(declarations = ''.join(function_declarations)))
 
     with open(root_dir + 'starcraft_exe_types.h', 'wt') as types_header_file:
-        content = TYPES_HEADER_TEMPLATE.format(definitions = ''.join(type_definitions), declarations = ''.join(type_declarations))
+        content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 
 
@@ -412,7 +412,7 @@ def is_blacklisted(text):
             return True
     return False
 
-def export_functions(definitions, declaration_macros):
+def export_functions(declarations, definitions):
     text_segment = idaapi.get_segm_by_name('.text')
     for function_ea in Functions(text_segment.startEA, text_segment.endEA):
         function = Function(function_ea)
@@ -422,10 +422,10 @@ def export_functions(definitions, declaration_macros):
         if is_blacklisted(declaration):
             continue
 
-        declaration_macros.append(declaration)
+        declarations.append(declaration)
         definitions.append(definition)
 
-def export_data(definitions, declaration_macros):
+def export_data(declarations, definitions):
     data_segment = idaapi.get_segm_by_name('.data')
 
     ea = data_segment.startEA
@@ -439,21 +439,21 @@ def export_data(definitions, declaration_macros):
             continue
         elif '[' in data_type: # array -> pointer
             data_type = re.sub('\[[^\]]*\]', '* ' + data_name, data_type, count = 1)
-            declaration = '{data_type} = (decltype({data_name} + 0)) {address};\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = (decltype({data_name} + 0)) {address};\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         elif '*)(' in data_type: # function pointer -> reference to function pointer
             data_type = data_type.replace('*)', '*&' + data_name + ')',  1)
-            declaration = '{data_type} = *((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = *((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         else: # scalar value -> reference
             data_type = data_type + '& ' + data_name
-            declaration = '{data_type} = * ((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = * ((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
 
-        definition = 'extern ' + data_type + ';\n'
+        declaration = 'extern ' + data_type + ';\n'
 
         if is_blacklisted(declaration):
             continue
 
+        declarations.append(declaration)
         definitions.append(definition)
-        declaration_macros.append(declaration)
 
 def is_type_blacklisted(type_ordinal):
     local_type_name = GetLocalTypeName(type_ordinal)
