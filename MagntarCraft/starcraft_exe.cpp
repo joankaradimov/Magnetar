@@ -13233,7 +13233,7 @@ DECL_FUNC(int(*load_statlb)(), load_statlb, 0x4bed70);
 DECL_FUNC(int(*sub_4BEF20)(), sub_4BEF20, 0x4bef20);
 DECL_FUNC(int (__thiscall*sub_4BF370)(FILE *, int, int), sub_4BF370, 0x4bf370);
 DECL_FUNC(int(*LoadMap)(), LoadMap, 0x4bf520);
-DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, int a5), ReadMapData, 0x4bf5d0);
+DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_capmaign), ReadMapData, 0x4bf5d0);
 BOOL sub_4BF780(MapChunks *a1) {
     int address = 0x4bf780;
     BOOL result_;
@@ -13781,7 +13781,19 @@ signed int sub_4CC2A0(int a1, int a2, int a3, MapChunks *a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*sub_4CC350)(size_t size, char *source), sub_4CC350, 0x4cc350);
+signed int sub_4CC350(char *a1, char *a2, int a3, size_t a4) {
+    int address = 0x4cc350;
+    signed result_;
+    __asm {
+        mov eax, a1
+        mov edx, a2
+        mov edi, a3
+        mov ecx, a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*setUnitEnergyEx)(int, char), setUnitEnergyEx, 0x4cc3b0);
 DECL_FUNC(int (__thiscall*sub_4CC420)(size_t size), sub_4CC420, 0x4cc420);
 char CHK_UNIT_ApplyOtherFlags(CUnit *a1, char a2, int a3) {
@@ -13817,7 +13829,7 @@ int sub_4CC7F0(char *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4CC990)(), sub_4CC990, 0x4cc990);
-signed int sub_4CCAC0(const char *a1, MapChunks *a2) {
+signed int sub_4CCAC0(char *a1, MapChunks *a2) {
     int address = 0x4ccac0;
     signed result_;
     __asm {

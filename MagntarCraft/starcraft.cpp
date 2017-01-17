@@ -750,6 +750,55 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+signed int sub_4CCAC0_(char *a1, MapChunks *a2)
+{
+	int v3; // esi@1
+	void* v5; // esi@7
+	int v6; // edi@11
+	signed int v7; // edi@14
+	char buff[260]; // [sp+Ch] [bp-210h]@5
+	char v9[260]; // [sp+110h] [bp-10Ch]@3
+	int v10; // [sp+214h] [bp-8h]@4
+	int v11; // [sp+218h] [bp-4h]@11
+
+	v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
+	SStrLen(a1);
+	if (!v3)
+	{
+		SErrSetLastError(0x57u);
+		return 0;
+	}
+	if (!sub_4CC350(v9, a1, (int)&a2->data7, 0x104u))
+		return 0;
+	v10 = 0;
+	if (v9[0])
+		_snprintf(buff, 0x104u, "%s\\%s", v9, "staredit\\scenario.chk");
+	else
+		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+	v5 = fastFileRead(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	if (v5)
+	{
+		v6 = v10;
+		v11 = 0;
+		if (ReadMapChunks(a2, (int) v5, &v11, v10))
+		{
+			v7 = ReadChunkNodes(chk_loaders[v11].i1, v6, chk_loaders[v11].ptr1, (int) v5, a2);
+			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
+			mapHandleDestroy();
+			return v7;
+		}
+		SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
+		mapHandleDestroy();
+		return 0;
+	}
+	if (hArchive)
+	{
+		SFileCloseArchive(hArchive);
+		hArchive = 0;
+	}
+	return 0;
+}
+
 int ReadMapData_(char *source, MapChunks *a4, int a5)
 {
 	int v3; // ecx@0
@@ -792,7 +841,7 @@ int ReadMapData_(char *source, MapChunks *a4, int a5)
 	else
 	{
 		v8 = source;
-		if (!*source || !sub_4CCAC0(source, a4))
+		if (!*source || !sub_4CCAC0_(source, a4))
 			return 0;
 	}
 	v9 = 12;
