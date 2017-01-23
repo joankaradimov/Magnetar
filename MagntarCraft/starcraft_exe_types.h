@@ -95,6 +95,7 @@ enum Tech2 ;
 enum FlingyID ;
 enum UnitType ;
 struct CUnitNydus;
+struct ChunkListItem;
 enum MapData ;
 enum DamageType ;
 enum CheatFlags;
@@ -133,7 +134,7 @@ struct Font;
 struct vr4entry;
 struct type_info;
 struct CUnitResource;
-struct ChkSectionLoader;
+struct __declspec(align(2)) ChkSectionLoader;
 struct SuppliesPerRace;
 struct ScrollSpeeds;
 struct CUnitBeacon;
@@ -150,6 +151,7 @@ struct ActiveTile;
 struct dialog_edit;
 struct CUnitFighter;
 struct TechSC;
+struct ChunkNode;
 struct RTTICompleteObjectLocator;
 struct MiniTileFlagArray;
 struct point;
@@ -199,10 +201,12 @@ struct struct_5;
 struct grpFrame;
 struct UpdateFunction;
 struct MapSize;
+struct SectionData;
 struct points;
 struct CUnitHatchery;
 struct CPPEH_RECORD;
 struct baseLocation;
+struct __declspec(align(2)) ChunkData;
 struct Target_;
 struct CUnitWorker;
 struct MiniTileMaps_type;
@@ -1016,6 +1020,12 @@ struct CUnitNydus
 };
 
 typedef unsigned __int32 u32;
+
+struct ChunkListItem
+{
+  ChunkData *next;
+  ChunkData *previous;
+};
 
 typedef unsigned __int16 u16;
 
@@ -3027,10 +3037,10 @@ struct CUnitResource
   u8 resourceBelongsToAI;
 };
 
-struct ChkSectionLoader
+struct __declspec(align(2)) ChkSectionLoader
 {
   const char name[4];
-  void *y;
+  bool (__stdcall *func)(SectionData *, int, MapChunks *);
   int x;
 };
 
@@ -3155,6 +3165,12 @@ struct CUnitFighter
 struct TechSC
 {
   u8 items[24];
+};
+
+struct ChunkNode
+{
+  ChunkListItem *count;
+  ChunkListItem field2;
 };
 
 struct RTTICompleteObjectLocator
@@ -3603,6 +3619,14 @@ struct MapSize
   u16 height;
 };
 
+struct SectionData
+{
+  int field0;
+  int field1;
+  int chunk_name;
+  int size;
+};
+
 struct points
 {
   __int16 x;
@@ -3631,6 +3655,12 @@ struct baseLocation
   DWORD remainingMinerals;
   DWORD remainingGas;
   DWORD unk_10[8];
+};
+
+struct __declspec(align(2)) ChunkData
+{
+  ChunkListItem field1;
+  SectionData section_data;
 };
 
 struct Target_

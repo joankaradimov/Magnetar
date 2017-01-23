@@ -187,7 +187,13 @@ DECL_FUNC(int(*_ID_Destructor)(), _ID_Destructor, 0x4016f0);
 DECL_FUNC(int (__stdcall*vector_insert)(int, int), vector_insert, 0x4017b0);
 DECL_FUNC(int(*GameNode_Destructor)(), GameNode_Destructor, 0x401860);
 DECL_FUNC(int(*SaveGame_Destructor)(), SaveGame_Destructor, 0x401920);
-DECL_FUNC(int(*_list_unlink)(), _list_unlink, 0x401970);
+void _list_unlink(int a1) {
+    int address = 0x401970;
+    __asm {
+        mov ebx, a1
+        call address
+    }
+}
 DECL_FUNC(int(*Device_Destructor)(), Device_Destructor, 0x401a10);
 DECL_FUNC(int(*PhoneNumber_Destructor)(), PhoneNumber_Destructor, 0x401a60);
 DECL_FUNC(int(*DrawText_Destructor)(), DrawText_Destructor, 0x401b20);
@@ -512,9 +518,34 @@ DECL_FUNC(int(*sub_4049A0)(), sub_4049A0, 0x4049a0);
 DECL_FUNC(int (__stdcall*setRect16)(int), setRect16, 0x4049d0);
 DECL_FUNC(int(*BltMask_Destructor)(), BltMask_Destructor, 0x404a10);
 DECL_FUNC(int(*DlgGrp_Destructor)(), DlgGrp_Destructor, 0x404ad0);
-DECL_FUNC(int(*sub_404B20)(), sub_404B20, 0x404b20);
-DECL_FUNC(int(*ChunkNode_Destructor)(), ChunkNode_Destructor, 0x404b70);
-DECL_FUNC(int (__stdcall*sub_404BC0)(int), sub_404BC0, 0x404bc0);
+ChunkListItem *sub_404B20(ChunkNode *a1) {
+    int address = 0x404b20;
+    ChunkListItem * result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+void ChunkNode_Destructor(ChunkNode *a1) {
+    int address = 0x404b70;
+    __asm {
+        mov ebx, a1
+        call address
+    }
+}
+int sub_404BC0(int a1, ChunkNode *a2) {
+    int address = 0x404bc0;
+    int result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_404BFA)(), sub_404BFA, 0x404bfa);
 DECL_FUNC(int(*sub_404C1E)(), sub_404C1E, 0x404c1e);
 DECL_FUNC(int(*__RTC_Initialize)(), __RTC_Initialize, 0x405923);
@@ -738,11 +769,21 @@ DECL_FUNC(int(*sub_411E90)(), sub_411E90, 0x411e90);
 DECL_FUNC(int(*AES_Comp)(), AES_Comp, 0x411ec0);
 DECL_FUNC(int (__stdcall*MD5_0)(int, int), MD5_0, 0x4132b0);
 DECL_FUNC(int(*MD5_1)(), MD5_1, 0x413380);
-DECL_FUNC(int (__stdcall*CopySectionData)(int), CopySectionData, 0x413440);
+signed int CopySectionData(SectionData *a1, void *a2) {
+    int address = 0x413440;
+    signed result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_413480)(), sub_413480, 0x413480);
-DECL_FUNC(int (__stdcall*ChunkNode_Constructor)(int, int, int), ChunkNode_Constructor, 0x4134a0);
-DECL_FUNC(int (__stdcall*sub_413550)(int, int, int), sub_413550, 0x413550);
-signed int sub_4135C0(ChkSectionLoader *a1, int a2, int a3) {
+DECL_FUNC(signed int (__stdcall*ChunkNode_Constructor)(int a1, int a2, ChunkNode *a3), ChunkNode_Constructor, 0x4134a0);
+DECL_FUNC(signed int (__thiscall*sub_413550)(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *map_chunks), sub_413550, 0x413550);
+signed int sub_4135C0(ChkSectionLoader *a1, ChunkNode *a2, int a3) {
     int address = 0x4135c0;
     signed result_;
     __asm {
@@ -756,7 +797,19 @@ signed int sub_4135C0(ChkSectionLoader *a1, int a2, int a3) {
 }
 DECL_FUNC(int(*sub_413610)(), sub_413610, 0x413610);
 DECL_FUNC(int(*sub_413640)(), sub_413640, 0x413640);
-DECL_FUNC(int (__stdcall*sub_413670)(int, int), sub_413670, 0x413670);
+signed int sub_413670(int a1, ChunkNode *a2, int a3, int (__stdcall *chunk_node_constructor)(_DWORD, _DWORD, ChunkNode *)) {
+    int address = 0x413670;
+    signed result_;
+    __asm {
+        mov eax, a1
+        mov edi, a2
+        push dword ptr chunk_node_constructor
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int ReadChunkNodes(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *a4) {
     int address = 0x413710;
     signed result_;
@@ -7306,7 +7359,19 @@ signed int TTAllowed(UnitType unit_type, CUnit *a2, int player_id) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*CHK_PerformVCODcheck)(int), CHK_PerformVCODcheck, 0x46e740);
+int CHK_PerformVCODcheck(PlayerInfo *lobby_players, unsigned int a2, int a3, signed int a4) {
+    int address = 0x46e740;
+    int result_;
+    __asm {
+        mov edx, lobby_players
+        mov ecx, a2
+        mov ebx, a3
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*nullsub_29)(), nullsub_29, 0x46e900);
 DECL_FUNC(int(*nullsub_30)(), nullsub_30, 0x46e910);
 DECL_FUNC(int(*sub_46E920)(), sub_46E920, 0x46e920);
@@ -13711,7 +13776,7 @@ DECL_FUNC(int(*sub_4CAE90)(), sub_4CAE90, 0x4cae90);
 DECL_FUNC(int (__stdcall*ChkLoader_FORC)(int, int, int), ChkLoader_FORC, 0x4caee0);
 DECL_FUNC(int (__stdcall*ChkLoader_SPRP)(int, int, int), ChkLoader_SPRP, 0x4caf40);
 DECL_FUNC(int (__stdcall*ChkLoader_MASK)(int, int amount, int), ChkLoader_MASK, 0x4caf90);
-DECL_FUNC(int (__stdcall*ChkLoader_DIM)(int, int, int), ChkLoader_DIM, 0x4cb040);
+DECL_FUNC(bool (__stdcall*ChkLoader_DIM)(SectionData *, int, MapChunks *), ChkLoader_DIM, 0x4cb040);
 DECL_FUNC(int(*sub_4CB120)(), sub_4CB120, 0x4cb120);
 DECL_FUNC(int (__stdcall*sub_4CB140)(int, int), sub_4CB140, 0x4cb140);
 DECL_FUNC(int(*CHK_UNIT_StartLocationSub)(), CHK_UNIT_StartLocationSub, 0x4cb190);
@@ -13721,10 +13786,10 @@ DECL_FUNC(int (__stdcall*ChkLoader_MRGN_)(int, int, int), ChkLoader_MRGN_, 0x4cb
 DECL_FUNC(int (__stdcall*ChkLoader_MRGN)(int, int, int), ChkLoader_MRGN, 0x4cb2f0);
 DECL_FUNC(int(*sub_4CB340)(), sub_4CB340, 0x4cb340);
 DECL_FUNC(void (__thiscall*freeCHKStringHandle)(bool exit_code), freeCHKStringHandle, 0x4cb370);
-DECL_FUNC(int (__stdcall*ChkLoader_ERA)(int, int, int), ChkLoader_ERA, 0x4cb3a0);
-DECL_FUNC(int (__stdcall*ChkLoader_OWNR)(int, int, int), ChkLoader_OWNR, 0x4cb420);
-DECL_FUNC(int (__stdcall*ChkLoader_SIDE)(int, int, int), ChkLoader_SIDE, 0x4cb490);
-DECL_FUNC(int (__stdcall*ChkLoader_VER)(int, int, int), ChkLoader_VER, 0x4cb500);
+DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *, int, MapChunks *), ChkLoader_ERA, 0x4cb3a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
+DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
+DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
 DECL_FUNC(int(*sub_4CB560)(), sub_4CB560, 0x4cb560);
 DECL_FUNC(int(*sub_4CB5B0)(), sub_4CB5B0, 0x4cb5b0);
 DECL_FUNC(int(*sub_4CB650)(), sub_4CB650, 0x4cb650);
@@ -13732,7 +13797,7 @@ DECL_FUNC(int (__stdcall*ChkLoader_PTEC)(int, int, int), ChkLoader_PTEC, 0x4cb67
 DECL_FUNC(int (__stdcall*ChkLoader_PTEx)(int, int, int), ChkLoader_PTEx, 0x4cb7d0);
 DECL_FUNC(int (__stdcall*ChkLoader_UPGR)(int, int, int), ChkLoader_UPGR, 0x4cb940);
 DECL_FUNC(int (__stdcall*ChkLoader_PUPx)(int, int, int), ChkLoader_PUPx, 0x4cbac0);
-DECL_FUNC(int (__stdcall*ChkLoader_VCOD)(int, int amount, int), ChkLoader_VCOD, 0x4cbc40);
+DECL_FUNC(bool (__stdcall*ChkLoader_VCOD)(SectionData *sectionData, int sectionSize, MapChunks *map_chunks), ChkLoader_VCOD, 0x4cbc40);
 DECL_FUNC(int (__fastcall*CHK_UNIT_Addon)(int a1, CUnit *a2, int a3), CHK_UNIT_Addon, 0x4cbdc0);
 DECL_FUNC(int (__stdcall*sub_4CBE00)(char, int), sub_4CBE00, 0x4cbe00);
 DECL_FUNC(int(*unitNotNeutral)(), unitNotNeutral, 0x4cbe20);
@@ -19401,6 +19466,7 @@ void *& off_51A2FC = * ((decltype(&off_51A2FC)) 0x51a2fc);
 int& dword_51A300 = * ((decltype(&dword_51A300)) 0x51a300);
 int& dword_51A304 = * ((decltype(&dword_51A304)) 0x51a304);
 void *& off_51A308 = * ((decltype(&off_51A308)) 0x51a308);
+void *& dword_51A30C = * ((decltype(&dword_51A30C)) 0x51a30c);
 TriggerList& stru_51A310 = * ((decltype(&stru_51A310)) 0x51a310);
 int& dword_51A31C = * ((decltype(&dword_51A31C)) 0x51a31c);
 void *& off_51A320 = * ((decltype(&off_51A320)) 0x51a320);
