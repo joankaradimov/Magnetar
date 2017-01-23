@@ -3,12 +3,7 @@
 
 signed int AppAddExit_(AppExitHandle a1)
 {
-	AppExitHandle *app_exit_handles_; // edx@1
-	signed int v2; // esi@3
-	signed int v3; // eax@3
-	AppExitHandle v4; // ecx@4
-
-	app_exit_handles_ = app_exit_handles;
+	AppExitHandle* app_exit_handles_ = app_exit_handles;
 	if (!app_exit_handles)
 	{
 		app_exit_handles_ = (AppExitHandle *)SMemAlloc(
@@ -19,14 +14,14 @@ signed int AppAddExit_(AppExitHandle a1)
 		memset(app_exit_handles_, 0, 128u);
 		app_exit_handles = app_exit_handles_;
 	}
-	v2 = -1;
-	v3 = 0;
+	int v2 = -1;
+	int v3 = 0;
 	do
 	{
-		v4 = app_exit_handles_[v3];
-		if (v4 == a1)
+		AppExitHandle exit_handle = app_exit_handles_[v3];
+		if (exit_handle == a1)
 			return 0;
-		if (v2 == -1 && !v4)
+		if (v2 == -1 && !exit_handle)
 			v2 = v3;
 		++v3;
 	} while (v3 < 32);
@@ -41,12 +36,9 @@ signed int AppAddExit_(AppExitHandle a1)
 
 HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile)
 {
-	char *v4; // eax@3
-	HANDLE result; // eax@9
-
 	if (!GetModuleFileNameA(hInst, a2, 0x104u))
 		*a2 = 0;
-	v4 = strrchr(a2, '\\');
+	char* v4 = strrchr(a2, '\\');
 	if (v4)
 		*v4 = 0;
 	SStrNCat(a2, (char *)hMpq, 260);
@@ -61,7 +53,7 @@ HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile
 		}
 		SFileCloseFile(phFile);
 	}
-	result = hMpq;
+	HANDLE result = hMpq;
 	if (!hMpq)
 		LABEL_15:
 	result = 0;
@@ -752,14 +744,13 @@ void GameRun_(MenuPosition a1)
 
 signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
-	int v3; // esi@1
-	void* v5; // esi@7
-	int v6; // edi@11
-	signed int v7; // edi@14
-	char buff[260]; // [sp+Ch] [bp-210h]@5
-	char v9[260]; // [sp+110h] [bp-10Ch]@3
-	int v10; // [sp+214h] [bp-8h]@4
-	int v11; // [sp+218h] [bp-4h]@11
+	int v3;
+	void* v5;
+	signed int v7;
+	char buff[260];
+	char v9[260];
+	int v10;
+	int v11;
 
 	v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
 	SStrLen(a1);
@@ -778,11 +769,10 @@ signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 	v5 = fastFileRead(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (v5)
 	{
-		v6 = v10;
 		v11 = 0;
 		if (ReadMapChunks(a2, (int) v5, &v11, v10))
 		{
-			v7 = ReadChunkNodes(chk_loaders[v11].i1, v6, chk_loaders[v11].ptr1, (int) v5, a2);
+			v7 = ReadChunkNodes(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
 			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
@@ -801,19 +791,16 @@ signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 
 int ReadMapData_(char *source, MapChunks *a4, int a5)
 {
-	int v3; // ecx@0
 	int v5; // edi@4
 	int v6; // esi@4
 	char *v8; // esi@7
 	int v9; // ecx@11
-	int *v10; // eax@11
 	bool v11; // zf@12
 	__int16 v12; // ax@20
 	char *v13; // eax@22
 	u16 v14; // ax@23
 	int v15; // [sp+0h] [bp-4h]@1
 
-	v15 = v3;
 	CurrentMapFileName[0] = 0;
 	if (!a5)
 		CampaignIndex = MD_none;
@@ -916,22 +903,18 @@ int CreateCampaignGame_(MapData a1)
 		v4.data231 = 1;
 		v4.number_of_open_slots = 1;
 		v2 = readTemplate("Use Map Settings(1)", v5, v5);
-		if (v2
-			&& (memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values)),
-				SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0),
-				sub_4DBE50()))
+		if (v2)
 		{
-			dword_596888 = 0;
-			return CreateGame(&v4) != 0;
-		}
-		else
-		{
-			return 0;
+			memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values));
+			SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0);
+			if (sub_4DBE50())
+			{
+				dword_596888 = 0;
+				return CreateGame(&v4) != 0;
+			}
 		}
 	}
-	else {
-		return 0;
-	}
+	return 0;
 }
 
 int LoadCampaignWithCharacter_(int a1)
