@@ -723,6 +723,125 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
+{
+	HRSRC hVCOD = FindResourceA(hInst, (LPCSTR)0xCA, "VCOD");
+	if (!hVCOD)
+		return 0;
+
+	DWORD VCOD_Size = SizeofResource(hInst, hVCOD);
+	if (section_size != VCOD_Size)
+		return 0;
+
+	HGLOBAL v6 = LoadResource(hInst, hVCOD);
+	if (!v6)
+		return 0;
+
+	void *VCOD_Locked = LockResource(v6);
+	if (!VCOD_Locked)
+		return 0;
+
+	void *hCHKData = SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1171, 0);
+	if (!hCHKData)
+		return 0;
+
+	if (!CopySectionData(section_data, hCHKData))
+	{
+		SMemFree(hCHKData, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1174, 0);
+		return 0;
+	}
+	int Hash_Chk = CHK_PerformVCODcheck(LobbyPlayers, 0x1B0u, (int) hCHKData, section_size);
+	int Hash_VCOD = CHK_PerformVCODcheck(LobbyPlayers, 0x1B0u, (int) VCOD_Locked, section_size);
+
+	SMemFree(hCHKData, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1182, 0);
+	return Hash_VCOD == Hash_Chk;
+}
+
+int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
+{
+	ChunkData *v6;
+
+	int v4 = 0;
+	if (a3 <= 0)
+	{
+		return 1;
+	}
+	else
+	{
+		while (1)
+		{
+			v6 = a2->field2.previous;
+			if (v6 > NULL)
+				break;
+		LABEL_8:
+			++v4;
+			if (v4 >= a3)
+			{
+				return 1;
+			}
+		}
+		while (1)
+		{
+			if (v6->section_data.chunk_name == *(DWORD*)loader[v4].name)
+			{
+				if (loader[v4].func)
+				{
+					if (!loader[v4].func(&v6->section_data, v6->section_data.size, a4))
+						break;
+				}
+			}
+			v6 = v6->field1.previous;
+			if ((signed int)v6 <= 0)
+				goto LABEL_8;
+		}
+		return 0;
+	}
+}
+
+signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *a4)
+{
+	ChunkNode v8;
+
+	v8.field2.next = (ChunkData *)&v8.field2.next;
+	v8.count = 0;
+	v8.field2.previous = (ChunkData *)~(unsigned int)&v8.field2;
+	sub_413670(a3, &v8, a2, ChunkNode_Constructor);
+	if (sub_4135C0(chk_section_loader, &v8, a1))
+	{
+		if (sub_413550_(chk_section_loader, &v8, a1, a4))
+		{
+			ChunkNode_Destructor(&v8);
+			sub_404B20(&v8);
+			return 1;
+		}
+		else
+		{
+			ChunkNode_Destructor(&v8);
+			sub_404B20(&v8);
+			return 0;
+		}
+	}
+	else
+	{
+		ChunkNode_Destructor(&v8);
+		_list_unlink((int)&v8);
+		if (v8.field2.next)
+		{
+			if ((signed int)v8.field2.previous <= 0)
+			{
+				*(_DWORD *)~(unsigned int)v8.field2.previous = (DWORD) v8.field2.next;
+				v8.field2.next->field1.previous = v8.field2.previous;
+				return 0;
+			}
+			*(ChunkData **)((char *)&v8.field2.previous->field1.next
+				+ (int)&v8.field2
+				- (int)v8.field2.next->field1.previous) = v8.field2.next;
+			v8.field2.next->field1.previous = v8.field2.previous;
+		}
+		return 0;
+	}
+}
+
 signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
 	int v3;
@@ -753,7 +872,7 @@ signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 		v11 = 0;
 		if (ReadMapChunks(a2, (int) v5, &v11, v10))
 		{
-			v7 = ReadChunkNodes(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
+			v7 = ReadChunkNodes_(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
 			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
@@ -802,7 +921,7 @@ int ReadMapData_(char *source, MapChunks *a4, int a5)
 		v6 = (int)dword_6D0F24;
 		v15 = MD_none;
 		if (!ReadMapChunks(a4, (int)dword_6D0F24, &v15, dword_6D0F20)
-			|| !ReadChunkNodes(chk_loaders[v15].i1, v5, chk_loaders[v15].ptr1, v6, a4))
+			|| !ReadChunkNodes_(chk_loaders[v15].i1, v5, chk_loaders[v15].ptr1, v6, a4))
 			return 0;
 		v8 = source;
 	}
@@ -947,7 +1066,7 @@ int LoadCampaignWithCharacter_(int a1)
 		}
 		else
 		{
-			return CreateCampaignGame((MapData)result[1]);
+			return CreateCampaignGame_((MapData)result[1]);
 		}
 	}
 	else {
@@ -1260,7 +1379,7 @@ int SwitchMenu_()
 		if (dword_51C4BC && !dword_6D11E4)
 			goto LABEL_38;
 		LOBYTE(v2) = dword_51C4BC != 0;
-		if (!loadCampaignBIN(v2) || !CreateCampaignGame((MapData)NextCampaign))
+		if (!loadCampaignBIN(v2) || !CreateCampaignGame_((MapData)NextCampaign))
 			goto LABEL_38;
 		if (dword_51C608)
 		{
