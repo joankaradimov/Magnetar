@@ -1,3 +1,4 @@
+#include <ddraw.h>
 #include "starcraft.h"
 
 
@@ -477,11 +478,6 @@ void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_e
 
 BOOL BWFXN_DDrawInitialize_()
 {
-	unsigned int v1; // eax@3
-	unsigned int v3; // eax@5
-	signed int v4; // ecx@6
-	unsigned int v5; // eax@8
-	unsigned int v6; // eax@12
 	int v7; // edi@16
 	int v8; // eax@16
 	unsigned int v9; // ebx@16
@@ -493,30 +489,15 @@ BOOL BWFXN_DDrawInitialize_()
 	DDSURFACEDESC surface_desc; // [sp+40Ch] [bp-6Ch]@20
 
 	ShowWindow(hWndParent, 1);
-	if (!ddraw_dll)
-	{
-		ddraw_dll = LoadLibraryA("ddraw.dll");
-		if (!ddraw_dll)
-		{
-			v1 = GetLastError();
-			ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "LoadLibrary", v1, 0x65u, 113);
-		}
-	}
-	int(__stdcall *DirectDrawCreate)(signed int, IDirectDraw **, _DWORD) = (decltype(DirectDrawCreate))GetProcAddress(ddraw_dll, "DirectDrawCreate");
-	if (!DirectDrawCreate)
-	{
-		v3 = GetLastError();
-		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "GetProcAddress", v3, 0x66u, 118);
-	}
-	v4 = 0;
+	GUID* v4 = 0;
 	if (byte_6D5DFC)
-		v4 = 2;
-	v5 = DirectDrawCreate(v4, &DDInterface, 0);
+		v4 = (GUID *) 2;
+	HRESULT v5 = DirectDrawCreate(v4, &DDInterface, 0);
 	if (v5 == 0x887600DE)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", 0x887600DE, 0x6Eu, 124);
 	if (v5)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", v5, 0x66u, 125);
-	v6 = DDInterface->SetCooperativeLevel(hWndParent, 16 | DSSCL_PRIORITY | DSSCL_NORMAL);
+	HRESULT v6 = DDInterface->SetCooperativeLevel(hWndParent, 16 | DSSCL_PRIORITY | DSSCL_NORMAL);
 	if (v6 != 0x88760245 && v6)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetCooperativeLevel", v6, 0x66u, 148);
 #ifndef BYPASS_DDRAW_STUFF
