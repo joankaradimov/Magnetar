@@ -757,6 +757,8 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
+PatchAddress ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
+
 int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
 {
 	ChunkData *v6;
