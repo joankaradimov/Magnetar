@@ -1,6 +1,6 @@
 #include <ddraw.h>
 #include "starcraft.h"
-
+#include "AddressPatch.h"
 
 signed int AppAddExit_(AppExitHandle a1)
 {
