@@ -447,21 +447,17 @@ char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 
 void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_error, WORD resource, int source_line)
 {
-	char *v5; // esi@1
-	char *v6; // edi@1
-	char *v7; // eax@1
-	char *v8; // eax@5
-	char dwInitParam[512]; // [sp+8h] [bp-300h]@5
-	CHAR Buffer[256]; // [sp+208h] [bp-100h]@5
+	char dwInitParam[512];
+	CHAR Buffer[256];
 
-	v5 = source_file;
-	v6 = function_name;
-	v7 = strrchr(source_file, '\\');
+	char* v5 = source_file;
+	char* v6 = function_name;
+	char* v7 = strrchr(source_file, '\\');
 	if (v7)
 		v5 = v7 + 1;
 	if (!v6)
 		v6 = "";
-	v8 = GetErrorString_(Buffer, sizeof(Buffer), last_error);
+	char* v8 = GetErrorString_(Buffer, sizeof(Buffer), last_error);
 	_snprintf(dwInitParam, 512u, "%s\n%s line %d\n%s", v8, v5, source_line, v6);
 	SErrSuppressErrors(1);
 	SNetLeaveGame(3);
