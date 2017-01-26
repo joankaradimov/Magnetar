@@ -755,6 +755,69 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 
 PatchAddress ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
 
+bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
+{
+	if ((unsigned)a2 <= 0x10000 && (unsigned int)((char *)a1->field1 + a1->size) <= a1->field0)
+	{
+		memcpy(MapTileArray, a1->field1, a1->size);
+		sub_4BCEA0();
+
+		ActiveTile *v7 = &ActiveTileArray[map_size.width * (map_size.height - 2)];
+		for (int i = 0; i <= 2; ++i)
+		{
+			for (int j = 0; j <= 5; ++j)
+			{
+				*(_DWORD *)v7 &= ~0x20410000u;
+				++v7;
+			}
+			v7 = v7 + map_size.width - 5;
+		}
+
+		ActiveTile *v11 = &ActiveTileArray[map_size.width * (map_size.height - 2)];
+		for (int i = 0; i <= 2; ++i)
+		{
+			for (int j = 0; j <= 5; ++j)
+			{
+				*(_DWORD *)v11 |= 0x800000u;
+				++v11;
+			}
+			v11 = v11 + map_size.width - 5;
+		}
+
+		ActiveTile *v15 = ActiveTileArray + map_size.width * (map_size.height - 1) - 5;
+		for (int i = 0; i <= 2; ++i)
+		{
+			for (int j = 0; j <= 5; ++j)
+			{
+				*(_DWORD *)v15 &= ~0x20410000u;
+				++v15;
+			}
+			v15 = (v15 + map_size.width - 5);
+		}
+
+		ActiveTile *v19 = ActiveTileArray + map_size.width * (map_size.height - 1) - 5;
+		for (int i = 0; i <= 2; ++i)
+		{
+			for (int j = 0; j <= 5; ++j)
+			{
+				*(_DWORD *)v19 |= 0x800000u;
+				++v19;
+			}
+			v19 = v19 + map_size.width - 5;
+		}
+
+		SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
+		AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
+		return SAI_PathCreate(ActiveTileArray) != 0;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+PatchAddress ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
+
 int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
 {
 	ChunkData *v6;
