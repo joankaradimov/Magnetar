@@ -1466,10 +1466,10 @@ LABEL_28:
 			loadMenu_gluJoin();
 			break;
 		case GLUE_CREATE:
-			loadMenu_gluCustm(0);
+			loadMenu_gluCustm_(0);
 			break;
 		case GLUE_CREATE_MULTI:
-			loadMenu_gluCustm(1);
+			loadMenu_gluCustm_(1);
 			break;
 		case GLUE_CHAT:
 			loadMenu_gluChat();
