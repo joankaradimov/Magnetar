@@ -5644,7 +5644,15 @@ int isMorphing(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_45CD50)(int, int, int, int, int), sub_45CD50, 0x45cd50);
-DECL_FUNC(int (__stdcall*updateNewUnitVision)(int, int), updateNewUnitVision, 0x45ce90);
+void updateNewUnitVision(UnitType a0, int pos_x, int pos_y) {
+    int address = 0x45ce90;
+    __asm {
+        mov cx, a0
+        push dword ptr pos_y
+        push dword ptr pos_x
+        call address
+    }
+}
 char orders_DroneStartBuild(CUnit *a1) {
     int address = 0x45cf80;
     char result_;
@@ -6822,17 +6830,14 @@ void *setUnitSorting_X(void *result, UnitFinderData *a2, int a3) {
     }
     return result_;
 }
-int updateBuildingLandFog2(CUnit *a1, __int16 a2, __int16 a3) {
+void updateBuildingLandFog2(CUnit *unit, __int16 x, __int16 y) {
     int address = 0x469ec0;
-    int result_;
     __asm {
-        mov eax, a1
-        push dword ptr a3
-        push dword ptr a2
+        mov eax, unit
+        push dword ptr y
+        push dword ptr x
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_469F40(CUnit *a1) {
     int address = 0x469f40;
@@ -6844,19 +6849,22 @@ int sub_469F40(CUnit *a1) {
     }
     return result_;
 }
-char *updateBuildingLandFog(CUnit *a1, __int16 a2, __int16 a3) {
+void updateBuildingLandFog(CUnit *a1, __int16 x, __int16 y) {
     int address = 0x469f60;
-    char * result_;
     __asm {
         mov eax, a1
-        push dword ptr a3
-        push dword ptr a2
+        push dword ptr y
+        push dword ptr x
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(int(*sub_469FE0)(), sub_469FE0, 0x469fe0);
+void sub_469FE0(CUnit *a1) {
+    int address = 0x469fe0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 int updateUnitSortingInfo(int result, CUnit *a2, int a3) {
     int address = 0x46a000;
     int result_;
@@ -6889,8 +6897,13 @@ unsigned int updateUnitOrderFinder(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*updateUnitSorting)(), updateUnitSorting, 0x46a560);
-DECL_FUNC(int(*sub_46A5A0)(), sub_46A5A0, 0x46a5a0);
+void updateUnitSorting(CUnit *a1) {
+    int address = 0x46a560;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_46A5E0)(), sub_46A5E0, 0x46a5e0);
 DECL_FUNC(int(*sub_46A5F0)(), sub_46A5F0, 0x46a5f0);
 DECL_FUNC(int(*sub_46A600)(), sub_46A600, 0x46a600);
@@ -7511,8 +7524,28 @@ DECL_FUNC(int(*sub_472D50)(), sub_472D50, 0x472d50);
 DECL_FUNC(int(*killTimerFunc)(), killTimerFunc, 0x472d60);
 DECL_FUNC(void (__stdcall*TimerFunc)(HWND, UINT, UINT, DWORD), TimerFunc, 0x472db0);
 DECL_FUNC(int(*SetTimerFunc)(), SetTimerFunc, 0x472e00);
-DECL_FUNC(int (__stdcall*SetFogMask)(int, int), SetFogMask, 0x472e50);
-DECL_FUNC(int (__stdcall*AddFogMask)(int, int), AddFogMask, 0x472eb0);
+void SetFogMask(int a1, int a2, int a3, int x, int y) {
+    int address = 0x472e50;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        mov edi, a3
+        push dword ptr y
+        push dword ptr x
+        call address
+    }
+}
+void AddFogMask(int a1, int a2, int some_flags_maybe, int x, int y) {
+    int address = 0x472eb0;
+    __asm {
+        mov edx, a1
+        mov edi, a2
+        mov esi, some_flags_maybe
+        push dword ptr y
+        push dword ptr x
+        call address
+    }
+}
 DECL_FUNC(int(*sub_472F00)(), sub_472F00, 0x472f00);
 DECL_FUNC(int(*sub_472F20)(), sub_472F20, 0x472f20);
 DECL_FUNC(int (__stdcall*sub_472F40)(int, int), sub_472F40, 0x472f40);
@@ -9036,12 +9069,21 @@ DECL_FUNC(int(*SAI_PathCreate_Sub3_4)(), SAI_PathCreate_Sub3_4, 0x483260);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_0)(int, int, __int16), SAI_PathCreate_Sub3_0_0, 0x483960);
 DECL_FUNC(int(*SAI_PathCreate_Sub3_1)(), SAI_PathCreate_Sub3_1, 0x483b50);
 DECL_FUNC(int(*sub_483BD0)(), sub_483BD0, 0x483bd0);
-DECL_FUNC(int(*CreateUIUnreachableRegion)(), CreateUIUnreachableRegion, 0x483c00);
-DECL_FUNC(int(*SAI_PathCreate_Sub1)(), SAI_PathCreate_Sub1, 0x483d20);
+DECL_FUNC(__int16 (__thiscall*CreateUIUnreachableRegion)(_DWORD this_), CreateUIUnreachableRegion, 0x483c00);
+int SAI_PathCreate_Sub1(ActiveTile *a1) {
+    int address = 0x483d20;
+    int result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*freeSaiPaths)(), freeSaiPaths, 0x483dd0);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0)(int, DWORD dwProcessId), SAI_PathCreate_Sub3_0, 0x483e30);
 DECL_FUNC(int(*SAI_PathCreate_Sub3)(), SAI_PathCreate_Sub3, 0x484210);
-DECL_FUNC(int (__stdcall*SAI_PathCreate)(int), SAI_PathCreate, 0x484290);
+DECL_FUNC(int (__stdcall*SAI_PathCreate)(ActiveTile *a1), SAI_PathCreate, 0x484290);
 DECL_FUNC(void (__thiscall*nullsub_3)(dlgEvent *), nullsub_3, 0x484350);
 DECL_FUNC(int(*saveScreenLocation)(), saveScreenLocation, 0x484360);
 DECL_FUNC(void (__thiscall*input_Game_LeftMouseBtnDwn)(dlgEvent *), input_Game_LeftMouseBtnDwn, 0x484380);
@@ -11610,7 +11652,7 @@ CUnit *CreateUnit(UnitType unit_type, int position_x, int position_y, int player
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*AI_CreateUnit)(int, int a4), AI_CreateUnit, 0x4a0ad0);
+DECL_FUNC(int (__stdcall*AI_CreateUnit)(UnitType a0, int a4), AI_CreateUnit, 0x4a0ad0);
 DECL_FUNC(int(*sub_4A0E10)(), sub_4A0E10, 0x4a0e10);
 DECL_FUNC(int (__stdcall*AI_Alliance)(char), AI_Alliance, 0x4a0e20);
 DECL_FUNC(int(*sub_4A0EB0)(), sub_4A0EB0, 0x4a0eb0);

@@ -3622,7 +3622,7 @@ struct MapSize
 struct SectionData
 {
   int field0;
-  int field1;
+  TileID *field1;
   int chunk_name;
   int size;
 };
