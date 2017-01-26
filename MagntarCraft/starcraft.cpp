@@ -1237,7 +1237,7 @@ int loadMenu_gluCustm_(int is_multiplayer)
 		v4 = 0;
 	}
 	dword_6D5A70 = v4;
-	dword_59BA60 = (void *)LoadGraphic("Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
+	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
 	v5 = gluLoadBINDlg(dword_6D5A70, gluCustm_Interact);
 	if (v5 != -3)

@@ -1004,9 +1004,9 @@ char scrollerLBtnDown(dialog *a1, dlgEvent *a2) {
 DECL_FUNC(bool (__fastcall*genericScrollerInteract)(dialog *dlg, struct dlgEvent *evt), genericScrollerInteract, 0x415af0);
 DECL_FUNC(int(*sub_415C70)(), sub_415C70, 0x415c70);
 DECL_FUNC(int (__stdcall*sub_415CA0)(int, int), sub_415CA0, 0x415ca0);
-int loadTBL(int a1, int a2, char *a3, char *a4, char **a5, FastFileRead a6) {
+void *loadTBL(int a1, int a2, char *a3, char *a4, char **a5, FastFileRead a6) {
     int address = 0x415cc0;
-    int result_;
+    void * result_;
     __asm {
         mov eax, a1
         mov edx, a2
@@ -13773,8 +13773,8 @@ DECL_FUNC(int (__stdcall*ChkLoader_UPGx)(int, int, int), ChkLoader_UPGx, 0x4ca9f
 DECL_FUNC(int (__stdcall*ChkLoader_UNIS)(int, int, int), ChkLoader_UNIS, 0x4cab10);
 DECL_FUNC(int (__stdcall*ChkLoader_UNIx)(int, int, int), ChkLoader_UNIx, 0x4cacd0);
 DECL_FUNC(int(*sub_4CAE90)(), sub_4CAE90, 0x4cae90);
-DECL_FUNC(int (__stdcall*ChkLoader_FORC)(int, int, int), ChkLoader_FORC, 0x4caee0);
-DECL_FUNC(int (__stdcall*ChkLoader_SPRP)(int, int, int), ChkLoader_SPRP, 0x4caf40);
+DECL_FUNC(bool (__stdcall*ChkLoader_FORC)(SectionData *, int, MapChunks *), ChkLoader_FORC, 0x4caee0);
+DECL_FUNC(bool (__stdcall*ChkLoader_SPRP)(SectionData *, int, MapChunks *), ChkLoader_SPRP, 0x4caf40);
 DECL_FUNC(int (__stdcall*ChkLoader_MASK)(int, int amount, int), ChkLoader_MASK, 0x4caf90);
 DECL_FUNC(bool (__stdcall*ChkLoader_DIM)(SectionData *, int, MapChunks *), ChkLoader_DIM, 0x4cb040);
 DECL_FUNC(int(*sub_4CB120)(), sub_4CB120, 0x4cb120);
@@ -13832,7 +13832,7 @@ signed int ReadMapChunks(MapChunks *a1, int a2, int *out_version_loader_index, i
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4CC1B0)(int), sub_4CC1B0, 0x4cc1b0);
-DECL_FUNC(int (__stdcall*ChkLoader_MBRF)(int, int amount, int), ChkLoader_MBRF, 0x4cc1f0);
+DECL_FUNC(bool (__stdcall*ChkLoader_MBRF)(SectionData *, int, MapChunks *), ChkLoader_MBRF, 0x4cc1f0);
 signed int sub_4CC2A0(int a1, int a2, int a3, MapChunks *a4) {
     int address = 0x4cc2a0;
     signed result_;
@@ -13882,7 +13882,7 @@ void sub_4CC610(CUnit *a1, char a2, int a3) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*ChkLoader_STR)(int, int amount, int), ChkLoader_STR, 0x4cc650);
+DECL_FUNC(bool (__stdcall*ChkLoader_STR)(SectionData *, int, MapChunks *), ChkLoader_STR, 0x4cc650);
 int sub_4CC7F0(char *a1) {
     int address = 0x4cc7f0;
     int result_;
@@ -13933,7 +13933,7 @@ CUnit *CHK_UNIT_ApplyBurrowFlag(CUnit *result, char a2, CUnit *a3) {
 DECL_FUNC(CUnit *(__stdcall*sub_4CCF90)(_DWORD a1), sub_4CCF90, 0x4ccf90);
 DECL_FUNC(int (__stdcall*sub_4CD070)(char, int), sub_4CD070, 0x4cd070);
 DECL_FUNC(int(*sub_4CD090)(), sub_4CD090, 0x4cd090);
-DECL_FUNC(int (__stdcall*ChkLoader_MTXM)(int, int, int), ChkLoader_MTXM, 0x4cd0b0);
+DECL_FUNC(bool (__stdcall*ChkLoader_MTXM)(SectionData *, int, MapChunks *), ChkLoader_MTXM, 0x4cd0b0);
 char setHangerCount(CUnit *a1, CUnit *a2, unsigned __int8 a3) {
     int address = 0x4cd260;
     char result_;
@@ -13970,7 +13970,7 @@ char editUnitFlags(CUnit *a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*ChkLoader_THG2)(int, int amount, int), ChkLoader_THG2, 0x4cd600);
+DECL_FUNC(bool (__stdcall*ChkLoader_THG2)(SectionData *, int, MapChunks *), ChkLoader_THG2, 0x4cd600);
 DECL_FUNC(int(*sub_4CD740)(), sub_4CD740, 0x4cd740);
 DECL_FUNC(int(*sub_4CD770)(), sub_4CD770, 0x4cd770);
 DECL_FUNC(int (__stdcall*ChkLoader_UNIT)(int, int amount, int), ChkLoader_UNIT, 0x4cd7a0);
@@ -14191,7 +14191,7 @@ void FileFatal(void *this_, int a2) {
 DECL_FUNC(int(*checkLastFileError)(), checkLastFileError, 0x4d28d0);
 DECL_FUNC(int (__stdcall*waitForImageLoadObjects)(int, int, int), waitForImageLoadObjects, 0x4d29d0);
 DECL_FUNC(int (__fastcall*_ReadFile)(void *buffer, DWORD nNumberOfBytesToRead), _ReadFile, 0x4d2aa0);
-DECL_FUNC(int (__stdcall*LoadGraphic)(char *logfilename, int logline), LoadGraphic, 0x4d2b30);
+DECL_FUNC(int (__fastcall*LoadGraphic)(char *grp_path, int unused_zero, char *logfilename, int logline), LoadGraphic, 0x4d2b30);
 DECL_FUNC(int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline), sub_4D2BF0, 0x4d2bf0);
 DECL_FUNC(int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline), sub_4D2C70, 0x4d2c70);
 void *fastFileRead(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline) {
@@ -18592,8 +18592,8 @@ char* aRezGateways_tx = (decltype(aRezGateways_tx + 0)) 0x504d74;
 char* aStarcraftSw_24 = (decltype(aStarcraftSw_24 + 0)) 0x504d88;
 char* aOverrideBattle = (decltype(aOverrideBattle + 0)) 0x504da8;
 char* aConfiguration = (decltype(aConfiguration + 0)) 0x504dc8;
-char* aBattle_netGate = (decltype(aBattle_netGate + 0)) 0x504dd8;
-char* aStarcraftSw_23 = (decltype(aStarcraftSw_23 + 0)) 0x504dec;
+const char* aBattle_netGate = (decltype(aBattle_netGate + 0)) 0x504dd8;
+const char* aStarcraftSw_23 = (decltype(aStarcraftSw_23 + 0)) 0x504dec;
 __int16& word_504E0C = * ((decltype(&word_504E0C)) 0x504e0c);
 char& byte_504E0E = * ((decltype(&byte_504E0E)) 0x504e0e);
 char* aGlueChatroomIc = (decltype(aGlueChatroomIc + 0)) 0x504e10;
@@ -19226,7 +19226,7 @@ char ** off_50E040 = (decltype(off_50E040 + 0)) 0x50e040;
 int& dword_50E058 = * ((decltype(&dword_50E058)) 0x50e058);
 int& dword_50E05C = * ((decltype(&dword_50E05C)) 0x50e05c);
 int& dword_50E064 = * ((decltype(&dword_50E064)) 0x50e064);
-char* aGluePalmm = (decltype(aGluePalmm + 0)) 0x50e06c;
+const char* aGluePalmm = (decltype(aGluePalmm + 0)) 0x50e06c;
 int* dword_50E170 = (decltype(dword_50E170 + 0)) 0x50e170;
 char& byte_50E174 = * ((decltype(&byte_50E174)) 0x50e174);
 void *& off_50E176 = * ((decltype(&off_50E176)) 0x50e176);
