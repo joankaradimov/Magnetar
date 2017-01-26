@@ -14,6 +14,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Magnetorm", "Magnetorm\Magn
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagntarCraft", "MagntarCraft\MagntarCraft.vcxproj", "{3DCEBAF3-26CC-4662-AA00-21CB8C44B984}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "idb-export", "idb-export", "{7B0280A4-5CAA-41A1-B214-B2D83D65ED22}"
+	ProjectSection(SolutionItems) = preProject
+		idb-export\idb-export.py = idb-export\idb-export.py
+		idb-export\README.md = idb-export\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
