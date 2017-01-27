@@ -13268,7 +13268,13 @@ void playsound_init_UI(int a1) {
         call address
     }
 }
-DECL_FUNC(int(*sub_4BCD70)(), sub_4BCD70, 0x4bcd70);
+void sub_4BCD70(int *a1) {
+    int address = 0x4bcd70;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*blitTileCacheOnRefresh)(), blitTileCacheOnRefresh, 0x4bcdc0);
 DECL_FUNC(int(*sub_4BCEA0)(), sub_4BCEA0, 0x4bcea0);
 DECL_FUNC(int(*sub_4BCF50)(), sub_4BCF50, 0x4bcf50);
@@ -13298,8 +13304,8 @@ DECL_FUNC(int(*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
 DECL_FUNC(int (__stdcall*sub_4BDB30)(int), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(int(*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
 DECL_FUNC(int(*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
-DECL_FUNC(int (__stdcall*sub_4BDDD0)(int), sub_4BDDD0, 0x4bddd0);
-DECL_FUNC(int (__stdcall*loadColorShiftTilesetImages)(int), loadColorShiftTilesetImages, 0x4bde60);
+DECL_FUNC(void (__stdcall*sub_4BDDD0)(char *a1), sub_4BDDD0, 0x4bddd0);
+DECL_FUNC(void (__stdcall*loadColorShiftTilesetImages)(char *a1), loadColorShiftTilesetImages, 0x4bde60);
 DECL_FUNC(int(*sub_4BDF70)(), sub_4BDF70, 0x4bdf70);
 DECL_FUNC(int(*sub_4BDF80)(), sub_4BDF80, 0x4bdf80);
 DECL_FUNC(void (__stdcall*cursorUpdateProc)(Bitmap *, bounds *), cursorUpdateProc, 0x4bdfa0);
@@ -13873,6 +13879,19 @@ signed int ReadMapChunks(MapChunks *a1, int a2, int *out_version_loader_index, i
     }
     return result_;
 }
+BOOL LoadFileArchiveToSBigBuf(char *a1, int *a2, int a3, HANDLE *a4) {
+    int address = 0x4cc110;
+    BOOL result_;
+    __asm {
+        mov esi, a1
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4CC1B0)(int), sub_4CC1B0, 0x4cc1b0);
 DECL_FUNC(bool (__stdcall*ChkLoader_MBRF)(SectionData *, int, MapChunks *), ChkLoader_MBRF, 0x4cc1f0);
 signed int sub_4CC2A0(int a1, int a2, int a3, MapChunks *a4) {
@@ -14222,7 +14241,7 @@ DECL_FUNC(int(*sub_4D2760)(), sub_4D2760, 0x4d2760);
 DECL_FUNC(int (__fastcall*sub_4D2770)(int height, int width, int size, void *buffer, int buffersize), sub_4D2770, 0x4d2770);
 DECL_FUNC(void (__fastcall*AllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line), AllocBackgroundImage, 0x4d27a0);
 DECL_FUNC(int (__fastcall*sub_4D2840)(DWORD dwSearchScope, HANDLE hMpq, int), sub_4D2840, 0x4d2840);
-void FileFatal(void *this_, int a2) {
+void FileFatal(HANDLE this_, int a2) {
     int address = 0x4d2880;
     __asm {
         mov ecx, this_
@@ -18148,7 +18167,7 @@ char* aJungle = (decltype(aJungle + 0)) 0x502c34;
 char* aAshworld = (decltype(aAshworld + 0)) 0x502c3c;
 char* aInstall = (decltype(aInstall + 0)) 0x502c48;
 char* aPlatform = (decltype(aPlatform + 0)) 0x502c50;
-char* aBadlands = (decltype(aBadlands + 0)) 0x502c5c;
+const char* aBadlands = (decltype(aBadlands + 0)) 0x502c5c;
 char* aArrSfxdata_tbl = (decltype(aArrSfxdata_tbl + 0)) 0x502c68;
 char* aArrSfxdata_dat = (decltype(aArrSfxdata_dat + 0)) 0x502c78;
 char* aSoundMemoryCac = (decltype(aSoundMemoryCac + 0)) 0x502c88;
@@ -19868,6 +19887,7 @@ CImage* stru_5244B8 = (decltype(stru_5244B8 + 0)) 0x5244b8;
 CImage *& dword_5254B8 = * ((decltype(&dword_5254B8)) 0x5254b8);
 CImage *& dword_52E4C0 = * ((decltype(&dword_52E4C0)) 0x52e4c0);
 CImage *& dword_52E4C4 = * ((decltype(&dword_52E4C4)) 0x52e4c4);
+char* tileset_shift = (decltype(tileset_shift + 0)) 0x52e4c8;
 LO_Overlays& ShieldOverlays = * ((decltype(&ShieldOverlays)) 0x52e5c8);
 CImage *& dword_52F564 = * ((decltype(&dword_52F564)) 0x52f564);
 CImage* stru_52F568 = (decltype(stru_52F568 + 0)) 0x52f568;

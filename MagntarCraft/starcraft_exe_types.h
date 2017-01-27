@@ -111,6 +111,7 @@ enum StatusFlags;
 enum SfxData;
 enum WeaponBehavior ;
 struct CUnitGhost;
+struct __declspec(align(2)) struct_a1;
 enum MapData4 ;
 struct __declspec(align(2)) AudioVideoInitializationError;
 struct _SCOPETABLE_ENTRY;
@@ -176,7 +177,6 @@ struct RTCI;
 struct Chat_TextLine;
 struct bounds;
 struct Bitmap;
-struct struct_a1;
 struct RTTIClassHierarchyDescriptor;
 struct Counts;
 struct layer;
@@ -2686,6 +2686,14 @@ struct CUnitGhost
   CSprite *nukeDot;
 };
 
+struct __declspec(align(2)) struct_a1
+{
+  int (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
+  int (__stdcall *isCreepCovered)(_DWORD, _DWORD);
+  int (__stdcall *isTileVisible)(int, int);
+  int (__stdcall *pfuncC)(_DWORD);
+};
+
 enum MapData4 : __int32
 {
   MD4_none = 0x0,
@@ -3400,14 +3408,6 @@ struct Bitmap
   u16 wid;
   u16 ht;
   u8 *data;
-};
-
-struct struct_a1
-{
-  int (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
-  int (__stdcall *pfunc4)(_DWORD, _DWORD);
-  _DWORD dword8;
-  int (__stdcall *pfuncC)(_DWORD);
 };
 
 struct RTTIClassHierarchyDescriptor
