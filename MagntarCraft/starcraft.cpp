@@ -552,7 +552,7 @@ void __cdecl audioVideoInit_()
 	BWFXN_DDrawInitialize_();
 	dword_6D5DF8 = 1;
 	AppAddExit_(vidinimoDestroy);
-	memcpy(&stru_6CEB40, &palette, sizeof(stru_6CEB40));
+	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget();
 	LoadGameData(sfxdataDat, "arr\\sfxdata.dat");
 	dword_5999B0 = loadTBL_(
@@ -965,7 +965,7 @@ int ReadMapData_(char *source, MapChunks *a4, int a5)
 	CurrentMapFileName[0] = 0;
 	if (!a5)
 		CampaignIndex = MD_none;
-	memset(LobbyPlayers, 0, sizeof(LobbyPlayers));
+	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
 	dword_59BDA8 = 0;
 	dword_59BDAC = 0;
 	a4->data0 = 0;
@@ -1477,9 +1477,9 @@ LABEL_28:
 	dword_50E064 = -1;
 	if (!byte_51A0E9)
 	{
-		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		memset(stru_6CEB40, 0, sizeof(PALETTEENTRY[256]));
 		byte_51A0E9 = 1;
-		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
 		gluDlgFadePalette(3u);
 		BWFXN_RedrawTarget();
 	}
@@ -1487,7 +1487,7 @@ LABEL_28:
 	dword_6D5E38 = (int(__thiscall *)(_DWORD))jmpNoMenu;
 	if (stru_51C000[0].data)
 		SMemFree(stru_51C000[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
-	memset(stru_51C000, 0, sizeof(stru_51C000));
+	memset(stru_51C000, 0, sizeof(Bitmap[129]));
 	while (gwGameMode == GAME_GLUES)
 	{
 		switch (glGluesMode)
@@ -1560,15 +1560,15 @@ LABEL_28:
 	}
 	if (stru_51C000[0].data)
 		SMemFree(stru_51C000[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
-	memset(stru_51C000, 0, sizeof(stru_51C000));
+	memset(stru_51C000, 0, sizeof(Bitmap[129]));
 	stopSounds();
 	stopMusic();
 	dword_6D5E20 = &GameScreenBuffer;
 	if (!byte_51A0E9)
 	{
-		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		memset(stru_6CEB40, 0, sizeof(PALETTEENTRY[256]));
 		byte_51A0E9 = 1;
-		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
 		gluDlgFadePalette(3u);
 		BWFXN_RedrawTarget();
 	}
