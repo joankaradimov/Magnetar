@@ -807,6 +807,107 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 
 PatchAddress ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
 
+void initMapData_()
+{
+	char filename[260];
+	struct_a1 a1;
+	int read;
+	int bytes_read;
+
+	word_6556FC = 0;
+	byte_66FF5C = 0;
+	MapTileArray = (TileID *)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
+	CellMap = (int *)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
+	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
+	ActiveTileArray = (ActiveTile *)SMemAlloc(0x40000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
+	memset(ActiveTileArray, 0, 0x40000u);
+	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".wpe");
+	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".vf4");
+	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	word_5998E0 = (unsigned int)bytes_read >> 5;
+	sub_4BCF50();
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".cv5");
+	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	TileSetMapSize = bytes_read / 52u;
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".grp");
+	a1.pfunc0 = (int(__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))sub_47E2D0;
+	a1.isCreepCovered = isCreepCovered;
+	a1.isTileVisible = isTileVisible;
+	a1.pfuncC = 0;
+	InitTerrainGraphicsAndCreep(&a1, MapTileArray, map_size.width, map_size.height, filename);
+	ZergCreepArray = location;
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[CurrentTileSet], ".vx4");
+	VX4Data = (vx4entry *)fastFileRead_(&read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[CurrentTileSet], ".vr4");
+	HANDLE v4;
+	if (!SFileOpenFileEx(0, filename, 0, &v4))
+	{
+		int v11 = SErrGetLastError();
+		SysWarn_FileNotFound(filename, v11);
+		throw "Could not load tileset"; // TODO: better error reporting
+	}
+	LONG v5 = SFileGetFileSize(v4, 0);
+	if (v5 == -1)
+	{
+		int v7 = GetLastError();
+		FileFatal(v4, v7);
+	}
+	else
+	{
+		int v0 = 0;
+		if (!v5)
+		{
+			v0 = 24;
+			SysWarn_FileNotFound(filename, 24);
+		}
+		vr4entry *v8 = (vr4entry *)SMemAlloc(v5, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, v0);
+		HANDLE v9 = v4;
+		if (SFileReadFile(v4, v8, v5, &read, 0))
+		{
+			if (read == v5)
+			{
+				SFileCloseFile(v4);
+				VR4Data = v8;
+				if (!dword_5993AC)
+				{
+					memcpy(stru_6CEB40, palette, sizeof(PALETTEENTRY[256]));
+					sub_4BCD70(palette);
+					sub_4BDD60();
+				}
+				loadColorShiftTilesetImages(TileSetNames[CurrentTileSet]);
+				sub_4BDDD0(TileSetNames[CurrentTileSet]);
+				if (!dword_5993AC)
+				{
+					ScreenLayers[5].buffers = 1;
+					sub_480960();
+					InitializeGameLayer();
+				}
+				byte_658AC0 = 0;
+				dword_658AA4 = 0;
+				loadParallaxStarGfx();
+				sub_47D660();
+			}
+			else
+			{
+				FileFatal(v9, 24);
+			}
+		}
+		else if (GetLastError() == 38)
+		{
+			FileFatal(v9, 24);
+		}
+		else
+		{
+			int v10 = GetLastError();
+			FileFatal(v9, v10);
+		}
+	}
+}
+
+PatchAddress initMapData_patch(initMapData, initMapData_);
+
 int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
 {
 	ChunkData *v6;
