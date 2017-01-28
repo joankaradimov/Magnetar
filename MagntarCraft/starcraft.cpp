@@ -572,21 +572,18 @@ void __cdecl audioVideoInit_()
 
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
-	u8 *v2; // eax@3
-	u16 v3; // dx@3
-	u16 v4; // cx@3
-	dlgEvent v5; // [sp+4h] [bp-14h]@3
+	dlgEvent v5;
 
 	a1->lFlags |= 0x44000000u;
 	a1->fields[0].dlg.pModalFcn = 0;
 	if (a2)
 		a1->pfcnInteract = a2;
-	v2 = (u8 *)SMemAlloc(
+	u8 *v2 = (u8 *)SMemAlloc(
 		a1->fields[0].dlg.dstBits_wid * a1->fields[0].dlg.dstBits_ht,
 		"Starcraft\\SWAR\\lang\\dlg\\dlg.cpp",
 		481,
 		0);
-	v3 = Mouse.x;
+	u16 v3 = Mouse.x;
 	a1->fields[0].dlg.dstBits_data = v2;
 	LOWORD(v2) = LOWORD(Mouse.y);
 	v5.cursor.x = v3;
@@ -597,7 +594,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	v5.cursor.y = (unsigned __int16)v2;
 	a1->pfcnInteract(a1, &v5);
 	a1->rct.right += a1->rct.left;
-	v4 = LOWORD(Mouse.y);
+	u16 v4 = LOWORD(Mouse.y);
 	a1->rct.bottom += a1->rct.top;
 	v5.cursor.y = v4;
 	v5.wNo = 14;
@@ -617,35 +614,30 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 void LoadTitle_()
 {
-	LONG v1; // eax@2 MAPDST
-	int v3; // eax@3
-	dialog *v4; // ebx@6
-	int v6; // eax@9
-	dialog *v7; // esi@13
-	int v8; // eax@16
-	int read; // [sp+8h] [bp-8h]@6
 	HANDLE phFile; // [sp+Ch] [bp-4h]@1 MAPDST
 
 	if (!SFileOpenFileEx(0, "rez\\titledlg.bin", 0, &phFile))
 	{
-		v8 = SErrGetLastError();
+		int v8 = SErrGetLastError();
 		SysWarn_FileNotFound("rez\\titledlg.bin", v8);
 	}
-	v1 = SFileGetFileSize(phFile, 0);
+	LONG v1 = SFileGetFileSize(phFile, 0);
 	if (v1 == -1)
 	{
-		v3 = GetLastError();
+		int v3 = GetLastError();
 		FileFatal(phFile, v3);
 	}
 	else
 	{
 		if (!v1)
 			SysWarn_FileNotFound("rez\\titledlg.bin", 24);
-		v4 = (dialog *)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+		dialog *v4 = (dialog *)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+		int read;
 		if (SFileReadFile(phFile, v4, v1, &read, 0))
 		{
 			if (read == v1)
 			{
+				dialog *v7;
 				SFileCloseFile(phFile);
 				if (v4)
 				{
@@ -671,7 +663,7 @@ void LoadTitle_()
 		}
 		else
 		{
-			v6 = GetLastError();
+			int v6 = GetLastError();
 			FileFatal(phFile, v6);
 		}
 	}
@@ -679,11 +671,8 @@ void LoadTitle_()
 
 void GameRun_(MenuPosition a1)
 {
-	signed int v1; // esi@1
-	GamePosition next_game_position; // si@18
-
 	IsInGameLoop = 1;
-	v1 = LoadGameInit();
+	int v1 = LoadGameInit();
 	IsInGameLoop = 0;
 	if (!InReplay)
 	{
@@ -708,7 +697,7 @@ void GameRun_(MenuPosition a1)
 	}
 	if (v1)
 	{
-		next_game_position = BeginGame(a1);
+		GamePosition next_game_position = BeginGame(a1);
 		DestroyGame();
 		gwGameMode = next_game_position;
 	}
