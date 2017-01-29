@@ -159,7 +159,7 @@ struct point;
 struct dialog_dlg;
 struct GameSpeeds;
 struct CThingy;
-struct __declspec(align(2)) PlayerInfo;
+struct PlayerInfo;
 struct dialog_scroll;
 struct pt;
 struct PMD;
@@ -3227,7 +3227,7 @@ struct CThingy
   CSprite *sprite;
 };
 
-struct __declspec(align(2)) PlayerInfo
+struct PlayerInfo
 {
   int dwPlayerID;
   int dwStormId;
