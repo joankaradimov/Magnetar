@@ -993,17 +993,12 @@ signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader *chk_section_loader,
 	}
 }
 
-signed int sub_4CCAC0_(char *a1, MapChunks *a2)
+int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
-	int v3;
-	void* v5;
-	signed int v7;
 	char buff[260];
 	char v9[260];
-	int v10;
-	int v11;
 
-	v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
+	int v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
 	SStrLen(a1);
 	if (!v3)
 	{
@@ -1012,18 +1007,18 @@ signed int sub_4CCAC0_(char *a1, MapChunks *a2)
 	}
 	if (!sub_4CC350(v9, a1, (int)&a2->data7, 0x104u))
 		return 0;
-	v10 = 0;
+	int v10 = 0;
 	if (v9[0])
 		_snprintf(buff, 0x104u, "%s\\%s", v9, "staredit\\scenario.chk");
 	else
 		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
-	v5 = fastFileRead(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	void* v5 = fastFileRead(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (v5)
 	{
-		v11 = 0;
+		int v11 = 0;
 		if (ReadMapChunks(a2, (int) v5, &v11, v10))
 		{
-			v7 = ReadChunkNodes_(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
+			int v7 = ReadChunkNodes_(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
 			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
