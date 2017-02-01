@@ -2114,19 +2114,52 @@ DECL_FUNC(int(*sub_421AA0)(), sub_421AA0, 0x421aa0);
 DECL_FUNC(int(*sub_421AF0)(), sub_421AF0, 0x421af0);
 DECL_FUNC(int (__stdcall*sub_421B40)(int, int), sub_421B40, 0x421b40);
 DECL_FUNC(int(*sub_421BA0)(), sub_421BA0, 0x421ba0);
-DECL_FUNC(int (__stdcall*setContourSearchBounds)(int, int), setContourSearchBounds, 0x421c60);
+SaiContourHub *setContourSearchBounds(SaiContourHub *result, __int16 a2, __int16 a3, __int16 a4, __int16 a5) {
+    int address = 0x421c60;
+    SaiContourHub * result_;
+    __asm {
+        mov eax, result
+        mov dx, a2
+        mov cx, a3
+        push dword ptr a5
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_421CB0)(), sub_421CB0, 0x421cb0);
 DECL_FUNC(int(*sub_421CD0)(), sub_421CD0, 0x421cd0);
 DECL_FUNC(int(*sub_422070)(), sub_422070, 0x422070);
-DECL_FUNC(int(*setContourSearchVariablesFromUnitType)(), setContourSearchVariablesFromUnitType, 0x4220c0);
+SaiContourHub *setContourSearchVariablesFromUnitType(SaiContourHub *result, unsigned __int16 a2) {
+    int address = 0x4220c0;
+    SaiContourHub * result_;
+    __asm {
+        mov eax, result
+        mov cx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_422160)(), sub_422160, 0x422160);
 DECL_FUNC(int (__stdcall*sub_422600)(int, char), sub_422600, 0x422600);
 DECL_FUNC(int (__stdcall*sub_4228E0)(int), sub_4228E0, 0x4228e0);
 DECL_FUNC(int(*nullsub_9)(), nullsub_9, 0x422a40);
 DECL_FUNC(int(*sub_422A50)(), sub_422A50, 0x422a50);
-DECL_FUNC(int (__stdcall*sub_422A90)(int), sub_422A90, 0x422a90);
+signed int sub_422A90(_DWORD a1, int a2) {
+    int address = 0x422a90;
+    signed result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_422C90)(int), sub_422C90, 0x422c90);
-DECL_FUNC(int (__stdcall*sub_422FA0)(int, int), sub_422FA0, 0x422fa0);
+DECL_FUNC(signed int (__stdcall*sub_422FA0)(CUnit *a1, int a2), sub_422FA0, 0x422fa0);
 DECL_FUNC(int(*nullsub_10)(), nullsub_10, 0x423180);
 signed int getLarvaeUnitsFromList(CUnit *a1, int a2) {
     int address = 0x423190;
@@ -2452,7 +2485,7 @@ DECL_FUNC(int (__stdcall*findContourInWork_3)(int, int, int), findContourInWork_
 DECL_FUNC(int (__stdcall*findContourInWork_2)(int, int, int), findContourInWork_2, 0x4298c0);
 DECL_FUNC(int (__stdcall*findContourInWork_1)(int, int, int), findContourInWork_1, 0x429990);
 DECL_FUNC(int (__stdcall*findContourInWork_0)(int, int, int), findContourInWork_0, 0x429a60);
-DECL_FUNC(int (__stdcall*isContourSpaceAvailable)(int, int), isContourSpaceAvailable, 0x429b20);
+DECL_FUNC(signed int (__thiscall*isContourSpaceAvailable)(SaiContourHub *this_, int a2, int a3), isContourSpaceAvailable, 0x429b20);
 DECL_FUNC(int (__stdcall*sub_429D50)(__int16, __int16, int), sub_429D50, 0x429d50);
 DECL_FUNC(int (__stdcall*sub_42A1B0)(int, int, int), sub_42A1B0, 0x42a1b0);
 DECL_FUNC(int (__stdcall*sub_42A570)(int), sub_42A570, 0x42a570);
@@ -2489,7 +2522,20 @@ DECL_FUNC(int(*SAI_ContoursRealloc)(), SAI_ContoursRealloc, 0x42b8a0);
 DECL_FUNC(int(*SAI_ContoursCreate_2)(), SAI_ContoursCreate_2, 0x42b9f0);
 DECL_FUNC(int(*sai_contoursCreate_Cleanup)(), sai_contoursCreate_Cleanup, 0x42bbd0);
 DECL_FUNC(int(*SAI_PathCreate_Sub1_0)(), SAI_PathCreate_Sub1_0, 0x42bc30);
-DECL_FUNC(int(*SAI_PathCreate_Sub4)(), SAI_PathCreate_Sub4, 0x42c5c0);
+void SAI_ContoursCreate(SaiContourHub *a1) {
+    int address = 0x42c060;
+    __asm {
+        mov esi, a1
+        call address
+    }
+}
+void SAI_PathCreate_Sub4(SAI_Paths *a1) {
+    int address = 0x42c5c0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*TRGCND_Switch)(), TRGCND_Switch, 0x42c610);
 DECL_FUNC(int(*TRGCND_Never)(), TRGCND_Never, 0x42c670);
 DECL_FUNC(int(*TRGCND_Always)(), TRGCND_Always, 0x42c680);
@@ -2619,7 +2665,18 @@ BOOL sub_42D6B0(CUnit *a1, __int16 a2, __int16 a3, unsigned __int16 a4, __int16 
     return result_;
 }
 DECL_FUNC(int (__stdcall*canDimensionsFitAt)(int, int, int, int), canDimensionsFitAt, 0x42d740);
-DECL_FUNC(int(*canUnitTypeFitAt)(), canUnitTypeFitAt, 0x42d810);
+int canUnitTypeFitAt(signed int a1, UnitType a2, __int16 a3) {
+    int address = 0x42d810;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov bx, a2
+        mov di, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 char sub_42D890(CUnit *a1, int a2, int a3) {
     int address = 0x42d890;
     char result_;
@@ -2729,7 +2786,7 @@ DECL_FUNC(int(*sub_42E460)(), sub_42E460, 0x42e460);
 DECL_FUNC(int (__stdcall*sub_42E470)(int), sub_42E470, 0x42e470);
 DECL_FUNC(int(*sub_42E4F0)(), sub_42E4F0, 0x42e4f0);
 DECL_FUNC(int (__stdcall*CreatePath_PullContours)(int, int, int), CreatePath_PullContours, 0x42e600);
-char GetClosestReachable(char a1, _DWORD a2) {
+char GetClosestReachable(char a1, CUnit *a2) {
     int address = 0x42efa0;
     char result_;
     __asm {
@@ -2969,7 +3026,17 @@ DECL_FUNC(int (__stdcall*sub_431CE0)(int), sub_431CE0, 0x431ce0);
 DECL_FUNC(int (__stdcall*sub_431D00)(int), sub_431D00, 0x431d00);
 DECL_FUNC(int (__stdcall*sub_431DA0)(int), sub_431DA0, 0x431da0);
 DECL_FUNC(int (__stdcall*sub_431DC0)(int), sub_431DC0, 0x431dc0);
-DECL_FUNC(int (__stdcall*GetStrongestUnitInRegion_AirOrGround)(int), GetStrongestUnitInRegion_AirOrGround, 0x431de0);
+CUnit *GetStrongestUnitInRegion_AirOrGround(CUnit *a1, int a2) {
+    int address = 0x431de0;
+    CUnit * result_;
+    __asm {
+        mov esi, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int AI_GetStrongestGroundUnit(CUnit *a1) {
     int address = 0x431e90;
     int result_;
@@ -3108,7 +3175,7 @@ DECL_FUNC(int (__stdcall*AI_WaitBuild)(int, int), AI_WaitBuild, 0x433210);
 DECL_FUNC(int(*sub_433410)(), sub_433410, 0x433410);
 DECL_FUNC(int (__stdcall*sub_433470)(int), sub_433470, 0x433470);
 DECL_FUNC(int (__stdcall*sub_4335F0)(int, int), sub_4335F0, 0x4335f0);
-int AI_FinishUnit(int a1, CUnit *a2) {
+int AI_FinishUnit(_DWORD a1, CUnit *a2) {
     int address = 0x433640;
     int result_;
     __asm {
@@ -3401,7 +3468,7 @@ int sub_4371D0(int result, AiCaptain *a2) {
 DECL_FUNC(int(*sub_437230)(), sub_437230, 0x437230);
 DECL_FUNC(int(*playerHasTransports)(), playerHasTransports, 0x437250);
 DECL_FUNC(int(*sub_437290)(), sub_437290, 0x437290);
-DECL_FUNC(int(*sub_4372E0)(), sub_4372E0, 0x4372e0);
+DECL_FUNC(unsigned int (__thiscall*sub_4372E0)(_DWORD this_), sub_4372E0, 0x4372e0);
 DECL_FUNC(int (__stdcall*AI_GetDarkTemplarsForSummon)(int), AI_GetDarkTemplarsForSummon, 0x437320);
 DECL_FUNC(int (__stdcall*AI_GetHighTemplarsForSummon)(int, int, int), AI_GetHighTemplarsForSummon, 0x437410);
 DECL_FUNC(int(*AI_GetHydraliskForMorph)(), AI_GetHydraliskForMorph, 0x437570);
@@ -3424,7 +3491,7 @@ DECL_FUNC(int (__thiscall*sub_4383E0)(CUnit *this_), sub_4383E0, 0x4383e0);
 DECL_FUNC(signed int (__fastcall*sub_438410)(int a1, CUnit *a2), sub_438410, 0x438410);
 DECL_FUNC(int (__thiscall*sub_438470)(CUnit *this_), sub_438470, 0x438470);
 DECL_FUNC(int(*isUnitTypeFoundInRegion)(), isUnitTypeFoundInRegion, 0x4384a0);
-DECL_FUNC(char (__stdcall*AI_PatrolController)(CUnit *a1, int a2, int a3), AI_PatrolController, 0x4384f0);
+DECL_FUNC(u8 (__stdcall*AI_PatrolController)(CUnit *a1, int a2, int *a3), AI_PatrolController, 0x4384f0);
 DECL_FUNC(int(*AI_BuildTurrets)(), AI_BuildTurrets, 0x4387e0);
 DECL_FUNC(int(*AI_BuildBunkers)(), AI_BuildBunkers, 0x438870);
 int sub_438910(CUnit *a1) {
@@ -3492,7 +3559,7 @@ signed int sub_439550(CUnit *a1) {
 }
 DECL_FUNC(int (__stdcall*AI_ClearCombatData)(int, int), AI_ClearCombatData, 0x439660);
 DECL_FUNC(int (__stdcall*AI_ValueArea)(int), AI_ValueArea, 0x4396f0);
-DECL_FUNC(int (__stdcall*AI_GetSpiderMineLocations)(int, int, int), AI_GetSpiderMineLocations, 0x439740);
+DECL_FUNC(signed int (__stdcall*AI_GetSpiderMineLocations)(CUnit *a1, int a2, int a3), AI_GetSpiderMineLocations, 0x439740);
 DECL_FUNC(int (__stdcall*AssignMilitaryToRegion)(int, int, int, int, int), AssignMilitaryToRegion, 0x4399d0);
 DECL_FUNC(int (__stdcall*PopulateRgnsWithEnemy)(int, int), PopulateRgnsWithEnemy, 0x439b50);
 DECL_FUNC(int (__stdcall*AI_CaptExpand)(int, int), AI_CaptExpand, 0x439c00);
@@ -3642,8 +3709,26 @@ char IssueCaptainUnitOrder(int order_id, CUnit *a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_43CA30)(), sub_43CA30, 0x43ca30);
-DECL_FUNC(int(*sub_43CB00)(), sub_43CB00, 0x43cb00);
+signed int sub_43CA30(CUnit *a1) {
+    int address = 0x43ca30;
+    signed result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+signed int sub_43CB00(CUnit *a1) {
+    int address = 0x43cb00;
+    signed result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_43CC40(AiCaptain *a1) {
     int address = 0x43cc40;
     int result_;
@@ -3794,7 +3879,7 @@ DECL_FUNC(int (__stdcall*AI_BuildBunker)(int, int), AI_BuildBunker, 0x43ebb0);
 DECL_FUNC(char (__stdcall*AI_CaptainUpdate_Military12)(AiCaptain *a1), AI_CaptainUpdate_Military12, 0x43ee10);
 DECL_FUNC(char (__stdcall*AI_CaptainUpdate_Military89)(AiCaptain *a1), AI_CaptainUpdate_Military89, 0x43eec0);
 DECL_FUNC(char (__stdcall*AI_CaptainUpdate_Type7)(AiCaptain *a1), AI_CaptainUpdate_Type7, 0x43f020);
-int sub_43F100(AiCaptain *a1, int a2, int a3, unsigned int a4) {
+int sub_43F100(AiCaptain *a1, WORD *a2, int a3, unsigned int a4) {
     int address = 0x43f100;
     int result_;
     __asm {
@@ -7566,7 +7651,18 @@ DECL_FUNC(int (__stdcall*canPlaceCreepBuildingAt)(int, __int16, __int16, int, in
 DECL_FUNC(int (__stdcall*canPlaceNydusBuildingAt)(int, __int16, __int16, int, int), canPlaceNydusBuildingAt, 0x473150);
 DECL_FUNC(int (__stdcall*sub_473290)(int, int, int), sub_473290, 0x473290);
 DECL_FUNC(int (__stdcall*sub_4732C0)(int, int, int), sub_4732C0, 0x4732c0);
-DECL_FUNC(int(*j_canUnitTypeFitAt)(), j_canUnitTypeFitAt, 0x4732f0);
+int j_canUnitTypeFitAt(signed int a1, UnitType a2, __int16 a3) {
+    int address = 0x4732f0;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov bx, a2
+        mov di, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_473300)(int, int, int, char, char), sub_473300, 0x473300);
 DECL_FUNC(int(*sub_473410)(), sub_473410, 0x473410);
 DECL_FUNC(unsigned __int32 (__thiscall*UnitIsResourceContainer)(CUnit *this_), UnitIsResourceContainer, 0x473490);
@@ -9059,27 +9155,83 @@ int *CMDACT_GameSpeed(dialog *a1) {
 DECL_FUNC(bool (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
 DECL_FUNC(int(*sub_482070)(), sub_482070, 0x482070);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_1_1_0_0)(int), SAI_PathCreate_Sub3_1_1_0_0, 0x482090);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_1_1_1)(int), SAI_PathCreate_Sub3_1_1_1, 0x4821a0);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_1_1_0)(int, int, int), SAI_PathCreate_Sub3_1_1_0, 0x482290);
-DECL_FUNC(int(*SAI_PathCreate_Sub3_1_1)(), SAI_PathCreate_Sub3_1_1, 0x482850);
+char *SAI_PathCreate_Sub3_1_1_1(SAI_Paths *a1, SaiRegion *a2) {
+    int address = 0x4821a0;
+    char * result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(signed int (__stdcall*SAI_PathCreate_Sub3_1_1_0)(SAI_Paths *a1, int a2, SaiRegion *a3), SAI_PathCreate_Sub3_1_1_0, 0x482290);
+int SAI_PathCreate_Sub3_1_1(SAI_Paths *a1) {
+    int address = 0x482850;
+    int result_;
+    __asm {
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_482890)(int), sub_482890, 0x482890);
-DECL_FUNC(int(*SAI_PathCreate_Sub3_1_0)(), SAI_PathCreate_Sub3_1_0, 0x482900);
+int SAI_PathCreate_Sub3_1_0(SAI_Paths *a1) {
+    int address = 0x482900;
+    int result_;
+    __asm {
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_482A80)(), sub_482A80, 0x482a80);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_2)(int, int, __int16), SAI_PathCreate_Sub3_0_2, 0x482ae0);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_1)(int), SAI_PathCreate_Sub3_0_1, 0x482c60);
 DECL_FUNC(int(*sub_482CC0)(), sub_482CC0, 0x482cc0);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_1_2_0)(int), SAI_PathCreate_Sub3_1_2_0, 0x482d30);
-DECL_FUNC(int(*SAI_CreateRegionGroupings)(), SAI_CreateRegionGroupings, 0x482da0);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_2)(int), SAI_PathCreate_Sub3_2, 0x482e10);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_3)(int), SAI_PathCreate_Sub3_3, 0x483030);
-DECL_FUNC(int(*SAI_PathCreate_Sub5)(), SAI_PathCreate_Sub5, 0x483160);
+DECL_FUNC(int (__fastcall*SAI_PathCreate_Sub3_1_2_0)(SAI_Paths *a1, int a2, int a3), SAI_PathCreate_Sub3_1_2_0, 0x482d30);
+int SAI_CreateRegionGroupings(SAI_Paths *a1) {
+    int address = 0x482da0;
+    int result_;
+    __asm {
+        mov ebx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(void (__stdcall*SAI_PathCreate_Sub3_2)(SAI_Paths *a1), SAI_PathCreate_Sub3_2, 0x482e10);
+DECL_FUNC(void (__stdcall*SAI_PathCreate_Sub3_3)(SAI_Paths *a1), SAI_PathCreate_Sub3_3, 0x483030);
+int SAI_PathCreate_Sub5(SaiRegion *a1) {
+    int address = 0x483160;
+    int result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_483200)(), sub_483200, 0x483200);
 DECL_FUNC(int(*sub_483230)(), sub_483230, 0x483230);
 DECL_FUNC(int(*SAI_PathCreate_Sub3_4)(), SAI_PathCreate_Sub3_4, 0x483260);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_0)(int, int, __int16), SAI_PathCreate_Sub3_0_0, 0x483960);
-DECL_FUNC(int(*SAI_PathCreate_Sub3_1)(), SAI_PathCreate_Sub3_1, 0x483b50);
+int SAI_PathCreate_Sub3_1(int a1, SAI_Paths *a2) {
+    int address = 0x483b50;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_483BD0)(), sub_483BD0, 0x483bd0);
-DECL_FUNC(__int16 (__thiscall*CreateUIUnreachableRegion)(_DWORD this_), CreateUIUnreachableRegion, 0x483c00);
+DECL_FUNC(__int16 (__thiscall*CreateUIUnreachableRegion)(SAI_Paths *this_), CreateUIUnreachableRegion, 0x483c00);
 int SAI_PathCreate_Sub1(ActiveTile *a1) {
     int address = 0x483d20;
     int result_;
@@ -9090,9 +9242,30 @@ int SAI_PathCreate_Sub1(ActiveTile *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*freeSaiPaths)(), freeSaiPaths, 0x483dd0);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0)(int, DWORD dwProcessId), SAI_PathCreate_Sub3_0, 0x483e30);
-DECL_FUNC(int(*SAI_PathCreate_Sub3)(), SAI_PathCreate_Sub3, 0x484210);
+DECL_FUNC(void (__cdecl*freeSaiPaths)(), freeSaiPaths, 0x483dd0);
+int SAI_PathCreate_Sub3_0(SAI_Paths *a1, int a2, DWORD dwProcessId) {
+    int address = 0x483e30;
+    int result_;
+    __asm {
+        mov edi, a1
+        push dword ptr dwProcessId
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int SAI_PathCreate_Sub3(PathCreateRelated *a1, SAI_Paths *a2) {
+    int address = 0x484210;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*SAI_PathCreate)(ActiveTile *a1), SAI_PathCreate, 0x484290);
 DECL_FUNC(void (__thiscall*nullsub_3)(dlgEvent *), nullsub_3, 0x484350);
 DECL_FUNC(int(*saveScreenLocation)(), saveScreenLocation, 0x484360);
@@ -11237,7 +11410,22 @@ DECL_FUNC(int(*sub_49CC30)(), sub_49CC30, 0x49cc30);
 DECL_FUNC(void (__cdecl*savePlayerSlotTypesAndRace)(), savePlayerSlotTypesAndRace, 0x49cc40);
 DECL_FUNC(int(*sub_49CCA0)(), sub_49CCA0, 0x49cca0);
 DECL_FUNC(int (__fastcall*airTrainingProc)(CUnit *a1, CUnit *a2), airTrainingProc, 0x49cce0);
-DECL_FUNC(int (__stdcall*sub_49CDC0)(int, int, int, int, int), sub_49CDC0, 0x49cdc0);
+signed int sub_49CDC0(__int16 a1, __int16 a2, CUnit *a3, int a4, __int16 a5, __int16 a6, int a7) {
+    int address = 0x49cdc0;
+    signed result_;
+    __asm {
+        mov ax, a1
+        mov dx, a2
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 bool CheckUnitCollisionPos(__int16 *move_area, CUnit *unit, Position *inPos, Position *outPos, bool hideErrorMsg, int flags) {
     int address = 0x49d3e0;
     bool result_;
@@ -12559,9 +12747,9 @@ signed int CommandLineCheatCompare(CheatFlags *game_cheats, const char *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4B24B0)(), sub_4B24B0, 0x4b24b0);
+DECL_FUNC(unsigned int (__fastcall*sub_4B24B0)(dialog *a1, dlgEvent *a2), sub_4B24B0, 0x4b24b0);
 DECL_FUNC(int(*gluCmpgnBtn_UpdateTimer)(), gluCmpgnBtn_UpdateTimer, 0x4b2500);
-DECL_FUNC(int(*gluCmpgnBtn_InitTimer)(), gluCmpgnBtn_InitTimer, 0x4b2570);
+DECL_FUNC(void (__thiscall*gluCmpgnBtn_InitTimer)(dialog *this_), gluCmpgnBtn_InitTimer, 0x4b2570);
 DECL_FUNC(void (__fastcall*gluCmpgnBtn_BtnLightupUpdate)(dialog *dlg, int x, int y, rect *dst), gluCmpgnBtn_BtnLightupUpdate, 0x4b25a0);
 DECL_FUNC(bool (__fastcall*gluCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluCmpgn_CampaignButton, 0x4b25e0);
 int sub_4B26B0(dialog *a1) {
@@ -13985,7 +14173,7 @@ int sub_4CC7F0(char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4CC990)(), sub_4CC990, 0x4cc990);
+DECL_FUNC(void (__cdecl*sub_4CC990)(), sub_4CC990, 0x4cc990);
 signed int sub_4CCAC0(char *a1, MapChunks *a2) {
     int address = 0x4ccac0;
     signed result_;
@@ -14190,6 +14378,16 @@ signed int sub_4CF7B0(char *a1) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4CF820)(int a2), sub_4CF820, 0x4cf820);
+int LoadGameInit_Mode(char *a1) {
+    int address = 0x4cf8e0;
+    int result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__thiscall*Saved_Game_Node_Constructor)(char *source, int, int), Saved_Game_Node_Constructor, 0x4cfb00);
 DECL_FUNC(int (__thiscall*sub_4CFCC0)(char *source, int, int), sub_4CFCC0, 0x4cfcc0);
 DECL_FUNC(int (__stdcall*sub_4CFD90)(int), sub_4CFD90, 0x4cfd90);
@@ -15560,7 +15758,16 @@ DECL_FUNC(bool (__fastcall*genericBtnInteract)(dialog *dlg, struct dlgEvent *evt
 DECL_FUNC(int (__stdcall*BWFXN_Draw)(int, int, int), BWFXN_Draw, 0x4e1c70);
 DECL_FUNC(void (__stdcall*BWFXN_DrawBox)(s16 x, s16 y, u16 w, u16 h), BWFXN_DrawBox, 0x4e1d20);
 DECL_FUNC(int (__stdcall*CreatePath_PopulatePathAreas)(int), CreatePath_PopulatePathAreas, 0x4e1d90);
-DECL_FUNC(int(*sub_4E2510)(), sub_4E2510, 0x4e2510);
+char sub_4E2510(_DWORD a1) {
+    int address = 0x4e2510;
+    char result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4E25F0)(), sub_4E25F0, 0x4e25f0);
 DECL_FUNC(int (__stdcall*sub_4E2700)(int), sub_4E2700, 0x4e2700);
 DECL_FUNC(int(*EndAreaFixup)(), EndAreaFixup, 0x4e27a0);
@@ -16807,7 +17014,18 @@ DECL_FUNC(int(*contour_gen_bottomLeft)(), contour_gen_bottomLeft, 0x4f1200);
 DECL_FUNC(int(*sub_4F1680)(), sub_4F1680, 0x4f1680);
 DECL_FUNC(int (__stdcall*sub_4F16C0)(int, int, int), sub_4F16C0, 0x4f16c0);
 DECL_FUNC(int(*sub_4F17C0)(), sub_4F17C0, 0x4f17c0);
-DECL_FUNC(int (__stdcall*sub_4F1870)(int, int), sub_4F1870, 0x4f1870);
+int sub_4F1870(CUnit *a1, __int16 a2, __int16 a3) {
+    int address = 0x4f1870;
+    int result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int sub_4F1980(CUnit *a1) {
     int address = 0x4f1980;
     signed result_;
@@ -16819,7 +17037,16 @@ signed int sub_4F1980(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4F1A20)(int), sub_4F1A20, 0x4f1a20);
-DECL_FUNC(int(*sub_4F1B70)(), sub_4F1B70, 0x4f1b70);
+signed int sub_4F1B70(CUnit *a1) {
+    int address = 0x4f1b70;
+    signed result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4F1C70(CUnit *a1, int a2) {
     int address = 0x4f1c70;
     int result_;
@@ -21203,7 +21430,7 @@ char* byte_6CAB08 = (decltype(byte_6CAB08 + 0)) 0x6cab08;
 __int16& word_6CAC0C = * ((decltype(&word_6CAC0C)) 0x6cac0c);
 char& byte_6CAC10 = * ((decltype(&byte_6CAC10)) 0x6cac10);
 char* byte_6CAC78 = (decltype(byte_6CAC78 + 0)) 0x6cac78;
-int& dword_6CAD98 = * ((decltype(&dword_6CAD98)) 0x6cad98);
+int* dword_6CAD98 = (decltype(dword_6CAD98 + 0)) 0x6cad98;
 int& dword_6CAD9C = * ((decltype(&dword_6CAD9C)) 0x6cad9c);
 int& dword_6CAF90 = * ((decltype(&dword_6CAF90)) 0x6caf90);
 int& dword_6CAF94 = * ((decltype(&dword_6CAF94)) 0x6caf94);
@@ -21507,7 +21734,7 @@ char& byte_6D5BED = * ((decltype(&byte_6D5BED)) 0x6d5bed);
 int& dword_6D5BF0 = * ((decltype(&dword_6D5BF0)) 0x6d5bf0);
 dialog *& dword_6D5BF4 = * ((decltype(&dword_6D5BF4)) 0x6d5bf4);
 int& dword_6D5BF8 = * ((decltype(&dword_6D5BF8)) 0x6d5bf8);
-void *& SAIPathing = * ((decltype(&SAIPathing)) 0x6d5bfc);
+SAI_Paths *& SAIPathing = * ((decltype(&SAIPathing)) 0x6d5bfc);
 DWORD& CpuThrottle = * ((decltype(&CpuThrottle)) 0x6d5c00);
 Bitmap& stru_6D5C04 = * ((decltype(&stru_6D5C04)) 0x6d5c04);
 void *& dword_6D5C0C = * ((decltype(&dword_6D5C0C)) 0x6d5c0c);

@@ -81,10 +81,11 @@ typedef __int8 _TBYTE;
 
 enum Tileset ;
 enum PlayerType ;
-enum WeaponType ;
+enum GameType ;
 struct LO_Overlays;
 enum Anims ;
 enum UnitPrototypeFlags;
+enum SaiAccessabilityFlags ;
 enum WeaponTargetFlags ;
 struct CUnitPylon;
 struct CUnitGatherer;
@@ -102,6 +103,7 @@ enum CheatFlags;
 enum UnitMovementState ;
 enum Race ;
 enum Tech ;
+enum WeaponType ;
 struct StringTbl;
 enum Order ;
 struct dialog_ctrl;
@@ -113,13 +115,13 @@ enum WeaponBehavior ;
 struct CUnitGhost;
 struct __declspec(align(2)) struct_a1;
 enum MapData4 ;
-struct __declspec(align(2)) AudioVideoInitializationError;
+union SaiRegionUser;
+struct AI_Flags;
 struct _SCOPETABLE_ENTRY;
 struct Box32;
-struct AI_Flags;
+struct __declspec(align(2)) AudioVideoInitializationError;
 struct s_evt;
 struct __declspec(align(2)) GotFileValues;
-struct __declspec(align(1)) ChkLoader;
 struct TileType;
 struct ImagesDatExtraOverlayLO_Files;
 struct UpgradesBW;
@@ -134,7 +136,8 @@ struct UnitFinderData;
 struct Font;
 struct vr4entry;
 struct type_info;
-struct CUnitResource;
+struct SaiContourHub;
+struct UnitDimentions;
 struct __declspec(align(2)) ChkSectionLoader;
 struct SuppliesPerRace;
 struct ScrollSpeeds;
@@ -160,6 +163,7 @@ struct dialog_dlg;
 struct GameSpeeds;
 struct CThingy;
 struct PlayerInfo;
+struct SaiSplit;
 struct dialog_scroll;
 struct pt;
 struct PMD;
@@ -179,10 +183,12 @@ struct bounds;
 struct Bitmap;
 struct RTTIClassHierarchyDescriptor;
 struct Counts;
+struct MapSize;
 struct layer;
 struct UpgradesSC;
-struct UnitDimentions;
+struct __declspec(align(1)) ChkLoader;
 struct dialog_list;
+struct Box16;
 struct fontMemStruct;
 struct RenderFunction;
 struct CharacterData;
@@ -198,34 +204,38 @@ struct struct_1;
 struct struct_6;
 struct struct_4;
 struct struct_5;
+struct SaiContour;
 struct grpFrame;
 struct UpdateFunction;
-struct MapSize;
+struct CUnitResource;
 struct SectionData;
 struct points;
-struct CUnitHatchery;
-struct CPPEH_RECORD;
-struct baseLocation;
-struct __declspec(align(2)) ChunkData;
-struct Target_;
-struct CUnitWorker;
-struct MiniTileMaps_type;
-struct Location;
-struct dialog_btn;
-struct grpHead;
-struct __declspec(align(2)) AI_Main;
 struct Trigger;
 struct RTTIBaseClassDescriptor;
-struct CUnitRally;
+struct Location;
 struct CSprite;
-struct AllScoresStruct;
-struct struct_game_140;
+struct dialog_btn;
 struct CImage;
-struct dlgEvent;
+struct CUnitHatchery;
+struct __declspec(align(2)) ChunkData;
+struct SaiRegion;
+struct __declspec(align(2)) AI_Main;
+struct CUnitRally;
+struct baseLocation;
+struct struct_game_140;
+struct CPPEH_RECORD;
+struct grpHead;
+struct Target_;
 struct __declspec(align(1)) GotFile;
+struct CUnitWorker;
+struct __declspec(align(2)) PathCreateRelated;
+struct AllScoresStruct;
+struct dlgEvent;
+struct MiniTileMaps_type;
 struct CUnitPowerup;
 struct CBullet;
 union dialog_fields;
+struct SAI_Paths;
 struct COrder;
 union CUnitFields2;
 union CUnitFields3;
@@ -265,112 +275,21 @@ enum PlayerType : __int8
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
-enum WeaponType : __int8
+enum GameType : __int8
 {
-  Gauss_Rifle = 0x0,
-  Gauss_Rifle_Jim_Raynor = 0x1,
-  C_10_Canister_Rifle = 0x2,
-  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
-  Fragmentation_Grenade = 0x4,
-  Fragmentation_Grenade_Jim_Raynor = 0x5,
-  Spider_Mines = 0x6,
-  Twin_Autocannons = 0x7,
-  Hellfire_Missile_Pack = 0x8,
-  Twin_Autocannons_Alan_Schezar = 0x9,
-  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
-  Arclite_Cannon = 0xB,
-  Arclite_Cannon_Edmund_Duke = 0xC,
-  Fusion_Cutter = 0xD,
-  Gemini_Missiles = 0xF,
-  Burst_Lasers = 0x10,
-  Gemini_Missiles_Tom_Kazansky = 0x11,
-  Burst_Lasers_Tom_Kazansky = 0x12,
-  ATS_Laser_Battery = 0x13,
-  ATA_Laser_Battery = 0x14,
-  ATS_Laser_Battery_Hero = 0x15,
-  ATA_Laser_Battery_Hero = 0x16,
-  ATS_Laser_Battery_Hyperion = 0x17,
-  ATA_Laser_Battery_Hyperion = 0x18,
-  Flame_Thrower = 0x19,
-  Flame_Thrower_Gui_Montag = 0x1A,
-  Arclite_Shock_Cannon = 0x1B,
-  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
-  Longbolt_Missile = 0x1D,
-  Yamato_Gun = 0x1E,
-  Nuclear_Strike = 0x1F,
-  Lockdown = 0x20,
-  EMP_Shockwave = 0x21,
-  Irradiate = 0x22,
-  Claws = 0x23,
-  Claws_Devouring_One = 0x24,
-  Claws_Infested_Kerrigan = 0x25,
-  Needle_Spines = 0x26,
-  Needle_Spines_Hunter_Killer = 0x27,
-  Kaiser_Blades = 0x28,
-  Kaiser_Blades_Torrasque = 0x29,
-  Toxic_Spores = 0x2A,
-  Spines = 0x2B,
-  Acid_Spore = 0x2E,
-  Acid_Spore_Kukulza = 0x2F,
-  Glave_Wurm = 0x30,
-  Glave_Wurm_Kukulza = 0x31,
-  Seeker_Spores = 0x34,
-  Subterranean_Tentacle = 0x35,
-  Suicide_Infested_Terran = 0x36,
-  Suicide_Scourge = 0x37,
-  Parasite = 0x38,
-  Spawn_Broodlings = 0x39,
-  Ensnare = 0x3A,
-  Dark_Swarm = 0x3B,
-  Plague = 0x3C,
-  Consume = 0x3D,
-  Particle_Beam = 0x3E,
-  Psi_Blades = 0x40,
-  Psi_Blades_Fenix = 0x41,
-  Phase_Disruptor = 0x42,
-  Phase_Disruptor_Fenix = 0x43,
-  Psi_Assault = 0x45,
-  Psionic_Shockwave = 0x46,
-  Psionic_Shockwave_TZ_Archon = 0x47,
-  Dual_Photon_Blasters = 0x49,
-  Anti_Matter_Missiles = 0x4A,
-  Dual_Photon_Blasters_Mojo = 0x4B,
-  Anti_Matter_Missiles_Mojo = 0x4C,
-  Phase_Disruptor_Cannon = 0x4D,
-  Phase_Disruptor_Cannon_Danimoth = 0x4E,
-  Pulse_Cannon = 0x4F,
-  STS_Photon_Cannon = 0x50,
-  STA_Photon_Cannon = 0x51,
-  Scarab = 0x52,
-  Stasis_Field = 0x53,
-  Psionic_Storm = 0x54,
-  Warp_Blades_Zeratul = 0x55,
-  Warp_Blades_Hero = 0x56,
-  Platform_Laser_Battery = 0x5C,
-  Independant_Laser_Battery = 0x5D,
-  Twin_Autocannons_Floor_Trap = 0x60,
-  Hellfire_Missile_Pack_Wall_Trap = 0x61,
-  Flame_Thrower_Wall_Trap = 0x62,
-  Hellfire_Missile_Pack_Floor_Trap = 0x63,
-  Neutron_Flare = 0x64,
-  Disruption_Web = 0x65,
-  Restoration = 0x66,
-  Halo_Rockets = 0x67,
-  Corrosive_Acid = 0x68,
-  Mind_Control = 0x69,
-  Feedback = 0x6A,
-  Optical_Flare = 0x6B,
-  Maelstrom = 0x6C,
-  Subterranean_Spines = 0x6D,
-  Warp_Blades = 0x6F,
-  C_10_Canister_Rifle_Samir_Duran = 0x70,
-  C_10_Canister_Rifle_Infested_Duran = 0x71,
-  Dual_Photon_Blasters_Artanis = 0x72,
-  Anti_Matter_Missiles_Artanis = 0x73,
-  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
-  WT_None = 0x82,
-  WT_Unknown = 0x83,
-  WT_MAX = 0x84,
+  GT_Melee = 0x2,
+  GT_FreeForAll = 0x3,
+  GT_OneOnOne = 0x4,
+  GT_CaptureTheFlag = 0x5,
+  GT_Greed = 0x6,
+  GT_Slaughter = 0x7,
+  GT_SuddenDeath = 0x8,
+  GT_Ladder = 0x9,
+  GT_UseMapSettings = 0xA,
+  GT_TeamMelee = 0xB,
+  GT_TeamFreeForAll = 0xC,
+  GT_TeamCTF = 0xD,
+  GT_TopVsBottom = 0xF,
 };
 
 struct LO_Overlays
@@ -444,6 +363,13 @@ enum UnitPrototypeFlags
   Invincible_ = 0x20000000,
   Mechanical = 0x40000000,
   ProducesUnits = 0x80000000,
+};
+
+enum SaiAccessabilityFlags : __int16
+{
+  SAF_HighGround = 0x1FF9,
+  SAF_LowGround = 0x1FFB,
+  SAF_Inaccessible = 0x1FFD,
 };
 
 enum WeaponTargetFlags : __int16
@@ -1241,7 +1167,113 @@ enum Tech : __int8
   TECH_none = 0x2C,
 };
 
-typedef u16 TileID;
+enum WeaponType : __int8
+{
+  Gauss_Rifle = 0x0,
+  Gauss_Rifle_Jim_Raynor = 0x1,
+  C_10_Canister_Rifle = 0x2,
+  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
+  Fragmentation_Grenade = 0x4,
+  Fragmentation_Grenade_Jim_Raynor = 0x5,
+  Spider_Mines = 0x6,
+  Twin_Autocannons = 0x7,
+  Hellfire_Missile_Pack = 0x8,
+  Twin_Autocannons_Alan_Schezar = 0x9,
+  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
+  Arclite_Cannon = 0xB,
+  Arclite_Cannon_Edmund_Duke = 0xC,
+  Fusion_Cutter = 0xD,
+  Gemini_Missiles = 0xF,
+  Burst_Lasers = 0x10,
+  Gemini_Missiles_Tom_Kazansky = 0x11,
+  Burst_Lasers_Tom_Kazansky = 0x12,
+  ATS_Laser_Battery = 0x13,
+  ATA_Laser_Battery = 0x14,
+  ATS_Laser_Battery_Hero = 0x15,
+  ATA_Laser_Battery_Hero = 0x16,
+  ATS_Laser_Battery_Hyperion = 0x17,
+  ATA_Laser_Battery_Hyperion = 0x18,
+  Flame_Thrower = 0x19,
+  Flame_Thrower_Gui_Montag = 0x1A,
+  Arclite_Shock_Cannon = 0x1B,
+  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
+  Longbolt_Missile = 0x1D,
+  Yamato_Gun = 0x1E,
+  Nuclear_Strike = 0x1F,
+  Lockdown = 0x20,
+  EMP_Shockwave = 0x21,
+  Irradiate = 0x22,
+  Claws = 0x23,
+  Claws_Devouring_One = 0x24,
+  Claws_Infested_Kerrigan = 0x25,
+  Needle_Spines = 0x26,
+  Needle_Spines_Hunter_Killer = 0x27,
+  Kaiser_Blades = 0x28,
+  Kaiser_Blades_Torrasque = 0x29,
+  Toxic_Spores = 0x2A,
+  Spines = 0x2B,
+  Acid_Spore = 0x2E,
+  Acid_Spore_Kukulza = 0x2F,
+  Glave_Wurm = 0x30,
+  Glave_Wurm_Kukulza = 0x31,
+  Seeker_Spores = 0x34,
+  Subterranean_Tentacle = 0x35,
+  Suicide_Infested_Terran = 0x36,
+  Suicide_Scourge = 0x37,
+  Parasite = 0x38,
+  Spawn_Broodlings = 0x39,
+  Ensnare = 0x3A,
+  Dark_Swarm = 0x3B,
+  Plague = 0x3C,
+  Consume = 0x3D,
+  Particle_Beam = 0x3E,
+  Psi_Blades = 0x40,
+  Psi_Blades_Fenix = 0x41,
+  Phase_Disruptor = 0x42,
+  Phase_Disruptor_Fenix = 0x43,
+  Psi_Assault = 0x45,
+  Psionic_Shockwave = 0x46,
+  Psionic_Shockwave_TZ_Archon = 0x47,
+  Dual_Photon_Blasters = 0x49,
+  Anti_Matter_Missiles = 0x4A,
+  Dual_Photon_Blasters_Mojo = 0x4B,
+  Anti_Matter_Missiles_Mojo = 0x4C,
+  Phase_Disruptor_Cannon = 0x4D,
+  Phase_Disruptor_Cannon_Danimoth = 0x4E,
+  Pulse_Cannon = 0x4F,
+  STS_Photon_Cannon = 0x50,
+  STA_Photon_Cannon = 0x51,
+  Scarab = 0x52,
+  Stasis_Field = 0x53,
+  Psionic_Storm = 0x54,
+  Warp_Blades_Zeratul = 0x55,
+  Warp_Blades_Hero = 0x56,
+  Platform_Laser_Battery = 0x5C,
+  Independant_Laser_Battery = 0x5D,
+  Twin_Autocannons_Floor_Trap = 0x60,
+  Hellfire_Missile_Pack_Wall_Trap = 0x61,
+  Flame_Thrower_Wall_Trap = 0x62,
+  Hellfire_Missile_Pack_Floor_Trap = 0x63,
+  Neutron_Flare = 0x64,
+  Disruption_Web = 0x65,
+  Restoration = 0x66,
+  Halo_Rockets = 0x67,
+  Corrosive_Acid = 0x68,
+  Mind_Control = 0x69,
+  Feedback = 0x6A,
+  Optical_Flare = 0x6B,
+  Maelstrom = 0x6C,
+  Subterranean_Spines = 0x6D,
+  Warp_Blades = 0x6F,
+  C_10_Canister_Rifle_Samir_Duran = 0x70,
+  C_10_Canister_Rifle_Infested_Duran = 0x71,
+  Dual_Photon_Blasters_Artanis = 0x72,
+  Anti_Matter_Missiles_Artanis = 0x73,
+  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
+  WT_None = 0x82,
+  WT_Unknown = 0x83,
+  WT_MAX = 0x84,
+};
 
 struct StringTbl
 {
@@ -2764,11 +2796,28 @@ enum MapData4 : __int32
   MD4_Unknown = 0x41,
 };
 
-struct __declspec(align(2)) AudioVideoInitializationError
+typedef u16 TileID;
+
+union SaiRegionUser
 {
-  _DWORD error_code;
-  _DWORD dword4;
-  _DWORD function_name;
+  void *node;
+  int relation;
+};
+
+struct AI_Flags
+{
+  unsigned __int16 isSecureFinished : 1;
+  unsigned __int16 isTownStarted : 1;
+  unsigned __int16 isDefaultBuildOff : 1;
+  unsigned __int16 isTransportsOff : 1;
+  unsigned __int16 isFarmsNotimingOn : 1;
+  unsigned __int16 isUseMapSettings : 1;
+  unsigned __int16 flag_0x40 : 1;
+  unsigned __int16 spreadCreep : 1;
+  unsigned __int16 flag_0x100 : 1;
+  unsigned __int16 hasStrongestGndArmy : 1;
+  unsigned __int16 bUpgradesFinished : 1;
+  unsigned __int16 bTargetExpansion : 1;
 };
 
 struct _SCOPETABLE_ENTRY
@@ -2786,20 +2835,11 @@ struct Box32
   s32 bottom;
 };
 
-struct AI_Flags
+struct __declspec(align(2)) AudioVideoInitializationError
 {
-  unsigned __int16 isSecureFinished : 1;
-  unsigned __int16 isTownStarted : 1;
-  unsigned __int16 isDefaultBuildOff : 1;
-  unsigned __int16 isTransportsOff : 1;
-  unsigned __int16 isFarmsNotimingOn : 1;
-  unsigned __int16 isUseMapSettings : 1;
-  unsigned __int16 flag_0x40 : 1;
-  unsigned __int16 spreadCreep : 1;
-  unsigned __int16 flag_0x100 : 1;
-  unsigned __int16 hasStrongestGndArmy : 1;
-  unsigned __int16 bUpgradesFinished : 1;
-  unsigned __int16 bTargetExpansion : 1;
+  _DWORD error_code;
+  _DWORD dword4;
+  _DWORD function_name;
 };
 
 typedef void (__thiscall *InputProcedure)(dlgEvent *);
@@ -2832,20 +2872,6 @@ struct __declspec(align(2)) GotFileValues
   u32 victory_condition_value;
   u32 resource_type_value;
   u8 unused3[5];
-};
-
-struct __declspec(align(1)) ChkLoader
-{
-  int version;
-  ChkSectionLoader *ptr1;
-  int i1;
-  ChkSectionLoader *ptr2;
-  int i2;
-  ChkSectionLoader *ptr3;
-  int i3;
-  ChkSectionLoader *ptr4;
-  int i4;
-  int requires_expansion;
 };
 
 struct TileType
@@ -3035,14 +3061,22 @@ struct type_info
   char _m_d_name[];
 };
 
-struct CUnitResource
+struct SaiContourHub
 {
-  u16 resourceCount;
-  u8 resourceIscript;
-  u8 gatherQueueCount;
-  CUnit *nextGatherer;
-  u8 resourceGroup;
-  u8 resourceBelongsToAI;
+  SaiContour *contours[4];
+  u16 contourCount[4];
+  u16 contourMax[4];
+  s16 searchInner[4];
+  s16 unk_28[4];
+  s16 searchOuter[4];
+};
+
+struct UnitDimentions
+{
+  __int16 a;
+  __int16 b;
+  __int16 c;
+  __int16 d;
 };
 
 struct __declspec(align(2)) ChkSectionLoader
@@ -3237,6 +3271,13 @@ struct PlayerInfo
   char szName[25];
 };
 
+struct SaiSplit
+{
+  u16 minitileMask;
+  u16 rgn1;
+  u16 rgn2;
+};
+
 struct dialog_scroll
 {
   struct dialog *pDlg;
@@ -3428,6 +3469,12 @@ struct Counts
 
 typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
 
+struct MapSize
+{
+  u16 width;
+  u16 height;
+};
+
 struct layer
 {
   BYTE buffers;
@@ -3446,12 +3493,18 @@ struct UpgradesSC
   u8 items[46];
 };
 
-struct UnitDimentions
+struct __declspec(align(1)) ChkLoader
 {
-  __int16 a;
-  __int16 b;
-  __int16 c;
-  __int16 d;
+  int version;
+  ChkSectionLoader *ptr1;
+  int i1;
+  ChkSectionLoader *ptr2;
+  int i2;
+  ChkSectionLoader *ptr3;
+  int i3;
+  ChkSectionLoader *ptr4;
+  int i4;
+  int requires_expansion;
 };
 
 typedef bool (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
@@ -3475,6 +3528,14 @@ struct dialog_list
   u8 bUnknown_0x4F;
   u16 wVerticalOffset;
   FnDrawItem *pDrawItemFcn;
+};
+
+struct Box16
+{
+  u16 left;
+  u16 top;
+  u16 right;
+  u16 bottom;
 };
 
 struct fontMemStruct
@@ -3598,6 +3659,13 @@ struct struct_5
   IDirectSoundBuffer *sound_buffer;
 };
 
+struct SaiContour
+{
+  s16 v[3];
+  u8 type;
+  u8 unk_relation;
+};
+
 struct grpFrame
 {
   s8 x;
@@ -3613,10 +3681,14 @@ struct UpdateFunction
   void (__fastcall *update_function)(CImage *);
 };
 
-struct MapSize
+struct CUnitResource
 {
-  u16 width;
-  u16 height;
+  u16 resourceCount;
+  u8 resourceIscript;
+  u8 gatherQueueCount;
+  CUnit *nextGatherer;
+  u8 resourceGroup;
+  u8 resourceBelongsToAI;
 };
 
 struct SectionData
@@ -3633,55 +3705,21 @@ struct points
   __int16 y;
 };
 
-struct CUnitHatchery
+struct Trigger
 {
-  rect harvestValue;
+  Condition conditions[16];
+  Action actions[64];
+  DWORD dwExecutionFlags;
+  BYTE bExecuteFor[27];
+  BYTE bCurrentActionIndex;
 };
 
-struct CPPEH_RECORD
+struct RTTIBaseClassDescriptor
 {
-  DWORD old_esp;
-  EXCEPTION_POINTERS *exc_ptr;
-  struct _EH3_EXCEPTION_REGISTRATION registration;
-};
-
-struct baseLocation
-{
-  Position position;
-  BYTE mineralClusters;
-  BYTE gasGeysers;
-  BYTE isStartLocation;
-  BYTE bFlags;
-  DWORD remainingMinerals;
-  DWORD remainingGas;
-  DWORD unk_10[8];
-};
-
-struct __declspec(align(2)) ChunkData
-{
-  ChunkListItem field1;
-  SectionData section_data;
-};
-
-struct Target_
-{
-  Position pt;
-  struct CUnit *pUnit;
-};
-
-struct CUnitWorker
-{
-  CUnit *pPowerup;
-  points targetResource;
-  CUnit *targetResourceUnit;
-  u16 repairResourceLossTimer;
-  bool isCarryingSomething;
-  u8 resourceCarryCount;
-};
-
-struct MiniTileMaps_type
-{
-  MiniTileFlagArray tile[65536];
+  void *pTypeDescriptor;
+  int numContainedBases;
+  PMD pmd;
+  int attributes;
 };
 
 struct Location
@@ -3689,6 +3727,26 @@ struct Location
   Box32 dimensions;
   u16 stringId;
   u16 flags;
+};
+
+struct CSprite
+{
+  CSprite *prev;
+  CSprite *next;
+  u16 spriteID;
+  u8 playerID;
+  u8 selectionIndex;
+  u8 visibilityFlags;
+  u8 elevationLevel;
+  u8 flags;
+  u8 selectionTimer;
+  u16 index;
+  u8 unkflags_12;
+  u8 unkflags_13;
+  Position position;
+  CImage *pImagePrimary;
+  CImage *pImageHead;
+  CImage *pImageTail;
 };
 
 struct dialog_btn
@@ -3702,12 +3760,62 @@ struct dialog_btn
   u16 wAlignment;
 };
 
-struct grpHead
+struct CImage
 {
-  u16 wFrames;
-  s16 width;
-  s16 height;
-  grpFrame frames[1];
+  CImage *prev;
+  CImage *next;
+  u16 imageID;
+  u8 paletteType;
+  u8 direction;
+  u16 flags;
+  s8 horizontalOffset;
+  s8 verticalOffset;
+  u16 iscriptHeader;
+  u16 iscriptOffset;
+  u16 unknown_14;
+  Anims anim;
+  u8 sleep;
+  u16 frameSet;
+  u16 frameIndex;
+  Position mapPosition;
+  Position screenPosition;
+  rect grpBounds;
+  grpHead *GRPFile;
+  void *coloringData;
+  void (__fastcall *renderFunction)(int, int, grpFrame *, rect *, int);
+  void (__fastcall *updateFunction)(CImage *);
+  CSprite *spriteOwner;
+};
+
+struct CUnitHatchery
+{
+  rect harvestValue;
+};
+
+struct __declspec(align(2)) ChunkData
+{
+  ChunkListItem field1;
+  SectionData section_data;
+};
+
+struct SaiRegion
+{
+  SaiAccessabilityFlags accessabilityFlags;
+  u16 groupIndex;
+  u16 tileCount;
+  u8 pathCount;
+  u8 neighborCount;
+  union SaiRegionUser user;
+  u16 *neighbors;
+  u32 rgnCenterX;
+  u32 rgnCenterY;
+  Box16 rgnBox;
+  u8 defencePriority;
+  u8 neighborProperty;
+  u16 unk_22;
+  u32 unk_24;
+  u32 unk_28;
+  u16 localBuffer[10];
 };
 
 struct __declspec(align(2)) AI_Main
@@ -3720,7 +3828,7 @@ struct __declspec(align(2)) AI_Main
   s32 supply;
   u8 unknown_0x18;
   u8 newBuildType;
-  u16 nextBuildType;
+  UnitType nextBuildType;
   AiCaptain *pTownMain;
   u32 unknown_0x20[124];
   u8 unknown_0x210;
@@ -3755,47 +3863,91 @@ struct __declspec(align(2)) AI_Main
   Box32 genCmdLoc;
 };
 
-struct Trigger
-{
-  Condition conditions[16];
-  Action actions[64];
-  DWORD dwExecutionFlags;
-  BYTE bExecuteFor[27];
-  BYTE bCurrentActionIndex;
-};
-
-struct RTTIBaseClassDescriptor
-{
-  void *pTypeDescriptor;
-  int numContainedBases;
-  PMD pmd;
-  int attributes;
-};
-
 struct CUnitRally
 {
   points position;
   CUnit *unit;
 };
 
-struct CSprite
+struct baseLocation
 {
-  CSprite *prev;
-  CSprite *next;
-  u16 spriteID;
-  u8 playerID;
-  u8 selectionIndex;
-  u8 visibilityFlags;
-  u8 elevationLevel;
-  u8 flags;
-  u8 selectionTimer;
-  u16 index;
-  u8 unkflags_12;
-  u8 unkflags_13;
   Position position;
-  CImage *pImagePrimary;
-  CImage *pImageHead;
-  CImage *pImageTail;
+  BYTE mineralClusters;
+  BYTE gasGeysers;
+  BYTE isStartLocation;
+  BYTE bFlags;
+  DWORD remainingMinerals;
+  DWORD remainingGas;
+  DWORD unk_10[8];
+};
+
+struct struct_game_140
+{
+  int data;
+  char player_name[24];
+  int data21;
+  __int16 width;
+  __int16 height;
+  char data231;
+  char number_of_open_slots;
+  char game_speed;
+  char data234;
+  GameType game_type;
+  char data242;
+  __int16 data243;
+  int data25;
+  __int16 tileset;
+  __int16 data262;
+  int data27[6];
+  char data3;
+  char map_name[32];
+  GotFileValues got_file_values;
+};
+
+struct CPPEH_RECORD
+{
+  DWORD old_esp;
+  EXCEPTION_POINTERS *exc_ptr;
+  struct _EH3_EXCEPTION_REGISTRATION registration;
+};
+
+struct grpHead
+{
+  u16 wFrames;
+  s16 width;
+  s16 height;
+  grpFrame frames[1];
+};
+
+struct Target_
+{
+  Position pt;
+  struct CUnit *pUnit;
+};
+
+struct __declspec(align(1)) GotFile
+{
+  u8 version;
+  char name[32];
+  char label[32];
+  GotFileValues values;
+};
+
+struct CUnitWorker
+{
+  CUnit *pPowerup;
+  points targetResource;
+  CUnit *targetResourceUnit;
+  u16 repairResourceLossTimer;
+  bool isCarryingSomething;
+  u8 resourceCarryCount;
+};
+
+struct __declspec(align(2)) PathCreateRelated
+{
+  s16 field1;
+  s16 field0;
+  MapSize map_size;
 };
 
 struct AllScoresStruct
@@ -3823,56 +3975,6 @@ struct AllScoresStruct
   Counts unitCounts;
 };
 
-struct struct_game_140
-{
-  int data;
-  char player_name[24];
-  int data21;
-  __int16 width;
-  __int16 height;
-  char data231;
-  char number_of_open_slots;
-  char game_speed;
-  char data234;
-  char game_type;
-  char data242;
-  __int16 data243;
-  int data25;
-  __int16 tileset;
-  __int16 data262;
-  int data27[6];
-  char data3;
-  char map_name[32];
-  GotFileValues got_file_values;
-};
-
-struct CImage
-{
-  CImage *prev;
-  CImage *next;
-  u16 imageID;
-  u8 paletteType;
-  u8 direction;
-  u16 flags;
-  s8 horizontalOffset;
-  s8 verticalOffset;
-  u16 iscriptHeader;
-  u16 iscriptOffset;
-  u16 unknown_14;
-  Anims anim;
-  u8 sleep;
-  u16 frameSet;
-  u16 frameIndex;
-  Position mapPosition;
-  Position screenPosition;
-  rect grpBounds;
-  grpHead *GRPFile;
-  void *coloringData;
-  void (__fastcall *renderFunction)(int, int, grpFrame *, rect *, int);
-  void (__fastcall *updateFunction)(CImage *);
-  CSprite *spriteOwner;
-};
-
 struct dlgEvent
 {
   u32 dwUser;
@@ -3885,12 +3987,9 @@ struct dlgEvent
   u16 wUnk_0x12;
 };
 
-struct __declspec(align(1)) GotFile
+struct MiniTileMaps_type
 {
-  u8 version;
-  char name[32];
-  char label[32];
-  GotFileValues values;
+  MiniTileFlagArray tile[65536];
 };
 
 struct CUnitPowerup
@@ -3948,6 +4047,18 @@ union dialog_fields
   dialog_edit edit;
   dialog_scroll scroll;
   dialog_list list;
+};
+
+struct SAI_Paths
+{
+  u32 regionCount;
+  void *globalBuffer_ptr;
+  void *splitTiles_end;
+  u16 mapTileRegionId[256][256];
+  SaiSplit splitTiles[25000];
+  SaiRegion regions[5000];
+  u16 globalBuffer[10000];
+  SaiContourHub *contours;
 };
 
 struct COrder

@@ -683,7 +683,7 @@ void GameRun_(MenuPosition a1)
 		if (!stru_5967F8.tileset)
 			stru_5967F8.tileset = CurrentTileSet;
 		if (!stru_5967F8.game_type)
-			stru_5967F8.game_type = stru_5967F8.got_file_values.template_id;
+			stru_5967F8.game_type = (GameType) stru_5967F8.got_file_values.template_id;
 		if (!stru_5967F8.data242)
 			stru_5967F8.data242 = stru_5967F8.got_file_values.unused1;
 		if (!stru_5967F8.data243)
