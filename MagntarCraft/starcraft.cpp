@@ -1129,6 +1129,47 @@ LABEL_26:
 	return 1;
 }
 
+PatchAddress ReadMapData_patch(ReadMapData, ReadMapData_);
+
+void sub_4CC990_()
+{
+	char buff[260];
+	char dest[260];
+	int v5; // [sp+214h] [bp-4h]@5
+
+	if (CampaignIndex)
+	{
+		SStrCopy(dest, CurrentMapFileName, 0x104u);
+	}
+	else
+	{
+		dest[0] = 0;
+		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &v5, 1, &hArchive))
+			return;
+	}
+	int v4 = 0;
+	if (dest[0])
+		_snprintf(buff, 0x104u, "%s\\%s", dest, "staredit\\scenario.chk");
+	else
+		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+	void* v0 = fastFileRead(&v4, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
+	if (v0)
+	{
+		v5 = 0;
+		if (ReadMapChunks(0, (int) v0, &v5, v4))
+		{
+			ReadChunkNodes(chk_loaders[v5].i2, v4, chk_loaders[v5].ptr2, (int) v0, 0);
+			SMemFree(v0, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
+		}
+		else
+		{
+			SMemFree(v0, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2104, 0);
+		}
+	}
+}
+
+PatchAddress sub_4CC990_patch(sub_4CC990, sub_4CC990_);
+
 int CreateCampaignGame_(MapData a1)
 {
 	int result; // eax@1
