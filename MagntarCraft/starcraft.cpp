@@ -1035,7 +1035,7 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	return 0;
 }
 
-int ReadMapData_(char *source, MapChunks *a4, int a5)
+int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 {
 	int v5; // edi@4
 	int v6; // esi@4
