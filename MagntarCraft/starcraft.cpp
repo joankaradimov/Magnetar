@@ -2,6 +2,7 @@
 #include "starcraft.h"
 #include "patching/AddressPatch.h"
 #include "patching/CallSitePatch.h"
+#include "patching/MemoryPatch.h"
 #include "patching/NopPatch.h"
 
 signed int AppAddExit_(AppExitHandle a1)
