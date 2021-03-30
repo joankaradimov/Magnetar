@@ -1037,15 +1037,11 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 
 int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 {
-	int v5; // edi@4
-	int v6; // esi@4
 	char *v8; // esi@7
-	int v9; // ecx@11
 	bool v11; // zf@12
 	__int16 v12; // ax@20
 	char *v13; // eax@22
 	u16 v14; // ax@23
-	int v15; // [sp+0h] [bp-4h]@1
 
 	CurrentMapFileName[0] = 0;
 	if (!a5)
@@ -1063,21 +1059,19 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 	a4->data7 = 0;
 	if (InReplay)
 	{
-		v5 = dword_6D0F20;
-		v6 = (int)dword_6D0F24;
-		v15 = MD_none;
-		if (!ReadMapChunks(a4, (int)dword_6D0F24, &v15, dword_6D0F20)
-			|| !ReadChunkNodes_(chk_loaders[v15].i1, v5, chk_loaders[v15].ptr1, v6, a4))
+		int loader_index = 0;
+		if (!ReadMapChunks(a4, (int)dword_6D0F24, &loader_index, dword_6D0F20)
+			|| !ReadChunkNodes_(chk_loaders[loader_index].i1, dword_6D0F20, chk_loaders[loader_index].ptr1, (int) dword_6D0F24, a4))
 			return 0;
 		v8 = source;
 	}
 	else
 	{
 		v8 = source;
-		if (!*source || !sub_4CCAC0_(source, a4))
+		if (!*source || !sub_4CCAC0(source, a4))
 			return 0;
 	}
-	v9 = 12;
+	int v9 = 12;
 	PlayerInfo* v10_ = LobbyPlayers + 12;
 	do
 	{
@@ -1172,15 +1166,12 @@ PatchAddress sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
 int CreateCampaignGame_(MapData a1)
 {
-	int result; // eax@1
-	GotFileValues *v2; // eax@2
 	MapChunks a4; // [sp+0h] [bp-D0h]@1
 	struct_game_140 v4; // [sp+20h] [bp-B0h]@2
 	char v5[32]; // [sp+B0h] [bp-20h]@2
 
 	CampaignIndex = a1;
-	result = ReadMapData_(MapdataFilenames[a1], &a4, 1);
-	if (result)
+	if (ReadMapData_(MapdataFilenames[a1], &a4, 1))
 	{
 		memset(&v4, 0, 140u);
 		v4.got_file_values.unused3[4] = 0;
@@ -1189,7 +1180,7 @@ int CreateCampaignGame_(MapData a1)
 		v4.game_speed = GameSpeed;
 		v4.data231 = 1;
 		v4.number_of_open_slots = 1;
-		v2 = readTemplate("Use Map Settings(1)", v5, v5);
+		GotFileValues* v2 = readTemplate("Use Map Settings(1)", v5, v5);
 		if (v2)
 		{
 			memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values));
@@ -1838,8 +1829,8 @@ void GameMainLoop_()
 
 unsigned __int32 LocalGetLang_()
 {
-	CHAR Buffer[16]; // [sp+4h] [bp-14h]@2
-	char *v2; // [sp+14h] [bp-4h]@5
+	CHAR Buffer[16];
+	char *v2;
 
 	if (hInstance && LoadStringA(hInstance, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
 		return strtoul(Buffer, &v2, 16);
