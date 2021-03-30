@@ -28,7 +28,6 @@ static LPVOID _VirtualAlloc(LPVOID address, SIZE_T size, DWORD allocationType, D
 	}
 }
 
-
 static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
 {
 	UNREFERENCED_PARAMETER(userdata);
