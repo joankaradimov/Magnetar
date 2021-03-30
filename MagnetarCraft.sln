@@ -12,13 +12,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Storm", "Storm\Storm.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Magnetorm", "Magnetorm\Magnetorm.vcxproj", "{BA15BFF5-9C70-4DC7-A4E2-E609BD86B99B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagntarCraft", "MagntarCraft\MagntarCraft.vcxproj", "{3DCEBAF3-26CC-4662-AA00-21CB8C44B984}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "idb-export", "idb-export", "{7B0280A4-5CAA-41A1-B214-B2D83D65ED22}"
 	ProjectSection(SolutionItems) = preProject
 		idb-export\idb-export.py = idb-export\idb-export.py
 		idb-export\README.md = idb-export\README.md
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MagnetarCraft", "MagnetarCraft\MagnetarCraft.vcxproj", "{3DCEBAF3-26CC-4662-AA00-21CB8C44B984}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,5 +55,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {27F4E109-AF84-4FDD-886E-A8B718227739}
 	EndGlobalSection
 EndGlobal
