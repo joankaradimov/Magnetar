@@ -1,12 +1,17 @@
 #pragma once
 
-#include <vector>
+#include "BasePatch.h"
 
-class AddressPatch
+class AddressPatch: public BasePatch
 {
 public:
-	AddressPatch(void* destination_function, void* new_function);
-	static void apply_patches();
+	AddressPatch(void* destination_function, void* replacement_function);
+
+	size_t length();
+	void apply();
+
 private:
-	static std::vector<std::pair<void*, void*>> patches;
+	BYTE* replacement_function;
+
+	static const BYTE JMP_INSTRUCTION_OPCODE = 0xE9;
 };

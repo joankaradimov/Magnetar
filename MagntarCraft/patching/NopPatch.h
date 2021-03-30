@@ -1,12 +1,17 @@
 #pragma once
 
-#include <vector>
+#include "BasePatch.h"
 
-class NopPatch
+class NopPatch : public BasePatch
 {
 public:
-	NopPatch(void* destination_address, size_t length);
-	static void apply_patches();
+	NopPatch(void* destination_address, size_t block_length);
+
+	size_t length();
+	void apply();
+
 private:
-	static std::vector<std::pair<void*, size_t>> patches;
+	size_t block_length;
+
+	static const BYTE NOP_INSTRUCTION_OPCODE = 0x90;
 };

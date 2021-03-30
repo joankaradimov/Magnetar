@@ -1,33 +1,20 @@
-#include <Windows.h>
-#include <vector>
-
 #include "NopPatch.h"
 
-const BYTE NOP_OPCODE = 0x90;
-
-std::vector<std::pair<void*, size_t>> NopPatch::patches;
-
-NopPatch::NopPatch(void* destination_address, size_t length)
+NopPatch::NopPatch(void* destination_address, size_t block_length) :
+	BasePatch(destination_address),
+	block_length(block_length)
 {
-	patches.emplace_back(destination_address, length);
 }
 
-void NopPatch::apply_patches()
+size_t NopPatch::length()
 {
-	// TODO: batch calls to `VirtualProtect` together
-	for (std::pair<void*, size_t>& patch : patches)
+	return block_length;
+}
+
+void NopPatch::apply()
+{
+	for (int i = 0; i < block_length; i++)
 	{
-		BYTE* destination_address = (BYTE*)patch.first;
-		size_t length = patch.second;
-
-		DWORD old_protection;
-		VirtualProtect(destination_address, length, PAGE_EXECUTE_READWRITE, &old_protection);
-
-		for (int i = 0; i < length; i++)
-		{
-			destination_address[i] = NOP_OPCODE;
-		}
-
-		VirtualProtect(destination_address, length, old_protection, NULL);
+		destination_address[i] = NOP_INSTRUCTION_OPCODE;
 	}
 }

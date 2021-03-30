@@ -152,6 +152,7 @@
   <ItemGroup>
     <ClInclude Include="..\MemoryModule\MemoryModule.h" />
     <ClInclude Include="patching\AddressPatch.h" />
+    <ClInclude Include="patching\BasePatch.h" />
     <ClInclude Include="patching\CallSitePatch.h" />
     <ClInclude Include="patching\NopPatch.h" />
     <ClInclude Include="starcraft.h" />
@@ -162,6 +163,7 @@
     <ClCompile Include="..\MemoryModule\MemoryModule.c" />
     <ClCompile Include="MagnetarCraft.cpp" />
     <ClCompile Include="patching\AddressPatch.cpp" />
+    <ClCompile Include="patching\BasePatch.cpp" />
     <ClCompile Include="patching\CallSitePatch.cpp" />
     <ClCompile Include="patching\NopPatch.cpp" />
     <ClCompile Include="starcraft.cpp" />

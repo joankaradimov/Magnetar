@@ -3,31 +3,20 @@
 
 #include "CallSitePatch.h"
 
-const BYTE JMP_INSTRUCTION_OPCODE = 0xE8;
-const ptrdiff_t JMP_INSTRUCTION_LENGTH = 5;
-
-std::vector<std::pair<void*, void*>> CallSitePatch::patches;
-
-CallSitePatch::CallSitePatch(void* destination_function, void* new_function)
+CallSitePatch::CallSitePatch(void* destination_address, void* function) :
+	BasePatch(destination_address),
+	function((BYTE*)function)
 {
-	patches.emplace_back(destination_function, new_function);
 }
 
-void CallSitePatch::apply_patches()
+size_t CallSitePatch::length()
 {
-	// TODO: batch calls to `VirtualProtect` together
-	for (std::pair<void*, void*>& patch : patches)
-	{
-		BYTE* destination_function = (BYTE*)patch.first;
-		BYTE* new_function = (BYTE*)patch.second;
+	return sizeof(CALL_INSTRUCTION_OPCODE) + sizeof(function);
+}
 
-		DWORD old_protection;
-		VirtualProtect(destination_function, JMP_INSTRUCTION_LENGTH, PAGE_EXECUTE_READWRITE, &old_protection);
-
-		ptrdiff_t jmp_offset = new_function - destination_function - JMP_INSTRUCTION_LENGTH;
-		destination_function[0] = JMP_INSTRUCTION_OPCODE;
-		*((ptrdiff_t*)(destination_function + 1)) = jmp_offset;
-
-		VirtualProtect(destination_function, JMP_INSTRUCTION_LENGTH, old_protection, NULL);
-	}
+void CallSitePatch::apply()
+{
+	ptrdiff_t jmp_offset = function - destination_address - length();
+	*destination_address = CALL_INSTRUCTION_OPCODE;
+	*((ptrdiff_t*)(destination_address + 1)) = jmp_offset;
 }

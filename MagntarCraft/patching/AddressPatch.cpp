@@ -3,31 +3,20 @@
 
 #include "AddressPatch.h"
 
-const BYTE JMP_INSTRUCTION_OPCODE = 0xE9;
-const ptrdiff_t JMP_INSTRUCTION_LENGTH = 5;
-
-std::vector<std::pair<void*, void*>> AddressPatch::patches;
-
-AddressPatch::AddressPatch(void* destination_function, void* new_function)
+AddressPatch::AddressPatch(void* destination_function, void* replacement_function) :
+	BasePatch(destination_function),
+	replacement_function((BYTE*)replacement_function)
 {
-	patches.emplace_back(destination_function, new_function);
 }
 
-void AddressPatch::apply_patches()
+size_t AddressPatch::length()
 {
-	// TODO: batch calls to `VirtualProtect` together
-	for (std::pair<void*, void*>& patch : patches)
-	{
-		BYTE* destination_function = (BYTE*)patch.first;
-		BYTE* new_function = (BYTE*)patch.second;
+	return sizeof(JMP_INSTRUCTION_OPCODE) + sizeof(replacement_function);
+}
 
-		DWORD old_protection;
-		VirtualProtect(destination_function, JMP_INSTRUCTION_LENGTH, PAGE_EXECUTE_READWRITE, &old_protection);
-
-		ptrdiff_t jmp_offset = new_function - destination_function - JMP_INSTRUCTION_LENGTH;
-		destination_function[0] = JMP_INSTRUCTION_OPCODE;
-		*((ptrdiff_t*)(destination_function + 1)) = jmp_offset;
-
-		VirtualProtect(destination_function, JMP_INSTRUCTION_LENGTH, old_protection, NULL);
-	}
+void AddressPatch::apply()
+{
+	ptrdiff_t jmp_offset = replacement_function - destination_address - length();
+	*destination_address = JMP_INSTRUCTION_OPCODE;
+	*((ptrdiff_t*)(destination_address + 1)) = jmp_offset;
 }

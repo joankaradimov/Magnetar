@@ -1,12 +1,17 @@
 #pragma once
 
-#include <vector>
+#include "BasePatch.h"
 
-class CallSitePatch
+class CallSitePatch : public BasePatch
 {
 public:
-	CallSitePatch(void* address, void* new_function);
-	static void apply_patches();
+	CallSitePatch(void* destination_address, void* function);
+
+	size_t length();
+	void apply();
+
 private:
-	static std::vector<std::pair<void*, void*>> patches;
+	BYTE* function;
+
+	static const BYTE CALL_INSTRUCTION_OPCODE = 0xE8;
 };
