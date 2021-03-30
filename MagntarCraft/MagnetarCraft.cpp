@@ -3,9 +3,7 @@
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
 #include <exception>
-#include "patching/AddressPatch.h"
-#include "patching/CallSitePatch.h"
-#include "patching/NopPatch.h"
+#include "patching/BasePatch.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
