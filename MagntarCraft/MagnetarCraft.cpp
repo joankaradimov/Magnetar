@@ -3,7 +3,8 @@
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
 #include <exception>
-#include "AddressPatch.h"
+#include "patching/AddressPatch.h"
+#include "patching/CallSitePatch.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
@@ -92,6 +93,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	init_stacraftexe_clib();
+	CallSitePatch::apply_patches();
 	AddressPatch::apply_patches();
 
 	main(starcraftExeData);
