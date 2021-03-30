@@ -121,7 +121,7 @@ struct _SCOPETABLE_ENTRY;
 struct Box32;
 struct __declspec(align(2)) AudioVideoInitializationError;
 struct s_evt;
-struct __declspec(align(2)) GotFileValues;
+struct __declspec(align(1)) GotFileValues;
 struct TileType;
 struct ImagesDatExtraOverlayLO_Files;
 struct UpgradesBW;
@@ -2852,7 +2852,7 @@ struct s_evt
   DWORD dwSize;
 };
 
-struct __declspec(align(2)) GotFileValues
+struct __declspec(align(1)) GotFileValues
 {
   u8 template_id;
   u8 unused1;
@@ -3902,6 +3902,7 @@ struct struct_game_140
   char data3;
   char map_name[32];
   GotFileValues got_file_values;
+  char unknown[4];
 };
 
 struct CPPEH_RECORD
