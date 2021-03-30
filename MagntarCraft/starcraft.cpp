@@ -270,7 +270,7 @@ int InitializeArchiveHandles_()
 	if (v0)
 		*v0 = 0;
 	SStrNCat(Filename, "\\Stardat.mpq", 260);
-	if (!SFileOpenArchive(Filename, 0x7D0u, 2u, &phFile) || (v1 = phFile) == 0)
+	if (!SFileOpenArchive(Filename, 2000u, 2u, &phFile) || (v1 = phFile) == 0)
 		v1 = 0;
 	dword_51CC38 = v1;
 	if (!v1)
@@ -284,7 +284,7 @@ int InitializeArchiveHandles_()
 	if (v2)
 		*v2 = 0;
 	SStrNCat(archivename, "\\patch_rt.mpq", 260);
-	if (!SFileOpenArchive(archivename, 0x1B58u, 2u, &phFile) || (v3 = phFile) == 0)
+	if (!SFileOpenArchive(archivename, 7000u, 2u, &phFile) || (v3 = phFile) == 0)
 		v3 = 0;
 	dword_51CC28 = v3;
 	InitializeFontKey_();
@@ -300,7 +300,7 @@ int InitializeArchiveHandles_()
 		if (v4)
 			*v4 = 0;
 		SStrNCat(archivename_, "\\Broodat.mpq", 260);
-		if (!SFileOpenArchive(archivename_, 0x9C4u, 2u, &phFile) || (v5 = phFile) == 0)
+		if (!SFileOpenArchive(archivename_, 2500u, 2u, &phFile) || (v5 = phFile) == 0)
 			v5 = 0;
 		dword_51CC2C = v5;
 		if (v5)
