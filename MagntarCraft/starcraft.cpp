@@ -122,7 +122,6 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 	void *result; // eax@7
 	LONG filesize; // eax@8 MAPDST
 	void *buffer; // ebx@17
-	HANDLE v14; // edi@19
 	HANDLE phFile; // [sp+8h] [bp-4h]@1 MAPDST
 
 	if (SFileOpenFileEx(0, filename, searchScope, &phFile))
@@ -146,15 +145,14 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 		buffer = (void *)defaultValue;
 		if (!defaultValue)
 			buffer = SMemAlloc(filesize, logfilename, logline, defaultValue);
-		v14 = phFile;
 		if (!SFileReadFile(phFile, buffer, filesize, &bytes_to_read, 0))
 		{
 			if (GetLastError() == 38)
-				FileFatal(v14, 24);
-			FileFatal(v14, GetLastError());
+				FileFatal(phFile, 24);
+			FileFatal(phFile, GetLastError());
 		}
 		if (bytes_to_read != filesize)
-			FileFatal(v14, 24);
+			FileFatal(phFile, 24);
 		SFileCloseFile(phFile);
 		result = buffer;
 	}
