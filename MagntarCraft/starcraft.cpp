@@ -742,7 +742,7 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
-PatchAddress ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
+AddressPatch ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
 
 bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 {
@@ -805,7 +805,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 	}
 }
 
-PatchAddress ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
+AddressPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
 
 void initMapData_()
 {
@@ -906,7 +906,7 @@ void initMapData_()
 	}
 }
 
-PatchAddress initMapData_patch(initMapData, initMapData_);
+AddressPatch initMapData_patch(initMapData, initMapData_);
 
 int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
 {
@@ -1123,7 +1123,7 @@ LABEL_26:
 	return 1;
 }
 
-PatchAddress ReadMapData_patch(ReadMapData, ReadMapData_);
+AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
 void sub_4CC990_()
 {
@@ -1162,7 +1162,7 @@ void sub_4CC990_()
 	}
 }
 
-PatchAddress sub_4CC990_patch(sub_4CC990, sub_4CC990_);
+AddressPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
 int CreateCampaignGame_(MapData a1)
 {

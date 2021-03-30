@@ -92,7 +92,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	init_stacraftexe_clib();
-	PatchAddress::apply_patches();
+	AddressPatch::apply_patches();
+
 	main(starcraftExeData);
 
 	return 0;

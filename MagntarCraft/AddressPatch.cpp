@@ -6,14 +6,14 @@
 const BYTE JMP_INSTRUCTION_OPCODE = 0xE9;
 const ptrdiff_t JMP_INSTRUCTION_LENGTH = 5;
 
-std::vector<std::pair<void*, void*>> PatchAddress::patches;
+std::vector<std::pair<void*, void*>> AddressPatch::patches;
 
-PatchAddress::PatchAddress(void* destination_function, void* new_function)
+AddressPatch::AddressPatch(void* destination_function, void* new_function)
 {
 	patches.emplace_back(destination_function, new_function);
 }
 
-void PatchAddress::apply_patches()
+void AddressPatch::apply_patches()
 {
 	// TODO: batch calls to `VirtualProtect` together
 	for (std::pair<void*, void*>& patch : patches)
