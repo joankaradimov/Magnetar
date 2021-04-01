@@ -1871,6 +1871,34 @@ void localDll_Init_(HINSTANCE a1)
 	AppAddExit_(FreeLocalDLL);
 }
 
+void __cdecl sub_4D9200_()
+{
+	if (!LOBYTE(OpheliaCheat2[0]) && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
+	{
+		for (int i = 0; i < 64; i++)
+		{
+			if (campaign_missions[i].mission_index == CampaignIndex)
+				loadInitCreditsBIN(campaign_missions[i].mission_name);
+		}
+	}
+	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
+	{
+		SFileOpenArchive(CurrentMapFileName, 0, 0, &hArchive);
+		HANDLE handle;
+		bool establishingShotExists = SFileOpenFileEx(hArchive, "rez\\est.txt", 0, &handle);
+		if (handle)
+			SFileCloseFile(handle);
+
+		if (establishingShotExists)
+			loadInitCreditsBIN("est");
+
+		if (hArchive)
+			SFileCloseArchive(hArchive);
+	}
+}
+
+AddressPatch sub_4D9200_patch(sub_4D9200, sub_4D9200_);
+
 void main(HINSTANCE starcraft_exe) {
 	hInst = starcraft_exe;
 	main_thread_id_maybe = GetCurrentThreadId();
