@@ -1907,5 +1907,5 @@ void main(HINSTANCE starcraft_exe) {
 	VerifySystemMemory();
 	FastIndexInit();
 	BWSetSecurityInfo();
-	GameMainLoop_();
+	GameMainLoop(); // TODO: use GameMainLoop_
 }
