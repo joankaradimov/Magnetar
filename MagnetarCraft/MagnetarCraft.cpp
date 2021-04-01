@@ -77,8 +77,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		throw std::exception("Could not reserve memory at base address 0x400000 for Starcraft.exe");
 	}
 
-	SetCurrentDirectory(L"C:\\Users\\Joan\\Desktop\\Starcraft");
-
 	HINSTANCE starcraftExeData = LoadLibrary(L"Starcraft.exe");
 
 	if (starcraftExeData == NULL) {
