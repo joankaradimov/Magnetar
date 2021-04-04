@@ -577,7 +577,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 		blitTileCacheOnRefresh();
 	}
 	BWFXN_drawAllSprites();
-	if (CurrentTileSet == Platform)
+	if (CurrentTileSet == Platform || CurrentTileSet == 8)
 	{
 		if (v2)
 			drawStars();
@@ -767,6 +767,7 @@ char* TILESET_NAMES[] = {
 	"Desert",
 	"Ice",
 	"Twlight",
+	"asteroids",
 };
 
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
@@ -965,7 +966,14 @@ void initMapData_()
 				}
 				byte_658AC0 = 0;
 				dword_658AA4 = 0;
-				loadParallaxStarGfx();
+				if (CurrentTileSet == Tileset::Platform)
+				{
+					loadParallaxStarGfx_("star");
+				}
+				else
+				{
+					loadParallaxStarGfx_("asteroid");
+				}
 				sub_47D660();
 			}
 			else
@@ -1999,6 +2007,7 @@ int TILESET_PALETTE_RELATED[] = {
 	0x51279C,
 	0x51279C,
 	0x51279C,
+	0x6D1228,
 };
 
 MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
