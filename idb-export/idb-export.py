@@ -65,8 +65,6 @@ class Function:
     def signature(self):
         if not hasattr(self, '_signature'):
             signature = self.ref_type
-            signature = signature.replace('__far', '')
-            signature = signature.replace(' __noreturn ', ' ')
             signature = signature.replace('this,', 'this_,')
             signature = signature.replace('this@', 'this_@')
             signature = signature.replace('this)', 'this_)')
@@ -286,6 +284,9 @@ TYPES_HEADER_TEMPLATE = """#pragma once
 #include <ddraw.h>
 #include <Mmreg.h>
 #include <DSound.h>
+
+#define __far
+#define __noreturn
 
 // Some convenience macros to make partial accesses nicer
 // first unsigned macros:
