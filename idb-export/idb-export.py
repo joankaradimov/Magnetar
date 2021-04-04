@@ -285,6 +285,8 @@ TYPES_HEADER_TEMPLATE = """#pragma once
 #include <Mmreg.h>
 #include <DSound.h>
 
+#define __unaligned
+#define __hidden
 #define __far
 #define __noreturn
 
