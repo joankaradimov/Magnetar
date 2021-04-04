@@ -8,6 +8,11 @@
 #include <Mmreg.h>
 #include <DSound.h>
 
+#define __unaligned
+#define __hidden
+#define __far
+#define __noreturn
+
 // Some convenience macros to make partial accesses nicer
 // first unsigned macros:
 #define LOBYTE(x)   (*((_BYTE*)&(x)))   // low byte
@@ -79,419 +84,285 @@ typedef __int32 _DWORD;
 typedef __int64 _QWORD;
 typedef __int8 _TBYTE;
 
-enum Tileset ;
-enum PlayerType ;
-enum GameType ;
-struct LO_Overlays;
-enum Anims ;
-enum UnitPrototypeFlags;
-enum SaiAccessabilityFlags ;
-enum WeaponTargetFlags ;
-struct CUnitPylon;
-struct CUnitGatherer;
-struct CUnitPsiProvider;
-enum PlayerGroups;
-struct SpriteTileData;
-enum Tech2 ;
-enum FlingyID ;
-enum UnitType ;
-struct CUnitNydus;
-struct ChunkListItem;
-enum MapData ;
-enum DamageType ;
-enum CheatFlags;
-enum UnitMovementState ;
-enum Race ;
-enum Tech ;
-enum WeaponType ;
-struct StringTbl;
-enum Order ;
-struct dialog_ctrl;
-enum MenuPosition ;
-enum GamePosition ;
-enum StatusFlags;
-enum SfxData;
-enum WeaponBehavior ;
-struct CUnitGhost;
-struct __declspec(align(2)) struct_a1;
 enum MapData4 ;
-union SaiRegionUser;
-struct AI_Flags;
-struct _SCOPETABLE_ENTRY;
-struct Box32;
-struct __declspec(align(2)) AudioVideoInitializationError;
-struct s_evt;
-struct __declspec(align(1)) GotFileValues;
-struct TileType;
-struct ImagesDatExtraOverlayLO_Files;
-struct UpgradesBW;
-struct __declspec(align(2)) UnknownPlayerRelated;
-struct __declspec(align(1)) Position;
-struct __declspec(align(2)) SightStruct;
-struct CUnitStatus;
-struct __declspec(align(2)) CUnitBuilding;
-struct CUnitVulture;
-struct ForceName;
-struct UnitFinderData;
-struct Font;
-struct vr4entry;
-struct type_info;
-struct SaiContourHub;
-struct UnitDimentions;
-struct __declspec(align(2)) ChkSectionLoader;
-struct SuppliesPerRace;
-struct ScrollSpeeds;
-struct CUnitBeacon;
-struct dialog_optn;
-struct UnitAvail;
-struct CUnitSilo;
-struct TechBW;
-struct PlayerAlliance;
-struct CUnitCarrier;
-struct LO_Header;
-struct vx4entry;
-struct rect;
-struct ActiveTile;
-struct dialog_edit;
-struct CUnitFighter;
-struct TechSC;
-struct ChunkNode;
-struct RTTICompleteObjectLocator;
-struct MiniTileFlagArray;
-struct point;
-struct dialog_dlg;
-struct GameSpeeds;
-struct CThingy;
+enum UnitMovementState ;
+enum FlingyID ;
+enum StatusFlags;
+enum Tech ;
+enum GameType ;
+struct CUnitGhost;
+struct SpriteTileData;
+enum WeaponBehavior ;
+struct ChunkListItem;
+enum GamePosition ;
+enum Race ;
+struct CUnitNydus;
+enum MenuPosition ;
+enum Order ;
+struct CUnitPsiProvider;
+enum CheatFlags;
+enum WeaponType ;
+enum Anims ;
+enum Tech2 ;
+enum PlayerGroups;
+enum UnitType ;
+enum Tileset ;
+struct __declspec(align(2)) struct_a1;
+enum SaiAccessabilityFlags ;
+enum DamageType ;
+enum WeaponTargetFlags ;
+struct StringTbl;
+struct dialog_ctrl;
+enum MapData ;
+struct CUnitPylon;
+struct LO_Overlays;
+struct CUnitGatherer;
+enum SfxData;
+enum PlayerType ;
+enum UnitPrototypeFlags;
+enum GluAllTblEntry ;
+struct __unaligned __declspec(align(1)) MapRelatedUnknown;
 struct PlayerInfo;
-struct SaiSplit;
-struct dialog_scroll;
-struct pt;
-struct PMD;
-struct MapChunks;
-struct Condition;
-struct TransVectorEntry;
-struct CUnitFinder;
-struct __declspec(align(2)) DatLoad;
-struct __declspec(align(2)) ColorShiftData;
-struct __declspec(align(2)) AiCaptain;
-struct Action;
-struct PlayerResources;
-struct CampaignMission;
-struct RTCI;
-struct Chat_TextLine;
-struct bounds;
-struct Bitmap;
-struct RTTIClassHierarchyDescriptor;
-struct Counts;
-struct MapSize;
-struct layer;
-struct UpgradesSC;
-struct __declspec(align(1)) ChkLoader;
-struct dialog_list;
-struct Box16;
-struct fontMemStruct;
-struct RenderFunction;
-struct CharacterData;
-struct TriggerList;
-struct FontChar;
-struct _EH3_EXCEPTION_REGISTRATION;
-struct __declspec(align(1)) swishTimer;
-struct CndSignature;
-struct struct_2;
-struct struct_3;
-struct struct_0;
 struct struct_1;
-struct struct_6;
-struct struct_4;
+struct __declspec(align(2)) DatLoad;
+struct Chat_TextLine;
+struct CThingy;
 struct struct_5;
-struct SaiContour;
-struct grpFrame;
+struct TransVectorEntry;
+struct ChunkNode;
+struct TriggerList;
+struct _SCOPETABLE_ENTRY;
+struct RTCI;
+struct CndSignature;
+struct struct_6;
 struct UpdateFunction;
-struct CUnitResource;
-struct SectionData;
+struct __declspec(align(1)) ChkLoader;
+struct CharacterData;
+struct __declspec(align(4)) EstablishingShotPosition;
+struct AI_Flags;
+struct PlayerResources;
+struct struct_4;
+struct Condition;
+struct MapChunks;
+struct RTTICompleteObjectLocator;
+struct RenderFunction;
+struct PMD;
+struct vx4entry;
+struct __declspec(align(2)) AudioVideoInitializationError;
+struct type_info;
+struct _EH3_EXCEPTION_REGISTRATION;
+struct bounds;
 struct points;
-struct Trigger;
+struct struct_0;
+union SaiRegionUser;
+struct struct_3;
+struct UnitDimentions;
+struct CampaignMission;
+struct struct_2;
+struct GameSpeeds;
+struct point;
+struct s_evt;
+struct layer;
+struct __declspec(align(2)) UnknownPlayerRelated;
+struct ImagesDatExtraOverlayLO_Files;
+struct vr4entry;
+struct RTTIClassHierarchyDescriptor;
+struct CUnitFighter;
+struct UnknownTilesetRelated2;
+struct __declspec(align(2)) ChkSectionLoader;
+struct __declspec(align(1)) swishTimer;
+struct SectionData;
+struct CUnitSilo;
+struct PlayerAlliance;
+struct ForceName;
+struct CUnitFinder;
+struct __declspec(align(2)) ColorShiftData;
+struct __declspec(align(1)) GotFileValues;
+struct __declspec(align(2)) AiCaptain;
+struct SaiContour;
+struct CUnitVulture;
+struct UnitAvail;
+struct __declspec(align(1)) Position;
 struct RTTIBaseClassDescriptor;
-struct Location;
-struct CSprite;
-struct dialog_btn;
-struct CImage;
-struct CUnitHatchery;
-struct __declspec(align(2)) ChunkData;
-struct SaiRegion;
-struct __declspec(align(2)) AI_Main;
-struct CUnitRally;
-struct baseLocation;
-struct struct_game_140;
+struct __declspec(align(2)) CUnitBuilding;
+struct CUnitCarrier;
+struct CUnitResource;
+struct dialog_scroll;
 struct CPPEH_RECORD;
-struct grpHead;
-struct Target_;
-struct __declspec(align(1)) GotFile;
-struct CUnitWorker;
-struct __declspec(align(2)) PathCreateRelated;
-struct AllScoresStruct;
-struct dlgEvent;
-struct MiniTileMaps_type;
+struct dialog_edit;
+struct dialog_optn;
+struct TechSC;
+struct UpgradesSC;
+struct Font;
+struct UnknownTilesetRelated1;
+struct rect;
+struct CUnitStatus;
+struct UnitFinderData;
+struct dialog_list;
+struct UpgradesBW;
+struct MiniTileFlagArray;
+struct SuppliesPerRace;
+struct Counts;
+struct ScrollSpeeds;
+struct Bitmap;
+struct FontChar;
+struct TechBW;
+struct CUnitBeacon;
+struct Action;
+struct dialog_dlg;
+struct SaiContourHub;
+struct Box32;
+struct __declspec(align(2)) SightStruct;
 struct CUnitPowerup;
-struct CBullet;
+struct grpFrame;
+struct CUnitWorker;
+struct MapSize;
+struct ActiveTile;
+struct SaiSplit;
+struct CUnitRally;
+struct Box16;
+struct pt;
+struct fontMemStruct;
+struct __declspec(align(2)) ChunkData;
+struct TileType;
+struct LO_Header;
+struct __declspec(align(1)) GotFile;
+struct __declspec(align(2)) PathCreateRelated;
+union CUnitFields3;
+struct __declspec(align(4)) Target_;
+struct __declspec(align(4)) baseLocation;
+struct __declspec(align(2)) AI_Main;
+struct grpHead;
+struct Location;
+struct AllScoresStruct;
+struct struct_game_140;
+struct __declspec(align(4)) CSprite;
+struct dlgEvent;
+struct dialog_btn;
+union CUnitFields1;
+struct __declspec(align(4)) CImage;
+struct CUnitHatchery;
+struct Trigger;
+struct MiniTileMaps_type;
+struct SaiRegion;
 union dialog_fields;
+struct TriggerListEntry;
 struct SAI_Paths;
 struct COrder;
+struct __declspec(align(4)) CBullet;
 union CUnitFields2;
-union CUnitFields3;
-union CUnitFields1;
-struct TriggerListEntry;
-struct CUnit;
 struct __declspec(align(2)) dialog;
+struct __declspec(align(4)) CUnit;
 
 
-enum Tileset : __int16
+enum MapData4 : __int32
 {
-  Badlands = 0x0,
-  Platform = 0x1,
-  Install = 0x2,
-  Ashworld = 0x3,
-  Jungle = 0x4,
-  Desert = 0x5,
-  Ice = 0x6,
-  Twilight = 0x7,
+  MD4_none = 0x0,
+  MD4_tutorial = 0x1,
+  MD4_terran01 = 0x2,
+  MD4_terran02 = 0x3,
+  MD4_terran03 = 0x4,
+  MD4_terran04 = 0x5,
+  MD4_terran05 = 0x6,
+  MD4_terran06 = 0x7,
+  MD4_terran08 = 0x8,
+  MD4_terran09 = 0x9,
+  MD4_terran11 = 0xA,
+  MD4_terran12 = 0xB,
+  MD4_zerg01 = 0xC,
+  MD4_zerg02 = 0xD,
+  MD4_zerg03 = 0xE,
+  MD4_zerg04 = 0xF,
+  MD4_zerg05 = 0x10,
+  MD4_zerg06 = 0x11,
+  MD4_zerg07 = 0x12,
+  MD4_zerg08 = 0x13,
+  MD4_zerg09 = 0x14,
+  MD4_zerg10 = 0x15,
+  MD4_protoss01 = 0x16,
+  MD4_protoss02 = 0x17,
+  MD4_protoss03 = 0x18,
+  MD4_protoss04 = 0x19,
+  MD4_protoss05 = 0x1A,
+  MD4_protoss06 = 0x1B,
+  MD4_protoss07 = 0x1C,
+  MD4_protoss08 = 0x1D,
+  MD4_protoss09 = 0x1E,
+  MD4_protoss10 = 0x1F,
+  MD4_xprotoss01 = 0x20,
+  MD4_xprotoss02 = 0x21,
+  MD4_xprotoss03 = 0x22,
+  MD4_xprotoss04 = 0x23,
+  MD4_xprotoss05 = 0x24,
+  MD4_xprotoss06 = 0x25,
+  MD4_xprotoss07 = 0x26,
+  MD4_xprotoss08 = 0x27,
+  MD4_xterran01 = 0x28,
+  MD4_xterran02 = 0x29,
+  MD4_xterran03 = 0x2A,
+  MD4_xterran04 = 0x2B,
+  MD4_xterran05a = 0x2C,
+  MD4_xterran05b = 0x2D,
+  MD4_xterran06 = 0x2E,
+  MD4_xterran07 = 0x2F,
+  MD4_xterran08 = 0x30,
+  MD4_xzerg01 = 0x31,
+  MD4_xzerg02 = 0x32,
+  MD4_xzerg03 = 0x33,
+  MD4_xzerg04a = 0x34,
+  MD4_xzerg04b = 0x35,
+  MD4_xzerg04c = 0x36,
+  MD4_xzerg04d = 0x37,
+  MD4_xzerg04e = 0x38,
+  MD4_xzerg04f = 0x39,
+  MD4_xzerg05 = 0x3A,
+  MD4_xzerg06 = 0x3B,
+  MD4_xzerg07 = 0x3C,
+  MD4_xzerg08 = 0x3D,
+  MD4_xzerg09 = 0x3E,
+  MD4_xbonus = 0x3F,
+  MD4_xzerg10 = 0x40,
+  MD4_Unknown = 0x41,
 };
 
-enum PlayerType : __int8
+enum UnitMovementState : __int8
 {
-  PT_NotUsed = 0x0,
-  PT_Computer = 0x1,
-  PT_Human = 0x2,
-  PT_Rescuable = 0x3,
-  PT_Unknown0 = 0x4,
-  PT_ComputerSlot = 0x5,
-  PT_OpenSlot = 0x6,
-  PT_Neutral = 0x7,
-  PT_ClosedSlot = 0x8,
-  PT_Unknown1 = 0x9,
-  PT_HumanDefeated = 0xA,
-  PT_ComputerDefeated = 0xB,
-};
-
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
-
-enum GameType : __int8
-{
-  GT_Melee = 0x2,
-  GT_FreeForAll = 0x3,
-  GT_OneOnOne = 0x4,
-  GT_CaptureTheFlag = 0x5,
-  GT_Greed = 0x6,
-  GT_Slaughter = 0x7,
-  GT_SuddenDeath = 0x8,
-  GT_Ladder = 0x9,
-  GT_UseMapSettings = 0xA,
-  GT_TeamMelee = 0xB,
-  GT_TeamFreeForAll = 0xC,
-  GT_TeamCTF = 0xD,
-  GT_TopVsBottom = 0xF,
-};
-
-struct LO_Overlays
-{
-  LO_Header *overlays[999];
-};
-
-enum Anims : __int8
-{
-  AE_Init = 0x0,
-  AE_Death = 0x1,
-  AE_GndAttkInit = 0x2,
-  AE_AirAttkInit = 0x3,
-  AE_Unused1 = 0x4,
-  AE_GndAttkRpt = 0x5,
-  AE_AirAttkRpt = 0x6,
-  AE_CastSpell = 0x7,
-  AE_GndAttkToIdle = 0x8,
-  AE_AirAttkToIdle = 0x9,
-  AE_Unused2 = 0xA,
-  AE_Walking = 0xB,
-  AE_WalkingToIdle = 0xC,
-  AE_SpecialState1 = 0xD,
-  AE_SpecialState2 = 0xE,
-  AE_AlmostBuilt = 0xF,
-  AE_Built = 0x10,
-  AE_Landing = 0x11,
-  AE_LiftOff = 0x12,
-  AE_IsWorking = 0x13,
-  AE_WorkingToIdle = 0x14,
-  AE_WarpIn = 0x15,
-  AE_Unused3 = 0x16,
-  AE_StarEditInit = 0x17,
-  AE_Disable = 0x18,
-  AE_Burrow = 0x19,
-  AE_UnBurrow = 0x1A,
-  AE_Enable = 0x1B,
-};
-
-enum UnitPrototypeFlags
-{
-  Building = 0x1,
-  Addon = 0x2,
-  Flyer = 0x4,
-  Worker = 0x8,
-  Subunit = 0x10,
-  FlyingBuilding = 0x20,
-  Hero = 0x40,
-  RegeneratesHP = 0x80,
-  AnimatedIdle = 0x100,
-  Cloakable = 0x200,
-  TwoUnitsIn1Egg = 0x400,
-  NeutralAccessories = 0x800,
-  ResourceDepot = 0x1000,
-  ResourceContainer = 0x2000,
-  RoboticUnit = 0x4000,
-  Detector = 0x8000,
-  OrganicUnit = 0x10000,
-  CreepBuilding = 0x20000,
-  Unused = 0x40000,
-  RequiresPsi = 0x80000,
-  Burrowable = 0x100000,
-  Spellcaster = 0x200000,
-  PermanentCloak = 0x400000,
-  NPCOrAccessories = 0x800000,
-  MorphFromOtherUnit = 0x1000000,
-  LargeUnit = 0x2000000,
-  HugeUnit = 0x4000000,
-  AutoAttackAndMove = 0x8000000,
-  Attack = 0x10000000,
-  Invincible_ = 0x20000000,
-  Mechanical = 0x40000000,
-  ProducesUnits = 0x80000000,
-};
-
-enum SaiAccessabilityFlags : __int16
-{
-  SAF_HighGround = 0x1FF9,
-  SAF_LowGround = 0x1FFB,
-  SAF_Inaccessible = 0x1FFD,
-};
-
-enum WeaponTargetFlags : __int16
-{
-  WTF_Air = 0x1,
-  WTF_Ground = 0x2,
-  WTF_Mechanical = 0x4,
-  WTF_Organic = 0x8,
-  WTF_NonBuilding = 0x10,
-  WTF_NonRobotic = 0x20,
-  WTF_Terrain = 0x40,
-  WTF_OrgOrMech = 0x80,
-  WTF_Own = 0x100,
-};
-
-struct CUnitPylon
-{
-  CSprite *pPowerTemplate;
-};
-
-struct CUnitGatherer
-{
-  CUnit *harvestTarget;
-  CUnit *prevHarvestUnit;
-  CUnit *nextHarvestUnit;
-};
-
-typedef __int8 s8;
-
-struct CUnitPsiProvider
-{
-  CUnit *prevPsiProvider;
-  CUnit *nextPsiProvider;
-};
-
-typedef unsigned __int8 u8;
-
-enum PlayerGroups
-{
-  Player1 = 0x0,
-  Player2 = 0x1,
-  Player3 = 0x2,
-  Player4 = 0x3,
-  Player5 = 0x4,
-  Player6 = 0x5,
-  Player7 = 0x6,
-  Player8 = 0x7,
-  Player9 = 0x8,
-  Player10 = 0x9,
-  Player11 = 0xA,
-  Player12 = 0xB,
-  PG_None = 0xC,
-  PG_CurrentPlayer = 0xD,
-  PG_Foes = 0xE,
-  PG_Allies = 0xF,
-  PG_NeutralPlayers = 0x10,
-  PG_AllPlayers = 0x11,
-  PG_Force1 = 0x12,
-  PG_Force2 = 0x13,
-  PG_Force3 = 0x14,
-  PG_Force4 = 0x15,
-  PG_Unused1 = 0x16,
-  PG_Unused2 = 0x17,
-  PG_Unused3 = 0x18,
-  PG_Unused4 = 0x19,
-  PG_NonAlliedVictoryPlayers = 0x1A,
-  PG_Max = 0x1B,
-};
-
-struct SpriteTileData
-{
-  CSprite *tails[256];
-  CSprite *heads[256];
-};
-
-enum Tech2 : __int16
-{
-  TECH2_stim_packs = 0x0,
-  TECH2_lockdown = 0x1,
-  TECH2_emp_shockwave = 0x2,
-  TECH2_spider_mines = 0x3,
-  TECH2_scanner_sweep = 0x4,
-  TECH2_tank_siege_mode = 0x5,
-  TECH2_defensive_matrix = 0x6,
-  TECH2_irradiate = 0x7,
-  TECH2_yamato_gun = 0x8,
-  TECH2_cloaking_field = 0x9,
-  TECH2_personnel_cloaking = 0xA,
-  TECH2_burrowing = 0xB,
-  TECH2_infestation = 0xC,
-  TECH2_spawn_broodlings = 0xD,
-  TECH2_dark_swarm = 0xE,
-  TECH2_plague = 0xF,
-  TECH2_consume = 0x10,
-  TECH2_ensnare = 0x11,
-  TECH2_parasite = 0x12,
-  TECH2_psionic_storm = 0x13,
-  TECH2_hallucination = 0x14,
-  TECH2_recall = 0x15,
-  TECH2_stasis_field = 0x16,
-  TECH2_archon_warp = 0x17,
-  TECH2_restoration = 0x18,
-  TECH2_disruption_web = 0x19,
-  TECH2_unknown_tech26 = 0x1A,
-  TECH2_mind_control = 0x1B,
-  TECH2_dark_archon_meld = 0x1C,
-  TECH2_feedback = 0x1D,
-  TECH2_optical_flare = 0x1E,
-  TECH2_maelstorm = 0x1F,
-  TECH2_lurker_aspect = 0x20,
-  TECH2_unknown_tech33 = 0x21,
-  TECH2_healing = 0x22,
-  TECH2_unknown_tech35 = 0x23,
-  TECH2_unknown_tech36 = 0x24,
-  TECH2_unknown_tech37 = 0x25,
-  TECH2_unknown_tech38 = 0x26,
-  TECH2_unknown_tech39 = 0x27,
-  TECH2_unknown_tech40 = 0x28,
-  TECH2_unknown_tech41 = 0x29,
-  TECH2_unknown_tech42 = 0x2A,
-  TECH2_unknown_tech43 = 0x2B,
-  TECH2_none = 0x2C,
+  UM_Init = 0x0,
+  UM_InitSeq = 0x1,
+  UM_Lump = 0x2,
+  UM_Turret = 0x3,
+  UM_Bunker = 0x4,
+  UM_BldgTurret = 0x5,
+  UM_Hidden = 0x6,
+  UM_Flyer = 0x7,
+  UM_FakeFlyer = 0x8,
+  UM_AtRest = 0x9,
+  UM_Dormant = 0xA,
+  UM_AtMoveTarget = 0xB,
+  UM_CheckIllegal = 0xC,
+  UM_MoveToLegal = 0xD,
+  UM_LumpWannabe = 0xE,
+  UM_FailedPath = 0xF,
+  UM_RetryPath = 0x10,
+  UM_StartPath = 0x11,
+  UM_UIOrderDelay = 0x12,
+  UM_TurnAndStart = 0x13,
+  UM_FaceTarget = 0x14,
+  UM_NewMoveTarget = 0x15,
+  UM_AnotherPath = 0x16,
+  UM_Repath = 0x17,
+  UM_RepathMovers = 0x18,
+  UM_FollowPath = 0x19,
+  UM_ScoutPath = 0x1A,
+  UM_ScoutFree = 0x1B,
+  UM_FixCollision = 0x1C,
+  UM_WaitFree = 0x1D,
+  UM_GetFree = 0x1E,
+  UM_SlidePrep = 0x1F,
+  UM_SlideFree = 0x20,
+  UM_ForceMoveFree = 0x21,
+  UM_FixTerrain = 0x22,
+  UM_TerrainSlide = 0x23,
 };
 
 enum FlingyID : __int8
@@ -706,6 +577,629 @@ enum FlingyID : __int8
   FGY_Uraj = 0xCF,
   FGY_Khalis = 0xD0,
   FGY_None = 0xD1,
+};
+
+enum StatusFlags
+{
+  Completed = 0x1,
+  GoundedBuilding = 0x2,
+  InAir = 0x4,
+  Disabled = 0x8,
+  Burrowed = 0x10,
+  InBuilding = 0x20,
+  InTransport = 0x40,
+  UNKNOWN1 = 0x80,
+  RequiresDetection = 0x100,
+  Cloaked = 0x200,
+  DoodadStatesThing = 0x400,
+  CloakingForFree = 0x800,
+  CanNotReceiveOrders = 0x1000,
+  NoBrkCodeStart = 0x2000,
+  UNKNOWN2 = 0x4000,
+  CanNotAttack = 0x8000,
+  IsAUnit = 0x10000,
+  IsABuilding = 0x20000,
+  IgnoreTileCollision = 0x40000,
+  UNKNOWN4 = 0x80000,
+  IsNormal = 0x100000,
+  NoCollide = 0x200000,
+  UNKNOWN5 = 0x400000,
+  IsGathering = 0x800000,
+  UNKNOWN6 = 0x1000000,
+  UNKNOWN7 = 0x2000000,
+  Invincible = 0x4000000,
+  HoldingPosition = 0x8000000,
+  SpeedUpgrade = 0x10000000,
+  CooldownUpgrade = 0x20000000,
+  IsHallucination = 0x40000000,
+  IsSelfDestructing = 0x80000000,
+};
+
+enum Tech : __int8
+{
+  TECH_stim_packs = 0x0,
+  TECH_lockdown = 0x1,
+  TECH_emp_shockwave = 0x2,
+  TECH_spider_mines = 0x3,
+  TECH_scanner_sweep = 0x4,
+  TECH_tank_siege_mode = 0x5,
+  TECH_defensive_matrix = 0x6,
+  TECH_irradiate = 0x7,
+  TECH_yamato_gun = 0x8,
+  TECH_cloaking_field = 0x9,
+  TECH_personnel_cloaking = 0xA,
+  TECH_burrowing = 0xB,
+  TECH_infestation = 0xC,
+  TECH_spawn_broodlings = 0xD,
+  TECH_dark_swarm = 0xE,
+  TECH_plague = 0xF,
+  TECH_consume = 0x10,
+  TECH_ensnare = 0x11,
+  TECH_parasite = 0x12,
+  TECH_psionic_storm = 0x13,
+  TECH_hallucination = 0x14,
+  TECH_recall = 0x15,
+  TECH_stasis_field = 0x16,
+  TECH_archon_warp = 0x17,
+  TECH_restoration = 0x18,
+  TECH_disruption_web = 0x19,
+  TECH_unknown_tech26 = 0x1A,
+  TECH_mind_control = 0x1B,
+  TECH_dark_archon_meld = 0x1C,
+  TECH_feedback = 0x1D,
+  TECH_optical_flare = 0x1E,
+  TECH_maelstorm = 0x1F,
+  TECH_lurker_aspect = 0x20,
+  TECH_unknown_tech33 = 0x21,
+  TECH_healing = 0x22,
+  TECH_unknown_tech35 = 0x23,
+  TECH_unknown_tech36 = 0x24,
+  TECH_unknown_tech37 = 0x25,
+  TECH_unknown_tech38 = 0x26,
+  TECH_unknown_tech39 = 0x27,
+  TECH_unknown_tech40 = 0x28,
+  TECH_unknown_tech41 = 0x29,
+  TECH_unknown_tech42 = 0x2A,
+  TECH_unknown_tech43 = 0x2B,
+  TECH_none = 0x2C,
+};
+
+enum GameType : __int8
+{
+  GT_Melee = 0x2,
+  GT_FreeForAll = 0x3,
+  GT_OneOnOne = 0x4,
+  GT_CaptureTheFlag = 0x5,
+  GT_Greed = 0x6,
+  GT_Slaughter = 0x7,
+  GT_SuddenDeath = 0x8,
+  GT_Ladder = 0x9,
+  GT_UseMapSettings = 0xA,
+  GT_TeamMelee = 0xB,
+  GT_TeamFreeForAll = 0xC,
+  GT_TeamCTF = 0xD,
+  GT_TopVsBottom = 0xF,
+};
+
+struct CUnitGhost
+{
+  CSprite *nukeDot;
+};
+
+struct SpriteTileData
+{
+  CSprite *tails[256];
+  CSprite *heads[256];
+};
+
+enum WeaponBehavior : __int8
+{
+  Fly_DoNotFollowTarget = 0x0,
+  Fly_FollowTarget = 0x1,
+  AppearOnTargetUnit = 0x2,
+  PersistOnTargetSite = 0x3,
+  AppearOnTargetSite = 0x4,
+  AppearOnAttacker = 0x5,
+  AttackAndSelfDestruct = 0x6,
+  Bounce = 0x7,
+  AttackNearbyArea = 0x8,
+  GoToMaxRange = 0x9,
+};
+
+struct ChunkListItem
+{
+  ChunkData *next;
+  ChunkData *previous;
+};
+
+enum GamePosition : __int16
+{
+  GAME_INTRO = 0x0,
+  GAME_RUNINIT = 0x1,
+  GAME_EXIT = 0x2,
+  GAME_RUN = 0x3,
+  GAME_GLUES = 0x4,
+  GAME_RESTART = 0x5,
+  GAME_WIN = 0x6,
+  GAME_LOSE = 0x7,
+  GAME_CREDITS = 0x8,
+  GAME_EPILOG = 0x9,
+  GAME_CINEMATIC = 0xA,
+  GAME_MAX = 0xB,
+};
+
+enum Race : __int8
+{
+  RACE_Zerg = 0x0,
+  RACE_Terran = 0x1,
+  RACE_Protoss = 0x2,
+  RACE_Other = 0x3,
+  RACE_Unused = 0x4,
+  RACE_Select = 0x5,
+  RACE_Random = 0x6,
+  RACE_None = 0x7,
+  RACE_Unknown = 0x8,
+};
+
+struct CUnitNydus
+{
+  CUnit *exit;
+};
+
+enum MenuPosition : __int32
+{
+  GLUE_MAIN_MENU = 0x0,
+  GLUE_SIMULATE = 0x1,
+  GLUE_CONNECT = 0x2,
+  GLUE_CHAT = 0x3,
+  GLUE_BATTLE = 0x4,
+  GLUE_LOGIN = 0x5,
+  GLUE_CAMPAIGN = 0x6,
+  GLUE_READY_T = 0x7,
+  GLUE_READY_Z = 0x8,
+  GLUE_READY_P = 0x9,
+  GLUE_GAME_SELECT = 0xA,
+  GLUE_CREATE = 0xB,
+  GLUE_CREATE_MULTI = 0xC,
+  GLUE_LOAD = 0xD,
+  GLUE_SCORE_Z_DEFEAT = 0xE,
+  GLUE_SCORE_Z_VICTORY = 0xF,
+  GLUE_SCORE_T_DEFEAT = 0x10,
+  GLUE_SCORE_T_VICTORY = 0x11,
+  GLUE_SCORE_P_DEFEAT = 0x12,
+  GLUE_SCORE_P_VICTORY = 0x13,
+  GLUE_MODEM = 0x14,
+  GLUE_DIRECT = 0x15,
+  GLUE_EX_CAMPAIGN = 0x16,
+  GLUE_GAME_MODE = 0x17,
+  GLUE_EX_GAME_MODE = 0x18,
+  GLUE_GENERIC = 0x19,
+  GLUE_MAX = 0x1A,
+};
+
+enum Order : __int8
+{
+  Die = 0x0,
+  Stop = 0x1,
+  Guard = 0x2,
+  PlayerGuard = 0x3,
+  TurretGuard = 0x4,
+  BunkerGuard = 0x5,
+  Move = 0x6,
+  ReaverStop = 0x7,
+  Attack1 = 0x8,
+  Attack2 = 0x9,
+  AttackUnit = 0xA,
+  AttackFixedRange = 0xB,
+  AttackTile = 0xC,
+  Hover = 0xD,
+  AttackMove = 0xE,
+  InfestedCommandCenter = 0xF,
+  UnusedNothing = 0x10,
+  UnusedPowerup = 0x11,
+  TowerGuard = 0x12,
+  TowerAttack = 0x13,
+  VultureMine = 0x14,
+  StayInRange = 0x15,
+  TurretAttack = 0x16,
+  Nothing = 0x17,
+  Unused_24 = 0x18,
+  DroneStartBuild = 0x19,
+  DroneBuild = 0x1A,
+  CastInfestation = 0x1B,
+  MoveToInfest = 0x1C,
+  InfestingCommandCenter = 0x1D,
+  PlaceBuilding = 0x1E,
+  PlaceProtossBuilding = 0x1F,
+  CreateProtossBuilding = 0x20,
+  ConstructingBuilding = 0x21,
+  Repair = 0x22,
+  MoveToRepair = 0x23,
+  PlaceAddon = 0x24,
+  BuildAddon = 0x25,
+  Train = 0x26,
+  RallyPointUnit = 0x27,
+  RallyPointTile = 0x28,
+  ZergBirth = 0x29,
+  ZergUnitMorph = 0x2A,
+  ZergBuildingMorph = 0x2B,
+  IncompleteBuilding = 0x2C,
+  IncompleteMorphing = 0x2D,
+  BuildNydusExit = 0x2E,
+  EnterNydusCanal = 0x2F,
+  IncompleteWarping = 0x30,
+  Follow = 0x31,
+  Carrier = 0x32,
+  ReaverCarrierMove = 0x33,
+  CarrierStop = 0x34,
+  CarrierAttack = 0x35,
+  CarrierMoveToAttack = 0x36,
+  CarrierIgnore2 = 0x37,
+  CarrierFight = 0x38,
+  CarrierHoldPosition = 0x39,
+  Reaver = 0x3A,
+  ReaverAttack = 0x3B,
+  ReaverMoveToAttack = 0x3C,
+  ReaverFight = 0x3D,
+  ReaverHoldPosition = 0x3E,
+  TrainFighter = 0x3F,
+  InterceptorAttack = 0x40,
+  ScarabAttack = 0x41,
+  RechargeShieldsUnit = 0x42,
+  RechargeShieldsBattery = 0x43,
+  ShieldBattery = 0x44,
+  InterceptorReturn = 0x45,
+  DroneLand = 0x46,
+  BuildingLand = 0x47,
+  BuildingLiftOff = 0x48,
+  DroneLiftOff = 0x49,
+  LiftingOff = 0x4A,
+  ResearchTech = 0x4B,
+  Upgrade = 0x4C,
+  Larva = 0x4D,
+  SpawningLarva = 0x4E,
+  Harvest1 = 0x4F,
+  Harvest2 = 0x50,
+  MoveToGas = 0x51,
+  WaitForGas = 0x52,
+  HarvestGas = 0x53,
+  ReturnGas = 0x54,
+  MoveToMinerals = 0x55,
+  WaitForMinerals = 0x56,
+  MiningMinerals = 0x57,
+  Harvest3 = 0x58,
+  Harvest4 = 0x59,
+  ReturnMinerals = 0x5A,
+  Interrupted = 0x5B,
+  EnterTransport = 0x5C,
+  PickupIdle = 0x5D,
+  PickupTransport = 0x5E,
+  PickupBunker = 0x5F,
+  Pickup4 = 0x60,
+  PowerupIdle = 0x61,
+  Sieging = 0x62,
+  Unsieging = 0x63,
+  WatchTarget = 0x64,
+  InitCreepGrowth = 0x65,
+  SpreadCreep = 0x66,
+  StoppingCreepGrowth = 0x67,
+  GuardianAspect = 0x68,
+  ArchonWarp = 0x69,
+  CompletingArchonSummon = 0x6A,
+  HoldPosition = 0x6B,
+  QueenHoldPosition = 0x6C,
+  Cloak = 0x6D,
+  Decloak = 0x6E,
+  Unload = 0x6F,
+  MoveUnload = 0x70,
+  FireYamatoGun = 0x71,
+  MoveToFireYamatoGun = 0x72,
+  CastLockdown = 0x73,
+  Burrowing = 0x74,
+  CastRecall = 0x75,
+  Teleport = 0x76,
+  CastScannerSweep = 0x77,
+  Scanner = 0x78,
+  CastDefensiveMatrix = 0x79,
+  CastPsionicStorm = 0x7A,
+  CastIrradiate = 0x7B,
+  CastPlague = 0x7C,
+  CastConsume = 0x7D,
+  CastEnsnare = 0x7E,
+  CastStasisField = 0x7F,
+  CastHallucination = 0x80,
+  Hallucination2 = 0x81,
+  ResetCollision = 0x82,
+  ResetHarvestCollision = 0x83,
+  Patrol = 0x84,
+  CTFCOPInit = 0x85,
+  CTFCOPStarted = 0x86,
+  CTFCOP2 = 0x87,
+  ComputerAI = 0x88,
+  AtkMoveEP = 0x89,
+  HarassMove = 0x8A,
+  AIPatrol = 0x8B,
+  GuardPost = 0x8C,
+  RescuePassive = 0x8D,
+  Neutral = 0x8E,
+  ComputerReturn = 0x8F,
+  InitializePsiProvider = 0x90,
+  SelfDestructing = 0x91,
+  Critter = 0x92,
+  HiddenGun = 0x93,
+  OpenDoor = 0x94,
+  CloseDoor = 0x95,
+  HideTrap = 0x96,
+  RevealTrap = 0x97,
+  EnableDoodad = 0x98,
+  DisableDoodad = 0x99,
+  WarpIn_ = 0x9A,
+  Medic = 0x9B,
+  MedicHeal = 0x9C,
+  HealMove = 0x9D,
+  MedicHoldPosition = 0x9E,
+  MedicHealToIdle = 0x9F,
+  CastRestoration = 0xA0,
+  CastDisruptionWeb = 0xA1,
+  CastMindControl = 0xA2,
+  DarkArchonMeld = 0xA3,
+  CastFeedback = 0xA4,
+  CastOpticalFlare = 0xA5,
+  CastMaelstrom = 0xA6,
+  JunkYardDog = 0xA7,
+  Fatal = 0xA8,
+  ORD_None = 0xA9,
+  ORD_Unknown = 0xAA,
+  ORD_MAX = 0xAB,
+};
+
+struct CUnitPsiProvider
+{
+  CUnit *prevPsiProvider;
+  CUnit *nextPsiProvider;
+};
+
+enum CheatFlags
+{
+  CHEAT_None = 0x0,
+  CHEAT_BlackSheepWall = 0x1,
+  CHEAT_OperationCwal = 0x2,
+  CHEAT_PowerOverwelming = 0x4,
+  CHEAT_SomethingForNothing = 0x8,
+  CHEAT_ShowMeTheMoney = 0x10,
+  CHEAT_GameOverMan = 0x40,
+  CHEAT_ThereIsNoCowLevel = 0x80,
+  CHEAT_StayingAlive = 0x100,
+  CHEAT_Ophelia = 0x200,
+  CHEAT_TheGathering = 0x800,
+  CHEAT_MedievalMan = 0x1000,
+  CHEAT_ModifyThePhaseVariance = 0x2000,
+  CHEAT_WarAintWhatItUsedToBe = 0x4000,
+  CHEAT_FoodForThought = 0x20000,
+  CHEAT_WhatsMineIsMine = 0x40000,
+  CHEAT_BreatheDeep = 0x80000,
+  CHEAT_NoGlues = 0x20000000,
+};
+
+enum WeaponType : __int8
+{
+  Gauss_Rifle = 0x0,
+  Gauss_Rifle_Jim_Raynor = 0x1,
+  C_10_Canister_Rifle = 0x2,
+  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
+  Fragmentation_Grenade = 0x4,
+  Fragmentation_Grenade_Jim_Raynor = 0x5,
+  Spider_Mines = 0x6,
+  Twin_Autocannons = 0x7,
+  Hellfire_Missile_Pack = 0x8,
+  Twin_Autocannons_Alan_Schezar = 0x9,
+  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
+  Arclite_Cannon = 0xB,
+  Arclite_Cannon_Edmund_Duke = 0xC,
+  Fusion_Cutter = 0xD,
+  Gemini_Missiles = 0xF,
+  Burst_Lasers = 0x10,
+  Gemini_Missiles_Tom_Kazansky = 0x11,
+  Burst_Lasers_Tom_Kazansky = 0x12,
+  ATS_Laser_Battery = 0x13,
+  ATA_Laser_Battery = 0x14,
+  ATS_Laser_Battery_Hero = 0x15,
+  ATA_Laser_Battery_Hero = 0x16,
+  ATS_Laser_Battery_Hyperion = 0x17,
+  ATA_Laser_Battery_Hyperion = 0x18,
+  Flame_Thrower = 0x19,
+  Flame_Thrower_Gui_Montag = 0x1A,
+  Arclite_Shock_Cannon = 0x1B,
+  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
+  Longbolt_Missile = 0x1D,
+  Yamato_Gun = 0x1E,
+  Nuclear_Strike = 0x1F,
+  Lockdown = 0x20,
+  EMP_Shockwave = 0x21,
+  Irradiate = 0x22,
+  Claws = 0x23,
+  Claws_Devouring_One = 0x24,
+  Claws_Infested_Kerrigan = 0x25,
+  Needle_Spines = 0x26,
+  Needle_Spines_Hunter_Killer = 0x27,
+  Kaiser_Blades = 0x28,
+  Kaiser_Blades_Torrasque = 0x29,
+  Toxic_Spores = 0x2A,
+  Spines = 0x2B,
+  Acid_Spore = 0x2E,
+  Acid_Spore_Kukulza = 0x2F,
+  Glave_Wurm = 0x30,
+  Glave_Wurm_Kukulza = 0x31,
+  Seeker_Spores = 0x34,
+  Subterranean_Tentacle = 0x35,
+  Suicide_Infested_Terran = 0x36,
+  Suicide_Scourge = 0x37,
+  Parasite = 0x38,
+  Spawn_Broodlings = 0x39,
+  Ensnare = 0x3A,
+  Dark_Swarm = 0x3B,
+  Plague = 0x3C,
+  Consume = 0x3D,
+  Particle_Beam = 0x3E,
+  Psi_Blades = 0x40,
+  Psi_Blades_Fenix = 0x41,
+  Phase_Disruptor = 0x42,
+  Phase_Disruptor_Fenix = 0x43,
+  Psi_Assault = 0x45,
+  Psionic_Shockwave = 0x46,
+  Psionic_Shockwave_TZ_Archon = 0x47,
+  Dual_Photon_Blasters = 0x49,
+  Anti_Matter_Missiles = 0x4A,
+  Dual_Photon_Blasters_Mojo = 0x4B,
+  Anti_Matter_Missiles_Mojo = 0x4C,
+  Phase_Disruptor_Cannon = 0x4D,
+  Phase_Disruptor_Cannon_Danimoth = 0x4E,
+  Pulse_Cannon = 0x4F,
+  STS_Photon_Cannon = 0x50,
+  STA_Photon_Cannon = 0x51,
+  Scarab = 0x52,
+  Stasis_Field = 0x53,
+  Psionic_Storm = 0x54,
+  Warp_Blades_Zeratul = 0x55,
+  Warp_Blades_Hero = 0x56,
+  Platform_Laser_Battery = 0x5C,
+  Independant_Laser_Battery = 0x5D,
+  Twin_Autocannons_Floor_Trap = 0x60,
+  Hellfire_Missile_Pack_Wall_Trap = 0x61,
+  Flame_Thrower_Wall_Trap = 0x62,
+  Hellfire_Missile_Pack_Floor_Trap = 0x63,
+  Neutron_Flare = 0x64,
+  Disruption_Web = 0x65,
+  Restoration = 0x66,
+  Halo_Rockets = 0x67,
+  Corrosive_Acid = 0x68,
+  Mind_Control = 0x69,
+  Feedback = 0x6A,
+  Optical_Flare = 0x6B,
+  Maelstrom = 0x6C,
+  Subterranean_Spines = 0x6D,
+  Warp_Blades = 0x6F,
+  C_10_Canister_Rifle_Samir_Duran = 0x70,
+  C_10_Canister_Rifle_Infested_Duran = 0x71,
+  Dual_Photon_Blasters_Artanis = 0x72,
+  Anti_Matter_Missiles_Artanis = 0x73,
+  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
+  WT_None = 0x82,
+  WT_Unknown = 0x83,
+  WT_MAX = 0x84,
+};
+
+enum Anims : __int8
+{
+  AE_Init = 0x0,
+  AE_Death = 0x1,
+  AE_GndAttkInit = 0x2,
+  AE_AirAttkInit = 0x3,
+  AE_Unused1 = 0x4,
+  AE_GndAttkRpt = 0x5,
+  AE_AirAttkRpt = 0x6,
+  AE_CastSpell = 0x7,
+  AE_GndAttkToIdle = 0x8,
+  AE_AirAttkToIdle = 0x9,
+  AE_Unused2 = 0xA,
+  AE_Walking = 0xB,
+  AE_WalkingToIdle = 0xC,
+  AE_SpecialState1 = 0xD,
+  AE_SpecialState2 = 0xE,
+  AE_AlmostBuilt = 0xF,
+  AE_Built = 0x10,
+  AE_Landing = 0x11,
+  AE_LiftOff = 0x12,
+  AE_IsWorking = 0x13,
+  AE_WorkingToIdle = 0x14,
+  AE_WarpIn = 0x15,
+  AE_Unused3 = 0x16,
+  AE_StarEditInit = 0x17,
+  AE_Disable = 0x18,
+  AE_Burrow = 0x19,
+  AE_UnBurrow = 0x1A,
+  AE_Enable = 0x1B,
+};
+
+enum Tech2 : __int16
+{
+  TECH2_stim_packs = 0x0,
+  TECH2_lockdown = 0x1,
+  TECH2_emp_shockwave = 0x2,
+  TECH2_spider_mines = 0x3,
+  TECH2_scanner_sweep = 0x4,
+  TECH2_tank_siege_mode = 0x5,
+  TECH2_defensive_matrix = 0x6,
+  TECH2_irradiate = 0x7,
+  TECH2_yamato_gun = 0x8,
+  TECH2_cloaking_field = 0x9,
+  TECH2_personnel_cloaking = 0xA,
+  TECH2_burrowing = 0xB,
+  TECH2_infestation = 0xC,
+  TECH2_spawn_broodlings = 0xD,
+  TECH2_dark_swarm = 0xE,
+  TECH2_plague = 0xF,
+  TECH2_consume = 0x10,
+  TECH2_ensnare = 0x11,
+  TECH2_parasite = 0x12,
+  TECH2_psionic_storm = 0x13,
+  TECH2_hallucination = 0x14,
+  TECH2_recall = 0x15,
+  TECH2_stasis_field = 0x16,
+  TECH2_archon_warp = 0x17,
+  TECH2_restoration = 0x18,
+  TECH2_disruption_web = 0x19,
+  TECH2_unknown_tech26 = 0x1A,
+  TECH2_mind_control = 0x1B,
+  TECH2_dark_archon_meld = 0x1C,
+  TECH2_feedback = 0x1D,
+  TECH2_optical_flare = 0x1E,
+  TECH2_maelstorm = 0x1F,
+  TECH2_lurker_aspect = 0x20,
+  TECH2_unknown_tech33 = 0x21,
+  TECH2_healing = 0x22,
+  TECH2_unknown_tech35 = 0x23,
+  TECH2_unknown_tech36 = 0x24,
+  TECH2_unknown_tech37 = 0x25,
+  TECH2_unknown_tech38 = 0x26,
+  TECH2_unknown_tech39 = 0x27,
+  TECH2_unknown_tech40 = 0x28,
+  TECH2_unknown_tech41 = 0x29,
+  TECH2_unknown_tech42 = 0x2A,
+  TECH2_unknown_tech43 = 0x2B,
+  TECH2_none = 0x2C,
+};
+
+enum PlayerGroups
+{
+  Player1 = 0x0,
+  Player2 = 0x1,
+  Player3 = 0x2,
+  Player4 = 0x3,
+  Player5 = 0x4,
+  Player6 = 0x5,
+  Player7 = 0x6,
+  Player8 = 0x7,
+  Player9 = 0x8,
+  Player10 = 0x9,
+  Player11 = 0xA,
+  Player12 = 0xB,
+  PG_None = 0xC,
+  PG_CurrentPlayer = 0xD,
+  PG_Foes = 0xE,
+  PG_Allies = 0xF,
+  PG_NeutralPlayers = 0x10,
+  PG_AllPlayers = 0x11,
+  PG_Force1 = 0x12,
+  PG_Force2 = 0x13,
+  PG_Force3 = 0x14,
+  PG_Force4 = 0x15,
+  PG_Unused1 = 0x16,
+  PG_Unused2 = 0x17,
+  PG_Unused3 = 0x18,
+  PG_Unused4 = 0x19,
+  PG_NonAlliedVictoryPlayers = 0x1A,
+  PG_Max = 0x1B,
 };
 
 enum UnitType : __int16
@@ -940,20 +1434,69 @@ enum UnitType : __int16
   Powerup_Terran_Gas_Tank_Type_2 = 0xE3,
 };
 
-struct CUnitNydus
+enum Tileset : __int16
 {
-  CUnit *exit;
+  Badlands = 0x0,
+  Platform = 0x1,
+  Install = 0x2,
+  Ashworld = 0x3,
+  Jungle = 0x4,
+  Desert = 0x5,
+  Ice = 0x6,
+  Twilight = 0x7,
 };
 
-typedef unsigned __int32 u32;
-
-struct ChunkListItem
+struct __declspec(align(2)) struct_a1
 {
-  ChunkData *next;
-  ChunkData *previous;
+  int (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
+  int (__stdcall *isCreepCovered)(_DWORD, _DWORD);
+  int (__stdcall *isTileVisible)(int, int);
+  int (__stdcall *pfuncC)(_DWORD);
+};
+
+enum SaiAccessabilityFlags : __int16
+{
+  SAF_HighGround = 0x1FF9,
+  SAF_LowGround = 0x1FFB,
+  SAF_Inaccessible = 0x1FFD,
+};
+
+enum DamageType : __int8
+{
+  Independent = 0x0,
+  Explosive = 0x1,
+  Concussive = 0x2,
+  Normal = 0x3,
+  Ignore_Armor = 0x4,
+  DT_None = 0x5,
+  DT_Unknown = 0x6,
+  DT_MAX = 0x7,
+};
+
+enum WeaponTargetFlags : __int16
+{
+  WTF_Air = 0x1,
+  WTF_Ground = 0x2,
+  WTF_Mechanical = 0x4,
+  WTF_Organic = 0x8,
+  WTF_NonBuilding = 0x10,
+  WTF_NonRobotic = 0x20,
+  WTF_Terrain = 0x40,
+  WTF_OrgOrMech = 0x80,
+  WTF_Own = 0x100,
 };
 
 typedef unsigned __int16 u16;
+
+struct StringTbl
+{
+  u16 *buffer;
+};
+
+struct dialog_ctrl
+{
+  dialog *pDlg;
+};
 
 enum MapData : __int16
 {
@@ -1025,525 +1568,21 @@ enum MapData : __int16
   MD_Unknown = 0x41,
 };
 
-enum DamageType : __int8
+struct CUnitPylon
 {
-  Independent = 0x0,
-  Explosive = 0x1,
-  Concussive = 0x2,
-  Normal = 0x3,
-  Ignore_Armor = 0x4,
-  DT_None = 0x5,
-  DT_Unknown = 0x6,
-  DT_MAX = 0x7,
+  CSprite *pPowerTemplate;
 };
 
-typedef void *(__fastcall *FastFileRead)(char *filename, int default_value, int *bytes_read, char *, int);
-
-typedef __int16 s16;
-
-typedef __int32 s32;
-
-enum CheatFlags
+struct LO_Overlays
 {
-  CHEAT_None = 0x0,
-  CHEAT_BlackSheepWall = 0x1,
-  CHEAT_OperationCwal = 0x2,
-  CHEAT_PowerOverwelming = 0x4,
-  CHEAT_SomethingForNothing = 0x8,
-  CHEAT_ShowMeTheMoney = 0x10,
-  CHEAT_GameOverMan = 0x40,
-  CHEAT_ThereIsNoCowLevel = 0x80,
-  CHEAT_StayingAlive = 0x100,
-  CHEAT_Ophelia = 0x200,
-  CHEAT_TheGathering = 0x800,
-  CHEAT_MedievalMan = 0x1000,
-  CHEAT_ModifyThePhaseVariance = 0x2000,
-  CHEAT_WarAintWhatItUsedToBe = 0x4000,
-  CHEAT_FoodForThought = 0x20000,
-  CHEAT_WhatsMineIsMine = 0x40000,
-  CHEAT_BreatheDeep = 0x80000,
-  CHEAT_NoGlues = 0x20000000,
+  LO_Header *overlays[999];
 };
 
-enum UnitMovementState : __int8
+struct CUnitGatherer
 {
-  UM_Init = 0x0,
-  UM_InitSeq = 0x1,
-  UM_Lump = 0x2,
-  UM_Turret = 0x3,
-  UM_Bunker = 0x4,
-  UM_BldgTurret = 0x5,
-  UM_Hidden = 0x6,
-  UM_Flyer = 0x7,
-  UM_FakeFlyer = 0x8,
-  UM_AtRest = 0x9,
-  UM_Dormant = 0xA,
-  UM_AtMoveTarget = 0xB,
-  UM_CheckIllegal = 0xC,
-  UM_MoveToLegal = 0xD,
-  UM_LumpWannabe = 0xE,
-  UM_FailedPath = 0xF,
-  UM_RetryPath = 0x10,
-  UM_StartPath = 0x11,
-  UM_UIOrderDelay = 0x12,
-  UM_TurnAndStart = 0x13,
-  UM_FaceTarget = 0x14,
-  UM_NewMoveTarget = 0x15,
-  UM_AnotherPath = 0x16,
-  UM_Repath = 0x17,
-  UM_RepathMovers = 0x18,
-  UM_FollowPath = 0x19,
-  UM_ScoutPath = 0x1A,
-  UM_ScoutFree = 0x1B,
-  UM_FixCollision = 0x1C,
-  UM_WaitFree = 0x1D,
-  UM_GetFree = 0x1E,
-  UM_SlidePrep = 0x1F,
-  UM_SlideFree = 0x20,
-  UM_ForceMoveFree = 0x21,
-  UM_FixTerrain = 0x22,
-  UM_TerrainSlide = 0x23,
-};
-
-enum Race : __int8
-{
-  RACE_Zerg = 0x0,
-  RACE_Terran = 0x1,
-  RACE_Protoss = 0x2,
-  RACE_Other = 0x3,
-  RACE_Unused = 0x4,
-  RACE_Select = 0x5,
-  RACE_Random = 0x6,
-  RACE_None = 0x7,
-  RACE_Unknown = 0x8,
-};
-
-enum Tech : __int8
-{
-  TECH_stim_packs = 0x0,
-  TECH_lockdown = 0x1,
-  TECH_emp_shockwave = 0x2,
-  TECH_spider_mines = 0x3,
-  TECH_scanner_sweep = 0x4,
-  TECH_tank_siege_mode = 0x5,
-  TECH_defensive_matrix = 0x6,
-  TECH_irradiate = 0x7,
-  TECH_yamato_gun = 0x8,
-  TECH_cloaking_field = 0x9,
-  TECH_personnel_cloaking = 0xA,
-  TECH_burrowing = 0xB,
-  TECH_infestation = 0xC,
-  TECH_spawn_broodlings = 0xD,
-  TECH_dark_swarm = 0xE,
-  TECH_plague = 0xF,
-  TECH_consume = 0x10,
-  TECH_ensnare = 0x11,
-  TECH_parasite = 0x12,
-  TECH_psionic_storm = 0x13,
-  TECH_hallucination = 0x14,
-  TECH_recall = 0x15,
-  TECH_stasis_field = 0x16,
-  TECH_archon_warp = 0x17,
-  TECH_restoration = 0x18,
-  TECH_disruption_web = 0x19,
-  TECH_unknown_tech26 = 0x1A,
-  TECH_mind_control = 0x1B,
-  TECH_dark_archon_meld = 0x1C,
-  TECH_feedback = 0x1D,
-  TECH_optical_flare = 0x1E,
-  TECH_maelstorm = 0x1F,
-  TECH_lurker_aspect = 0x20,
-  TECH_unknown_tech33 = 0x21,
-  TECH_healing = 0x22,
-  TECH_unknown_tech35 = 0x23,
-  TECH_unknown_tech36 = 0x24,
-  TECH_unknown_tech37 = 0x25,
-  TECH_unknown_tech38 = 0x26,
-  TECH_unknown_tech39 = 0x27,
-  TECH_unknown_tech40 = 0x28,
-  TECH_unknown_tech41 = 0x29,
-  TECH_unknown_tech42 = 0x2A,
-  TECH_unknown_tech43 = 0x2B,
-  TECH_none = 0x2C,
-};
-
-enum WeaponType : __int8
-{
-  Gauss_Rifle = 0x0,
-  Gauss_Rifle_Jim_Raynor = 0x1,
-  C_10_Canister_Rifle = 0x2,
-  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
-  Fragmentation_Grenade = 0x4,
-  Fragmentation_Grenade_Jim_Raynor = 0x5,
-  Spider_Mines = 0x6,
-  Twin_Autocannons = 0x7,
-  Hellfire_Missile_Pack = 0x8,
-  Twin_Autocannons_Alan_Schezar = 0x9,
-  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
-  Arclite_Cannon = 0xB,
-  Arclite_Cannon_Edmund_Duke = 0xC,
-  Fusion_Cutter = 0xD,
-  Gemini_Missiles = 0xF,
-  Burst_Lasers = 0x10,
-  Gemini_Missiles_Tom_Kazansky = 0x11,
-  Burst_Lasers_Tom_Kazansky = 0x12,
-  ATS_Laser_Battery = 0x13,
-  ATA_Laser_Battery = 0x14,
-  ATS_Laser_Battery_Hero = 0x15,
-  ATA_Laser_Battery_Hero = 0x16,
-  ATS_Laser_Battery_Hyperion = 0x17,
-  ATA_Laser_Battery_Hyperion = 0x18,
-  Flame_Thrower = 0x19,
-  Flame_Thrower_Gui_Montag = 0x1A,
-  Arclite_Shock_Cannon = 0x1B,
-  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
-  Longbolt_Missile = 0x1D,
-  Yamato_Gun = 0x1E,
-  Nuclear_Strike = 0x1F,
-  Lockdown = 0x20,
-  EMP_Shockwave = 0x21,
-  Irradiate = 0x22,
-  Claws = 0x23,
-  Claws_Devouring_One = 0x24,
-  Claws_Infested_Kerrigan = 0x25,
-  Needle_Spines = 0x26,
-  Needle_Spines_Hunter_Killer = 0x27,
-  Kaiser_Blades = 0x28,
-  Kaiser_Blades_Torrasque = 0x29,
-  Toxic_Spores = 0x2A,
-  Spines = 0x2B,
-  Acid_Spore = 0x2E,
-  Acid_Spore_Kukulza = 0x2F,
-  Glave_Wurm = 0x30,
-  Glave_Wurm_Kukulza = 0x31,
-  Seeker_Spores = 0x34,
-  Subterranean_Tentacle = 0x35,
-  Suicide_Infested_Terran = 0x36,
-  Suicide_Scourge = 0x37,
-  Parasite = 0x38,
-  Spawn_Broodlings = 0x39,
-  Ensnare = 0x3A,
-  Dark_Swarm = 0x3B,
-  Plague = 0x3C,
-  Consume = 0x3D,
-  Particle_Beam = 0x3E,
-  Psi_Blades = 0x40,
-  Psi_Blades_Fenix = 0x41,
-  Phase_Disruptor = 0x42,
-  Phase_Disruptor_Fenix = 0x43,
-  Psi_Assault = 0x45,
-  Psionic_Shockwave = 0x46,
-  Psionic_Shockwave_TZ_Archon = 0x47,
-  Dual_Photon_Blasters = 0x49,
-  Anti_Matter_Missiles = 0x4A,
-  Dual_Photon_Blasters_Mojo = 0x4B,
-  Anti_Matter_Missiles_Mojo = 0x4C,
-  Phase_Disruptor_Cannon = 0x4D,
-  Phase_Disruptor_Cannon_Danimoth = 0x4E,
-  Pulse_Cannon = 0x4F,
-  STS_Photon_Cannon = 0x50,
-  STA_Photon_Cannon = 0x51,
-  Scarab = 0x52,
-  Stasis_Field = 0x53,
-  Psionic_Storm = 0x54,
-  Warp_Blades_Zeratul = 0x55,
-  Warp_Blades_Hero = 0x56,
-  Platform_Laser_Battery = 0x5C,
-  Independant_Laser_Battery = 0x5D,
-  Twin_Autocannons_Floor_Trap = 0x60,
-  Hellfire_Missile_Pack_Wall_Trap = 0x61,
-  Flame_Thrower_Wall_Trap = 0x62,
-  Hellfire_Missile_Pack_Floor_Trap = 0x63,
-  Neutron_Flare = 0x64,
-  Disruption_Web = 0x65,
-  Restoration = 0x66,
-  Halo_Rockets = 0x67,
-  Corrosive_Acid = 0x68,
-  Mind_Control = 0x69,
-  Feedback = 0x6A,
-  Optical_Flare = 0x6B,
-  Maelstrom = 0x6C,
-  Subterranean_Spines = 0x6D,
-  Warp_Blades = 0x6F,
-  C_10_Canister_Rifle_Samir_Duran = 0x70,
-  C_10_Canister_Rifle_Infested_Duran = 0x71,
-  Dual_Photon_Blasters_Artanis = 0x72,
-  Anti_Matter_Missiles_Artanis = 0x73,
-  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
-  WT_None = 0x82,
-  WT_Unknown = 0x83,
-  WT_MAX = 0x84,
-};
-
-struct StringTbl
-{
-  u16 *buffer;
-};
-
-typedef struct _GUID GUID;
-
-enum Order : __int8
-{
-  Die = 0x0,
-  Stop = 0x1,
-  Guard = 0x2,
-  PlayerGuard = 0x3,
-  TurretGuard = 0x4,
-  BunkerGuard = 0x5,
-  Move = 0x6,
-  ReaverStop = 0x7,
-  Attack1 = 0x8,
-  Attack2 = 0x9,
-  AttackUnit = 0xA,
-  AttackFixedRange = 0xB,
-  AttackTile = 0xC,
-  Hover = 0xD,
-  AttackMove = 0xE,
-  InfestedCommandCenter = 0xF,
-  UnusedNothing = 0x10,
-  UnusedPowerup = 0x11,
-  TowerGuard = 0x12,
-  TowerAttack = 0x13,
-  VultureMine = 0x14,
-  StayInRange = 0x15,
-  TurretAttack = 0x16,
-  Nothing = 0x17,
-  Unused_24 = 0x18,
-  DroneStartBuild = 0x19,
-  DroneBuild = 0x1A,
-  CastInfestation = 0x1B,
-  MoveToInfest = 0x1C,
-  InfestingCommandCenter = 0x1D,
-  PlaceBuilding = 0x1E,
-  PlaceProtossBuilding = 0x1F,
-  CreateProtossBuilding = 0x20,
-  ConstructingBuilding = 0x21,
-  Repair = 0x22,
-  MoveToRepair = 0x23,
-  PlaceAddon = 0x24,
-  BuildAddon = 0x25,
-  Train = 0x26,
-  RallyPointUnit = 0x27,
-  RallyPointTile = 0x28,
-  ZergBirth = 0x29,
-  ZergUnitMorph = 0x2A,
-  ZergBuildingMorph = 0x2B,
-  IncompleteBuilding = 0x2C,
-  IncompleteMorphing = 0x2D,
-  BuildNydusExit = 0x2E,
-  EnterNydusCanal = 0x2F,
-  IncompleteWarping = 0x30,
-  Follow = 0x31,
-  Carrier = 0x32,
-  ReaverCarrierMove = 0x33,
-  CarrierStop = 0x34,
-  CarrierAttack = 0x35,
-  CarrierMoveToAttack = 0x36,
-  CarrierIgnore2 = 0x37,
-  CarrierFight = 0x38,
-  CarrierHoldPosition = 0x39,
-  Reaver = 0x3A,
-  ReaverAttack = 0x3B,
-  ReaverMoveToAttack = 0x3C,
-  ReaverFight = 0x3D,
-  ReaverHoldPosition = 0x3E,
-  TrainFighter = 0x3F,
-  InterceptorAttack = 0x40,
-  ScarabAttack = 0x41,
-  RechargeShieldsUnit = 0x42,
-  RechargeShieldsBattery = 0x43,
-  ShieldBattery = 0x44,
-  InterceptorReturn = 0x45,
-  DroneLand = 0x46,
-  BuildingLand = 0x47,
-  BuildingLiftOff = 0x48,
-  DroneLiftOff = 0x49,
-  LiftingOff = 0x4A,
-  ResearchTech = 0x4B,
-  Upgrade = 0x4C,
-  Larva = 0x4D,
-  SpawningLarva = 0x4E,
-  Harvest1 = 0x4F,
-  Harvest2 = 0x50,
-  MoveToGas = 0x51,
-  WaitForGas = 0x52,
-  HarvestGas = 0x53,
-  ReturnGas = 0x54,
-  MoveToMinerals = 0x55,
-  WaitForMinerals = 0x56,
-  MiningMinerals = 0x57,
-  Harvest3 = 0x58,
-  Harvest4 = 0x59,
-  ReturnMinerals = 0x5A,
-  Interrupted = 0x5B,
-  EnterTransport = 0x5C,
-  PickupIdle = 0x5D,
-  PickupTransport = 0x5E,
-  PickupBunker = 0x5F,
-  Pickup4 = 0x60,
-  PowerupIdle = 0x61,
-  Sieging = 0x62,
-  Unsieging = 0x63,
-  WatchTarget = 0x64,
-  InitCreepGrowth = 0x65,
-  SpreadCreep = 0x66,
-  StoppingCreepGrowth = 0x67,
-  GuardianAspect = 0x68,
-  ArchonWarp = 0x69,
-  CompletingArchonSummon = 0x6A,
-  HoldPosition = 0x6B,
-  QueenHoldPosition = 0x6C,
-  Cloak = 0x6D,
-  Decloak = 0x6E,
-  Unload = 0x6F,
-  MoveUnload = 0x70,
-  FireYamatoGun = 0x71,
-  MoveToFireYamatoGun = 0x72,
-  CastLockdown = 0x73,
-  Burrowing = 0x74,
-  CastRecall = 0x75,
-  Teleport = 0x76,
-  CastScannerSweep = 0x77,
-  Scanner = 0x78,
-  CastDefensiveMatrix = 0x79,
-  CastPsionicStorm = 0x7A,
-  CastIrradiate = 0x7B,
-  CastPlague = 0x7C,
-  CastConsume = 0x7D,
-  CastEnsnare = 0x7E,
-  CastStasisField = 0x7F,
-  CastHallucination = 0x80,
-  Hallucination2 = 0x81,
-  ResetCollision = 0x82,
-  ResetHarvestCollision = 0x83,
-  Patrol = 0x84,
-  CTFCOPInit = 0x85,
-  CTFCOPStarted = 0x86,
-  CTFCOP2 = 0x87,
-  ComputerAI = 0x88,
-  AtkMoveEP = 0x89,
-  HarassMove = 0x8A,
-  AIPatrol = 0x8B,
-  GuardPost = 0x8C,
-  RescuePassive = 0x8D,
-  Neutral = 0x8E,
-  ComputerReturn = 0x8F,
-  InitializePsiProvider = 0x90,
-  SelfDestructing = 0x91,
-  Critter = 0x92,
-  HiddenGun = 0x93,
-  OpenDoor = 0x94,
-  CloseDoor = 0x95,
-  HideTrap = 0x96,
-  RevealTrap = 0x97,
-  EnableDoodad = 0x98,
-  DisableDoodad = 0x99,
-  WarpIn_ = 0x9A,
-  Medic = 0x9B,
-  MedicHeal = 0x9C,
-  HealMove = 0x9D,
-  MedicHoldPosition = 0x9E,
-  MedicHealToIdle = 0x9F,
-  CastRestoration = 0xA0,
-  CastDisruptionWeb = 0xA1,
-  CastMindControl = 0xA2,
-  DarkArchonMeld = 0xA3,
-  CastFeedback = 0xA4,
-  CastOpticalFlare = 0xA5,
-  CastMaelstrom = 0xA6,
-  JunkYardDog = 0xA7,
-  Fatal = 0xA8,
-  ORD_None = 0xA9,
-  ORD_Unknown = 0xAA,
-  ORD_MAX = 0xAB,
-};
-
-struct dialog_ctrl
-{
-  dialog *pDlg;
-};
-
-enum MenuPosition : __int32
-{
-  GLUE_MAIN_MENU = 0x0,
-  GLUE_SIMULATE = 0x1,
-  GLUE_CONNECT = 0x2,
-  GLUE_CHAT = 0x3,
-  GLUE_BATTLE = 0x4,
-  GLUE_LOGIN = 0x5,
-  GLUE_CAMPAIGN = 0x6,
-  GLUE_READY_T = 0x7,
-  GLUE_READY_Z = 0x8,
-  GLUE_READY_P = 0x9,
-  GLUE_GAME_SELECT = 0xA,
-  GLUE_CREATE = 0xB,
-  GLUE_CREATE_MULTI = 0xC,
-  GLUE_LOAD = 0xD,
-  GLUE_SCORE_Z_DEFEAT = 0xE,
-  GLUE_SCORE_Z_VICTORY = 0xF,
-  GLUE_SCORE_T_DEFEAT = 0x10,
-  GLUE_SCORE_T_VICTORY = 0x11,
-  GLUE_SCORE_P_DEFEAT = 0x12,
-  GLUE_SCORE_P_VICTORY = 0x13,
-  GLUE_MODEM = 0x14,
-  GLUE_DIRECT = 0x15,
-  GLUE_EX_CAMPAIGN = 0x16,
-  GLUE_GAME_MODE = 0x17,
-  GLUE_EX_GAME_MODE = 0x18,
-  GLUE_GENERIC = 0x19,
-  GLUE_MAX = 0x1A,
-};
-
-enum GamePosition : __int16
-{
-  GAME_INTRO = 0x0,
-  GAME_RUNINIT = 0x1,
-  GAME_EXIT = 0x2,
-  GAME_RUN = 0x3,
-  GAME_GLUES = 0x4,
-  GAME_RESTART = 0x5,
-  GAME_WIN = 0x6,
-  GAME_LOSE = 0x7,
-  GAME_CREDITS = 0x8,
-  GAME_EPILOG = 0x9,
-  GAME_CINEMATIC = 0xA,
-  GAME_MAX = 0xB,
-};
-
-enum StatusFlags
-{
-  Completed = 0x1,
-  GoundedBuilding = 0x2,
-  InAir = 0x4,
-  Disabled = 0x8,
-  Burrowed = 0x10,
-  InBuilding = 0x20,
-  InTransport = 0x40,
-  UNKNOWN1 = 0x80,
-  RequiresDetection = 0x100,
-  Cloaked = 0x200,
-  DoodadStatesThing = 0x400,
-  CloakingForFree = 0x800,
-  CanNotReceiveOrders = 0x1000,
-  NoBrkCodeStart = 0x2000,
-  UNKNOWN2 = 0x4000,
-  CanNotAttack = 0x8000,
-  IsAUnit = 0x10000,
-  IsABuilding = 0x20000,
-  IgnoreTileCollision = 0x40000,
-  UNKNOWN4 = 0x80000,
-  IsNormal = 0x100000,
-  NoCollide = 0x200000,
-  UNKNOWN5 = 0x400000,
-  IsGathering = 0x800000,
-  UNKNOWN6 = 0x1000000,
-  UNKNOWN7 = 0x2000000,
-  Invincible = 0x4000000,
-  HoldingPosition = 0x8000000,
-  SpeedUpgrade = 0x10000000,
-  CooldownUpgrade = 0x20000000,
-  IsHallucination = 0x40000000,
-  IsSelfDestructing = 0x80000000,
+  CUnit *harvestTarget;
+  CUnit *prevHarvestUnit;
+  CUnit *nextHarvestUnit;
 };
 
 enum SfxData
@@ -2695,114 +2734,306 @@ enum SfxData
   SFX_MAX = 0x478,
 };
 
+enum PlayerType : __int8
+{
+  PT_NotUsed = 0x0,
+  PT_Computer = 0x1,
+  PT_Human = 0x2,
+  PT_Rescuable = 0x3,
+  PT_Unknown0 = 0x4,
+  PT_ComputerSlot = 0x5,
+  PT_OpenSlot = 0x6,
+  PT_Neutral = 0x7,
+  PT_ClosedSlot = 0x8,
+  PT_Unknown1 = 0x9,
+  PT_HumanDefeated = 0xA,
+  PT_ComputerDefeated = 0xB,
+};
+
+enum UnitPrototypeFlags
+{
+  Building = 0x1,
+  Addon = 0x2,
+  Flyer = 0x4,
+  Worker = 0x8,
+  Subunit = 0x10,
+  FlyingBuilding = 0x20,
+  Hero = 0x40,
+  RegeneratesHP = 0x80,
+  AnimatedIdle = 0x100,
+  Cloakable = 0x200,
+  TwoUnitsIn1Egg = 0x400,
+  NeutralAccessories = 0x800,
+  ResourceDepot = 0x1000,
+  ResourceContainer = 0x2000,
+  RoboticUnit = 0x4000,
+  Detector = 0x8000,
+  OrganicUnit = 0x10000,
+  CreepBuilding = 0x20000,
+  Unused = 0x40000,
+  RequiresPsi = 0x80000,
+  Burrowable = 0x100000,
+  Spellcaster = 0x200000,
+  PermanentCloak = 0x400000,
+  NPCOrAccessories = 0x800000,
+  MorphFromOtherUnit = 0x1000000,
+  LargeUnit = 0x2000000,
+  HugeUnit = 0x4000000,
+  AutoAttackAndMove = 0x8000000,
+  Attack = 0x10000000,
+  Invincible_ = 0x20000000,
+  Mechanical = 0x40000000,
+  ProducesUnits = 0x80000000,
+};
+
+enum GluAllTblEntry : __int16
+{
+  STAR_EDIT_NOT_FOUND = 0x0,
+  SPAWNED_BY = 0x1,
+  PRINT_FORMAT_S = 0x2,
+  UNITS = 0x3,
+  STRUCTURES = 0x4,
+  RESOURCES = 0x5,
+  PRODUCED = 0x6,
+  KILLED = 0x7,
+  LOST = 0x8,
+  CONSTRUCTED = 0x9,
+  RAZED = 0xA,
+  LOST2 = 0xB,
+  GAS_MINED = 0xC,
+  MINTERALS_MINED = 0xD,
+  TOTAL_SPENT = 0xE,
+  ELAPSED_TIME = 0xF,
+  DEFEAT = 0x10,
+  VICTORY = 0x11,
+  DRAW = 0x12,
+  DISCONNECTED = 0x13,
+  UNDECIDED = 0x14,
+  DELETE_SAVE_GAME = 0x15,
+  ENTER_CHARACTER_NAME = 0x16,
+  DELETE_CHARACTER = 0x17,
+  NAME_EXISTS = 0x18,
+  PLEASE_DELETE_CHARACTER = 0x19,
+  CHARACTER_CREATION_ERROR = 0x1A,
+  UP_ONE_LEVEL = 0x1B,
+  SAVE = 0x1C,
+  PRINT_FORMAT_U = 0x1D,
+  NUMBER_OF_PLAYERS = 0x1E,
+  PRINT_FORMAT_UX_U = 0x1F,
+  MAP_SIZE = 0x20,
+  TILESET = 0x21,
+  PRINT_FORMAT_U2 = 0x22,
+  COMPUTER_SLOTS = 0x23,
+  PRINT_FORMAT_U3 = 0x24,
+  HUMAN_SLOTS = 0x25,
+  BADLANDS = 0x26,
+  SPACE = 0x27,
+  INSTALLATION = 0x28,
+  ASHWORLD = 0x29,
+  JUNGLE = 0x2A,
+  DESERT = 0x2B,
+  ICE = 0x2C,
+  TWILIGHT = 0x2D,
+  SAVED_GAME = 0x2E,
+  MAP_NAME = 0x2F,
+  UNABLE_TO_LOAD_MAP = 0x30,
+  SELECT_LADDER_MAP = 0x31,
+  SELECTED_SCENARIO_NOT_VALID = 0x32,
+  ERROR_CREATING_GAME = 0x33,
+  NETWORK_GAME_EXISTS = 0x34,
+  UNSUPPORTED_GAME_TYPE_OPTIONS = 0x35,
+  TOO_MANY_GAMES_ON_NETWORK = 0x36,
+  GAME_NETWORK_INITIALIZATION_ERROR = 0x37,
+  OPPONENT_PLAYER_REQUIRED = 0x38,
+  HUMAN_PLAYER_REQUIRED = 0x39,
+  UMS_ONLY = 0x3A,
+  EXPANSION_ONLY = 0x3B,
+  INVALID_SCENARIO = 0x3C,
+  SCENARIO_FILENAME_TOO_LONG = 0x3D,
+  SCENARIO_INVALID_OR_CORRUPTED = 0x3E,
+  INVALID_SAVE_GAME = 0x3F,
+};
+
+
+
+typedef unsigned __int8 u8;
+
+typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
+
+struct __unaligned __declspec(align(1)) MapRelatedUnknown
+{
+  _BYTE gap0[4];
+  MapRelatedUnknown *dword4;
+  _BYTE gap8[65];
+  const char char49;
+  _BYTE gap4A[526];
+  _DWORD dword258;
+  _DWORD dword25C;
+  _BYTE byte260;
+  _BYTE gap261[7];
+  _BYTE byte268;
+  char char269;
+  _BYTE gap26A[520];
+  _WORD word472;
+  _WORD word474;
+  _BYTE gap476[3];
+  _BYTE byte479;
+  _BYTE byte47A;
+  _BYTE byte47B;
+  _BYTE gap47C[16];
+  char char48C;
+};
+
+struct PlayerInfo
+{
+  int dwPlayerID;
+  int dwStormId;
+  PlayerType nType;
+  Race nRace;
+  unsigned __int8 nTeam;
+  char szName[25];
+};
+
+struct struct_1
+{
+  struct_1 *field_0;
+  char gap_4[28];
+  __int16 field_4;
+  char gap_22[36];
+  char field_5;
+  char gap_47[1];
+  char field_6;
+};
+
+struct __declspec(align(2)) DatLoad
+{
+  void *address;
+  int length;
+  int entries;
+};
+
+struct Chat_TextLine
+{
+  char chars[218];
+};
+
+typedef __int32 s32;
+
+struct CThingy
+{
+  CThingy *prev;
+  CThingy *next;
+  int hitPoints;
+  CSprite *sprite;
+};
+
+struct struct_5
+{
+  int sound_buffer_bytes;
+  int anonymous_1;
+  int anonymous_2;
+  IDirectSoundBuffer *sound_buffer;
+};
+
+struct TransVectorEntry
+{
+  HANDLE hTrans;
+  RECT info;
+  DWORD dwReserved;
+};
+
+struct ChunkNode
+{
+  ChunkListItem *count;
+  ChunkListItem field2;
+};
+
+struct TriggerList
+{
+  int field_0;
+  TriggerListEntry *end;
+  TriggerListEntry *begin;
+};
+
+struct _SCOPETABLE_ENTRY
+{
+  int EnclosingLevel;
+  void *FilterFunc;
+  void *HandlerFunc;
+};
+
+typedef void (__thiscall *AppExitHandle)(bool exit_code);
+
+struct RTCI
+{
+  void *m_lpszClassName;
+  int m_nObjectSize;
+  int m_wSchema;
+  void *m_pfnCreateObject;
+  void *m_pfnGetBaseClass;
+  int m_pNextClass;
+  int m_pClassInit;
+};
+
+struct CndSignature
+{
+  int field_0;
+  char filename[20];
+};
+
+struct struct_6
+{
+  IDirectSoundBuffer *sound_buffer;
+  __int16 unit_type;
+  char sfxdata_flags_2;
+  char sfxdata_flags_1;
+  int field_8;
+  int sfx_id;
+  int field_10;
+  int volume_related_maybe;
+};
+
+struct UpdateFunction
+{
+  int index;
+  void (__fastcall *update_function)(CImage *);
+};
+
+struct __declspec(align(1)) ChkLoader
+{
+  int version;
+  ChkSectionLoader *ptr1;
+  int i1;
+  ChkSectionLoader *ptr2;
+  int i2;
+  ChkSectionLoader *ptr3;
+  int i3;
+  ChkSectionLoader *ptr4;
+  int i4;
+  int requires_expansion;
+};
+
+typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, void *);
+
+struct CharacterData
+{
+  int char0;
+  _BYTE has_ophelia_cheat;
+  _BYTE gap5[3];
+  _DWORD last_access_time;
+  char player_name[24];
+  int gap0;
+  int gap[3];
+  _BYTE more_data[60];
+};
+
+struct __declspec(align(4)) EstablishingShotPosition
+{
+  int index;
+  const char *tag;
+};
+
 typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
-
-typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
-
-enum WeaponBehavior : __int8
-{
-  Fly_DoNotFollowTarget = 0x0,
-  Fly_FollowTarget = 0x1,
-  AppearOnTargetUnit = 0x2,
-  PersistOnTargetSite = 0x3,
-  AppearOnTargetSite = 0x4,
-  AppearOnAttacker = 0x5,
-  AttackAndSelfDestruct = 0x6,
-  Bounce = 0x7,
-  AttackNearbyArea = 0x8,
-  GoToMaxRange = 0x9,
-};
-
-struct CUnitGhost
-{
-  CSprite *nukeDot;
-};
-
-struct __declspec(align(2)) struct_a1
-{
-  int (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
-  int (__stdcall *isCreepCovered)(_DWORD, _DWORD);
-  int (__stdcall *isTileVisible)(int, int);
-  int (__stdcall *pfuncC)(_DWORD);
-};
-
-enum MapData4 : __int32
-{
-  MD4_none = 0x0,
-  MD4_tutorial = 0x1,
-  MD4_terran01 = 0x2,
-  MD4_terran02 = 0x3,
-  MD4_terran03 = 0x4,
-  MD4_terran04 = 0x5,
-  MD4_terran05 = 0x6,
-  MD4_terran06 = 0x7,
-  MD4_terran08 = 0x8,
-  MD4_terran09 = 0x9,
-  MD4_terran11 = 0xA,
-  MD4_terran12 = 0xB,
-  MD4_zerg01 = 0xC,
-  MD4_zerg02 = 0xD,
-  MD4_zerg03 = 0xE,
-  MD4_zerg04 = 0xF,
-  MD4_zerg05 = 0x10,
-  MD4_zerg06 = 0x11,
-  MD4_zerg07 = 0x12,
-  MD4_zerg08 = 0x13,
-  MD4_zerg09 = 0x14,
-  MD4_zerg10 = 0x15,
-  MD4_protoss01 = 0x16,
-  MD4_protoss02 = 0x17,
-  MD4_protoss03 = 0x18,
-  MD4_protoss04 = 0x19,
-  MD4_protoss05 = 0x1A,
-  MD4_protoss06 = 0x1B,
-  MD4_protoss07 = 0x1C,
-  MD4_protoss08 = 0x1D,
-  MD4_protoss09 = 0x1E,
-  MD4_protoss10 = 0x1F,
-  MD4_xprotoss01 = 0x20,
-  MD4_xprotoss02 = 0x21,
-  MD4_xprotoss03 = 0x22,
-  MD4_xprotoss04 = 0x23,
-  MD4_xprotoss05 = 0x24,
-  MD4_xprotoss06 = 0x25,
-  MD4_xprotoss07 = 0x26,
-  MD4_xprotoss08 = 0x27,
-  MD4_xterran01 = 0x28,
-  MD4_xterran02 = 0x29,
-  MD4_xterran03 = 0x2A,
-  MD4_xterran04 = 0x2B,
-  MD4_xterran05a = 0x2C,
-  MD4_xterran05b = 0x2D,
-  MD4_xterran06 = 0x2E,
-  MD4_xterran07 = 0x2F,
-  MD4_xterran08 = 0x30,
-  MD4_xzerg01 = 0x31,
-  MD4_xzerg02 = 0x32,
-  MD4_xzerg03 = 0x33,
-  MD4_xzerg04a = 0x34,
-  MD4_xzerg04b = 0x35,
-  MD4_xzerg04c = 0x36,
-  MD4_xzerg04d = 0x37,
-  MD4_xzerg04e = 0x38,
-  MD4_xzerg04f = 0x39,
-  MD4_xzerg05 = 0x3A,
-  MD4_xzerg06 = 0x3B,
-  MD4_xzerg07 = 0x3C,
-  MD4_xzerg08 = 0x3D,
-  MD4_xzerg09 = 0x3E,
-  MD4_xbonus = 0x3F,
-  MD4_xzerg10 = 0x40,
-  MD4_Unknown = 0x41,
-};
-
-typedef u16 TileID;
-
-union SaiRegionUser
-{
-  void *node;
-  int relation;
-};
 
 struct AI_Flags
 {
@@ -2820,20 +3051,85 @@ struct AI_Flags
   unsigned __int16 bTargetExpansion : 1;
 };
 
-struct _SCOPETABLE_ENTRY
+typedef __int8 s8;
+
+struct PlayerResources
 {
-  int EnclosingLevel;
-  void *FilterFunc;
-  void *HandlerFunc;
+  int minerals[12];
+  int gas[12];
+  int cumulativeGas[12];
+  int cumulativeMinerals[12];
 };
 
-struct Box32
+struct struct_4
 {
-  s32 left;
-  s32 top;
-  s32 right;
-  s32 bottom;
+  __int16 anonymous_0[2];
+  int anonymous_1;
+  void *anonymous_2;
 };
+
+struct Condition
+{
+  DWORD dwLocation;
+  DWORD dwGroup;
+  DWORD dwCount;
+  WORD wUnitType;
+  BYTE bComparisonType;
+  BYTE bConditionType;
+  BYTE bExtraType;
+  BYTE bFlags;
+  BYTE __bAlign[2];
+};
+
+struct MapChunks
+{
+  int data0;
+  int data1;
+  int data2;
+  int data3;
+  int data4;
+  int data5;
+  int data6;
+  int data7;
+};
+
+struct RTTICompleteObjectLocator
+{
+  int signature;
+  int offset;
+  int cdOffset;
+  void *pTypeDescriptor;
+  void *pClassDescriptor;
+};
+
+typedef __int16 s16;
+
+struct RenderFunction
+{
+  int index;
+  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
+  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
+};
+
+struct PMD
+{
+  int mdisp;
+  int pdisp;
+  int vdisp;
+};
+
+typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
+
+typedef void (__thiscall *InputProcedure)(dlgEvent *);
+
+struct vx4entry
+{
+  WORD wImageRef[4][4];
+};
+
+typedef int (__fastcall *ActionPointer)(Action *);
+
+typedef void *(__fastcall *FastFileRead)(char *filename, int default_value, int *bytes_read, char *, int);
 
 struct __declspec(align(2)) AudioVideoInitializationError
 {
@@ -2842,7 +3138,94 @@ struct __declspec(align(2)) AudioVideoInitializationError
   _DWORD function_name;
 };
 
-typedef void (__thiscall *InputProcedure)(dlgEvent *);
+typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+
+typedef unsigned __int32 u32;
+
+struct type_info
+{
+  void *vftable;
+  int _m_data;
+  char _m_d_name[];
+};
+
+struct _EH3_EXCEPTION_REGISTRATION
+{
+  struct _EH3_EXCEPTION_REGISTRATION *Next;
+  PVOID ExceptionHandler;
+  PSCOPETABLE_ENTRY ScopeTable;
+  DWORD TryLevel;
+};
+
+struct bounds
+{
+  WORD left;
+  WORD top;
+  WORD right;
+  WORD bottom;
+  WORD width;
+  WORD height;
+};
+
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+
+typedef bool (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
+
+struct points
+{
+  __int16 x;
+  __int16 y;
+};
+
+struct struct_0
+{
+  int anonymous_0;
+  dialog *anonymous_1;
+};
+
+union SaiRegionUser
+{
+  void *node;
+  int relation;
+};
+
+struct struct_3
+{
+  void *anonymous_0;
+  int anonymous_1;
+  void *anonymous_2;
+};
+
+struct UnitDimentions
+{
+  __int16 a;
+  __int16 b;
+  __int16 c;
+  __int16 d;
+};
+
+struct CampaignMission
+{
+  char *mission_name;
+  int mission_index;
+};
+
+struct struct_2
+{
+  int field_0;
+};
+
+struct GameSpeeds
+{
+  unsigned __int32 gameSpeedModifiers[7];
+  unsigned __int32 altSpeedModifiers[7];
+};
+
+struct point
+{
+  __int32 x;
+  __int32 y;
+};
 
 struct s_evt
 {
@@ -2852,59 +3235,18 @@ struct s_evt
   DWORD dwSize;
 };
 
-struct __declspec(align(1)) GotFileValues
+struct layer
 {
-  u8 template_id;
-  u8 unused1;
-  u16 variation_id;
-  int variation_value;
-  u8 victory_conditions;
-  u8 resource_type;
-  u8 unit_stats;
-  u8 fog;
-  u8 starting_units;
-  u8 starting_positions;
-  u8 player_types;
-  u8 allies_allowed;
-  u8 team_mode;
-  u8 cheats;
-  u8 tournament_mode;
-  u32 victory_condition_value;
-  u32 resource_type_value;
-  u8 unused3[5];
+  BYTE buffers;
+  BYTE bits;
+  WORD left;
+  WORD top;
+  WORD width;
+  WORD height;
+  WORD alignment;
+  Bitmap *pSurface;
+  void (__stdcall *pUpdate)(Bitmap *pSurface, bounds *pBounds);
 };
-
-struct TileType
-{
-  u16 index;
-  u8 buildability;
-  u8 groundHeight;
-  u16 leftEdge;
-  u16 topEdge;
-  u16 rightEdge;
-  u16 bottomEdge;
-  u16 _1;
-  u16 _2;
-  u16 _3;
-  u16 _4;
-  u16 megaTileRef[16];
-};
-
-struct ImagesDatExtraOverlayLO_Files
-{
-  LO_Overlays attackOverlays;
-  LO_Overlays damageOverlays;
-  LO_Overlays specialOverlays;
-  LO_Overlays landingDustOverlays;
-  LO_Overlays liftoffDustOverlays;
-};
-
-struct UpgradesBW
-{
-  u8 items[15];
-};
-
-typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
 
 struct __declspec(align(2)) UnknownPlayerRelated
 {
@@ -2962,238 +3304,28 @@ struct __declspec(align(2)) UnknownPlayerRelated
   dialog *some_dialog;
 };
 
-struct __declspec(align(1)) Position
+struct ImagesDatExtraOverlayLO_Files
 {
-  __int16 x;
-  u16 y;
+  LO_Overlays attackOverlays;
+  LO_Overlays damageOverlays;
+  LO_Overlays specialOverlays;
+  LO_Overlays landingDustOverlays;
+  LO_Overlays liftoffDustOverlays;
 };
 
-struct __declspec(align(2)) SightStruct
-{
-  u32 tileSightWidth;
-  u32 tileSightHeight;
-  u32 unknown1;
-  u32 unknown2;
-  u32 unknown3;
-  u32 unknown4;
-  u32 unknown5;
-};
-
-struct CUnitStatus
-{
-  u16 removeTimer;
-  u16 defenseMatrixDamage;
-  u8 defenseMatrixTimer;
-  u8 stimTimer;
-  u8 ensnareTimer;
-  u8 lockdownTimer;
-  u8 irradiateTimer;
-  u8 stasisTimer;
-  u8 plagueTimer;
-  u8 stormTimer;
-  CUnit *irradiatedBy;
-  u8 irradiatePlayerID;
-  u8 parasiteFlags;
-  u8 cycleCounter;
-  bool isBlind;
-  u8 maelstromTimer;
-  u8 _unused_0x125;
-  u8 acidSporeCount;
-  u8 acidSporeTime[9];
-  u16 bulletBehaviour3by3AttackSequence;
-  u16 _padding_0x132;
-  void *pAI;
-  u16 airStrength;
-  u16 groundStrength;
-};
-
-struct __declspec(align(2)) CUnitBuilding
-{
-  CUnit *addon;
-  UnitType addonBuildType;
-  u16 upgradeResearchTime;
-  Tech techType;
-  u8 upgradeType;
-  u8 larvaTimer;
-  u8 landingTimer;
-  u8 creepTimer;
-  u8 upgradeLevel;
-  u16 __E;
-};
-
-typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, void *);
-
-struct CUnitVulture
-{
-  u8 spiderMineCount;
-};
-
-struct ForceName
-{
-  char name[30];
-};
-
-struct UnitFinderData
-{
-  s32 unitIndex;
-  s32 position;
-};
-
-struct Font
-{
-  u32 magic;
-  u8 low;
-  u8 high;
-  u8 Xmax;
-  u8 Ymax;
-  FontChar *chrs[1];
-};
+typedef struct _GUID GUID;
 
 struct vr4entry
 {
   BYTE cdata[8][8];
 };
 
-struct type_info
+struct RTTIClassHierarchyDescriptor
 {
-  void *vftable;
-  int _m_data;
-  char _m_d_name[];
-};
-
-struct SaiContourHub
-{
-  SaiContour *contours[4];
-  u16 contourCount[4];
-  u16 contourMax[4];
-  s16 searchInner[4];
-  s16 unk_28[4];
-  s16 searchOuter[4];
-};
-
-struct UnitDimentions
-{
-  __int16 a;
-  __int16 b;
-  __int16 c;
-  __int16 d;
-};
-
-struct __declspec(align(2)) ChkSectionLoader
-{
-  const char name[4];
-  bool (__stdcall *func)(SectionData *, int, MapChunks *);
-  int x;
-};
-
-struct SuppliesPerRace
-{
-  s32 available[12];
-  s32 used[12];
-  s32 max[12];
-};
-
-struct ScrollSpeeds
-{
-  u8 scroll[7];
-};
-
-struct CUnitBeacon
-{
-  u32 _unknown_00;
-  u32 _unknown_04;
-  u32 flagSpawnFrame;
-};
-
-struct dialog_optn
-{
-  dialog *pDlg;
-  u8 bEnabled;
-};
-
-struct UnitAvail
-{
-  u8 available[12][228];
-};
-
-typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
-
-struct CUnitSilo
-{
-  CUnit *pNuke;
-  bool bReady;
-};
-
-struct TechBW
-{
-  u8 items[20];
-};
-
-struct PlayerAlliance
-{
-  unsigned __int8 player[12];
-};
-
-struct CUnitCarrier
-{
-  CUnit *pInHanger;
-  CUnit *pOutHanger;
-  u8 inHangerCount;
-  u8 outHangerCount;
-};
-
-typedef void (__thiscall *AppExitHandle)(bool exit_code);
-
-typedef int (__fastcall *ActionPointer)(Action *);
-
-struct LO_Header
-{
-  u32 frameCount;
-  u32 overlayCount;
-  u32 frameOffsets[1];
-};
-
-struct vx4entry
-{
-  WORD wImageRef[4][4];
-};
-
-struct rect
-{
-  s16 left;
-  s16 top;
-  s16 right;
-  s16 bottom;
-};
-
-struct ActiveTile
-{
-  u8 bVisibilityFlags;
-  u8 bExploredFlags;
-  unsigned __int8 bWalkable : 1;
-  unsigned __int8 bUnknown1 : 1;
-  unsigned __int8 bUnwalkable : 1;
-  unsigned __int8 bUnknown2 : 3;
-  unsigned __int8 bHasCreep : 1;
-  unsigned __int8 bAlwaysUnbuildable : 1;
-  unsigned __int8 bGroundHeight : 3;
-  unsigned __int8 bCurrentlyOccupied : 1;
-  unsigned __int8 bCreepReceeding : 1;
-  unsigned __int8 bCliffEdge : 1;
-  unsigned __int8 bTemporaryCreep : 1;
-  unsigned __int8 bUnknown3 : 1;
-};
-
-struct dialog_edit
-{
-  dialog *pDlg;
-  u8 bColor;
-  u8 bScrollPosition;
-  u8 bLeftMargin;
-  u8 bTopMargin;
-  u16 wUnk_0x3A;
-  u16 wUnk_0x3C;
-  u8 bCursorPos;
+  int signature;
+  int attributes;
+  int numBaseClasses;
+  void *pBaseClassArray;
 };
 
 struct CUnitFighter
@@ -3204,140 +3336,54 @@ struct CUnitFighter
   bool inHanger;
 };
 
-struct TechSC
+typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
+
+struct UnknownTilesetRelated2
 {
-  u8 items[24];
+  _DWORD dword0;
+  unsigned __int8 has_next;
+  _BYTE byte5;
+  _BYTE byte6;
+  _BYTE byte7;
 };
 
-struct ChunkNode
+struct __declspec(align(2)) ChkSectionLoader
 {
-  ChunkListItem *count;
-  ChunkListItem field2;
+  const char name[4];
+  bool (__stdcall *func)(SectionData *, int, MapChunks *);
+  int x;
 };
 
-struct RTTICompleteObjectLocator
+struct __declspec(align(1)) swishTimer
 {
-  int signature;
-  int offset;
-  int cdOffset;
-  void *pTypeDescriptor;
-  void *pClassDescriptor;
+  unsigned __int16 wIndex;
+  unsigned __int16 wType;
 };
 
-struct MiniTileFlagArray
+typedef u16 TileID;
+
+struct SectionData
 {
-  u16 miniTile[16];
+  int field0;
+  TileID *field1;
+  int chunk_name;
+  int size;
 };
 
-struct point
+struct CUnitSilo
 {
-  __int32 x;
-  __int32 y;
+  CUnit *pNuke;
+  bool bReady;
 };
 
-struct dialog_dlg
+struct PlayerAlliance
 {
-  u32 dwUnk_0x32;
-  u16 dstBits_wid;
-  u16 dstBits_ht;
-  u8 *dstBits_data;
-  dialog *pActiveElement;
-  dialog *pFirstChild;
-  dialog *pMouseElement;
-  void *pModalFcn;
+  unsigned __int8 player[12];
 };
 
-struct GameSpeeds
+struct ForceName
 {
-  unsigned __int32 gameSpeedModifiers[7];
-  unsigned __int32 altSpeedModifiers[7];
-};
-
-struct CThingy
-{
-  CThingy *prev;
-  CThingy *next;
-  int hitPoints;
-  CSprite *sprite;
-};
-
-struct PlayerInfo
-{
-  int dwPlayerID;
-  int dwStormId;
-  PlayerType nType;
-  Race nRace;
-  unsigned __int8 nTeam;
-  char szName[25];
-};
-
-struct SaiSplit
-{
-  u16 minitileMask;
-  u16 rgn1;
-  u16 rgn2;
-};
-
-struct dialog_scroll
-{
-  struct dialog *pDlg;
-  void *pfcnScrollerUpdate;
-  u16 nCurPos;
-  u16 nMin;
-  u16 nMax;
-  u16 wUnk_0x40;
-  u32 dwScrollFlags;
-  u8 bSliderSkip;
-  u8 bUpdateCounter;
-  u8 bSliderGraphic;
-  u8 bSliderSpacing;
-  u16 wUnk_0x4A;
-  u32 dwUnk_0x4C;
-};
-
-struct pt
-{
-  u16 x;
-  u16 y;
-};
-
-struct PMD
-{
-  int mdisp;
-  int pdisp;
-  int vdisp;
-};
-
-struct MapChunks
-{
-  int data0;
-  int data1;
-  int data2;
-  int data3;
-  int data4;
-  int data5;
-  int data6;
-  int data7;
-};
-
-struct Condition
-{
-  DWORD dwLocation;
-  DWORD dwGroup;
-  DWORD dwCount;
-  WORD wUnitType;
-  BYTE bComparisonType;
-  BYTE bConditionType;
-  BYTE bExtraType;
-  BYTE bFlags;
-  BYTE __bAlign[2];
-};
-
-struct TransVectorEntry
-{
-  HANDLE hTrans;
-  RECT info;
-  DWORD dwReserved;
+  char name[30];
 };
 
 struct CUnitFinder
@@ -3348,18 +3394,33 @@ struct CUnitFinder
   u32 bottom;
 };
 
-struct __declspec(align(2)) DatLoad
-{
-  void *address;
-  int length;
-  int entries;
-};
-
 struct __declspec(align(2)) ColorShiftData
 {
   u32 index;
   void *data;
   char name[12];
+};
+
+struct __declspec(align(1)) GotFileValues
+{
+  u8 template_id;
+  u8 unused1;
+  u16 variation_id;
+  int variation_value;
+  u8 victory_conditions;
+  u8 resource_type;
+  u8 unit_stats;
+  u8 fog;
+  u8 starting_units;
+  u8 starting_positions;
+  u8 player_types;
+  u8 allies_allowed;
+  u8 team_mode;
+  u8 cheats;
+  u8 tournament_mode;
+  u32 victory_condition_value;
+  u32 resource_type_value;
+  u8 unused3[5];
 };
 
 struct __declspec(align(2)) AiCaptain
@@ -3390,102 +3451,114 @@ struct __declspec(align(2)) AiCaptain
   void *town;
 };
 
-struct Action
+struct SaiContour
 {
-  u32 location;
-  u32 string;
-  u32 wavString;
-  u32 time;
-  u32 player;
-  u32 number;
-  u16 unit;
-  u8 action;
-  u8 number2;
-  u8 flags;
+  s16 v[3];
+  u8 type;
+  u8 unk_relation;
 };
 
-struct PlayerResources
+struct CUnitVulture
 {
-  int minerals[12];
-  int gas[12];
-  int cumulativeGas[12];
-  int cumulativeMinerals[12];
+  u8 spiderMineCount;
 };
 
-struct CampaignMission
+struct UnitAvail
 {
-  char *mission_name;
-  int mission_index;
+  u8 available[12][228];
 };
 
-struct RTCI
+struct __declspec(align(1)) Position
 {
-  void *m_lpszClassName;
-  int m_nObjectSize;
-  int m_wSchema;
-  void *m_pfnCreateObject;
-  void *m_pfnGetBaseClass;
-  int m_pNextClass;
-  int m_pClassInit;
+  u16 x;
+  u16 y;
 };
 
-struct Chat_TextLine
+struct RTTIBaseClassDescriptor
 {
-  char chars[218];
-};
-
-struct bounds
-{
-  WORD left;
-  WORD top;
-  WORD right;
-  WORD bottom;
-  WORD width;
-  WORD height;
-};
-
-struct Bitmap
-{
-  u16 wid;
-  u16 ht;
-  u8 *data;
-};
-
-struct RTTIClassHierarchyDescriptor
-{
-  int signature;
+  void *pTypeDescriptor;
+  int numContainedBases;
+  PMD pmd;
   int attributes;
-  int numBaseClasses;
-  void *pBaseClassArray;
 };
 
-struct Counts
+struct __declspec(align(2)) CUnitBuilding
 {
-  s32 all[228][12];
-  s32 completed[228][12];
-  s32 killed[228][12];
-  s32 dead[228][12];
+  CUnit *addon;
+  UnitType addonBuildType;
+  u16 upgradeResearchTime;
+  Tech techType;
+  u8 upgradeType;
+  u8 larvaTimer;
+  u8 landingTimer;
+  u8 creepTimer;
+  u8 upgradeLevel;
+  u16 __E;
 };
 
-typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
-
-struct MapSize
+struct CUnitCarrier
 {
-  u16 width;
-  u16 height;
+  CUnit *pInHanger;
+  CUnit *pOutHanger;
+  u8 inHangerCount;
+  u8 outHangerCount;
 };
 
-struct layer
+struct CUnitResource
 {
-  BYTE buffers;
-  BYTE bits;
-  WORD left;
-  WORD top;
-  WORD width;
-  WORD height;
-  WORD alignment;
-  Bitmap *pSurface;
-  void (__stdcall *pUpdate)(Bitmap *pSurface, bounds *pBounds);
+  u16 resourceCount;
+  u8 resourceIscript;
+  u8 gatherQueueCount;
+  CUnit *nextGatherer;
+  u8 resourceGroup;
+  u8 resourceBelongsToAI;
+};
+
+struct dialog_scroll
+{
+  struct dialog *pDlg;
+  void *pfcnScrollerUpdate;
+  u16 nCurPos;
+  u16 nMin;
+  u16 nMax;
+  u16 wUnk_0x40;
+  u32 dwScrollFlags;
+  u8 bSliderSkip;
+  u8 bUpdateCounter;
+  u8 bSliderGraphic;
+  u8 bSliderSpacing;
+  u16 wUnk_0x4A;
+  u32 dwUnk_0x4C;
+};
+
+struct CPPEH_RECORD
+{
+  DWORD old_esp;
+  EXCEPTION_POINTERS *exc_ptr;
+  struct _EH3_EXCEPTION_REGISTRATION registration;
+};
+
+struct dialog_edit
+{
+  dialog *pDlg;
+  u8 bColor;
+  u8 bScrollPosition;
+  u8 bLeftMargin;
+  u8 bTopMargin;
+  u16 wUnk_0x3A;
+  u16 wUnk_0x3C;
+  u8 bCursorPos;
+};
+
+struct dialog_optn
+{
+  dialog *pDlg;
+  u8 bEnabled;
+};
+
+struct TechSC
+{
+  u8 items[24];
 };
 
 struct UpgradesSC
@@ -3493,21 +3566,63 @@ struct UpgradesSC
   u8 items[46];
 };
 
-struct __declspec(align(1)) ChkLoader
+struct Font
 {
-  int version;
-  ChkSectionLoader *ptr1;
-  int i1;
-  ChkSectionLoader *ptr2;
-  int i2;
-  ChkSectionLoader *ptr3;
-  int i3;
-  ChkSectionLoader *ptr4;
-  int i4;
-  int requires_expansion;
+  u32 magic;
+  u8 low;
+  u8 high;
+  u8 Xmax;
+  u8 Ymax;
+  FontChar *chrs[1];
 };
 
-typedef bool (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
+struct UnknownTilesetRelated1
+{
+  int x;
+  UnknownTilesetRelated2 y[2];
+};
+
+struct rect
+{
+  s16 left;
+  s16 top;
+  s16 right;
+  s16 bottom;
+};
+
+struct CUnitStatus
+{
+  u16 removeTimer;
+  u16 defenseMatrixDamage;
+  u8 defenseMatrixTimer;
+  u8 stimTimer;
+  u8 ensnareTimer;
+  u8 lockdownTimer;
+  u8 irradiateTimer;
+  u8 stasisTimer;
+  u8 plagueTimer;
+  u8 stormTimer;
+  CUnit *irradiatedBy;
+  u8 irradiatePlayerID;
+  u8 parasiteFlags;
+  u8 cycleCounter;
+  bool isBlind;
+  u8 maelstromTimer;
+  u8 _unused_0x125;
+  u8 acidSporeCount;
+  u8 acidSporeTime[9];
+  u16 bulletBehaviour3by3AttackSequence;
+  u16 _padding_0x132;
+  void *pAI;
+  u16 airStrength;
+  u16 groundStrength;
+};
+
+struct UnitFinderData
+{
+  s32 unitIndex;
+  s32 position;
+};
 
 struct dialog_list
 {
@@ -3530,12 +3645,192 @@ struct dialog_list
   FnDrawItem *pDrawItemFcn;
 };
 
+struct UpgradesBW
+{
+  u8 items[15];
+};
+
+struct MiniTileFlagArray
+{
+  u16 miniTile[16];
+};
+
+struct SuppliesPerRace
+{
+  s32 available[12];
+  s32 used[12];
+  s32 max[12];
+};
+
+struct Counts
+{
+  s32 all[228][12];
+  s32 completed[228][12];
+  s32 killed[228][12];
+  s32 dead[228][12];
+};
+
+struct ScrollSpeeds
+{
+  u8 scroll[7];
+};
+
+struct Bitmap
+{
+  u16 wid;
+  u16 ht;
+  u8 *data;
+};
+
+struct FontChar
+{
+  u8 w;
+  u8 h;
+  u8 _x;
+  u8 _y;
+  u8 data[1];
+};
+
+struct TechBW
+{
+  u8 items[20];
+};
+
+struct CUnitBeacon
+{
+  u32 _unknown_00;
+  u32 _unknown_04;
+  u32 flagSpawnFrame;
+};
+
+struct Action
+{
+  u32 location;
+  u32 string;
+  u32 wavString;
+  u32 time;
+  u32 player;
+  u32 number;
+  u16 unit;
+  u8 action;
+  u8 number2;
+  u8 flags;
+};
+
+struct dialog_dlg
+{
+  u32 dwUnk_0x32;
+  u16 dstBits_wid;
+  u16 dstBits_ht;
+  u8 *dstBits_data;
+  dialog *pActiveElement;
+  dialog *pFirstChild;
+  dialog *pMouseElement;
+  void *pModalFcn;
+};
+
+struct SaiContourHub
+{
+  SaiContour *contours[4];
+  u16 contourCount[4];
+  u16 contourMax[4];
+  s16 searchInner[4];
+  s16 unk_28[4];
+  s16 searchOuter[4];
+};
+
+struct Box32
+{
+  s32 left;
+  s32 top;
+  s32 right;
+  s32 bottom;
+};
+
+struct __declspec(align(2)) SightStruct
+{
+  u32 tileSightWidth;
+  u32 tileSightHeight;
+  u32 unknown1;
+  u32 unknown2;
+  u32 unknown3;
+  u32 unknown4;
+  u32 unknown5;
+};
+
+struct CUnitPowerup
+{
+  points origin;
+};
+
+struct grpFrame
+{
+  s8 x;
+  s8 y;
+  s8 wid;
+  s8 hgt;
+  u32 dataOffset;
+};
+
+struct CUnitWorker
+{
+  CUnit *pPowerup;
+  points targetResource;
+  CUnit *targetResourceUnit;
+  u16 repairResourceLossTimer;
+  bool isCarryingSomething;
+  u8 resourceCarryCount;
+};
+
+struct MapSize
+{
+  u16 width;
+  u16 height;
+};
+
+struct ActiveTile
+{
+  u8 bVisibilityFlags;
+  u8 bExploredFlags;
+  unsigned __int8 bWalkable : 1;
+  unsigned __int8 bUnknown1 : 1;
+  unsigned __int8 bUnwalkable : 1;
+  unsigned __int8 bUnknown2 : 3;
+  unsigned __int8 bHasCreep : 1;
+  unsigned __int8 bAlwaysUnbuildable : 1;
+  unsigned __int8 bGroundHeight : 3;
+  unsigned __int8 bCurrentlyOccupied : 1;
+  unsigned __int8 bCreepReceeding : 1;
+  unsigned __int8 bCliffEdge : 1;
+  unsigned __int8 bTemporaryCreep : 1;
+  unsigned __int8 bUnknown3 : 1;
+};
+
+struct SaiSplit
+{
+  u16 minitileMask;
+  u16 rgn1;
+  u16 rgn2;
+};
+
+struct CUnitRally
+{
+  points position;
+  CUnit *unit;
+};
+
 struct Box16
 {
   u16 left;
   u16 top;
   u16 right;
   u16 bottom;
+};
+
+struct pt
+{
+  u16 x;
+  u16 y;
 };
 
 struct fontMemStruct
@@ -3548,274 +3843,72 @@ struct fontMemStruct
   u16 y2;
 };
 
-struct RenderFunction
-{
-  int index;
-  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
-  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
-};
-
-struct CharacterData
-{
-  int char0;
-  _BYTE has_ophelia_cheat;
-  _BYTE gap5[3];
-  _DWORD last_access_time;
-  char player_name[24];
-  int gap0;
-  int gap[3];
-  _BYTE more_data[60];
-};
-
-struct TriggerList
-{
-  int field_0;
-  TriggerListEntry *end;
-  TriggerListEntry *begin;
-};
-
-struct FontChar
-{
-  u8 w;
-  u8 h;
-  u8 _x;
-  u8 _y;
-  u8 data[1];
-};
-
-struct _EH3_EXCEPTION_REGISTRATION
-{
-  struct _EH3_EXCEPTION_REGISTRATION *Next;
-  PVOID ExceptionHandler;
-  PSCOPETABLE_ENTRY ScopeTable;
-  DWORD TryLevel;
-};
-
-struct __declspec(align(1)) swishTimer
-{
-  unsigned __int16 wIndex;
-  unsigned __int16 wType;
-};
-
-struct CndSignature
-{
-  int field_0;
-  char filename[20];
-};
-
-struct struct_2
-{
-  int field_0;
-};
-
-struct struct_3
-{
-  void *anonymous_0;
-  int anonymous_1;
-  void *anonymous_2;
-};
-
-struct struct_0
-{
-  int anonymous_0;
-  dialog *anonymous_1;
-};
-
-struct struct_1
-{
-  struct_1 *field_0;
-  char gap_4[28];
-  __int16 field_4;
-  char gap_22[36];
-  char field_5;
-  char gap_47[1];
-  char field_6;
-};
-
-struct struct_6
-{
-  IDirectSoundBuffer *sound_buffer;
-  __int16 unit_type;
-  char sfxdata_flags_2;
-  char sfxdata_flags_1;
-  int field_8;
-  int sfx_id;
-  int field_10;
-  int volume_related_maybe;
-};
-
-struct struct_4
-{
-  __int16 anonymous_0[2];
-  int anonymous_1;
-  void *anonymous_2;
-};
-
-struct struct_5
-{
-  int sound_buffer_bytes;
-  int anonymous_1;
-  int anonymous_2;
-  IDirectSoundBuffer *sound_buffer;
-};
-
-struct SaiContour
-{
-  s16 v[3];
-  u8 type;
-  u8 unk_relation;
-};
-
-struct grpFrame
-{
-  s8 x;
-  s8 y;
-  s8 wid;
-  s8 hgt;
-  u32 dataOffset;
-};
-
-struct UpdateFunction
-{
-  int index;
-  void (__fastcall *update_function)(CImage *);
-};
-
-struct CUnitResource
-{
-  u16 resourceCount;
-  u8 resourceIscript;
-  u8 gatherQueueCount;
-  CUnit *nextGatherer;
-  u8 resourceGroup;
-  u8 resourceBelongsToAI;
-};
-
-struct SectionData
-{
-  int field0;
-  TileID *field1;
-  int chunk_name;
-  int size;
-};
-
-struct points
-{
-  __int16 x;
-  __int16 y;
-};
-
-struct Trigger
-{
-  Condition conditions[16];
-  Action actions[64];
-  DWORD dwExecutionFlags;
-  BYTE bExecuteFor[27];
-  BYTE bCurrentActionIndex;
-};
-
-struct RTTIBaseClassDescriptor
-{
-  void *pTypeDescriptor;
-  int numContainedBases;
-  PMD pmd;
-  int attributes;
-};
-
-struct Location
-{
-  Box32 dimensions;
-  u16 stringId;
-  u16 flags;
-};
-
-struct CSprite
-{
-  CSprite *prev;
-  CSprite *next;
-  u16 spriteID;
-  u8 playerID;
-  u8 selectionIndex;
-  u8 visibilityFlags;
-  u8 elevationLevel;
-  u8 flags;
-  u8 selectionTimer;
-  u16 index;
-  u8 unkflags_12;
-  u8 unkflags_13;
-  Position position;
-  CImage *pImagePrimary;
-  CImage *pImageHead;
-  CImage *pImageTail;
-};
-
-struct dialog_btn
-{
-  dialog *pDlg;
-  rect responseRct;
-  u16 wHighlight;
-  u16 wUnknown_0x40;
-  void *pSmk;
-  rect textRct;
-  u16 wAlignment;
-};
-
-struct CImage
-{
-  CImage *prev;
-  CImage *next;
-  u16 imageID;
-  u8 paletteType;
-  u8 direction;
-  u16 flags;
-  s8 horizontalOffset;
-  s8 verticalOffset;
-  u16 iscriptHeader;
-  u16 iscriptOffset;
-  u16 unknown_14;
-  Anims anim;
-  u8 sleep;
-  u16 frameSet;
-  u16 frameIndex;
-  Position mapPosition;
-  Position screenPosition;
-  rect grpBounds;
-  grpHead *GRPFile;
-  void *coloringData;
-  void (__fastcall *renderFunction)(int, int, grpFrame *, rect *, int);
-  void (__fastcall *updateFunction)(CImage *);
-  CSprite *spriteOwner;
-};
-
-struct CUnitHatchery
-{
-  rect harvestValue;
-};
-
 struct __declspec(align(2)) ChunkData
 {
   ChunkListItem field1;
   SectionData section_data;
 };
 
-struct SaiRegion
+struct TileType
 {
-  SaiAccessabilityFlags accessabilityFlags;
-  u16 groupIndex;
-  u16 tileCount;
-  u8 pathCount;
-  u8 neighborCount;
-  union SaiRegionUser user;
-  u16 *neighbors;
-  u32 rgnCenterX;
-  u32 rgnCenterY;
-  Box16 rgnBox;
-  u8 defencePriority;
-  u8 neighborProperty;
-  u16 unk_22;
-  u32 unk_24;
-  u32 unk_28;
-  u16 localBuffer[10];
+  u16 index;
+  u8 buildability;
+  u8 groundHeight;
+  u16 leftEdge;
+  u16 topEdge;
+  u16 rightEdge;
+  u16 bottomEdge;
+  u16 _1;
+  u16 _2;
+  u16 _3;
+  u16 _4;
+  u16 megaTileRef[16];
+};
+
+struct LO_Header
+{
+  u32 frameCount;
+  u32 overlayCount;
+  u32 frameOffsets[1];
+};
+
+struct __declspec(align(1)) GotFile
+{
+  u8 version;
+  char name[32];
+  char label[32];
+  GotFileValues values;
+};
+
+struct __declspec(align(2)) PathCreateRelated
+{
+  s16 field1;
+  s16 field0;
+  MapSize map_size;
+};
+
+union CUnitFields3
+{
+  CUnitRally rally;
+  CUnitPsiProvider psyProvider;
+};
+
+struct __declspec(align(4)) Target_
+{
+  Position pt;
+  struct CUnit *pUnit;
+};
+
+struct __declspec(align(4)) baseLocation
+{
+  Position position;
+  BYTE mineralClusters;
+  BYTE gasGeysers;
+  BYTE isStartLocation;
+  BYTE bFlags;
+  DWORD remainingMinerals;
+  DWORD remainingGas;
+  DWORD unk_10[8];
 };
 
 struct __declspec(align(2)) AI_Main
@@ -3863,55 +3956,6 @@ struct __declspec(align(2)) AI_Main
   Box32 genCmdLoc;
 };
 
-struct CUnitRally
-{
-  points position;
-  CUnit *unit;
-};
-
-struct baseLocation
-{
-  Position position;
-  BYTE mineralClusters;
-  BYTE gasGeysers;
-  BYTE isStartLocation;
-  BYTE bFlags;
-  DWORD remainingMinerals;
-  DWORD remainingGas;
-  DWORD unk_10[8];
-};
-
-struct struct_game_140
-{
-  int data;
-  char player_name[24];
-  int data21;
-  __int16 width;
-  __int16 height;
-  char data231;
-  char number_of_open_slots;
-  char game_speed;
-  char data234;
-  GameType game_type;
-  char data242;
-  __int16 data243;
-  int data25;
-  __int16 tileset;
-  __int16 data262;
-  int data27[6];
-  char data3;
-  char map_name[32];
-  GotFileValues got_file_values;
-  char unknown[4];
-};
-
-struct CPPEH_RECORD
-{
-  DWORD old_esp;
-  EXCEPTION_POINTERS *exc_ptr;
-  struct _EH3_EXCEPTION_REGISTRATION registration;
-};
-
 struct grpHead
 {
   u16 wFrames;
@@ -3920,35 +3964,11 @@ struct grpHead
   grpFrame frames[1];
 };
 
-struct Target_
+struct Location
 {
-  Position pt;
-  struct CUnit *pUnit;
-};
-
-struct __declspec(align(1)) GotFile
-{
-  u8 version;
-  char name[32];
-  char label[32];
-  GotFileValues values;
-};
-
-struct CUnitWorker
-{
-  CUnit *pPowerup;
-  points targetResource;
-  CUnit *targetResourceUnit;
-  u16 repairResourceLossTimer;
-  bool isCarryingSomething;
-  u8 resourceCarryCount;
-};
-
-struct __declspec(align(2)) PathCreateRelated
-{
-  s16 field1;
-  s16 field0;
-  MapSize map_size;
+  Box32 dimensions;
+  u16 stringId;
+  u16 flags;
 };
 
 struct AllScoresStruct
@@ -3976,6 +3996,49 @@ struct AllScoresStruct
   Counts unitCounts;
 };
 
+struct struct_game_140
+{
+  int data;
+  char player_name[24];
+  int data21;
+  __int16 width;
+  __int16 height;
+  char data231;
+  char number_of_open_slots;
+  char game_speed;
+  char data234;
+  GameType game_type;
+  char data242;
+  __int16 data243;
+  int data25;
+  __int16 tileset;
+  __int16 data262;
+  int data27[6];
+  char data3;
+  char map_name[32];
+  GotFileValues got_file_values;
+};
+
+struct __declspec(align(4)) CSprite
+{
+  CSprite *prev;
+  CSprite *next;
+  u16 spriteID;
+  u8 playerID;
+  u8 selectionIndex;
+  u8 visibilityFlags;
+  u8 elevationLevel;
+  u8 flags;
+  u8 selectionTimer;
+  u16 index;
+  u8 unkflags_12;
+  u8 unkflags_13;
+  Position position;
+  CImage *pImagePrimary;
+  CImage *pImageHead;
+  CImage *pImageTail;
+};
+
 struct dlgEvent
 {
   u32 dwUser;
@@ -3988,17 +4051,133 @@ struct dlgEvent
   u16 wUnk_0x12;
 };
 
+struct dialog_btn
+{
+  dialog *pDlg;
+  rect responseRct;
+  u16 wHighlight;
+  u16 wUnknown_0x40;
+  void *pSmk;
+  rect textRct;
+  u16 wAlignment;
+};
+
+union CUnitFields1
+{
+  CUnitVulture vulture;
+  CUnitCarrier carrier;
+  CUnitFighter fighter;
+  CUnitBeacon beacon;
+  CUnitBuilding building;
+  CUnitWorker worker;
+};
+
+struct __declspec(align(4)) CImage
+{
+  CImage *prev;
+  CImage *next;
+  u16 imageID;
+  u8 paletteType;
+  u8 direction;
+  u16 flags;
+  s8 horizontalOffset;
+  s8 verticalOffset;
+  u16 iscriptHeader;
+  u16 iscriptOffset;
+  u16 unknown_14;
+  Anims anim;
+  u8 sleep;
+  u16 frameSet;
+  u16 frameIndex;
+  Position mapPosition;
+  Position screenPosition;
+  rect grpBounds;
+  grpHead *GRPFile;
+  void *coloringData;
+  void (__fastcall *renderFunction)(int, int, grpFrame *, rect *, int);
+  void (__fastcall *updateFunction)(CImage *);
+  CSprite *spriteOwner;
+};
+
+struct CUnitHatchery
+{
+  rect harvestValue;
+};
+
+struct Trigger
+{
+  Condition conditions[16];
+  Action actions[64];
+  DWORD dwExecutionFlags;
+  BYTE bExecuteFor[27];
+  BYTE bCurrentActionIndex;
+};
+
 struct MiniTileMaps_type
 {
   MiniTileFlagArray tile[65536];
 };
 
-struct CUnitPowerup
+struct SaiRegion
 {
-  points origin;
+  SaiAccessabilityFlags accessabilityFlags;
+  u16 groupIndex;
+  u16 tileCount;
+  u8 pathCount;
+  u8 neighborCount;
+  union SaiRegionUser user;
+  u16 *neighbors;
+  u32 rgnCenterX;
+  u32 rgnCenterY;
+  Box16 rgnBox;
+  u8 defencePriority;
+  u8 neighborProperty;
+  u16 unk_22;
+  u32 unk_24;
+  u32 unk_28;
+  u16 localBuffer[10];
 };
 
-struct CBullet
+union dialog_fields
+{
+  dialog_ctrl ctrl;
+  dialog_dlg dlg;
+  dialog_btn btn;
+  dialog_optn optn;
+  dialog_edit edit;
+  dialog_scroll scroll;
+  dialog_list list;
+};
+
+struct TriggerListEntry
+{
+  struct TriggerListEntry *prev;
+  struct TriggerListEntry *next;
+  Trigger container;
+};
+
+struct SAI_Paths
+{
+  u32 regionCount;
+  void *globalBuffer_ptr;
+  void *splitTiles_end;
+  u16 mapTileRegionId[256][256];
+  SaiSplit splitTiles[25000];
+  SaiRegion regions[5000];
+  u16 globalBuffer[10000];
+  SaiContourHub *contours;
+};
+
+struct COrder
+{
+  struct COrder *prev;
+  struct COrder *next;
+  u16 orderID;
+  u16 unitType;
+  Target_ target;
+};
+
+struct __declspec(align(4)) CBullet
 {
   CBullet *prev;
   CBullet *next;
@@ -4039,38 +4218,6 @@ struct CBullet
   u32 cyclicMissileIndex;
 };
 
-union dialog_fields
-{
-  dialog_ctrl ctrl;
-  dialog_dlg dlg;
-  dialog_btn btn;
-  dialog_optn optn;
-  dialog_edit edit;
-  dialog_scroll scroll;
-  dialog_list list;
-};
-
-struct SAI_Paths
-{
-  u32 regionCount;
-  void *globalBuffer_ptr;
-  void *splitTiles_end;
-  u16 mapTileRegionId[256][256];
-  SaiSplit splitTiles[25000];
-  SaiRegion regions[5000];
-  u16 globalBuffer[10000];
-  SaiContourHub *contours;
-};
-
-struct COrder
-{
-  struct COrder *prev;
-  struct COrder *next;
-  u16 orderID;
-  u16 unitType;
-  Target_ target;
-};
-
 union CUnitFields2
 {
   CUnitResource resource;
@@ -4083,30 +4230,25 @@ union CUnitFields2
   CUnitGatherer gatherer;
 };
 
-union CUnitFields3
+struct __declspec(align(2)) dialog
 {
-  CUnitRally rally;
-  CUnitPsiProvider psyProvider;
+  dialog *pNext;
+  rect rct;
+  Bitmap srcBits;
+  char *pszText;
+  u32 lFlags;
+  u16 wUnk_0x1C;
+  u16 wUnk_0x1E;
+  s16 wIndex;
+  u16 wCtrlType;
+  u16 wUser;
+  int lUser;
+  FnInteract pfcnInteract;
+  FnUpdate pfcnUpdate;
+  dialog_fields fields[9];
 };
 
-union CUnitFields1
-{
-  CUnitVulture vulture;
-  CUnitCarrier carrier;
-  CUnitFighter fighter;
-  CUnitBeacon beacon;
-  CUnitBuilding building;
-  CUnitWorker worker;
-};
-
-struct TriggerListEntry
-{
-  struct TriggerListEntry *prev;
-  struct TriggerListEntry *next;
-  Trigger container;
-};
-
-struct CUnit
+struct __declspec(align(4)) CUnit
 {
   CUnit *prev;
   CUnit *next;
@@ -4205,23 +4347,5 @@ struct CUnit
   u8 repulseAngle;
   u8 bRepMtxX;
   u8 bRepMtxY;
-};
-
-struct __declspec(align(2)) dialog
-{
-  dialog *pNext;
-  rect rct;
-  Bitmap srcBits;
-  char *pszText;
-  u32 lFlags;
-  u16 wUnk_0x1C;
-  u16 wUnk_0x1E;
-  s16 wIndex;
-  u16 wCtrlType;
-  u16 wUser;
-  int lUser;
-  FnInteract pfcnInteract;
-  FnUpdate pfcnUpdate;
-  dialog_fields fields[9];
 };
 

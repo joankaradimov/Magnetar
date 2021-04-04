@@ -551,7 +551,7 @@ DECL_FUNC(int(*sub_404C1E)(), sub_404C1E, 0x404c1e);
 DECL_FUNC(int(*__RTC_Initialize)(), __RTC_Initialize, 0x405923);
 DECL_FUNC(void (__cdecl*__RTC_Terminate)(), __RTC_Terminate, 0x405967);
 DECL_FUNC(int(*sub_405D74)(), sub_405D74, 0x405d74);
-DECL_FUNC(int(*sub_406504)(), sub_406504, 0x406504);
+DECL_FUNC(void __noreturn(*sub_406504)(), sub_406504, 0x406504);
 DECL_FUNC(int(*sub_40651C)(), sub_40651C, 0x40651c);
 DECL_FUNC(int(*renderTerrainGRPToCache)(), renderTerrainGRPToCache, 0x40aae0);
 char imageRenderFxn0_0(int a1, int a2, int a3, int a4, tagRECT *a5, int a6) {
@@ -607,7 +607,7 @@ DECL_FUNC(int (__stdcall*GetApproxDistance)(int, int), GetApproxDistance, 0x40c3
 DECL_FUNC(int(*drawMinitileImageData)(), drawMinitileImageData, 0x40c3b0);
 DECL_FUNC(int (__stdcall*sub_40C4D2)(int, int), sub_40C4D2, 0x40c4d2);
 DECL_FUNC(int(*type_info__szName)(), type_info__szName, 0x40c5bf);
-DECL_FUNC(int(*sub_40CCA6)(), sub_40CCA6, 0x40cca6);
+DECL_FUNC(void __noreturn(*sub_40CCA6)(), sub_40CCA6, 0x40cca6);
 DECL_FUNC(int (__cdecl*__flushall)(), __flushall, 0x40df5a);
 DECL_FUNC(int(*sub_40FFCB)(), sub_40FFCB, 0x40ffcb);
 DECL_FUNC(void *(__stdcall*SMemAlloc)(int amount, char *logfilename, int logline, int defaultValue), SMemAlloc, 0x41006a);
@@ -810,14 +810,14 @@ signed int sub_413670(int a1, ChunkNode *a2, int a3, int (__stdcall *chunk_node_
     }
     return result_;
 }
-signed int ReadChunkNodes(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *a4) {
+signed int ReadChunkNodes(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *map_chunks) {
     int address = 0x413710;
     signed result_;
     __asm {
         mov eax, a1
         mov edx, a2
         mov ecx, chk_section_loader
-        push dword ptr a4
+        push dword ptr map_chunks
         push dword ptr a3
         call address
         mov result_, eax
@@ -852,7 +852,7 @@ DECL_FUNC(int(*sub_413F50)(), sub_413F50, 0x413f50);
 DECL_FUNC(int(*sub_413F70)(), sub_413F70, 0x413f70);
 DECL_FUNC(int (__stdcall*setCreepRelationalData)(int a1, int a2, int (__stdcall *a3)(TileID *, _DWORD, _DWORD, TileID *, _DWORD), int a4), setCreepRelationalData, 0x413fa0);
 DECL_FUNC(signed int (__stdcall*runCreepRandomizer_notePossibleDesync)(TileID *a1, int a2, int a3, TileID *a4, int a5), runCreepRandomizer_notePossibleDesync, 0x4140a0);
-DECL_FUNC(int (__thiscall*readCreepFile)(char *filename), readCreepFile, 0x414100);
+DECL_FUNC(grpHead *(__thiscall*readCreepFile)(char *grpFile), readCreepFile, 0x414100);
 int sub_414180(UnitType a1, int a2, int a3, int a4, int a5, int a6) {
     int address = 0x414180;
     int result_;
@@ -1143,7 +1143,7 @@ int DrawTransparencies(int a1, int a2, RECT *a3, int a4, int a5, int a6) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4174A0)(int, int, char), sub_4174A0, 0x4174a0);
+DECL_FUNC(int (__stdcall*sub_4174A0)(int, int, int), sub_4174A0, 0x4174a0);
 DECL_FUNC(int (__stdcall*sub_4178B0)(int), sub_4178B0, 0x4178b0);
 int sub_417A10(unsigned __int8 a1, char *a2, int a3, int a4, int a5) {
     int address = 0x417a10;
@@ -1158,6 +1158,14 @@ int sub_417A10(unsigned __int8 a1, char *a2, int a3, int a4, int a5) {
         mov result_, eax
     }
     return result_;
+}
+void CompileSCode(int a1, int palette) {
+    int address = 0x417c20;
+    __asm {
+        mov ebx, a1
+        push dword ptr palette
+        call address
+    }
 }
 DECL_FUNC(int(*sub_417DF0)(), sub_417DF0, 0x417df0);
 DECL_FUNC(int(*pDLGInteract)(), pDLGInteract, 0x417e20);
@@ -2044,7 +2052,7 @@ void AppExit(bool exit_code) {
         call address
     }
 }
-DECL_FUNC(int(*sub_420830)(), sub_420830, 0x420830);
+DECL_FUNC(void __noreturn(*sub_420830)(), sub_420830, 0x420830);
 DECL_FUNC(int (__stdcall*ErrMessageBox)(LPCSTR lpText, LPCSTR lpCaption), ErrMessageBox, 0x4208e0);
 DECL_FUNC(BOOL (__stdcall*DialogFunc)(HWND, UINT, WPARAM, LPARAM), DialogFunc, 0x420980);
 DECL_FUNC(int(*sub_420A20)(), sub_420A20, 0x420a20);
@@ -2073,7 +2081,7 @@ void ErrorDDrawInit(char *source_file, char *function_name, unsigned int last_er
         call address
     }
 }
-void SysWarn_FileNotFound(char *a1, int last_error) {
+void SysWarn_FileNotFound(const char *a1, int last_error) {
     int address = 0x4212c0;
     __asm {
         mov ebx, last_error
@@ -2087,7 +2095,7 @@ DECL_FUNC(int(*SystemWarning_PentiumProcessor)(), SystemWarning_PentiumProcessor
 DECL_FUNC(int(*sub_421420)(), sub_421420, 0x421420);
 DECL_FUNC(int(*SystemWarning_20MBDiskSpace)(), SystemWarning_20MBDiskSpace, 0x421460);
 DECL_FUNC(int(*sub_4214C0)(), sub_4214C0, 0x4214c0);
-DECL_FUNC(int(*DLGErrFatal)(), DLGErrFatal, 0x4214d0);
+DECL_FUNC(void __noreturn(*DLGErrFatal)(), DLGErrFatal, 0x4214d0);
 DECL_FUNC(int(*sub_421510)(), sub_421510, 0x421510);
 DECL_FUNC(void(*FatalError)(char *arg0, ...), FatalError, 0x4215d0);
 DECL_FUNC(int(*SetCursorClipBounds)(), SetCursorClipBounds, 0x4215e0);
@@ -2785,7 +2793,7 @@ DECL_FUNC(int(*sub_42E450)(), sub_42E450, 0x42e450);
 DECL_FUNC(int(*sub_42E460)(), sub_42E460, 0x42e460);
 DECL_FUNC(int (__stdcall*sub_42E470)(int), sub_42E470, 0x42e470);
 DECL_FUNC(int(*sub_42E4F0)(), sub_42E4F0, 0x42e4f0);
-DECL_FUNC(int (__stdcall*CreatePath_PullContours)(int, int, int), CreatePath_PullContours, 0x42e600);
+DECL_FUNC(BOOL (__stdcall*CreatePath_PullContours)(_DWORD a1, int a2, unsigned __int16 a3), CreatePath_PullContours, 0x42e600);
 char GetClosestReachable(char a1, CUnit *a2) {
     int address = 0x42efa0;
     char result_;
@@ -4405,14 +4413,14 @@ DECL_FUNC(int(*sub_4435E0)(), sub_4435E0, 0x4435e0);
 DECL_FUNC(int(*nullsub_21)(), nullsub_21, 0x443600);
 DECL_FUNC(int (__stdcall*trimPlacement)(int), trimPlacement, 0x443610);
 DECL_FUNC(int (__stdcall*excludePlacementSpotsDifferentHeight)(int, signed int y), excludePlacementSpotsDifferentHeight, 0x4436c0);
-DECL_FUNC(int (__stdcall*reserveOnPlacemap)(int, int, int, int, int, __int16), reserveOnPlacemap, 0x443790);
+DECL_FUNC(int (__stdcall*reserveOnPlacemap)(int, int, int, int, int, int), reserveOnPlacemap, 0x443790);
 DECL_FUNC(int (__stdcall*excludeNonAIOwnedSpots)(int, int), excludeNonAIOwnedSpots, 0x443870);
 DECL_FUNC(int (__stdcall*excludePlacementSpotsOutsideRegion)(int, signed int x), excludePlacementSpotsOutsideRegion, 0x443900);
 DECL_FUNC(int(*AI_GetNumWorkersForMinerals)(), AI_GetNumWorkersForMinerals, 0x4439b0);
 DECL_FUNC(int(*AI_AlliesWatchInit)(), AI_AlliesWatchInit, 0x443a00);
 DECL_FUNC(int (__stdcall*getClosestBaseFromStartLocation)(int, int), getClosestBaseFromStartLocation, 0x443a20);
-DECL_FUNC(int (__stdcall*reserveTurretPlacementPosition)(int, int, __int16, __int16, int), reserveTurretPlacementPosition, 0x443ac0);
-DECL_FUNC(int (__stdcall*excludeAddonBuildLocations)(__int16, int, int, __int16), excludeAddonBuildLocations, 0x443cc0);
+DECL_FUNC(int (__stdcall*reserveTurretPlacementPosition)(int, int, int, __int16, int), reserveTurretPlacementPosition, 0x443ac0);
+DECL_FUNC(int (__stdcall*excludeAddonBuildLocations)(__int16, int, int, int), excludeAddonBuildLocations, 0x443cc0);
 DECL_FUNC(int (__stdcall*reserveBuildingOnPlacemap)(int, int, int), reserveBuildingOnPlacemap, 0x443e30);
 int reserveStaticBuildingOnPlacemap(CUnit *a1, int a2, int a3, __int16 a4, int a5) {
     int address = 0x443f40;
@@ -6453,7 +6461,7 @@ signed int carrierReaverIdle(CUnit *a1, CUnit *a2, int a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*getNextStrafePosition)(__int16), getNextStrafePosition, 0x465d30);
+DECL_FUNC(int (__stdcall*getNextStrafePosition)(int), getNextStrafePosition, 0x465d30);
 char orders_StrafeUnit2(CUnit *a1) {
     int address = 0x465e00;
     char result_;
@@ -7647,8 +7655,8 @@ DECL_FUNC(int (__stdcall*sub_472F40)(int, int), sub_472F40, 0x472f40);
 DECL_FUNC(int (__stdcall*getActiveTileFlag)(__int16, int, int), getActiveTileFlag, 0x472f80);
 DECL_FUNC(int(*sub_472FD0)(), sub_472FD0, 0x472fd0);
 DECL_FUNC(int(*sub_472FF0)(), sub_472FF0, 0x472ff0);
-DECL_FUNC(int (__stdcall*canPlaceCreepBuildingAt)(int, __int16, __int16, int, int, int), canPlaceCreepBuildingAt, 0x473010);
-DECL_FUNC(int (__stdcall*canPlaceNydusBuildingAt)(int, __int16, __int16, int, int), canPlaceNydusBuildingAt, 0x473150);
+DECL_FUNC(int (__stdcall*canPlaceCreepBuildingAt)(int, int, int, int, int, int), canPlaceCreepBuildingAt, 0x473010);
+DECL_FUNC(int (__stdcall*canPlaceNydusBuildingAt)(int, int, int, int, int), canPlaceNydusBuildingAt, 0x473150);
 DECL_FUNC(int (__stdcall*sub_473290)(int, int, int), sub_473290, 0x473290);
 DECL_FUNC(int (__stdcall*sub_4732C0)(int, int, int), sub_4732C0, 0x4732c0);
 int j_canUnitTypeFitAt(signed int a1, UnitType a2, __int16 a3) {
@@ -7668,12 +7676,12 @@ DECL_FUNC(int(*sub_473410)(), sub_473410, 0x473410);
 DECL_FUNC(unsigned __int32 (__thiscall*UnitIsResourceContainer)(CUnit *this_), UnitIsResourceContainer, 0x473490);
 DECL_FUNC(int (__stdcall*sub_4734B0)(__int16), sub_4734B0, 0x4734b0);
 DECL_FUNC(signed int (__thiscall*IsAccessibleForHarvest)(CUnit *this_), IsAccessibleForHarvest, 0x473560);
-DECL_FUNC(int (__stdcall*sub_473720)(int, int, int, int, __int16, int, int, int, int), sub_473720, 0x473720);
+DECL_FUNC(int (__stdcall*sub_473720)(int, int, int, int, int, int, int, int, int), sub_473720, 0x473720);
 DECL_FUNC(int (__stdcall*canPlacePoweredBuildingAt)(__int16, __int16), canPlacePoweredBuildingAt, 0x473920);
 DECL_FUNC(int(*sub_473970)(), sub_473970, 0x473970);
 DECL_FUNC(int(*PlaceBuildingResourceRestrictionCheck)(), PlaceBuildingResourceRestrictionCheck, 0x473990);
-DECL_FUNC(int (__stdcall*canPlaceStandardBuildingAt)(int, int, char, __int16, int, int), canPlaceStandardBuildingAt, 0x473a10);
-DECL_FUNC(int (__stdcall*sub_473BD0)(int, __int16, int), sub_473BD0, 0x473bd0);
+DECL_FUNC(int (__stdcall*canPlaceStandardBuildingAt)(int, int, int, int, int, int), canPlaceStandardBuildingAt, 0x473a10);
+DECL_FUNC(int (__stdcall*sub_473BD0)(int, int, int), sub_473BD0, 0x473bd0);
 DECL_FUNC(int (__stdcall*vespeneGeyserPlacebox)(int, int, int, int), vespeneGeyserPlacebox, 0x473db0);
 DECL_FUNC(int (__stdcall*sub_473EF0)(int, int, int), sub_473EF0, 0x473ef0);
 DECL_FUNC(signed int (__stdcall*canBuildOnTileLocation)(CUnit *a1, int a2, int a3, __int16 a4, int a5, int a6, int a7, int a8, int a9), canBuildOnTileLocation, 0x473fb0);
@@ -10994,7 +11002,14 @@ int drawSprite(CSprite *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*refreshImageRange)(), refreshImageRange, 0x498cb0);
+void refreshImageRange(int result, unsigned int a2) {
+    int address = 0x498cb0;
+    __asm {
+        mov eax, result
+        mov ebx, a2
+        call address
+    }
+}
 DECL_FUNC(int(*BWFXN_updateImageData)(), BWFXN_updateImageData, 0x498cf0);
 DECL_FUNC(void (__cdecl*BWFXN_drawAllSprites)(), BWFXN_drawAllSprites, 0x498d40);
 CImage *sub_498D70(CSprite *a1, char a2, char a3, char a4) {
@@ -12160,7 +12175,16 @@ DECL_FUNC(int(*sub_4A6A00)(), sub_4A6A00, 0x4a6a00);
 DECL_FUNC(int(*sub_4A6DD0)(), sub_4A6DD0, 0x4a6dd0);
 DECL_FUNC(int(*LoadRecentMapsCombobox)(), LoadRecentMapsCombobox, 0x4a6ee0);
 DECL_FUNC(int (__stdcall*fileExt)(char), fileExt, 0x4a7050);
-DECL_FUNC(int(*save_Recent_Map_Data)(), save_Recent_Map_Data, 0x4a7210);
+MapRelatedUnknown *save_Recent_Map_Data(MapRelatedUnknown *result) {
+    int address = 0x4a7210;
+    MapRelatedUnknown * result_;
+    __asm {
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*getMapListEntryCount)(int, int, char *), getMapListEntryCount, 0x4a73c0);
 DECL_FUNC(int (__stdcall*sub_4A7540)(int), sub_4A7540, 0x4a7540);
 DECL_FUNC(int(*sub_4A7740)(), sub_4A7740, 0x4a7740);
@@ -12773,7 +12797,7 @@ DECL_FUNC(int(*unitScoreCalc)(), unitScoreCalc, 0x4b2b30);
 DECL_FUNC(int(*overallScoreCalc)(), overallScoreCalc, 0x4b2b70);
 DECL_FUNC(int(*sub_4B2BD0)(), sub_4B2BD0, 0x4b2bd0);
 DECL_FUNC(int(*sub_4B2D10)(), sub_4B2D10, 0x4b2d10);
-DECL_FUNC(int (__stdcall*sub_4B2D20)(__int16, char), sub_4B2D20, 0x4b2d20);
+DECL_FUNC(int (__stdcall*sub_4B2D20)(__int16, __int16), sub_4B2D20, 0x4b2d20);
 DECL_FUNC(int(*sub_4B2D50)(), sub_4B2D50, 0x4b2d50);
 DECL_FUNC(int(*sub_4B2DA0)(), sub_4B2DA0, 0x4b2da0);
 DECL_FUNC(int (__stdcall*sub_4B2DE0)(char), sub_4B2DE0, 0x4b2de0);
@@ -13174,7 +13198,17 @@ int gluChat_CustomCtrlID(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*getErrorStringPair)(int), getErrorStringPair, 0x4b9830);
+int getErrorStringPair(GluAllTblEntry a1, int a2) {
+    int address = 0x4b9830;
+    int result_;
+    __asm {
+        mov ax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*SendLobbyMessage)(), SendLobbyMessage, 0x4b98d0);
 signed int gluChat_controlActivation(signed int a1, dialog *a2) {
     int address = 0x4b9910;
@@ -13523,8 +13557,8 @@ DECL_FUNC(int(*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
 DECL_FUNC(int (__thiscall*sub_4BDB30)(int *this_, int a2), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(int(*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
 DECL_FUNC(int(*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
-DECL_FUNC(void (__stdcall*sub_4BDDD0)(char *a1), sub_4BDDD0, 0x4bddd0);
-DECL_FUNC(void (__stdcall*loadColorShiftTilesetImages)(char *a1), loadColorShiftTilesetImages, 0x4bde60);
+DECL_FUNC(void (__stdcall*sub_4BDDD0)(char *tileset_name), sub_4BDDD0, 0x4bddd0);
+DECL_FUNC(void (__stdcall*loadColorShiftTilesetImages)(char *tileset_name), loadColorShiftTilesetImages, 0x4bde60);
 DECL_FUNC(int(*sub_4BDF70)(), sub_4BDF70, 0x4bdf70);
 DECL_FUNC(int(*sub_4BDF80)(), sub_4BDF80, 0x4bdf80);
 DECL_FUNC(void (__stdcall*cursorUpdateProc)(Bitmap *, bounds *), cursorUpdateProc, 0x4bdfa0);
@@ -13563,6 +13597,17 @@ DECL_FUNC(int (__stdcall*statlb_Dlg_Create)(int), statlb_Dlg_Create, 0x4bec40);
 DECL_FUNC(bool (__fastcall*statlb_Dlg_Interact)(dialog *dlg, dlgEvent *evt), statlb_Dlg_Interact, 0x4becf0);
 DECL_FUNC(int(*load_statlb)(), load_statlb, 0x4bed70);
 DECL_FUNC(int(*sub_4BEF20)(), sub_4BEF20, 0x4bef20);
+signed int LoadFileToSBigBuf(char *filename, int a2) {
+    int address = 0x4bef80;
+    signed result_;
+    __asm {
+        mov eax, filename
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__thiscall*sub_4BF370)(FILE *, int, int), sub_4BF370, 0x4bf370);
 DECL_FUNC(int (__fastcall*LoadMap)(int loader_index_), LoadMap, 0x4bf520);
 DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_capmaign), ReadMapData, 0x4bf5d0);
@@ -14053,12 +14098,12 @@ DECL_FUNC(int (__stdcall*ChkLoader_MRGN_)(int, int, int), ChkLoader_MRGN_, 0x4cb
 DECL_FUNC(int (__stdcall*ChkLoader_MRGN)(int, int, int), ChkLoader_MRGN, 0x4cb2f0);
 DECL_FUNC(int(*sub_4CB340)(), sub_4CB340, 0x4cb340);
 DECL_FUNC(void (__thiscall*freeCHKStringHandle)(bool exit_code), freeCHKStringHandle, 0x4cb370);
-DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *, int, MapChunks *), ChkLoader_ERA, 0x4cb3a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
 DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
 DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
 DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
 DECL_FUNC(int(*sub_4CB560)(), sub_4CB560, 0x4cb560);
-DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, void *a2), sub_4CB5B0, 0x4cb5b0);
+DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2), sub_4CB5B0, 0x4cb5b0);
 DECL_FUNC(int(*sub_4CB650)(), sub_4CB650, 0x4cb650);
 DECL_FUNC(int (__stdcall*ChkLoader_PTEC)(int, int, int), ChkLoader_PTEC, 0x4cb670);
 DECL_FUNC(int (__stdcall*ChkLoader_PTEx)(int, int, int), ChkLoader_PTEx, 0x4cb7d0);
@@ -14098,11 +14143,11 @@ signed int ReadMapChunks(MapChunks *a1, int a2, int *out_version_loader_index, i
     }
     return result_;
 }
-BOOL LoadFileArchiveToSBigBuf(char *a1, int *a2, int a3, HANDLE *a4) {
+BOOL LoadFileArchiveToSBigBuf(char *filename, int *a2, int a3, HANDLE *a4) {
     int address = 0x4cc110;
     BOOL result_;
     __asm {
-        mov esi, a1
+        mov esi, filename
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
@@ -14163,6 +14208,17 @@ void sub_4CC610(CUnit *a1, char a2, int a3) {
     }
 }
 DECL_FUNC(bool (__stdcall*ChkLoader_STR)(SectionData *, int, MapChunks *), ChkLoader_STR, 0x4cc650);
+int getFullMapChunk(char *filename, int *a3) {
+    int address = 0x4cc6e0;
+    int result_;
+    __asm {
+        mov eax, filename
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4CC7F0(char *a1) {
     int address = 0x4cc7f0;
     int result_;
@@ -15069,11 +15125,22 @@ char creditsEndPage(dialog *a1) {
     return result_;
 }
 DECL_FUNC(void (__fastcall*sub_4D8930)(dialog *dlg, int x, int y, rect *dst), sub_4D8930, 0x4d8930);
-int runCreditsScriptCommands(char *a1, unsigned int a2, dialog *a3) {
+HANDLE creditsSetBackgroundImageFromFile(const char *a1, dialog *a2) {
+    int address = 0x4d8970;
+    HANDLE result_;
+    __asm {
+        mov eax, a1
+        mov edi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int runCreditsScriptCommands(char *tag, unsigned int a2, dialog *a3) {
     int address = 0x4d8a80;
     int result_;
     __asm {
-        mov ecx, a1
+        mov ecx, tag
         mov eax, a2
         push dword ptr a3
         call address
@@ -15433,7 +15500,7 @@ int registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
 }
 DECL_FUNC(int (__fastcall*loadFullMenuDLG)(char *szFileName, void *buffer, int read, char *logfilename, int logline), loadFullMenuDLG, 0x4ddbe0);
 DECL_FUNC(int(*sub_4DDCF0)(), sub_4DDCF0, 0x4ddcf0);
-DECL_FUNC(int (__stdcall*get_GluAll_String)(int), get_GluAll_String, 0x4ddd30);
+DECL_FUNC(const char *(__stdcall*get_GluAll_String)(GluAllTblEntry tbl_entry), get_GluAll_String, 0x4ddd30);
 DECL_FUNC(int(*sub_4DDE70)(), sub_4DDE70, 0x4dde70);
 DECL_FUNC(void (__cdecl*loadDlgGrp)(), loadDlgGrp, 0x4ddf00);
 DECL_FUNC(void(*loadCursor)(void), loadCursor, 0x4ddf90);
@@ -17973,7 +18040,7 @@ _SCOPETABLE_ENTRY& stru_4FF5E0 = * ((decltype(&stru_4FF5E0)) 0x4ff5e0);
 _SCOPETABLE_ENTRY& stru_4FF5F0 = * ((decltype(&stru_4FF5F0)) 0x4ff5f0);
 _SCOPETABLE_ENTRY& stru_4FF600 = * ((decltype(&stru_4FF600)) 0x4ff600);
 _SCOPETABLE_ENTRY* stru_4FF610 = (decltype(stru_4FF610 + 0)) 0x4ff610;
-int (__thiscall *&off_4FF62C)(void *location, char) = *((decltype(&off_4FF62C)) 0x4ff62c);
+void *(__thiscall *&off_4FF62C)(type_info *__hidden this_, char) = *((decltype(&off_4FF62C)) 0x4ff62c);
 _SCOPETABLE_ENTRY& stru_4FF630 = * ((decltype(&stru_4FF630)) 0x4ff630);
 _SCOPETABLE_ENTRY& stru_4FF640 = * ((decltype(&stru_4FF640)) 0x4ff640);
 _SCOPETABLE_ENTRY& stru_4FF650 = * ((decltype(&stru_4FF650)) 0x4ff650);
@@ -18046,9 +18113,7 @@ char* aRezGlucmpgn_bi = (decltype(aRezGlucmpgn_bi + 0)) 0x4ffecc;
 char* aRezGluexpcmpgn = (decltype(aRezGluexpcmpgn + 0)) 0x4ffee0;
 char* aLastreplay_1 = (decltype(aLastreplay_1 + 0)) 0x4ffef8;
 char* aLocal_dll = (decltype(aLocal_dll + 0)) 0x4fff08;
-__int16* word_4FFF24 = (decltype(word_4FFF24 + 0)) 0x4fff24;
-char* off_4FFF28 = (decltype(off_4FFF28 + 0)) 0x4fff28;
-char *& off_4FFF50 = * ((decltype(&off_4FFF50)) 0x4fff50);
+EstablishingShotPosition* establishingShotPositions = (decltype(establishingShotPositions + 0)) 0x4fff24;
 char* aA_0 = (decltype(aA_0 + 0)) 0x4fff54;
 CampaignMission* campaign_missions = (decltype(campaign_missions + 0)) 0x4fff60;
 CHAR* String2 = (decltype(String2 + 0)) 0x500194;
@@ -18060,7 +18125,7 @@ ChkSectionLoader* stru_500388 = (decltype(stru_500388 + 0)) 0x500388;
 ChkLoader* chk_loaders = (decltype(chk_loaders + 0)) 0x500560;
 ChkLoader& dword_5005D8 = * ((decltype(&dword_5005D8)) 0x5005d8);
 int* dword_5008EC = (decltype(dword_5008EC + 0)) 0x5008ec;
-signed __int32& volume = * ((decltype(&volume)) 0x5008f0);
+signed __int32* volume = (decltype(volume + 0)) 0x5008f0;
 __int16* word_500A94 = (decltype(word_500A94 + 0)) 0x500a94;
 __int16* word_500A96 = (decltype(word_500A96 + 0)) 0x500a96;
 __int16* word_500AB8 = (decltype(word_500AB8 + 0)) 0x500ab8;
@@ -18195,9 +18260,9 @@ char* aSS_gid = (decltype(aSS_gid + 0)) 0x501bb0;
 char* aFont = (decltype(aFont + 0)) 0x501bbc;
 char* aStarcraftSw_74 = (decltype(aStarcraftSw_74 + 0)) 0x501bc4;
 char* aStarcraftSw_73 = (decltype(aStarcraftSw_73 + 0)) 0x501be4;
-char* aCrdt_exp = (decltype(aCrdt_exp + 0)) 0x501c08;
-char* aCrdt_lst = (decltype(aCrdt_lst + 0)) 0x501c14;
-char* aEpilog = (decltype(aEpilog + 0)) 0x501c20;
+const char* aCrdt_exp = (decltype(aCrdt_exp + 0)) 0x501c08;
+const char* aCrdt_lst = (decltype(aCrdt_lst + 0)) 0x501c14;
+const char* aEpilog = (decltype(aEpilog + 0)) 0x501c20;
 char* aEpilogx = (decltype(aEpilogx + 0)) 0x501c28;
 char* aRezCredits_bin = (decltype(aRezCredits_bin + 0)) 0x501c30;
 char* aRezS_txt = (decltype(aRezS_txt + 0)) 0x501c40;
@@ -19487,7 +19552,7 @@ __int16& word_50B4EE = * ((decltype(&word_50B4EE)) 0x50b4ee);
 __int16& word_50B4FA = * ((decltype(&word_50B4FA)) 0x50b4fa);
 __int16& word_50B50A = * ((decltype(&word_50B50A)) 0x50b50a);
 __int16& word_50B51A = * ((decltype(&word_50B51A)) 0x50b51a);
-int (__cdecl *&off_50C4F0)(UINT uExitCode) = *((decltype(&off_50C4F0)) 0x50c4f0);
+void (__cdecl __noreturn *&off_50C4F0)(UINT uExitCode) = *((decltype(&off_50C4F0)) 0x50c4f0);
 int& dword_50C4F4 = * ((decltype(&dword_50C4F4)) 0x50c4f4);
 int* dword_50C4F8 = (decltype(dword_50C4F8 + 0)) 0x50c4f8;
 char* off_50C4FC = (decltype(off_50C4FC + 0)) 0x50c4fc;
@@ -19549,17 +19614,17 @@ char& byte_50CEDD = * ((decltype(&byte_50CEDD)) 0x50cedd);
 int& dword_50CEDE = * ((decltype(&dword_50CEDE)) 0x50cede);
 int& dword_50CEE2 = * ((decltype(&dword_50CEE2)) 0x50cee2);
 int& dword_50CEF0 = * ((decltype(&dword_50CEF0)) 0x50cef0);
-int (__thiscall **&off_50CF10)(void *location, char) = *((decltype(&off_50CF10)) 0x50cf10);
+void *(__thiscall **&off_50CF10)(type_info *__hidden this_, char) = *((decltype(&off_50CF10)) 0x50cf10);
 char* a_avtype_info = (decltype(a_avtype_info + 0)) 0x50cf18;
 void *& off_50CF30 = * ((decltype(&off_50CF30)) 0x50cf30);
 char *& off_50D1B0 = * ((decltype(&off_50D1B0)) 0x50d1b0);
 wchar_t *& off_50D1B4 = * ((decltype(&off_50D1B4)) 0x50d1b4);
-int (** off_50D1B8)() = (decltype(off_50D1B8 + 0)) 0x50d1b8;
-int (** off_50D1BC)() = (decltype(off_50D1BC + 0)) 0x50d1bc;
-int (** off_50D1C0)() = (decltype(off_50D1C0 + 0)) 0x50d1c0;
-int (** off_50D1C4)() = (decltype(off_50D1C4 + 0)) 0x50d1c4;
-int (** off_50D1C8)() = (decltype(off_50D1C8 + 0)) 0x50d1c8;
-int (*&off_50D1CC)() = *((decltype(&off_50D1CC)) 0x50d1cc);
+void (__noreturn ** off_50D1B8)() = (decltype(off_50D1B8 + 0)) 0x50d1b8;
+void (__noreturn ** off_50D1BC)() = (decltype(off_50D1BC + 0)) 0x50d1bc;
+void (__noreturn ** off_50D1C0)() = (decltype(off_50D1C0 + 0)) 0x50d1c0;
+void (__noreturn ** off_50D1C4)() = (decltype(off_50D1C4 + 0)) 0x50d1c4;
+void (__noreturn ** off_50D1C8)() = (decltype(off_50D1C8 + 0)) 0x50d1c8;
+void (__noreturn *&off_50D1CC)() = *((decltype(&off_50D1CC)) 0x50d1cc);
 int& dword_50D1D0 = * ((decltype(&dword_50D1D0)) 0x50d1d0);
 int& dword_50D1D4 = * ((decltype(&dword_50D1D4)) 0x50d1d4);
 int& dword_50D1D8 = * ((decltype(&dword_50D1D8)) 0x50d1d8);
@@ -19609,10 +19674,10 @@ __int16* word_512768 = (decltype(word_512768 + 0)) 0x512768;
 __int16& word_51276C = * ((decltype(&word_51276C)) 0x51276c);
 __int16& word_512770 = * ((decltype(&word_512770)) 0x512770);
 __int16& word_512774 = * ((decltype(&word_512774)) 0x512774);
-int& dword_512778 = * ((decltype(&dword_512778)) 0x512778);
-int& dword_51279C = * ((decltype(&dword_51279C)) 0x51279c);
-int& dword_5127B8 = * ((decltype(&dword_5127B8)) 0x5127b8);
-void ** off_5127DC = (decltype(off_5127DC + 0)) 0x5127dc;
+UnknownTilesetRelated1& stru_512778 = * ((decltype(&stru_512778)) 0x512778);
+UnknownTilesetRelated1& stru_51279C = * ((decltype(&stru_51279C)) 0x51279c);
+UnknownTilesetRelated1& stru_5127B8 = * ((decltype(&stru_5127B8)) 0x5127b8);
+UnknownTilesetRelated1 ** off_5127DC = (decltype(off_5127DC + 0)) 0x5127dc;
 ActionPointer* ActionTable = (decltype(ActionTable + 0)) 0x512800;
 int& dword_5128F0 = * ((decltype(&dword_5128F0)) 0x5128f0);
 ColorShiftData* colorShift = (decltype(colorShift + 0)) 0x5128f8;
@@ -19808,7 +19873,7 @@ void *& off_51A26C = * ((decltype(&off_51A26C)) 0x51a26c);
 int& dword_51A270 = * ((decltype(&dword_51A270)) 0x51a270);
 int& MapListVector = * ((decltype(&MapListVector)) 0x51a274);
 void *& off_51A278 = * ((decltype(&off_51A278)) 0x51a278);
-int& dword_51A27C = * ((decltype(&dword_51A27C)) 0x51a27c);
+MapRelatedUnknown *& dword_51A27C = * ((decltype(&dword_51A27C)) 0x51a27c);
 TriggerList* TriggerVectors = (decltype(TriggerVectors + 0)) 0x51a280;
 int& dword_51A2E0 = * ((decltype(&dword_51A2E0)) 0x51a2e0);
 void *& off_51A2E4 = * ((decltype(&off_51A2E4)) 0x51a2e4);
@@ -19839,25 +19904,25 @@ int& dword_51A34C = * ((decltype(&dword_51A34C)) 0x51a34c);
 void *& customList_UIDlgData = * ((decltype(&customList_UIDlgData)) 0x51a350);
 int& dword_51A354 = * ((decltype(&dword_51A354)) 0x51a354);
 FnInteract* off_51A358 = (decltype(off_51A358 + 0)) 0x51a358;
-int (__thiscall **&off_51A368)(void *location, char) = *((decltype(&off_51A368)) 0x51a368);
+void *(__thiscall **&off_51A368)(type_info *__hidden this_, char) = *((decltype(&off_51A368)) 0x51a368);
 char* a_au_hiddenctrl = (decltype(a_au_hiddenctrl + 0)) 0x51a370;
 FnInteract* off_51A388 = (decltype(off_51A388 + 0)) 0x51a388;
-int (__thiscall **&off_51A3B8)(void *location, char) = *((decltype(&off_51A3B8)) 0x51a3b8);
+void *(__thiscall **&off_51A3B8)(type_info *__hidden this_, char) = *((decltype(&off_51A3B8)) 0x51a3b8);
 char* a_autgame_hdr_node = (decltype(a_autgame_hdr_node + 0)) 0x51a3c0;
-int (__thiscall **&off_51A3E4)(void *location, char) = *((decltype(&off_51A3E4)) 0x51a3e4);
+void *(__thiscall **&off_51A3E4)(type_info *__hidden this_, char) = *((decltype(&off_51A3E4)) 0x51a3e4);
 char* a_autsaved_game_node = (decltype(a_autsaved_game_node + 0)) 0x51a3ec;
 FnInteract* off_51A404 = (decltype(off_51A404 + 0)) 0x51a404;
-int (__thiscall **&off_51A424)(void *location, char) = *((decltype(&off_51A424)) 0x51a424);
+void *(__thiscall **&off_51A424)(type_info *__hidden this_, char) = *((decltype(&off_51A424)) 0x51a424);
 char* a_austreamed = (decltype(a_austreamed + 0)) 0x51a42c;
-int (__thiscall **&off_51A440)(void *location, char) = *((decltype(&off_51A440)) 0x51a440);
+void *(__thiscall **&off_51A440)(type_info *__hidden this_, char) = *((decltype(&off_51A440)) 0x51a440);
 char* a_autprovider = (decltype(a_autprovider + 0)) 0x51a448;
-int (__thiscall **&off_51A458)(void *location, char) = *((decltype(&off_51A458)) 0x51a458);
+void *(__thiscall **&off_51A458)(type_info *__hidden this_, char) = *((decltype(&off_51A458)) 0x51a458);
 char* a_au_id = (decltype(a_au_id + 0)) 0x51a460;
 FnInteract* off_51A46C = (decltype(off_51A46C + 0)) 0x51a46c;
 swishTimer* gluChatSwishController = (decltype(gluChatSwishController + 0)) 0x51a490;
 FnInteract* off_51A4A8 = (decltype(off_51A4A8 + 0)) 0x51a4a8;
 FnInteract* off_51A5F8 = (decltype(off_51A5F8 + 0)) 0x51a5f8;
-int (__thiscall **&off_51A648)(void *location, char) = *((decltype(&off_51A648)) 0x51a648);
+void *(__thiscall **&off_51A648)(type_info *__hidden this_, char) = *((decltype(&off_51A648)) 0x51a648);
 char* a_au_gamenode = (decltype(a_au_gamenode + 0)) 0x51a650;
 FnInteract* off_51A660 = (decltype(off_51A660 + 0)) 0x51a660;
 FnInteract* off_51A69C = (decltype(off_51A69C + 0)) 0x51a69c;
@@ -19867,7 +19932,7 @@ FnInteract* off_51A6DC = (decltype(off_51A6DC + 0)) 0x51a6dc;
 FnInteract* off_51A6E4 = (decltype(off_51A6E4 + 0)) 0x51a6e4;
 FnInteract* off_51A6F0 = (decltype(off_51A6F0 + 0)) 0x51a6f0;
 char* separators2_maybe = (decltype(separators2_maybe + 0)) 0x51a70c;
-int (__thiscall **&off_51A71C)(void *location, char) = *((decltype(&off_51A71C)) 0x51a71c);
+void *(__thiscall **&off_51A71C)(type_info *__hidden this_, char) = *((decltype(&off_51A71C)) 0x51a71c);
 char* a_au_savegame = (decltype(a_au_savegame + 0)) 0x51a724;
 FnInteract* off_51A734 = (decltype(off_51A734 + 0)) 0x51a734;
 FnInteract* off_51A750 = (decltype(off_51A750 + 0)) 0x51a750;
@@ -19878,9 +19943,9 @@ FnInteract* off_51A80C = (decltype(off_51A80C + 0)) 0x51a80c;
 FnInteract* off_51A818 = (decltype(off_51A818 + 0)) 0x51a818;
 FnInteract* off_51A848 = (decltype(off_51A848 + 0)) 0x51a848;
 FnInteract* off_51A93C = (decltype(off_51A93C + 0)) 0x51a93c;
-int (__thiscall **&off_51A968)(void *location, char) = *((decltype(&off_51A968)) 0x51a968);
+void *(__thiscall **&off_51A968)(type_info *__hidden this_, char) = *((decltype(&off_51A968)) 0x51a968);
 char* a_au_phonenumber = (decltype(a_au_phonenumber + 0)) 0x51a970;
-int (__thiscall **&off_51A984)(void *location, char) = *((decltype(&off_51A984)) 0x51a984);
+void *(__thiscall **&off_51A984)(type_info *__hidden this_, char) = *((decltype(&off_51A984)) 0x51a984);
 char* a_au_device = (decltype(a_au_device + 0)) 0x51a98c;
 swishTimer* stru_51A99C = (decltype(stru_51A99C + 0)) 0x51a99c;
 FnInteract* off_51A9AC = (decltype(off_51A9AC + 0)) 0x51a9ac;
@@ -19889,31 +19954,31 @@ swishTimer* gluCustmSwishController = (decltype(gluCustmSwishController + 0)) 0x
 FnInteract* off_51AA08 = (decltype(off_51AA08 + 0)) 0x51aa08;
 int& dword_51AAA0 = * ((decltype(&dword_51AAA0)) 0x51aaa0);
 int& dword_51AAA8 = * ((decltype(&dword_51AAA8)) 0x51aaa8);
-int (__thiscall **&off_51AAB0)(void *location, char) = *((decltype(&off_51AAB0)) 0x51aab0);
+void *(__thiscall **&off_51AAB0)(type_info *__hidden this_, char) = *((decltype(&off_51AAB0)) 0x51aab0);
 char* a_au_drawtext = (decltype(a_au_drawtext + 0)) 0x51aab8;
-int (__thiscall **&off_51AAC8)(void *location, char) = *((decltype(&off_51AAC8)) 0x51aac8);
+void *(__thiscall **&off_51AAC8)(type_info *__hidden this_, char) = *((decltype(&off_51AAC8)) 0x51aac8);
 char* a_auttemplate = (decltype(a_auttemplate + 0)) 0x51aad0;
-int (__thiscall **&off_51AAE0)(void *location, char) = *((decltype(&off_51AAE0)) 0x51aae0);
+void *(__thiscall **&off_51AAE0)(type_info *__hidden this_, char) = *((decltype(&off_51AAE0)) 0x51aae0);
 char* a_aulistentry = (decltype(a_aulistentry + 0)) 0x51aae8;
 FnInteract& off_51AAF8 = * ((decltype(&off_51AAF8)) 0x51aaf8);
 FnInteract* off_51AAFC = (decltype(off_51AAFC + 0)) 0x51aafc;
 FnInteract* off_51AB0C = (decltype(off_51AB0C + 0)) 0x51ab0c;
 FnInteract* off_51AB20 = (decltype(off_51AB20 + 0)) 0x51ab20;
-int (__thiscall **&off_51AB94)(void *location, char) = *((decltype(&off_51AB94)) 0x51ab94);
+void *(__thiscall **&off_51AB94)(type_info *__hidden this_, char) = *((decltype(&off_51AB94)) 0x51ab94);
 char* a_autriggernode = (decltype(a_autriggernode + 0)) 0x51ab9c;
 FnInteract* off_51ABB0 = (decltype(off_51ABB0 + 0)) 0x51abb0;
 FnInteract* off_51ABC0 = (decltype(off_51ABC0 + 0)) 0x51abc0;
-int (__thiscall **&off_51ABD4)(void *location, char) = *((decltype(&off_51ABD4)) 0x51abd4);
+void *(__thiscall **&off_51ABD4)(type_info *__hidden this_, char) = *((decltype(&off_51ABD4)) 0x51abd4);
 char* a_autbnetmessage = (decltype(a_autbnetmessage + 0)) 0x51abdc;
 FnInteract* a3 = (decltype(a3 + 0)) 0x51abf0;
 int* dword_51ABFC = (decltype(dword_51ABFC + 0)) 0x51abfc;
-int (__thiscall **&off_51AC10)(void *location, char) = *((decltype(&off_51AC10)) 0x51ac10);
+void *(__thiscall **&off_51AC10)(type_info *__hidden this_, char) = *((decltype(&off_51AC10)) 0x51ac10);
 char* a_autfd_session = (decltype(a_autfd_session + 0)) 0x51ac18;
-int (__thiscall **&off_51AC2C)(void *location, char) = *((decltype(&off_51AC2C)) 0x51ac2c);
+void *(__thiscall **&off_51AC2C)(type_info *__hidden this_, char) = *((decltype(&off_51AC2C)) 0x51ac2c);
 char* a_autuser_info = (decltype(a_autuser_info + 0)) 0x51ac34;
-int (__thiscall **&off_51AC48)(void *location, char) = *((decltype(&off_51AC48)) 0x51ac48);
+void *(__thiscall **&off_51AC48)(type_info *__hidden this_, char) = *((decltype(&off_51AC48)) 0x51ac48);
 char* a_autban = (decltype(a_autban + 0)) 0x51ac50;
-int (__thiscall **&off_51AC5C)(void *location, char) = *((decltype(&off_51AC5C)) 0x51ac5c);
+void *(__thiscall **&off_51AC5C)(type_info *__hidden this_, char) = *((decltype(&off_51AC5C)) 0x51ac5c);
 char* a_autsavegame = (decltype(a_autsavegame + 0)) 0x51ac64;
 FnInteract* off_51AC74 = (decltype(off_51AC74 + 0)) 0x51ac74;
 FnInteract* off_51AC84 = (decltype(off_51AC84 + 0)) 0x51ac84;
@@ -19925,7 +19990,7 @@ int& dword_51ACB4 = * ((decltype(&dword_51ACB4)) 0x51acb4);
 int& dword_51ACB8 = * ((decltype(&dword_51ACB8)) 0x51acb8);
 int& dword_51ACC0 = * ((decltype(&dword_51ACC0)) 0x51acc0);
 char* aEntrextrdwhepb = (decltype(aEntrextrdwhepb + 0)) 0x51acc4;
-int (__thiscall **&off_51AD18)(void *location, char) = *((decltype(&off_51AD18)) 0x51ad18);
+void *(__thiscall **&off_51AD18)(type_info *__hidden this_, char) = *((decltype(&off_51AD18)) 0x51ad18);
 char* a_autfd_user = (decltype(a_autfd_user + 0)) 0x51ad20;
 FnInteract* off_51AD30 = (decltype(off_51AD30 + 0)) 0x51ad30;
 int& dword_51AD60 = * ((decltype(&dword_51AD60)) 0x51ad60);
@@ -19949,30 +20014,30 @@ int& nNumber = * ((decltype(&nNumber)) 0x51aea4);
 char *& off_51AEA8 = * ((decltype(&off_51AEA8)) 0x51aea8);
 char* a_xxx_xxxxxxxxx = (decltype(a_xxx_xxxxxxxxx + 0)) 0x51aebc;
 char* a___xxx____xxxx = (decltype(a___xxx____xxxx + 0)) 0x51aed8;
-_DWORD& a____xxxxx_____ = * ((decltype(&a____xxxxx_____)) 0x51af30);
-_DWORD& a______xxxxx___ = * ((decltype(&a______xxxxx___)) 0x51afe0);
+char* a____xxxxx_____ = (decltype(a____xxxxx_____ + 0)) 0x51af30;
+char* a______xxxxx___ = (decltype(a______xxxxx___ + 0)) 0x51afe0;
 int& dword_51B108 = * ((decltype(&dword_51B108)) 0x51b108);
 int* dword_51B1E8 = (decltype(dword_51B1E8 + 0)) 0x51b1e8;
 int& dword_51B260 = * ((decltype(&dword_51B260)) 0x51b260);
-int (__thiscall **&off_51B274)(void *location, char) = *((decltype(&off_51B274)) 0x51b274);
+void *(__thiscall **&off_51B274)(type_info *__hidden this_, char) = *((decltype(&off_51B274)) 0x51b274);
 HANDLE& hObject = * ((decltype(&hObject)) 0x51b290);
 int& dword_51B294 = * ((decltype(&dword_51B294)) 0x51b294);
-int (__thiscall **&off_51B298)(void *location, char) = *((decltype(&off_51B298)) 0x51b298);
+void *(__thiscall **&off_51B298)(type_info *__hidden this_, char) = *((decltype(&off_51B298)) 0x51b298);
 char* a_au_bltmask = (decltype(a_au_bltmask + 0)) 0x51b2a0;
-int (__thiscall **&off_51B2B0)(void *location, char) = *((decltype(&off_51B2B0)) 0x51b2b0);
+void *(__thiscall **&off_51B2B0)(type_info *__hidden this_, char) = *((decltype(&off_51B2B0)) 0x51b2b0);
 char* a_au_ctrlnode = (decltype(a_au_ctrlnode + 0)) 0x51b2b8;
 int& dword_51B2C8 = * ((decltype(&dword_51B2C8)) 0x51b2c8);
 char& byte_51B2CC = * ((decltype(&byte_51B2CC)) 0x51b2cc);
 char& byte_51B2CD = * ((decltype(&byte_51B2CD)) 0x51b2cd);
 char& byte_51B2CE = * ((decltype(&byte_51B2CE)) 0x51b2ce);
 char& byte_51B2CF = * ((decltype(&byte_51B2CF)) 0x51b2cf);
-int (__thiscall **&off_51B2D0)(void *location, char) = *((decltype(&off_51B2D0)) 0x51b2d0);
+void *(__thiscall **&off_51B2D0)(type_info *__hidden this_, char) = *((decltype(&off_51B2D0)) 0x51b2d0);
 char* a_au_dlggrp = (decltype(a_au_dlggrp + 0)) 0x51b2d8;
 int& dword_51B2E8 = * ((decltype(&dword_51B2E8)) 0x51b2e8);
 int& dword_51B2F0 = * ((decltype(&dword_51B2F0)) 0x51b2f0);
 int& dword_51B2F4 = * ((decltype(&dword_51B2F4)) 0x51b2f4);
 int& dword_51B2F8 = * ((decltype(&dword_51B2F8)) 0x51b2f8);
-int (__thiscall **&off_51B428)(void *location, char) = *((decltype(&off_51B428)) 0x51b428);
+void *(__thiscall **&off_51B428)(type_info *__hidden this_, char) = *((decltype(&off_51B428)) 0x51b428);
 char* a_auchunknode = (decltype(a_auchunknode + 0)) 0x51b430;
 char* aUs = (decltype(aUs + 0)) 0x51b440;
 char* aSs = (decltype(aSs + 0)) 0x51b444;
@@ -20080,7 +20145,7 @@ int& dword_51BFF0 = * ((decltype(&dword_51BFF0)) 0x51bff0);
 int& dword_51BFF4 = * ((decltype(&dword_51BFF4)) 0x51bff4);
 int& Ophelia = * ((decltype(&Ophelia)) 0x51bff8);
 Bitmap* stru_51C000 = (decltype(stru_51C000 + 0)) 0x51c000;
-void *& dword_51C408 = * ((decltype(&dword_51C408)) 0x51c408);
+void *& gluAllTblData = * ((decltype(&gluAllTblData)) 0x51c408);
 void *& dword_51C40C = * ((decltype(&dword_51C40C)) 0x51c40c);
 MapData4& NextCampaign = * ((decltype(&NextCampaign)) 0x51c410);
 int& dword_51C414 = * ((decltype(&dword_51C414)) 0x51c414);
@@ -20153,13 +20218,13 @@ int& dword_51CE98 = * ((decltype(&dword_51CE98)) 0x51ce98);
 char& byte_51CE9C = * ((decltype(&byte_51CE9C)) 0x51ce9c);
 char& byte_51CE9D = * ((decltype(&byte_51CE9D)) 0x51ce9d);
 int& FramesUntilNextTurn = * ((decltype(&FramesUntilNextTurn)) 0x51cea0);
-int& dword_51CEA4 = * ((decltype(&dword_51CEA4)) 0x51cea4);
-void *& dword_51CEA8 = * ((decltype(&dword_51CEA8)) 0x51cea8);
+int& bytes_read = * ((decltype(&bytes_read)) 0x51cea4);
+char *& dword_51CEA8 = * ((decltype(&dword_51CEA8)) 0x51cea8);
 char& byte_51CEAC = * ((decltype(&byte_51CEAC)) 0x51ceac);
 dialog *& dword_51CEB0 = * ((decltype(&dword_51CEB0)) 0x51ceb0);
 int& dword_51CEB4 = * ((decltype(&dword_51CEB4)) 0x51ceb4);
 int& dword_51CEB8 = * ((decltype(&dword_51CEB8)) 0x51ceb8);
-int& dword_51CEBC = * ((decltype(&dword_51CEBC)) 0x51cebc);
+char *& dword_51CEBC = * ((decltype(&dword_51CEBC)) 0x51cebc);
 int& dword_51CEC0 = * ((decltype(&dword_51CEC0)) 0x51cec0);
 int& dword_51CEC4 = * ((decltype(&dword_51CEC4)) 0x51cec4);
 char& byte_51CEC8 = * ((decltype(&byte_51CEC8)) 0x51cec8);
@@ -20423,11 +20488,11 @@ char& byte_5982A0 = * ((decltype(&byte_5982A0)) 0x5982a0);
 char* byte_5985A0 = (decltype(byte_5985A0 + 0)) 0x5985a0;
 char* byte_5992A0 = (decltype(byte_5992A0 + 0)) 0x5992a0;
 void *& dword_5993A0 = * ((decltype(&dword_5993A0)) 0x5993a0);
-int& dword_5993A4 = * ((decltype(&dword_5993A4)) 0x5993a4);
+int& result = * ((decltype(&result)) 0x5993a4);
 TileID *& ZergCreepArray = * ((decltype(&ZergCreepArray)) 0x5993a8);
 int& dword_5993AC = * ((decltype(&dword_5993AC)) 0x5993ac);
 RECT& rc = * ((decltype(&rc)) 0x5993b0);
-int& dword_5993C0 = * ((decltype(&dword_5993C0)) 0x5993c0);
+unsigned int& dword_5993C0 = * ((decltype(&dword_5993C0)) 0x5993c0);
 TileID *& MapTileArray = * ((decltype(&MapTileArray)) 0x5993c4);
 int& TileSetMapSize = * ((decltype(&TileSetMapSize)) 0x5993c8);
 void *& dword_5993CC = * ((decltype(&dword_5993CC)) 0x5993cc);
@@ -20614,10 +20679,10 @@ int& ScreenY = * ((decltype(&ScreenY)) 0x628470);
 int* dword_628484 = (decltype(dword_628484 + 0)) 0x628484;
 int* dword_628488 = (decltype(dword_628488 + 0)) 0x628488;
 int& MoveToX = * ((decltype(&MoveToX)) 0x62848c);
-int& dword_628490 = * ((decltype(&dword_628490)) 0x628490);
+int& parallaxSomethingWidth = * ((decltype(&parallaxSomethingWidth)) 0x628490);
 int *& CellMap = * ((decltype(&CellMap)) 0x628494);
 int& dword_628498 = * ((decltype(&dword_628498)) 0x628498);
-int& dword_62849C = * ((decltype(&dword_62849C)) 0x62849c);
+int& parallaxSomethingHeight = * ((decltype(&parallaxSomethingHeight)) 0x62849c);
 __int16& move_area = * ((decltype(&move_area)) 0x6284a0);
 __int16& word_6284A2 = * ((decltype(&word_6284A2)) 0x6284a2);
 __int16& word_6284A4 = * ((decltype(&word_6284A4)) 0x6284a4);
@@ -20839,11 +20904,8 @@ int& dword_658AB4 = * ((decltype(&dword_658AB4)) 0x658ab4);
 int& dword_658AB8 = * ((decltype(&dword_658AB8)) 0x658ab8);
 int& dword_658ABC = * ((decltype(&dword_658ABC)) 0x658abc);
 char& byte_658AC0 = * ((decltype(&byte_658AC0)) 0x658ac0);
-int* dword_658AC4 = (decltype(dword_658AC4 + 0)) 0x658ac4;
-int& dword_658AC8 = * ((decltype(&dword_658AC8)) 0x658ac8);
-int& dword_658ACC = * ((decltype(&dword_658ACC)) 0x658acc);
-int& dword_658AD0 = * ((decltype(&dword_658AD0)) 0x658ad0);
-void *& dword_658AD8 = * ((decltype(&dword_658AD8)) 0x658ad8);
+int* spkLayer = (decltype(spkLayer + 0)) 0x658ac4;
+void *& spkHandle = * ((decltype(&spkHandle)) 0x658ad8);
 void *& dword_658ADC = * ((decltype(&dword_658ADC)) 0x658adc);
 int& dword_658AE0 = * ((decltype(&dword_658AE0)) 0x658ae0);
 int& dword_658AE4 = * ((decltype(&dword_658AE4)) 0x658ae4);
@@ -21212,7 +21274,7 @@ HWND& dword_68F70C = * ((decltype(&dword_68F70C)) 0x68f70c);
 int& dword_68F710 = * ((decltype(&dword_68F710)) 0x68f710);
 int& dword_68F714 = * ((decltype(&dword_68F714)) 0x68f714);
 CHAR* byte_68F718 = (decltype(byte_68F718 + 0)) 0x68f718;
-unsigned __int8& byte_68F820 = * ((decltype(&byte_68F820)) 0x68f820);
+unsigned __int8* byte_68F820 = (decltype(byte_68F820 + 0)) 0x68f820;
 int& dword_68F924 = * ((decltype(&dword_68F924)) 0x68f924);
 int& dword_68F928 = * ((decltype(&dword_68F928)) 0x68f928);
 int& dword_68F92C = * ((decltype(&dword_68F92C)) 0x68f92c);
@@ -21222,7 +21284,7 @@ int& dword_68F938 = * ((decltype(&dword_68F938)) 0x68f938);
 int& dword_68F93C = * ((decltype(&dword_68F93C)) 0x68f93c);
 int& dword_68F940 = * ((decltype(&dword_68F940)) 0x68f940);
 int& dword_68F944 = * ((decltype(&dword_68F944)) 0x68f944);
-char& byte_68F948 = * ((decltype(&byte_68F948)) 0x68f948);
+char* byte_68F948 = (decltype(byte_68F948 + 0)) 0x68f948;
 int& dword_68FA48 = * ((decltype(&dword_68FA48)) 0x68fa48);
 int& a7 = * ((decltype(&a7)) 0x68fa4c);
 int* dword_68FA50 = (decltype(dword_68FA50 + 0)) 0x68fa50;
@@ -21371,6 +21433,7 @@ int& dword_6BEEA0 = * ((decltype(&dword_6BEEA0)) 0x6beea0);
 int& dword_6BEEA4 = * ((decltype(&dword_6BEEA4)) 0x6beea4);
 int& dword_6BEEA8 = * ((decltype(&dword_6BEEA8)) 0x6beea8);
 int& dword_6BEEAC = * ((decltype(&dword_6BEEAC)) 0x6beeac);
+int& dword_6BEEB0 = * ((decltype(&dword_6BEEB0)) 0x6beeb0);
 int* dword_6C0DD0 = (decltype(dword_6C0DD0 + 0)) 0x6c0dd0;
 int& dword_6C0DD4 = * ((decltype(&dword_6C0DD4)) 0x6c0dd4);
 int& dword_6C102C = * ((decltype(&dword_6C102C)) 0x6c102c);
@@ -21378,8 +21441,7 @@ int& dword_6C1030 = * ((decltype(&dword_6C1030)) 0x6c1030);
 int& dword_6C1074 = * ((decltype(&dword_6C1074)) 0x6c1074);
 int& dword_6C1078 = * ((decltype(&dword_6C1078)) 0x6c1078);
 int& dword_6C107C = * ((decltype(&dword_6C107C)) 0x6c107c);
-int& dword_6C1080 = * ((decltype(&dword_6C1080)) 0x6c1080);
-int& dword_6C1084 = * ((decltype(&dword_6C1084)) 0x6c1084);
+__int64& qword_6C1080 = * ((decltype(&qword_6C1080)) 0x6c1080);
 __int16& word_6C10A8 = * ((decltype(&word_6C10A8)) 0x6c10a8);
 int& dword_6C2310 = * ((decltype(&dword_6C2310)) 0x6c2310);
 int& dword_6C2314 = * ((decltype(&dword_6C2314)) 0x6c2314);
@@ -21428,7 +21490,7 @@ char& byte_6CA9F0 = * ((decltype(&byte_6CA9F0)) 0x6ca9f0);
 char* byte_6CA9F8 = (decltype(byte_6CA9F8 + 0)) 0x6ca9f8;
 char* byte_6CAB08 = (decltype(byte_6CAB08 + 0)) 0x6cab08;
 __int16& word_6CAC0C = * ((decltype(&word_6CAC0C)) 0x6cac0c);
-char& byte_6CAC10 = * ((decltype(&byte_6CAC10)) 0x6cac10);
+char* byte_6CAC10 = (decltype(byte_6CAC10 + 0)) 0x6cac10;
 char* byte_6CAC78 = (decltype(byte_6CAC78 + 0)) 0x6cac78;
 int* dword_6CAD98 = (decltype(dword_6CAD98 + 0)) 0x6cad98;
 int& dword_6CAD9C = * ((decltype(&dword_6CAD9C)) 0x6cad9c);
@@ -21565,7 +21627,7 @@ void *& dword_6D05A8 = * ((decltype(&dword_6D05A8)) 0x6d05a8);
 int& dword_6D05AC = * ((decltype(&dword_6D05AC)) 0x6d05ac);
 __int16& word_6D09B0 = * ((decltype(&word_6D09B0)) 0x6d09b0);
 char& byte_6D09B2 = * ((decltype(&byte_6D09B2)) 0x6d09b2);
-_BYTE* dword_6D09B8 = (decltype(dword_6D09B8 + 0)) 0x6d09b8;
+_DWORD* dword_6D09B8 = (decltype(dword_6D09B8 + 0)) 0x6d09b8;
 int& dword_6D0AA8 = * ((decltype(&dword_6D0AA8)) 0x6d0aa8);
 int& dword_6D0AF8 = * ((decltype(&dword_6D0AF8)) 0x6d0af8);
 char& byte_6D0B50 = * ((decltype(&byte_6D0B50)) 0x6d0b50);
@@ -21708,7 +21770,7 @@ void *& dword_6D5A98 = * ((decltype(&dword_6D5A98)) 0x6d5a98);
 void *& dword_6D5A9C = * ((decltype(&dword_6D5A9C)) 0x6d5a9c);
 void *& dword_6D5AA0 = * ((decltype(&dword_6D5AA0)) 0x6d5aa0);
 char& byte_6D5AA8 = * ((decltype(&byte_6D5AA8)) 0x6d5aa8);
-HANDLE& handle = * ((decltype(&handle)) 0x6d5bac);
+HANDLE& directsound = * ((decltype(&directsound)) 0x6d5bac);
 int& current_music = * ((decltype(&current_music)) 0x6d5bb0);
 signed int& bigvolume = * ((decltype(&bigvolume)) 0x6d5bb4);
 int& dword_6D5BB8 = * ((decltype(&dword_6D5BB8)) 0x6d5bb8);
@@ -21782,6 +21844,7 @@ char *& dword_6D5D50 = * ((decltype(&dword_6D5D50)) 0x6d5d50);
 char *& dword_6D5D54 = * ((decltype(&dword_6D5D54)) 0x6d5d54);
 char *& dword_6D5D58 = * ((decltype(&dword_6D5D58)) 0x6d5d58);
 void *& dword_6D5D5C = * ((decltype(&dword_6D5D5C)) 0x6d5d5c);
+char* byte_6D5D60 = (decltype(byte_6D5D60 + 0)) 0x6d5d60;
 int& dword_6D5D64 = * ((decltype(&dword_6D5D64)) 0x6d5d64);
 int& dword_6D5D68 = * ((decltype(&dword_6D5D68)) 0x6d5d68);
 int* dword_6D5D70 = (decltype(dword_6D5D70 + 0)) 0x6d5d70;
@@ -22171,6 +22234,7 @@ Bitmap& stru_6DB28C = * ((decltype(&stru_6DB28C)) 0x6db28c);
 char* byte_6DB298 = (decltype(byte_6DB298 + 0)) 0x6db298;
 char* byte_6DB698 = (decltype(byte_6DB698 + 0)) 0x6db698;
 char* byte_6DB718 = (decltype(byte_6DB718 + 0)) 0x6db718;
+char* byte_6DB798 = (decltype(byte_6DB798 + 0)) 0x6db798;
 char* byte_6DB818 = (decltype(byte_6DB818 + 0)) 0x6db818;
 char* byte_6DB898 = (decltype(byte_6DB898 + 0)) 0x6db898;
 char& byte_6DB918 = * ((decltype(&byte_6DB918)) 0x6db918);
