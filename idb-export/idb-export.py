@@ -554,6 +554,7 @@ class CompositionType(Type):
 
 @keywords('typedef')
 class TypedefType(Type):
+    simple_type_pattern = re.compile(r'^typedef (?P<original_type>.*) \**(?P<type_name>\w+);')
     function_ptr_type_pattern = re.compile(r'^typedef (?P<return_type>.*)\((\w+\s*)*\*\s*(?P<type_name>\w+)\)\((?P<args>.*)\);')
 
     @property
@@ -572,8 +573,13 @@ class TypedefType(Type):
                 argument_name = re.split('\s+', argument)[-1]
                 result.add(argument_name)
             return result
+
+        simple_type_match = self.simple_type_pattern.match(self.definition_without_body)
+        if simple_type_match:
+            return {simple_type_match.group('original_type')}
+
         else:
-            return set() # TODO
+            raise IdbExportError('Could not get type dependencies for type "%s"' % self.name)
 
     @property
     def name(self):
