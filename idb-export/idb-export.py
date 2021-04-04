@@ -551,7 +551,7 @@ class CompositionType(Type):
 
 @keywords('typedef')
 class TypedefType(Type):
-    function_ptr_type_pattern = re.compile(r'^typedef (?P<return_type>.*) \((\w+\s*)*\*\s*(?P<type_name>\w+)\)\((?P<args>.*)\);')
+    function_ptr_type_pattern = re.compile(r'^typedef (?P<return_type>.*)\((\w+\s*)*\*\s*(?P<type_name>\w+)\)\((?P<args>.*)\);')
 
     @property
     def declaration(self):
