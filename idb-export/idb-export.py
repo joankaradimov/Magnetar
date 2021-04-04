@@ -444,7 +444,7 @@ def export_data(segment, declarations, definitions):
         data_type = get_type(ea) or guess_type(ea)
         data_name = idaapi.get_name(ea)
 
-        if data_name == None:
+        if data_name == None or data_name == '' or data_type == None:
             continue
         elif '[' in data_type: # array -> pointer
             data_type = re.sub('\[[^\]]*\]', '* ' + data_name, data_type, count = 1)
