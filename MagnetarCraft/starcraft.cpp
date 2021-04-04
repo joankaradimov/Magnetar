@@ -1,5 +1,6 @@
 #include <ddraw.h>
 #include "starcraft.h"
+#include "tbl_file.h"
 #include "patching/AddressPatch.h"
 #include "patching/CallSitePatch.h"
 #include "patching/MemoryPatch.h"
@@ -288,6 +289,16 @@ int InitializeArchiveHandles_()
 	if (!SFileOpenArchive(archivename, 7000u, 2u, &phFile) || (v3 = phFile) == 0)
 		v3 = 0;
 	dword_51CC28 = v3;
+
+    char magnetarDatFilename[MAX_PATH] = { 0 };
+    if (!GetModuleFileNameA(hInst, magnetarDatFilename, 0x104u))
+		*magnetarDatFilename = 0;
+    auto separator = strrchr(magnetarDatFilename, '\\');
+    if (separator)
+		*separator = 0;
+    SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", 260);
+    !SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &phFile);
+
 	InitializeFontKey_();
 	AppAddExit_(DestroyFontKey);
 	if (!dword_5124D0)
@@ -319,6 +330,8 @@ int InitializeArchiveHandles_()
 	dword_6D11E4 = v6;
 	return SStrNCat(byte_51CA20, Filename, 520);
 }
+
+AddressPatch InitializeArchiveHandles_patch(InitializeArchiveHandles, InitializeArchiveHandles_);
 
 signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 {
@@ -543,6 +556,42 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
+void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
+{
+	int v2 = ScreenLayers[5].bits & 1;
+	if ((ScreenLayers[5].bits & 1) != 0)
+	{
+		maskSomething0();
+		memcpy(dword_6D5C10, dword_6D5C0C, 0x198u);
+		BWFXN_updateImageData();
+		maskSomething2();
+		BWFXN_drawMapTiles();
+		BWFXN_blitMapTiles();
+	}
+	else
+	{
+		maskSomething1();
+		refreshImageRange(result, dword_5993C0);
+		maskSomething2();
+		BWFXN_drawMapTiles();
+		blitTileCacheOnRefresh();
+	}
+	BWFXN_drawAllSprites();
+	if (CurrentTileSet == Platform)
+	{
+		if (v2)
+			drawStars();
+		else
+			refreshStars();
+	}
+	updateAllFog();
+	BWFXN_DrawHighTarget();
+	BWFXN_drawDragSelBox();
+	BWFXN_drawAllThingys();
+}
+
+AddressPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
+
 void __cdecl audioVideoInit_()
 {
 	loadColorSettings();
@@ -709,6 +758,35 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+char* TILESET_NAMES[] = {
+	"badlands",
+	"platform",
+	"install",
+	"AshWorld",
+	"Jungle",
+	"Desert",
+	"Ice",
+	"Twlight",
+};
+
+bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size != 2)
+		return 0;
+	if ((unsigned int)section_data->field1 + section_data->size > section_data->field0)
+		return 0;
+
+	memcpy_s(&CurrentTileSet, sizeof(CurrentTileSet), section_data->field1, section_size);
+	if (CurrentTileSet > Tileset::Jungle && !IsExpansion)
+		return 0;
+
+	int tileset_count = sizeof(TILESET_NAMES) / sizeof(*TILESET_NAMES);
+	CurrentTileSet = Tileset(CurrentTileSet % tileset_count);
+	return 1;
+}
+
+AddressPatch ChkLoader_ERA_patch(ChkLoader_ERA, ChkLoader_ERA_);
+
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
 	HRSRC hVCOD = FindResourceA(hInst, (LPCSTR)0xCA, "VCOD");
@@ -817,31 +895,31 @@ void initMapData_()
 
 	word_6556FC = 0;
 	byte_66FF5C = 0;
-	MapTileArray = (TileID *)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
+	MapTileArray = (TileID *)SMemAlloc(0x80000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
 	CellMap = (int *)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
 	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
-	ActiveTileArray = (ActiveTile *)SMemAlloc(0x40000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
+	ActiveTileArray = (ActiveTile *)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
 	memset(ActiveTileArray, 0, 0x40000u);
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".wpe");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".vf4");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	word_5998E0 = (unsigned int)bytes_read >> 5;
 	sub_4BCF50();
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".cv5");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	TileSetMapSize = bytes_read / 52u;
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[(unsigned __int16)CurrentTileSet], ".grp");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".grp");
 	a1.pfunc0 = (int(__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))sub_47E2D0;
 	a1.isCreepCovered = isCreepCovered;
 	a1.isTileVisible = isTileVisible;
 	a1.pfuncC = 0;
 	InitTerrainGraphicsAndCreep(&a1, MapTileArray, map_size.width, map_size.height, filename);
 	ZergCreepArray = location;
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[CurrentTileSet], ".vx4");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
 	VX4Data = (vx4entry *)fastFileRead_(&read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TileSetNames[CurrentTileSet], ".vr4");
+	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
 	HANDLE v4;
 	if (!SFileOpenFileEx(0, filename, 0, &v4))
 	{
@@ -877,8 +955,8 @@ void initMapData_()
 					sub_4BCD70(palette);
 					sub_4BDD60();
 				}
-				loadColorShiftTilesetImages(TileSetNames[CurrentTileSet]);
-				sub_4BDDD0(TileSetNames[CurrentTileSet]);
+				loadColorShiftTilesetImages(TILESET_NAMES[CurrentTileSet]);
+				sub_4BDDD0(TILESET_NAMES[CurrentTileSet]);
 				if (!dword_5993AC)
 				{
 					ScreenLayers[5].buffers = 1;
@@ -1898,6 +1976,37 @@ void __cdecl sub_4D9200_()
 }
 
 AddressPatch sub_4D9200_patch(sub_4D9200, sub_4D9200_);
+
+const char* __stdcall get_Tileset_String(Tileset tileset)
+{
+	static TblFile tbl_file("rez\\tilesets.tbl");
+
+	return tbl_file[tileset];
+}
+
+NopPatch tilsetNameTblArithmetic((void*)0x4A7960, 3);
+CallSitePatch tilsetNameTblCall((void*)0x4A7964, get_Tileset_String);
+
+MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES, sizeof(*TILESET_NAMES));
+MemoryPatch tilesetNames_2(0x4D4B26, TILESET_NAMES + 1, sizeof(TILESET_NAMES[1]));
+
+int TILESET_PALETTE_RELATED[] = {
+	0x512778,
+	0x6D1228,
+	0x6D1228,
+	0x5127B8,
+	0x512778,
+	0x51279C,
+	0x51279C,
+	0x51279C,
+};
+
+MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
 
 void main(HINSTANCE starcraft_exe) {
 	hInst = starcraft_exe;

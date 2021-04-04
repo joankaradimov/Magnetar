@@ -159,6 +159,7 @@
     <ClInclude Include="starcraft.h" />
     <ClInclude Include="starcraft_exe.h" />
     <ClInclude Include="starcraft_exe_types.h" />
+    <ClInclude Include="tbl_file.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\MemoryModule\MemoryModule.c" />
