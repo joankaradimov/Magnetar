@@ -7,8 +7,8 @@ class FunctionArgument:
 class Function:
     def __init__(self, ref):
         self.ref = ref
-        self.ref_type = GetType(ref) or GuessType(ref)
-        self.ref_name = GetFunctionName(ref)
+        self.ref_type = get_type(ref) or guess_type(ref)
+        self.ref_name = get_func_name(ref)
         self.skip = False
 
         # TODO: handle properly
@@ -18,7 +18,7 @@ class Function:
             self.skip = True
             return
 
-        func_flags = GetFunctionAttr(ref, FUNCATTR_FLAGS)
+        func_flags = get_func_attr(ref, FUNCATTR_FLAGS)
         is_lib = func_flags & FUNC_LIB
         if is_lib:
             self.skip = True
@@ -269,7 +269,7 @@ def get_referred_funcs(ea):
     result = []
     for ref in refs:
         ref_func = get_func(ref)
-        if ref_func and ref_func.startEA == ref:
+        if ref_func and ref_func.start_ea == ref:
             result.append(ref)
 
     return result
@@ -417,7 +417,7 @@ def is_blacklisted(text):
 
 def export_functions(declarations, definitions):
     text_segment = idaapi.get_segm_by_name('.text')
-    for function_ea in Functions(text_segment.startEA, text_segment.endEA):
+    for function_ea in Functions(text_segment.start_ea, text_segment.end_ea):
         function = Function(function_ea)
         declaration = function.build_export_declaration()
         definition = function.build_export_definition()
@@ -431,12 +431,12 @@ def export_functions(declarations, definitions):
 def export_data(segment, declarations, definitions):
     data_segment = idaapi.get_segm_by_name(segment)
 
-    ea = data_segment.startEA
+    ea = data_segment.start_ea
     while ea != idc.BADADDR:
-        ea = NextHead(ea, data_segment.endEA)
+        ea = next_head(ea, data_segment.end_ea)
 
-        data_type = GetType(ea) or GuessType(ea)
-        data_name = idaapi.get_name(ea, ea)
+        data_type = get_type(ea) or guess_type(ea)
+        data_name = idaapi.get_name(ea)
 
         if data_name == None:
             continue
@@ -459,7 +459,7 @@ def export_data(segment, declarations, definitions):
         definitions.append(definition)
 
 def is_type_blacklisted(type_ordinal):
-    local_type_name = GetLocalTypeName(type_ordinal)
+    local_type_name = get_numbered_type_name(type_ordinal)
     if local_type_name == None:
         return False # TODO: determine when this happens
     if local_type_name in {'RECT', 'POINT', '_GUID', '__int128'}:
@@ -586,11 +586,11 @@ def export_types(declarations, definitions):
     existing_type_names = set()
     local_types = []
 
-    for type_ordinal in range(1, GetMaxLocalType()):
+    for type_ordinal in range(1, get_ordinal_qty()):
         if is_type_blacklisted(type_ordinal):
             continue
 
-        type_name = GetLocalTypeName(type_ordinal)
+        type_name = get_numbered_type_name(type_ordinal)
 
         if type_name in existing_type_names:
             continue
