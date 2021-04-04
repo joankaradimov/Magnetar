@@ -1,5 +1,8 @@
 import re
 
+class IdbExportError(Exception):
+    pass
+
 class FunctionArgument:
     def __init__(self, signature):
         self.signature = signature
@@ -93,7 +96,7 @@ class Function:
             if depth == 0:
                 return self.ref_type[i + 1: -1]
             i -= 1
-        raise 'Trying to get args when none seem to be present: %s' % self.ref_type
+        raise IdbExportError('Trying to get args when none seem to be present: %s' % self.ref_type)
 
     register_arg_pattern = re.compile(r'@<(\w+)>')
 
@@ -166,7 +169,7 @@ class Function:
             return ''
 
         if self.name.find('@') >= 0:
-            raise 'Function name contains invalid character: %s' % self.name
+            raise IdbExportError('Function name contains invalid character: %s' % self.name)
 
         if is_function_pointer(self.signature):
             return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = self.signature, name = self.name, address = hex(self.ref))
@@ -485,7 +488,7 @@ class Type(object):
             self.definition = type_definition.strip() + ';\n\n'
             return self
         else:
-            raise Exception('key word not registered') # TODO: proper exception type
+            raise IdbExportError('key word not registered')
 
     @classmethod
     def register_keyword(cls, keyword, subclass):
