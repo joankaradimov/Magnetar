@@ -451,6 +451,7 @@ def export_data(segment, declarations, definitions):
             definition = '{data_type} = (decltype({data_name} + 0)) {address};\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         elif '*)(' in data_type: # function pointer -> reference to function pointer
             data_type = data_type.replace('*)', '*&' + data_name + ')',  1)
+            data_type = data_type.replace('__hidden this', '__hidden this_')
             definition = '{data_type} = *((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         else: # scalar value -> reference
             data_type = data_type + '& ' + data_name
