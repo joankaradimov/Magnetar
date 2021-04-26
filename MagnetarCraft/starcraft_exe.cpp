@@ -12040,7 +12040,13 @@ DECL_FUNC(int(*minimapVisionUpdate_64)(), minimapVisionUpdate_64, 0x4a3c00);
 DECL_FUNC(int(*sub_4A3D40)(), sub_4A3D40, 0x4a3d40);
 DECL_FUNC(int(*getMinimapCursorPos)(), getMinimapCursorPos, 0x4a3d70);
 DECL_FUNC(int(*sub_4A3E00)(), sub_4A3E00, 0x4a3e00);
-DECL_FUNC(int(*killMinimapPreviewDlg)(), killMinimapPreviewDlg, 0x4a3e20);
+void killMinimapPreviewDlg(dialog *a1) {
+    int address = 0x4a3e20;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*minimapGameResetMouseInput)(), minimapGameResetMouseInput, 0x4a3eb0);
 DECL_FUNC(void (__fastcall*MinimapImageUpdate)(dialog *dlg, int x, int y, rect *dst), MinimapImageUpdate, 0x4a3ee0);
 DECL_FUNC(int (__stdcall*drawUnitBox)(int, char, char, char), drawUnitBox, 0x4a3fd0);
@@ -12092,6 +12098,14 @@ void minimap_dlg_Create(dialog *a1) {
 DECL_FUNC(int (__stdcall*MinimapGameRightclickEventMoveto)(int), MinimapGameRightclickEventMoveto, 0x4a5310);
 void MinimapGameClickEvent(dlgEvent *a1, dialog *a2) {
     int address = 0x4a53c0;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        call address
+    }
+}
+void minimapPreviewMouseUpdate(dialog *a1, struct dlgEvent *a2) {
+    int address = 0x4a5440;
     __asm {
         mov eax, a1
         mov ecx, a2
@@ -14102,7 +14116,7 @@ DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_
 DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
 DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
 DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
-DECL_FUNC(int(*sub_4CB560)(), sub_4CB560, 0x4cb560);
+DECL_FUNC(int (__fastcall*sub_4CB560)(int a1), sub_4CB560, 0x4cb560);
 DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2), sub_4CB5B0, 0x4cb5b0);
 DECL_FUNC(int(*sub_4CB650)(), sub_4CB650, 0x4cb650);
 DECL_FUNC(int (__stdcall*ChkLoader_PTEC)(int, int, int), ChkLoader_PTEC, 0x4cb670);
@@ -20624,16 +20638,13 @@ dialog *& dword_59C1A4 = * ((decltype(&dword_59C1A4)) 0x59c1a4);
 int& dword_59C1A8 = * ((decltype(&dword_59C1A8)) 0x59c1a8);
 void *& dword_59C1AC = * ((decltype(&dword_59C1AC)) 0x59c1ac);
 __int16& word_59C1B0 = * ((decltype(&word_59C1B0)) 0x59c1b0);
-char* byte_59C1B8 = (decltype(byte_59C1B8 + 0)) 0x59c1b8;
-int* dword_59C1BC = (decltype(dword_59C1BC + 0)) 0x59c1bc;
-int* dword_59C1C0 = (decltype(dword_59C1C0 + 0)) 0x59c1c0;
-__int16* word_59C1C4 = (decltype(word_59C1C4 + 0)) 0x59c1c4;
-char* byte_59C1C6 = (decltype(byte_59C1C6 + 0)) 0x59c1c6;
+MinimapSurfaceInfoRelated* stru_59C1B8 = (decltype(stru_59C1B8 + 0)) 0x59c1b8;
 int& dword_59C2B8 = * ((decltype(&dword_59C2B8)) 0x59c2b8);
 char* byte_59C2C0 = (decltype(byte_59C2C0 + 0)) 0x59c2c0;
 char& byte_59C3C0 = * ((decltype(&byte_59C3C0)) 0x59c3c0);
 char& byte_59C4C0 = * ((decltype(&byte_59C4C0)) 0x59c4c0);
 char& byte_59C5C0 = * ((decltype(&byte_59C5C0)) 0x59c5c0);
+int* dword_59C6C0 = (decltype(dword_59C6C0 + 0)) 0x59c6c0;
 int* dword_59CAC0 = (decltype(dword_59CAC0 + 0)) 0x59cac0;
 int* dword_59CAC4 = (decltype(dword_59CAC4 + 0)) 0x59cac4;
 bool& HasMegatileUpdate = * ((decltype(&HasMegatileUpdate)) 0x59cb58);
