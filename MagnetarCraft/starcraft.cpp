@@ -758,6 +758,60 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+void __cdecl setMapSizeConstants_()
+{
+	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
+
+	if (larger_dimension <= 64)
+	{
+		word_59CC68 = 1;
+		word_59CC6C = 16;
+		dword_59C1A0 = minimapSurfaceUpdate_64;
+		dword_59C188 = minimapVisionUpdate_64;
+		LOWORD(dword_59CC64) = 2 * map_size.height;
+		LOWORD(dword_59CC74) = 2 * map_size.width;
+		word_59C184 = 0;
+		word_59C1B0 = 1;
+	}
+	else if (larger_dimension <= 128)
+	{
+		word_59CC68 = 1;
+		word_59CC6C = 32;
+		dword_59C1A0 = minimapSurfaceUpdate_96_128;
+		dword_59C188 = minimapVisionUpdate_96_128;
+		LOWORD(dword_59CC64) = map_size.height;
+		LOWORD(dword_59CC74) = map_size.width;
+		word_59C184 = 0;
+		word_59C1B0 = 0;
+	}
+	else if (larger_dimension <= 256)
+	{
+		word_59CC68 = 2;
+		word_59CC6C = 64;
+		dword_59C1A0 = minimapSurfaceUpdate_192_256;
+		dword_59C188 = minimapVisionUpdate_192_256;
+		LOWORD(dword_59CC64) = map_size.height >> 1;
+		LOWORD(dword_59CC74) = map_size.width >> 1;
+		word_59C184 = 0;
+		word_59C1B0 = 0;
+	}
+
+	dialog* v4 = dword_59CC60;
+	int v5 = 128 - (unsigned __int16)dword_59CC74;
+	dword_59CC60->rct.left += v5 / 2;
+	v4->rct.right -= v5 / 2;
+	int v7 = (128 - dword_59CC64) / 2;
+	v4->rct.top += v7;
+	v4->rct.bottom -= v7;
+	CreateMinimapSurface();
+	stru_512D00.left = dword_59CC60->rct.left;
+	stru_512D00.top = dword_59CC60->rct.top + 315;
+	stru_512D00.right = dword_59CC60->rct.left + (unsigned __int16)dword_59CC74 - 1;
+	stru_512D00.bottom = dword_59CC60->rct.top + (unsigned __int16)dword_59CC64 + 314;
+}
+
+AddressPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
+
 char* TILESET_NAMES[] = {
 	"badlands",
 	"platform",
