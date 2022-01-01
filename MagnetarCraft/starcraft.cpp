@@ -726,24 +726,24 @@ void GameRun_(MenuPosition a1)
 	IsInGameLoop = 0;
 	if (!InReplay)
 	{
-		if (!stru_5967F8.width)
-			stru_5967F8.width = map_size.width;
-		if (!stru_5967F8.height)
-			stru_5967F8.height = map_size.height;
-		if (!stru_5967F8.tileset)
-			stru_5967F8.tileset = CurrentTileSet;
-		if (!stru_5967F8.game_type)
-			stru_5967F8.game_type = (GameType) stru_5967F8.got_file_values.template_id;
-		if (!stru_5967F8.data242)
-			stru_5967F8.data242 = stru_5967F8.got_file_values.unused1;
-		if (!stru_5967F8.data243)
-			stru_5967F8.data243 = stru_5967F8.got_file_values.variation_id;
-		SetReplayData(&stru_5967F8, Players, dword_57F21C);
+		if (!gameData.width)
+			gameData.width = map_size.width;
+		if (!gameData.height)
+			gameData.height = map_size.height;
+		if (!gameData.tileset)
+			gameData.tileset = CurrentTileSet;
+		if (!gameData.game_type)
+			gameData.game_type = (GameType) gameData.got_file_values.template_id;
+		if (!gameData.data242)
+			gameData.data242 = gameData.got_file_values.unused1;
+		if (!gameData.data243)
+			gameData.data243 = gameData.got_file_values.variation_id;
+		SetReplayData(&gameData, Players, factionsColorsOrdering);
 	}
-	if (dword_6D1218)
+	if (loadGameFileHandle)
 	{
-		fclose(dword_6D1218);
-		dword_6D1218 = 0;
+		fclose(loadGameFileHandle);
+		loadGameFileHandle = 0;
 	}
 	if (v1)
 	{
@@ -768,8 +768,8 @@ void __cdecl setMapSizeConstants_()
 		word_59CC6C = 16;
 		dword_59C1A0 = minimapSurfaceUpdate_64;
 		dword_59C188 = minimapVisionUpdate_64;
-		LOWORD(dword_59CC64) = 2 * map_size.height;
-		LOWORD(dword_59CC74) = 2 * map_size.width;
+		minimap_height_related = 2 * map_size.height;
+		minimap_width_related = 2 * map_size.width;
 		word_59C184 = 0;
 		word_59C1B0 = 1;
 	}
@@ -779,8 +779,8 @@ void __cdecl setMapSizeConstants_()
 		word_59CC6C = 32;
 		dword_59C1A0 = minimapSurfaceUpdate_96_128;
 		dword_59C188 = minimapVisionUpdate_96_128;
-		LOWORD(dword_59CC64) = map_size.height;
-		LOWORD(dword_59CC74) = map_size.width;
+		minimap_height_related = map_size.height;
+		minimap_width_related = map_size.width;
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
@@ -790,24 +790,23 @@ void __cdecl setMapSizeConstants_()
 		word_59CC6C = 64;
 		dword_59C1A0 = minimapSurfaceUpdate_192_256;
 		dword_59C188 = minimapVisionUpdate_192_256;
-		LOWORD(dword_59CC64) = map_size.height >> 1;
-		LOWORD(dword_59CC74) = map_size.width >> 1;
+		minimap_height_related = map_size.height >> 1;
+		minimap_width_related = map_size.width >> 1;
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
 
-	dialog* v4 = dword_59CC60;
-	int v5 = 128 - (unsigned __int16)dword_59CC74;
-	dword_59CC60->rct.left += v5 / 2;
-	v4->rct.right -= v5 / 2;
-	int v7 = (128 - dword_59CC64) / 2;
-	v4->rct.top += v7;
-	v4->rct.bottom -= v7;
+	int v5 = 128 - (unsigned __int16)minimap_width_related;
+	minimap_dialog->rct.left += v5 / 2;
+	minimap_dialog->rct.right -= v5 / 2;
+	int v7 = (128 - minimap_height_related) / 2;
+	minimap_dialog->rct.top += v7;
+	minimap_dialog->rct.bottom -= v7;
 	CreateMinimapSurface();
-	stru_512D00.left = dword_59CC60->rct.left;
-	stru_512D00.top = dword_59CC60->rct.top + 315;
-	stru_512D00.right = dword_59CC60->rct.left + (unsigned __int16)dword_59CC74 - 1;
-	stru_512D00.bottom = dword_59CC60->rct.top + (unsigned __int16)dword_59CC64 + 314;
+	stru_512D00.left = minimap_dialog->rct.left;
+	stru_512D00.top = minimap_dialog->rct.top + 315;
+	stru_512D00.right = minimap_dialog->rct.left + (unsigned __int16)minimap_width_related - 1;
+	stru_512D00.bottom = minimap_dialog->rct.top + (unsigned __int16)minimap_height_related + 314;
 }
 
 AddressPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
@@ -959,7 +958,7 @@ void initMapData_()
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	word_5998E0 = (unsigned int)bytes_read >> 5;
+	megatileCount = (unsigned int)bytes_read >> 5;
 	sub_4BCF50();
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
@@ -1160,10 +1159,10 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 		mapHandleDestroy();
 		return 0;
 	}
-	if (hArchive)
+	if (mapArchiveHandle)
 	{
-		SFileCloseArchive(hArchive);
-		hArchive = 0;
+		SFileCloseArchive(mapArchiveHandle);
+		mapArchiveHandle = 0;
 	}
 	return 0;
 }
@@ -1180,7 +1179,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 	if (!a5)
 		CampaignIndex = MD_none;
 	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
-	dword_59BDA8 = 0;
+	playerForce = 0;
 	dword_59BDAC = 0;
 	a4->data0 = 0;
 	a4->data1 = 0;
@@ -1193,8 +1192,8 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 	if (InReplay)
 	{
 		int loader_index = 0;
-		if (!ReadMapChunks(a4, (int)dword_6D0F24, &loader_index, dword_6D0F20)
-			|| !ReadChunkNodes_(chk_loaders[loader_index].i1, dword_6D0F20, chk_loaders[loader_index].ptr1, (int) dword_6D0F24, a4))
+		if (!ReadMapChunks(a4, (int)scenarioChk, &loader_index, scenarioChkSize)
+			|| !ReadChunkNodes_(chk_loaders[loader_index].i1, scenarioChkSize, chk_loaders[loader_index].ptr1, (int) scenarioChk, a4))
 			return 0;
 		v8 = source;
 	}
@@ -1217,7 +1216,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 		{
 			v10_->nRace = Race::RACE_Random;
 			if (v9 < 8u)
-				*((_BYTE *)&dword_59BDA8 + (unsigned __int8)v9) = 1;
+				*((_BYTE *)&playerForce + (unsigned __int8)v9) = 1;
 		}
 		if (v10_ >= LobbyPlayers + 8)
 		{
@@ -1271,7 +1270,7 @@ void sub_4CC990_()
 	else
 	{
 		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &v5, 1, &hArchive))
+		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &v5, 1, &mapArchiveHandle))
 			return;
 	}
 	int v4 = 0;
@@ -1308,7 +1307,7 @@ int CreateCampaignGame_(MapData a1)
 	{
 		memset(&v4, 0, 140u);
 		v4.got_file_values.unused3[4] = 0;
-		SStrCopy(v4.player_name, CurrentPlayer, 24u);
+		SStrCopy(v4.player_name, playerName, 24u);
 		SStrCopy(v4.map_name, CurrentMapName, 32u);
 		v4.game_speed = GameSpeed;
 		v4.data231 = 1;
@@ -1320,7 +1319,7 @@ int CreateCampaignGame_(MapData a1)
 			SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0);
 			if (sub_4DBE50())
 			{
-				dword_596888 = 0;
+				isHost = 0;
 				return CreateGame(&v4) != 0;
 			}
 		}
@@ -1339,12 +1338,12 @@ int LoadCampaignWithCharacter_(int a1)
 	MapData v7; // dx@15
 	CharacterData v8; // [sp+8h] [bp-70h]@1
 
-	byte_57F1E3 = 0;
+	customSingleplayer = 0;
 	dword_51CA1C = 0;
-	if (!LoadCharacterData(&v8, CurrentPlayer))
+	if (!LoadCharacterData(&v8, playerName))
 	{
-		v1 = (const char *)(*dword_6D1220 > 71u ? ((char *)dword_6D1220 + dword_6D1220[72]) : "");
-		if ((_stricmp(CurrentPlayer, v1) || !verifyCharacterFile(&v8, CurrentPlayer)) && !byte_6D5A10)
+		v1 = (const char *)(*networkTable > 71u ? ((char *)networkTable + networkTable[72]) : "");
+		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&v8, playerName)) && !outOfGame)
 			doNetTBLError(0, 0, 0, 88);
 	}
 	v2 = off_5122A0[a1];
@@ -1398,7 +1397,7 @@ int sub_4B5110_(int a1)
 		char *v3;
 
 		if ((v2 = (a1 != 1) + 142, (a1 != 1) != ~142)
-			? (v2 < *dword_6D1220 ? (v3 = (char *)dword_6D1220 + dword_6D1220[v2 + 1]) : (v3 = ""))
+			? (v2 < *networkTable ? (v3 = (char *)networkTable + networkTable[v2 + 1]) : (v3 = ""))
 			: (v3 = 0),
 			sub_4B5B20(v3)) {
 			result = LoadCampaignWithCharacter_(a1) != 0;
@@ -1471,7 +1470,7 @@ int loadMenu_gluExpCmpgn_()
 	int result; // eax@5
 
 	OpheliaEnabled = GLUE_MAIN_MENU;
-	LOBYTE(OpheliaCheat2[0]) = GLUE_MAIN_MENU;
+	LOBYTE(multiPlayerMode) = GLUE_MAIN_MENU;
 	sub_4B5050();
 	v0 = (dialog *)loadFullMenuDLG("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (v0)
@@ -1533,7 +1532,7 @@ int loadMenu_gluCustm_(int is_multiplayer)
 
 	dword_59B844 = is_multiplayer;
 	v1 = 0;
-	if (LOBYTE(OpheliaCheat2[0]))
+	if (LOBYTE(multiPlayerMode))
 		v2 = "rez\\gluCreat.bin";
 	else
 		v2 = "rez\\gluCustm.bin";
@@ -1557,11 +1556,11 @@ int loadMenu_gluCustm_(int is_multiplayer)
 	{
 		if (v5 == 12)
 		{
-			if (LOBYTE(OpheliaCheat2[0]) == v1)
+			if (LOBYTE(multiPlayerMode) == v1)
 			{
-				if (stru_5967F8.got_file_values.victory_conditions != v1
-					|| stru_5967F8.got_file_values.starting_units != v1
-					|| stru_5967F8.got_file_values.tournament_mode != v1
+				if (gameData.got_file_values.victory_conditions != v1
+					|| gameData.got_file_values.starting_units != v1
+					|| gameData.got_file_values.tournament_mode != v1
 					|| InReplay)
 				{
 					gwGameMode = GAME_RUNINIT;
@@ -1595,12 +1594,12 @@ int loadMenu_gluCustm_(int is_multiplayer)
 		}
 	}
 	InReplay = 0;
-	if (dword_6D0F24)
+	if (scenarioChk)
 	{
-		SMemFree(dword_6D0F24, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
-		dword_6D0F24 = 0;
+		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
+		scenarioChk = 0;
 	}
-	if (!LOBYTE(OpheliaCheat2[0]))
+	if (!LOBYTE(multiPlayerMode))
 	{
 		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 		goto LABEL_37;
@@ -1674,18 +1673,18 @@ int SwitchMenu_()
 		glGluesMode = GLUE_SCORE_T_VICTORY;
 		goto LABEL_28;
 	}
-	if (Ophelia && !LOBYTE(OpheliaCheat2[0]))
+	if (Ophelia && !LOBYTE(multiPlayerMode))
 	{
 		Ophelia = 0;
-		if (!CurrentPlayer[0])
+		if (!playerName[0])
 		{
-			if (*dword_6D1220 > 71u)
-				v3 = (char *)dword_6D1220 + dword_6D1220[72];
+			if (*networkTable > 71u)
+				v3 = (char *)networkTable + networkTable[72];
 			else
 				v3 = "";
-			SStrCopy(CurrentPlayer, v3, 25u);
+			SStrCopy(playerName, v3, 25u);
 		}
-		byte_57F1E3 = 0;
+		customSingleplayer = 0;
 		IsExpansion = dword_51C4BC != 0;
 		if (dword_51C4BC && !dword_6D11E4)
 			goto LABEL_38;
@@ -1746,7 +1745,7 @@ LABEL_28:
 			loadMenu_None();
 			break;
 		case GLUE_MAIN_MENU:
-			byte_6D5A10 = 0;
+			outOfGame = 0;
 			loadMenu_gluMain();
 			break;
 		case GLUE_LOGIN:
@@ -2005,7 +2004,7 @@ void localDll_Init_(HINSTANCE a1)
 
 void __cdecl sub_4D9200_()
 {
-	if (!LOBYTE(OpheliaCheat2[0]) && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
+	if (!LOBYTE(multiPlayerMode) && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
 	{
 		for (int i = 0; i < 64; i++)
 		{
@@ -2015,17 +2014,17 @@ void __cdecl sub_4D9200_()
 	}
 	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
 	{
-		SFileOpenArchive(CurrentMapFileName, 0, 0, &hArchive);
+		SFileOpenArchive(CurrentMapFileName, 0, 0, &mapArchiveHandle);
 		HANDLE handle;
-		bool establishingShotExists = SFileOpenFileEx(hArchive, "rez\\est.txt", 0, &handle);
+		bool establishingShotExists = SFileOpenFileEx(mapArchiveHandle, "rez\\est.txt", 0, &handle);
 		if (handle)
 			SFileCloseFile(handle);
 
 		if (establishingShotExists)
 			loadInitCreditsBIN("est");
 
-		if (hArchive)
-			SFileCloseArchive(hArchive);
+		if (mapArchiveHandle)
+			SFileCloseArchive(mapArchiveHandle);
 	}
 }
 

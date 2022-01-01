@@ -106,6 +106,7 @@ enum Anims ;
 enum GameType ;
 enum FlingyID ;
 enum PlayerGroups;
+struct PlayersSelections;
 enum Order ;
 struct LO_Overlays;
 struct CUnitNydus;
@@ -2049,6 +2050,11 @@ enum PlayerGroups
   PG_Max = 0x1B,
 };
 
+struct PlayersSelections
+{
+  CUnit *unit[8][12];
+};
+
 enum Order : __int8
 {
   Die = 0x0,
@@ -3015,7 +3021,7 @@ struct __declspec(align(2)) ChkSectionLoader
 {
   const char name[4];
   bool (__stdcall *func)(SectionData *, int, MapChunks *);
-  int x;
+  int flags;
 };
 
 typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
