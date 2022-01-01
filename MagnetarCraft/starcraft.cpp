@@ -983,8 +983,7 @@ void initMapData_()
 	LONG v5 = SFileGetFileSize(v4, 0);
 	if (v5 == -1)
 	{
-		int v7 = GetLastError();
-		FileFatal(v4, v7);
+		FileFatal(v4, GetLastError());
 	}
 	else
 	{
@@ -1305,8 +1304,7 @@ int CreateCampaignGame_(MapData a1)
 	CampaignIndex = a1;
 	if (ReadMapData_(MapdataFilenames[a1], &a4, 1))
 	{
-		memset(&v4, 0, 140u);
-		v4.got_file_values.unused3[4] = 0;
+		memset(&v4, 0, 141u);
 		SStrCopy(v4.player_name, playerName, 24u);
 		SStrCopy(v4.map_name, CurrentMapName, 32u);
 		v4.game_speed = GameSpeed;
