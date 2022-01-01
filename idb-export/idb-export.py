@@ -68,6 +68,7 @@ class Function:
             signature = signature.replace('this,', 'this_,')
             signature = signature.replace('this@', 'this_@')
             signature = signature.replace('this)', 'this_)')
+            signature = signature.replace(' __noreturn', '')
 
             if self.calling_convention in {'usercall', 'userpurge'}:
                 signature = re.sub(r'@<[^>]*>', '', signature)
