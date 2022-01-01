@@ -580,7 +580,7 @@ class TypedefType(Type):
 
         simple_type_match = self.simple_type_pattern.match(self.definition_without_body)
         if simple_type_match:
-            return {simple_type_match.group('original_type')}
+            return {self.type_qualifier_pattern.sub('', simple_type_match.group('original_type'))}
 
         else:
             raise IdbExportError('Could not get type dependencies for type "%s"' % self.name)
