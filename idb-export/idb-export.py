@@ -479,7 +479,7 @@ def is_type_blacklisted(type_ordinal):
 
 class Type(object):
     body_pattern = re.compile('{.*};')
-    base_type_pattern = re.compile(r's*:\s*\w+\s*;\n')
+    base_type_pattern = re.compile(r's*:\s*(\w+\s*)+;\n')
     type_qualifier_pattern = re.compile(r'\b(const|unsigned|signed|struct|union|class|enum)\b')
 
     keyword_constructor = {}
