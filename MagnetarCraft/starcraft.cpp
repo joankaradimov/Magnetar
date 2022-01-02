@@ -180,33 +180,33 @@ void InitializeFontKey_(void)
 	char buff[260]; // [sp+8h] [bp-104h]@1
 
 	_snprintf(buff, 0x104u, "%s\\%s.gid", "font", "font");
-	v0 = fastFileRead_(&dword_51CE5C, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (v0)
 	{
-		if (dword_51CE5C)
+		if (cdkey_encrypted_len)
 			goto LABEL_5;
 		SMemFree(v0, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
 	}
 	v0 = 0;
 LABEL_5:
-	dword_51CE60 = v0;
+	cdkey_encrypted = v0;
 	_snprintf(buff, 0x104u, "%s\\%s.clh", "font", "font");
-	v1 = fastFileRead_(&dword_51CE64, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!v1)
 	{
 	LABEL_8:
 		v1 = 0;
 		goto LABEL_9;
 	}
-	if (!dword_51CE64)
+	if (!cdkeyowner_encrypted_len)
 	{
 		SMemFree(v1, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
 		goto LABEL_8;
 	}
 LABEL_9:
-	dword_51CE68 = v1;
+	cdkeyowner_encrypted = v1;
 	_snprintf(buff, 0x104u, "%s\\%s.ccd", "font", "font");
-	dword_5124D0 = KeyVerification(buff, "sgubon") == 0;
+	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
 
 int LoadMainModuleStringInfo_()
@@ -263,7 +263,7 @@ int InitializeArchiveHandles_()
 	dword_51CD44 = 20;
 	dword_51CD48 = aInternalVersio;
 	dword_51CD4C = tstrFilename;
-	dword_51CD50 = byte_51CA20;
+	dword_51CD50 = broodat_mpq_path;
 	dword_51CD54 = archivename;
 	LoadMainModuleStringInfo_();
 	if (!GetModuleFileNameA(hInst, Filename, 0x104u))
@@ -301,10 +301,10 @@ int InitializeArchiveHandles_()
 
 	InitializeFontKey_();
 	AppAddExit_(DestroyFontKey);
-	if (!dword_5124D0)
+	if (!is_spawn)
 		InitializeCDArchives_(0, 1);
-	byte_51CA20[0] = 0;
-	if (!dword_5124D0)
+	broodat_mpq_path[0] = 0;
+	if (!is_spawn)
 	{
 		if (!GetModuleFileNameA(hInst, archivename_, 0x104u))
 			*archivename_ = 0;
@@ -317,8 +317,8 @@ int InitializeArchiveHandles_()
 		dword_51CC2C = v5;
 		if (v5)
 		{
-			SStrCopy(byte_51CA20, archivename_, 0x208u);
-			SStrNCat(byte_51CA20, ";", 520);
+			SStrCopy(broodat_mpq_path, archivename_, 0x208u);
+			SStrNCat(broodat_mpq_path, ";", 520);
 		}
 	}
 	v6 = SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile);
@@ -328,7 +328,7 @@ int InitializeArchiveHandles_()
 		v6 = 1;
 	}
 	dword_6D11E4 = v6;
-	return SStrNCat(byte_51CA20, Filename, 520);
+	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
 AddressPatch InitializeArchiveHandles_patch(InitializeArchiveHandles, InitializeArchiveHandles_);
@@ -476,7 +476,7 @@ void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_e
 	SErrSuppressErrors(1);
 	SNetLeaveGame(3);
 	SNetDestroy();
-	if (GetCurrentThreadId() == main_thread_id_maybe)
+	if (GetCurrentThreadId() == main_thread_id)
 	{
 		BWFXN_DDrawDestroy();
 		BWFXN_DSoundDestroy();
@@ -699,7 +699,7 @@ void LoadTitle_()
 				{
 					v7 = 0;
 				}
-				dword_57F0DC = v7;
+				load_screen = v7;
 				InitializeDialog_(v7, TitleDlgProc);
 			}
 			else
@@ -734,10 +734,10 @@ void GameRun_(MenuPosition a1)
 			gameData.tileset = CurrentTileSet;
 		if (!gameData.game_type)
 			gameData.game_type = (GameType) gameData.got_file_values.template_id;
-		if (!gameData.data242)
-			gameData.data242 = gameData.got_file_values.unused1;
-		if (!gameData.data243)
-			gameData.data243 = gameData.got_file_values.variation_id;
+		if (!gameData.game_type_unk)
+			gameData.game_type_unk = gameData.got_file_values.unused1;
+		if (!gameData.game_type_param)
+			gameData.game_type_param = gameData.got_file_values.variation_id;
 		SetReplayData(&gameData, Players, factionsColorsOrdering);
 	}
 	if (loadGameFileHandle)
@@ -766,8 +766,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 16;
-		dword_59C1A0 = minimapSurfaceUpdate_64;
-		dword_59C188 = minimapVisionUpdate_64;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_64;
+		minimapVisionUpdate = minimapVisionUpdate_64;
 		minimap_height_related = 2 * map_size.height;
 		minimap_width_related = 2 * map_size.width;
 		word_59C184 = 0;
@@ -777,8 +777,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 32;
-		dword_59C1A0 = minimapSurfaceUpdate_96_128;
-		dword_59C188 = minimapVisionUpdate_96_128;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_96_128;
+		minimapVisionUpdate = minimapVisionUpdate_96_128;
 		minimap_height_related = map_size.height;
 		minimap_width_related = map_size.width;
 		word_59C184 = 0;
@@ -788,8 +788,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 2;
 		word_59CC6C = 64;
-		dword_59C1A0 = minimapSurfaceUpdate_192_256;
-		dword_59C188 = minimapVisionUpdate_192_256;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_192_256;
+		minimapVisionUpdate = minimapVisionUpdate_192_256;
 		minimap_height_related = map_size.height >> 1;
 		minimap_width_related = map_size.width >> 1;
 		word_59C184 = 0;
@@ -883,7 +883,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 		memcpy(MapTileArray, a1->field1, a1->size);
 		sub_4BCEA0();
 
-		ActiveTile *v7 = &ActiveTileArray[map_size.width * (map_size.height - 2)];
+		MegatileFlags *v7 = &active_tiles[map_size.width * (map_size.height - 2)];
 		for (int i = 0; i <= 2; ++i)
 		{
 			for (int j = 0; j <= 5; ++j)
@@ -894,7 +894,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 			v7 = v7 + map_size.width - 5;
 		}
 
-		ActiveTile *v11 = &ActiveTileArray[map_size.width * (map_size.height - 2)];
+		MegatileFlags*v11 = &active_tiles[map_size.width * (map_size.height - 2)];
 		for (int i = 0; i <= 2; ++i)
 		{
 			for (int j = 0; j <= 5; ++j)
@@ -905,7 +905,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 			v11 = v11 + map_size.width - 5;
 		}
 
-		ActiveTile *v15 = ActiveTileArray + map_size.width * (map_size.height - 1) - 5;
+		MegatileFlags*v15 = active_tiles + map_size.width * (map_size.height - 1) - 5;
 		for (int i = 0; i <= 2; ++i)
 		{
 			for (int j = 0; j <= 5; ++j)
@@ -916,7 +916,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 			v15 = (v15 + map_size.width - 5);
 		}
 
-		ActiveTile *v19 = ActiveTileArray + map_size.width * (map_size.height - 1) - 5;
+		MegatileFlags*v19 = active_tiles + map_size.width * (map_size.height - 1) - 5;
 		for (int i = 0; i <= 2; ++i)
 		{
 			for (int j = 0; j <= 5; ++j)
@@ -929,7 +929,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 
 		SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
 		AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
-		return SAI_PathCreate(ActiveTileArray) != 0;
+		return SAI_PathCreate(active_tiles) != 0;
 	}
 	else
 	{
@@ -949,17 +949,17 @@ void initMapData_()
 	word_6556FC = 0;
 	byte_66FF5C = 0;
 	MapTileArray = (TileID *)SMemAlloc(0x80000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
-	CellMap = (int *)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
+	CellMap = (__int16*)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
 	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
-	ActiveTileArray = (ActiveTile *)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
-	memset(ActiveTileArray, 0, 0x40000u);
+	active_tiles = (MegatileFlags*)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
+	memset(active_tiles, 0, 0x40000u);
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	megatileCount = (unsigned int)bytes_read >> 5;
-	sub_4BCF50();
+	GenerateMegatileDefaultFlags();
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	TileSetMapSize = bytes_read / 52u;
@@ -1298,7 +1298,7 @@ AddressPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 int CreateCampaignGame_(MapData a1)
 {
 	MapChunks a4; // [sp+0h] [bp-D0h]@1
-	struct_game_140 v4; // [sp+20h] [bp-B0h]@2
+	GameData v4; // [sp+20h] [bp-B0h]@2
 	char v5[32]; // [sp+B0h] [bp-20h]@2
 
 	CampaignIndex = a1;
@@ -1308,8 +1308,8 @@ int CreateCampaignGame_(MapData a1)
 		SStrCopy(v4.player_name, playerName, 24u);
 		SStrCopy(v4.map_name, CurrentMapName, 32u);
 		v4.game_speed = GameSpeed;
-		v4.data231 = 1;
-		v4.number_of_open_slots = 1;
+		v4.active_human_players = 1;
+		v4.max_players = 1;
 		GotFileValues* v2 = readTemplate("Use Map Settings(1)", v5, v5);
 		if (v2)
 		{
@@ -1642,9 +1642,9 @@ int SwitchMenu_()
 	void *v2; // ecx@7
 	char *v3; // eax@15
 
-	if (!GetModuleFileNameA(0u, byte_51C4C0, 260u))
-		byte_51C4C0[0] = 0;
-	v0 = strrchr(byte_51C4C0, '\\');
+	if (!GetModuleFileNameA(0u, main_directory, 260u))
+		main_directory[0] = 0;
+	v0 = strrchr(main_directory, '\\');
 	if (v0)
 		*v0 = 0;
 	v1 = 0;
@@ -1683,17 +1683,17 @@ int SwitchMenu_()
 			SStrCopy(playerName, v3, 25u);
 		}
 		customSingleplayer = 0;
-		IsExpansion = dword_51C4BC != 0;
-		if (dword_51C4BC && !dword_6D11E4)
+		IsExpansion = level_cheat_is_bw != 0;
+		if (level_cheat_is_bw && !dword_6D11E4)
 			goto LABEL_38;
-		LOBYTE(v2) = dword_51C4BC != 0;
-		if (!loadCampaignBIN(v2) || !CreateCampaignGame_((MapData)NextCampaign))
+		LOBYTE(v2) = level_cheat_is_bw != 0;
+		if (!loadCampaignBIN(v2) || !CreateCampaignGame_((MapData)level_cheat_mission))
 			goto LABEL_38;
-		if (dword_51C608)
+		if (level_cheat_race)
 		{
-			if (dword_51C608 != 1)
+			if (level_cheat_race != 1)
 			{
-				if (dword_51C608 == 2)
+				if (level_cheat_race == 2)
 				{
 					glGluesMode = GLUE_READY_P;
 					goto LABEL_26;
@@ -1716,10 +1716,10 @@ int SwitchMenu_()
 	}
 LABEL_28:
 	Sleep(1500u);
-	if (dword_57F0DC)
+	if (load_screen)
 	{
-		DestroyDialog(dword_57F0DC);
-		dword_57F0DC = 0;
+		DestroyDialog(load_screen);
+		load_screen = 0;
 	}
 	dword_50E064 = -1;
 	if (!byte_51A0E9)
@@ -1732,9 +1732,9 @@ LABEL_28:
 	}
 	RefreshCursor_0();
 	dword_6D5E38 = (int(__thiscall *)(_DWORD))jmpNoMenu;
-	if (stru_51C000[0].data)
-		SMemFree(stru_51C000[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
-	memset(stru_51C000, 0, sizeof(Bitmap[129]));
+	if (glue_background_palette[0].data)
+		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
+	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
 	while (gwGameMode == GAME_GLUES)
 	{
 		switch (glGluesMode)
@@ -1805,9 +1805,9 @@ LABEL_28:
 			break;
 		}
 	}
-	if (stru_51C000[0].data)
-		SMemFree(stru_51C000[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
-	memset(stru_51C000, 0, sizeof(Bitmap[129]));
+	if (glue_background_palette[0].data)
+		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
+	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
 	stopSounds();
 	stopMusic();
 	dword_6D5E20 = &GameScreenBuffer;
@@ -1860,10 +1860,10 @@ void GameMainLoop_()
 			LoadTitle();
 			LoadInitIscriptBIN();
 			AppAddExit_(CleanupIscriptBINHandle);
-			if (gwGameMode != GAME_GLUES && dword_57F0DC)
+			if (gwGameMode != GAME_GLUES && load_screen)
 			{
-				DestroyDialog(dword_57F0DC);
-				dword_57F0DC = (dialog *)GLUE_MAIN_MENU;
+				DestroyDialog(load_screen);
+				load_screen = (dialog *)GLUE_MAIN_MENU;
 			}
 			while (1)
 			{
@@ -1891,7 +1891,7 @@ void GameMainLoop_()
 						ContinueCampaign(1);
 					continue;
 				case GAME_RESTART:
-					dword_6D0F0C = 1;
+					next_campaign_mission = 1;
 					goto LABEL_23;
 				case GAME_RUNINIT:
 				LABEL_23:
@@ -2061,7 +2061,7 @@ MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED, sizeof(*TILESET_
 
 void main(HINSTANCE starcraft_exe) {
 	hInst = starcraft_exe;
-	main_thread_id_maybe = GetCurrentThreadId();
+	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");
 	localDll_Init_(hInst);
 	VerifySystemMemory();
