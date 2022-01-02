@@ -478,9 +478,55 @@ def is_type_blacklisted(type_ordinal):
         return True
     return False
 
+class Definition(object):
+    simple_type_pattern = re.compile(r'^(const|signed|unsigned|struct|union|class|enum)*\s*(?P<type>\w+(\s|const|\*)*)(?P<name>\w+)?((\[.*\])*|(\s*:\s*\d+))$')
+    function_ptr_type_pattern = re.compile(r'^(const|signed|unsigned|struct|union|class|enum)*\s*(?P<return_type>\w+(\s|const|\*)*)\((\w+\s*)*\*\s*(?P<name>\w+)?\)\((?P<args>.*)\)$')
+
+    def __new__(self, definition):
+        if self.simple_type_pattern.match(definition):
+            self = object.__new__(SimpleDefinition)
+        elif self.function_ptr_type_pattern.match(definition):
+            self = object.__new__(FunctionPointerDefinition)
+        else:
+            raise IdbExportError('Could not build definition for "%s"' % definition)
+
+        self.definition = definition
+        return self
+
+class SimpleDefinition(Definition):
+    @property
+    def name(self):
+        return self.simple_type_pattern.match(self.definition).group('name')
+
+    @property
+    def type(self):
+        return self.simple_type_pattern.match(self.definition).group('type').strip().replace(' *', '*').replace('*const', '*')
+
+    @property
+    def types(self):
+        return {self.type}
+
+class FunctionPointerDefinition(Definition):
+    @property
+    def name(self):
+        return self.function_ptr_type_pattern.match(self.definition).group('name')
+
+    @property
+    def types(self):
+        match = self.function_ptr_type_pattern.match(self.definition)
+
+        types = {match.group('return_type').strip()}
+
+        args = match.group('args')
+        args = args.split(',') if len(args) > 0 else []
+        for arg in args:
+            types |= set(Definition(arg).types)
+
+        return types
+
 class Type(object):
     body_pattern = re.compile('{.*};')
-    base_type_pattern = re.compile(r's*:\s*(\w+\s*)+;\n')
+    base_type_pattern = re.compile(r'\s*:\s*(?P<base_type>(\w+\s*)+)')
     type_qualifier_pattern = re.compile(r'\b(const|unsigned|signed|struct|union|class|enum)\b')
 
     keyword_constructor = {}
@@ -504,13 +550,25 @@ class Type(object):
         if not hasattr(self, '_definition_without_body'):
             local_type_oneline = self.definition.replace('\n', '')
             local_type_no_body = self.body_pattern.sub(';\n', local_type_oneline)
-            self._definition_without_body = self.base_type_pattern.sub(';\n', local_type_no_body)
+            self._definition_without_body = self.base_type_pattern.sub('', local_type_no_body)
         return self._definition_without_body
+
+    @property
+    def base_types(self):
+        oneline_definition = self.definition.replace('\n', '')
+        definition_without_body = self.body_pattern.sub('', oneline_definition)
+        base_type_match = self.base_type_pattern.search(definition_without_body)
+
+        # TODO: handle multiple base types
+        if base_type_match:
+            return [base_type_match.group('base_type').strip()]
+        else:
+            return []
 
     @property
     def name(self):
         if not hasattr(self, '_name'):
-            definition_without_body = self.base_type_pattern.sub('', self.definition_without_body)
+            definition_without_body = self.base_type_pattern.sub('', self.definition_without_body).strip()
             name = definition_without_body.replace(';', '').split()[-1]
             self._name = name
         return self._name
@@ -529,7 +587,7 @@ class EnumType(Type):
 
     @property
     def dependencies(self):
-        return set() # TODO
+        return set(self.base_types)
 
 @keywords('struct', 'union', 'class')
 class CompositionType(Type):
@@ -538,7 +596,9 @@ class CompositionType(Type):
     @property
     def fields(self):
         body_fields = self.fields_pattern.findall(self.definition)
-        return body_fields[0].split(';') if len(body_fields) > 0 else []
+        body_fields = body_fields[0].split(';') if len(body_fields) > 0 else []
+        body_fields = map(str.strip, body_fields)
+        return filter(lambda field: field != '', body_fields)
 
     @classmethod
     def simplify_field(cls, field):
@@ -552,53 +612,34 @@ class CompositionType(Type):
 
     @property
     def dependencies(self):
-        fields = map(self.simplify_field, self.fields)
-        fields = filter(lambda field: '*' not in field, fields)
-        field_types = { field.split(' ')[0] for field in fields if field != '' }
-        return field_types
+        result = set(self.base_types)
+        for field in self.fields:
+            result |= Definition(field).types
+        return result
 
 @keywords('typedef')
 class TypedefType(Type):
-    simple_type_pattern = re.compile(r'^typedef (?P<original_type>.*) \**(?P<type_name>\w+);')
-    function_ptr_type_pattern = re.compile(r'^typedef (?P<return_type>.*)\((\w+\s*)*\*\s*(?P<type_name>\w+)\)\((?P<args>.*)\);')
-
     @property
     def declaration(self):
         return ''
 
     @property
     def dependencies(self):
-        function_ptr_type_match = self.function_ptr_type_pattern.match(self.definition_without_body)
-        if function_ptr_type_match:
-            result = set()
-            result.add(function_ptr_type_match.group('return_type'))
-            for argument in split_args(function_ptr_type_match.group('args')):
-                argument = self.type_qualifier_pattern.sub('', argument)
-                argument = argument.replace('*', '')
-                argument_name = re.split('\s+', argument)[-1]
-                result.add(argument_name)
-            return result
-
-        simple_type_match = self.simple_type_pattern.match(self.definition_without_body)
-        if simple_type_match:
-            return {self.type_qualifier_pattern.sub('', simple_type_match.group('original_type'))}
-
-        else:
-            raise IdbExportError('Could not get type dependencies for type "%s"' % self.name)
+        return self.definition_object.types
 
     @property
     def name(self):
-        if not hasattr(self, '_name'):
-            function_ptr_type_match = self.function_ptr_type_pattern.match(self.definition_without_body)
-            if function_ptr_type_match:
-                self._name = function_ptr_type_match.group('type_name')
-            else:
-                return super(self.__class__, self).name
-        return self._name
+        return self.definition_object.name
+
+    @property
+    def definition_object(self):
+        if not hasattr(self, '_definition_object'):
+            self._definition_object = Definition(self.definition.replace('typedef ', '').strip().rstrip(';'))
+        return self._definition_object
 
 def export_types(declarations, definitions):
     existing_type_names = set()
-    local_types = []
+    local_types = {}
 
     for type_ordinal in range(1, get_ordinal_qty()):
         if is_type_blacklisted(type_ordinal):
@@ -614,7 +655,7 @@ def export_types(declarations, definitions):
         try:
             local_type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE)
             local_type = Type(local_type_definition)
-            local_types.append(local_type)
+            local_types[local_type.name] = local_type
         except:
             continue
 
@@ -633,8 +674,17 @@ def sort_topologically(local_types):
     levels_by_name = {}
     names_by_level = defaultdict(set)
 
-    for local_type in local_types:
-        graph[local_type.name] = local_type.dependencies
+    for local_type in local_types.values():
+        graph[local_type.name] = set()
+        for dependency in local_type.dependencies:
+            dependency_type = dependency.replace('*', '')
+            if dependency_type not in local_types:
+                continue # There is no definition on depend on
+
+            if '*' in dependency and local_types[dependency_type].declaration != '':
+                continue # No need to depend on the definition when a declaration is sufficient
+
+            graph[local_type.name].add(dependency_type)
 
     def walk_depth_first(name):
         if name in levels_by_name:
@@ -653,7 +703,7 @@ def sort_topologically(local_types):
     sorted_local_types = []
     for level in levels:
         for name in level:
-            for local_type in local_types:
+            for local_type in local_types.values():
                 if name == local_type.name:
                     sorted_local_types.append(local_type)
                     break
