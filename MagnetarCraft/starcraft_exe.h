@@ -8503,7 +8503,7 @@ extern __int16& word_59C184;
 extern void (__cdecl *&minimapVisionUpdate)();
 extern __int16& word_59C18C;
 extern __int16& word_59C18E;
-extern void *& dword_59C190;
+extern BYTE *& dword_59C190;
 extern Bitmap& minimap_related_maybe;
 extern __int16& word_59C19C;
 extern void (__cdecl *&minimapSurfaceUpdate)();

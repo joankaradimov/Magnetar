@@ -758,6 +758,39 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+void __cdecl __noreturn minimapSurfaceUpdate_64_()
+{
+	BYTE* v1 = dword_59C190;
+	for (int i = 0; i < map_size.height; i++)
+	{
+		for (int j = 0; j < map_size.width; j++)
+		{
+			int index = i * map_size.width + j;
+			__int16 v5 = CellMap[index * word_59CC68];
+			v1[0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[0][0] & 0xFFFE) + 6][7]];
+			v1[1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[0][1] & 0xFFFE) + 6][7]];
+			v1[minimap_width_related] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[1][0] & 0xFFFE) + 6][7]];
+			v1[minimap_width_related + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[1][1] & 0xFFFE) + 6][7]];
+			v1 += 2;
+		}
+		v1 += 2 * word_59C18C - (unsigned __int16)minimap_width_related;
+	}
+}
+
+void __cdecl __noreturn minimapSurfaceUpdate_()
+{
+	BYTE*  v1 = dword_59C190;
+	for (int i = 0; i < map_size.height / word_59CC68; i++)
+	{
+		for (int j = 0; j < map_size.width / word_59CC68; j++)
+		{
+			int index = i * map_size.width + j;
+			__int16 v4 = CellMap[index * word_59CC68];
+			*v1++ = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v4 & 0x7FFF].wImageRef[0][0] & 0xFFFE) + 6][7]];
+		}
+	}
+}
+
 void __cdecl setMapSizeConstants_()
 {
 	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
@@ -766,7 +799,7 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 16;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_64;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_64_;
 		minimapVisionUpdate = minimapVisionUpdate_64;
 		minimap_height_related = 2 * map_size.height;
 		minimap_width_related = 2 * map_size.width;
@@ -777,7 +810,7 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 32;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_96_128;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_;
 		minimapVisionUpdate = minimapVisionUpdate_96_128;
 		minimap_height_related = map_size.height;
 		minimap_width_related = map_size.width;
@@ -788,7 +821,7 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 2;
 		word_59CC6C = 64;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_192_256;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_;
 		minimapVisionUpdate = minimapVisionUpdate_192_256;
 		minimap_height_related = map_size.height >> 1;
 		minimap_width_related = map_size.width >> 1;
