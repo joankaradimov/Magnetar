@@ -1176,7 +1176,7 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 		_snprintf(buff, 0x104u, "%s\\%s", v9, "staredit\\scenario.chk");
 	else
 		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
-	void* v5 = fastFileRead(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	void* v5 = fastFileRead_(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (v5)
 	{
 		int v11 = 0;
@@ -1310,7 +1310,7 @@ void sub_4CC990_()
 		_snprintf(buff, 0x104u, "%s\\%s", dest, "staredit\\scenario.chk");
 	else
 		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
-	void* v0 = fastFileRead(&v4, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
+	void* v0 = fastFileRead_(&v4, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
 	if (v0)
 	{
 		v5 = 0;
