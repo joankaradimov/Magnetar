@@ -2035,7 +2035,7 @@ void localDll_Init_(HINSTANCE a1)
 
 void __cdecl sub_4D9200_()
 {
-	if (!LOBYTE(multiPlayerMode) && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
+	if (!*multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
 	{
 		for (int i = 0; i < 64; i++)
 		{
