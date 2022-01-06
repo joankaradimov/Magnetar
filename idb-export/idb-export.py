@@ -470,7 +470,7 @@ def is_type_blacklisted(type_ordinal):
     local_type_name = get_numbered_type_name(type_ordinal)
     if local_type_name == None:
         return False # TODO: determine when this happens
-    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128', 'tm'}:
+    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128', 'tm', 'tagPALETTEENTRY'}:
         return True
     if local_type_name.startswith('IDirectDraw'):
         return True
