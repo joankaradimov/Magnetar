@@ -1972,7 +1972,15 @@ DECL_FUNC(int (__thiscall*sub_41D880)(char *logfilename), sub_41D880, 0x41d880);
 DECL_FUNC(int (__fastcall*sub_41D8A0)(unsigned int numentries, unsigned int firstentry), sub_41D8A0, 0x41d8a0);
 DECL_FUNC(int(*BWFXN_DDrawDestroy)(), BWFXN_DDrawDestroy, 0x41d8b0);
 DECL_FUNC(int(*BWFXN_DDrawInitialize)(), BWFXN_DDrawInitialize, 0x41d930);
-DECL_FUNC(int(*sub_41DC20)(), sub_41DC20, 0x41dc20);
+void sub_41DC20(PALETTEENTRY *a1, PALETTEENTRY *a2, int a3) {
+    int address = 0x41dc20;
+    __asm {
+        mov eax, a1
+        mov edx, a2
+        mov ecx, a3
+        call address
+    }
+}
 DECL_FUNC(int(*sub_41DCF0)(), sub_41DCF0, 0x41dcf0);
 DECL_FUNC(int(*sub_41DD10)(), sub_41DD10, 0x41dd10);
 DECL_FUNC(int(*sub_41DD20)(), sub_41DD20, 0x41dd20);
@@ -2001,7 +2009,13 @@ int sub_41E450(int (__thiscall *a1)(int *, _DWORD), int *a2) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*SetCurrentPaletteInfo)(char), SetCurrentPaletteInfo, 0x41e480);
-DECL_FUNC(int(*CyclePalette)(), CyclePalette, 0x41e4b0);
+void CyclePalette(int a1) {
+    int address = 0x41e4b0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 CycleStruct *CyclePaletteAdvanced(int cycle_struct_index) {
     int address = 0x41e4f0;
     CycleStruct * result_;
@@ -2016,18 +2030,7 @@ DECL_FUNC(int (__stdcall*sub_41E550)(char, int, char), sub_41E550, 0x41e550);
 DECL_FUNC(int(*sub_41E590)(), sub_41E590, 0x41e590);
 DECL_FUNC(int(*sub_41E5A0)(), sub_41E5A0, 0x41e5a0);
 DECL_FUNC(int(*setPaletteGamma)(), setPaletteGamma, 0x41e5c0);
-unsigned int DoCycle(CycleStruct *cycle_struct, unsigned int a2, unsigned int a3) {
-    int address = 0x41e7b0;
-    unsigned result_;
-    __asm {
-        mov eax, cycle_struct
-        push dword ptr a3
-        push dword ptr a2
-        call address
-        mov result_, eax
-    }
-    return result_;
-}
+DECL_FUNC(int (__stdcall*DoCycle)(int cycle_struct_index, int), DoCycle, 0x41e7b0);
 DECL_FUNC(int(*updatePaletteEntries)(), updatePaletteEntries, 0x41e870);
 void gluDlgFadePalette(unsigned int a1) {
     int address = 0x41e8b0;
@@ -2036,7 +2039,7 @@ void gluDlgFadePalette(unsigned int a1) {
         call address
     }
 }
-DECL_FUNC(int(*colorCycleInterval)(), colorCycleInterval, 0x41e900);
+DECL_FUNC(void (__cdecl*colorCycleInterval)(), colorCycleInterval, 0x41e900);
 DECL_FUNC(int(*pauseSetPaletteToGreyscale)(), pauseSetPaletteToGreyscale, 0x41e930);
 DECL_FUNC(int (__stdcall*sub_41E9E0)(unsigned int a1), sub_41E9E0, 0x41e9e0);
 DECL_FUNC(int (__stdcall*TitlePaletteUpdate)(unsigned int a1), TitlePaletteUpdate, 0x41ea30);
@@ -13997,13 +14000,13 @@ DECL_FUNC(int(*ToggleLeaderboardList)(), ToggleLeaderboardList, 0x4bec00);
 DECL_FUNC(int (__stdcall*statlb_Dlg_Create)(int), statlb_Dlg_Create, 0x4bec40);
 DECL_FUNC(bool (__fastcall*statlb_Dlg_Interact)(dialog *dlg, dlgEvent *evt), statlb_Dlg_Interact, 0x4becf0);
 DECL_FUNC(int(*load_statlb)(), load_statlb, 0x4bed70);
-int getNameFromPath(char *out_buf, const char *path, size_t s) {
+int getNameFromPath(char *out_buf, const char *path, size_t size_) {
     int address = 0x4beed0;
     int result_;
     __asm {
         mov ebx, out_buf
         mov edi, path
-        push dword ptr s
+        push dword ptr size_
         call address
         mov result_, eax
     }
@@ -21059,7 +21062,7 @@ __int16& word_59C184 = * ((decltype(&word_59C184)) 0x59c184);
 void (__cdecl *&minimapVisionUpdate)() = *((decltype(&minimapVisionUpdate)) 0x59c188);
 __int16& word_59C18C = * ((decltype(&word_59C18C)) 0x59c18c);
 __int16& word_59C18E = * ((decltype(&word_59C18E)) 0x59c18e);
-BYTE *& dword_59C190 = * ((decltype(&dword_59C190)) 0x59c190);
+void *& dword_59C190 = * ((decltype(&dword_59C190)) 0x59c190);
 Bitmap& minimap_related_maybe = * ((decltype(&minimap_related_maybe)) 0x59c194);
 __int16& word_59C19C = * ((decltype(&word_59C19C)) 0x59c19c);
 void (__cdecl *&minimapSurfaceUpdate)() = *((decltype(&minimapSurfaceUpdate)) 0x59c1a0);
