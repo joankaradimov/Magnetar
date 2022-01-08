@@ -718,6 +718,73 @@ void LoadTitle_()
 	}
 }
 
+UnitType GetWorkerType(Race race)
+{
+	switch (race)
+	{
+	case Race::RACE_Zerg:
+		return UnitType::Zerg_Drone;
+	case Race::RACE_Terran:
+		return UnitType::Terran_SCV;
+	case Race::RACE_Protoss:
+		return UnitType::Protoss_Probe;
+	default:
+		return (UnitType)228;
+	}
+}
+
+void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
+{
+	UnitType workerUnitType = GetWorkerType(race);
+
+	CUnit* worker = CreateUnit(workerUnitType, startPositions[player_index].x, startPositions[player_index].y, player_index);
+	if (worker)
+	{
+		updateUnitStatsFinishBuilding(worker);
+		if (sub_49EC30(worker))
+		{
+			updateUnitStrengthAndApplyDefaultOrders(worker);
+		}
+	}
+}
+
+void CreateInitialMeleeUnits_()
+{
+	for (int player_index = 0; player_index < 8; player_index++)
+	{
+		PlayerInfo* player = Players + player_index;
+		if (player->nType == PT_Human || player->nType == PT_Computer)
+		{
+			u8 starting_units = gameData.got_file_values.starting_units;
+			if (!gameData.got_file_values.victory_conditions
+				&& !gameData.got_file_values.starting_units
+				&& !gameData.got_file_values.tournament_mode
+				&& player_index < 8
+				&& playerForce[player_index])
+			{
+				starting_units = 2;
+			}
+			if (starting_units != 1)
+			{
+				if (starting_units != 2)
+				{
+					continue;
+				}
+				CreateInitialMeleeBuildings(player->nRace, player_index);
+				if (player->nRace == Race::RACE_Zerg)
+					CreateInitialOverlord(player_index);
+			}
+
+			CreateInitialMeleeWorker_(player->nRace, player_index);
+			CreateInitialMeleeWorker_(player->nRace, player_index);
+			CreateInitialMeleeWorker_(player->nRace, player_index);
+			CreateInitialMeleeWorker_(player->nRace, player_index);
+		}
+	}
+}
+
+//AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
+
 void GameRun_(MenuPosition a1)
 {
 	IsInGameLoop = 1;
