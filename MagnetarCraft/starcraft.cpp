@@ -1972,7 +1972,7 @@ void GameMainLoop_()
 	HANDLE phFile; // [sp+Ch] [bp-4h]@1
 
 	gwGameMode = GAME_GLUES;
-	PreInitData(); // TODO: use PreInitData_
+	PreInitData_();
 	InitializeInputProcs();
 	CreateMainWindow();
 	audioVideoInit(); // TODO: use audioVideoInit_
@@ -2013,7 +2013,7 @@ void GameMainLoop_()
 				switch (gwGameMode)
 				{
 				case GAME_RUN:
-					GameRun(GLUE_MAIN_MENU); // TODO: use GameRun_
+					GameRun_(GLUE_MAIN_MENU);
 					continue;
 				case GAME_CINEMATIC:
 					PlayMovieWithIntro(dword_5122B8);
