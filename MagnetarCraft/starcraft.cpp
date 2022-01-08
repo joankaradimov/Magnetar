@@ -1136,6 +1136,41 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 
 AddressPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
 
+void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
+{
+	dword_6D0E84 = a2;
+	dword_6D0C74 = a1->isCreepCovered;
+	dword_6D0C70 = a1->pfunc0;
+	dword_6D0F08 = a3;
+	dword_6D0C7C = a1->pfuncC;
+	int v8 = a4;
+	dword_6D0C78 = a1->isTileVisible;
+	dword_6D0C6C = a4;
+	if (location)
+	{
+		SMemFree(location, "Starcraft\\SWAR\\MapComn\\creep.cpp", 419, 0);
+		v8 = dword_6D0C6C;
+	}
+	location = (TileID*)SMemAlloc(2 * dword_6D0F08 * v8, "Starcraft\\SWAR\\MapComn\\creep.cpp", 420, 8);
+	if (CreepEdgeData)
+	{
+		SMemFree(CreepEdgeData, "Starcraft\\SWAR\\MapComn\\creep.cpp", 423, 0);
+	}
+	CreepEdgeData = (u8*)SMemAlloc(dword_6D0F08 * dword_6D0C6C, "Starcraft\\SWAR\\MapComn\\creep.cpp", 424, 8);
+	if (TerrainGraphics)
+	{
+		SMemFree(TerrainGraphics, "Starcraft\\SWAR\\MapComn\\creep.cpp", 427, 0);
+	}
+	TerrainGraphics = readCreepFile((char*)a5);
+	if (!dword_6D6414)
+	{
+		dword_6D6414 = 1;
+		sub_413C50();
+		sub_413C00();
+		AppAddExit_(FreeCreepData);
+	}
+}
+
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
 	int v4 = 0, v5 = 255;
@@ -1323,7 +1358,7 @@ void initMapData_()
 	a1.isCreepCovered = isCreepCovered;
 	a1.isTileVisible = isTileVisible;
 	a1.pfuncC = 0;
-	InitTerrainGraphicsAndCreep(&a1, MapTileArray, map_size.width, map_size.height, filename);
+	InitTerrainGraphicsAndCreep_(&a1, MapTileArray, map_size.width, map_size.height, filename);
 	ZergCreepArray = location;
 	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
 	VX4Data = (vx4entry *)fastFileRead_(&read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
