@@ -1016,7 +1016,7 @@ char* TILESET_NAMES[] = {
 	"Jungle",
 	"Desert",
 	"Ice",
-	"Twlight",
+	"Twilight",
 };
 
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
