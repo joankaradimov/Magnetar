@@ -1217,6 +1217,83 @@ void __cdecl updateHUDInformation_()
 
 AddressPatch updateHUDInformation_patch(updateHUDInformation, updateHUDInformation_);
 
+void loadParallaxStarGfx_(const char* parallaxFile)
+{
+	char parallaxFilePath[MAX_PATH];
+	snprintf(parallaxFilePath, MAX_PATH, "parallax\\%s.spk", parallaxFile);
+
+	parallaxSomethingWidth = 165888;
+	parallaxSomethingHeight = 124928;
+
+	HANDLE hFile;
+	if (!SFileOpenFileEx(0, parallaxFilePath, 0, &hFile))
+	{
+		SysWarn_FileNotFound(parallaxFilePath, SErrGetLastError());
+		throw std::exception("Could not find SPK file");
+	}
+	LONG fileSize = SFileGetFileSize(hFile, 0);
+	if (fileSize == -1)
+	{
+		FileFatal(hFile, GetLastError());
+		return;
+	}
+	if (!fileSize)
+	{
+		fileSize = 24;
+		SysWarn_FileNotFound(parallaxFilePath, 24);
+	}
+	void* spkData = SMemAlloc(fileSize, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	int read;
+	if (SFileReadFile(hFile, spkData, fileSize, &read, 0))
+	{
+		if (read != fileSize)
+		{
+			FileFatal(hFile, 24);
+			return;
+		}
+		SFileCloseFile(hFile);
+		int numberOfLayers = *(unsigned __int16*)spkData;
+		int v8 = 0;
+		spkHandle = spkData;
+		if (numberOfLayers)
+		{
+			u16* v10 = (u16*)spkData;
+			for (int layerIndex = 0; layerIndex < numberOfLayers; ++layerIndex) {
+				++v10;
+				spkLayer[layerIndex] = *v10;
+				v8 += *v10;
+			}
+		}
+		int v12 = (int)spkData + 2 * numberOfLayers + 2;
+		if (v8 > 0)
+		{
+			_DWORD* v13 = (_DWORD*)(v12 + 4);
+			do
+			{
+				*v13 += (int)spkData;
+				v13 += 2;
+				--v8;
+			} while (v8);
+		}
+		dword_658AAC = v12 + 8 * spkLayer[0];
+		dword_658AA8 = v12;
+		dword_658AB0 = dword_658AAC + 8 * spkLayer[1];
+		dword_658AB4 = dword_658AB0 + 8 * spkLayer[2];
+		dword_658AB8 = dword_658AB0 + 8 * spkLayer[2] + 8 * spkLayer[3];
+	}
+	else
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(hFile, 24);
+		}
+		else
+		{
+			FileFatal(hFile, GetLastError());
+		}
+	}
+}
+
 void initMapData_()
 {
 	char filename[260];
@@ -1295,7 +1372,7 @@ void initMapData_()
 				}
 				byte_658AC0 = 0;
 				dword_658AA4 = 0;
-				loadParallaxStarGfx();
+				loadParallaxStarGfx_("star");
 				sub_47D660();
 			}
 			else
