@@ -1874,12 +1874,12 @@ void GameMainLoop_()
 	HANDLE phFile; // [sp+Ch] [bp-4h]@1
 
 	gwGameMode = GAME_GLUES;
-	PreInitData_();
+	PreInitData(); // TODO: use PreInitData_
 	InitializeInputProcs();
 	CreateMainWindow();
-	audioVideoInit_();
+	audioVideoInit(); // TODO: use audioVideoInit_
 	AppAddExit_(SaveCPUThrottleOption);
-	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int *)&phFile))
+	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
 		CpuThrottle = phFile != 0;
 	SetCursorPos(320, 240);
 	Mouse.x = 320;
@@ -1896,7 +1896,7 @@ void GameMainLoop_()
 			if (gwGameMode != GAME_GLUES && load_screen)
 			{
 				DestroyDialog(load_screen);
-				load_screen = (dialog *)GLUE_MAIN_MENU;
+				load_screen = NULL;
 			}
 			while (1)
 			{
@@ -1915,7 +1915,7 @@ void GameMainLoop_()
 				switch (gwGameMode)
 				{
 				case GAME_RUN:
-					GameRun_(GLUE_MAIN_MENU);
+					GameRun(GLUE_MAIN_MENU); // TODO: use GameRun_
 					continue;
 				case GAME_CINEMATIC:
 					PlayMovieWithIntro(dword_5122B8);
@@ -1951,7 +1951,7 @@ void GameMainLoop_()
 				case GAME_GLUES:
 				case GAME_WIN:
 				case GAME_LOSE:
-					SwitchMenu_();
+					SwitchMenu(); // TODO: use SwitchMenu_
 					continue;
 				case GAME_CREDITS:
 					BeginCredits();
@@ -2159,5 +2159,5 @@ void main(HINSTANCE starcraft_exe) {
 	VerifySystemMemory();
 	FastIndexInit();
 	BWSetSecurityInfo();
-	GameMainLoop(); // TODO: use GameMainLoop_
+	GameMainLoop_();
 }
