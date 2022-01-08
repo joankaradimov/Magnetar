@@ -1450,7 +1450,7 @@ LABEL_26:
 	return 1;
 }
 
-AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
+// AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
 void sub_4CC990_()
 {
