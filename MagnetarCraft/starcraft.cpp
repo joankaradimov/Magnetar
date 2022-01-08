@@ -1491,35 +1491,38 @@ void sub_4CC990_()
 
 AddressPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
-int CreateCampaignGame_(MapData a1)
+int CreateCampaignGame_(MapData mapData)
 {
-	MapChunks a4; // [sp+0h] [bp-D0h]@1
-	GameData v4; // [sp+20h] [bp-B0h]@2
-	char v5[32]; // [sp+B0h] [bp-20h]@2
+	MapChunks mapChunks;
+	GameData v4;
+	char v5[32];
 
-	CampaignIndex = a1;
-	if (ReadMapData_(MapdataFilenames[a1], &a4, 1))
-	{
-		memset(&v4, 0, 141u);
-		SStrCopy(v4.player_name, playerName, 24u);
-		SStrCopy(v4.map_name, CurrentMapName, 32u);
-		v4.game_speed = GameSpeed;
-		v4.active_human_players = 1;
-		v4.max_players = 1;
-		GotFileValues* v2 = readTemplate("Use Map Settings(1)", v5, v5);
-		if (v2)
-		{
-			memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values));
-			SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0);
-			if (sub_4DBE50())
-			{
-				isHost = 0;
-				return CreateGame(&v4) != 0;
-			}
-		}
+	CampaignIndex = mapData;
+	int readSuccess = ReadMapData(MapdataFilenames[mapData], &mapChunks, 1);
+	if (!readSuccess) {
+		return 0;
 	}
-	return 0;
+
+	memset(&v4, 0, 140u);
+	v4.got_file_values.unused3[4] = 0;
+	SStrCopy(v4.player_name, playerName, 24u);
+	SStrCopy(v4.map_name, CurrentMapName, 32u);
+	v4.game_speed = GameSpeed;
+	v4.active_human_players = 1;
+	v4.max_players = 1;
+	GotFileValues* v2 = readTemplate("Use Map Settings(1)", v5, v5);
+	if (v2 && (memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values)), SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0), sub_4DBE50()))
+	{
+		isHost = 0;
+		return CreateGame(&v4) != 0;
+	}
+	else
+	{
+		return 0;
+	}
 }
+
+AddressPatch CreateCampaignGame_patch(CreateCampaignGame_, CreateCampaignGame);
 
 int LoadCampaignWithCharacter_(int a1)
 {
