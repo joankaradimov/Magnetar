@@ -9620,7 +9620,17 @@ void sub_4878F0(CThingy *a1) {
     }
 }
 DECL_FUNC(void (__cdecl*initializeThingyArrays)(), initializeThingyArrays, 0x487990);
-DECL_FUNC(int (__stdcall*sub_487A10)(int), sub_487A10, 0x487a10);
+CThingy *sub_487A10(int a1, int a2) {
+    int address = 0x487a10;
+    CThingy * result_;
+    __asm {
+        mov ebx, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__fastcall*sub_487A90)(CUnit *a1, __int16 a2), sub_487A90, 0x487a90);
 DECL_FUNC(int (__stdcall*getPlacementRestrictionsFromSpriteID)(int, int, int), getPlacementRestrictionsFromSpriteID, 0x487b00);
 DECL_FUNC(int (__stdcall*sub_487C70)(int, int, int, int), sub_487C70, 0x487c70);
@@ -11784,7 +11794,17 @@ int sub_49D660(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*CreateInitialOverlord)(unsigned __int8 player_index), CreateInitialOverlord, 0x49d6c0);
-DECL_FUNC(int (__stdcall*sub_49D760)(char), sub_49D760, 0x49d760);
+CUnit *CreateInitialMeleeWorker(Race race, unsigned __int8 player_index) {
+    int address = 0x49d760;
+    CUnit * result_;
+    __asm {
+        mov al, race
+        push dword ptr player_index
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void CreateInitialMeleeBuildings(int race, unsigned __int8 player_index) {
     int address = 0x49d7c0;
     __asm {
@@ -12173,7 +12193,6 @@ int _UnitDestructor(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*Init_AI_UnitData)(), Init_AI_UnitData, 0x4a0960);
 DECL_FUNC(int (__thiscall*UnitDestructor)(CUnit *this_), UnitDestructor, 0x4a0990);
 CUnit *CreateUnit(UnitType unit_type, int position_x, int position_y, int player_id) {
     int address = 0x4a09d0;
@@ -12349,7 +12368,7 @@ DECL_FUNC(int (__stdcall*sub_4A37A0)(int, int), sub_4A37A0, 0x4a37a0);
 DECL_FUNC(int(*sub_4A3870)(), sub_4A3870, 0x4a3870);
 DECL_FUNC(int(*sub_4A39D0)(), sub_4A39D0, 0x4a39d0);
 DECL_FUNC(int (__stdcall*sub_4A39E0)(int), sub_4A39E0, 0x4a39e0);
-DECL_FUNC(int(*sub_4A3A00)(), sub_4A3A00, 0x4a3a00);
+DECL_FUNC(void (__cdecl*sub_4A3A00)(), sub_4A3A00, 0x4a3a00);
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_192_256)(), minimapVisionUpdate_192_256, 0x4a3a40);
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_96_128)(), minimapVisionUpdate_96_128, 0x4a3b30);
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_64)(), minimapVisionUpdate_64, 0x4a3c00);
@@ -12375,7 +12394,21 @@ void killMinimapPreviewDlg(dialog *a1) {
 }
 DECL_FUNC(void(*minimapGameResetMouseInput)(), minimapGameResetMouseInput, 0x4a3eb0);
 DECL_FUNC(void (__fastcall*MinimapImageUpdate)(dialog *dlg, int x, int y, rect *dst), MinimapImageUpdate, 0x4a3ee0);
-DECL_FUNC(int (__stdcall*drawUnitBox)(int, char, char, char), drawUnitBox, 0x4a3fd0);
+int drawUnitBox(char color, unsigned int x, unsigned int y, unsigned __int8 a4, unsigned __int8 a5, char a6) {
+    int address = 0x4a3fd0;
+    int result_;
+    __asm {
+        mov cl, color
+        mov eax, x
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr y
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__cdecl*sub_4A4150)(), sub_4A4150, 0x4a4150);
 DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_192_256)(), minimapSurfaceUpdate_192_256, 0x4a41b0);
 DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_96_128)(), minimapSurfaceUpdate_96_128, 0x4a4240);
@@ -12803,7 +12836,7 @@ GotFileValues *readTemplate(char *template_name, char *got_template_name, char *
 DECL_FUNC(int(*InitUseMapSettingsTemplate)(), InitUseMapSettingsTemplate, 0x4ab840);
 DECL_FUNC(signed int (__stdcall*LoadGameTemplates)(TemplateConstructor template_constructor), LoadGameTemplates, 0x4ab860);
 DECL_FUNC(int(*sub_4AB970)(), sub_4AB970, 0x4ab970);
-DECL_FUNC(int(*sub_4ABA20)(), sub_4ABA20, 0x4aba20);
+DECL_FUNC(void(*sub_4ABA20)(), sub_4ABA20, 0x4aba20);
 DECL_FUNC(int(*chooseTRGTemplate)(), chooseTRGTemplate, 0x4abaf0);
 DECL_FUNC(int (__stdcall*sub_4ABC90)(LPCSTR lpszString, int nFit, int), sub_4ABC90, 0x4abc90);
 DECL_FUNC(int (__stdcall*sub_4ABF50)(HGDIOBJ h), sub_4ABF50, 0x4abf50);
@@ -14232,7 +14265,7 @@ DECL_FUNC(int(*LoadConsoleImage)(), LoadConsoleImage, 0x4c3950);
 DECL_FUNC(int(*load_Stat_txt)(), load_Stat_txt, 0x4c3a20);
 DECL_FUNC(int(*sub_4C3B10)(), sub_4C3B10, 0x4c3b10);
 DECL_FUNC(signed int (__fastcall*updateBuildingLandUnitSelection)(int a1, CUnit *a2), updateBuildingLandUnitSelection, 0x4c3b40);
-DECL_FUNC(int(*setup_HUD)(), setup_HUD, 0x4c3bb0);
+DECL_FUNC(void(*setup_HUD)(), setup_HUD, 0x4c3bb0);
 DECL_FUNC(int(*sub_4C3C80)(), sub_4C3C80, 0x4c3c80);
 DECL_FUNC(void (__stdcall*eventSetPlayerFlag)(s_evt *evt), eventSetPlayerFlag, 0x4c3c90);
 DECL_FUNC(int(*clearPlayerFlags)(), clearPlayerFlags, 0x4c3cd0);
@@ -19291,16 +19324,16 @@ char* aGenericPopupsH = (decltype(aGenericPopupsH + 0)) 0x503cc0;
 char* aBackgroundsBnj = (decltype(aBackgroundsBnj + 0)) 0x503cdc;
 char* aBackgroundsBn_ = (decltype(aBackgroundsBn_ + 0)) 0x503cf8;
 char* aTriggersCtf_tr = (decltype(aTriggersCtf_tr + 0)) 0x503d10;
-char* aTriggersSlau_2 = (decltype(aTriggersSlau_2 + 0)) 0x503d24;
-char* aTriggersSlau_1 = (decltype(aTriggersSlau_1 + 0)) 0x503d40;
-char* aTriggersSlau_0 = (decltype(aTriggersSlau_0 + 0)) 0x503d5c;
-char* aTriggersSlaugh = (decltype(aTriggersSlaugh + 0)) 0x503d78;
-char* aTriggersGreed1 = (decltype(aTriggersGreed1 + 0)) 0x503d94;
-char* aTriggersGreed7 = (decltype(aTriggersGreed7 + 0)) 0x503dac;
-char* aTriggersGreed5 = (decltype(aTriggersGreed5 + 0)) 0x503dc4;
-char* aTriggersGreed2 = (decltype(aTriggersGreed2 + 0)) 0x503ddc;
-char* aTriggersSudden = (decltype(aTriggersSudden + 0)) 0x503df4;
-char* aTriggersMelee_ = (decltype(aTriggersMelee_ + 0)) 0x503e10;
+const char* aTriggersSlau_2 = (decltype(aTriggersSlau_2 + 0)) 0x503d24;
+const char* aTriggersSlau_1 = (decltype(aTriggersSlau_1 + 0)) 0x503d40;
+const char* aTriggersSlau_0 = (decltype(aTriggersSlau_0 + 0)) 0x503d5c;
+const char* aTriggersSlaugh = (decltype(aTriggersSlaugh + 0)) 0x503d78;
+const char* aTriggersGreed1 = (decltype(aTriggersGreed1 + 0)) 0x503d94;
+const char* aTriggersGreed7 = (decltype(aTriggersGreed7 + 0)) 0x503dac;
+const char* aTriggersGreed5 = (decltype(aTriggersGreed5 + 0)) 0x503dc4;
+const char* aTriggersGreed2 = (decltype(aTriggersGreed2 + 0)) 0x503ddc;
+const char* aTriggersSudden = (decltype(aTriggersSudden + 0)) 0x503df4;
+const char* aTriggersMelee_ = (decltype(aTriggersMelee_ + 0)) 0x503e10;
 char* template_name = (decltype(template_name + 0)) 0x503e24;
 char* aUnableToReadGa = (decltype(aUnableToReadGa + 0)) 0x503e38;
 char* aSS_0 = (decltype(aSS_0 + 0)) 0x503e58;
@@ -21058,8 +21091,7 @@ HGDIOBJ& dword_59BD98 = * ((decltype(&dword_59BD98)) 0x59bd98);
 void *& dword_59BD9C = * ((decltype(&dword_59BD9C)) 0x59bd9c);
 int& dword_59BDA0 = * ((decltype(&dword_59BDA0)) 0x59bda0);
 int& dword_59BDA4 = * ((decltype(&dword_59BDA4)) 0x59bda4);
-int& playerForce = * ((decltype(&playerForce)) 0x59bda8);
-int& dword_59BDAC = * ((decltype(&dword_59BDAC)) 0x59bdac);
+byte* playerForce = (decltype(playerForce + 0)) 0x59bda8;
 PlayerInfo* LobbyPlayers = (decltype(LobbyPlayers + 0)) 0x59bdb0;
 int* dword_59BF60 = (decltype(dword_59BF60 + 0)) 0x59bf60;
 int* dword_59BF64 = (decltype(dword_59BF64 + 0)) 0x59bf64;
@@ -21259,8 +21291,8 @@ CThingy *& ThingyList_UsedFirst = * ((decltype(&ThingyList_UsedFirst)) 0x652918)
 CThingy *& dword_65291C = * ((decltype(&dword_65291C)) 0x65291c);
 bool& wantThingyUpdate = * ((decltype(&wantThingyUpdate)) 0x652920);
 CThingy* stru_652928 = (decltype(stru_652928 + 0)) 0x652928;
-int& dword_654868 = * ((decltype(&dword_654868)) 0x654868);
-int& dword_65486C = * ((decltype(&dword_65486C)) 0x65486c);
+CThingy *& dword_654868 = * ((decltype(&dword_654868)) 0x654868);
+CThingy *& dword_65486C = * ((decltype(&dword_65486C)) 0x65486c);
 CThingy *& dword_654870 = * ((decltype(&dword_654870)) 0x654870);
 CThingy *& first_lone_sprite = * ((decltype(&first_lone_sprite)) 0x654874);
 CThingy *& dword_654878 = * ((decltype(&dword_654878)) 0x654878);
