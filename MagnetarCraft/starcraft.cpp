@@ -387,13 +387,17 @@ void PreInitData_()
 	SFileSetIoErrorMode(1, FileIOErrProc_);
 	AppAddExit_(leaveOnQuit);
 	if (signal(2, 1) != -1)
+	{
 		signal(21, 1);
+	}
 	CommandLineCheck();
 	AppAddExit_(CloseAllArchives);
 	InitializeArchiveHandles_();
 	DataVersionCheck("rez\\DataVersion.txt");
 	if (hMpq)
+	{
 		DataVersionCheck("rez\\CDversion.txt");
+	}
 	dword_6CDFEC |= 7u;
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
@@ -410,12 +414,7 @@ void PreInitData_()
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
 	LoadGameData(mapdataDat, "arr\\mapdata.dat");
-	dword_51CC30 = loadTBL_(
-		1577,
-		65,
-		"Starcraft\\SWAR\\lang\\init.cpp",
-		"arr\\mapdata.tbl",
-		MapdataFilenames);
+	dword_51CC30 = loadTBL_(1577, 65, "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames);
 	AppAddExit_(FreeMapdataTable);
 	LoadGameTemplates(Template_Constructor);
 	AppAddExit_(DestroyGameTemplates);
@@ -1768,16 +1767,17 @@ LABEL_37:
 
 int SwitchMenu_()
 {
-	char *v0; // eax@3
 	unsigned int v1; // eax@5
 	void *v2; // ecx@7
 	char *v3; // eax@15
 
 	if (!GetModuleFileNameA(0u, main_directory, 260u))
 		main_directory[0] = 0;
-	v0 = strrchr(main_directory, '\\');
-	if (v0)
-		*v0 = 0;
+
+	char* lastDirectorySeparator = strrchr(main_directory, '\\');
+	if (lastDirectorySeparator)
+		*lastDirectorySeparator = 0;
+
 	v1 = 0;
 	do
 	{
@@ -1966,10 +1966,8 @@ LABEL_28:
 
 void GameMainLoop_()
 {
-	unsigned int v0; // eax@6
-	unsigned int v1; // eax@27
-	bool v2; // zf@32
-	HANDLE phFile; // [sp+Ch] [bp-4h]@1
+	bool v2;
+	HANDLE phFile;
 
 	gwGameMode = GAME_GLUES;
 	PreInitData_();
@@ -2035,13 +2033,12 @@ void GameMainLoop_()
 						if (hMpq && SFileOpenFileEx(hMpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 						{
 							SFileCloseFile(phFile);
-							v1 = 24;
+							PlayMovie(24);
 						}
 						else
 						{
-							v1 = 1;
+							PlayMovie(1);
 						}
-						PlayMovie(v1);
 						if (gwGameMode == GAME_INTRO)
 							gwGameMode = GAME_GLUES;
 					}
@@ -2074,7 +2071,7 @@ void GameMainLoop_()
 		}
 		dword_6CDFEC &= ~0x800u;
 		PlayMovie(0);
-		v0 = 24;
+		PlayMovie(24);
 	}
 	else
 	{
@@ -2082,9 +2079,8 @@ void GameMainLoop_()
 			goto LABEL_8;
 		dword_6CDFEC &= ~0x200u;
 		PlayMovie(0);
-		v0 = 1;
+		PlayMovie(1);
 	}
-	PlayMovie(v0);
 	goto LABEL_8;
 }
 
