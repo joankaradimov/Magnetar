@@ -1136,6 +1136,87 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 
 AddressPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
 
+unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
+{
+	int v4 = 0, v5 = 255;
+
+	while (cycle_struct->speed)
+	{
+		if (cycle_struct_index >= 8 || cycle_struct->palette_entry_low > a3)
+		{
+			if (v4 >= v5)
+			{
+				int v10 = v4 - v5 + 1;
+				PALETTEENTRY* v11 = &GamePalette[v5];
+				if (Gamma != 100)
+				{
+					PALETTEENTRY a1[256];
+					sub_41DC20(v11, &a1[v5], v10);
+					v11 = &a1[v5];
+				}
+				SDrawUpdatePalette(v5, v10, v11, 1);
+			}
+
+			break;
+		}
+
+		if (cycle_struct->active && cycle_struct->wait-- == 1)
+		{
+			cycle_struct->wait = cycle_struct->speed;
+			if (cycle_struct->advanced_cycle_data)
+			{
+				CyclePaletteAdvanced(cycle_struct_index);
+			}
+			CyclePalette(cycle_struct_index);
+			v4 = max(v4, cycle_struct->palette_entry_high);
+			v5 = min(cycle_struct->palette_entry_low, v5);
+		}
+		++cycle_struct;
+		++cycle_struct_index;
+	}
+
+	return cycle_struct_index;
+}
+
+void __cdecl colorCycleInterval_()
+{
+	unsigned int v0 = DoCycle_(cycle_colors, 0, 0x80u);
+	if (v0 < 8)
+		DoCycle_(&cycle_colors[v0], v0, 0x100u);
+}
+
+
+void __cdecl updateHUDInformation_()
+{
+	if (byte_59723C)
+	{
+		updateSelectedUnitData();
+		byte_59723C = 0;
+	}
+	updateSelectedUnitPortrait();
+	updateCurrentButtonset();
+	sub_458120();
+	refreshScreen();
+	if (dword_51BFA8)
+	{
+		if (ColorCycle)
+		{
+			if (!IS_GAME_PAUSED)
+			{
+				DWORD tickCount = GetTickCount();
+				if (tickCount - dword_6D6374 >= 0xA)
+				{
+					dword_6D6374 = tickCount;
+					colorCycleInterval_();
+				}
+			}
+		}
+	}
+	refreshGameTextIfCounterActive();
+}
+
+AddressPatch updateHUDInformation_patch(updateHUDInformation, updateHUDInformation_);
+
 void initMapData_()
 {
 	char filename[260];
