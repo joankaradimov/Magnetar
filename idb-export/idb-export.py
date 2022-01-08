@@ -65,6 +65,10 @@ class Function:
     def signature(self):
         if not hasattr(self, '_signature'):
             signature = self.ref_type
+            # TODO: use 'normalize_arg_name'
+            signature = signature.replace('size,', 'size_,')
+            signature = signature.replace('size@', 'size_@')
+            signature = signature.replace('size)', 'size_)')
             signature = signature.replace('this,', 'this_,')
             signature = signature.replace('this@', 'this_@')
             signature = signature.replace('this)', 'this_)')
@@ -201,6 +205,16 @@ def split_args(arguments_str):
 arg_name_pattern = re.compile(r'(\w+)$')
 func_ptr_arg_name_pattern = re.compile(r'\*\s*(?P<name>\w+)\)\(.*\)$')
 
+def normalize_arg_name(argument_name):
+    if argument_name == 'this':
+        # TODO: fix this mess
+        argument_name = 'this_'
+
+    if argument_name == 'size':
+        argument_name = 'size_'
+
+    return argument_name
+
 def extract_arg_name(argument):
     """
     Accepts a string that looks like:
@@ -220,11 +234,7 @@ def extract_arg_name(argument):
     else:
         result = arg_name_pattern.search(argument).group(1)
 
-    if result == 'this':
-        # TODO: fix this mess
-        result = 'this_'
-
-    return result
+    return normalize_arg_name(result)
 
 def extract_function_return_type(ref_type):
     """
