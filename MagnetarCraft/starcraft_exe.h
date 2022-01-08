@@ -5012,7 +5012,7 @@ extern int (__thiscall*cleanUpFileNameString)(char *);
 extern int (__thiscall*sub_4DCB00)(void *);
 extern int(*sub_4DCBD0)();
 int DestroyChildren(dialog *a1);
-extern void (__thiscall*nextLeaveGameMenu)(DWORD this_);
+extern void (__cdecl*nextLeaveGameMenu)();
 extern int(*loadMenu_None)();
 extern int (__thiscall*DLGSwishOutProc)(dialog *a1);
 extern int(*sub_4DCEA0)();

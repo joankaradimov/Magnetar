@@ -15916,7 +15916,7 @@ int DestroyChildren(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*nextLeaveGameMenu)(DWORD this_), nextLeaveGameMenu, 0x4dcc50);
+DECL_FUNC(void (__cdecl*nextLeaveGameMenu)(), nextLeaveGameMenu, 0x4dcc50);
 DECL_FUNC(int(*loadMenu_None)(), loadMenu_None, 0x4dcc90);
 DECL_FUNC(int (__thiscall*DLGSwishOutProc)(dialog *a1), DLGSwishOutProc, 0x4dcd00);
 DECL_FUNC(int(*sub_4DCEA0)(), sub_4DCEA0, 0x4dcea0);
