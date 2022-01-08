@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="MagnetarCraft.cpp" />
+    <ClCompile Include="starcraft.cpp" />
+    <ClCompile Include="starcraft_exe.cpp" />
+    <ClCompile Include="patching\AddressPatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
+    <ClCompile Include="patching\CallSitePatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
+    <ClCompile Include="patching\NopPatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
+    <ClCompile Include="patching\MemoryPatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
+    <ClCompile Include="patching\BasePatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
+    <ClCompile Include="DDrawWrapper.cpp" />
+    <ClCompile Include="..\MemoryModule\MemoryModule.c">
+      <Filter>MemoryModule</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="starcraft.h" />
+    <ClInclude Include="starcraft_exe.h" />
+    <ClInclude Include="starcraft_exe_types.h" />
+    <ClInclude Include="patching\AddressPatch.h">
+      <Filter>patching</Filter>
+    </ClInclude>
+    <ClInclude Include="patching\CallSitePatch.h">
+      <Filter>patching</Filter>
+    </ClInclude>
+    <ClInclude Include="patching\NopPatch.h">
+      <Filter>patching</Filter>
+    </ClInclude>
+    <ClInclude Include="patching\MemoryPatch.h">
+      <Filter>patching</Filter>
+    </ClInclude>
+    <ClInclude Include="patching\BasePatch.h">
+      <Filter>patching</Filter>
+    </ClInclude>
+    <ClInclude Include="tbl_file.h" />
+    <ClInclude Include="DDrawWrapper.h" />
+    <ClInclude Include="..\MemoryModule\MemoryModule.h">
+      <Filter>MemoryModule</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="patching">
+      <UniqueIdentifier>{d64c2422-c30f-499a-9dc6-4d9a0e5d5620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MemoryModule">
+      <UniqueIdentifier>{8ab23540-73e3-416c-ad48-1f1e65b94b09}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
