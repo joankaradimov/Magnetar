@@ -758,35 +758,131 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+void __cdecl minimapVisionUpdate_64_()
+{
+	for (int i = 0; i < map_size.height; i++)
+	{
+		for (int j = 0; j < map_size.width; j++)
+		{
+			MegatileFlags active_tile = active_tiles[i * map_size.width + j];
+			BOOL v2 = (playerVisions & active_tile) == 0;
+			int v3 = (playerExploredVisions & active_tile) == 0;
+			if (InReplay)
+			{
+				if (replayShowEntireMap)
+				{
+					v2 = 1;
+					v3 = 0;
+				}
+				else
+				{
+					v3 = 0;
+					BYTE1(v3) = ReplayVision;
+					int v4 = ~active_tile;
+					if ((v3 & v4) != 0)
+					{
+						if (((unsigned __int8)v4 & (unsigned __int8)ReplayVision) != 0)
+						{
+							v2 = 1;
+							v3 = 0;
+						}
+						else
+						{
+							v2 = 0;
+							v3 = 1;
+						}
+					}
+					else
+					{
+						v2 = 0;
+						v3 = 0;
+					}
+				}
+			}
+
+			minimap_surface.data[(2 * i + 0) * minimap_surface_width + (2 * j + 0)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 0) * minimap_surface_width + (2 * j + 0)]];
+			minimap_surface.data[(2 * i + 0) * minimap_surface_width + (2 * j + 1)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 0) * minimap_surface_width + (2 * j + 1)]];
+			minimap_surface.data[(2 * i + 1) * minimap_surface_width + (2 * j + 0)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 1) * minimap_surface_width + (2 * j + 0)]];
+			minimap_surface.data[(2 * i + 1) * minimap_surface_width + (2 * j + 1)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 1) * minimap_surface_width + (2 * j + 1)]];
+		}
+	}
+}
+
+void __cdecl minimapVisionUpdate_()
+{
+	for (int i = 0; i < minimap_surface_height; i++)
+	{
+		for (int j = 0; j < minimap_surface_width; j++)
+		{
+			MegatileFlags active_tile = active_tiles[(i * map_size.width + j) * word_59CC68];
+			BOOL v2 = (playerVisions & active_tile) == 0;
+			int v3 = (playerExploredVisions & active_tile) == 0;
+			if (InReplay)
+			{
+				if (replayShowEntireMap)
+				{
+					v2 = 1;
+					v3 = 0;
+				}
+				else
+				{
+					v3 = 0;
+					BYTE1(v3) = ReplayVision;
+					int v4 = ~active_tile;
+					if ((v3 & v4) != 0)
+					{
+						if (((unsigned __int8)v4 & (unsigned __int8)ReplayVision) != 0)
+						{
+							v2 = 1;
+							v3 = 0;
+						}
+						else
+						{
+							v2 = 0;
+							v3 = 1;
+						}
+					}
+					else
+					{
+						v2 = 0;
+						v3 = 0;
+					}
+				}
+			}
+
+			int surface_index = i * minimap_surface_width + j;
+			minimap_surface.data[surface_index] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[surface_index]];
+		}
+	}
+}
+
 void __cdecl __noreturn minimapSurfaceUpdate_64_()
 {
-	BYTE* v1 = dword_59C190;
+	BYTE* v1 = minimap_surface_no_fog.data;
 	for (int i = 0; i < map_size.height; i++)
 	{
 		for (int j = 0; j < map_size.width; j++)
 		{
 			int index = i * map_size.width + j;
-			__int16 v5 = CellMap[index * word_59CC68];
-			v1[0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[0][0] & 0xFFFE) + 6][7]];
-			v1[1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[0][1] & 0xFFFE) + 6][7]];
-			v1[minimap_width_related] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[1][0] & 0xFFFE) + 6][7]];
-			v1[minimap_width_related + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5 & 0x7FFF].wImageRef[1][1] & 0xFFFE) + 6][7]];
-			v1 += 2;
+			__int16 v5 = CellMap[index * word_59CC68] & 0x7FFF;
+			v1[(2 * i + 0) * minimap_surface_width + j * 2 + 0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[0][0] & 0xFFFE) + 6][7]];
+			v1[(2 * i + 0) * minimap_surface_width + j * 2 + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[0][1] & 0xFFFE) + 6][7]];
+			v1[(2 * i + 1) * minimap_surface_width + j * 2 + 0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[1][0] & 0xFFFE) + 6][7]];
+			v1[(2 * i + 1) * minimap_surface_width + j * 2 + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[1][1] & 0xFFFE) + 6][7]];
 		}
-		v1 += 2 * word_59C18C - (unsigned __int16)minimap_width_related;
 	}
 }
 
 void __cdecl __noreturn minimapSurfaceUpdate_()
 {
-	BYTE*  v1 = dword_59C190;
+	BYTE* v1 = minimap_surface_no_fog.data;
 	for (int i = 0; i < map_size.height / word_59CC68; i++)
 	{
 		for (int j = 0; j < map_size.width / word_59CC68; j++)
 		{
 			int index = i * map_size.width + j;
-			__int16 v4 = CellMap[index * word_59CC68];
-			*v1++ = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v4 & 0x7FFF].wImageRef[0][0] & 0xFFFE) + 6][7]];
+			__int16 v4 = CellMap[index * word_59CC68] & 0x7FFF;
+			*v1++ = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v4].wImageRef[0][0] & 0xFFFE) + 6][7]];
 		}
 	}
 }
@@ -800,9 +896,9 @@ void __cdecl setMapSizeConstants_()
 		word_59CC68 = 1;
 		word_59CC6C = 16;
 		minimapSurfaceUpdate = minimapSurfaceUpdate_64_;
-		minimapVisionUpdate = minimapVisionUpdate_64;
-		minimap_height_related = 2 * map_size.height;
-		minimap_width_related = 2 * map_size.width;
+		minimapVisionUpdate = minimapVisionUpdate_64_;
+		minimap_surface_height = 2 * map_size.height;
+		minimap_surface_width = 2 * map_size.width;
 		word_59C184 = 0;
 		word_59C1B0 = 1;
 	}
@@ -811,9 +907,9 @@ void __cdecl setMapSizeConstants_()
 		word_59CC68 = 1;
 		word_59CC6C = 32;
 		minimapSurfaceUpdate = minimapSurfaceUpdate_;
-		minimapVisionUpdate = minimapVisionUpdate_96_128;
-		minimap_height_related = map_size.height;
-		minimap_width_related = map_size.width;
+		minimapVisionUpdate = minimapVisionUpdate_;
+		minimap_surface_height = map_size.height;
+		minimap_surface_width = map_size.width;
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
@@ -822,24 +918,26 @@ void __cdecl setMapSizeConstants_()
 		word_59CC68 = 2;
 		word_59CC6C = 64;
 		minimapSurfaceUpdate = minimapSurfaceUpdate_;
-		minimapVisionUpdate = minimapVisionUpdate_192_256;
-		minimap_height_related = map_size.height >> 1;
-		minimap_width_related = map_size.width >> 1;
+		minimapVisionUpdate = minimapVisionUpdate_;
+		minimap_surface_height = map_size.height >> 1;
+		minimap_surface_width = map_size.width >> 1;
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
 
-	int v5 = 128 - (unsigned __int16)minimap_width_related;
-	minimap_dialog->rct.left += v5 / 2;
-	minimap_dialog->rct.right -= v5 / 2;
-	int v7 = (128 - minimap_height_related) / 2;
+	int v5 = (128 - minimap_surface_width) / 2;
+	int v7 = (128 - minimap_surface_height) / 2;
+	minimap_dialog->rct.left += v5;
+	minimap_dialog->rct.right -= v5;
 	minimap_dialog->rct.top += v7;
 	minimap_dialog->rct.bottom -= v7;
+
 	CreateMinimapSurface();
+
 	stru_512D00.left = minimap_dialog->rct.left;
 	stru_512D00.top = minimap_dialog->rct.top + 315;
-	stru_512D00.right = minimap_dialog->rct.left + (unsigned __int16)minimap_width_related - 1;
-	stru_512D00.bottom = minimap_dialog->rct.top + (unsigned __int16)minimap_height_related + 314;
+	stru_512D00.right = minimap_dialog->rct.left + minimap_surface_width - 1;
+	stru_512D00.bottom = minimap_dialog->rct.top + minimap_surface_height + 314;
 }
 
 AddressPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);

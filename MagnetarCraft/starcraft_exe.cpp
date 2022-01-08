@@ -652,23 +652,23 @@ DECL_FUNC(void *(__stdcall*SMemAlloc)(int amount, char *logfilename, int logline
 DECL_FUNC(BOOL (__stdcall*SMemFree)(void *location, char *logfilename, int logline, char defaultValue), SMemFree, 0x410070);
 DECL_FUNC(BOOL (__stdcall*SRegLoadValue)(char *keyname, char *valuename, BYTE flags, int *value), SRegLoadValue, 0x410076);
 DECL_FUNC(int (__stdcall*SStrNCat)(char *base, char *new_, int max_length), SStrNCat, 0x41007c);
-DECL_FUNC(size_t(*SStrVPrintf)(char *dest, size_t size, const char *format, ...), SStrVPrintf, 0x410082);
+DECL_FUNC(size_t(*SStrVPrintf)(char *dest, size_t size_, const char *format, ...), SStrVPrintf, 0x410082);
 DECL_FUNC(char *(__stdcall*SStrChrR)(const char *string, char c), SStrChrR, 0x410088);
-DECL_FUNC(int (__stdcall*SStrCopy)(char *dest, const char *source, size_t size), SStrCopy, 0x41008e);
-DECL_FUNC(int (__stdcall*SStrCmpI)(const char *string1, const char *string2, size_t size), SStrCmpI, 0x410094);
+DECL_FUNC(int (__stdcall*SStrCopy)(char *dest, const char *source, size_t size_), SStrCopy, 0x41008e);
+DECL_FUNC(int (__stdcall*SStrCmpI)(const char *string1, const char *string2, size_t size_), SStrCmpI, 0x410094);
 DECL_FUNC(char *(__stdcall*SStrChr)(const char *string, char c), SStrChr, 0x41009a);
 DECL_FUNC(int (__stdcall*SStrLen)(const char *string), SStrLen, 0x4100a0);
 DECL_FUNC(int (__stdcall*SNetSendReplayPath)(int a1, int a2, char *replayPath), SNetSendReplayPath, 0x4100a6);
-DECL_FUNC(BOOL (__stdcall*SRegLoadString)(char *keyname, char *valuename, BYTE flags, char *buffer, size_t buffersize), SRegLoadString, 0x4100ac);
+DECL_FUNC(BOOL (__stdcall*SRegLoadString)(char *keyname, char *valuename, BYTE flags, char *buffer, size_t buffersize_), SRegLoadString, 0x4100ac);
 DECL_FUNC(BOOL (__stdcall*SFileOpenArchive)(char *archivename, DWORD dwPriority, DWORD dwFlags, HANDLE handle), SFileOpenArchive, 0x4100b2);
 DECL_FUNC(BOOL (__stdcall*SFileCloseFile)(HANDLE hFile), SFileCloseFile, 0x4100b8);
 DECL_FUNC(BOOL (__stdcall*SFileCloseArchive)(HANDLE hArchive), SFileCloseArchive, 0x4100be);
 DECL_FUNC(BOOL (__stdcall*SFileOpenFileEx)(HANDLE hMpq, const char *szFileName, DWORD dwSearchScope, HANDLE *phFile), SFileOpenFileEx, 0x4100c4);
 DECL_FUNC(void (__stdcall*SFileSetLocale)(LCID lcLocale), SFileSetLocale, 0x4100ca);
 DECL_FUNC(DWORD (__stdcall*SStrHash)(const char *string, DWORD flags, DWORD Seed), SStrHash, 0x4100d0);
-DECL_FUNC(int (__stdcall*SStrCmp)(const char *string1, const char *string2, size_t size), SStrCmp, 0x4100d6);
+DECL_FUNC(int (__stdcall*SStrCmp)(const char *string1, const char *string2, size_t size_), SStrCmp, 0x4100d6);
 DECL_FUNC(BOOL (__stdcall*SNetGetProviderCaps)(char *caps), SNetGetProviderCaps, 0x4100dc);
-DECL_FUNC(BOOL (__stdcall*storm_313)(int maxiterations, int lpSurface, int width, int height, int width2, int pitch, int a7, DWORD rop), storm_313, 0x4100e2);
+DECL_FUNC(BOOL (__stdcall*SBltROP3)(int maxiterations, int lpSurface, int width, int height, int width2, int pitch, int a7, DWORD rop), SBltROP3, 0x4100e2);
 DECL_FUNC(BOOL (__stdcall*SVidPlayContinueSingle)(HANDLE video, int a2, int a3), SVidPlayContinueSingle, 0x4100e8);
 DECL_FUNC(BOOL (__stdcall*storm_458)(HANDLE video), storm_458, 0x4100ee);
 DECL_FUNC(BOOL (__stdcall*storm_454)(char *filename, int arg4, int a3, int a4, int a5, int a6, HANDLE video), storm_454, 0x4100f4);
@@ -687,24 +687,24 @@ DECL_FUNC(BOOL (__stdcall*SFileOpenFile)(char *filename, HANDLE handle), SFileOp
 DECL_FUNC(LONG (__stdcall*SFileGetFileSize)(HANDLE hFile, LPDWORD lpFileSizeHigh), SFileGetFileSize, 0x410142);
 DECL_FUNC(BOOL (__stdcall*SFileReadFile)(HANDLE hFile, void *buffer, DWORD nNumberOfBytesToRead, int *read, LONG lpDistanceToMoveHigh), SFileReadFile, 0x410148);
 DECL_FUNC(HANDLE (__stdcall*SBmpAllocLoadImage)(const char *fileName, int *palette, void **buffer, int *width, int *height, int unused6, int unused7, void *(__stdcall *allocFunction)(DWORD)), SBmpAllocLoadImage, 0x41014e);
-DECL_FUNC(BOOL (__stdcall*SBmpLoadImage)(const char *fileName, int size, void *buffer, int buffersize, int width, int height, int depth), SBmpLoadImage, 0x410154);
+DECL_FUNC(BOOL (__stdcall*SBmpLoadImage)(const char *fileName, int size_, void *buffer, int buffersize_, int width, int height, int depth), SBmpLoadImage, 0x410154);
 DECL_FUNC(int (__stdcall*SNetLeagueLogout)(char *bnetName), SNetLeagueLogout, 0x41015a);
 DECL_FUNC(BOOL (__stdcall*SDrawCaptureScreen)(char *source), SDrawCaptureScreen, 0x410160);
 DECL_FUNC(BOOL (__stdcall*STrans442)(int a1, int a2, int a3, char *a4, size_t a5), STrans442, 0x410166);
-DECL_FUNC(void (__stdcall*SMemCopy)(void *dest, const void *source, size_t size), SMemCopy, 0x41016c);
+DECL_FUNC(void (__stdcall*SMemCopy)(void *dest, const void *source, size_t size_), SMemCopy, 0x41016c);
 DECL_FUNC(void (__stdcall*SErrSetLastError)(DWORD dwErrCode), SErrSetLastError, 0x410172);
 DECL_FUNC(int (__stdcall*SMemZero)(void *location, size_t length), SMemZero, 0x410178);
 DECL_FUNC(BOOL (__stdcall*SNetGetNumPlayers)(int *firstplayerid, int *lastplayerid, int *activeplayers), SNetGetNumPlayers, 0x41017e);
-DECL_FUNC(BOOL (__stdcall*SNetGetPlayerName)(int playerid, char *buffer, size_t buffersize), SNetGetPlayerName, 0x410184);
+DECL_FUNC(BOOL (__stdcall*SNetGetPlayerName)(int playerid, char *buffer, size_t buffersize_), SNetGetPlayerName, 0x410184);
 DECL_FUNC(BOOL (__stdcall*SNetSetGameMode)(DWORD modeFlags, char a2), SNetSetGameMode, 0x41018a);
 DECL_FUNC(BOOL (__stdcall*SNetLeaveGame)(int type), SNetLeaveGame, 0x410190);
-DECL_FUNC(BOOL (__stdcall*SNetReportGameResult)(unsigned int a1, int size, int a3, int a4, int a5), SNetReportGameResult, 0x410196);
+DECL_FUNC(BOOL (__stdcall*SNetReportGameResult)(unsigned int a1, int size_, int a3, int a4, int a5), SNetReportGameResult, 0x410196);
 DECL_FUNC(BOOL (__stdcall*SNet144)(char *buffer), SNet144, 0x41019c);
 DECL_FUNC(BOOL (__stdcall*SNetGetGameInfo)(int type, char *src, unsigned int length, int *byteswritten), SNetGetGameInfo, 0x4101a2);
 DECL_FUNC(BOOL (__stdcall*SNetDropPlayer)(int playerid, DWORD flags), SNetDropPlayer, 0x4101a8);
 DECL_FUNC(BOOL (__stdcall*SFileLoadFileEx)(void *hArchive, char *filename, int a3, int a4, int a5, DWORD searchScope, struct _OVERLAPPED *lpOverlapped), SFileLoadFileEx, 0x4101ae);
 DECL_FUNC(BOOL (__stdcall*SFileUnloadFile)(HANDLE hFile), SFileUnloadFile, 0x4101b4);
-DECL_FUNC(BOOL (__stdcall*SBmpDecodeImage)(int type, signed int *srcbuffer, unsigned int a3, int a4, void *dstbuffer, int size, int a7, int a8, int a9), SBmpDecodeImage, 0x4101ba);
+DECL_FUNC(BOOL (__stdcall*SBmpDecodeImage)(int type, signed int *srcbuffer, unsigned int a3, int a4, void *dstbuffer, int size_, int a7, int a8, int a9), SBmpDecodeImage, 0x4101ba);
 DECL_FUNC(BOOL (__stdcall*SFileDdaInitialize)(HANDLE directsound), SFileDdaInitialize, 0x4101c0);
 DECL_FUNC(BOOL (__stdcall*SVidInitialize)(HANDLE video), SVidInitialize, 0x4101c6);
 DECL_FUNC(BOOL (__stdcall*SFileDdaBeginEx)(HANDLE directsound, DWORD flags, DWORD mask, unsigned __int32 lDistanceToMove, signed __int32 volume, signed int a6, int a7), SFileDdaBeginEx, 0x4101cc);
@@ -715,7 +715,7 @@ DECL_FUNC(BOOL (__stdcall*SFileDdaGetPos)(HANDLE directsound, int a2, int a3), S
 DECL_FUNC(BOOL (__stdcall*SNetSendMessage)(unsigned int playerID, char *data, unsigned int databytes), SNetSendMessage, 0x4101ea);
 DECL_FUNC(BOOL (__stdcall*SNetReceiveMessage)(int *senderplayerid, BYTE **data, int *databytes), SNetReceiveMessage, 0x4101f0);
 DECL_FUNC(BOOL (__stdcall*SErrGetErrorStr)(DWORD dwErrCode, char *buffer, size_t bufferchars), SErrGetErrorStr, 0x4101f6);
-DECL_FUNC(BOOL (__stdcall*SNetReceiveTurns)(int a1, int arraysize, char **arraydata, unsigned int *arraydatabytes, DWORD *arrayplayerstatus), SNetReceiveTurns, 0x4101fc);
+DECL_FUNC(BOOL (__stdcall*SNetReceiveTurns)(int a1, int arraysize_, char **arraydata, unsigned int *arraydatabytes, DWORD *arrayplayerstatus), SNetReceiveTurns, 0x4101fc);
 DECL_FUNC(BOOL (__stdcall*SNetSendTurn)(char *data, unsigned int databytes), SNetSendTurn, 0x410202);
 DECL_FUNC(BOOL (__stdcall*SNetEnumProviders)(int (__stdcall *callback)(DWORD, DWORD, DWORD)), SNetEnumProviders, 0x410208);
 DECL_FUNC(int (__stdcall*SNetGetLeaguePlayerName)(int *curPlayerID, size_t nameSize), SNetGetLeaguePlayerName, 0x41020e);
@@ -729,8 +729,8 @@ DECL_FUNC(int (__stdcall*Ordinal224)(int a1), Ordinal224, 0x410238);
 DECL_FUNC(HWND (__stdcall*SDrawGetFrameWindow)(HWND sdraw_framewindow), SDrawGetFrameWindow, 0x41023e);
 DECL_FUNC(BOOL (__stdcall*SDrawUpdatePalette)(unsigned int firstentry, unsigned int numentries, PALETTEENTRY *pPalEntries, int a4), SDrawUpdatePalette, 0x410244);
 DECL_FUNC(int (__stdcall*SNetSelectGame)(int a1, int a2, int a3, int a4, int a5, int *playerid), SNetSelectGame, 0x41024a);
-DECL_FUNC(BOOL (__stdcall*SRegLoadData)(char *keyname, char *valuename, BYTE flags, LPBYTE lpData, int size, LPDWORD lpcbData), SRegLoadData, 0x410250);
-DECL_FUNC(BOOL (__stdcall*SRegSaveData)(char *keyname, char *valuename, int size, BYTE *lpData, DWORD cbData), SRegSaveData, 0x410256);
+DECL_FUNC(BOOL (__stdcall*SRegLoadData)(char *keyname, char *valuename, BYTE flags, LPBYTE lpData, int size_, LPDWORD lpcbData), SRegLoadData, 0x410250);
+DECL_FUNC(BOOL (__stdcall*SRegSaveData)(char *keyname, char *valuename, int size_, BYTE *lpData, DWORD cbData), SRegSaveData, 0x410256);
 DECL_FUNC(BOOL (__stdcall*SFileGetFileArchive)(HANDLE hFile, HANDLE archive), SFileGetFileArchive, 0x41025c);
 DECL_FUNC(BOOL (__stdcall*SFileGetArchiveName)(HANDLE hArchive, char *name, int length), SFileGetArchiveName, 0x410262);
 DECL_FUNC(BOOL (__stdcall*SFileDdaSetVolume)(HANDLE directsound, signed int bigvolume, signed int volume), SFileDdaSetVolume, 0x410268);
@@ -744,11 +744,11 @@ DECL_FUNC(int (__stdcall*SBigDel)(void *buffer), SBigDel, 0x410292);
 DECL_FUNC(int (__stdcall*SBigToBinaryBuffer)(void *buffer, int length, int a3, int a4), SBigToBinaryBuffer, 0x410298);
 DECL_FUNC(char *(__stdcall*SStrUpper)(char *string), SStrUpper, 0x41029e);
 DECL_FUNC(int (__stdcall*SMemFill)(void *location, size_t length, char fillWith), SMemFill, 0x4102a4);
-DECL_FUNC(int (__stdcall*SMemCmp)(void *location1, void *location2, size_t size), SMemCmp, 0x4102aa);
-DECL_FUNC(int (__stdcall*SBigFromBinary)(void *buffer, const void *str, size_t size), SBigFromBinary, 0x4102b0);
+DECL_FUNC(int (__stdcall*SMemCmp)(void *location1, void *location2, size_t size_), SMemCmp, 0x4102aa);
+DECL_FUNC(int (__stdcall*SBigFromBinary)(void *buffer, const void *str, size_t size_), SBigFromBinary, 0x4102b0);
 DECL_FUNC(int (__stdcall*SBigNew)(void **buffer), SBigNew, 0x4102b6);
 DECL_FUNC(BOOL (__stdcall*SRegDeleteValue)(char *keyname, char *valuename, BYTE flags), SRegDeleteValue, 0x4102bc);
-DECL_FUNC(BOOL (__stdcall*SFileLoadFile)(char *filename, void *buffer, int buffersize, int a4, int a5), SFileLoadFile, 0x4102c2);
+DECL_FUNC(BOOL (__stdcall*SFileLoadFile)(char *filename, void *buffer, int buffersize_, int a4, int a5), SFileLoadFile, 0x4102c2);
 DECL_FUNC(BOOL (__stdcall*SNetGetPlayerCaps)(char playerid, int *caps), SNetGetPlayerCaps, 0x4102c8);
 DECL_FUNC(BOOL (__stdcall*SGdiSelectObject)(HANDLE hObject), SGdiSelectObject, 0x4102ce);
 DECL_FUNC(HGDIOBJ (__stdcall*SDlgDefDialogProc)(HWND hDlg, signed int DlgType, HDC textLabel, HWND hWnd), SDlgDefDialogProc, 0x4102d4);
@@ -1984,6 +1984,15 @@ void sub_41DC20(PALETTEENTRY *a1, PALETTEENTRY *a2, int a3) {
 DECL_FUNC(int(*sub_41DCF0)(), sub_41DCF0, 0x41dcf0);
 DECL_FUNC(int(*sub_41DD10)(), sub_41DD10, 0x41dd10);
 DECL_FUNC(int(*sub_41DD20)(), sub_41DD20, 0x41dd20);
+void sub_41DD50(PALETTEENTRY *a1, unsigned int a2, unsigned int a3) {
+    int address = 0x41dd50;
+    __asm {
+        mov eax, a1
+        mov ebx, a2
+        mov edi, a3
+        call address
+    }
+}
 DECL_FUNC(int(*sub_41DD90)(), sub_41DD90, 0x41dd90);
 DECL_FUNC(int(*sub_41DDD0)(), sub_41DDD0, 0x41ddd0);
 DECL_FUNC(int (__stdcall*refreshRect)(int, int, int, int), refreshRect, 0x41de20);
@@ -2133,8 +2142,8 @@ DECL_FUNC(void(*sub_420830)(), sub_420830, 0x420830);
 DECL_FUNC(int (__stdcall*ErrMessageBox)(LPCSTR lpText, LPCSTR lpCaption), ErrMessageBox, 0x4208e0);
 DECL_FUNC(BOOL (__stdcall*DialogFunc)(HWND, UINT, WPARAM, LPARAM), DialogFunc, 0x420980);
 DECL_FUNC(int(*sub_420A20)(), sub_420A20, 0x420a20);
-DECL_FUNC(int (__fastcall*DSERR_GetString)(size_t size, char *dest), DSERR_GetString, 0x420a30);
-DECL_FUNC(int (__fastcall*DDERR_GetString)(size_t size, char *dest), DDERR_GetString, 0x420b90);
+DECL_FUNC(int (__fastcall*DSERR_GetString)(size_t size_, char *dest), DSERR_GetString, 0x420a30);
+DECL_FUNC(int (__fastcall*DDERR_GetString)(size_t size_, char *dest), DDERR_GetString, 0x420b90);
 char *GetErrorString(LPSTR lpBuffer, DWORD a2, unsigned int a3) {
     int address = 0x421140;
     char * result_;
@@ -4763,7 +4772,7 @@ DECL_FUNC(int (__stdcall*BNBlitToWindow)(int, int a5, int), BNBlitToWindow, 0x44
 DECL_FUNC(int(*sub_449390)(), sub_449390, 0x449390);
 DECL_FUNC(int (__stdcall*ParseSCIcon)(int, int, int), ParseSCIcon, 0x4494a0);
 DECL_FUNC(int (__stdcall*DrawChannelUser_maybe)(LPCSTR lpString, int, char, int), DrawChannelUser_maybe, 0x449650);
-DECL_FUNC(int (__stdcall*BattleGetErrorString)(int, int, int, int, int, char *dest, size_t size), BattleGetErrorString, 0x449810);
+DECL_FUNC(int (__stdcall*BattleGetErrorString)(int, int, int, int, int, char *dest, size_t size_), BattleGetErrorString, 0x449810);
 DECL_FUNC(int (__stdcall*BattleUpdateIcons)(int, int, LPCSTR lpString, int, int, char, int, int, int, COLORREF color), BattleUpdateIcons, 0x449f60);
 DECL_FUNC(int (__stdcall*GetObjectHeight)(HGDIOBJ h), GetObjectHeight, 0x44a000);
 DECL_FUNC(int (__stdcall*addItemProc)(LPARAM, LPARAM lParam, int), addItemProc, 0x44a210);
@@ -5124,7 +5133,7 @@ int sub_453BA0(const void *a1, size_t a2, const void *a3, size_t size_) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sha1)(char *source, int), sha1, 0x453bd0);
-DECL_FUNC(int (__stdcall*parseLocalSBigBuffer)(int, int, int, void *str, size_t size, void *, size_t), parseLocalSBigBuffer, 0x453c60);
+DECL_FUNC(int (__stdcall*parseLocalSBigBuffer)(int, int, int, void *str, size_t size_, void *, size_t), parseLocalSBigBuffer, 0x453c60);
 DECL_FUNC(int (__fastcall*refundTech75percent)(unsigned __int8 a1, int a2, Tech a3), refundTech75percent, 0x453d30);
 int sub_453D90(unsigned __int8 a1, Tech tech) {
     int address = 0x453d90;
@@ -5771,13 +5780,13 @@ DECL_FUNC(int(*sub_45A890)(), sub_45A890, 0x45a890);
 DECL_FUNC(int(*sub_45A8B0)(), sub_45A8B0, 0x45a8b0);
 DECL_FUNC(int(*sub_45A900)(), sub_45A900, 0x45a900);
 DECL_FUNC(int(*sub_45A920)(), sub_45A920, 0x45a920);
-DECL_FUNC(int (__fastcall*sub_45A950)(size_t size, char *dest), sub_45A950, 0x45a950);
+DECL_FUNC(int (__fastcall*sub_45A950)(size_t size_, char *dest), sub_45A950, 0x45a950);
 DECL_FUNC(int (__thiscall*sub_45A970)(char *source), sub_45A970, 0x45a970);
 DECL_FUNC(int(*sub_45A990)(), sub_45A990, 0x45a990);
 DECL_FUNC(int (__stdcall*sub_45A9B0)(char), sub_45A9B0, 0x45a9b0);
 DECL_FUNC(int (__stdcall*sub_45AB20)(char, char), sub_45AB20, 0x45ab20);
 DECL_FUNC(int(*sub_45ABA0)(), sub_45ABA0, 0x45aba0);
-DECL_FUNC(int (__fastcall*sub_45ABE0)(size_t size, char *dest), sub_45ABE0, 0x45abe0);
+DECL_FUNC(int (__fastcall*sub_45ABE0)(size_t size_, char *dest), sub_45ABE0, 0x45abe0);
 DECL_FUNC(signed int (__thiscall*sub_45AC10)(int *this_), sub_45AC10, 0x45ac10);
 DECL_FUNC(int(*GetEmptiestTeam)(), GetEmptiestTeam, 0x45ad20);
 DECL_FUNC(int(*updatePlayerForce)(), updatePlayerForce, 0x45ad90);
@@ -12802,7 +12811,7 @@ DECL_FUNC(int (__thiscall*BNLoadImage)(char *fileName, HWND hWnd, HRGN a2, int a
 DECL_FUNC(int (__stdcall*sub_4AC250)(int, wchar_t *), sub_4AC250, 0x4ac250);
 DECL_FUNC(int(*sub_4AC2E0)(), sub_4AC2E0, 0x4ac2e0);
 DECL_FUNC(int (__stdcall*BattleGetCursor)(int, int, int, int, int), BattleGetCursor, 0x4ac300);
-DECL_FUNC(int (__stdcall*BattleGetResource)(int, int, int size, void *buffer, int buffersize, int width, int height, int depth), BattleGetResource, 0x4ac380);
+DECL_FUNC(int (__stdcall*BattleGetResource)(int, int, int size_, void *buffer, int buffersize_, int width, int height, int depth), BattleGetResource, 0x4ac380);
 DECL_FUNC(int(*sub_4ACD30)(), sub_4ACD30, 0x4acd30);
 DECL_FUNC(int (__stdcall*DrawTextConstructor)(HDC hdc), DrawTextConstructor, 0x4acd50);
 DECL_FUNC(int(*sub_4ACE20)(), sub_4ACE20, 0x4ace20);
@@ -13218,7 +13227,7 @@ BOOL sub_4B30A0(dialog *dlg) {
 }
 DECL_FUNC(int (__stdcall*sub_4B3140)(int), sub_4B3140, 0x4b3140);
 DECL_FUNC(int (__stdcall*sub_4B31C0)(int, int), sub_4B31C0, 0x4b31c0);
-DECL_FUNC(int (__stdcall*endgameData)(char *, size_t, char *buff, size_t size), endgameData, 0x4b3220);
+DECL_FUNC(int (__stdcall*endgameData)(char *, size_t, char *buff, size_t size_), endgameData, 0x4b3220);
 DECL_FUNC(int (__stdcall*sub_4B34D0)(int, int), sub_4B34D0, 0x4b34d0);
 int sub_4B3600(dialog *a1, int a2, int a3, int a4) {
     int address = 0x4b3600;
@@ -13461,7 +13470,7 @@ int sub_4B6C70(dialog *a1) {
 DECL_FUNC(bool (__fastcall*fn_interact)(dialog *dlg, struct dlgEvent *evt), fn_interact, 0x4b6cc0);
 DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4B6D60, 0x4b6d60);
 DECL_FUNC(bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt), sub_4B6E10, 0x4b6e10);
-DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
+DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
 DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
 DECL_FUNC(int(*BWFXN_gluPOKCancel_MBox)(), BWFXN_gluPOKCancel_MBox, 0x4b73b0);
 DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
@@ -13734,7 +13743,7 @@ char doNetTBLError(int a1, const CHAR *error_message, char *file_name, int a4) {
 }
 DECL_FUNC(char (__fastcall*BigPacketError)(int a1, const CHAR *a2, char *a3, int a4, int a5), BigPacketError, 0x4bb430);
 DECL_FUNC(int(*sub_4BB4B0)(), sub_4BB4B0, 0x4bb4b0);
-DECL_FUNC(int (__fastcall*ReceiveTurns)(unsigned int *arraydatabytes, char **arraydata, int a1, int arraysize), ReceiveTurns, 0x4bb530);
+DECL_FUNC(int (__fastcall*ReceiveTurns)(unsigned int *arraydatabytes, char **arraydata, int a1, int arraysize_), ReceiveTurns, 0x4bb530);
 DECL_FUNC(int(*CreateSoundBuffer)(), CreateSoundBuffer, 0x4bb5a0);
 signed int SetCooperativeLevel(HWND a1, AudioVideoInitializationError *a2) {
     int address = 0x4bb600;
@@ -14514,7 +14523,7 @@ DECL_FUNC(int (__stdcall*ChkLoader_MRGN_)(int, int, int), ChkLoader_MRGN_, 0x4cb
 DECL_FUNC(int (__stdcall*ChkLoader_MRGN)(int, int, int), ChkLoader_MRGN, 0x4cb2f0);
 DECL_FUNC(int(*sub_4CB340)(), sub_4CB340, 0x4cb340);
 DECL_FUNC(void (__thiscall*freeCHKStringHandle)(bool exit_code), freeCHKStringHandle, 0x4cb370);
-DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
 DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
 DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
 DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
@@ -14601,7 +14610,7 @@ signed int sub_4CC350(char *a1, char *a2, int a3, size_t a4) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*setUnitEnergyEx)(int, char), setUnitEnergyEx, 0x4cc3b0);
-DECL_FUNC(int (__thiscall*sub_4CC420)(size_t size), sub_4CC420, 0x4cc420);
+DECL_FUNC(int (__thiscall*sub_4CC420)(size_t size_), sub_4CC420, 0x4cc420);
 char CHK_UNIT_ApplyOtherFlags(CUnit *a1, char a2, int a3) {
     int address = 0x4cc470;
     char result_;
@@ -14863,7 +14872,7 @@ int LoadGameInit_Mode(char *a1) {
 DECL_FUNC(int (__thiscall*Saved_Game_Node_Constructor)(char *source, int, int), Saved_Game_Node_Constructor, 0x4cfb00);
 DECL_FUNC(int (__thiscall*sub_4CFCC0)(char *source, int, int), sub_4CFCC0, 0x4cfcc0);
 DECL_FUNC(int (__stdcall*sub_4CFD90)(int), sub_4CFD90, 0x4cfd90);
-DECL_FUNC(int (__stdcall*sub_4CFE40)(int, char *dest, size_t size), sub_4CFE40, 0x4cfe40);
+DECL_FUNC(int (__stdcall*sub_4CFE40)(int, char *dest, size_t size_), sub_4CFE40, 0x4cfe40);
 DECL_FUNC(int(*loadGameFull)(), loadGameFull, 0x4cfef0);
 DECL_FUNC(int(*loseSightSelection)(), loseSightSelection, 0x4d0820);
 DECL_FUNC(int(*getTopLevelExceptionFilter)(), getTopLevelExceptionFilter, 0x4d0910);
@@ -14939,7 +14948,7 @@ DECL_FUNC(int(*sub_4D26D0)(), sub_4D26D0, 0x4d26d0);
 DECL_FUNC(int (__fastcall*sub_4D26E0)(int logline, char *logfilename), sub_4D26E0, 0x4d26e0);
 DECL_FUNC(int (__stdcall*FileIOErrProc)(char *source, int, int), FileIOErrProc, 0x4d2700);
 DECL_FUNC(int(*sub_4D2760)(), sub_4D2760, 0x4d2760);
-DECL_FUNC(int (__fastcall*sub_4D2770)(int height, int width, int size, void *buffer, int buffersize), sub_4D2770, 0x4d2770);
+DECL_FUNC(int (__fastcall*sub_4D2770)(int height, int width, int size_, void *buffer, int buffersize_), sub_4D2770, 0x4d2770);
 DECL_FUNC(void (__fastcall*AllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line), AllocBackgroundImage, 0x4d27a0);
 DECL_FUNC(int (__fastcall*sub_4D2840)(DWORD dwSearchScope, HANDLE hMpq, int), sub_4D2840, 0x4d2840);
 void FileFatal(HANDLE this_, int a2) {
@@ -21060,10 +21069,8 @@ char* top_map_listing_dir = (decltype(top_map_listing_dir + 0)) 0x59bf78;
 char ** MapdataFilenames = (decltype(MapdataFilenames + 0)) 0x59c080;
 __int16& word_59C184 = * ((decltype(&word_59C184)) 0x59c184);
 void (__cdecl *&minimapVisionUpdate)() = *((decltype(&minimapVisionUpdate)) 0x59c188);
-__int16& word_59C18C = * ((decltype(&word_59C18C)) 0x59c18c);
-__int16& word_59C18E = * ((decltype(&word_59C18E)) 0x59c18e);
-void *& dword_59C190 = * ((decltype(&dword_59C190)) 0x59c190);
-Bitmap& minimap_related_maybe = * ((decltype(&minimap_related_maybe)) 0x59c194);
+Bitmap& minimap_surface_no_fog = * ((decltype(&minimap_surface_no_fog)) 0x59c18c);
+Bitmap& minimap_surface = * ((decltype(&minimap_surface)) 0x59c194);
 __int16& word_59C19C = * ((decltype(&word_59C19C)) 0x59c19c);
 void (__cdecl *&minimapSurfaceUpdate)() = *((decltype(&minimapSurfaceUpdate)) 0x59c1a0);
 dialog *& dword_59C1A4 = * ((decltype(&dword_59C1A4)) 0x59c1a4);
@@ -21084,11 +21091,11 @@ dialog *& dword_59CB5C = * ((decltype(&dword_59CB5C)) 0x59cb5c);
 char* byte_59CB60 = (decltype(byte_59CB60 + 0)) 0x59cb60;
 int* dword_59CB64 = (decltype(dword_59CB64 + 0)) 0x59cb64;
 dialog *& minimap_dialog = * ((decltype(&minimap_dialog)) 0x59cc60);
-__int16& minimap_height_related = * ((decltype(&minimap_height_related)) 0x59cc64);
+__int16& minimap_surface_height = * ((decltype(&minimap_surface_height)) 0x59cc64);
 __int16& word_59CC68 = * ((decltype(&word_59CC68)) 0x59cc68);
 __int16& word_59CC6C = * ((decltype(&word_59CC6C)) 0x59cc6c);
 __int16& word_59CC70 = * ((decltype(&word_59CC70)) 0x59cc70);
-__int16& minimap_width_related = * ((decltype(&minimap_width_related)) 0x59cc74);
+__int16& minimap_surface_width = * ((decltype(&minimap_surface_width)) 0x59cc74);
 int& countdownTimeRemaining = * ((decltype(&countdownTimeRemaining)) 0x59cc78);
 int& countdownTimeTickCount = * ((decltype(&countdownTimeTickCount)) 0x59cc7c);
 int& dword_59CC80 = * ((decltype(&dword_59CC80)) 0x59cc80);
