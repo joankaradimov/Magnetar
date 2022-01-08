@@ -1375,8 +1375,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 	if (!a5)
 		CampaignIndex = MD_none;
 	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
-	playerForce = 0;
-	dword_59BDAC = 0;
+	memset(playerForce, 0, 8);
 	a4->data0 = 0;
 	a4->data1 = 0;
 	a4->data2 = 0;
