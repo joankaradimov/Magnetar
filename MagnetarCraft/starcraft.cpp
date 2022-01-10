@@ -1077,65 +1077,43 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 
 AddressPatch ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
 
+#define MAX_MAP_DIMENTION 256
+
+DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
+
 bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 {
-	if ((unsigned)a2 <= 0x10000 && (unsigned int)((char *)a1->field1 + a1->size) <= a1->field0)
-	{
-		memcpy(MapTileArray, a1->field1, a1->size);
-		sub_4BCEA0();
-
-		MegatileFlags *v7 = &active_tiles[map_size.width * (map_size.height - 2)];
-		for (int i = 0; i <= 2; ++i)
-		{
-			for (int j = 0; j <= 5; ++j)
-			{
-				*(_DWORD *)v7 &= ~0x20410000u;
-				++v7;
-			}
-			v7 = v7 + map_size.width - 5;
-		}
-
-		MegatileFlags*v11 = &active_tiles[map_size.width * (map_size.height - 2)];
-		for (int i = 0; i <= 2; ++i)
-		{
-			for (int j = 0; j <= 5; ++j)
-			{
-				*(_DWORD *)v11 |= 0x800000u;
-				++v11;
-			}
-			v11 = v11 + map_size.width - 5;
-		}
-
-		MegatileFlags*v15 = active_tiles + map_size.width * (map_size.height - 1) - 5;
-		for (int i = 0; i <= 2; ++i)
-		{
-			for (int j = 0; j <= 5; ++j)
-			{
-				*(_DWORD *)v15 &= ~0x20410000u;
-				++v15;
-			}
-			v15 = (v15 + map_size.width - 5);
-		}
-
-		MegatileFlags*v19 = active_tiles + map_size.width * (map_size.height - 1) - 5;
-		for (int i = 0; i <= 2; ++i)
-		{
-			for (int j = 0; j <= 5; ++j)
-			{
-				*(_DWORD *)v19 |= 0x800000u;
-				++v19;
-			}
-			v19 = v19 + map_size.width - 5;
-		}
-
-		SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
-		AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
-		return SAI_PathCreate(active_tiles) != 0;
-	}
-	else
+	if (a2 > MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID) || (int)(a1->field1 + a1->size) > a1->field0)
 	{
 		return 0;
 	}
+
+	memcpy(MapTileArray, a1->field1, a1->size);
+	sub_4BCEA0();
+
+	MegatileFlags* lowerLeftCournerTiles = &active_tiles[map_size.width * (map_size.height - 2)];
+	for (int i = 0; i <= 2; ++i)
+	{
+		for (int j = 0; j <= 5; ++j)
+		{
+			lowerLeftCournerTiles[i * map_size.width + j] &= ~(CLIFF_EDGE | REAL_CREEP | MORE_THAN_12_WALKABLE);
+			lowerLeftCournerTiles[i * map_size.width + j] |= ALWAYS_UNBUILDABLE;
+		}
+	}
+
+	MegatileFlags* lowerRightCournerTiles = &active_tiles[map_size.width * (map_size.height - 1) - 5];
+	for (int i = 0; i <= 2; ++i)
+	{
+		for (int j = 0; j <= 5; ++j)
+		{
+			lowerRightCournerTiles[i * map_size.width + j] &= ~(CLIFF_EDGE | REAL_CREEP | MORE_THAN_12_WALKABLE);
+			lowerRightCournerTiles[i * map_size.width + j] |= ALWAYS_UNBUILDABLE;
+		}
+	}
+
+	SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
+	AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
+	return SAI_PathCreate(active_tiles) != 0;
 }
 
 AddressPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
