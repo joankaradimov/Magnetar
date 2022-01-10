@@ -915,7 +915,18 @@ void __cdecl setMapSizeConstants_()
 {
 	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
 
-	if (larger_dimension <= 64)
+	if (larger_dimension <= 32)
+	{
+		word_59CC68 = 1;
+		word_59CC6C = 8;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_<4>;
+		minimapVisionUpdate = minimapVisionUpdate_<4>;
+		minimap_surface_height = 4 * map_size.height;
+		minimap_surface_width = 4 * map_size.width;
+		word_59C184 = 0;
+		word_59C1B0 = 2;
+	}
+	else if (larger_dimension <= 64)
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 16;
