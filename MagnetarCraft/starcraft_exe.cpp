@@ -916,9 +916,8 @@ DECL_FUNC(int(*sub_414520)(), sub_414520, 0x414520);
 DECL_FUNC(int (__stdcall*sub_414560)(int), sub_414560, 0x414560);
 DECL_FUNC(int(*sub_414680)(), sub_414680, 0x414680);
 DECL_FUNC(int (__stdcall*ApplyCreepAtLocationFromUnitType)(int, int, int), ApplyCreepAtLocationFromUnitType, 0x4148f0);
-int InitTerrainGraphicsAndCreep(struct_a1 *a1, TileID *a2, int a3, int a4, void *a5) {
+void InitTerrainGraphicsAndCreep(struct_a1 *a1, TileID *a2, int a3, int a4, void *a5) {
     int address = 0x414a30;
-    int result_;
     __asm {
         mov eax, a1
         mov ecx, a2
@@ -926,9 +925,7 @@ int InitTerrainGraphicsAndCreep(struct_a1 *a1, TileID *a2, int a3, int a4, void 
         push dword ptr a4
         push dword ptr a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_414B50)(), sub_414B50, 0x414b50);
 DECL_FUNC(int(*sub_414B70)(), sub_414B70, 0x414b70);
@@ -12394,9 +12391,8 @@ void killMinimapPreviewDlg(dialog *a1) {
 }
 DECL_FUNC(void(*minimapGameResetMouseInput)(), minimapGameResetMouseInput, 0x4a3eb0);
 DECL_FUNC(void (__fastcall*MinimapImageUpdate)(dialog *dlg, int x, int y, rect *dst), MinimapImageUpdate, 0x4a3ee0);
-int drawUnitBox(char color, unsigned int x, unsigned int y, unsigned __int8 a4, unsigned __int8 a5, char a6) {
+void drawUnitBox(char color, unsigned int x, unsigned int y, unsigned __int8 a4, unsigned __int8 a5, char a6) {
     int address = 0x4a3fd0;
-    int result_;
     __asm {
         mov cl, color
         mov eax, x
@@ -12405,9 +12401,7 @@ int drawUnitBox(char color, unsigned int x, unsigned int y, unsigned __int8 a4, 
         push dword ptr a4
         push dword ptr y
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__cdecl*sub_4A4150)(), sub_4A4150, 0x4a4150);
 DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_192_256)(), minimapSurfaceUpdate_192_256, 0x4a41b0);
@@ -12415,13 +12409,13 @@ DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_96_128)(), minimapSurfaceUpdate_96_
 DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_64)(), minimapSurfaceUpdate_64, 0x4a42b0);
 DECL_FUNC(void (__cdecl*setMapSizeConstants)(), setMapSizeConstants, 0x4a4400);
 DECL_FUNC(void (__fastcall*drawMinimapUnitBox)(int player_id), drawMinimapUnitBox, 0x4a4650);
-DECL_FUNC(int(*drawMinimapUnitBox2)(), drawMinimapUnitBox2, 0x4a47b0);
-DECL_FUNC(int(*drawAllMinimapUnitBoxes)(), drawAllMinimapUnitBoxes, 0x4a48e0);
+DECL_FUNC(void(*drawMinimapUnitBox2)(), drawMinimapUnitBox2, 0x4a47b0);
+DECL_FUNC(void(*drawAllMinimapUnitBoxes)(), drawAllMinimapUnitBoxes, 0x4a48e0);
 DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
 DECL_FUNC(int(*updateMinimapPositioninfoProc)(), updateMinimapPositioninfoProc, 0x4a4a70);
-DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
+DECL_FUNC(void(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(int (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
-DECL_FUNC(int(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
+DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
 int minimapGameUpdate(dialog *a1) {
     int address = 0x4a4ce0;
     int result_;
@@ -12440,13 +12434,13 @@ void minimapGameMouseUpdate(dialog *a1, dialog *a2) {
         call address
     }
 }
-DECL_FUNC(int(*Minimap_TimerRefresh)(), Minimap_TimerRefresh, 0x4a4e00);
+DECL_FUNC(void(*Minimap_TimerRefresh)(), Minimap_TimerRefresh, 0x4a4e00);
 DECL_FUNC(int(*updateMinimapSurfaceInfoProc)(), updateMinimapSurfaceInfoProc, 0x4a4e40);
 DECL_FUNC(int(*updateMinimapSurfaceInfo2Proc)(), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
 DECL_FUNC(int(*playerInfoSomethingTvBProc)(), playerInfoSomethingTvBProc, 0x4a4fe0);
 DECL_FUNC(char (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
-DECL_FUNC(int(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
-DECL_FUNC(int(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
+DECL_FUNC(void(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
+DECL_FUNC(void(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
 void Minimap_InitVisionButton(dialog *a1) {
     int address = 0x4a5230;
     __asm {
@@ -14535,25 +14529,25 @@ DECL_FUNC(int (__thiscall*sub_4CA450)(dialog *a1), sub_4CA450, 0x4ca450);
 DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
 DECL_FUNC(int(*mapHandleDestroy)(), mapHandleDestroy, 0x4ca520);
 DECL_FUNC(int (__stdcall*mapAuthCallback)(char *szFileName, int, int), mapAuthCallback, 0x4ca540);
-DECL_FUNC(int (__stdcall*ChkLoader_PUNI)(int, int, int), ChkLoader_PUNI, 0x4ca600);
-DECL_FUNC(int (__stdcall*ChkLoader_TECS)(int, int, int), ChkLoader_TECS, 0x4ca6d0);
-DECL_FUNC(int (__stdcall*ChkLoader_TECx)(int, int, int), ChkLoader_TECx, 0x4ca7d0);
-DECL_FUNC(int (__stdcall*ChkLoader_UPGS)(int, int, int), ChkLoader_UPGS, 0x4ca8d0);
-DECL_FUNC(int (__stdcall*ChkLoader_UPGx)(int, int, int), ChkLoader_UPGx, 0x4ca9f0);
-DECL_FUNC(int (__stdcall*ChkLoader_UNIS)(int, int, int), ChkLoader_UNIS, 0x4cab10);
-DECL_FUNC(int (__stdcall*ChkLoader_UNIx)(int, int, int), ChkLoader_UNIx, 0x4cacd0);
+DECL_FUNC(bool (__stdcall*ChkLoader_PUNI)(SectionData *, int, MapChunks *), ChkLoader_PUNI, 0x4ca600);
+DECL_FUNC(bool (__stdcall*ChkLoader_TECS)(SectionData *, int, MapChunks *), ChkLoader_TECS, 0x4ca6d0);
+DECL_FUNC(bool (__stdcall*ChkLoader_TECx)(SectionData *, int, MapChunks *), ChkLoader_TECx, 0x4ca7d0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UPGS)(SectionData *, int, MapChunks *), ChkLoader_UPGS, 0x4ca8d0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UPGx)(SectionData *, int, MapChunks *), ChkLoader_UPGx, 0x4ca9f0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UNIS)(SectionData *, int, MapChunks *), ChkLoader_UNIS, 0x4cab10);
+DECL_FUNC(bool (__stdcall*ChkLoader_UNIx)(SectionData *, int, MapChunks *), ChkLoader_UNIx, 0x4cacd0);
 DECL_FUNC(int(*sub_4CAE90)(), sub_4CAE90, 0x4cae90);
 DECL_FUNC(bool (__stdcall*ChkLoader_FORC)(SectionData *, int, MapChunks *), ChkLoader_FORC, 0x4caee0);
 DECL_FUNC(bool (__stdcall*ChkLoader_SPRP)(SectionData *, int, MapChunks *), ChkLoader_SPRP, 0x4caf40);
-DECL_FUNC(int (__stdcall*ChkLoader_MASK)(int, int amount, int), ChkLoader_MASK, 0x4caf90);
+DECL_FUNC(bool (__stdcall*ChkLoader_MASK)(SectionData *, int, MapChunks *), ChkLoader_MASK, 0x4caf90);
 DECL_FUNC(bool (__stdcall*ChkLoader_DIM)(SectionData *, int, MapChunks *), ChkLoader_DIM, 0x4cb040);
 DECL_FUNC(int(*sub_4CB120)(), sub_4CB120, 0x4cb120);
 DECL_FUNC(int (__stdcall*sub_4CB140)(int, int), sub_4CB140, 0x4cb140);
 DECL_FUNC(int(*CHK_UNIT_StartLocationSub)(), CHK_UNIT_StartLocationSub, 0x4cb190);
 DECL_FUNC(int(*sub_4CB220)(), sub_4CB220, 0x4cb220);
-DECL_FUNC(int (__stdcall*ChkLoader_UPRP)(int, int, int), ChkLoader_UPRP, 0x4cb250);
-DECL_FUNC(int (__stdcall*ChkLoader_MRGN_)(int, int, int), ChkLoader_MRGN_, 0x4cb2a0);
-DECL_FUNC(int (__stdcall*ChkLoader_MRGN)(int, int, int), ChkLoader_MRGN, 0x4cb2f0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UPRP)(SectionData *, int, MapChunks *), ChkLoader_UPRP, 0x4cb250);
+DECL_FUNC(bool (__stdcall*ChkLoader_MRGN_)(SectionData *, int, MapChunks *), ChkLoader_MRGN_, 0x4cb2a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_MRGN)(SectionData *, int, MapChunks *), ChkLoader_MRGN, 0x4cb2f0);
 DECL_FUNC(int(*sub_4CB340)(), sub_4CB340, 0x4cb340);
 DECL_FUNC(void (__thiscall*freeCHKStringHandle)(bool exit_code), freeCHKStringHandle, 0x4cb370);
 DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
@@ -14563,15 +14557,15 @@ DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLo
 DECL_FUNC(int (__fastcall*sub_4CB560)(int a1), sub_4CB560, 0x4cb560);
 DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2), sub_4CB5B0, 0x4cb5b0);
 DECL_FUNC(int(*sub_4CB650)(), sub_4CB650, 0x4cb650);
-DECL_FUNC(int (__stdcall*ChkLoader_PTEC)(int, int, int), ChkLoader_PTEC, 0x4cb670);
-DECL_FUNC(int (__stdcall*ChkLoader_PTEx)(int, int, int), ChkLoader_PTEx, 0x4cb7d0);
-DECL_FUNC(int (__stdcall*ChkLoader_UPGR)(int, int, int), ChkLoader_UPGR, 0x4cb940);
-DECL_FUNC(int (__stdcall*ChkLoader_PUPx)(int, int, int), ChkLoader_PUPx, 0x4cbac0);
+DECL_FUNC(bool (__stdcall*ChkLoader_PTEC)(SectionData *, int, MapChunks *), ChkLoader_PTEC, 0x4cb670);
+DECL_FUNC(bool (__stdcall*ChkLoader_PTEx)(SectionData *, int, MapChunks *), ChkLoader_PTEx, 0x4cb7d0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UPGR)(SectionData *, int, MapChunks *), ChkLoader_UPGR, 0x4cb940);
+DECL_FUNC(bool (__stdcall*ChkLoader_PUPx)(SectionData *, int, MapChunks *), ChkLoader_PUPx, 0x4cbac0);
 DECL_FUNC(bool (__stdcall*ChkLoader_VCOD)(SectionData *sectionData, int sectionSize, MapChunks *map_chunks), ChkLoader_VCOD, 0x4cbc40);
 DECL_FUNC(int (__fastcall*CHK_UNIT_Addon)(int a1, CUnit *a2, int a3), CHK_UNIT_Addon, 0x4cbdc0);
 DECL_FUNC(int (__stdcall*sub_4CBE00)(char, int), sub_4CBE00, 0x4cbe00);
 DECL_FUNC(int(*unitNotNeutral)(), unitNotNeutral, 0x4cbe20);
-DECL_FUNC(int (__stdcall*ChkLoader_COLR)(int, int, int), ChkLoader_COLR, 0x4cbe70);
+DECL_FUNC(bool (__stdcall*ChkLoader_COLR)(SectionData *, int, MapChunks *), ChkLoader_COLR, 0x4cbe70);
 DECL_FUNC(int(*sub_4CBED0)(), sub_4CBED0, 0x4cbed0);
 DECL_FUNC(int (__stdcall*CHK_UNIT_Nydus)(int), CHK_UNIT_Nydus, 0x4cbef0);
 DECL_FUNC(int(*sub_4CBF40)(), sub_4CBF40, 0x4cbf40);
@@ -14587,7 +14581,7 @@ char sub_4CBF60(int a1, CUnit *a2, __int16 a3) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*ChkLoader_TRIG)(int, int amount, int), ChkLoader_TRIG, 0x4cbfa0);
+DECL_FUNC(bool (__stdcall*ChkLoader_TRIG)(SectionData *, int, MapChunks *), ChkLoader_TRIG, 0x4cbfa0);
 signed int ReadMapChunks(MapChunks *a1, int a2, int *out_version_loader_index, int a4) {
     int address = 0x4cc060;
     signed result_;
@@ -14767,7 +14761,7 @@ char editUnitFlags(CUnit *a1, int a2) {
 DECL_FUNC(bool (__stdcall*ChkLoader_THG2)(SectionData *, int, MapChunks *), ChkLoader_THG2, 0x4cd600);
 DECL_FUNC(int(*sub_4CD740)(), sub_4CD740, 0x4cd740);
 DECL_FUNC(int(*sub_4CD770)(), sub_4CD770, 0x4cd770);
-DECL_FUNC(int (__stdcall*ChkLoader_UNIT)(int, int amount, int), ChkLoader_UNIT, 0x4cd7a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_UNIT)(SectionData *, int, MapChunks *), ChkLoader_UNIT, 0x4cd7a0);
 DECL_FUNC(int (__thiscall*sub_4CD9C0)(dialog *this_), sub_4CD9C0, 0x4cd9c0);
 DECL_FUNC(int (__stdcall*sub_4CDA00)(int), sub_4CDA00, 0x4cda00);
 DECL_FUNC(int(*sub_4CDA20)(), sub_4CDA20, 0x4cda20);
@@ -19372,7 +19366,7 @@ char* aMusicZerg2_wav = (decltype(aMusicZerg2_wav + 0)) 0x504050;
 char* aMusicZerg1_wav = (decltype(aMusicZerg1_wav + 0)) 0x504060;
 char* aRezMinimap_bin = (decltype(aRezMinimap_bin + 0)) 0x504070;
 char* aGameTblink_pcx = (decltype(aGameTblink_pcx + 0)) 0x504080;
-char* aGameBlink_grp = (decltype(aGameBlink_grp + 0)) 0x504090;
+char* grp_path = (decltype(grp_path + 0)) 0x504090;
 char* aRezMinimapprev = (decltype(aRezMinimapprev + 0)) 0x5040a0;
 char* aStarcraftSw_44 = (decltype(aStarcraftSw_44 + 0)) 0x5040b8;
 char* aRezTimeout_bin = (decltype(aRezTimeout_bin + 0)) 0x5040d8;
@@ -20826,7 +20820,7 @@ int& dword_57F26B = * ((decltype(&dword_57F26B)) 0x57f26b);
 __int16* word_57F270 = (decltype(word_57F270 + 0)) 0x57f270;
 __int16* word_57F272 = (decltype(word_57F272 + 0)) 0x57f272;
 UnitAvail& UnitAvailability = * ((decltype(&UnitAvailability)) 0x57f27c);
-char& byte_57FD2C = * ((decltype(&byte_57FD2C)) 0x57fd2c);
+char* byte_57FD2C = (decltype(byte_57FD2C + 0)) 0x57fd2c;
 int& dword_57FD34 = * ((decltype(&dword_57FD34)) 0x57fd34);
 int& dword_57FD38 = * ((decltype(&dword_57FD38)) 0x57fd38);
 char* CurrentMapFileName = (decltype(CurrentMapFileName + 0)) 0x57fd3c;
@@ -21123,11 +21117,11 @@ dialog *& dword_59CB5C = * ((decltype(&dword_59CB5C)) 0x59cb5c);
 char* byte_59CB60 = (decltype(byte_59CB60 + 0)) 0x59cb60;
 int* dword_59CB64 = (decltype(dword_59CB64 + 0)) 0x59cb64;
 dialog *& minimap_dialog = * ((decltype(&minimap_dialog)) 0x59cc60);
-__int16& minimap_surface_height = * ((decltype(&minimap_surface_height)) 0x59cc64);
+int& minimap_surface_height = * ((decltype(&minimap_surface_height)) 0x59cc64);
 __int16& word_59CC68 = * ((decltype(&word_59CC68)) 0x59cc68);
 __int16& word_59CC6C = * ((decltype(&word_59CC6C)) 0x59cc6c);
 __int16& word_59CC70 = * ((decltype(&word_59CC70)) 0x59cc70);
-__int16& minimap_surface_width = * ((decltype(&minimap_surface_width)) 0x59cc74);
+int& minimap_surface_width = * ((decltype(&minimap_surface_width)) 0x59cc74);
 int& countdownTimeRemaining = * ((decltype(&countdownTimeRemaining)) 0x59cc78);
 int& countdownTimeTickCount = * ((decltype(&countdownTimeTickCount)) 0x59cc7c);
 int& dword_59CC80 = * ((decltype(&dword_59CC80)) 0x59cc80);
