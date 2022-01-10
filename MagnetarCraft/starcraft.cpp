@@ -824,61 +824,25 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
-void __cdecl minimapVisionUpdate_64_()
+template <int PIXEL_STRIDE>
+void minimapVisionUpdateMegatile(int flags, int x, int y)
 {
-	for (int i = 0; i < map_size.height; i++)
+	for (int i = 0; i < PIXEL_STRIDE; i++)
 	{
-		for (int j = 0; j < map_size.width; j++)
+		for (int j = 0; j < PIXEL_STRIDE; j++)
 		{
-			MegatileFlags active_tile = active_tiles[i * map_size.width + j];
-			BOOL v2 = (playerVisions & active_tile) == 0;
-			int v3 = (playerExploredVisions & active_tile) == 0;
-			if (InReplay)
-			{
-				if (replayShowEntireMap)
-				{
-					v2 = 1;
-					v3 = 0;
-				}
-				else
-				{
-					v3 = 0;
-					BYTE1(v3) = ReplayVision;
-					int v4 = ~active_tile;
-					if ((v3 & v4) != 0)
-					{
-						if (((unsigned __int8)v4 & (unsigned __int8)ReplayVision) != 0)
-						{
-							v2 = 1;
-							v3 = 0;
-						}
-						else
-						{
-							v2 = 0;
-							v3 = 1;
-						}
-					}
-					else
-					{
-						v2 = 0;
-						v3 = 0;
-					}
-				}
-			}
-
-			minimap_surface.data[(2 * i + 0) * minimap_surface_width + (2 * j + 0)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 0) * minimap_surface_width + (2 * j + 0)]];
-			minimap_surface.data[(2 * i + 0) * minimap_surface_width + (2 * j + 1)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 0) * minimap_surface_width + (2 * j + 1)]];
-			minimap_surface.data[(2 * i + 1) * minimap_surface_width + (2 * j + 0)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 1) * minimap_surface_width + (2 * j + 0)]];
-			minimap_surface.data[(2 * i + 1) * minimap_surface_width + (2 * j + 1)] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[(2 * i + 1) * minimap_surface_width + (2 * j + 1)]];
+			int index = (PIXEL_STRIDE * x + i) * minimap_surface_width + (PIXEL_STRIDE * y + j);
+			minimap_surface.data[index] = byte_59C2C0[256 * flags + minimap_surface_no_fog.data[index]];
 		}
 	}
 }
 
+template <int PIXEL_STRIDE>
 void __cdecl minimapVisionUpdate_()
 {
-	for (int i = 0; i < minimap_surface_height; i++)
+	for (int i = 0; i < map_size.height / word_59CC68; i++)
 	{
-		for (int j = 0; j < minimap_surface_width; j++)
+		for (int j = 0; j < map_size.width / word_59CC68; j++)
 		{
 			MegatileFlags active_tile = active_tiles[(i * map_size.width + j) * word_59CC68];
 			BOOL v2 = (playerVisions & active_tile) == 0;
@@ -916,39 +880,33 @@ void __cdecl minimapVisionUpdate_()
 				}
 			}
 
-			int surface_index = i * minimap_surface_width + j;
-			minimap_surface.data[surface_index] = byte_59C2C0[256 * (v3 | (2 * v2)) + minimap_surface_no_fog.data[surface_index]];
+			minimapVisionUpdateMegatile<PIXEL_STRIDE>(v3 | (2 * v2), i, j);
 		}
 	}
 }
 
-void __cdecl __noreturn minimapSurfaceUpdate_64_()
+template <int PIXEL_STRIDE>
+void minimapSurfaceUpdateMegatile(int x, int y)
 {
-	BYTE* v1 = minimap_surface_no_fog.data;
-	for (int i = 0; i < map_size.height; i++)
+	int cellMapIndex = (x * map_size.width + y) * word_59CC68;
+	__int16 cell = CellMap[cellMapIndex] & 0x7FFF;
+	for (int i = 0; i < PIXEL_STRIDE; i++)
 	{
-		for (int j = 0; j < map_size.width; j++)
+		for (int j = 0; j < PIXEL_STRIDE; j++)
 		{
-			int index = i * map_size.width + j;
-			__int16 v5 = CellMap[index * word_59CC68] & 0x7FFF;
-			v1[(2 * i + 0) * minimap_surface_width + j * 2 + 0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[0][0] & 0xFFFE) + 6][7]];
-			v1[(2 * i + 0) * minimap_surface_width + j * 2 + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[0][1] & 0xFFFE) + 6][7]];
-			v1[(2 * i + 1) * minimap_surface_width + j * 2 + 0] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[1][0] & 0xFFFE) + 6][7]];
-			v1[(2 * i + 1) * minimap_surface_width + j * 2 + 1] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v5].wImageRef[1][1] & 0xFFFE) + 6][7]];
+			minimap_surface_no_fog.data[(PIXEL_STRIDE * x + i) * minimap_surface_width + PIXEL_STRIDE * y + j] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[cell].wImageRef[i][j] & 0xFFFE) + 6][7]];
 		}
 	}
 }
 
-void __cdecl __noreturn minimapSurfaceUpdate_()
+template <int PIXEL_STRIDE>
+void __cdecl minimapSurfaceUpdate_()
 {
-	BYTE* v1 = minimap_surface_no_fog.data;
 	for (int i = 0; i < map_size.height / word_59CC68; i++)
 	{
 		for (int j = 0; j < map_size.width / word_59CC68; j++)
 		{
-			int index = i * map_size.width + j;
-			__int16 v4 = CellMap[index * word_59CC68] & 0x7FFF;
-			*v1++ = byte_59CB60[VR4Data->cdata[4 * (VX4Data[v4].wImageRef[0][0] & 0xFFFE) + 6][7]];
+			minimapSurfaceUpdateMegatile<PIXEL_STRIDE>(i, j);
 		}
 	}
 }
@@ -961,8 +919,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 16;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_64_;
-		minimapVisionUpdate = minimapVisionUpdate_64_;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_<2>;
+		minimapVisionUpdate = minimapVisionUpdate_<2>;
 		minimap_surface_height = 2 * map_size.height;
 		minimap_surface_width = 2 * map_size.width;
 		word_59C184 = 0;
@@ -972,8 +930,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 1;
 		word_59CC6C = 32;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_;
-		minimapVisionUpdate = minimapVisionUpdate_;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_<1>;
+		minimapVisionUpdate = minimapVisionUpdate_<1>;
 		minimap_surface_height = map_size.height;
 		minimap_surface_width = map_size.width;
 		word_59C184 = 0;
@@ -983,8 +941,8 @@ void __cdecl setMapSizeConstants_()
 	{
 		word_59CC68 = 2;
 		word_59CC6C = 64;
-		minimapSurfaceUpdate = minimapSurfaceUpdate_;
-		minimapVisionUpdate = minimapVisionUpdate_;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_<1>;
+		minimapVisionUpdate = minimapVisionUpdate_<1>;
 		minimap_surface_height = map_size.height >> 1;
 		minimap_surface_width = map_size.width >> 1;
 		word_59C184 = 0;
