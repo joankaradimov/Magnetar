@@ -824,6 +824,41 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+void setup_HUD_()
+{
+	LoadConsoleImage();
+	if (!SBmpLoadImage("game\\thpbar.pcx", 0, byte_66FBE4, 19, 0, 0, 0))
+	{
+		int v0 = SErrGetLastError();
+		SysWarn_FileNotFound("game\\thpbar.pcx", v0);
+	}
+	load_statfluf_BIN();
+	loadPortdata_BINDLG();
+	load_statlb();
+	load_StatRes_BIN();
+	load_Statdata_BIN();
+	load_WireframeGRP();
+	load_statbtn_BIN();
+	load_Statf10_BIN();
+	ctextbox_BIN();
+	load_gluMinimap();
+	if (GameScreenConsole.data != NULL)
+	{
+		SMemFree(GameScreenConsole.data, "Starcraft\\SWAR\\lang\\status.cpp", 217, NULL);
+		GameScreenConsole.data = NULL;
+	}
+	memset(ClientSelectionGroup, 0, sizeof(ClientSelectionGroup));
+	ClientSelectionCount = NULL;
+	ActivePortraitUnit = NULL;
+	ctrl_under_mouse = NULL;
+	ctrl_under_mouse_val = NULL;
+	CanUpdateCurrentButtonSet = 1;
+	CanUpdateSelectedUnitPortrait = 1;
+	CanUpdateStatDataDialog = 1;
+}
+
+AddressPatch setup_HUD_patch(setup_HUD, setup_HUD_);
+
 template <int PIXEL_STRIDE>
 void minimapVisionUpdateMegatile(int flags, int x, int y)
 {
