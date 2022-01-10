@@ -604,12 +604,7 @@ void __cdecl audioVideoInit_()
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget();
 	LoadGameData(sfxdataDat, "arr\\sfxdata.dat");
-	dword_5999B0 = loadTBL_(
-		1711,
-		1144,
-		"Starcraft\\SWAR\\lang\\snd.cpp",
-		"arr\\sfxdata.tbl",
-		SFXData_SoundFile);
+	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 	AppAddExit_(sfxdata_cleanup);
 	if (!byte_6D11D0)
 	{
