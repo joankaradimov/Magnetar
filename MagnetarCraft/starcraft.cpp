@@ -1533,16 +1533,14 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	return 0;
 }
 
-int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
+int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 {
-	char *v8; // esi@7
-	bool v11; // zf@12
-	__int16 v12; // ax@20
-	char *v13; // eax@22
-	u16 v14; // ax@23
+	char *v8;
+	__int16 v12;
+	char *v13;
 
 	CurrentMapFileName[0] = 0;
-	if (!a5)
+	if (!is_campaign)
 		CampaignIndex = MD_none;
 	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
 	memset(playerForce, 0, 8);
@@ -1569,45 +1567,40 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int a5)
 			return 0;
 	}
 	int v9 = 12;
-	PlayerInfo* v10_ = LobbyPlayers + 12;
 	do
 	{
-		--v10_;
 		--v9;
-		v11 = v10_->nRace == Race::RACE_Select;
-		v10_->dwPlayerID = v9;
-		v10_->dwStormId = -1;
-		if (v11)
+		LobbyPlayers[v9].dwPlayerID = v9;
+		LobbyPlayers[v9].dwStormId = -1;
+		if (LobbyPlayers[v9].nRace == Race::RACE_Select)
 		{
-			v10_->nRace = Race::RACE_Random;
-			if (v9 < 8u)
-				*((_BYTE *)&playerForce + (unsigned __int8)v9) = 1;
+			LobbyPlayers[v9].nRace = Race::RACE_Random;
+			if (v9 < 8)
+				playerForce[v9] = 1;
 		}
-		if (v10_ >= LobbyPlayers + 8)
+		if (v9 >= 8)
 		{
-			v10_->nType = PlayerType::PT_NotUsed;
-			v10_->nRace = Race::RACE_Zerg;
-			v10_->nTeam = 0;
+			LobbyPlayers[v9].nType = PlayerType::PT_NotUsed;
+			LobbyPlayers[v9].nRace = Race::RACE_Zerg;
+			LobbyPlayers[v9].nTeam = 0;
 		}
-	} while (v10_ != LobbyPlayers);
+	} while (v9 > 0);
 	sub_4A91E0();
 	sub_45AC10(&a4->data1);
 	updatePlayerForce();
 	strrchr(v8, '\\');
-	SStrCopy(CurrentMapFileName, v8, 0x104u);
-	if (!a5)
+	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
+	if (!is_campaign)
 		CampaignIndex = MD_none;
 	v12 = LOWORD(a4->data0);
-	v11 = LOWORD(a4->data0) == 0;
 	dword_5994DC = 1;
-	if (v11)
+	if (v12 == 0)
 		goto LABEL_25;
 	if (MapStringTbl.buffer)
 	{
-		v14 = v12 - 1;
-		if (v14 < *MapStringTbl.buffer)
+		if (v12 - 1 < *MapStringTbl.buffer)
 		{
-			v13 = (char *)MapStringTbl.buffer + MapStringTbl.buffer[v14 + 1];
+			v13 = (char *)MapStringTbl.buffer + MapStringTbl.buffer[v12];
 			goto LABEL_26;
 		}
 	LABEL_25:
