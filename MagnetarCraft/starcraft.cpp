@@ -41,12 +41,12 @@ signed int AppAddExit_(AppExitHandle a1)
 
 HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile)
 {
-	if (!GetModuleFileNameA(hInst, a2, 0x104u))
+	if (!GetModuleFileNameA(hInst, a2, MAX_PATH))
 		*a2 = 0;
 	char* v4 = strrchr(a2, '\\');
 	if (v4)
 		*v4 = 0;
-	SStrNCat(a2, (char *)hMpq, 260);
+	SStrNCat(a2, (char *)hMpq, MAX_PATH);
 	if (!SFileOpenArchive(a2, (DWORD)phFile, 2u, &hMpq))
 		goto LABEL_15;
 	if (a1)
@@ -69,7 +69,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 {
 	signed int result; // eax@2
 	INT_PTR v4; // eax@8
-	char path_buffer[260]; // [sp+4h] [bp-104h]@3
+	char path_buffer[MAX_PATH]; // [sp+4h] [bp-104h]@3
 
 	if (hMpq)
 	{
@@ -177,9 +177,9 @@ void InitializeFontKey_(void)
 {
 	void *v0; // eax@1
 	void *v1; // eax@5
-	char buff[260]; // [sp+8h] [bp-104h]@1
+	char buff[MAX_PATH]; // [sp+8h] [bp-104h]@1
 
-	_snprintf(buff, 0x104u, "%s\\%s.gid", "font", "font");
+	_snprintf(buff, MAX_PATH, "%s\\%s.gid", "font", "font");
 	v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (v0)
 	{
@@ -190,7 +190,7 @@ void InitializeFontKey_(void)
 	v0 = 0;
 LABEL_5:
 	cdkey_encrypted = v0;
-	_snprintf(buff, 0x104u, "%s\\%s.clh", "font", "font");
+	_snprintf(buff, MAX_PATH, "%s\\%s.clh", "font", "font");
 	v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!v1)
 	{
@@ -205,7 +205,7 @@ LABEL_5:
 	}
 LABEL_9:
 	cdkeyowner_encrypted = v1;
-	_snprintf(buff, 0x104u, "%s\\%s.ccd", "font", "font");
+	_snprintf(buff, MAX_PATH, "%s\\%s.ccd", "font", "font");
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
 
@@ -218,7 +218,7 @@ int LoadMainModuleStringInfo_()
 	DWORD dwHandle; // [sp+4h] [bp-8h]@3
 	LPVOID lpBuffer; // [sp+8h] [bp-4h]@5
 
-	result = GetModuleFileNameA(hInst, tstrFilename, 0x104u);
+	result = GetModuleFileNameA(hInst, tstrFilename, MAX_PATH);
 	if (result)
 	{
 		result = GetFileVersionInfoSizeA(tstrFilename, &dwHandle);
@@ -231,7 +231,7 @@ int LoadMainModuleStringInfo_()
 				if (VerQueryValueA(v2, "\\", &lpBuffer, &puLen))
 					_snprintf(
 						aInternalVersio,
-						0x104u,
+						MAX_PATH,
 						"Version %d.%d.%d",
 						*((_DWORD *)lpBuffer + 4) >> 16,
 						(unsigned __int16)*((_DWORD *)lpBuffer + 4),
@@ -256,8 +256,8 @@ int InitializeArchiveHandles_()
 	char *v4; // eax@22
 	HANDLE v5; // eax@25
 	BOOL v6; // eax@29
-	CHAR Filename[260]; // [sp+8h] [bp-20Ch]@1
-	CHAR archivename_[260]; // [sp+10Ch] [bp-108h]@20
+	CHAR Filename[MAX_PATH]; // [sp+8h] [bp-20Ch]@1
+	CHAR archivename_[MAX_PATH]; // [sp+10Ch] [bp-108h]@20
 	HANDLE phFile; // [sp+210h] [bp-4h]@5
 
 	dword_51CD44 = 20;
@@ -266,12 +266,12 @@ int InitializeArchiveHandles_()
 	dword_51CD50 = broodat_mpq_path;
 	dword_51CD54 = archivename;
 	LoadMainModuleStringInfo_();
-	if (!GetModuleFileNameA(hInst, Filename, 0x104u))
+	if (!GetModuleFileNameA(hInst, Filename, MAX_PATH))
 		Filename[0] = 0;
 	v0 = strrchr(Filename, '\\');
 	if (v0)
 		*v0 = 0;
-	SStrNCat(Filename, "\\Stardat.mpq", 260);
+	SStrNCat(Filename, "\\Stardat.mpq", MAX_PATH);
 	if (!SFileOpenArchive(Filename, 2000u, 2u, &phFile) || (v1 = phFile) == 0)
 		v1 = 0;
 	dword_51CC38 = v1;
@@ -280,23 +280,23 @@ int InitializeArchiveHandles_()
 		int last_error = GetLastError();
 		SysWarn_FileNotFound("Stardat.mpq", last_error);
 	}
-	if (!GetModuleFileNameA(hInst, archivename, 0x104u))
+	if (!GetModuleFileNameA(hInst, archivename, MAX_PATH))
 		archivename[0] = 0;
 	v2 = strrchr(archivename, '\\');
 	if (v2)
 		*v2 = 0;
-	SStrNCat(archivename, "\\patch_rt.mpq", 260);
+	SStrNCat(archivename, "\\patch_rt.mpq", MAX_PATH);
 	if (!SFileOpenArchive(archivename, 7000u, 2u, &phFile) || (v3 = phFile) == 0)
 		v3 = 0;
 	dword_51CC28 = v3;
 
     char magnetarDatFilename[MAX_PATH] = { 0 };
-    if (!GetModuleFileNameA(hInst, magnetarDatFilename, 0x104u))
+    if (!GetModuleFileNameA(hInst, magnetarDatFilename, MAX_PATH))
 		*magnetarDatFilename = 0;
     auto separator = strrchr(magnetarDatFilename, '\\');
     if (separator)
 		*separator = 0;
-    SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", 260);
+    SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
     !SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &phFile);
 
 	InitializeFontKey_();
@@ -306,12 +306,12 @@ int InitializeArchiveHandles_()
 	broodat_mpq_path[0] = 0;
 	if (!is_spawn)
 	{
-		if (!GetModuleFileNameA(hInst, archivename_, 0x104u))
+		if (!GetModuleFileNameA(hInst, archivename_, MAX_PATH))
 			*archivename_ = 0;
 		v4 = strrchr(archivename_, '\\');
 		if (v4)
 			*v4 = 0;
-		SStrNCat(archivename_, "\\Broodat.mpq", 260);
+		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
 		if (!SFileOpenArchive(archivename_, 2500u, 2u, &phFile) || (v5 = phFile) == 0)
 			v5 = 0;
 		dword_51CC2C = v5;
@@ -345,7 +345,7 @@ signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 	if (!byte_596910[0])
 	{
 		EnterCriticalSection(&stru_6D5EDC);
-		SStrCopy(byte_596910, source, 0x104u);
+		SStrCopy(byte_596910, source, MAX_PATH);
 		LeaveCriticalSection(&stru_6D5EDC);
 	}
 	return 0;
@@ -1308,7 +1308,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 
 void initMapData_()
 {
-	char filename[260];
+	char filename[MAX_PATH];
 	struct_a1 a1;
 	int read;
 	int bytes_read;
@@ -1321,25 +1321,25 @@ void initMapData_()
 	active_tiles = (MegatileFlags*)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
 	memset(active_tiles, 0, 0x40000u);
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".wpe");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".vf4");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	megatileCount = (unsigned int)bytes_read >> 5;
 	GenerateMegatileDefaultFlags();
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".cv5");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	TileSetMapSize = bytes_read / 52u;
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".grp");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[(unsigned __int16)CurrentTileSet], ".grp");
 	a1.pfunc0 = (int(__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))sub_47E2D0;
 	a1.isCreepCovered = isCreepCovered;
 	a1.isTileVisible = isTileVisible;
 	a1.pfuncC = 0;
 	InitTerrainGraphicsAndCreep_(&a1, MapTileArray, map_size.width, map_size.height, filename);
 	ZergCreepArray = location;
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
 	VX4Data = (vx4entry *)fastFileRead_(&read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	_snprintf(filename, 260u, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
+	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
 	HANDLE v4;
 	if (!SFileOpenFileEx(0, filename, 0, &v4))
 	{
@@ -1493,8 +1493,8 @@ signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader *chk_section_loader,
 
 int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
-	char buff[260];
-	char v9[260];
+	char buff[MAX_PATH];
+	char v9[MAX_PATH];
 
 	int v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
 	SStrLen(a1);
@@ -1503,13 +1503,13 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 		SErrSetLastError(0x57u);
 		return 0;
 	}
-	if (!sub_4CC350(v9, a1, (int)&a2->data7, 0x104u))
+	if (!sub_4CC350(v9, a1, (int)&a2->data7, MAX_PATH))
 		return 0;
 	int v10 = 0;
 	if (v9[0])
-		_snprintf(buff, 0x104u, "%s\\%s", v9, "staredit\\scenario.chk");
+		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
 	else
-		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
 	void* v5 = fastFileRead_(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (v5)
 	{
@@ -1624,13 +1624,13 @@ LABEL_26:
 
 void sub_4CC990_()
 {
-	char buff[260];
-	char dest[260];
+	char buff[MAX_PATH];
+	char dest[MAX_PATH];
 	int v5; // [sp+214h] [bp-4h]@5
 
 	if (CampaignIndex)
 	{
-		SStrCopy(dest, CurrentMapFileName, 0x104u);
+		SStrCopy(dest, CurrentMapFileName, MAX_PATH);
 	}
 	else
 	{
@@ -1640,9 +1640,9 @@ void sub_4CC990_()
 	}
 	int v4 = 0;
 	if (dest[0])
-		_snprintf(buff, 0x104u, "%s\\%s", dest, "staredit\\scenario.chk");
+		_snprintf(buff, MAX_PATH, "%s\\%s", dest, "staredit\\scenario.chk");
 	else
-		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
 	void* v0 = fastFileRead_(&v4, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
 	if (v0)
 	{
@@ -2010,7 +2010,7 @@ int SwitchMenu_()
 	void *v2; // ecx@7
 	char *v3; // eax@15
 
-	if (!GetModuleFileNameA(0u, main_directory, 260u))
+	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
 		main_directory[0] = 0;
 
 	char* lastDirectorySeparator = strrchr(main_directory, '\\');
@@ -2336,9 +2336,9 @@ unsigned __int32 LocalGetLang_()
 
 void localDll_Init_(HINSTANCE a1)
 {
-	char Filename[260];
+	char Filename[MAX_PATH];
 
-	if (!GetModuleFileNameA(a1, Filename, 260u))
+	if (!GetModuleFileNameA(a1, Filename, MAX_PATH))
 		Filename[0] = 0;
 	char* v1 = strrchr(Filename, '\\');
 	if (!v1)
@@ -2372,11 +2372,11 @@ void loadInitCreditsBIN_(char* a1)
 	int v4; // eax
 	dialog* v5; // ebx
 	int v6; // eax
-	char buff[260]; // [esp+Ch] [ebp-10Ch] BYREF
+	char buff[MAX_PATH]; // [esp+Ch] [ebp-10Ch] BYREF
 	int read; // [esp+110h] [ebp-8h] BYREF
 	HANDLE phFile; // [esp+114h] [ebp-4h] MAPDST BYREF
 
-	_snprintf(buff, 0x104u, "rez\\%s.txt", a1);
+	_snprintf(buff, MAX_PATH, "rez\\%s.txt", a1);
 
 	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	dword_51CEBC = dword_51CEA8;
