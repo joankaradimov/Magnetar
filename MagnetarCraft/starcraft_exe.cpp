@@ -848,15 +848,15 @@ signed int sub_413670(int a1, ChunkNode *a2, int a3, int (__stdcall *chunk_node_
     }
     return result_;
 }
-signed int ReadChunkNodes(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *map_chunks) {
+signed int ReadChunkNodes(int a1, int chk_size_, ChkSectionLoader *chk_section_loader, void *chk_data, MapChunks *map_chunks) {
     int address = 0x413710;
     signed result_;
     __asm {
         mov eax, a1
-        mov edx, a2
+        mov edx, chk_size_
         mov ecx, chk_section_loader
         push dword ptr map_chunks
-        push dword ptr a3
+        push dword ptr chk_data
         call address
         mov result_, eax
     }
@@ -12416,6 +12416,7 @@ DECL_FUNC(int(*updateMinimapPositioninfoProc)(), updateMinimapPositioninfoProc, 
 DECL_FUNC(void(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(int (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
 DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
+DECL_FUNC(int(*sub_4A4CB4)(), sub_4A4CB4, 0x4a4cb4);
 int minimapGameUpdate(dialog *a1) {
     int address = 0x4a4ce0;
     int result_;
@@ -14061,8 +14062,8 @@ signed int LoadFileToSBigBuf(char *filename, int a2) {
     return result_;
 }
 DECL_FUNC(int (__thiscall*sub_4BF370)(FILE *, int, int), sub_4BF370, 0x4bf370);
-DECL_FUNC(int (__fastcall*LoadMap)(int loader_index_), LoadMap, 0x4bf520);
-DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_capmaign), ReadMapData, 0x4bf5d0);
+DECL_FUNC(int (__cdecl*LoadMap)(), LoadMap, 0x4bf520);
+DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_campaign), ReadMapData, 0x4bf5d0);
 BOOL sub_4BF780(MapChunks *a1) {
     int address = 0x4bf780;
     BOOL result_;
@@ -14582,14 +14583,14 @@ char sub_4CBF60(int a1, CUnit *a2, __int16 a3) {
     return result_;
 }
 DECL_FUNC(bool (__stdcall*ChkLoader_TRIG)(SectionData *, int, MapChunks *), ChkLoader_TRIG, 0x4cbfa0);
-signed int ReadMapChunks(MapChunks *a1, int a2, int *out_version_loader_index, int a4) {
+signed int ReadMapChunks(MapChunks *a1, void *chk_data, int *out_version_loader_index, int chk_size_) {
     int address = 0x4cc060;
     signed result_;
     __asm {
         mov eax, a1
-        mov ecx, a2
+        mov ecx, chk_data
         mov ebx, out_version_loader_index
-        push dword ptr a4
+        push dword ptr chk_size_
         call address
         mov result_, eax
     }
@@ -14610,12 +14611,12 @@ BOOL LoadFileArchiveToSBigBuf(char *filename, int *a2, int a3, HANDLE *a4) {
 }
 DECL_FUNC(int (__stdcall*sub_4CC1B0)(int), sub_4CC1B0, 0x4cc1b0);
 DECL_FUNC(bool (__stdcall*ChkLoader_MBRF)(SectionData *, int, MapChunks *), ChkLoader_MBRF, 0x4cc1f0);
-signed int sub_4CC2A0(int a1, int a2, int a3, MapChunks *a4) {
+signed int sub_4CC2A0(void *chk_data, int chk_size_, int a3, MapChunks *a4) {
     int address = 0x4cc2a0;
     signed result_;
     __asm {
-        mov edi, a1
-        mov esi, a2
+        mov edi, chk_data
+        mov esi, chk_size_
         push dword ptr a4
         push dword ptr a3
         call address
@@ -18640,10 +18641,14 @@ char* aA_0 = (decltype(aA_0 + 0)) 0x4fff54;
 CampaignMission* campaign_missions = (decltype(campaign_missions + 0)) 0x4fff60;
 CHAR* String2 = (decltype(String2 + 0)) 0x500194;
 char* aStareditScenar = (decltype(aStareditScenar + 0)) 0x5001b4;
-ChkSectionLoader* stru_5001CC = (decltype(stru_5001CC + 0)) 0x5001cc;
-ChkSectionLoader* stru_5001E8 = (decltype(stru_5001E8 + 0)) 0x5001e8;
-ChkSectionLoader* stru_5002A0 = (decltype(stru_5002A0 + 0)) 0x5002a0;
-ChkSectionLoader* stru_500388 = (decltype(stru_500388 + 0)) 0x500388;
+ChkSectionLoader* chk_loaders_version = (decltype(chk_loaders_version + 0)) 0x5001cc;
+ChkSectionLoader* chk_loaders_lobby = (decltype(chk_loaders_lobby + 0)) 0x5001e8;
+ChkSectionLoader* chk_loaders_briefing = (decltype(chk_loaders_briefing + 0)) 0x500254;
+ChkSectionLoader* chk_loaders_melee_vanilla = (decltype(chk_loaders_melee_vanilla + 0)) 0x50026c;
+ChkSectionLoader* chk_loaders_ums_1_00 = (decltype(chk_loaders_ums_1_00 + 0)) 0x5002a0;
+ChkSectionLoader* chk_loaders_ums_1_04 = (decltype(chk_loaders_ums_1_04 + 0)) 0x500388;
+ChkSectionLoader* chk_loaders_melee_broodwar = (decltype(chk_loaders_melee_broodwar + 0)) 0x50046c;
+ChkSectionLoader* chk_loaders_ums_broodwar_1_04 = (decltype(chk_loaders_ums_broodwar_1_04 + 0)) 0x5004a8;
 ChkLoader* chk_loaders = (decltype(chk_loaders + 0)) 0x500560;
 ChkLoader& dword_5005D8 = * ((decltype(&dword_5005D8)) 0x5005d8);
 size_t* dword_5005F8 = (decltype(dword_5005F8 + 0)) 0x5005f8;

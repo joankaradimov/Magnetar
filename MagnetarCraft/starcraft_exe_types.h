@@ -128,7 +128,7 @@ enum DamageType;
 struct CUnitPylon;
 enum PlayerGroups;
 enum GluAllTblEntry;
-struct __declspec(align(1)) ChkLoader;
+struct ChkLoader;
 struct CUnitPsiProvider;
 struct points;
 enum WeaponBehavior;
@@ -1133,17 +1133,17 @@ enum GluAllTblEntry : __int16
   INVALID_SAVE_GAME = 0x3F,
 };
 
-struct __declspec(align(1)) ChkLoader
+struct ChkLoader
 {
   int version;
-  ChkSectionLoader *ptr1;
-  int i1;
-  ChkSectionLoader *ptr2;
-  int i2;
-  ChkSectionLoader *ptr3;
-  int i3;
-  ChkSectionLoader *ptr4;
-  int i4;
+  ChkSectionLoader *lobby_loaders;
+  int lobby_loader_count;
+  ChkSectionLoader *briefing_loaders;
+  int briefing_loader_count;
+  ChkSectionLoader *melee_loaders;
+  int melee_loader_count;
+  ChkSectionLoader *ums_loaders;
+  int ums_loader_count;
   int requires_expansion;
 };
 

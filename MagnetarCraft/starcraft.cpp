@@ -1514,9 +1514,9 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	if (v5)
 	{
 		int v11 = 0;
-		if (ReadMapChunks(a2, (int) v5, &v11, v10))
+		if (ReadMapChunks(a2, v5, &v11, v10))
 		{
-			int v7 = ReadChunkNodes_(chk_loaders[v11].i1, v10, chk_loaders[v11].ptr1, (int) v5, a2);
+			int v7 = ReadChunkNodes_(chk_loaders[v11].lobby_loader_count, v10, chk_loaders[v11].lobby_loaders, (int) v5, a2);
 			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
@@ -1555,8 +1555,8 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 	if (InReplay)
 	{
 		int loader_index = 0;
-		if (!ReadMapChunks(a4, (int)scenarioChk, &loader_index, scenarioChkSize)
-			|| !ReadChunkNodes_(chk_loaders[loader_index].i1, scenarioChkSize, chk_loaders[loader_index].ptr1, (int) scenarioChk, a4))
+		if (!ReadMapChunks(a4, scenarioChk, &loader_index, scenarioChkSize)
+			|| !ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders[loader_index].lobby_loaders, (int) scenarioChk, a4))
 			return 0;
 		v8 = source;
 	}
@@ -1640,9 +1640,9 @@ void sub_4CC990_()
 	if (v0)
 	{
 		v5 = 0;
-		if (ReadMapChunks(0, (int) v0, &v5, v4))
+		if (ReadMapChunks(0, v0, &v5, v4))
 		{
-			ReadChunkNodes(chk_loaders[v5].i2, v4, chk_loaders[v5].ptr2, (int) v0, 0);
+			ReadChunkNodes(chk_loaders[v5].briefing_loader_count, v4, chk_loaders[v5].briefing_loaders, v0, 0);
 			SMemFree(v0, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 		}
 		else
