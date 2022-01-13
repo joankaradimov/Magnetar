@@ -780,12 +780,46 @@ void CreateInitialMeleeUnits_()
 
 //AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
+int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
+{
+	MapChunks location;
+
+	if (out_version_loader_index && (*out_version_loader_index = 0, chk_data))
+	{
+		SMemZero(&location, 0x20u);
+		if (!a1)
+		{
+			a1 = &location;
+		}
+		if (ReadChunkNodes(2, chk_size, chk_loaders_version, chk_data, a1))
+		{
+			for (int i = 0; i < 3; i++)
+			{
+				if (chk_loaders[i].version == LOWORD(a1->data6))
+				{
+					if (!chk_loaders[i].requires_expansion || IsExpansion)
+					{
+						*out_version_loader_index = i;
+						return 1;
+					}
+					return 0;
+				}
+			}
+		}
+	}
+	else
+	{
+		SErrSetLastError(0x57u);
+	}
+	return 0;
+}
+
 int LoadMap_()
 {
 	if (InReplay)
 	{
 		int loader_index = 0;
-		int result = ReadMapChunks(0, scenarioChk, &loader_index, scenarioChkSize);
+		int result = ReadMapChunks_(0, scenarioChk, &loader_index, scenarioChkSize);
 		if (result)
 		{
 			ChkSectionLoader** v4;
@@ -1535,23 +1569,23 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	}
 	if (!sub_4CC350(v9, a1, (int)&a2->data7, MAX_PATH))
 		return 0;
-	int v10 = 0;
+	int chk_size = 0;
 	if (v9[0])
 		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
 	else
 		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
-	void* v5 = fastFileRead_(&v10, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
-	if (v5)
+	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	if (chk_data)
 	{
 		int v11 = 0;
-		if (ReadMapChunks(a2, v5, &v11, v10))
+		if (ReadMapChunks_(a2, chk_data, &v11, chk_size))
 		{
-			int v7 = ReadChunkNodes_(chk_loaders[v11].lobby_loader_count, v10, chk_loaders[v11].lobby_loaders, (int) v5, a2);
-			SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
+			int v7 = ReadChunkNodes_(chk_loaders[v11].lobby_loader_count, chk_size, chk_loaders[v11].lobby_loaders, (int) chk_data, a2);
+			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
 		}
-		SMemFree((void *)v5, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
+		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
 		mapHandleDestroy();
 		return 0;
 	}
@@ -1585,7 +1619,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 	if (InReplay)
 	{
 		int loader_index = 0;
-		if (!ReadMapChunks(a4, scenarioChk, &loader_index, scenarioChkSize)
+		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
 			|| !ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders[loader_index].lobby_loaders, (int) scenarioChk, a4))
 			return 0;
 		v8 = source;
@@ -1649,7 +1683,7 @@ void sub_4CC990_()
 {
 	char buff[MAX_PATH];
 	char dest[MAX_PATH];
-	int v5; // [sp+214h] [bp-4h]@5
+	int loader_index;
 
 	if (CampaignIndex)
 	{
@@ -1658,26 +1692,26 @@ void sub_4CC990_()
 	else
 	{
 		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &v5, 1, &mapArchiveHandle))
+		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &loader_index, 1, &mapArchiveHandle))
 			return;
 	}
-	int v4 = 0;
+	int chk_size = 0;
 	if (dest[0])
 		_snprintf(buff, MAX_PATH, "%s\\%s", dest, "staredit\\scenario.chk");
 	else
 		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
-	void* v0 = fastFileRead_(&v4, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
-	if (v0)
+	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
+	if (chk_data)
 	{
-		v5 = 0;
-		if (ReadMapChunks(0, v0, &v5, v4))
+		loader_index = 0;
+		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
 		{
-			ReadChunkNodes(chk_loaders[v5].briefing_loader_count, v4, chk_loaders[v5].briefing_loaders, v0, 0);
-			SMemFree(v0, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
+			ReadChunkNodes(chk_loaders[loader_index].briefing_loader_count, chk_size, chk_loaders[loader_index].briefing_loaders, chk_data, 0);
+			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 		}
 		else
 		{
-			SMemFree(v0, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2104, 0);
+			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2104, 0);
 		}
 	}
 }
