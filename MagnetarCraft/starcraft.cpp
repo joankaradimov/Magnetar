@@ -780,6 +780,36 @@ void CreateInitialMeleeUnits_()
 
 //AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
+int LoadMap_()
+{
+	if (InReplay)
+	{
+		int loader_index = 0;
+		int result = ReadMapChunks(0, scenarioChk, &loader_index, scenarioChkSize);
+		if (result)
+		{
+			ChkSectionLoader** v4;
+			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
+			{
+				v4 = &chk_loaders[loader_index].melee_loaders;
+			}
+			else
+			{
+				v4 = &chk_loaders[loader_index].ums_loaders;
+			}
+			return ReadChunkNodes((int)v4[1], scenarioChkSize, *v4, scenarioChk, 0);
+		}
+	}
+	else if (CurrentMapFileName[0])
+	{
+		return sub_4CC7F0(CurrentMapFileName);
+	}
+
+	return 0;
+}
+
+AddressPatch LoadMap_patch(LoadMap, LoadMap_);
+
 void GameRun_(MenuPosition a1)
 {
 	IsInGameLoop = 1;
