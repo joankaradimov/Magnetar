@@ -1056,16 +1056,19 @@ int LoadMap_()
 		int result = ReadMapChunks_(0, scenarioChk, &loader_index, scenarioChkSize);
 		if (result)
 		{
-			ChkSectionLoader** v4;
+			ChkSectionLoader* loaders;
+			int loader_count;
 			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
 			{
-				v4 = &chk_loaders_[loader_index].melee_loaders;
+				loaders = chk_loaders_[loader_index].melee_loaders;
+				loader_count = chk_loaders_[loader_index].melee_loader_count;
 			}
 			else
 			{
-				v4 = &chk_loaders_[loader_index].ums_loaders;
+				loaders = chk_loaders_[loader_index].ums_loaders;
+				loader_count = chk_loaders_[loader_index].ums_loader_count;
 			}
-			return ReadChunkNodes_((int)v4[1], scenarioChkSize, *v4, scenarioChk, 0);
+			return ReadChunkNodes_(loader_count, scenarioChkSize, loaders, scenarioChk, 0);
 		}
 	}
 	else if (CurrentMapFileName[0])
