@@ -780,6 +780,91 @@ void CreateInitialMeleeUnits_()
 
 //AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
+int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
+{
+	ChunkData* v6;
+
+	int v4 = 0;
+	if (a3 <= 0)
+	{
+		return 1;
+	}
+	else
+	{
+		while (1)
+		{
+			v6 = a2->field2.previous;
+			if (v6 > NULL)
+				break;
+		LABEL_8:
+			++v4;
+			if (v4 >= a3)
+			{
+				return 1;
+			}
+		}
+		while (1)
+		{
+			if (v6->section_data.chunk_name == *(DWORD*)loader[v4].name)
+			{
+				if (loader[v4].func)
+				{
+					if (!loader[v4].func(&v6->section_data, v6->section_data.size, a4))
+						break;
+				}
+			}
+			v6 = v6->field1.previous;
+			if ((signed int)v6 <= 0)
+				goto LABEL_8;
+		}
+		return 0;
+	}
+}
+
+signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader* chk_section_loader, void* chk_data, MapChunks* a4)
+{
+	ChunkNode v8;
+
+	v8.field2.next = (ChunkData*)&v8.field2.next;
+	v8.count = 0;
+	v8.field2.previous = (ChunkData*)~(unsigned int)&v8.field2;
+	sub_413670((int)chk_data, &v8, a2, ChunkNode_Constructor);
+	if (sub_4135C0(chk_section_loader, &v8, a1))
+	{
+		if (sub_413550_(chk_section_loader, &v8, a1, a4))
+		{
+			ChunkNode_Destructor(&v8);
+			sub_404B20(&v8);
+			return 1;
+		}
+		else
+		{
+			ChunkNode_Destructor(&v8);
+			sub_404B20(&v8);
+			return 0;
+		}
+	}
+	else
+	{
+		ChunkNode_Destructor(&v8);
+		_list_unlink((int)&v8);
+		if (v8.field2.next)
+		{
+			if ((signed int)v8.field2.previous <= 0)
+			{
+				*(_DWORD*)~(unsigned int)v8.field2.previous = (DWORD)v8.field2.next;
+				v8.field2.next->field1.previous = v8.field2.previous;
+				return 0;
+			}
+			*(ChunkData**)((char*)&v8.field2.previous->field1.next
+				+ (int)&v8.field2
+				- (int)v8.field2.next->field1.previous) = v8.field2.next;
+			v8.field2.next->field1.previous = v8.field2.previous;
+		}
+		return 0;
+	}
+}
+
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
 	MapChunks location;
@@ -831,7 +916,7 @@ int LoadMap_()
 			{
 				v4 = &chk_loaders[loader_index].ums_loaders;
 			}
-			return ReadChunkNodes((int)v4[1], scenarioChkSize, *v4, scenarioChk, 0);
+			return ReadChunkNodes_((int)v4[1], scenarioChkSize, *v4, scenarioChk, 0);
 		}
 	}
 	else if (CurrentMapFileName[0])
@@ -1470,91 +1555,6 @@ void initMapData_()
 
 AddressPatch initMapData_patch(initMapData, initMapData_);
 
-int sub_413550_(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *a4)
-{
-	ChunkData *v6;
-
-	int v4 = 0;
-	if (a3 <= 0)
-	{
-		return 1;
-	}
-	else
-	{
-		while (1)
-		{
-			v6 = a2->field2.previous;
-			if (v6 > NULL)
-				break;
-		LABEL_8:
-			++v4;
-			if (v4 >= a3)
-			{
-				return 1;
-			}
-		}
-		while (1)
-		{
-			if (v6->section_data.chunk_name == *(DWORD*)loader[v4].name)
-			{
-				if (loader[v4].func)
-				{
-					if (!loader[v4].func(&v6->section_data, v6->section_data.size, a4))
-						break;
-				}
-			}
-			v6 = v6->field1.previous;
-			if ((signed int)v6 <= 0)
-				goto LABEL_8;
-		}
-		return 0;
-	}
-}
-
-signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader *chk_section_loader, int a3, MapChunks *a4)
-{
-	ChunkNode v8;
-
-	v8.field2.next = (ChunkData *)&v8.field2.next;
-	v8.count = 0;
-	v8.field2.previous = (ChunkData *)~(unsigned int)&v8.field2;
-	sub_413670(a3, &v8, a2, ChunkNode_Constructor);
-	if (sub_4135C0(chk_section_loader, &v8, a1))
-	{
-		if (sub_413550_(chk_section_loader, &v8, a1, a4))
-		{
-			ChunkNode_Destructor(&v8);
-			sub_404B20(&v8);
-			return 1;
-		}
-		else
-		{
-			ChunkNode_Destructor(&v8);
-			sub_404B20(&v8);
-			return 0;
-		}
-	}
-	else
-	{
-		ChunkNode_Destructor(&v8);
-		_list_unlink((int)&v8);
-		if (v8.field2.next)
-		{
-			if ((signed int)v8.field2.previous <= 0)
-			{
-				*(_DWORD *)~(unsigned int)v8.field2.previous = (DWORD) v8.field2.next;
-				v8.field2.next->field1.previous = v8.field2.previous;
-				return 0;
-			}
-			*(ChunkData **)((char *)&v8.field2.previous->field1.next
-				+ (int)&v8.field2
-				- (int)v8.field2.next->field1.previous) = v8.field2.next;
-			v8.field2.next->field1.previous = v8.field2.previous;
-		}
-		return 0;
-	}
-}
-
 int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
 	char buff[MAX_PATH];
@@ -1577,11 +1577,11 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (chk_data)
 	{
-		int v11 = 0;
-		if (ReadMapChunks_(a2, chk_data, &v11, chk_size))
+		int loader_index = 0;
+		if (ReadMapChunks_(a2, chk_data, &loader_index, chk_size))
 		{
-			int v7 = ReadChunkNodes_(chk_loaders[v11].lobby_loader_count, chk_size, chk_loaders[v11].lobby_loaders, (int) chk_data, a2);
-			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
+			int v7 = ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, chk_size, chk_loaders[loader_index].lobby_loaders, chk_data, a2);
+			SMemFree((void *)chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
 		}
@@ -1620,7 +1620,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 	{
 		int loader_index = 0;
 		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
-			|| !ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders[loader_index].lobby_loaders, (int) scenarioChk, a4))
+			|| !ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders[loader_index].lobby_loaders, scenarioChk, a4))
 			return 0;
 		v8 = source;
 	}
@@ -1706,7 +1706,7 @@ void sub_4CC990_()
 		loader_index = 0;
 		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
 		{
-			ReadChunkNodes(chk_loaders[loader_index].briefing_loader_count, chk_size, chk_loaders[loader_index].briefing_loaders, chk_data, 0);
+			ReadChunkNodes_(chk_loaders[loader_index].briefing_loader_count, chk_size, chk_loaders[loader_index].briefing_loaders, chk_data, 0);
 			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 		}
 		else
