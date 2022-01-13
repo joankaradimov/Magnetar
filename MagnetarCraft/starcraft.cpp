@@ -1014,11 +1014,12 @@ signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader* chk_section_loader,
 
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
-	MapChunks location;
-
-	if (out_version_loader_index && (*out_version_loader_index = 0, chk_data))
+	if (out_version_loader_index && chk_data)
 	{
-		SMemZero(&location, 0x20u);
+		MapChunks location;
+		SMemZero(&location, sizeof(location));
+
+		*out_version_loader_index = 0;
 
 		if (!a1)
 		{
@@ -1028,7 +1029,7 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 		{
 			for (int i = 0; i < _countof(chk_loaders_); i++)
 			{
-				if (chk_loaders_[i].version == LOWORD(a1->data6))
+				if (chk_loaders_[i].version == a1->data6)
 				{
 					if (!chk_loaders_[i].requires_expansion || IsExpansion)
 					{
