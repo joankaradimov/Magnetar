@@ -4571,6 +4571,7 @@ extern bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_siz
 extern bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *);
 extern bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *);
 extern bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *);
+extern bool (__stdcall*ChkLoader_TYPE)(SectionData *, int, MapChunks *);
 extern int (__fastcall*sub_4CB560)(int a1);
 extern char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2);
 extern int(*sub_4CB650)();
@@ -4733,7 +4734,7 @@ extern int (__fastcall*ReadFile_Overlapped)(void *buffer, DWORD nNumberOfBytesTo
 extern int (__fastcall*LoadGraphic)(char *grp_path, int unused_zero, char *logfilename, int logline);
 extern int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline);
 extern int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline);
-void *fastFileRead(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline);
+int fastFileRead(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline);
 extern void *(__fastcall*_fastFileRead)(char *filename, int default_value, int *bytes_read, char *, int);
 extern int(*sub_4D2E60)();
 void LoadGameData(DatLoad *a1, char *a2);

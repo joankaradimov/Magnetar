@@ -14555,6 +14555,7 @@ DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_
 DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
 DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
 DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
+DECL_FUNC(bool (__stdcall*ChkLoader_TYPE)(SectionData *, int, MapChunks *), ChkLoader_TYPE, 0x4cb550);
 DECL_FUNC(int (__fastcall*sub_4CB560)(int a1), sub_4CB560, 0x4cb560);
 DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2), sub_4CB5B0, 0x4cb5b0);
 DECL_FUNC(int(*sub_4CB650)(), sub_4CB650, 0x4cb650);
@@ -14993,9 +14994,9 @@ DECL_FUNC(int (__fastcall*ReadFile_Overlapped)(void *buffer, DWORD nNumberOfByte
 DECL_FUNC(int (__fastcall*LoadGraphic)(char *grp_path, int unused_zero, char *logfilename, int logline), LoadGraphic, 0x4d2b30);
 DECL_FUNC(int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline), sub_4D2BF0, 0x4d2bf0);
 DECL_FUNC(int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline), sub_4D2C70, 0x4d2c70);
-void *fastFileRead(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline) {
+int fastFileRead(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline) {
     int address = 0x4d2d10;
-    void * result_;
+    int result_;
     __asm {
         mov eax, bytes_read
         mov ecx, searchScope
