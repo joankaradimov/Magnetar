@@ -780,6 +780,153 @@ void CreateInitialMeleeUnits_()
 
 //AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
+ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
+{
+	return {
+		{section_name[0], section_name[1], section_name[2], section_name[3]},
+		func,
+		flags,
+	};
+}
+
+ChkSectionLoader chk_loaders_version_[] = {
+	CreateChkSectionLoader("TYPE", ChkLoader_TYPE, 1),
+	CreateChkSectionLoader("VER ", ChkLoader_VER, 1),
+};
+
+ChkSectionLoader chk_loaders_lobby_[] = {
+	CreateChkSectionLoader("VER ", ChkLoader_VER, 1),
+	CreateChkSectionLoader("DIM ", ChkLoader_DIM, 1),
+	CreateChkSectionLoader("ERA ", ChkLoader_ERA, 1),
+	CreateChkSectionLoader("OWNR", ChkLoader_OWNR, 1),
+	CreateChkSectionLoader("SIDE", ChkLoader_SIDE, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("SPRP", ChkLoader_SPRP, 1),
+	CreateChkSectionLoader("FORC", ChkLoader_FORC, 1),
+	CreateChkSectionLoader("VCOD", ChkLoader_VCOD, 1),
+};
+
+ChkSectionLoader chk_loaders_briefing_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MBRF", ChkLoader_MBRF, 1),
+};
+
+ChkSectionLoader chk_loaders_melee_vanilla_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+};
+
+ChkSectionLoader chk_loaders_ums_1_00_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
+	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
+	CreateChkSectionLoader("TECS", ChkLoader_TECS, 1),
+	CreateChkSectionLoader("PUNI", ChkLoader_PUNI, 1),
+	CreateChkSectionLoader("UPGR", ChkLoader_UPGR, 1),
+	CreateChkSectionLoader("PTEC", ChkLoader_PTEC, 1),
+	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 0),
+	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 0),
+	CreateChkSectionLoader("TECx", ChkLoader_TECx, 0),
+	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
+	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
+	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
+};
+
+ChkSectionLoader chk_loaders_ums_1_04_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
+	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
+	CreateChkSectionLoader("TECS", ChkLoader_TECS, 1),
+	CreateChkSectionLoader("PUNI", ChkLoader_PUNI, 1),
+	CreateChkSectionLoader("UPGR", ChkLoader_UPGR, 1),
+	CreateChkSectionLoader("PTEC", ChkLoader_PTEC, 1),
+	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 0),
+	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 0),
+	CreateChkSectionLoader("TECx", ChkLoader_TECx, 0),
+	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
+	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
+	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
+};
+
+ChkSectionLoader chk_loaders_melee_broodwar_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+};
+
+ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 1),
+	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 1),
+	CreateChkSectionLoader("TECx", ChkLoader_TECx, 1),
+	CreateChkSectionLoader("PUNI", ChkLoader_PUNI, 1),
+	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 1),
+	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
+	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
+	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+};
+
+ChkLoader chk_loaders_[] = {
+	{
+		// Loaders for Starcraft 1.00
+		59,
+		chk_loaders_lobby_, _countof(chk_loaders_lobby_),
+		chk_loaders_briefing_, _countof(chk_loaders_briefing_),
+		chk_loaders_melee_vanilla_, _countof(chk_loaders_melee_vanilla_),
+		chk_loaders_ums_1_00_, _countof(chk_loaders_ums_1_00_),
+		0
+	},
+	{
+		// Loaders for Starcraft 1.04
+		63,
+		chk_loaders_lobby_, _countof(chk_loaders_lobby_),
+		chk_loaders_briefing_, _countof(chk_loaders_briefing_),
+		chk_loaders_melee_vanilla_, _countof(chk_loaders_melee_vanilla_),
+		chk_loaders_ums_1_04_, _countof(chk_loaders_ums_1_04_),
+		0
+	},
+	{
+		// Loaders for Brood War 1.04
+		205,
+		chk_loaders_lobby_, _countof(chk_loaders_lobby_),
+		chk_loaders_briefing_, _countof(chk_loaders_briefing_),
+		chk_loaders_melee_broodwar_, _countof(chk_loaders_melee_broodwar_),
+		chk_loaders_ums_broodwar_1_04_, _countof(chk_loaders_ums_broodwar_1_04_),
+		1
+	},
+};
+
+MemoryPatch chk_loader_patch1(0x4BF65A, &chk_loaders_->lobby_loader_count, 4);
+MemoryPatch chk_loader_patch2(0x4BF660, &chk_loaders_->lobby_loaders, 4);
+MemoryPatch chk_loader_patch3(0x4CC0CD, chk_loaders_, 4);
+MemoryPatch chk_loader_patch4(0x4CC0E1, &chk_loaders_->requires_expansion, 4);
+MemoryPatch chk_loader_patch5(0x4CCA8A, &chk_loaders_->briefing_loader_count, 4);
+MemoryPatch chk_loader_patch6(0x4CCA90, &chk_loaders_->briefing_loaders, 4);
+MemoryPatch chk_loader_patch7(0x4CCBFC, &chk_loaders_->lobby_loader_count, 4);
+MemoryPatch chk_loader_patch8(0x4CCC02, &chk_loaders_->lobby_loaders, 4);
+
 int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 {
 	ChunkData* v6;
@@ -872,17 +1019,18 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 	if (out_version_loader_index && (*out_version_loader_index = 0, chk_data))
 	{
 		SMemZero(&location, 0x20u);
+
 		if (!a1)
 		{
 			a1 = &location;
 		}
-		if (ReadChunkNodes(2, chk_size, chk_loaders_version, chk_data, a1))
+		if (ReadChunkNodes_(_countof(chk_loaders_version_), chk_size, chk_loaders_version_, chk_data, a1))
 		{
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < _countof(chk_loaders_); i++)
 			{
-				if (chk_loaders[i].version == LOWORD(a1->data6))
+				if (chk_loaders_[i].version == LOWORD(a1->data6))
 				{
-					if (!chk_loaders[i].requires_expansion || IsExpansion)
+					if (!chk_loaders_[i].requires_expansion || IsExpansion)
 					{
 						*out_version_loader_index = i;
 						return 1;
@@ -910,11 +1058,11 @@ int LoadMap_()
 			ChkSectionLoader** v4;
 			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
 			{
-				v4 = &chk_loaders[loader_index].melee_loaders;
+				v4 = &chk_loaders_[loader_index].melee_loaders;
 			}
 			else
 			{
-				v4 = &chk_loaders[loader_index].ums_loaders;
+				v4 = &chk_loaders_[loader_index].ums_loaders;
 			}
 			return ReadChunkNodes_((int)v4[1], scenarioChkSize, *v4, scenarioChk, 0);
 		}
@@ -1580,7 +1728,7 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 		int loader_index = 0;
 		if (ReadMapChunks_(a2, chk_data, &loader_index, chk_size))
 		{
-			int v7 = ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, chk_size, chk_loaders[loader_index].lobby_loaders, chk_data, a2);
+			int v7 = ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, chk_size, chk_loaders_[loader_index].lobby_loaders, chk_data, a2);
 			SMemFree((void *)chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 			mapHandleDestroy();
 			return v7;
@@ -1620,7 +1768,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 	{
 		int loader_index = 0;
 		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
-			|| !ReadChunkNodes_(chk_loaders[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders[loader_index].lobby_loaders, scenarioChk, a4))
+			|| !ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders_[loader_index].lobby_loaders, scenarioChk, a4))
 			return 0;
 		v8 = source;
 	}
@@ -1706,7 +1854,7 @@ void sub_4CC990_()
 		loader_index = 0;
 		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
 		{
-			ReadChunkNodes_(chk_loaders[loader_index].briefing_loader_count, chk_size, chk_loaders[loader_index].briefing_loaders, chk_data, 0);
+			ReadChunkNodes_(chk_loaders_[loader_index].briefing_loader_count, chk_size, chk_loaders_[loader_index].briefing_loaders, chk_data, 0);
 			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 		}
 		else
