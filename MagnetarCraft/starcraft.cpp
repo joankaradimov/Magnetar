@@ -1829,7 +1829,7 @@ LABEL_26:
 	return 1;
 }
 
-// AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
+AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
 void sub_4CC990_()
 {
@@ -1877,7 +1877,7 @@ int CreateCampaignGame_(MapData mapData)
 	char v5[32];
 
 	CampaignIndex = mapData;
-	int readSuccess = ReadMapData(MapdataFilenames[mapData], &mapChunks, 1);
+	int readSuccess = ReadMapData_(MapdataFilenames[mapData], &mapChunks, 1);
 	if (!readSuccess) {
 		return 0;
 	}
