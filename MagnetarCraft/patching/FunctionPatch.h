@@ -2,10 +2,10 @@
 
 #include "BasePatch.h"
 
-class AddressPatch: public BasePatch
+class FunctionPatch: public BasePatch
 {
 public:
-	AddressPatch(void* destination_function, void* replacement_function);
+	FunctionPatch(void* destination_function, void* replacement_function);
 
 	size_t length();
 	void do_apply();

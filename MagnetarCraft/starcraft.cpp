@@ -1,7 +1,7 @@
 #include <ddraw.h>
 #include "starcraft.h"
 #include "tbl_file.h"
-#include "patching/AddressPatch.h"
+#include "patching/FunctionPatch.h"
 #include "patching/CallSitePatch.h"
 #include "patching/MemoryPatch.h"
 #include "patching/NopPatch.h"
@@ -315,7 +315,7 @@ int InitializeArchiveHandles_()
 	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
-AddressPatch InitializeArchiveHandles_patch(InitializeArchiveHandles, InitializeArchiveHandles_);
+FunctionPatch InitializeArchiveHandles_patch(InitializeArchiveHandles, InitializeArchiveHandles_);
 
 signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 {
@@ -539,7 +539,7 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
-AddressPatch BWFXN_DDrawInitialize_patch(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
+FunctionPatch BWFXN_DDrawInitialize_patch(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
 
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
@@ -575,7 +575,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	BWFXN_drawAllThingys();
 }
 
-AddressPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
+FunctionPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
 
 void audioVideoInit_()
 {
@@ -764,7 +764,7 @@ void CreateInitialMeleeUnits_()
 	}
 }
 
-//AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
+//FunctionPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -1069,7 +1069,7 @@ int LoadMap_()
 	return 0;
 }
 
-AddressPatch LoadMap_patch(LoadMap, LoadMap_);
+FunctionPatch LoadMap_patch(LoadMap, LoadMap_);
 
 void GameRun_(MenuPosition a1)
 {
@@ -1143,7 +1143,7 @@ void setup_HUD_()
 	CanUpdateStatDataDialog = 1;
 }
 
-AddressPatch setup_HUD_patch(setup_HUD, setup_HUD_);
+FunctionPatch setup_HUD_patch(setup_HUD, setup_HUD_);
 
 template <int PIXEL_STRIDE>
 void minimapVisionUpdateMegatile(int flags, int x, int y)
@@ -1296,7 +1296,7 @@ void __cdecl setMapSizeConstants_()
 	stru_512D00.bottom = minimap_dialog->rct.top + minimap_surface_height + 314;
 }
 
-AddressPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
+FunctionPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
 
 char* TILESET_NAMES[] = {
 	"badlands",
@@ -1325,7 +1325,7 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-AddressPatch ChkLoader_ERA_patch(ChkLoader_ERA, ChkLoader_ERA_);
+FunctionPatch ChkLoader_ERA_patch(ChkLoader_ERA, ChkLoader_ERA_);
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
@@ -1361,7 +1361,7 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
-AddressPatch ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
+FunctionPatch ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
 
 #define MAX_MAP_DIMENTION 256
 
@@ -1402,7 +1402,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 	return SAI_PathCreate(active_tiles) != 0;
 }
 
-AddressPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
+FunctionPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
@@ -1518,7 +1518,7 @@ void __cdecl updateHUDInformation_()
 	refreshGameTextIfCounterActive();
 }
 
-AddressPatch updateHUDInformation_patch(updateHUDInformation, updateHUDInformation_);
+FunctionPatch updateHUDInformation_patch(updateHUDInformation, updateHUDInformation_);
 
 void loadParallaxStarGfx_(const char* parallaxFile)
 {
@@ -1695,7 +1695,7 @@ void initMapData_()
 	}
 }
 
-AddressPatch initMapData_patch(initMapData, initMapData_);
+FunctionPatch initMapData_patch(initMapData, initMapData_);
 
 int sub_4CCAC0_(char *a1, MapChunks *a2)
 {
@@ -1819,7 +1819,7 @@ LABEL_26:
 	return 1;
 }
 
-AddressPatch ReadMapData_patch(ReadMapData, ReadMapData_);
+FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
 void sub_4CC990_()
 {
@@ -1858,7 +1858,7 @@ void sub_4CC990_()
 	}
 }
 
-AddressPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
+FunctionPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
 int CreateCampaignGame_(MapData mapData)
 {
@@ -1891,7 +1891,7 @@ int CreateCampaignGame_(MapData mapData)
 	}
 }
 
-AddressPatch CreateCampaignGame_patch(CreateCampaignGame_, CreateCampaignGame);
+FunctionPatch CreateCampaignGame_patch(CreateCampaignGame_, CreateCampaignGame);
 
 int LoadCampaignWithCharacter_(int a1)
 {
@@ -2692,7 +2692,7 @@ void __cdecl sub_4D9200_()
 	}
 }
 
-AddressPatch sub_4D9200_patch(sub_4D9200, sub_4D9200_);
+FunctionPatch sub_4D9200_patch(sub_4D9200, sub_4D9200_);
 
 const char* __stdcall get_Tileset_String(Tileset tileset)
 {

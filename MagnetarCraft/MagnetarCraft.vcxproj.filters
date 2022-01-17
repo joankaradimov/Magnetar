@@ -4,7 +4,7 @@
     <ClCompile Include="MagnetarCraft.cpp" />
     <ClCompile Include="starcraft.cpp" />
     <ClCompile Include="starcraft_exe.cpp" />
-    <ClCompile Include="patching\AddressPatch.cpp">
+    <ClCompile Include="patching\FunctionPatch.cpp">
       <Filter>patching</Filter>
     </ClCompile>
     <ClCompile Include="patching\CallSitePatch.cpp">
@@ -28,7 +28,7 @@
     <ClInclude Include="starcraft.h" />
     <ClInclude Include="starcraft_exe.h" />
     <ClInclude Include="starcraft_exe_types.h" />
-    <ClInclude Include="patching\AddressPatch.h">
+    <ClInclude Include="patching\FunctionPatch.h">
       <Filter>patching</Filter>
     </ClInclude>
     <ClInclude Include="patching\CallSitePatch.h">
