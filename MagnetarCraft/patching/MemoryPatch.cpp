@@ -17,7 +17,7 @@ size_t MemoryPatch::length()
 	return block_length;
 }
 
-void MemoryPatch::apply()
+void MemoryPatch::do_apply()
 {
 	memcpy(destination_address, &block, block_length);
 }

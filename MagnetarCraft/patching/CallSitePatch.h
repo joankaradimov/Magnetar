@@ -8,7 +8,7 @@ public:
 	CallSitePatch(void* destination_address, void* function);
 
 	size_t length();
-	void apply();
+	void do_apply();
 
 private:
 	BYTE* function;

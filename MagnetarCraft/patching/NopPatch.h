@@ -8,7 +8,7 @@ public:
 	NopPatch(void* destination_address, size_t block_length);
 
 	size_t length();
-	void apply();
+	void do_apply();
 
 private:
 	size_t block_length;

@@ -9,7 +9,7 @@ public:
 	MemoryPatch(void* destination_address, void* block, size_t block_length);
 
 	size_t length();
-	void apply();
+	void do_apply();
 
 private:
 	BYTE* block;

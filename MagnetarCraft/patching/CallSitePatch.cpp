@@ -14,7 +14,7 @@ size_t CallSitePatch::length()
 	return sizeof(CALL_INSTRUCTION_OPCODE) + sizeof(function);
 }
 
-void CallSitePatch::apply()
+void CallSitePatch::do_apply()
 {
 	ptrdiff_t jmp_offset = function - destination_address - length();
 	*destination_address = CALL_INSTRUCTION_OPCODE;

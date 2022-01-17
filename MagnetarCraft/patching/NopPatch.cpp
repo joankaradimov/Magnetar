@@ -11,7 +11,7 @@ size_t NopPatch::length()
 	return block_length;
 }
 
-void NopPatch::apply()
+void NopPatch::do_apply()
 {
 	for (int i = 0; i < block_length; i++)
 	{

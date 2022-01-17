@@ -14,7 +14,7 @@ size_t AddressPatch::length()
 	return sizeof(JMP_INSTRUCTION_OPCODE) + sizeof(replacement_function);
 }
 
-void AddressPatch::apply()
+void AddressPatch::do_apply()
 {
 	ptrdiff_t jmp_offset = replacement_function - destination_address - length();
 	*destination_address = JMP_INSTRUCTION_OPCODE;

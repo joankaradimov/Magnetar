@@ -2,23 +2,36 @@
 
 #include "BasePatch.h"
 
-std::vector<BasePatch*> BasePatch::pending_patches;
+std::vector<BasePatch*> BasePatch::patches;
 
-BasePatch::BasePatch(void* destination_address): destination_address((BYTE*)destination_address)
+BasePatch::BasePatch(void* destination_address): destination_address((BYTE*)destination_address), pending(true)
 {
-	pending_patches.push_back(this);
+	patches.push_back(this);
+}
+
+bool BasePatch::is_pending() {
+	return pending;
+}
+
+void BasePatch::apply() {
+	pending = false;
+
+	do_apply();
 }
 
 void BasePatch::apply_pending_patches() {
 	// TODO: batch calls to `VirtualProtect` together
-	for (BasePatch* patch : pending_patches)
+	for (BasePatch* patch : patches)
 	{
-		DWORD old_protection;
-		VirtualProtect(patch->destination_address, patch->length(), PAGE_EXECUTE_READWRITE, &old_protection);
+		if (patch->is_pending())
+		{
+			DWORD old_protection;
+			VirtualProtect(patch->destination_address, patch->length(), PAGE_EXECUTE_READWRITE, &old_protection);
 
-		patch->apply();
+			patch->apply();
 
-		DWORD unused;
-		VirtualProtect(patch->destination_address, patch->length(), old_protection, &unused);
+			DWORD unused;
+			VirtualProtect(patch->destination_address, patch->length(), old_protection, &unused);
+		}
 	}
 }

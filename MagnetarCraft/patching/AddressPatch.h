@@ -8,7 +8,7 @@ public:
 	AddressPatch(void* destination_function, void* replacement_function);
 
 	size_t length();
-	void apply();
+	void do_apply();
 
 private:
 	BYTE* replacement_function;
