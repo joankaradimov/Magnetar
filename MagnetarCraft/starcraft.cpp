@@ -539,6 +539,8 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
+AddressPatch BWFXN_DDrawInitialize_patch(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
+
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
