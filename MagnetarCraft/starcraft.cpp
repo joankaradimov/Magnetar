@@ -958,7 +958,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 	}
 }
 
-signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader* chk_section_loader, void* chk_data, MapChunks* a4)
+signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoader* chk_section_loader, void* chk_data, MapChunks* a4)
 {
 	ChunkNode v8;
 
@@ -966,9 +966,9 @@ signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader* chk_section_loader,
 	v8.count = 0;
 	v8.field2.previous = (ChunkData*)~(unsigned int)&v8.field2;
 	sub_413670((int)chk_data, &v8, a2, ChunkNode_Constructor);
-	if (sub_4135C0(chk_section_loader, &v8, a1))
+	if (sub_4135C0(chk_section_loader, &v8, chk_section_loader_count))
 	{
-		if (sub_413550_(chk_section_loader, &v8, a1, a4))
+		if (sub_413550_(chk_section_loader, &v8, chk_section_loader_count, a4))
 		{
 			ChunkNode_Destructor(&v8);
 			sub_404B20(&v8);
