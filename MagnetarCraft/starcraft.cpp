@@ -591,7 +591,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 
 AddressPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
 
-void __cdecl audioVideoInit_()
+void audioVideoInit_()
 {
 	loadColorSettings();
 	GameScreenBuffer.wid = 640;
@@ -2421,7 +2421,7 @@ void GameMainLoop_()
 	PreInitData_();
 	InitializeInputProcs();
 	CreateMainWindow();
-	audioVideoInit(); // TODO: use audioVideoInit_
+	audioVideoInit_();
 	AppAddExit_(SaveCPUThrottleOption);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
 		CpuThrottle = phFile != 0;
