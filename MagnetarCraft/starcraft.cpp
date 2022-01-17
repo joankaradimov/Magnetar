@@ -764,6 +764,10 @@ void CreateInitialMeleeUnits_()
 
 //AddressPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
+bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
+
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
 {
 	return {
@@ -781,13 +785,13 @@ ChkSectionLoader chk_loaders_version_[] = {
 ChkSectionLoader chk_loaders_lobby_[] = {
 	CreateChkSectionLoader("VER ", ChkLoader_VER, 1),
 	CreateChkSectionLoader("DIM ", ChkLoader_DIM, 1),
-	CreateChkSectionLoader("ERA ", ChkLoader_ERA, 1),
+	CreateChkSectionLoader("ERA ", ChkLoader_ERA_, 1),
 	CreateChkSectionLoader("OWNR", ChkLoader_OWNR, 1),
 	CreateChkSectionLoader("SIDE", ChkLoader_SIDE, 1),
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("SPRP", ChkLoader_SPRP, 1),
 	CreateChkSectionLoader("FORC", ChkLoader_FORC, 1),
-	CreateChkSectionLoader("VCOD", ChkLoader_VCOD, 1),
+	CreateChkSectionLoader("VCOD", ChkLoader_VCOD_, 1),
 };
 
 ChkSectionLoader chk_loaders_briefing_[] = {
@@ -797,14 +801,14 @@ ChkSectionLoader chk_loaders_briefing_[] = {
 
 ChkSectionLoader chk_loaders_melee_vanilla_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
@@ -826,7 +830,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 
 ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
@@ -848,7 +852,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 
 ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
@@ -856,7 +860,7 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 
 ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 1),
