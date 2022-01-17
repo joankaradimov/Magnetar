@@ -67,53 +67,37 @@ HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile
 
 signed int InitializeCDArchives_(const char *filename, int a2)
 {
-	signed int result; // eax@2
-	INT_PTR v4; // eax@8
-	char path_buffer[MAX_PATH]; // [sp+4h] [bp-104h]@3
-
 	if (hMpq)
+		return 1;
+
+	char path_buffer[MAX_PATH];
+	hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\BroodWar.mpq", (HANDLE)1000);
+	if (hMpq || (hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\StarCraft.mpq", (HANDLE)1000)) != 0)
+		return 1;
+
+
+	hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
+	if (hMpq)
+		return 1;
+
+	while (a2)
 	{
-		result = 1;
-	}
-	else
-	{
-		hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\BroodWar.mpq", (HANDLE)1000);
-		if (hMpq || (hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\StarCraft.mpq", (HANDLE)1000)) != 0)
+		INT_PTR v4 = DialogBoxParamA(hInstance, (LPCSTR)107, hWndParent, DialogFunc, 0);
+		if (v4 == -1)
 		{
-			result = 1;
+			FatalError("GdsDialogBoxParam: %d", 107);
+		LABEL_13:
+			AppExit(0);
+			ProcError(1);
+			exit(0);
 		}
-		else
-		{
-			hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
-			if (hMpq)
-			{
-			LABEL_11:
-				result = 1;
-			}
-			else
-			{
-				while (a2)
-				{
-					v4 = DialogBoxParamA(hInstance, (LPCSTR)107, hWndParent, DialogFunc, 0);
-					if (v4 == -1)
-					{
-						FatalError("GdsDialogBoxParam: %d", 107);
-					LABEL_13:
-						AppExit(0);
-						ProcError(1);
-						exit(0);
-					}
-					if (v4 != 1)
-						goto LABEL_13;
-					hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
-					if (hMpq)
-						goto LABEL_11;
-				}
-				result = 0;
-			}
-		}
+		if (v4 != 1)
+			goto LABEL_13;
+		hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
+		if (hMpq)
+			return 1;
 	}
-	return result;
+	return 0;
 }
 
 int(*signal)(int a1, int a2) = (int(*)(int a1, int a2)) 0x0040C8D5;
