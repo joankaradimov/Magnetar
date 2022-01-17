@@ -2412,6 +2412,48 @@ LABEL_28:
 	return sub_4DC870();
 }
 
+void CreateMainWindow_()
+{
+	WNDCLASSEXA window_class;
+
+	memset(&window_class, 0, sizeof(window_class));
+	window_class.cbSize = sizeof(window_class);
+	window_class.style = 8;
+	window_class.lpfnWndProc = (WNDPROC)MainWindowProc;
+	window_class.hInstance = hInst;
+	window_class.hIcon = LoadIconA(hInst, (LPCSTR)0x66);
+	window_class.hIconSm = (HICON)LoadImageA(hInst, (LPCSTR)0x66, 1u, 16, 16, 0x8000u);
+	window_class.hCursor = LoadCursorA(0, (LPCSTR)0x7F00);
+	window_class.hbrBackground = (HBRUSH)GetStockObject(5);
+	window_class.lpszClassName = "SWarClass";
+
+	if (!RegisterClassExA(&window_class))
+	{
+		FatalError("RegisterClass");
+	}
+
+	const char* v0 = dword_6D11E4 ? "Brood War" : "Starcraft";
+	int v3 = GetSystemMetrics(1);
+	int v1 = GetSystemMetrics(0);
+	hWndParent = CreateWindowExA(0, "SWarClass", v0, 0x90080000, 0, 0, v1, v3, 0, 0, hInst, 0);
+	if (!hWndParent)
+	{
+		FatalError("CreateWindowEx");
+	}
+
+	UpdateWindow(hWndParent);
+	SetFocus(hWndParent);
+	SetCursor(0);
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (!dword_6D6438)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		dword_6D6438 = ImmAssociateContext(hWndParent, 0);
+	}
+}
+
 void GameMainLoop_()
 {
 	bool v2;
@@ -2420,7 +2462,7 @@ void GameMainLoop_()
 	gwGameMode = GAME_GLUES;
 	PreInitData_();
 	InitializeInputProcs();
-	CreateMainWindow();
+	CreateMainWindow_();
 	audioVideoInit_();
 	AppAddExit_(SaveCPUThrottleOption);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
