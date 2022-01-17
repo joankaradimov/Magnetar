@@ -1004,6 +1004,9 @@ signed int ReadChunkNodes_(int a1, int a2, ChkSectionLoader* chk_section_loader,
 
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
+	return ReadMapChunks(a1, chk_data, out_version_loader_index, chk_size);
+	// TODO: fix
+	/*
 	if (out_version_loader_index && chk_data)
 	{
 		MapChunks location;
@@ -1036,6 +1039,7 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 		SErrSetLastError(0x57u);
 	}
 	return 0;
+	*/
 }
 
 int LoadMap_()
