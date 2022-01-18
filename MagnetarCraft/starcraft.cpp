@@ -2164,20 +2164,17 @@ int loadMenu_gluCustm_(int is_multiplayer)
 				{
 					gwGameMode = GAME_RUNINIT;
 				}
-				else if (Players[g_LocalNationID].nRace)
-				{
-					if (Players[g_LocalNationID].nRace == 1)
-					{
-						glGluesMode = GLUE_READY_T;
-					}
-					else if (Players[g_LocalNationID].nRace == 2)
-					{
-						glGluesMode = GLUE_READY_P;
-					}
-				}
-				else
+				else if (Players[g_LocalNationID].nRace == 0)
 				{
 					glGluesMode = GLUE_READY_Z;
+				}
+				else if (Players[g_LocalNationID].nRace == 1)
+				{
+					glGluesMode = GLUE_READY_T;
+				}
+				else if (Players[g_LocalNationID].nRace == 2)
+				{
+					glGluesMode = GLUE_READY_P;
 				}
 			}
 			else
