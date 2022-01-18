@@ -821,13 +821,13 @@ signed int CopySectionData(SectionData *a1, void *a2) {
 DECL_FUNC(int(*sub_413480)(), sub_413480, 0x413480);
 DECL_FUNC(signed int (__stdcall*ChunkNode_Constructor)(int a1, int a2, ChunkNode *a3), ChunkNode_Constructor, 0x4134a0);
 DECL_FUNC(signed int (__thiscall*sub_413550)(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *map_chunks), sub_413550, 0x413550);
-signed int sub_4135C0(ChkSectionLoader *a1, ChunkNode *a2, int a3) {
+signed int sub_4135C0(ChkSectionLoader *chk_section_loaders, ChunkNode *a2, int chk_section_loader_count) {
     int address = 0x4135c0;
     signed result_;
     __asm {
-        mov ecx, a1
+        mov ecx, chk_section_loaders
         mov edi, a2
-        push dword ptr a3
+        push dword ptr chk_section_loader_count
         call address
         mov result_, eax
     }
@@ -848,11 +848,11 @@ signed int sub_413670(int a1, ChunkNode *a2, int a3, int (__stdcall *chunk_node_
     }
     return result_;
 }
-signed int ReadChunkNodes(int a1, int chk_size_, ChkSectionLoader *chk_section_loader, void *chk_data, MapChunks *map_chunks) {
+signed int ReadChunkNodes(int chk_section_loader_count, int chk_size_, ChkSectionLoader *chk_section_loader, void *chk_data, MapChunks *map_chunks) {
     int address = 0x413710;
     signed result_;
     __asm {
-        mov eax, a1
+        mov eax, chk_section_loader_count
         mov edx, chk_size_
         mov ecx, chk_section_loader
         push dword ptr map_chunks
@@ -12779,7 +12779,18 @@ DECL_FUNC(int(*sub_4AABB0)(), sub_4AABB0, 0x4aabb0);
 DECL_FUNC(int(*sub_4AABD0)(), sub_4AABD0, 0x4aabd0);
 DECL_FUNC(int(*sub_4AABF0)(), sub_4AABF0, 0x4aabf0);
 DECL_FUNC(int(*sub_4AAC60)(), sub_4AAC60, 0x4aac60);
-DECL_FUNC(int(*sub_4AAC90)(), sub_4AAC90, 0x4aac90);
+GotFileValues *sub_4AAC90(__int16 a1, char a2, char a3) {
+    int address = 0x4aac90;
+    GotFileValues * result_;
+    __asm {
+        mov cx, a1
+        mov dl, a2
+        mov bl, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4AACC0)(char), sub_4AACC0, 0x4aacc0);
 DECL_FUNC(int(*sub_4AAD00)(), sub_4AAD00, 0x4aad00);
 DECL_FUNC(int(*getGameTypeString)(), getGameTypeString, 0x4aad40);
@@ -12816,6 +12827,19 @@ DECL_FUNC(int(*beginComputerAIScriptExecution)(), beginComputerAIScriptExecution
 DECL_FUNC(int (__stdcall*sub_4AB310)(int, int), sub_4AB310, 0x4ab310);
 DECL_FUNC(int (__stdcall*IsBNetGame)(int), IsBNetGame, 0x4ab5b0);
 DECL_FUNC(Trigger *(__stdcall*loadTRGFile)(const char *a1), loadTRGFile, 0x4ab620);
+int sub_4AB6C0(GotFileValues *a1, size_t a2, int a3, char *buff) {
+    int address = 0x4ab6c0;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov edx, a2
+        mov ecx, a3
+        push dword ptr buff
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 GotFileValues *readTemplate(char *template_name, char *got_template_name, char *got_template_label) {
     int address = 0x4ab750;
     GotFileValues * result_;
@@ -14108,7 +14132,7 @@ int templarMergePartner(int a1, CUnit *a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*CMDRECV_restartGame)(), CMDRECV_restartGame, 0x4bfb10);
+DECL_FUNC(void(*CMDRECV_restartGame)(), CMDRECV_restartGame, 0x4bfb10);
 DECL_FUNC(int (__stdcall*CMDRECV_ShiftDeselect)(int), CMDRECV_ShiftDeselect, 0x4bfb40);
 DECL_FUNC(int (__stdcall*sub_4BFC50)(__int16, __int16), sub_4BFC50, 0x4bfc50);
 DECL_FUNC(int(*sub_4BFC80)(), sub_4BFC80, 0x4bfc80);
@@ -20769,7 +20793,7 @@ char* curPlayerID = (decltype(curPlayerID + 0)) 0x57f094;
 char* byte_57F098 = (decltype(byte_57F098 + 0)) 0x57f098;
 char* byte_57F09A = (decltype(byte_57F09A + 0)) 0x57f09a;
 int& playerVisions = * ((decltype(&playerVisions)) 0x57f0b0);
-int* multiPlayerMode = (decltype(multiPlayerMode + 0)) 0x57f0b4;
+BYTE& multiPlayerMode = * ((decltype(&multiPlayerMode)) 0x57f0b4);
 int* playerStatusArray = (decltype(playerStatusArray + 0)) 0x57f0b8;
 int& dword_57F0BC = * ((decltype(&dword_57F0BC)) 0x57f0bc);
 int& dword_57F0C0 = * ((decltype(&dword_57F0C0)) 0x57f0c0);
@@ -21074,9 +21098,9 @@ int& dword_59B844 = * ((decltype(&dword_59B844)) 0x59b844);
 int& dword_59B848 = * ((decltype(&dword_59B848)) 0x59b848);
 char* menuMapRelativePath = (decltype(menuMapRelativePath + 0)) 0x59b850;
 char* byte_59B958 = (decltype(byte_59B958 + 0)) 0x59b958;
-int& selectedGameTypeParam = * ((decltype(&selectedGameTypeParam)) 0x59ba5c);
+__int16& selectedGameTypeParam = * ((decltype(&selectedGameTypeParam)) 0x59ba5c);
 void *& dword_59BA60 = * ((decltype(&dword_59BA60)) 0x59ba60);
-int& selectedGameType = * ((decltype(&selectedGameType)) 0x59ba64);
+char* selectedGameType = (decltype(selectedGameType + 0)) 0x59ba64;
 char* byte_59BA68 = (decltype(byte_59BA68 + 0)) 0x59ba68;
 char& byte_59BB6C = * ((decltype(&byte_59BB6C)) 0x59bb6c);
 char* CurrentMapFolder = (decltype(CurrentMapFolder + 0)) 0x59bb70;
@@ -21751,12 +21775,12 @@ HGDIOBJ& dword_68F6EC = * ((decltype(&dword_68F6EC)) 0x68f6ec);
 HWND& dword_68F6F0 = * ((decltype(&dword_68F6F0)) 0x68f6f0);
 HWND& dword_68F6F4 = * ((decltype(&dword_68F6F4)) 0x68f6f4);
 int& dword_68F6F8 = * ((decltype(&dword_68F6F8)) 0x68f6f8);
-int& dword_68F6FC = * ((decltype(&dword_68F6FC)) 0x68f6fc);
+__int16& dword_68F6FC = * ((decltype(&dword_68F6FC)) 0x68f6fc);
 char* dword_68F700 = (decltype(dword_68F700 + 0)) 0x68f700;
 int& dword_68F704 = * ((decltype(&dword_68F704)) 0x68f704);
 HWND& dword_68F708 = * ((decltype(&dword_68F708)) 0x68f708);
 HWND& dword_68F70C = * ((decltype(&dword_68F70C)) 0x68f70c);
-int& dword_68F710 = * ((decltype(&dword_68F710)) 0x68f710);
+char* dword_68F710 = (decltype(dword_68F710 + 0)) 0x68f710;
 int& dword_68F714 = * ((decltype(&dword_68F714)) 0x68f714);
 CHAR* bnet_previous_map_dir = (decltype(bnet_previous_map_dir + 0)) 0x68f718;
 unsigned __int8* byte_68F820 = (decltype(byte_68F820 + 0)) 0x68f820;
@@ -21790,7 +21814,7 @@ HWND& hWnd = * ((decltype(&hWnd)) 0x68fe94);
 HWND& dword_68FE98 = * ((decltype(&dword_68FE98)) 0x68fe98);
 char* dword_68FE9C = (decltype(dword_68FE9C + 0)) 0x68fe9c;
 int& dword_68FEA0 = * ((decltype(&dword_68FEA0)) 0x68fea0);
-int& dword_68FEA4 = * ((decltype(&dword_68FEA4)) 0x68fea4);
+char* dword_68FEA4 = (decltype(dword_68FEA4 + 0)) 0x68fea4;
 void *& dword_68FEA8 = * ((decltype(&dword_68FEA8)) 0x68fea8);
 int& dword_68FEAC = * ((decltype(&dword_68FEAC)) 0x68feac);
 int& dword_68FEB0 = * ((decltype(&dword_68FEB0)) 0x68feb0);

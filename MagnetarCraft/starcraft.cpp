@@ -2697,7 +2697,7 @@ void loadInitCreditsBIN_(char* a1)
 
 void __cdecl sub_4D9200_()
 {
-	if (!*multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
+	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
 	{
 		for (int i = 0; i < 64; i++)
 		{

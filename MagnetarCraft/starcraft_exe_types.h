@@ -91,6 +91,7 @@ struct UnknownTilesetRelated2;
 struct struct_2;
 enum StatusFlags;
 struct ForceName;
+enum ResourceType;
 struct Timer;
 enum GameType;
 enum Tech;
@@ -101,6 +102,7 @@ struct TriggerList;
 struct MapChunks;
 struct PMD;
 enum PlayerGroups;
+enum VictoryConditions;
 enum UnitPrototypeFlags;
 struct struct_3;
 struct struct_5;
@@ -109,16 +111,19 @@ struct points;
 enum Tileset;
 struct TransVectorEntry;
 struct GameSpeeds;
+enum StartingUnits;
 struct PlayerAlliance;
 enum MegatileFlags;
 enum Tech2;
 enum BulletState;
 enum MapData4;
+enum UnitStats;
 struct AI_Flags;
 enum SaiAccessabilityFlags;
 enum WeaponBehavior;
 enum UnitType;
 struct __declspec(align(2)) ChkSectionLoader;
+enum PlayerTypes;
 struct RTCI;
 enum MapData;
 struct dialog_ctrl;
@@ -132,12 +137,14 @@ struct CUnitPsiProvider;
 enum SfxData;
 struct RTTIClassHierarchyDescriptor;
 struct CUnitGhost;
+enum StartingPositions;
 struct LO_Overlays;
 struct __declspec(align(4)) EstablishingShotPosition;
 struct _SCOPETABLE_ENTRY;
 enum WeaponTargetFlags;
 struct SpriteTileData;
 struct ChunkListItem;
+enum FogOfWar;
 struct RTTICompleteObjectLocator;
 struct CampaignMission;
 struct CUnitGatherer;
@@ -471,6 +478,16 @@ struct ForceName
   char name[30];
 };
 
+enum ResourceType : unsigned __int8
+{
+  RT_MAP_DEFALUT = 0x0,
+  RT_FIXED_VALUE = 0x1,
+  RT_LOW = 0x2,
+  RT_MEDIUM = 0x3,
+  RT_HIGH = 0x4,
+  RT_INCOME = 0x5,
+};
+
 struct Timer
 {
   struct Timer *next;
@@ -669,6 +686,18 @@ enum PlayerGroups
   PG_Max = 0x1B,
 };
 
+enum VictoryConditions : unsigned __int8
+{
+  VC_MAP_DEFAULT = 0x0,
+  VC_MELEE = 0x1,
+  VC_HIGH_SCORE = 0x2,
+  VC_RESOURCES = 0x3,
+  VC_CAPTURE_THE_FLAG = 0x4,
+  VC_SUSDDEN_DEATH = 0x5,
+  VC_SLAUGHTER = 0x6,
+  VC_ONE_ON_ONE = 0x7,
+};
+
 enum UnitPrototypeFlags
 {
   Building = 0x1,
@@ -817,6 +846,13 @@ struct GameSpeeds
 {
   unsigned __int32 gameSpeedModifiers[7];
   unsigned __int32 altSpeedModifiers[7];
+};
+
+enum StartingUnits : unsigned __int8
+{
+  SU_MAP_DEFAULT = 0x0,
+  SU_WORKER_ONLY = 0x1,
+  SU_WORKER_AND_CENTER = 0x2,
 };
 
 struct PlayerAlliance
@@ -988,6 +1024,12 @@ enum MapData4 : __int32
   MD4_xbonus = 0x3F,
   MD4_xzerg10 = 0x40,
   MD4_Unknown = 0x41,
+};
+
+enum UnitStats : unsigned __int8
+{
+  US_MAP_DEFALUT = 0x0,
+  US_STANDARD = 0x1,
 };
 
 struct AI_Flags
@@ -1266,6 +1308,15 @@ struct __declspec(align(2)) ChkSectionLoader
 };
 
 typedef void (__thiscall *InputProcedure)(dlgEvent *);
+
+enum PlayerTypes : unsigned __int8
+{
+  PT_NO_SINGLE = 0x0,
+  PT_NO_COMPUTERS = 0x1,
+  PT_NO_SINGLE_WITH_COMPUTERS = 0x2,
+  PT_SINGLE_NO_COMPUTERS = 0x3,
+  PT_SINGLE_WITH_COMPUTERS = 0x4,
+};
 
 struct RTCI
 {
@@ -2569,6 +2620,12 @@ struct CUnitGhost
   CSprite *nukeDot;
 };
 
+enum StartingPositions : unsigned __int8
+{
+  SP_RANDOM = 0x0,
+  SP_FIXED = 0x1,
+};
+
 struct LO_Overlays
 {
   LO_Header *overlays[999];
@@ -2610,6 +2667,13 @@ struct ChunkListItem
 {
   ChunkData *next;
   ChunkData *previous;
+};
+
+enum FogOfWar : unsigned __int8
+{
+  FOW_OFF = 0x0,
+  FOW_WARCRAFT1 = 0x1,
+  FOW_ON = 0x2,
 };
 
 struct RTTICompleteObjectLocator
@@ -3346,13 +3410,13 @@ struct __declspec(align(1)) GotFileValues
   u8 unused1;
   u16 variation_id;
   int variation_value;
-  u8 victory_conditions;
-  u8 resource_type;
-  u8 unit_stats;
-  u8 fog;
-  u8 starting_units;
-  u8 starting_positions;
-  u8 player_types;
+  VictoryConditions victory_conditions;
+  ResourceType resource_type;
+  UnitStats unit_stats;
+  FogOfWar fog;
+  StartingUnits starting_units;
+  StartingPositions starting_positions;
+  PlayerTypes player_types;
   u8 allies_allowed;
   u8 team_mode;
   u8 cheats;
