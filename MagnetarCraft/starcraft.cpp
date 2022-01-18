@@ -1893,6 +1893,44 @@ void sub_4CC990_()
 
 FunctionPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
+GotFileValues* readTemplate_(char* template_name, char* got_template_name, char* got_template_label)
+{
+	char buff[260];
+	int got_file_size;
+
+	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
+	GotFile* got_file_data = (GotFile*)fastFileRead(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (!got_file_data)
+	{
+		return 0;
+	}
+	if (got_file_size != 97 || got_file_data->version != 3)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 97, 0);
+		return 0;
+	}
+	if (got_file_data->values.template_id >= 129u || got_file_data->values.variation_id >= 8u)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 98, 0);
+		return 0;
+	}
+	memcpy(got_template_name, got_file_data->name, 32u);
+	memcpy(got_template_label, got_file_data->label, 32u);
+	GotFileValues*  result = (GotFileValues*)SMemAlloc(32, "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
+	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
+	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
+	return result;
+}
+
+GotFileValues* InitUseMapSettingsTemplate_()
+{
+	char ununsed[32];
+
+	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
+}
+
+FunctionPatch InitUseMapSettingsTemplate_patch(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
+
 int CreateCampaignGame_(MapData mapData)
 {
 	MapChunks mapChunks;
@@ -1912,7 +1950,7 @@ int CreateCampaignGame_(MapData mapData)
 	v4.game_speed = GameSpeed;
 	v4.active_human_players = 1;
 	v4.max_players = 1;
-	GotFileValues* v2 = readTemplate("Use Map Settings(1)", v5, v5);
+	GotFileValues* v2 = readTemplate_("Use Map Settings(1)", v5, v5);
 	if (v2 && (memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values)), SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0), sub_4DBE50()))
 	{
 		isHost = 0;
