@@ -745,32 +745,36 @@ void CreateInitialMeleeUnits_()
 	for (int player_index = 0; player_index < 8; player_index++)
 	{
 		PlayerInfo* player = Players + player_index;
-		if (player->nType == PT_Human || player->nType == PT_Computer)
+		if (player->nType == PlayerType::PT_Human || player->nType == PlayerType::PT_Computer)
 		{
-			u8 starting_units = gameData.got_file_values.starting_units;
-			if (!gameData.got_file_values.victory_conditions
-				&& !gameData.got_file_values.starting_units
+			StartingUnits starting_units;
+			if (gameData.got_file_values.victory_conditions != VictoryConditions::VC_MAP_DEFAULT
+				&& gameData.got_file_values.starting_units != StartingUnits::SU_MAP_DEFAULT
 				&& !gameData.got_file_values.tournament_mode
 				&& player_index < 8
 				&& playerForce[player_index])
 			{
-				starting_units = 2;
+				starting_units = StartingUnits::SU_WORKER_AND_CENTER;
 			}
-			if (starting_units != 1)
+			else
 			{
-				if (starting_units != 2)
-				{
-					continue;
-				}
+				starting_units = gameData.got_file_values.starting_units;
+			}
+
+			switch (starting_units)
+			{
+			case StartingUnits::SU_WORKER_AND_CENTER:
 				CreateInitialMeleeBuildings(player->nRace, player_index);
 				if (player->nRace == Race::RACE_Zerg)
 					CreateInitialOverlord(player_index);
+			case StartingUnits::SU_WORKER_ONLY:
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+			case StartingUnits::SU_MAP_DEFAULT:
+				break;
 			}
-
-			CreateInitialMeleeWorker_(player->nRace, player_index);
-			CreateInitialMeleeWorker_(player->nRace, player_index);
-			CreateInitialMeleeWorker_(player->nRace, player_index);
-			CreateInitialMeleeWorker_(player->nRace, player_index);
 		}
 	}
 }
