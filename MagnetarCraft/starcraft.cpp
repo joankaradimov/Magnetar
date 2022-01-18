@@ -1,6 +1,7 @@
 #include <ddraw.h>
 #include "starcraft.h"
 #include "tbl_file.h"
+#include "patching/FailStubPatch.h"
 #include "patching/FunctionPatch.h"
 #include "patching/CallSitePatch.h"
 #include "patching/MemoryPatch.h"
@@ -192,6 +193,8 @@ LABEL_9:
 	_snprintf(buff, MAX_PATH, "%s\\%s.ccd", "font", "font");
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
+
+FailStubPatch InitializeFontKey_patch(InitializeFontKey);
 
 int LoadMainModuleStringInfo_()
 {
@@ -404,6 +407,8 @@ void PreInitData_()
 	AppAddExit_(DestroyGameTemplates);
 }
 
+FailStubPatch PreInitData_patch(PreInitData);
+
 char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 {
 	unsigned int v4; // eax@1
@@ -468,6 +473,8 @@ void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_e
 		FatalError("GdsDialogBoxParam: %d", resource);
 	DLGErrFatal();
 }
+
+FailStubPatch ErrorDDrawInit_patch(ErrorDDrawInit);
 
 BOOL BWFXN_DDrawInitialize_()
 {
@@ -600,6 +607,8 @@ void audioVideoInit_()
 	}
 }
 
+FailStubPatch audioVideoInit_patch(audioVideoInit);
+
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
 	dlgEvent v5;
@@ -728,6 +737,8 @@ void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
 		}
 	}
 }
+
+FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
 
 void CreateInitialMeleeUnits_()
 {
@@ -1114,6 +1125,8 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
+FailStubPatch GameRun_patch(GameRun);
+
 void setup_HUD_()
 {
 	LoadConsoleImage();
@@ -1210,6 +1223,10 @@ void __cdecl minimapVisionUpdate_()
 	}
 }
 
+FailStubPatch minimapVisionUpdate_64_patch(minimapVisionUpdate_64);
+FailStubPatch minimapVisionUpdate_96_128_patch(minimapVisionUpdate_96_128);
+FailStubPatch minimapVisionUpdate_192_256_patch(minimapVisionUpdate_192_256);
+
 template <int PIXEL_STRIDE>
 void minimapSurfaceUpdateMegatile(int x, int y)
 {
@@ -1235,6 +1252,10 @@ void __cdecl minimapSurfaceUpdate_()
 		}
 	}
 }
+
+FailStubPatch minimapSurfaceUpdate_64_patch(minimapSurfaceUpdate_64);
+FailStubPatch minimapSurfaceUpdate_96_128_patch(minimapSurfaceUpdate_96_128);
+FailStubPatch minimapSurfaceUpdate_192_256_patch(minimapSurfaceUpdate_192_256);
 
 void __cdecl setMapSizeConstants_()
 {
@@ -1443,6 +1464,8 @@ void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, voi
 	}
 }
 
+FailStubPatch InitTerrainGraphicsAndCreep_patch(InitTerrainGraphicsAndCreep);
+
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
 	int v4 = 0, v5 = 255;
@@ -1484,6 +1507,8 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 
 	return cycle_struct_index;
 }
+
+FailStubPatch DoCycle_patch(DoCycle);
 
 void __cdecl colorCycleInterval_()
 {

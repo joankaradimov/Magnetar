@@ -151,6 +151,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\MemoryModule\MemoryModule.h" />
+    <ClInclude Include="patching\FailStubPatch.h" />
     <ClInclude Include="patching\FunctionPatch.h" />
     <ClInclude Include="patching\BasePatch.h" />
     <ClInclude Include="patching\CallSitePatch.h" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="..\MemoryModule\MemoryModule.c" />
     <ClCompile Include="MagnetarCraft.cpp" />
+    <ClCompile Include="patching\FailStubPatch.cpp" />
     <ClCompile Include="patching\FunctionPatch.cpp" />
     <ClCompile Include="patching\BasePatch.cpp" />
     <ClCompile Include="patching\CallSitePatch.cpp" />

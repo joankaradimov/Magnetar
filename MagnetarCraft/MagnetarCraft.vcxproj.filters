@@ -23,6 +23,9 @@
     <ClCompile Include="..\MemoryModule\MemoryModule.c">
       <Filter>MemoryModule</Filter>
     </ClCompile>
+    <ClCompile Include="patching\FailStubPatch.cpp">
+      <Filter>patching</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="starcraft.h" />
@@ -47,6 +50,9 @@
     <ClInclude Include="DDrawWrapper.h" />
     <ClInclude Include="..\MemoryModule\MemoryModule.h">
       <Filter>MemoryModule</Filter>
+    </ClInclude>
+    <ClInclude Include="patching\FailStubPatch.h">
+      <Filter>patching</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
