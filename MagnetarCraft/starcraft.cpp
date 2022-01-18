@@ -653,7 +653,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 void LoadTitle_()
 {
-	HANDLE phFile; // [sp+Ch] [bp-4h]@1 MAPDST
+	HANDLE phFile;
 
 	if (!SFileOpenFileEx(0, "rez\\titledlg.bin", 0, &phFile))
 	{
@@ -676,20 +676,18 @@ void LoadTitle_()
 		{
 			if (read == v1)
 			{
-				dialog *v7;
 				SFileCloseFile(phFile);
 				if (v4)
 				{
 					v4->lFlags |= 4u;
 					AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\title.cpp", 190);
-					v7 = v4;
+					load_screen = v4;
 				}
 				else
 				{
-					v7 = 0;
+					load_screen = 0;
 				}
-				load_screen = v7;
-				InitializeDialog_(v7, TitleDlgProc);
+				InitializeDialog(load_screen, TitleDlgProc);
 			}
 			else
 			{
@@ -707,6 +705,8 @@ void LoadTitle_()
 		}
 	}
 }
+
+FailStubPatch LoadTitle_patch(LoadTitle);
 
 UnitType GetWorkerType(Race race)
 {
@@ -2534,7 +2534,7 @@ void GameMainLoop_()
 		if (!(BYTE1(dword_6CDFEC) & 8))
 		{
 		LABEL_8:
-			LoadTitle();
+			LoadTitle_();
 			LoadInitIscriptBIN();
 			AppAddExit_(CleanupIscriptBINHandle);
 			if (gwGameMode != GAME_GLUES && load_screen)
