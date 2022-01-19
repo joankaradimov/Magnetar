@@ -2013,7 +2013,7 @@ GotFileValues* readTemplate_(char* template_name, char* got_template_name, char*
 	}
 	memcpy(got_template_name, got_file_data->name, 32u);
 	memcpy(got_template_label, got_file_data->label, 32u);
-	GotFileValues*  result = (GotFileValues*)SMemAlloc(32, "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
+	GotFileValues* result = (GotFileValues*)SMemAlloc(sizeof(GotFileValues), "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
 	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
 	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
 	return result;
