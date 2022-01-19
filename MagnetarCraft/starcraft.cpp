@@ -318,7 +318,7 @@ int InitializeArchiveHandles_()
 	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
-FunctionPatch InitializeArchiveHandles_patch(InitializeArchiveHandles, InitializeArchiveHandles_);
+FailStubPatch InitializeArchiveHandles_patch(InitializeArchiveHandles);
 
 signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 {
