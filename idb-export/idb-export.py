@@ -680,6 +680,8 @@ def export_types(declarations, definitions):
         try:
             local_type = Type(type_ordinal)
             local_types[local_type.name] = local_type
+        except IdbExportError as error:
+            print(error)
         except:
             continue
 
