@@ -1869,6 +1869,8 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 	return 0;
 }
 
+FailStubPatch sub_4CCAC0_patch(sub_4CCAC0);
+
 int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 {
 	char *v8;
@@ -1899,7 +1901,7 @@ int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 	else
 	{
 		v8 = source;
-		if (!*source || !sub_4CCAC0(source, a4))
+		if (!*source || !sub_4CCAC0_(source, a4))
 			return 0;
 	}
 	int v9 = 12;
