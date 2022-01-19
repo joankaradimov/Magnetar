@@ -269,6 +269,7 @@ struct __declspec(align(2)) dialog;
 struct __declspec(align(4)) CUnit;
 
 
+#pragma pack(push, 1)
 struct struct_6
 {
   IDirectSoundBuffer *sound_buffer;
@@ -280,6 +281,7 @@ struct struct_6
   int field_10;
   int volume_related_maybe;
 };
+#pragma pack(pop)
 
 enum WeaponType : unsigned __int8
 {
@@ -432,10 +434,12 @@ struct UnknownTilesetRelated2
   _BYTE byte7;
 };
 
+#pragma pack(push, 1)
 struct struct_2
 {
   int field_0;
 };
+#pragma pack(pop)
 
 enum StatusFlags
 {
@@ -647,12 +651,14 @@ struct MapChunks
   int data7;
 };
 
+#pragma pack(push, 1)
 struct PMD
 {
   int mdisp;
   int pdisp;
   int vdisp;
 };
+#pragma pack(pop)
 
 enum PlayerGroups
 {
@@ -734,13 +740,16 @@ enum UnitPrototypeFlags
   ProducesUnits = 0x80000000,
 };
 
+#pragma pack(push, 1)
 struct struct_3
 {
   void *anonymous_0;
   int anonymous_1;
   void *anonymous_2;
 };
+#pragma pack(pop)
 
+#pragma pack(push, 1)
 struct struct_5
 {
   int sound_buffer_bytes;
@@ -748,6 +757,7 @@ struct struct_5
   int anonymous_2;
   IDirectSoundBuffer *sound_buffer;
 };
+#pragma pack(pop)
 
 enum GluAllTblEntry : __int16
 {
@@ -1318,6 +1328,7 @@ enum PlayerTypes : unsigned __int8
   PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
 
+#pragma pack(push, 1)
 struct RTCI
 {
   void *m_lpszClassName;
@@ -1328,6 +1339,7 @@ struct RTCI
   int m_pNextClass;
   int m_pClassInit;
 };
+#pragma pack(pop)
 
 typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, void *);
 
@@ -1433,6 +1445,7 @@ struct PlayersSelections
   CUnit *unit[8][12];
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) struct_a1
 {
   int (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD);
@@ -1440,17 +1453,20 @@ struct __declspec(align(2)) struct_a1
   int (__stdcall *isTileVisible)(int, int);
   int (__stdcall *pfuncC)(_DWORD);
 };
+#pragma pack(pop)
 
 struct CUnitPylon
 {
   CSprite *pPowerTemplate;
 };
 
+#pragma pack(push, 1)
 struct activation_delays
 {
   int anonymous_0;
   dialog *anonymous_1;
 };
+#pragma pack(pop)
 
 struct CUnitPsiProvider
 {
@@ -2607,6 +2623,7 @@ enum SfxData
   SFX_MAX = 0x478,
 };
 
+#pragma pack(push, 1)
 struct RTTIClassHierarchyDescriptor
 {
   int signature;
@@ -2614,6 +2631,7 @@ struct RTTIClassHierarchyDescriptor
   int numBaseClasses;
   void *pBaseClassArray;
 };
+#pragma pack(pop)
 
 struct CUnitGhost
 {
@@ -2676,6 +2694,7 @@ enum FogOfWar : unsigned __int8
   FOW_ON = 0x2,
 };
 
+#pragma pack(push, 1)
 struct RTTICompleteObjectLocator
 {
   int signature;
@@ -2684,6 +2703,7 @@ struct RTTICompleteObjectLocator
   void *pTypeDescriptor;
   void *pClassDescriptor;
 };
+#pragma pack(pop)
 
 typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
 
@@ -2702,11 +2722,13 @@ struct CUnitGatherer
 
 typedef struct _GUID GUID;
 
+#pragma pack(push, 1)
 struct __declspec(align(1)) swishTimer
 {
   unsigned __int16 wIndex;
   unsigned __int16 wType;
 };
+#pragma pack(pop)
 
 struct UpdateFunction
 {
@@ -2730,21 +2752,25 @@ enum GamePosition : __int16
   GAME_MAX = 0xB,
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) AudioVideoInitializationError
 {
   _DWORD error_code;
   _DWORD dword4;
   _DWORD function_name;
 };
+#pragma pack(pop)
 
 typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) DatLoad
 {
   void *address;
   int length;
   int entries;
 };
+#pragma pack(pop)
 
 enum FlingyID : __int8
 {
@@ -3121,23 +3147,27 @@ struct CharacterData
   _BYTE more_data[60];
 };
 
+#pragma pack(push, 1)
 struct CndSignature
 {
   int field_0;
   char filename[20];
 };
+#pragma pack(pop)
 
 struct vx4entry
 {
   WORD wImageRef[4][4];
 };
 
+#pragma pack(push, 1)
 struct struct_4
 {
   __int16 anonymous_0[2];
   int anonymous_1;
   void *anonymous_2;
 };
+#pragma pack(pop)
 
 struct CThingy
 {
@@ -3176,6 +3206,7 @@ typedef __int8 s8;
 
 typedef int (__fastcall *ActionPointer)(Action *);
 
+#pragma pack(push, 1)
 struct struct_1
 {
   struct_1 *field_0;
@@ -3186,6 +3217,7 @@ struct struct_1
   char gap_47[1];
   char field_6;
 };
+#pragma pack(pop)
 
 enum Order : __int8
 {
@@ -3363,13 +3395,16 @@ enum Order : __int8
   ORD_MAX = 0xAB,
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) ColorShiftData
 {
   u32 index;
   void *data;
   char name[12];
 };
+#pragma pack(pop)
 
+#pragma pack(push, 1)
 struct RTTIBaseClassDescriptor
 {
   void *pTypeDescriptor;
@@ -3377,6 +3412,7 @@ struct RTTIBaseClassDescriptor
   PMD pmd;
   int attributes;
 };
+#pragma pack(pop)
 
 struct SaiContourHub
 {
@@ -3404,6 +3440,7 @@ struct UnknownTilesetRelated1
   UnknownTilesetRelated2 y[2];
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(1)) GotFileValues
 {
   u8 template_id;
@@ -3425,6 +3462,7 @@ struct __declspec(align(1)) GotFileValues
   u32 resource_type_value;
   u8 unused3[5];
 };
+#pragma pack(pop)
 
 struct Condition
 {
@@ -3560,6 +3598,7 @@ struct CUnitStatus
   u16 groundStrength;
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) LobbySlot
 {
   int field0;
@@ -3615,12 +3654,15 @@ struct __declspec(align(2)) LobbySlot
   int field42;
   dialog *some_dialog;
 };
+#pragma pack(pop)
 
+#pragma pack(push, 1)
 struct __declspec(align(1)) Position
 {
   u16 x;
   u16 y;
 };
+#pragma pack(pop)
 
 struct CUnitCarrier
 {
@@ -3642,6 +3684,7 @@ struct dialog_edit
   u8 bCursorPos;
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) AiCaptain
 {
   u16 region;
@@ -3669,6 +3712,7 @@ struct __declspec(align(2)) AiCaptain
   CUnit *mainMedic;
   void *town;
 };
+#pragma pack(pop)
 
 struct Counts
 {
@@ -3884,6 +3928,7 @@ struct PlayerInfo
   char szName[25];
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) SightStruct
 {
   u32 tileSightWidth;
@@ -3894,6 +3939,7 @@ struct __declspec(align(2)) SightStruct
   u32 tile_count;
   u32 tiles;
 };
+#pragma pack(pop)
 
 struct grpFrame
 {
@@ -3926,6 +3972,7 @@ struct TechBW
   u8 items[20];
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) CUnitBuilding
 {
   CUnit *addon;
@@ -3939,6 +3986,7 @@ struct __declspec(align(2)) CUnitBuilding
   u8 upgradeLevel;
   u16 __E;
 };
+#pragma pack(pop)
 
 typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
 
@@ -4042,12 +4090,14 @@ struct __declspec(align(1)) GameData
   GotFileValues got_file_values;
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) PathCreateRelated
 {
   s16 field1;
   s16 field0;
   MapSize map_size;
 };
+#pragma pack(pop)
 
 struct GotFile
 {
@@ -4057,6 +4107,7 @@ struct GotFile
   GotFileValues values;
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) AI_Main
 {
   s32 oreCollection;
@@ -4101,6 +4152,7 @@ struct __declspec(align(2)) AI_Main
   CUnit *mainMedic;
   Box32 genCmdLoc;
 };
+#pragma pack(pop)
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
@@ -4414,12 +4466,15 @@ struct __declspec(align(4)) CFlingy
   u8 velocityDirection2;
 };
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) ChunkData
 {
   ChunkListItem field1;
   SectionData section_data;
 };
+#pragma pack(pop)
 
+#pragma pack(push, 1)
 struct __declspec(align(2)) dialog
 {
   dialog *pNext;
@@ -4437,6 +4492,7 @@ struct __declspec(align(2)) dialog
   FnUpdate pfcnUpdate;
   dialog_fields fields[9];
 };
+#pragma pack(pop)
 
 struct __declspec(align(4)) CUnit
 {
