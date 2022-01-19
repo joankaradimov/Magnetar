@@ -1451,7 +1451,7 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FunctionPatch ChkLoader_ERA_patch(ChkLoader_ERA, ChkLoader_ERA_);
+FailStubPatch ChkLoader_ERA_patch(ChkLoader_ERA);
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
@@ -1487,7 +1487,7 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
-FunctionPatch ChkLoader_VCOD_patch(ChkLoader_VCOD, ChkLoader_VCOD_);
+FailStubPatch ChkLoader_VCOD_patch(ChkLoader_VCOD);
 
 #define MAX_MAP_DIMENTION 256
 
@@ -1528,7 +1528,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 	return SAI_PathCreate(active_tiles) != 0;
 }
 
-FunctionPatch ChkLoader_MTXM_patch(ChkLoader_MTXM, ChkLoader_MTXM_);
+FailStubPatch ChkLoader_MTXM_patch(ChkLoader_MTXM);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
