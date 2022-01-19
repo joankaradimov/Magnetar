@@ -798,7 +798,7 @@ void CreateInitialMeleeUnits_()
 	}
 }
 
-FunctionPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
+FailStubPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits);
 
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -1186,6 +1186,84 @@ int LoadMap_()
 }
 
 FunctionPatch LoadMap_patch(LoadMap, LoadMap_);
+
+signed int GameInit_()
+{
+	memset(Chat_GameText, 0, 2832u);
+	*(_WORD *)&Chat_GameText[12].chars[216] = 0;
+	resetTextAndLineData();
+	dword_6D5BD0 = 0;
+	initAIControllerData();
+	initDetailFinder();
+	InitRegionCaptains(0);
+	load_AIScript_BIN();
+	initAITownMgr();
+	dword_59CC94 = 60;
+	dword_59CC8C = 15;
+	dword_59CC90 = 6;
+	initMapData();
+	InitializePresetImageArrays();
+	InitializeSpriteArray();
+	InitializeThingyArray();
+	LoadGameData(flingyDat, "arr\\flingy.dat");
+	memset(dword_63FEE0, 0, 76u);
+	dword_63FF3C = (CUnit *)dword_63FEE0;
+	dword_63FF38 = (CUnit *)dword_63FEE0;
+	dword_63FEC8 = 0;
+	dword_63FF34 = 0;
+	InitializeBulletArray();
+	InitializeOrderArray();
+	sub_4CB5B0(0, off_5127DC[CurrentTileSet]->y);
+	sub_41E450(sub_4BDB30, palette);
+	sub_4C99C0();
+	if (!loadGameFileHandle)
+		InitializeUnitCounts();
+	initializePsiFieldData();
+	ResetDATFiles();
+	resetOrdersUnitsDAT();
+	calculateUnitStrengths();
+	createUnitBuildingSpriteValidityArray();
+	if (loadGameFileHandle)
+		return 1;
+	if (LoadMap_())
+	{
+		if (!loadGameFileHandle)
+		{
+			if (LOBYTE(multiPlayerMode) && gameData.got_file_values.team_mode)
+				CreateInitialTeamMeleeUnits();
+			else
+				CreateInitialMeleeUnits_();
+			InitialSetScreenToStartLocation();
+			if (!loadGameFileHandle)
+			{
+				InitRegionCaptains(1);
+				sub_446350();
+			}
+		}
+		return 1;
+	}
+	if (!dword_6D5BF8 && !outOfGame)
+	{
+		leaveGame(3);
+		outOfGame = 1;
+		doNetTBLError(0, 0, 0, 97);
+		if (gwGameMode == GAME_RUN)
+		{
+			GameState = 0;
+			gwNextGameMode = GAME_GLUES;
+			if (!InReplay)
+			{
+				ReplayFrames = ElapsedTimeFrames;
+			}
+		}
+		nextLeaveGameMenu();
+	}
+	return 0;
+}
+
+FunctionPatch GameInit_patch(GameInit, GameInit_);
+FailStubPatch sub_4CD770_patch(sub_4CD770);
+FailStubPatch sub_4A13B0_patch(sub_4A13B0);
 
 void GameRun_(MenuPosition a1)
 {
