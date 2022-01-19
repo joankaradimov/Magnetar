@@ -2775,8 +2775,6 @@ void localDll_Init_(HINSTANCE a1)
 void loadInitCreditsBIN_(char* a1)
 {
 	LONG v3; // esi MAPDST
-	int v4; // eax
-	dialog* v5; // ebx
 	int v6; // eax
 	char buff[MAX_PATH]; // [esp+Ch] [ebp-10Ch] BYREF
 	int read; // [esp+110h] [ebp-8h] BYREF
@@ -2802,7 +2800,7 @@ void loadInitCreditsBIN_(char* a1)
 	}
 	if (!v3)
 		SysWarn_FileNotFound("rez\\credits.bin", 24);
-	v5 = (dialog*)SMemAlloc(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	dialog* v5 = (dialog*)SMemAlloc(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 	if (!SFileReadFile(phFile, v5, v3, &read, 0))
 	{
 		FileFatal(phFile, GetLastError() == 38 ? 24 : GetLastError());
