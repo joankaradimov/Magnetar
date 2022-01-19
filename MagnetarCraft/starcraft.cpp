@@ -706,7 +706,7 @@ void LoadTitle_()
 				{
 					load_screen = 0;
 				}
-				InitializeDialog(load_screen, TitleDlgProc_);
+				InitializeDialog_(load_screen, TitleDlgProc_);
 			}
 			else
 			{
