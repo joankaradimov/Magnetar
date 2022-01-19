@@ -541,7 +541,8 @@ class Type(object):
 
     keyword_constructor = {}
 
-    def __new__(cls, type_definition):
+    def __new__(cls, type_ordinal):
+        type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE)
         type_keyword = type_definition.split(' ')[0]
         constructor = cls.keyword_constructor.get(type_keyword)
         if constructor:
@@ -663,8 +664,7 @@ def export_types(declarations, definitions):
             existing_type_names.add(type_name)
 
         try:
-            local_type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE)
-            local_type = Type(local_type_definition)
+            local_type = Type(type_ordinal)
             local_types[local_type.name] = local_type
         except:
             continue
