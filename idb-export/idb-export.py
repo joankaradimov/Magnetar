@@ -542,12 +542,26 @@ class Type(object):
     keyword_constructor = {}
 
     def __new__(cls, type_ordinal):
-        type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE)
+        type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE | PRTYPE_PRAGMA).strip()
+
+        type_definition_lines = type_definition.split('\n')
+        if type_definition_lines[0].startswith('#pragma') and type_definition_lines[-1].startswith('#pragma'):
+            type_prologue = type_definition_lines[0] + '\n'
+            type_epilogue = type_definition_lines[-1] + '\n'
+            type_definition = '\n'.join(type_definition_lines[1:-1])
+        elif type_definition_lines[0].startswith('#pragma') or type_definition_lines[-1].startswith('#pragma'):
+            raise IdbExportError('Expected pragma at both the start and end of type')
+        else:
+            type_prologue = ''
+            type_epilogue = ''
+
         type_keyword = type_definition.split(' ')[0]
         constructor = cls.keyword_constructor.get(type_keyword)
         if constructor:
             self = object.__new__(constructor)
-            self.definition = type_definition.strip() + ';\n\n'
+            self.prologue = type_prologue
+            self.definition = type_definition + ';\n'
+            self.epilogue = type_epilogue
             return self
         else:
             raise IdbExportError('key word not registered')
@@ -673,7 +687,7 @@ def export_types(declarations, definitions):
 
     for local_type in sort_topologically(local_types):
         declarations.append(local_type.declaration)
-        definitions.append(local_type.definition)
+        definitions.append(local_type.prologue + local_type.definition + local_type.epilogue + '\n')
 
 
 from collections import defaultdict
