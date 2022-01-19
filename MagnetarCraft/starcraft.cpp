@@ -798,7 +798,7 @@ void CreateInitialMeleeUnits_()
 	}
 }
 
-//FunctionPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
+FunctionPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits, CreateInitialMeleeUnits_);
 
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
