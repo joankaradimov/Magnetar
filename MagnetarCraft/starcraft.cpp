@@ -651,6 +651,25 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->lFlags &= ~0x4000000u;
 }
 
+bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == 14)
+	{
+		if (evt->dwUser == 0)
+		{
+			titleInit(dlg);
+		}
+		else if (evt->dwUser == 1)
+		{
+			DrawBINDialog(dlg);
+			return genericDlgInteract(dlg, evt);
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FailStubPatch TitleDlgProc_patch(TitleDlgProc);
+
 void LoadTitle_()
 {
 	HANDLE phFile;
@@ -687,7 +706,7 @@ void LoadTitle_()
 				{
 					load_screen = 0;
 				}
-				InitializeDialog(load_screen, TitleDlgProc);
+				InitializeDialog(load_screen, TitleDlgProc_);
 			}
 			else
 			{
