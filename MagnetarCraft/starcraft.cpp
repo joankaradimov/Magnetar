@@ -1076,6 +1076,84 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 	*/
 }
 
+BOOL sub_4CC7F0_(char* a1)
+{
+	char buff[260];
+	char dest[260];
+	int chk_size;
+
+	if (CampaignIndex)
+	{
+		SStrCopy(dest, a1, 0x104u);
+	}
+	else
+	{
+		dest[0] = 0;
+		int result = LoadFileArchiveToSBigBuf(a1, &chk_size, 1, &mapArchiveHandle);
+		if (!result)
+		{
+			return result;
+		}
+	}
+	if (dest[0])
+	{
+		_snprintf(buff, 260u, "%s\\%s", dest, "staredit\\scenario.chk");
+	}
+	else
+	{
+		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+	}
+	void* chk_data = (void*)fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2141);
+	if (chk_data)
+	{
+		int loader_index = 0;
+		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
+		{
+			ChkSectionLoader* loaders;
+			int loader_count;
+			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
+			{
+				loaders = chk_loaders_[loader_index].melee_loaders;
+				loader_count = chk_loaders_[loader_index].melee_loader_count;
+			}
+			else
+			{
+				loaders = chk_loaders_[loader_index].ums_loaders;
+				loader_count = chk_loaders_[loader_index].ums_loader_count;
+			}
+			int result = ReadChunkNodes_(loader_count, chk_size, loaders, chk_data, 0);
+			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2159, 0);
+			if (mapArchiveHandle)
+			{
+				SFileCloseArchive(mapArchiveHandle);
+				mapArchiveHandle = 0;
+			}
+			return result;
+		}
+		else
+		{
+			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2149, 0);
+			if (mapArchiveHandle)
+			{
+				SFileCloseArchive(mapArchiveHandle);
+				mapArchiveHandle = 0;
+			}
+			return 0;
+		}
+	}
+	else
+	{
+		if (mapArchiveHandle)
+		{
+			SFileCloseArchive(mapArchiveHandle);
+			mapArchiveHandle = 0;
+		}
+		return 0;
+	}
+}
+
+FailStubPatch sub_4CC7F0_patch(sub_4CC7F0);
+
 int LoadMap_()
 {
 	if (InReplay)
@@ -1101,7 +1179,7 @@ int LoadMap_()
 	}
 	else if (CurrentMapFileName[0])
 	{
-		return sub_4CC7F0(CurrentMapFileName);
+		return sub_4CC7F0_(CurrentMapFileName);
 	}
 
 	return 0;
