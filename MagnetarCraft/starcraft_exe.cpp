@@ -14786,7 +14786,7 @@ char editUnitFlags(CUnit *a1, int a2) {
 }
 DECL_FUNC(bool (__stdcall*ChkLoader_THG2)(SectionData *, int, MapChunks *), ChkLoader_THG2, 0x4cd600);
 DECL_FUNC(int(*sub_4CD740)(), sub_4CD740, 0x4cd740);
-DECL_FUNC(int(*sub_4CD770)(), sub_4CD770, 0x4cd770);
+DECL_FUNC(void (__cdecl*sub_4CD770)(), sub_4CD770, 0x4cd770);
 DECL_FUNC(bool (__stdcall*ChkLoader_UNIT)(SectionData *, int, MapChunks *), ChkLoader_UNIT, 0x4cd7a0);
 DECL_FUNC(int (__thiscall*sub_4CD9C0)(dialog *this_), sub_4CD9C0, 0x4cd9c0);
 DECL_FUNC(int (__stdcall*sub_4CDA00)(int), sub_4CDA00, 0x4cda00);

@@ -104,6 +104,7 @@ struct MapDownload;
 enum UnitMovementState;
 struct TriggerList;
 struct MapChunks;
+struct __declspec(align(4)) SectionData;
 struct PMD;
 enum PlayerGroups;
 enum VictoryConditions;
@@ -223,6 +224,7 @@ struct FontChar;
 struct TileType;
 struct UnitAvail;
 struct Bitmap;
+struct __declspec(align(2)) ChunkData;
 struct MiniTileFlagArray;
 struct Box16;
 struct s_evt;
@@ -253,7 +255,6 @@ struct dialog_btn;
 struct CPPEH_RECORD;
 struct grpHead;
 struct SaiRegion;
-struct SectionData;
 struct CUnitHatchery;
 struct __declspec(align(4)) Target_;
 struct Trigger;
@@ -268,9 +269,9 @@ struct COrder;
 union CUnitFields2;
 union dialog_fields;
 struct __declspec(align(4)) CFlingy;
-struct __declspec(align(2)) ChunkData;
 struct __declspec(align(2)) dialog;
 struct __declspec(align(4)) CUnit;
+
 
 
 #pragma pack(push, 1)
@@ -663,6 +664,15 @@ struct MapChunks
   int data7;
 };
 static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
+
+struct __declspec(align(4)) SectionData
+{
+  int field0;
+  byte *field1;
+  int chunk_name;
+  int size;
+};
+static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
 
 #pragma pack(push, 1)
 struct PMD
@@ -3980,6 +3990,15 @@ struct Bitmap
 };
 static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
 
+#pragma pack(push, 1)
+struct __declspec(align(2)) ChunkData
+{
+  ChunkListItem field1;
+  SectionData section_data;
+};
+#pragma pack(pop)
+static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
+
 struct MiniTileFlagArray
 {
   u16 miniTile[16];
@@ -4390,15 +4409,6 @@ struct SaiRegion
 };
 static_assert(sizeof(SaiRegion) == 64, "Incorrect size for type `SaiRegion`. Expected: 64");
 
-struct SectionData
-{
-  int field0;
-  TileID *field1;
-  int chunk_name;
-  int size;
-};
-static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
-
 struct CUnitHatchery
 {
   rect harvestValue;
@@ -4614,15 +4624,6 @@ struct __declspec(align(4)) CFlingy
   u8 velocityDirection2;
 };
 static_assert(sizeof(CFlingy) == 76, "Incorrect size for type `CFlingy`. Expected: 76");
-
-#pragma pack(push, 1)
-struct __declspec(align(2)) ChunkData
-{
-  ChunkListItem field1;
-  SectionData section_data;
-};
-#pragma pack(pop)
-static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) dialog

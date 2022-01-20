@@ -4617,7 +4617,7 @@ CUnit *CreateUnitAtPos(__int16 player_id, unsigned int unit_type, __int16 x, __i
 char editUnitFlags(CUnit *a1, int a2);
 extern bool (__stdcall*ChkLoader_THG2)(SectionData *, int, MapChunks *);
 extern int(*sub_4CD740)();
-extern int(*sub_4CD770)();
+extern void (__cdecl*sub_4CD770)();
 extern bool (__stdcall*ChkLoader_UNIT)(SectionData *, int, MapChunks *);
 extern int (__thiscall*sub_4CD9C0)(dialog *this_);
 extern int (__stdcall*sub_4CDA00)(int);
