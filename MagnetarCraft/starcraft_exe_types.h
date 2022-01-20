@@ -15,10 +15,14 @@
 
 // Some convenience macros to make partial accesses nicer
 // first unsigned macros:
+#undef LOBYTE
 #define LOBYTE(x)   (*((_BYTE*)&(x)))   // low byte
+#undef LOWORD
 #define LOWORD(x)   (*((_WORD*)&(x)))   // low word
 #define LODWORD(x)  (*((_DWORD*)&(x)))  // low dword
+#undef HIBYTE
 #define HIBYTE(x)   (*((_BYTE*)&(x)+1))
+#undef HIWORD
 #define HIWORD(x)   (*((_WORD*)&(x)+1))
 #define HIDWORD(x)  (*((_DWORD*)&(x)+1))
 #define BYTEn(x, n)   (*((_BYTE*)&(x)+n))
