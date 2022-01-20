@@ -569,7 +569,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 		blitTileCacheOnRefresh();
 	}
 	BWFXN_drawAllSprites();
-	if (CurrentTileSet == Platform)
+	if (CurrentTileSet == Tileset::Platform)
 	{
 		if (v2)
 			drawStars();
@@ -1246,10 +1246,10 @@ signed int GameInit_()
 		leaveGame(3);
 		outOfGame = 1;
 		doNetTBLError(0, 0, 0, 97);
-		if (gwGameMode == GAME_RUN)
+		if (gwGameMode == GamePosition::GAME_RUN)
 		{
 			GameState = 0;
-			gwNextGameMode = GAME_GLUES;
+			gwNextGameMode = GamePosition::GAME_GLUES;
 			if (!InReplay)
 			{
 				ReplayFrames = ElapsedTimeFrames;
