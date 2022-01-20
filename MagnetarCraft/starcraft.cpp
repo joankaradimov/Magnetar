@@ -816,7 +816,7 @@ ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__std
 }
 
 ChkSectionLoader chk_loaders_version_[] = {
-	CreateChkSectionLoader("TYPE", ChkLoader_TYPE, 1),
+	CreateChkSectionLoader("TYPE", ChkLoader_TYPE, 0),
 	CreateChkSectionLoader("VER ", ChkLoader_VER, 1),
 };
 
@@ -1040,9 +1040,6 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
-	return ReadMapChunks(a1, chk_data, out_version_loader_index, chk_size);
-	// TODO: fix
-	/*
 	if (out_version_loader_index && chk_data)
 	{
 		MapChunks location;
@@ -1058,7 +1055,7 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 		{
 			for (int i = 0; i < _countof(chk_loaders_); i++)
 			{
-				if (chk_loaders_[i].version == a1->data6)
+				if (chk_loaders_[i].version == LOWORD(a1->data6))
 				{
 					if (!chk_loaders_[i].requires_expansion || IsExpansion)
 					{
@@ -1075,7 +1072,6 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 		SErrSetLastError(0x57u);
 	}
 	return 0;
-	*/
 }
 
 BOOL sub_4CC7F0_(char* a1)
