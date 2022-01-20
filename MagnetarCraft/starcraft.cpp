@@ -786,11 +786,13 @@ void CreateInitialMeleeUnits_()
 				CreateInitialMeleeBuildings(player->nRace, player_index);
 				if (player->nRace == Race::RACE_Zerg)
 					CreateInitialOverlord(player_index);
+				[[fallthrough]];
 			case StartingUnits::SU_WORKER_ONLY:
 				CreateInitialMeleeWorker_(player->nRace, player_index);
 				CreateInitialMeleeWorker_(player->nRace, player_index);
 				CreateInitialMeleeWorker_(player->nRace, player_index);
 				CreateInitialMeleeWorker_(player->nRace, player_index);
+				[[fallthrough]];
 			case StartingUnits::SU_MAP_DEFAULT:
 				break;
 			}
