@@ -4962,7 +4962,7 @@ extern void (__cdecl*audioVideoInit)();
 extern int(*gluMainDestroy)();
 extern int(*sub_4DB180)();
 extern int(*sub_4DB1C0)();
-extern signed int (__thiscall*loadCampaignBIN)(HANDLE file);
+extern signed int (__cdecl*loadCampaignBIN)();
 extern int (__stdcall*sub_4DB260)(int, int, int);
 void gluMainCreate(dialog *a1);
 extern int(*sub_4DB480)();

@@ -15809,7 +15809,7 @@ DECL_FUNC(void (__cdecl*audioVideoInit)(), audioVideoInit, 0x4db060);
 DECL_FUNC(int(*gluMainDestroy)(), gluMainDestroy, 0x4db140);
 DECL_FUNC(int(*sub_4DB180)(), sub_4DB180, 0x4db180);
 DECL_FUNC(int(*sub_4DB1C0)(), sub_4DB1C0, 0x4db1c0);
-DECL_FUNC(signed int (__thiscall*loadCampaignBIN)(HANDLE file), loadCampaignBIN, 0x4db200);
+DECL_FUNC(signed int (__cdecl*loadCampaignBIN)(), loadCampaignBIN, 0x4db200);
 DECL_FUNC(int (__stdcall*sub_4DB260)(int, int, int), sub_4DB260, 0x4db260);
 void gluMainCreate(dialog *a1) {
     int address = 0x4db280;

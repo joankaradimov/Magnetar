@@ -2450,10 +2450,6 @@ LABEL_37:
 
 int SwitchMenu_()
 {
-	unsigned int v1; // eax@5
-	void *v2; // ecx@7
-	char *v3; // eax@15
-
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
 		main_directory[0] = 0;
 
@@ -2461,12 +2457,10 @@ int SwitchMenu_()
 	if (lastDirectorySeparator)
 		*lastDirectorySeparator = 0;
 
-	v1 = 0;
-	do
+	for (int i = 0; i < 256; ++i)
 	{
-		byte_50CDC1[v1] = v1;
-		++v1;
-	} while (v1 < 256);
+		byte_50CDC1[i] = i;
+	}
 	LoadMenuFonts();
 	loadtEffectPcx();
 	loadCursor();
@@ -2485,24 +2479,24 @@ int SwitchMenu_()
 		glGluesMode = GLUE_SCORE_T_VICTORY;
 		goto LABEL_28;
 	}
-	if (Ophelia && !LOBYTE(multiPlayerMode))
+	if (Ophelia && !multiPlayerMode)
 	{
 		Ophelia = 0;
 		if (!playerName[0])
 		{
+			char* v3;
 			if (*networkTable > 71u)
 				v3 = (char *)networkTable + networkTable[72];
 			else
 				v3 = "";
 			SStrCopy(playerName, v3, 25u);
 		}
-		customSingleplayer = 0;
+		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
-		if (level_cheat_is_bw && !dword_6D11E4)
+		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
+		{
 			goto LABEL_38;
-		LOBYTE(v2) = level_cheat_is_bw != 0;
-		if (!loadCampaignBIN(v2) || !CreateCampaignGame_((MapData)level_cheat_mission))
-			goto LABEL_38;
+		}
 		if (level_cheat_race)
 		{
 			if (level_cheat_race != 1)
@@ -2525,7 +2519,7 @@ int SwitchMenu_()
 		}
 	LABEL_26:
 		OpheliaEnabled = 1;
-		if (GameCheats & CHEAT_NoGlues)
+		if (GameCheats & CheatFlags::CHEAT_NoGlues)
 			gwGameMode = GAME_RUNINIT;
 	}
 LABEL_28:
@@ -2646,6 +2640,8 @@ LABEL_28:
 		SMemFree(dword_51C40C, "Starcraft\\SWAR\\lang\\glues.cpp", 370, 0);
 	return sub_4DC870();
 }
+
+FailStubPatch SwitchMenu_patch(SwitchMenu);
 
 void CreateMainWindow_()
 {
@@ -2771,7 +2767,7 @@ void GameMainLoop_()
 				case GAME_GLUES:
 				case GAME_WIN:
 				case GAME_LOSE:
-					SwitchMenu(); // TODO: use SwitchMenu_
+					SwitchMenu_();
 					continue;
 				case GAME_CREDITS:
 					BeginCredits();
