@@ -286,6 +286,7 @@ struct struct_6
   int volume_related_maybe;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_6) == 24, "Incorrect size for type `struct_6`. Expected: 24");
 
 enum WeaponType : unsigned __int8
 {
@@ -437,6 +438,7 @@ struct UnknownTilesetRelated2
   _BYTE byte6;
   _BYTE byte7;
 };
+static_assert(sizeof(UnknownTilesetRelated2) == 8, "Incorrect size for type `UnknownTilesetRelated2`. Expected: 8");
 
 #pragma pack(push, 1)
 struct struct_2
@@ -444,6 +446,7 @@ struct struct_2
   int field_0;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_2) == 4, "Incorrect size for type `struct_2`. Expected: 4");
 
 enum StatusFlags
 {
@@ -485,6 +488,7 @@ struct ForceName
 {
   char name[30];
 };
+static_assert(sizeof(ForceName) == 30, "Incorrect size for type `ForceName`. Expected: 30");
 
 enum ResourceType : unsigned __int8
 {
@@ -506,6 +510,7 @@ struct Timer
   __int16 id;
   int unknown;
 };
+static_assert(sizeof(Timer) == 28, "Incorrect size for type `Timer`. Expected: 28");
 
 enum GameType : __int8
 {
@@ -581,6 +586,7 @@ struct RenderFunction
   void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
   void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
 };
+static_assert(sizeof(RenderFunction) == 12, "Incorrect size for type `RenderFunction`. Expected: 12");
 
 struct MapDownload
 {
@@ -595,6 +601,7 @@ struct MapDownload
   int u4;
   int u5;
 };
+static_assert(sizeof(MapDownload) == 296, "Incorrect size for type `MapDownload`. Expected: 296");
 
 enum UnitMovementState : __int8
 {
@@ -642,6 +649,7 @@ struct TriggerList
   TriggerListEntry *end;
   TriggerListEntry *begin;
 };
+static_assert(sizeof(TriggerList) == 12, "Incorrect size for type `TriggerList`. Expected: 12");
 
 struct MapChunks
 {
@@ -654,6 +662,7 @@ struct MapChunks
   int data6;
   int data7;
 };
+static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
 
 #pragma pack(push, 1)
 struct PMD
@@ -663,6 +672,7 @@ struct PMD
   int vdisp;
 };
 #pragma pack(pop)
+static_assert(sizeof(PMD) == 12, "Incorrect size for type `PMD`. Expected: 12");
 
 enum PlayerGroups
 {
@@ -752,6 +762,7 @@ struct struct_3
   void *anonymous_2;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_3) == 12, "Incorrect size for type `struct_3`. Expected: 12");
 
 #pragma pack(push, 1)
 struct struct_5
@@ -762,6 +773,7 @@ struct struct_5
   IDirectSoundBuffer *sound_buffer;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_5) == 16, "Incorrect size for type `struct_5`. Expected: 16");
 
 enum GluAllTblEntry : __int16
 {
@@ -836,6 +848,7 @@ struct points
   __int16 x;
   __int16 y;
 };
+static_assert(sizeof(points) == 4, "Incorrect size for type `points`. Expected: 4");
 
 enum Tileset : __int16
 {
@@ -855,12 +868,14 @@ struct TransVectorEntry
   RECT info;
   DWORD dwReserved;
 };
+static_assert(sizeof(TransVectorEntry) == 24, "Incorrect size for type `TransVectorEntry`. Expected: 24");
 
 struct GameSpeeds
 {
   unsigned __int32 gameSpeedModifiers[7];
   unsigned __int32 altSpeedModifiers[7];
 };
+static_assert(sizeof(GameSpeeds) == 56, "Incorrect size for type `GameSpeeds`. Expected: 56");
 
 enum StartingUnits : unsigned __int8
 {
@@ -873,6 +888,7 @@ struct PlayerAlliance
 {
   unsigned __int8 player[12];
 };
+static_assert(sizeof(PlayerAlliance) == 12, "Incorrect size for type `PlayerAlliance`. Expected: 12");
 
 enum MegatileFlags
 {
@@ -1061,6 +1077,7 @@ struct AI_Flags
   unsigned __int16 bUpgradesFinished : 1;
   unsigned __int16 bTargetExpansion : 1;
 };
+static_assert(sizeof(AI_Flags) == 2, "Incorrect size for type `AI_Flags`. Expected: 2");
 
 enum SaiAccessabilityFlags : __int16
 {
@@ -1320,6 +1337,7 @@ struct __declspec(align(2)) ChkSectionLoader
   bool (__stdcall *func)(SectionData *, int, MapChunks *);
   int flags;
 };
+static_assert(sizeof(ChkSectionLoader) == 12, "Incorrect size for type `ChkSectionLoader`. Expected: 12");
 
 typedef void (__thiscall *InputProcedure)(dlgEvent *);
 
@@ -1344,6 +1362,7 @@ struct RTCI
   int m_pClassInit;
 };
 #pragma pack(pop)
+static_assert(sizeof(RTCI) == 28, "Incorrect size for type `RTCI`. Expected: 28");
 
 typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, void *);
 
@@ -1421,6 +1440,7 @@ struct dialog_ctrl
 {
   dialog *pDlg;
 };
+static_assert(sizeof(dialog_ctrl) == 4, "Incorrect size for type `dialog_ctrl`. Expected: 4");
 
 struct PlayerResources
 {
@@ -1429,6 +1449,7 @@ struct PlayerResources
   int cumulativeGas[12];
   int cumulativeMinerals[12];
 };
+static_assert(sizeof(PlayerResources) == 192, "Incorrect size for type `PlayerResources`. Expected: 192");
 
 struct ChkLoader
 {
@@ -1443,11 +1464,13 @@ struct ChkLoader
   int ums_loader_count;
   int requires_expansion;
 };
+static_assert(sizeof(ChkLoader) == 40, "Incorrect size for type `ChkLoader`. Expected: 40");
 
 struct PlayersSelections
 {
   CUnit *unit[8][12];
 };
+static_assert(sizeof(PlayersSelections) == 384, "Incorrect size for type `PlayersSelections`. Expected: 384");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) struct_a1
@@ -1458,11 +1481,13 @@ struct __declspec(align(2)) struct_a1
   int (__stdcall *pfuncC)(_DWORD);
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_a1) == 16, "Incorrect size for type `struct_a1`. Expected: 16");
 
 struct CUnitPylon
 {
   CSprite *pPowerTemplate;
 };
+static_assert(sizeof(CUnitPylon) == 4, "Incorrect size for type `CUnitPylon`. Expected: 4");
 
 #pragma pack(push, 1)
 struct activation_delays
@@ -1471,12 +1496,14 @@ struct activation_delays
   dialog *anonymous_1;
 };
 #pragma pack(pop)
+static_assert(sizeof(activation_delays) == 8, "Incorrect size for type `activation_delays`. Expected: 8");
 
 struct CUnitPsiProvider
 {
   CUnit *prevPsiProvider;
   CUnit *nextPsiProvider;
 };
+static_assert(sizeof(CUnitPsiProvider) == 8, "Incorrect size for type `CUnitPsiProvider`. Expected: 8");
 
 enum SfxData
 {
@@ -2636,11 +2663,13 @@ struct RTTIClassHierarchyDescriptor
   void *pBaseClassArray;
 };
 #pragma pack(pop)
+static_assert(sizeof(RTTIClassHierarchyDescriptor) == 16, "Incorrect size for type `RTTIClassHierarchyDescriptor`. Expected: 16");
 
 struct CUnitGhost
 {
   CSprite *nukeDot;
 };
+static_assert(sizeof(CUnitGhost) == 4, "Incorrect size for type `CUnitGhost`. Expected: 4");
 
 enum StartingPositions : unsigned __int8
 {
@@ -2652,12 +2681,14 @@ struct LO_Overlays
 {
   LO_Header *overlays[999];
 };
+static_assert(sizeof(LO_Overlays) == 3996, "Incorrect size for type `LO_Overlays`. Expected: 3996");
 
 struct __declspec(align(4)) EstablishingShotPosition
 {
   int index;
   const char *tag;
 };
+static_assert(sizeof(EstablishingShotPosition) == 8, "Incorrect size for type `EstablishingShotPosition`. Expected: 8");
 
 struct _SCOPETABLE_ENTRY
 {
@@ -2665,6 +2696,7 @@ struct _SCOPETABLE_ENTRY
   void *FilterFunc;
   void *HandlerFunc;
 };
+static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPETABLE_ENTRY`. Expected: 12");
 
 enum WeaponTargetFlags : __int16
 {
@@ -2684,12 +2716,14 @@ struct SpriteTileData
   CSprite *tails[256];
   CSprite *heads[256];
 };
+static_assert(sizeof(SpriteTileData) == 2048, "Incorrect size for type `SpriteTileData`. Expected: 2048");
 
 struct ChunkListItem
 {
   ChunkData *next;
   ChunkData *previous;
 };
+static_assert(sizeof(ChunkListItem) == 8, "Incorrect size for type `ChunkListItem`. Expected: 8");
 
 enum FogOfWar : unsigned __int8
 {
@@ -2708,6 +2742,7 @@ struct RTTICompleteObjectLocator
   void *pClassDescriptor;
 };
 #pragma pack(pop)
+static_assert(sizeof(RTTICompleteObjectLocator) == 20, "Incorrect size for type `RTTICompleteObjectLocator`. Expected: 20");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
 
@@ -2716,6 +2751,7 @@ struct CampaignMission
   char *mission_name;
   int mission_index;
 };
+static_assert(sizeof(CampaignMission) == 8, "Incorrect size for type `CampaignMission`. Expected: 8");
 
 struct CUnitGatherer
 {
@@ -2723,6 +2759,7 @@ struct CUnitGatherer
   CUnit *prevHarvestUnit;
   CUnit *nextHarvestUnit;
 };
+static_assert(sizeof(CUnitGatherer) == 12, "Incorrect size for type `CUnitGatherer`. Expected: 12");
 
 typedef struct _GUID GUID;
 
@@ -2733,12 +2770,14 @@ struct __declspec(align(1)) swishTimer
   unsigned __int16 wType;
 };
 #pragma pack(pop)
+static_assert(sizeof(swishTimer) == 4, "Incorrect size for type `swishTimer`. Expected: 4");
 
 struct UpdateFunction
 {
   int index;
   void (__fastcall *update_function)(CImage *);
 };
+static_assert(sizeof(UpdateFunction) == 8, "Incorrect size for type `UpdateFunction`. Expected: 8");
 
 enum GamePosition : __int16
 {
@@ -2764,6 +2803,7 @@ struct __declspec(align(2)) AudioVideoInitializationError
   _DWORD function_name;
 };
 #pragma pack(pop)
+static_assert(sizeof(AudioVideoInitializationError) == 12, "Incorrect size for type `AudioVideoInitializationError`. Expected: 12");
 
 typedef void (__fastcall *FnAllocBackgroundImage)(char *fileName, Bitmap *a2, int *palette, char *source_filename, int source_line);
 
@@ -2775,8 +2815,9 @@ struct __declspec(align(2)) DatLoad
   int entries;
 };
 #pragma pack(pop)
+static_assert(sizeof(DatLoad) == 12, "Incorrect size for type `DatLoad`. Expected: 12");
 
-enum FlingyID : __int8
+enum FlingyID : unsigned __int8
 {
   FGY_Scourge = 0x0,
   FGY_Broodling = 0x1,
@@ -2994,6 +3035,7 @@ struct Chat_TextLine
 {
   char chars[218];
 };
+static_assert(sizeof(Chat_TextLine) == 218, "Incorrect size for type `Chat_TextLine`. Expected: 218");
 
 typedef tagPALETTEENTRY PALETTEENTRY;
 
@@ -3047,6 +3089,7 @@ struct CUnitFighter
   CUnit *next;
   bool inHanger;
 };
+static_assert(sizeof(CUnitFighter) == 16, "Incorrect size for type `CUnitFighter`. Expected: 16");
 
 enum CheatFlags
 {
@@ -3095,12 +3138,14 @@ struct point
   __int32 x;
   __int32 y;
 };
+static_assert(sizeof(point) == 8, "Incorrect size for type `point`. Expected: 8");
 
 struct CUnitSilo
 {
   CUnit *pNuke;
   bool bReady;
 };
+static_assert(sizeof(CUnitSilo) == 8, "Incorrect size for type `CUnitSilo`. Expected: 8");
 
 typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
 
@@ -3115,6 +3160,7 @@ union SaiRegionUser
   void *node;
   int relation;
 };
+static_assert(sizeof(SaiRegionUser) == 4, "Incorrect size for type `SaiRegionUser`. Expected: 4");
 
 struct bounds
 {
@@ -3125,6 +3171,7 @@ struct bounds
   WORD width;
   WORD height;
 };
+static_assert(sizeof(bounds) == 12, "Incorrect size for type `bounds`. Expected: 12");
 
 struct UnitDimentions
 {
@@ -3133,11 +3180,13 @@ struct UnitDimentions
   __int16 c;
   __int16 d;
 };
+static_assert(sizeof(UnitDimentions) == 8, "Incorrect size for type `UnitDimentions`. Expected: 8");
 
 struct CUnitNydus
 {
   CUnit *exit;
 };
+static_assert(sizeof(CUnitNydus) == 4, "Incorrect size for type `CUnitNydus`. Expected: 4");
 
 struct CharacterData
 {
@@ -3150,6 +3199,7 @@ struct CharacterData
   int gap[3];
   _BYTE more_data[60];
 };
+static_assert(sizeof(CharacterData) == 112, "Incorrect size for type `CharacterData`. Expected: 112");
 
 #pragma pack(push, 1)
 struct CndSignature
@@ -3158,11 +3208,13 @@ struct CndSignature
   char filename[20];
 };
 #pragma pack(pop)
+static_assert(sizeof(CndSignature) == 24, "Incorrect size for type `CndSignature`. Expected: 24");
 
 struct vx4entry
 {
   WORD wImageRef[4][4];
 };
+static_assert(sizeof(vx4entry) == 32, "Incorrect size for type `vx4entry`. Expected: 32");
 
 #pragma pack(push, 1)
 struct struct_4
@@ -3172,6 +3224,7 @@ struct struct_4
   void *anonymous_2;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_4) == 12, "Incorrect size for type `struct_4`. Expected: 12");
 
 struct CThingy
 {
@@ -3180,6 +3233,7 @@ struct CThingy
   int hitPoints;
   CSprite *sprite;
 };
+static_assert(sizeof(CThingy) == 16, "Incorrect size for type `CThingy`. Expected: 16");
 
 struct __declspec(align(2)) struc_66FE20
 {
@@ -3190,6 +3244,7 @@ struct __declspec(align(2)) struc_66FE20
   __int16 field_4;
   char player_name[26];
 };
+static_assert(sizeof(struc_66FE20) == 34, "Incorrect size for type `struc_66FE20`. Expected: 34");
 
 typedef unsigned __int8 u8;
 
@@ -3222,8 +3277,9 @@ struct struct_1
   char field_6;
 };
 #pragma pack(pop)
+static_assert(sizeof(struct_1) == 73, "Incorrect size for type `struct_1`. Expected: 73");
 
-enum Order : __int8
+enum Order : unsigned __int8
 {
   Die = 0x0,
   Stop = 0x1,
@@ -3407,6 +3463,7 @@ struct __declspec(align(2)) ColorShiftData
   char name[12];
 };
 #pragma pack(pop)
+static_assert(sizeof(ColorShiftData) == 20, "Incorrect size for type `ColorShiftData`. Expected: 20");
 
 #pragma pack(push, 1)
 struct RTTIBaseClassDescriptor
@@ -3417,6 +3474,7 @@ struct RTTIBaseClassDescriptor
   int attributes;
 };
 #pragma pack(pop)
+static_assert(sizeof(RTTIBaseClassDescriptor) == 24, "Incorrect size for type `RTTIBaseClassDescriptor`. Expected: 24");
 
 struct SaiContourHub
 {
@@ -3427,22 +3485,26 @@ struct SaiContourHub
   s16 unk_28[4];
   s16 searchOuter[4];
 };
+static_assert(sizeof(SaiContourHub) == 56, "Incorrect size for type `SaiContourHub`. Expected: 56");
 
 struct StringTbl
 {
   u16 *buffer;
 };
+static_assert(sizeof(StringTbl) == 4, "Incorrect size for type `StringTbl`. Expected: 4");
 
 struct CUnitVulture
 {
   u8 spiderMineCount;
 };
+static_assert(sizeof(CUnitVulture) == 1, "Incorrect size for type `CUnitVulture`. Expected: 1");
 
 struct UnknownTilesetRelated1
 {
   int x;
   UnknownTilesetRelated2 y[2];
 };
+static_assert(sizeof(UnknownTilesetRelated1) == 20, "Incorrect size for type `UnknownTilesetRelated1`. Expected: 20");
 
 #pragma pack(push, 1)
 struct __declspec(align(1)) GotFileValues
@@ -3467,6 +3529,7 @@ struct __declspec(align(1)) GotFileValues
   u8 unused3[5];
 };
 #pragma pack(pop)
+static_assert(sizeof(GotFileValues) == 32, "Incorrect size for type `GotFileValues`. Expected: 32");
 
 struct Condition
 {
@@ -3480,6 +3543,7 @@ struct Condition
   BYTE bFlags;
   BYTE __bAlign[2];
 };
+static_assert(sizeof(Condition) == 20, "Incorrect size for type `Condition`. Expected: 20");
 
 struct CUnitWorker
 {
@@ -3490,6 +3554,7 @@ struct CUnitWorker
   bool isCarryingSomething;
   u8 resourceCarryCount;
 };
+static_assert(sizeof(CUnitWorker) == 16, "Incorrect size for type `CUnitWorker`. Expected: 16");
 
 struct Font
 {
@@ -3500,12 +3565,14 @@ struct Font
   u8 Ymax;
   FontChar *chrs[1];
 };
+static_assert(sizeof(Font) == 12, "Incorrect size for type `Font`. Expected: 12");
 
 struct MapSize
 {
   u16 width;
   u16 height;
 };
+static_assert(sizeof(MapSize) == 4, "Incorrect size for type `MapSize`. Expected: 4");
 
 struct dialog_dlg
 {
@@ -3518,17 +3585,20 @@ struct dialog_dlg
   dialog *pMouseElement;
   void *pModalFcn;
 };
+static_assert(sizeof(dialog_dlg) == 28, "Incorrect size for type `dialog_dlg`. Expected: 28");
 
 struct CUnitRally
 {
   points position;
   CUnit *unit;
 };
+static_assert(sizeof(CUnitRally) == 8, "Incorrect size for type `CUnitRally`. Expected: 8");
 
 struct ScrollSpeeds
 {
   u8 scroll[7];
 };
+static_assert(sizeof(ScrollSpeeds) == 7, "Incorrect size for type `ScrollSpeeds`. Expected: 7");
 
 struct CycleStruct
 {
@@ -3541,6 +3611,7 @@ struct CycleStruct
   PALETTEENTRY *advanced_cycle_data;
   BYTE adv_cycle_count;
 };
+static_assert(sizeof(CycleStruct) == 16, "Incorrect size for type `CycleStruct`. Expected: 16");
 
 struct layer
 {
@@ -3554,6 +3625,7 @@ struct layer
   Bitmap *pSurface;
   void (__stdcall *pUpdate)(Bitmap *pSurface, bounds *pBounds);
 };
+static_assert(sizeof(layer) == 20, "Incorrect size for type `layer`. Expected: 20");
 
 struct dialog_scroll
 {
@@ -3571,6 +3643,7 @@ struct dialog_scroll
   u16 wUnk_0x4A;
   u32 dwUnk_0x4C;
 };
+static_assert(sizeof(dialog_scroll) == 32, "Incorrect size for type `dialog_scroll`. Expected: 32");
 
 typedef u16 TileID;
 
@@ -3601,6 +3674,7 @@ struct CUnitStatus
   u16 airStrength;
   u16 groundStrength;
 };
+static_assert(sizeof(CUnitStatus) == 44, "Incorrect size for type `CUnitStatus`. Expected: 44");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) LobbySlot
@@ -3659,6 +3733,7 @@ struct __declspec(align(2)) LobbySlot
   dialog *some_dialog;
 };
 #pragma pack(pop)
+static_assert(sizeof(LobbySlot) == 176, "Incorrect size for type `LobbySlot`. Expected: 176");
 
 #pragma pack(push, 1)
 struct __declspec(align(1)) Position
@@ -3667,6 +3742,7 @@ struct __declspec(align(1)) Position
   u16 y;
 };
 #pragma pack(pop)
+static_assert(sizeof(Position) == 4, "Incorrect size for type `Position`. Expected: 4");
 
 struct CUnitCarrier
 {
@@ -3675,6 +3751,7 @@ struct CUnitCarrier
   u8 inHangerCount;
   u8 outHangerCount;
 };
+static_assert(sizeof(CUnitCarrier) == 12, "Incorrect size for type `CUnitCarrier`. Expected: 12");
 
 struct dialog_edit
 {
@@ -3687,6 +3764,7 @@ struct dialog_edit
   u16 wUnk_0x3C;
   u8 bCursorPos;
 };
+static_assert(sizeof(dialog_edit) == 16, "Incorrect size for type `dialog_edit`. Expected: 16");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) AiCaptain
@@ -3717,6 +3795,7 @@ struct __declspec(align(2)) AiCaptain
   void *town;
 };
 #pragma pack(pop)
+static_assert(sizeof(AiCaptain) == 52, "Incorrect size for type `AiCaptain`. Expected: 52");
 
 struct Counts
 {
@@ -3725,6 +3804,7 @@ struct Counts
   s32 killed[228][12];
   s32 dead[228][12];
 };
+static_assert(sizeof(Counts) == 43776, "Incorrect size for type `Counts`. Expected: 43776");
 
 struct SaiSplit
 {
@@ -3732,18 +3812,21 @@ struct SaiSplit
   u16 rgn1;
   u16 rgn2;
 };
+static_assert(sizeof(SaiSplit) == 6, "Incorrect size for type `SaiSplit`. Expected: 6");
 
 struct UnitFinderData
 {
   s32 unitIndex;
   s32 position;
 };
+static_assert(sizeof(UnitFinderData) == 8, "Incorrect size for type `UnitFinderData`. Expected: 8");
 
 struct ChunkNode
 {
   ChunkListItem *count;
   ChunkListItem field2;
 };
+static_assert(sizeof(ChunkNode) == 12, "Incorrect size for type `ChunkNode`. Expected: 12");
 
 struct MinimapSurfaceInfoRelated
 {
@@ -3755,11 +3838,13 @@ struct MinimapSurfaceInfoRelated
   int c;
   int d;
 };
+static_assert(sizeof(MinimapSurfaceInfoRelated) == 16, "Incorrect size for type `MinimapSurfaceInfoRelated`. Expected: 16");
 
 struct UpgradesSC
 {
   u8 items[46];
 };
+static_assert(sizeof(UpgradesSC) == 46, "Incorrect size for type `UpgradesSC`. Expected: 46");
 
 struct rect
 {
@@ -3768,17 +3853,20 @@ struct rect
   s16 right;
   s16 bottom;
 };
+static_assert(sizeof(rect) == 8, "Incorrect size for type `rect`. Expected: 8");
 
 struct UpgradesBW
 {
   u8 items[15];
 };
+static_assert(sizeof(UpgradesBW) == 15, "Incorrect size for type `UpgradesBW`. Expected: 15");
 
 struct pt
 {
   u16 x;
   u16 y;
 };
+static_assert(sizeof(pt) == 4, "Incorrect size for type `pt`. Expected: 4");
 
 struct CUnitResource
 {
@@ -3789,17 +3877,20 @@ struct CUnitResource
   u8 resourceGroup;
   u8 resourceBelongsToAI;
 };
+static_assert(sizeof(CUnitResource) == 12, "Incorrect size for type `CUnitResource`. Expected: 12");
 
 struct dialog_optn
 {
   dialog *pDlg;
   u8 bEnabled;
 };
+static_assert(sizeof(dialog_optn) == 8, "Incorrect size for type `dialog_optn`. Expected: 8");
 
 struct CUnitPowerup
 {
   points origin;
 };
+static_assert(sizeof(CUnitPowerup) == 4, "Incorrect size for type `CUnitPowerup`. Expected: 4");
 
 struct SuppliesPerRace
 {
@@ -3807,6 +3898,7 @@ struct SuppliesPerRace
   s32 used[12];
   s32 max[12];
 };
+static_assert(sizeof(SuppliesPerRace) == 144, "Incorrect size for type `SuppliesPerRace`. Expected: 144");
 
 struct fontMemStruct
 {
@@ -3817,6 +3909,7 @@ struct fontMemStruct
   u16 x2;
   u16 y2;
 };
+static_assert(sizeof(fontMemStruct) == 16, "Incorrect size for type `fontMemStruct`. Expected: 16");
 
 struct ImagesDatExtraOverlayLO_Files
 {
@@ -3826,6 +3919,7 @@ struct ImagesDatExtraOverlayLO_Files
   LO_Overlays landingDustOverlays;
   LO_Overlays liftoffDustOverlays;
 };
+static_assert(sizeof(ImagesDatExtraOverlayLO_Files) == 19980, "Incorrect size for type `ImagesDatExtraOverlayLO_Files`. Expected: 19980");
 
 struct Box32
 {
@@ -3834,6 +3928,7 @@ struct Box32
   s32 right;
   s32 bottom;
 };
+static_assert(sizeof(Box32) == 16, "Incorrect size for type `Box32`. Expected: 16");
 
 struct CUnitFinder
 {
@@ -3842,6 +3937,7 @@ struct CUnitFinder
   u32 top;
   u32 bottom;
 };
+static_assert(sizeof(CUnitFinder) == 16, "Incorrect size for type `CUnitFinder`. Expected: 16");
 
 struct FontChar
 {
@@ -3851,6 +3947,7 @@ struct FontChar
   u8 _y;
   u8 data[1];
 };
+static_assert(sizeof(FontChar) == 5, "Incorrect size for type `FontChar`. Expected: 5");
 
 struct TileType
 {
@@ -3867,11 +3964,13 @@ struct TileType
   u16 _4;
   u16 megaTileRef[16];
 };
+static_assert(sizeof(TileType) == 52, "Incorrect size for type `TileType`. Expected: 52");
 
 struct UnitAvail
 {
   u8 available[12][228];
 };
+static_assert(sizeof(UnitAvail) == 2736, "Incorrect size for type `UnitAvail`. Expected: 2736");
 
 struct Bitmap
 {
@@ -3879,11 +3978,13 @@ struct Bitmap
   u16 ht;
   u8 *data;
 };
+static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
 
 struct MiniTileFlagArray
 {
   u16 miniTile[16];
 };
+static_assert(sizeof(MiniTileFlagArray) == 32, "Incorrect size for type `MiniTileFlagArray`. Expected: 32");
 
 struct Box16
 {
@@ -3892,6 +3993,7 @@ struct Box16
   u16 right;
   u16 bottom;
 };
+static_assert(sizeof(Box16) == 8, "Incorrect size for type `Box16`. Expected: 8");
 
 struct s_evt
 {
@@ -3900,6 +4002,7 @@ struct s_evt
   BYTE *pData;
   DWORD dwSize;
 };
+static_assert(sizeof(s_evt) == 16, "Incorrect size for type `s_evt`. Expected: 16");
 
 struct Action
 {
@@ -3914,6 +4017,7 @@ struct Action
   u8 number2;
   u8 flags;
 };
+static_assert(sizeof(Action) == 32, "Incorrect size for type `Action`. Expected: 32");
 
 struct CUnitBeacon
 {
@@ -3921,6 +4025,7 @@ struct CUnitBeacon
   u32 _unknown_04;
   u32 flagSpawnFrame;
 };
+static_assert(sizeof(CUnitBeacon) == 12, "Incorrect size for type `CUnitBeacon`. Expected: 12");
 
 struct PlayerInfo
 {
@@ -3931,6 +4036,7 @@ struct PlayerInfo
   unsigned __int8 nTeam;
   char szName[25];
 };
+static_assert(sizeof(PlayerInfo) == 36, "Incorrect size for type `PlayerInfo`. Expected: 36");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) SightStruct
@@ -3944,6 +4050,7 @@ struct __declspec(align(2)) SightStruct
   u32 tiles;
 };
 #pragma pack(pop)
+static_assert(sizeof(SightStruct) == 28, "Incorrect size for type `SightStruct`. Expected: 28");
 
 struct grpFrame
 {
@@ -3953,6 +4060,7 @@ struct grpFrame
   s8 hgt;
   u32 dataOffset;
 };
+static_assert(sizeof(grpFrame) == 8, "Incorrect size for type `grpFrame`. Expected: 8");
 
 struct LO_Header
 {
@@ -3960,21 +4068,25 @@ struct LO_Header
   u32 overlayCount;
   u32 frameOffsets[1];
 };
+static_assert(sizeof(LO_Header) == 12, "Incorrect size for type `LO_Header`. Expected: 12");
 
 struct TechSC
 {
   u8 items[24];
 };
+static_assert(sizeof(TechSC) == 24, "Incorrect size for type `TechSC`. Expected: 24");
 
 struct vr4entry
 {
   BYTE cdata[8][8];
 };
+static_assert(sizeof(vr4entry) == 64, "Incorrect size for type `vr4entry`. Expected: 64");
 
 struct TechBW
 {
   u8 items[20];
 };
+static_assert(sizeof(TechBW) == 20, "Incorrect size for type `TechBW`. Expected: 20");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) CUnitBuilding
@@ -3991,6 +4103,7 @@ struct __declspec(align(2)) CUnitBuilding
   u16 __E;
 };
 #pragma pack(pop)
+static_assert(sizeof(CUnitBuilding) == 16, "Incorrect size for type `CUnitBuilding`. Expected: 16");
 
 typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
 
@@ -4000,6 +4113,7 @@ struct SaiContour
   u8 type;
   u8 unk_relation;
 };
+static_assert(sizeof(SaiContour) == 8, "Incorrect size for type `SaiContour`. Expected: 8");
 
 struct _EH3_EXCEPTION_REGISTRATION
 {
@@ -4008,11 +4122,13 @@ struct _EH3_EXCEPTION_REGISTRATION
   PSCOPETABLE_ENTRY ScopeTable;
   DWORD TryLevel;
 };
+static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
 
 struct MiniTileMaps_type
 {
   MiniTileFlagArray tile[65536];
 };
+static_assert(sizeof(MiniTileMaps_type) == 2097152, "Incorrect size for type `MiniTileMaps_type`. Expected: 2097152");
 
 struct __declspec(align(4)) baseLocation
 {
@@ -4025,6 +4141,7 @@ struct __declspec(align(4)) baseLocation
   DWORD remainingGas;
   DWORD unk_10[8];
 };
+static_assert(sizeof(baseLocation) == 48, "Incorrect size for type `baseLocation`. Expected: 48");
 
 struct AllScoresStruct
 {
@@ -4050,6 +4167,7 @@ struct AllScoresStruct
   s32 customScore[12];
   Counts unitCounts;
 };
+static_assert(sizeof(AllScoresStruct) == 45120, "Incorrect size for type `AllScoresStruct`. Expected: 45120");
 
 struct __declspec(align(4)) CSprite
 {
@@ -4070,6 +4188,7 @@ struct __declspec(align(4)) CSprite
   CImage *pImageHead;
   CImage *pImageTail;
 };
+static_assert(sizeof(CSprite) == 36, "Incorrect size for type `CSprite`. Expected: 36");
 
 struct __declspec(align(1)) GameData
 {
@@ -4093,6 +4212,7 @@ struct __declspec(align(1)) GameData
   char map_name[32];
   GotFileValues got_file_values;
 };
+static_assert(sizeof(GameData) == 144, "Incorrect size for type `GameData`. Expected: 144");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) PathCreateRelated
@@ -4102,6 +4222,7 @@ struct __declspec(align(2)) PathCreateRelated
   MapSize map_size;
 };
 #pragma pack(pop)
+static_assert(sizeof(PathCreateRelated) == 8, "Incorrect size for type `PathCreateRelated`. Expected: 8");
 
 struct GotFile
 {
@@ -4110,6 +4231,7 @@ struct GotFile
   char label[32];
   GotFileValues values;
 };
+static_assert(sizeof(GotFile) == 97, "Incorrect size for type `GotFile`. Expected: 97");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) AI_Main
@@ -4157,6 +4279,7 @@ struct __declspec(align(2)) AI_Main
   Box32 genCmdLoc;
 };
 #pragma pack(pop)
+static_assert(sizeof(AI_Main) == 1256, "Incorrect size for type `AI_Main`. Expected: 1256");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
@@ -4165,6 +4288,7 @@ union CUnitFields3
   CUnitRally rally;
   CUnitPsiProvider psyProvider;
 };
+static_assert(sizeof(CUnitFields3) == 8, "Incorrect size for type `CUnitFields3`. Expected: 8");
 
 struct __declspec(align(4)) CImage
 {
@@ -4192,6 +4316,7 @@ struct __declspec(align(4)) CImage
   void (__fastcall *updateFunction)(CImage *);
   CSprite *spriteOwner;
 };
+static_assert(sizeof(CImage) == 64, "Incorrect size for type `CImage`. Expected: 64");
 
 struct dialog_list
 {
@@ -4213,6 +4338,7 @@ struct dialog_list
   u16 wVerticalOffset;
   FnDrawItem *pDrawItemFcn;
 };
+static_assert(sizeof(dialog_list) == 36, "Incorrect size for type `dialog_list`. Expected: 36");
 
 struct dialog_btn
 {
@@ -4224,6 +4350,7 @@ struct dialog_btn
   rect textRct;
   u16 wAlignment;
 };
+static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
 
 struct CPPEH_RECORD
 {
@@ -4231,6 +4358,7 @@ struct CPPEH_RECORD
   EXCEPTION_POINTERS *exc_ptr;
   struct _EH3_EXCEPTION_REGISTRATION registration;
 };
+static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
 
 struct grpHead
 {
@@ -4239,6 +4367,7 @@ struct grpHead
   s16 height;
   grpFrame frames[1];
 };
+static_assert(sizeof(grpHead) == 16, "Incorrect size for type `grpHead`. Expected: 16");
 
 struct SaiRegion
 {
@@ -4259,6 +4388,7 @@ struct SaiRegion
   u32 unk_28;
   u16 localBuffer[10];
 };
+static_assert(sizeof(SaiRegion) == 64, "Incorrect size for type `SaiRegion`. Expected: 64");
 
 struct SectionData
 {
@@ -4267,17 +4397,20 @@ struct SectionData
   int chunk_name;
   int size;
 };
+static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
 
 struct CUnitHatchery
 {
   rect harvestValue;
 };
+static_assert(sizeof(CUnitHatchery) == 8, "Incorrect size for type `CUnitHatchery`. Expected: 8");
 
 struct __declspec(align(4)) Target_
 {
   Position pt;
   struct CUnit *pUnit;
 };
+static_assert(sizeof(Target_) == 8, "Incorrect size for type `Target_`. Expected: 8");
 
 struct Trigger
 {
@@ -4287,6 +4420,7 @@ struct Trigger
   BYTE bExecuteFor[27];
   BYTE bCurrentActionIndex;
 };
+static_assert(sizeof(Trigger) == 2400, "Incorrect size for type `Trigger`. Expected: 2400");
 
 struct dlgEvent
 {
@@ -4299,6 +4433,7 @@ struct dlgEvent
   pt cursor;
   u16 wUnk_0x12;
 };
+static_assert(sizeof(dlgEvent) == 20, "Incorrect size for type `dlgEvent`. Expected: 20");
 
 union CUnitFields1
 {
@@ -4309,6 +4444,7 @@ union CUnitFields1
   CUnitBuilding building;
   CUnitWorker worker;
 };
+static_assert(sizeof(CUnitFields1) == 16, "Incorrect size for type `CUnitFields1`. Expected: 16");
 
 struct Location
 {
@@ -4316,6 +4452,7 @@ struct Location
   u16 stringId;
   u16 flags;
 };
+static_assert(sizeof(Location) == 20, "Incorrect size for type `Location`. Expected: 20");
 
 struct TriggerListEntry
 {
@@ -4323,6 +4460,7 @@ struct TriggerListEntry
   struct TriggerListEntry *next;
   Trigger container;
 };
+static_assert(sizeof(TriggerListEntry) == 2408, "Incorrect size for type `TriggerListEntry`. Expected: 2408");
 
 struct __declspec(align(4)) CBullet
 {
@@ -4364,6 +4502,7 @@ struct __declspec(align(4)) CBullet
   CUnit *nextBounceUnit;
   u32 cyclicMissileIndex;
 };
+static_assert(sizeof(CBullet) == 112, "Incorrect size for type `CBullet`. Expected: 112");
 
 struct MapDirEntry
 {
@@ -4398,6 +4537,7 @@ struct MapDirEntry
   BYTE unknown5[34];
   int campaign_mission;
 };
+static_assert(sizeof(MapDirEntry) == 1348, "Incorrect size for type `MapDirEntry`. Expected: 1348");
 
 struct SAI_Paths
 {
@@ -4410,6 +4550,7 @@ struct SAI_Paths
   u16 globalBuffer[10000];
   SaiContourHub *contours;
 };
+static_assert(sizeof(SAI_Paths) == 621088, "Incorrect size for type `SAI_Paths`. Expected: 621088");
 
 struct COrder
 {
@@ -4419,6 +4560,7 @@ struct COrder
   u16 unitType;
   Target_ target;
 };
+static_assert(sizeof(COrder) == 20, "Incorrect size for type `COrder`. Expected: 20");
 
 union CUnitFields2
 {
@@ -4431,6 +4573,7 @@ union CUnitFields2
   CUnitPowerup powerup;
   CUnitGatherer gatherer;
 };
+static_assert(sizeof(CUnitFields2) == 12, "Incorrect size for type `CUnitFields2`. Expected: 12");
 
 union dialog_fields
 {
@@ -4442,6 +4585,7 @@ union dialog_fields
   dialog_scroll scroll;
   dialog_list list;
 };
+static_assert(sizeof(dialog_fields) == 36, "Incorrect size for type `dialog_fields`. Expected: 36");
 
 struct __declspec(align(4)) CFlingy
 {
@@ -4469,6 +4613,7 @@ struct __declspec(align(4)) CFlingy
   u8 currentDirection2;
   u8 velocityDirection2;
 };
+static_assert(sizeof(CFlingy) == 76, "Incorrect size for type `CFlingy`. Expected: 76");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) ChunkData
@@ -4477,6 +4622,7 @@ struct __declspec(align(2)) ChunkData
   SectionData section_data;
 };
 #pragma pack(pop)
+static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) dialog
@@ -4497,6 +4643,7 @@ struct __declspec(align(2)) dialog
   dialog_fields fields[9];
 };
 #pragma pack(pop)
+static_assert(sizeof(dialog) == 374, "Incorrect size for type `dialog`. Expected: 374");
 
 struct __declspec(align(4)) CUnit
 {
@@ -4598,4 +4745,4 @@ struct __declspec(align(4)) CUnit
   u8 bRepMtxX;
   u8 bRepMtxY;
 };
-
+static_assert(sizeof(CUnit) == 336, "Incorrect size for type `CUnit`. Expected: 336");

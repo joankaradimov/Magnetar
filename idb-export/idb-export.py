@@ -602,6 +602,10 @@ class Type(object):
             self._name = name
         return self._name
 
+    @property
+    def size(self):
+        return None
+
 def keywords(*keywords):
     def keywords_inner(cls):
         for keyword in keywords:
@@ -645,6 +649,10 @@ class CompositionType(Type):
         for field in self.fields:
             result |= Definition(field).types
         return result
+
+    @property
+    def size(self):
+        return get_struc_size(get_struc_id(self.name))
 
 @keywords('typedef')
 class TypedefType(Type):
@@ -693,7 +701,13 @@ def export_types(declarations, definitions):
 
     for local_type in sort_topologically(local_types):
         declarations.append(local_type.declaration)
-        definitions.append(local_type.prologue + local_type.definition + local_type.epilogue + '\n')
+        definitions.append('\n' + local_type.prologue + local_type.definition + local_type.epilogue)
+        if local_type.size != None:
+            size_check = 'static_assert(sizeof({name}) == {size}, "Incorrect size for type `{name}`. Expected: {size}");\n'.format(
+                name = local_type.name,
+                size = local_type.size,
+            )
+            definitions.append(size_check)
 
 
 from collections import defaultdict
