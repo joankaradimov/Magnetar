@@ -1963,6 +1963,8 @@ int sub_4CCAC0_(char *a1, MapChunks *a2)
 
 FailStubPatch sub_4CCAC0_patch(sub_4CCAC0);
 
+FailStubPatch sub_4CC2A0_patch(sub_4CC2A0);
+
 int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
 {
 	char *v8;
