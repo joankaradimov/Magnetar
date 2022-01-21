@@ -1264,6 +1264,154 @@ FunctionPatch GameInit_patch(GameInit, GameInit_);
 FailStubPatch sub_4CD770_patch(sub_4CD770);
 FailStubPatch sub_4A13B0_patch(sub_4A13B0);
 
+void DestroyGame_()
+{
+	if (isInGame)
+	{
+		countdownTimeTickCount_0 = GetTickCount();
+		isInGame = 0;
+	}
+	if (multiPlayerMode && NetMode.as_number == 'BNET')
+	{
+		ReportGameResult();
+	}
+	leaveGame(0x40000001);
+	if (gwGameMode == GAME_GLUES && glGluesMode == GLUE_MAIN_MENU)
+	{
+		initializePlayerValues();
+	}
+	memset(cycle_colors, 0, sizeof(cycle_colors));
+	if (!multiPlayerMode)
+	{
+		TickCountSomething(1);
+	}
+	if (GameMenuDlg)
+	{
+		DestroyDialog(GameMenuDlg);
+		GameMenuDlg = 0;
+		if (gwGameMode == GAME_RUN)
+		{
+			hAccTable = DlgAccelerator;
+			input_procedures[16] = AcceleratorTables;
+		}
+		byte_6D1214 = 0;
+	}
+	if (has_effects_scode_maybe)
+	{
+		BWFXN_GameEndTarget();
+		has_effects_scode_maybe = 0;
+	}
+	layer* v0 = &ScreenLayers[3];
+	do
+	{
+		v0->buffers = 0;
+		++v0;
+	} while ((int)v0 <= (int)&ScreenLayers[5]);
+	Streamed_SFX_FullDestructor(&soundFXList);
+	for (int i = 0; i < 8; i++)
+	{
+		TriggerNode_Destructor(stru_51A218.triggers + i);
+	}
+	struct_0* v2 = placement_boxes;
+	do
+	{
+		if (v2->field_0)
+		{
+			SMemFree(v2->field_0, "Starcraft\\SWAR\\lang\\placebox.cpp", 578, 0);
+			v2->field_0 = 0;
+		}
+		++v2;
+	} while ((int)v2 < (int)playerReplayWatchers);
+	if (is_placing_building)
+	{
+		refreshPlaceBuildingLocation();
+	}
+	if (byte_641694)
+	{
+		CancelTargetOrder();
+	}
+	SetInGameInputProcs();
+	destroyGameHUD();
+	DestroyMapData();
+	if (dword_6BEE8C)
+	{
+		SMemFree(dword_6BEE8C, "Starcraft\\SWAR\\lang\\Sai_path.cpp", 792, 0);
+		dword_6BEE8C = 0;
+	}
+	if (SAIPathing)
+	{
+		SaiContourHub* v4 = SAIPathing->contours;
+		if (v4)
+		{
+			sai_contoursCreate_Cleanup();
+			SMemFree(v4, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 333, 0);
+			SAIPathing->contours = 0;
+		}
+		SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
+		SAIPathing = 0;
+	}
+	if (dword_68C104)
+	{
+		SMemFree(dword_68C104, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1546, 0);
+		dword_68C104 = 0;
+	}
+	if (dword_68C108)
+	{
+		SMemFree(dword_68C108, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1551, 0);
+		dword_68C108 = 0;
+	}
+	freeAICaptains();
+
+	stopSounds();
+	stopMusic();
+	stopSounds();
+	LoadRaceSFX(0);
+	InitializeInputProcs();
+	if (pylon_power_mask)
+	{
+		SMemFree(pylon_power_mask, "Starcraft\\SWAR\\lang\\CUnitProtoss.cpp", 102, 0);
+	}
+	pylon_power_mask = 0;
+	if (MapStringTbl.buffer)
+	{
+		SMemFree(MapStringTbl.buffer, "Starcraft\\SWAR\\lang\\maphdr.cpp", 267, 0);
+	}
+	MapStringTbl.buffer = 0;
+	if (mapArchiveHandle)
+	{
+		SFileCloseArchive(mapArchiveHandle);
+		mapArchiveHandle = 0;
+	}
+	dword_6D5A60 = (int)InReplay;
+	if (InReplay)
+	{
+		replayData->field2 = 0;
+		if (scenarioChk != 0)
+		{
+			SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
+			scenarioChk = 0;
+		}
+		InReplay = 0;
+		game_id_hash = 0;
+	}
+	else
+	{
+		SaveReplay("LastReplay", 1);
+		if (league_maybe)
+		{
+			char a1[260];
+			createLeagueFile(a1);
+			SNetSendReplayPath(
+				a1,
+				game_id_hash,
+				(char*)(validation_replay_path[0] != 0 ? (unsigned int)validation_replay_path : 0));
+		}
+		game_id_hash = 0;
+	}
+}
+
+FailStubPatch DestroyGame_patch(DestroyGame);
+
 void GameRun_(MenuPosition a1)
 {
 	IsInGameLoop = 1;
@@ -1293,12 +1441,12 @@ void GameRun_(MenuPosition a1)
 	if (v1)
 	{
 		GamePosition next_game_position = BeginGame(a1);
-		DestroyGame();
+		DestroyGame_();
 		gwGameMode = next_game_position;
 	}
 	else
 	{
-		DestroyGame();
+		DestroyGame_();
 		gwGameMode = GAME_GLUES;
 	}
 }
