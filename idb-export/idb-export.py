@@ -210,8 +210,8 @@ def normalize_arg_name(argument_name):
         # TODO: fix this mess
         argument_name = 'this_'
 
-    if argument_name == 'size':
-        argument_name = 'size_'
+    if argument_name.endswith('size'):
+        argument_name += '_'
 
     return argument_name
 
