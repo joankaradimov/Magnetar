@@ -1021,7 +1021,7 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 	else
 	{
 		ChunkNode_Destructor(&v8);
-		_list_unlink((int)&v8);
+		_list_unlink((ListNode*)&v8);
 		if (v8.field2.next)
 		{
 			if ((signed int)v8.field2.previous <= 0)
@@ -2431,24 +2431,24 @@ int loadMenu_gluCustm_(int is_multiplayer)
 		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 		goto LABEL_37;
 	}
-	if ((unsigned int)NetMode <= 0x4D4F444D)
+	if ((unsigned int)NetMode.as_number <= 0x4D4F444D)
 	{
-		if (NetMode == 0x4D4F444D)
+		if (NetMode.as_number == 0x4D4F444D)
 		{
 		LABEL_32:
 			glGluesMode = MenuPosition::GLUE_MODEM;
 			goto LABEL_37;
 		}
-		if (NetMode == 1112425812)
+		if (NetMode.as_number == 1112425812)
 		{
 			glGluesMode = MenuPosition::GLUE_BATTLE;
 			goto LABEL_37;
 		}
-		if (NetMode == 1296321880)
+		if (NetMode.as_number == 1296321880)
 			goto LABEL_32;
 		goto LABEL_35;
 	}
-	if (NetMode != 1396916812)
+	if (NetMode.as_number != 1396916812)
 	{
 	LABEL_35:
 		glGluesMode = MenuPosition::GLUE_GAME_SELECT;

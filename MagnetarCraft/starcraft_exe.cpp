@@ -180,8 +180,34 @@ BOOL UnitIsGhost(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*Streamed_SFX_Cleanup)(), Streamed_SFX_Cleanup, 0x4015a0);
-DECL_FUNC(int(*Streamed_SFX_FullDestructor)(), Streamed_SFX_FullDestructor, 0x4015f0);
+BOOL Streamed_SFX_Cleanup(STREAMED *a1) {
+    int address = 0x4015a0;
+    BOOL result_;
+    __asm {
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+void Streamed_SFX_FullDestructor(SFX_related *a1) {
+    int address = 0x4015f0;
+    __asm {
+        mov ebx, a1
+        call address
+    }
+}
+signed int Streamed_SFX_Destructor(STREAMED *a1, SFX_related *a2) {
+    int address = 0x401650;
+    signed result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*Provider_Destructor)(), Provider_Destructor, 0x4016a0);
 DECL_FUNC(int(*_ID_Destructor)(), _ID_Destructor, 0x4016f0);
 int *vector_insert(int *a1, int a2, void *a3, int a4) {
@@ -199,7 +225,7 @@ int *vector_insert(int *a1, int a2, void *a3, int a4) {
 }
 DECL_FUNC(int(*GameNode_Destructor)(), GameNode_Destructor, 0x401860);
 DECL_FUNC(int(*SaveGame_Destructor)(), SaveGame_Destructor, 0x401920);
-void _list_unlink(int a1) {
+void _list_unlink(ListNode *a1) {
     int address = 0x401970;
     __asm {
         mov ebx, a1
@@ -658,7 +684,7 @@ DECL_FUNC(int (__stdcall*SStrCopy)(char *dest, const char *source, size_t size_)
 DECL_FUNC(int (__stdcall*SStrCmpI)(const char *string1, const char *string2, size_t size_), SStrCmpI, 0x410094);
 DECL_FUNC(char *(__stdcall*SStrChr)(const char *string, char c), SStrChr, 0x41009a);
 DECL_FUNC(int (__stdcall*SStrLen)(const char *string), SStrLen, 0x4100a0);
-DECL_FUNC(int (__stdcall*SNetSendReplayPath)(int a1, int a2, char *replayPath), SNetSendReplayPath, 0x4100a6);
+DECL_FUNC(int (__stdcall*SNetSendReplayPath)(char *a1, int a2, char *replayPath), SNetSendReplayPath, 0x4100a6);
 DECL_FUNC(BOOL (__stdcall*SRegLoadString)(char *keyname, char *valuename, BYTE flags, char *buffer, size_t buffersize_), SRegLoadString, 0x4100ac);
 DECL_FUNC(BOOL (__stdcall*SFileOpenArchive)(char *archivename, DWORD dwPriority, DWORD dwFlags, HANDLE handle), SFileOpenArchive, 0x4100b2);
 DECL_FUNC(BOOL (__stdcall*SFileCloseFile)(HANDLE hFile), SFileCloseFile, 0x4100b8);
@@ -5045,7 +5071,16 @@ signed int j_JoinNetworkGame(GameData *a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*Begin_BNET)(), Begin_BNET, 0x452a30);
+signed int Begin_BNET(Char4 network_provider_id) {
+    int address = 0x452a30;
+    signed result_;
+    __asm {
+        mov eax, network_provider_id
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_452A70)(), sub_452A70, 0x452a70);
 DECL_FUNC(int(*sub_452A90)(), sub_452A90, 0x452a90);
 DECL_FUNC(int (__stdcall*sub_452AB0)(int), sub_452AB0, 0x452ab0);
@@ -9011,7 +9046,6 @@ DECL_FUNC(unsigned int (__thiscall*getModifiedUnitTurnRadius)(CUnit *this_), get
 DECL_FUNC(unsigned int (__thiscall*getModifiedUnitAcceleration)(CUnit *this_), getModifiedUnitAcceleration, 0x47b8a0);
 DECL_FUNC(int (__fastcall*GetUnitSpeed)(int a1, CUnit *a2), GetUnitSpeed, 0x47b8f0);
 DECL_FUNC(int(*isUnitEnemyOf)(), isUnitEnemyOf, 0x47b910);
-DECL_FUNC(int (__stdcall*ApplyAllUnitSpeedUpgradesProc)(CUnit *unit, UnitType unit_type, char, int), ApplyAllUnitSpeedUpgradesProc, 0x47b940);
 void DisableDoodadState(CUnit *a1) {
     int address = 0x47b960;
     __asm {
@@ -11503,6 +11537,13 @@ DECL_FUNC(int(*sub_499D40)(), sub_499D40, 0x499d40);
 DECL_FUNC(int (__stdcall*GameResultText)(int, int, int), GameResultText, 0x499d50);
 DECL_FUNC(int(*sub_499E00)(), sub_499E00, 0x499e00);
 DECL_FUNC(int(*GetLeagueTimestamp)(), GetLeagueTimestamp, 0x499e20);
+void createLeagueFile(char *a1) {
+    int address = 0x499ec0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*StoreString)(char *source), StoreString, 0x49a040);
 DECL_FUNC(int(*sub_49A060)(), sub_49A060, 0x49a060);
 DECL_FUNC(int(*IsHumanPlayerOnSameTeam)(), IsHumanPlayerOnSameTeam, 0x49a110);
@@ -13178,6 +13219,18 @@ void sub_4B0AE0(dialog *a1) {
 DECL_FUNC(int(*load_gluATZoneList)(), load_gluATZoneList, 0x4b0c60);
 DECL_FUNC(int(*load_gluModemList)(), load_gluModemList, 0x4b0dc0);
 DECL_FUNC(bool (__fastcall*gluModemEntry_loop)(dialog *dlg, dlgEvent *evt), gluModemEntry_loop, 0x4b0f20);
+int InitializeModem(int a1, int a2, Char4 a3) {
+    int address = 0x4b0fb0;
+    int result_;
+    __asm {
+        mov edi, a1
+        mov esi, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*load_gluModemStatus)(dialog *a1), load_gluModemStatus, 0x4b1060);
 void DeleteGluModemEntry(dialog *a1) {
     int address = 0x4b1310;
@@ -13875,7 +13928,7 @@ DECL_FUNC(int(*sub_4BBC00)(), sub_4BBC00, 0x4bbc00);
 DECL_FUNC(int(*sub_4BBCF0)(), sub_4BBCF0, 0x4bbcf0);
 DECL_FUNC(int(*parseWaveFile)(), parseWaveFile, 0x4bbd80);
 DECL_FUNC(int(*sub_4BBE40)(), sub_4BBE40, 0x4bbe40);
-DECL_FUNC(int(*PlayBriefingWAVBegin)(), PlayBriefingWAVBegin, 0x4bbe50);
+DECL_FUNC(void (__cdecl*PlayBriefingWAVBegin)(), PlayBriefingWAVBegin, 0x4bbe50);
 signed int sub_4BBEB0(SfxData a1, int a2, int a3, UnitType a4) {
     int address = 0x4bbeb0;
     signed result_;
@@ -14821,21 +14874,64 @@ DECL_FUNC(int(*getRaceName)(), getRaceName, 0x4cdb70);
 DECL_FUNC(void (__thiscall*FreeNetworkTBLHandle)(bool exit_code), FreeNetworkTBLHandle, 0x4cdba0);
 DECL_FUNC(int(*LoadNetworkTBL)(), LoadNetworkTBL, 0x4cdbd0);
 DECL_FUNC(int(*sub_4CDCC0)(), sub_4CDCC0, 0x4cdcc0);
-DECL_FUNC(int(*sub_4CDCE0)(), sub_4CDCE0, 0x4cdce0);
+DECL_FUNC(unsigned int (__thiscall*sub_4CDCE0)(GameActionDataBlock *this_), sub_4CDCE0, 0x4cdce0);
 DECL_FUNC(int(*sub_4CDD30)(), sub_4CDD30, 0x4cdd30);
 DECL_FUNC(int(*sub_4CDDC0)(), sub_4CDDC0, 0x4cddc0);
 DECL_FUNC(int (__stdcall*sub_4CDE10)(void *dest), sub_4CDE10, 0x4cde10);
+void saveReplayAction(GameActionDataBlock *a1, _BYTE *a2, size_t a3, char a4) {
+    int address = 0x4cde70;
+    __asm {
+        mov eax, a1
+        mov ebx, a2
+        mov edi, a3
+        push dword ptr a4
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4CDF00)(), sub_4CDF00, 0x4cdf00);
 DECL_FUNC(int(*sub_4CDF10)(), sub_4CDF10, 0x4cdf10);
 DECL_FUNC(int(*sub_4CDF20)(), sub_4CDF20, 0x4cdf20);
 DECL_FUNC(int(*sub_4CDF30)(), sub_4CDF30, 0x4cdf30);
-DECL_FUNC(int(*allocateRepGameActionMemory)(), allocateRepGameActionMemory, 0x4cdf50);
+_DWORD *allocateRepGameActionMemory(GameActionDataBlock *a1) {
+    int address = 0x4cdf50;
+    _DWORD * result_;
+    __asm {
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4CDFA0)(), sub_4CDFA0, 0x4cdfa0);
 DECL_FUNC(int(*sub_4CDFC0)(), sub_4CDFC0, 0x4cdfc0);
 DECL_FUNC(int(*sub_4CDFD0)(), sub_4CDFD0, 0x4cdfd0);
-DECL_FUNC(int (__stdcall*sub_4CDFF0)(int, int, void *dest, int), sub_4CDFF0, 0x4cdff0);
+int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, int a3, char *dest, int a5) {
+    int address = 0x4cdff0;
+    int result_;
+    __asm {
+        mov esi, a1
+        push dword ptr a5
+        push dword ptr dest
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4CE110)(int), sub_4CE110, 0x4ce110);
 DECL_FUNC(void (__thiscall*FreeGameActionData)(bool exit_code), FreeGameActionData, 0x4ce130);
+int WriteGameActions(FILE *a2, GameActionDataBlock *a3) {
+    int address = 0x4ce1c0;
+    int result_;
+    __asm {
+        mov edi, a2
+        mov esi, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4CE270)(), sub_4CE270, 0x4ce270);
 DECL_FUNC(void (__cdecl*createNewGameActionDataBlock)(), createNewGameActionDataBlock, 0x4ce280);
 DECL_FUNC(int(*closeLoadGameFile)(), closeLoadGameFile, 0x4ce440);
@@ -15073,7 +15169,7 @@ DECL_FUNC(int(*sub_4D3400)(), sub_4D3400, 0x4d3400);
 DECL_FUNC(int(*nullsub_62)(), nullsub_62, 0x4d3430);
 DECL_FUNC(int(*nullsub_63)(), nullsub_63, 0x4d3440);
 DECL_FUNC(int(*nullsub_64)(), nullsub_64, 0x4d3450);
-DECL_FUNC(int(*sub_4D3460)(), sub_4D3460, 0x4d3460);
+DECL_FUNC(int(*get_netmode)(), get_netmode, 0x4d3460);
 DECL_FUNC(int(*sub_4D3470)(), sub_4D3470, 0x4d3470);
 DECL_FUNC(int (__stdcall*GameUpgrade)(int), GameUpgrade, 0x4d34a0);
 DECL_FUNC(int(*ResetLeagueEvent)(), ResetLeagueEvent, 0x4d3510);
@@ -15106,7 +15202,7 @@ signed int JoinNetworkGame(GameData *a3) {
     }
     return result_;
 }
-signed int InitializeNetworkProvider(int provider_id) {
+signed int InitializeNetworkProvider(Char4 provider_id) {
     int address = 0x4d3cc0;
     signed result_;
     __asm {
@@ -15898,7 +15994,7 @@ DECL_FUNC(int(*sub_4DC520)(), sub_4DC520, 0x4dc520);
 DECL_FUNC(int(*sub_4DC530)(), sub_4DC530, 0x4dc530);
 DECL_FUNC(int(*SetInGameLoop)(), SetInGameLoop, 0x4dc540);
 DECL_FUNC(int (__stdcall*RandBetween)(int), RandBetween, 0x4dc550);
-DECL_FUNC(int(*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
+DECL_FUNC(void (__cdecl*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
 MapData4 sub_4DC630(MapData4 result, int a2, int a3) {
     int address = 0x4dc630;
     MapData4 result_;
@@ -16139,7 +16235,17 @@ void createReplayListbox(dialog *a1) {
 DECL_FUNC(bool (__fastcall*savegame_Listbox)(dialog *dlg, dlgEvent *evt), savegame_Listbox, 0x4df9e0);
 DECL_FUNC(int(*saveGame_InitChildren)(), saveGame_InitChildren, 0x4dfa30);
 DECL_FUNC(int(*sub_4DFA90)(), sub_4DFA90, 0x4dfa90);
-DECL_FUNC(int (__stdcall*SaveReplay)(int), SaveReplay, 0x4dfab0);
+int SaveReplay(char *a1, int a3) {
+    int address = 0x4dfab0;
+    int result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*CopyLastReplayTo)(), CopyLastReplayTo, 0x4dfd70);
 DECL_FUNC(int(*saveGame_Create)(), saveGame_Create, 0x4dfdd0);
 DECL_FUNC(bool (__fastcall*savegameBIN_Main)(dialog *dlg, struct dlgEvent *evt), savegameBIN_Main, 0x4dfef0);
@@ -16156,6 +16262,7 @@ void GameRun(MenuPosition a1) {
     }
 }
 DECL_FUNC(int(*GameMainLoop)(), GameMainLoop, 0x4e0820);
+DECL_FUNC(int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd), _WinMain, 0x4e0ae0);
 DECL_FUNC(unsigned int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2), sub_4E0B30, 0x4e0b30);
 __int16 genericLightupBtnUserDestroyEventHandler(dialog *a1) {
     int address = 0x4e0b80;
@@ -17491,7 +17598,7 @@ DECL_FUNC(void (__cdecl*LoadRaceUI)(), LoadRaceUI, 0x4ee2d0);
 DECL_FUNC(int(*sub_4EE3D0)(), sub_4EE3D0, 0x4ee3d0);
 DECL_FUNC(int(*LoadGameCreate)(), LoadGameCreate, 0x4ee520);
 DECL_FUNC(int(*LevelCheatInitGame)(), LevelCheatInitGame, 0x4ee5b0);
-DECL_FUNC(int(*DestroyGame)(), DestroyGame, 0x4ee8c0);
+DECL_FUNC(void (__cdecl*DestroyGame)(), DestroyGame, 0x4ee8c0);
 DECL_FUNC(void (__cdecl*hotkeyRemapping)(), hotkeyRemapping, 0x4eec30);
 DECL_FUNC(int(*LoadGameCore)(), LoadGameCore, 0x4eed10);
 DECL_FUNC(int(*GameInit)(), GameInit, 0x4eee00);
@@ -18588,8 +18695,6 @@ _SCOPETABLE_ENTRY& stru_4FF5E0 = * ((decltype(&stru_4FF5E0)) 0x4ff5e0);
 _SCOPETABLE_ENTRY& stru_4FF5F0 = * ((decltype(&stru_4FF5F0)) 0x4ff5f0);
 _SCOPETABLE_ENTRY& stru_4FF600 = * ((decltype(&stru_4FF600)) 0x4ff600);
 _SCOPETABLE_ENTRY* stru_4FF610 = (decltype(stru_4FF610 + 0)) 0x4ff610;
-void *(__thiscall *&off_4FF62C)(type_info *__hidden this_, char) = *((decltype(&off_4FF62C)) 0x4ff62c);
-_SCOPETABLE_ENTRY& stru_4FF630 = * ((decltype(&stru_4FF630)) 0x4ff630);
 _SCOPETABLE_ENTRY& stru_4FF640 = * ((decltype(&stru_4FF640)) 0x4ff640);
 _SCOPETABLE_ENTRY& stru_4FF650 = * ((decltype(&stru_4FF650)) 0x4ff650);
 _SCOPETABLE_ENTRY& stru_4FF660 = * ((decltype(&stru_4FF660)) 0x4ff660);
@@ -19019,7 +19124,7 @@ char* a_sng = (decltype(a_sng + 0)) 0x502844;
 char* aSave = (decltype(aSave + 0)) 0x50284c;
 char* aMaps = (decltype(aMaps + 0)) 0x502854;
 char* a__0 = (decltype(a__0 + 0)) 0x50285c;
-char& byte_502860 = * ((decltype(&byte_502860)) 0x502860);
+char* byte_502860 = (decltype(byte_502860 + 0)) 0x502860;
 char* aStarcraftSw_67 = (decltype(aStarcraftSw_67 + 0)) 0x50286c;
 char* aRezNetwork_tbl = (decltype(aRezNetwork_tbl + 0)) 0x502890;
 char* asc_5028A0 = (decltype(asc_5028A0 + 0)) 0x5028a0;
@@ -20104,6 +20209,11 @@ __int16& word_50B4EE = * ((decltype(&word_50B4EE)) 0x50b4ee);
 __int16& word_50B4FA = * ((decltype(&word_50B4FA)) 0x50b4fa);
 __int16& word_50B50A = * ((decltype(&word_50B50A)) 0x50b50a);
 __int16& word_50B51A = * ((decltype(&word_50B51A)) 0x50b51a);
+int& __xc_z_0 = * ((decltype(&__xc_z_0)) 0x50c4bc);
+int& __xt_a_0 = * ((decltype(&__xt_a_0)) 0x50c4d8);
+int& __xt_z_0 = * ((decltype(&__xt_z_0)) 0x50c4e0);
+int& __xt_a_1 = * ((decltype(&__xt_a_1)) 0x50c4e4);
+int& __xt_z_1 = * ((decltype(&__xt_z_1)) 0x50c4e8);
 void (__cdecl __noreturn *&off_50C4F0)(UINT uExitCode) = *((decltype(&off_50C4F0)) 0x50c4f0);
 int& dword_50C4F4 = * ((decltype(&dword_50C4F4)) 0x50c4f4);
 int* dword_50C4F8 = (decltype(dword_50C4F8 + 0)) 0x50c4f8;
@@ -20155,7 +20265,7 @@ int& dword_50CD50 = * ((decltype(&dword_50CD50)) 0x50cd50);
 int& dword_50CD80 = * ((decltype(&dword_50CD80)) 0x50cd80);
 int& dword_50CD84 = * ((decltype(&dword_50CD84)) 0x50cd84);
 u8* byte_50CDC1 = (decltype(byte_50CDC1 + 0)) 0x50cdc1;
-int* imgDrawPaletteIndex = (decltype(imgDrawPaletteIndex + 0)) 0x50cec1;
+char* aAvtypeInfo = (decltype(aAvtypeInfo + 0)) 0x50cf18;
 char& byte_50DBC8 = * ((decltype(&byte_50DBC8)) 0x50dbc8);
 char& byte_50DBD8 = * ((decltype(&byte_50DBD8)) 0x50dbd8);
 char& byte_50DBE8 = * ((decltype(&byte_50DBE8)) 0x50dbe8);
@@ -20366,50 +20476,10 @@ int& dword_51A1F8 = * ((decltype(&dword_51A1F8)) 0x51a1f8);
 int& dword_51A1FC = * ((decltype(&dword_51A1FC)) 0x51a1fc);
 void *& off_51A200 = * ((decltype(&off_51A200)) 0x51a200);
 int& dword_51A204 = * ((decltype(&dword_51A204)) 0x51a204);
-int& dword_51A208 = * ((decltype(&dword_51A208)) 0x51a208);
-void *& off_51A20C = * ((decltype(&off_51A20C)) 0x51a20c);
-int& dword_51A210 = * ((decltype(&dword_51A210)) 0x51a210);
+SFX_related& soundFXList = * ((decltype(&soundFXList)) 0x51a208);
+STREAMED *& dword_51A210 = * ((decltype(&dword_51A210)) 0x51a210);
 int& dword_51A214 = * ((decltype(&dword_51A214)) 0x51a214);
-void *& off_51A218 = * ((decltype(&off_51A218)) 0x51a218);
-int& dword_51A21C = * ((decltype(&dword_51A21C)) 0x51a21c);
-void *& off_51A224 = * ((decltype(&off_51A224)) 0x51a224);
-int& dword_51A228 = * ((decltype(&dword_51A228)) 0x51a228);
-void *& off_51A230 = * ((decltype(&off_51A230)) 0x51a230);
-void *& dword_51A234 = * ((decltype(&dword_51A234)) 0x51a234);
-int& dword_51A238 = * ((decltype(&dword_51A238)) 0x51a238);
-void *& off_51A23C = * ((decltype(&off_51A23C)) 0x51a23c);
-int& dword_51A240 = * ((decltype(&dword_51A240)) 0x51a240);
-void *& network_device_list_maybe = * ((decltype(&network_device_list_maybe)) 0x51a248);
-int& dword_51A24C = * ((decltype(&dword_51A24C)) 0x51a24c);
-int& dword_51A250 = * ((decltype(&dword_51A250)) 0x51a250);
-void *& off_51A254 = * ((decltype(&off_51A254)) 0x51a254);
-int& dword_51A258 = * ((decltype(&dword_51A258)) 0x51a258);
-void *& off_51A260 = * ((decltype(&off_51A260)) 0x51a260);
-int& dword_51A264 = * ((decltype(&dword_51A264)) 0x51a264);
-void *& off_51A26C = * ((decltype(&off_51A26C)) 0x51a26c);
-int& dword_51A270 = * ((decltype(&dword_51A270)) 0x51a270);
-int& MapListVector = * ((decltype(&MapListVector)) 0x51a274);
-void *& map_directory_list_end = * ((decltype(&map_directory_list_end)) 0x51a278);
-MapDirEntry *& map_drectory_list_begin = * ((decltype(&map_drectory_list_begin)) 0x51a27c);
-TriggerList* TriggerVectors = (decltype(TriggerVectors + 0)) 0x51a280;
-int& dword_51A2E0 = * ((decltype(&dword_51A2E0)) 0x51a2e0);
-void *& off_51A2E4 = * ((decltype(&off_51A2E4)) 0x51a2e4);
-int& dword_51A2E8 = * ((decltype(&dword_51A2E8)) 0x51a2e8);
-int& dword_51A2EC = * ((decltype(&dword_51A2EC)) 0x51a2ec);
-void *& off_51A2F0 = * ((decltype(&off_51A2F0)) 0x51a2f0);
-int& dword_51A2F4 = * ((decltype(&dword_51A2F4)) 0x51a2f4);
-int& map_downloads_list = * ((decltype(&map_downloads_list)) 0x51a2f8);
-void *& off_51A2FC = * ((decltype(&off_51A2FC)) 0x51a2fc);
-int& dword_51A300 = * ((decltype(&dword_51A300)) 0x51a300);
-int& dword_51A304 = * ((decltype(&dword_51A304)) 0x51a304);
-void *& off_51A308 = * ((decltype(&off_51A308)) 0x51a308);
-void *& dword_51A30C = * ((decltype(&dword_51A30C)) 0x51a30c);
-TriggerList& stru_51A310 = * ((decltype(&stru_51A310)) 0x51a310);
-int& dword_51A31C = * ((decltype(&dword_51A31C)) 0x51a31c);
-void *& off_51A320 = * ((decltype(&off_51A320)) 0x51a320);
-int& dword_51A324 = * ((decltype(&dword_51A324)) 0x51a324);
-int& dword_51A328 = * ((decltype(&dword_51A328)) 0x51a328);
-void *& off_51A32C = * ((decltype(&off_51A32C)) 0x51a32c);
+TPROVIDER& stru_51A218 = * ((decltype(&stru_51A218)) 0x51a218);
 int& dword_51A330 = * ((decltype(&dword_51A330)) 0x51a330);
 int& TransMaskVector = * ((decltype(&TransMaskVector)) 0x51a334);
 void *& off_51A338 = * ((decltype(&off_51A338)) 0x51a338);
@@ -20421,26 +20491,19 @@ int& dword_51A34C = * ((decltype(&dword_51A34C)) 0x51a34c);
 void *& customList_UIDlgData = * ((decltype(&customList_UIDlgData)) 0x51a350);
 int& dword_51A354 = * ((decltype(&dword_51A354)) 0x51a354);
 FnInteract* off_51A358 = (decltype(off_51A358 + 0)) 0x51a358;
-void *(__thiscall **&off_51A368)(type_info *__hidden this_, char) = *((decltype(&off_51A368)) 0x51a368);
 char* a_au_hiddenctrl = (decltype(a_au_hiddenctrl + 0)) 0x51a370;
 FnInteract* off_51A388 = (decltype(off_51A388 + 0)) 0x51a388;
 int& consoleRaceSpecific = * ((decltype(&consoleRaceSpecific)) 0x51a3b4);
-void *(__thiscall **&off_51A3B8)(type_info *__hidden this_, char) = *((decltype(&off_51A3B8)) 0x51a3b8);
 char* a_autgame_hdr_node = (decltype(a_autgame_hdr_node + 0)) 0x51a3c0;
-void *(__thiscall **&off_51A3E4)(type_info *__hidden this_, char) = *((decltype(&off_51A3E4)) 0x51a3e4);
 char* a_autsaved_game_node = (decltype(a_autsaved_game_node + 0)) 0x51a3ec;
 FnInteract* off_51A404 = (decltype(off_51A404 + 0)) 0x51a404;
-void *(__thiscall **&off_51A424)(type_info *__hidden this_, char) = *((decltype(&off_51A424)) 0x51a424);
 char* a_austreamed = (decltype(a_austreamed + 0)) 0x51a42c;
-void *(__thiscall **&off_51A440)(type_info *__hidden this_, char) = *((decltype(&off_51A440)) 0x51a440);
 char* a_autprovider = (decltype(a_autprovider + 0)) 0x51a448;
-void *(__thiscall **&off_51A458)(type_info *__hidden this_, char) = *((decltype(&off_51A458)) 0x51a458);
 char* a_au_id = (decltype(a_au_id + 0)) 0x51a460;
 FnInteract* off_51A46C = (decltype(off_51A46C + 0)) 0x51a46c;
 swishTimer* gluChatSwishController = (decltype(gluChatSwishController + 0)) 0x51a490;
 FnInteract* off_51A4A8 = (decltype(off_51A4A8 + 0)) 0x51a4a8;
 FnInteract* off_51A5F8 = (decltype(off_51A5F8 + 0)) 0x51a5f8;
-void *(__thiscall **&off_51A648)(type_info *__hidden this_, char) = *((decltype(&off_51A648)) 0x51a648);
 char* a_au_gamenode = (decltype(a_au_gamenode + 0)) 0x51a650;
 FnInteract* off_51A660 = (decltype(off_51A660 + 0)) 0x51a660;
 FnInteract* off_51A69C = (decltype(off_51A69C + 0)) 0x51a69c;
@@ -20450,7 +20513,6 @@ FnInteract* off_51A6DC = (decltype(off_51A6DC + 0)) 0x51a6dc;
 FnInteract* off_51A6E4 = (decltype(off_51A6E4 + 0)) 0x51a6e4;
 FnInteract* off_51A6F0 = (decltype(off_51A6F0 + 0)) 0x51a6f0;
 char* separators2_maybe = (decltype(separators2_maybe + 0)) 0x51a70c;
-void *(__thiscall **&off_51A71C)(type_info *__hidden this_, char) = *((decltype(&off_51A71C)) 0x51a71c);
 char* a_au_savegame = (decltype(a_au_savegame + 0)) 0x51a724;
 FnInteract* off_51A734 = (decltype(off_51A734 + 0)) 0x51a734;
 FnInteract* off_51A750 = (decltype(off_51A750 + 0)) 0x51a750;
@@ -20461,9 +20523,7 @@ FnInteract* off_51A80C = (decltype(off_51A80C + 0)) 0x51a80c;
 FnInteract* off_51A818 = (decltype(off_51A818 + 0)) 0x51a818;
 FnInteract* off_51A848 = (decltype(off_51A848 + 0)) 0x51a848;
 FnInteract* off_51A93C = (decltype(off_51A93C + 0)) 0x51a93c;
-void *(__thiscall **&off_51A968)(type_info *__hidden this_, char) = *((decltype(&off_51A968)) 0x51a968);
 char* a_au_phonenumber = (decltype(a_au_phonenumber + 0)) 0x51a970;
-void *(__thiscall **&off_51A984)(type_info *__hidden this_, char) = *((decltype(&off_51A984)) 0x51a984);
 char* a_au_device = (decltype(a_au_device + 0)) 0x51a98c;
 swishTimer* stru_51A99C = (decltype(stru_51A99C + 0)) 0x51a99c;
 FnInteract* off_51A9AC = (decltype(off_51A9AC + 0)) 0x51a9ac;
@@ -20472,31 +20532,22 @@ swishTimer* gluCustmSwishController = (decltype(gluCustmSwishController + 0)) 0x
 FnInteract* off_51AA08 = (decltype(off_51AA08 + 0)) 0x51aa08;
 int& singleRaceSelect = * ((decltype(&singleRaceSelect)) 0x51aaa0);
 int& singleTypeSelect = * ((decltype(&singleTypeSelect)) 0x51aaa8);
-void *(__thiscall **&off_51AAB0)(type_info *__hidden this_, char) = *((decltype(&off_51AAB0)) 0x51aab0);
 char* a_au_drawtext = (decltype(a_au_drawtext + 0)) 0x51aab8;
-void *(__thiscall **&off_51AAC8)(type_info *__hidden this_, char) = *((decltype(&off_51AAC8)) 0x51aac8);
 char* a_auttemplate = (decltype(a_auttemplate + 0)) 0x51aad0;
-void *(__thiscall **&off_51AAE0)(type_info *__hidden this_, char) = *((decltype(&off_51AAE0)) 0x51aae0);
 char* a_aulistentry = (decltype(a_aulistentry + 0)) 0x51aae8;
 FnInteract& off_51AAF8 = * ((decltype(&off_51AAF8)) 0x51aaf8);
 FnInteract* off_51AAFC = (decltype(off_51AAFC + 0)) 0x51aafc;
 FnInteract* off_51AB0C = (decltype(off_51AB0C + 0)) 0x51ab0c;
 FnInteract* off_51AB20 = (decltype(off_51AB20 + 0)) 0x51ab20;
-void *(__thiscall **&off_51AB94)(type_info *__hidden this_, char) = *((decltype(&off_51AB94)) 0x51ab94);
 char* a_autriggernode = (decltype(a_autriggernode + 0)) 0x51ab9c;
 FnInteract* off_51ABB0 = (decltype(off_51ABB0 + 0)) 0x51abb0;
 FnInteract* off_51ABC0 = (decltype(off_51ABC0 + 0)) 0x51abc0;
-void *(__thiscall **&off_51ABD4)(type_info *__hidden this_, char) = *((decltype(&off_51ABD4)) 0x51abd4);
 char* a_autbnetmessage = (decltype(a_autbnetmessage + 0)) 0x51abdc;
 FnInteract* a3 = (decltype(a3 + 0)) 0x51abf0;
 int* dword_51ABFC = (decltype(dword_51ABFC + 0)) 0x51abfc;
-void *(__thiscall **&off_51AC10)(type_info *__hidden this_, char) = *((decltype(&off_51AC10)) 0x51ac10);
 char* a_autfd_session = (decltype(a_autfd_session + 0)) 0x51ac18;
-void *(__thiscall **&off_51AC2C)(type_info *__hidden this_, char) = *((decltype(&off_51AC2C)) 0x51ac2c);
 char* a_autuser_info = (decltype(a_autuser_info + 0)) 0x51ac34;
-void *(__thiscall **&off_51AC48)(type_info *__hidden this_, char) = *((decltype(&off_51AC48)) 0x51ac48);
 char* a_autban = (decltype(a_autban + 0)) 0x51ac50;
-void *(__thiscall **&off_51AC5C)(type_info *__hidden this_, char) = *((decltype(&off_51AC5C)) 0x51ac5c);
 char* a_autsavegame = (decltype(a_autsavegame + 0)) 0x51ac64;
 FnInteract* off_51AC74 = (decltype(off_51AC74 + 0)) 0x51ac74;
 FnInteract* off_51AC84 = (decltype(off_51AC84 + 0)) 0x51ac84;
@@ -20508,7 +20559,6 @@ int& dword_51ACB4 = * ((decltype(&dword_51ACB4)) 0x51acb4);
 int& dword_51ACB8 = * ((decltype(&dword_51ACB8)) 0x51acb8);
 int& dword_51ACC0 = * ((decltype(&dword_51ACC0)) 0x51acc0);
 char* aEntrextrdwhepb = (decltype(aEntrextrdwhepb + 0)) 0x51acc4;
-void *(__thiscall **&off_51AD18)(type_info *__hidden this_, char) = *((decltype(&off_51AD18)) 0x51ad18);
 char* a_autfd_user = (decltype(a_autfd_user + 0)) 0x51ad20;
 FnInteract* off_51AD30 = (decltype(off_51AD30 + 0)) 0x51ad30;
 int& dword_51AD60 = * ((decltype(&dword_51AD60)) 0x51ad60);
@@ -20537,25 +20587,21 @@ char* a______xxxxx___ = (decltype(a______xxxxx___ + 0)) 0x51afe0;
 int& dword_51B108 = * ((decltype(&dword_51B108)) 0x51b108);
 int* dword_51B1E8 = (decltype(dword_51B1E8 + 0)) 0x51b1e8;
 int& dword_51B260 = * ((decltype(&dword_51B260)) 0x51b260);
-void *(__thiscall **&off_51B274)(type_info *__hidden this_, char) = *((decltype(&off_51B274)) 0x51b274);
+char* aAutareafixup = (decltype(aAutareafixup + 0)) 0x51b27c;
 HANDLE& hObject = * ((decltype(&hObject)) 0x51b290);
 int& dword_51B294 = * ((decltype(&dword_51B294)) 0x51b294);
-void *(__thiscall **&off_51B298)(type_info *__hidden this_, char) = *((decltype(&off_51B298)) 0x51b298);
 char* a_au_bltmask = (decltype(a_au_bltmask + 0)) 0x51b2a0;
-void *(__thiscall **&off_51B2B0)(type_info *__hidden this_, char) = *((decltype(&off_51B2B0)) 0x51b2b0);
 char* a_au_ctrlnode = (decltype(a_au_ctrlnode + 0)) 0x51b2b8;
 int& dword_51B2C8 = * ((decltype(&dword_51B2C8)) 0x51b2c8);
 char& byte_51B2CC = * ((decltype(&byte_51B2CC)) 0x51b2cc);
 char& byte_51B2CD = * ((decltype(&byte_51B2CD)) 0x51b2cd);
 char& byte_51B2CE = * ((decltype(&byte_51B2CE)) 0x51b2ce);
 char& byte_51B2CF = * ((decltype(&byte_51B2CF)) 0x51b2cf);
-void *(__thiscall **&off_51B2D0)(type_info *__hidden this_, char) = *((decltype(&off_51B2D0)) 0x51b2d0);
 char* a_au_dlggrp = (decltype(a_au_dlggrp + 0)) 0x51b2d8;
 int& dword_51B2E8 = * ((decltype(&dword_51B2E8)) 0x51b2e8);
 int& dword_51B2F0 = * ((decltype(&dword_51B2F0)) 0x51b2f0);
 int& dword_51B2F4 = * ((decltype(&dword_51B2F4)) 0x51b2f4);
 int& dword_51B2F8 = * ((decltype(&dword_51B2F8)) 0x51b2f8);
-void *(__thiscall **&off_51B428)(type_info *__hidden this_, char) = *((decltype(&off_51B428)) 0x51b428);
 char* a_auchunknode = (decltype(a_auchunknode + 0)) 0x51b430;
 char* aUs = (decltype(aUs + 0)) 0x51b440;
 char* aSs = (decltype(aSs + 0)) 0x51b444;
@@ -20563,6 +20609,7 @@ int (__cdecl *&off_51B448)(_DWORD) = *((decltype(&off_51B448)) 0x51b448);
 int (** off_51B44C)() = (decltype(off_51B44C + 0)) 0x51b44c;
 int (*&off_51B450)() = *((decltype(&off_51B450)) 0x51b450);
 double& dbl_51B460 = * ((decltype(&dbl_51B460)) 0x51b460);
+char* aPow_0 = (decltype(aPow_0 + 0)) 0x51b468;
 _TBYTE& tbyte_51B470 = * ((decltype(&tbyte_51B470)) 0x51b470);
 _TBYTE& tbyte_51B47A = * ((decltype(&tbyte_51B47A)) 0x51b47a);
 _TBYTE& tbyte_51B48E = * ((decltype(&tbyte_51B48E)) 0x51b48e);
@@ -20912,16 +20959,16 @@ int& dword_58F446 = * ((decltype(&dword_58F446)) 0x58f446);
 int& dword_5967F0 = * ((decltype(&dword_5967F0)) 0x5967f0);
 GameData& gameData = * ((decltype(&gameData)) 0x5967f8);
 int& isHost = * ((decltype(&isHost)) 0x596888);
-int& NetMode = * ((decltype(&NetMode)) 0x59688c);
+Char4& NetMode = * ((decltype(&NetMode)) 0x59688c);
 MapDownload *& map_download = * ((decltype(&map_download)) 0x596890);
 char& byte_596894 = * ((decltype(&byte_596894)) 0x596894);
-HACCEL& dword_596898 = * ((decltype(&dword_596898)) 0x596898);
+HACCEL& DlgAccelerator = * ((decltype(&DlgAccelerator)) 0x596898);
 InputProcedure* input_procedures = (decltype(input_procedures + 0)) 0x5968a0;
 int& dword_5968EC = * ((decltype(&dword_5968EC)) 0x5968ec);
 HACCEL& hAccel = * ((decltype(&hAccel)) 0x5968f0);
 HACCEL& dword_5968F4 = * ((decltype(&dword_5968F4)) 0x5968f4);
 HACCEL& dword_5968F8 = * ((decltype(&dword_5968F8)) 0x5968f8);
-InputProcedure& dword_5968FC = * ((decltype(&dword_5968FC)) 0x5968fc);
+InputProcedure& AcceleratorTables = * ((decltype(&AcceleratorTables)) 0x5968fc);
 GamePosition& gwGameMode = * ((decltype(&gwGameMode)) 0x596904);
 char* byte_596910 = (decltype(byte_596910 + 0)) 0x596910;
 int& dword_596A14 = * ((decltype(&dword_596A14)) 0x596a14);
@@ -20961,7 +21008,7 @@ int& dword_596BAC = * ((decltype(&dword_596BAC)) 0x596bac);
 int& dword_596BB0 = * ((decltype(&dword_596BB0)) 0x596bb0);
 int& dword_596BB4 = * ((decltype(&dword_596BB4)) 0x596bb4);
 int& dword_596BB8 = * ((decltype(&dword_596BB8)) 0x596bb8);
-void *& replayData = * ((decltype(&replayData)) 0x596bbc);
+GameActionDataBlock *& replayData = * ((decltype(&replayData)) 0x596bbc);
 HANDLE& mapArchiveHandle = * ((decltype(&mapArchiveHandle)) 0x596bc4);
 char& byte_596BC8 = * ((decltype(&byte_596BC8)) 0x596bc8);
 int& has_effects_scode_maybe = * ((decltype(&has_effects_scode_maybe)) 0x596ccc);
@@ -21077,7 +21124,7 @@ int& dword_59B624 = * ((decltype(&dword_59B624)) 0x59b624);
 char* byte_59B628 = (decltype(byte_59B628 + 0)) 0x59b628;
 void *& dword_59B72C = * ((decltype(&dword_59B72C)) 0x59b72c);
 char* byte_59B730 = (decltype(byte_59B730 + 0)) 0x59b730;
-int& dword_59B73C = * ((decltype(&dword_59B73C)) 0x59b73c);
+int* dword_59B73C = (decltype(dword_59B73C + 0)) 0x59b73c;
 int& dword_59B75C = * ((decltype(&dword_59B75C)) 0x59b75c);
 int* dword_59B760 = (decltype(dword_59B760 + 0)) 0x59b760;
 int& dword_59B764 = * ((decltype(&dword_59B764)) 0x59b764);
@@ -21270,7 +21317,7 @@ char* byte_6408F8 = (decltype(byte_6408F8 + 0)) 0x6408f8;
 int& placeBuildingMessageId = * ((decltype(&placeBuildingMessageId)) 0x640958);
 __int16* word_64095C = (decltype(word_64095C + 0)) 0x64095c;
 char* algn_64095E = (decltype(algn_64095E + 0)) 0x64095e;
-int& dword_64096C = * ((decltype(&dword_64096C)) 0x64096c);
+struct_0* placement_boxes = (decltype(placement_boxes + 0)) 0x640960;
 PlayerInfo* playerReplayWatchers = (decltype(playerReplayWatchers + 0)) 0x640970;
 int& Chat_IncrementY = * ((decltype(&Chat_IncrementY)) 0x640b20);
 int* dword_640B24 = (decltype(dword_640B24 + 0)) 0x640b24;
@@ -21333,6 +21380,7 @@ int& dword_654A9C = * ((decltype(&dword_654A9C)) 0x654a9c);
 unsigned int& sgdwBytesInCmdQueue = * ((decltype(&sgdwBytesInCmdQueue)) 0x654aa0);
 int* dword_654AA8 = (decltype(dword_654AA8 + 0)) 0x654aa8;
 int& dword_6552A8 = * ((decltype(&dword_6552A8)) 0x6552a8);
+char* byte_6552B0 = (decltype(byte_6552B0 + 0)) 0x6552b0;
 char& byte_6554B0 = * ((decltype(&byte_6554B0)) 0x6554b0);
 int* arraydata = (decltype(arraydata + 0)) 0x6554b4;
 char* byte_6554D8 = (decltype(byte_6554D8 + 0)) 0x6554d8;
@@ -22248,8 +22296,8 @@ void *& dword_6D5A18 = * ((decltype(&dword_6D5A18)) 0x6d5a18);
 void *& dword_6D5A1C = * ((decltype(&dword_6D5A1C)) 0x6d5a1c);
 int& dword_6D5A20 = * ((decltype(&dword_6D5A20)) 0x6d5a20);
 dialog *& dword_6D5A24 = * ((decltype(&dword_6D5A24)) 0x6d5a24);
-int& dword_6D5A28 = * ((decltype(&dword_6D5A28)) 0x6d5a28);
-int& dword_6D5A2C = * ((decltype(&dword_6D5A2C)) 0x6d5a2c);
+Char4& network_provider_id = * ((decltype(&network_provider_id)) 0x6d5a28);
+Char4& network_provider_id_related = * ((decltype(&network_provider_id_related)) 0x6d5a2c);
 dialog *& lobby_dlg = * ((decltype(&lobby_dlg)) 0x6d5a30);
 int& dword_6D5A38 = * ((decltype(&dword_6D5A38)) 0x6d5a38);
 dialog *& dword_6D5A3C = * ((decltype(&dword_6D5A3C)) 0x6d5a3c);
@@ -22303,7 +22351,7 @@ int& dword_6D5BE8 = * ((decltype(&dword_6D5BE8)) 0x6d5be8);
 char& byte_6D5BEC = * ((decltype(&byte_6D5BEC)) 0x6d5bec);
 char& byte_6D5BED = * ((decltype(&byte_6D5BED)) 0x6d5bed);
 int& dword_6D5BF0 = * ((decltype(&dword_6D5BF0)) 0x6d5bf0);
-dialog *& dword_6D5BF4 = * ((decltype(&dword_6D5BF4)) 0x6d5bf4);
+dialog *& GameMenuDlg = * ((decltype(&GameMenuDlg)) 0x6d5bf4);
 int& dword_6D5BF8 = * ((decltype(&dword_6D5BF8)) 0x6d5bf8);
 SAI_Paths *& SAIPathing = * ((decltype(&SAIPathing)) 0x6d5bfc);
 DWORD& CpuThrottle = * ((decltype(&CpuThrottle)) 0x6d5c00);
