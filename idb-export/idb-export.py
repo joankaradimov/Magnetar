@@ -1,4 +1,5 @@
 import re
+import collections
 
 class IdbExportError(Exception):
     pass
@@ -676,7 +677,7 @@ class TypedefType(Type):
 
 def export_types(declarations, definitions):
     existing_type_names = set()
-    local_types = {}
+    local_types = collections.OrderedDict()
 
     for type_ordinal in range(1, get_ordinal_qty()):
         if is_type_blacklisted(type_ordinal):
