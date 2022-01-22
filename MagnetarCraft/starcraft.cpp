@@ -83,7 +83,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 
 	while (a2)
 	{
-		INT_PTR v4 = DialogBoxParamA(hInstance, (LPCSTR)107, hWndParent, DialogFunc, 0);
+		INT_PTR v4 = DialogBoxParamA(hModule, (LPCSTR)107, hWndParent, DialogFunc, 0);
 		if (v4 == -1)
 		{
 			FatalError("GdsDialogBoxParam: %d", 107);
@@ -469,7 +469,7 @@ void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_e
 		BWFXN_DDrawDestroy();
 		BWFXN_DSoundDestroy();
 	}
-	if (DialogBoxParamA(hInstance, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
+	if (DialogBoxParamA(hModule, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 		FatalError("GdsDialogBoxParam: %d", resource);
 	DLGErrFatal();
 }
@@ -1343,7 +1343,7 @@ void DestroyGame_()
 		SaiContourHub* v4 = SAIPathing->contours;
 		if (v4)
 		{
-			sai_contoursCreate_Cleanup();
+			sai_contoursCreate_Cleanup(v4->contours);
 			SMemFree(v4, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 333, 0);
 			SAIPathing->contours = 0;
 		}
@@ -2974,7 +2974,7 @@ unsigned __int32 LocalGetLang_()
 	CHAR Buffer[16];
 	char *v2;
 
-	if (hInstance && LoadStringA(hInstance, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
+	if (hModule && LoadStringA(hModule, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
 		return strtoul(Buffer, &v2, 16);
 	else
 		return 1033;
@@ -2998,8 +2998,8 @@ void localDll_Init_(HINSTANCE a1)
 			break;
 		++i;
 	};
-	hInstance = LoadLibraryA(Filename);
-	if (!hInstance)
+	hModule = LoadLibraryA(Filename);
+	if (!hModule)
 	{
 		DialogBoxParamA(a1, (LPCSTR)106, hWndParent, LocalErrProc, (LPARAM)Filename);
 		SErrSuppressErrors(1);
