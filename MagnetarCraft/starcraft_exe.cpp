@@ -16097,7 +16097,7 @@ int registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*loadFullMenuDLG)(char *szFileName, void *buffer, int read, char *logfilename, int logline), loadFullMenuDLG, 0x4ddbe0);
+DECL_FUNC(dialog *(__fastcall*loadFullMenuDLG)(char *szFileName, void *buffer, int read, char *logfilename, int logline), loadFullMenuDLG, 0x4ddbe0);
 DECL_FUNC(int(*sub_4DDCF0)(), sub_4DDCF0, 0x4ddcf0);
 DECL_FUNC(const char *(__stdcall*get_GluAll_String)(GluAllTblEntry tbl_entry), get_GluAll_String, 0x4ddd30);
 DECL_FUNC(int(*sub_4DDE70)(), sub_4DDE70, 0x4dde70);

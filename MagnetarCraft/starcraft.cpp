@@ -2441,63 +2441,48 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog *dlg, struct dlgEvent *evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-int loadMenu_gluExpCmpgn_()
+void loadMenu_gluExpCmpgn_()
 {
-	dialog *v0; // eax@1 MAPDST
-	dialog *v2; // eax@2
-	int result; // eax@5
-
-	OpheliaEnabled = GLUE_MAIN_MENU;
-	LOBYTE(multiPlayerMode) = GLUE_MAIN_MENU;
+	OpheliaEnabled = 0;
+	multiPlayerMode = 0;
 	sub_4B5050();
-	v0 = (dialog *)loadFullMenuDLG("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (v0)
+	dialog* campaign_dialog = loadFullMenuDLG("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	if (campaign_dialog)
 	{
-		v0->lFlags |= 4u;
-		AllocInitDialogData(v0, v0, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-		v2 = v0;
+		campaign_dialog->lFlags |= 4u;
+		AllocInitDialogData(campaign_dialog, campaign_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	}
-	else
-	{
-		v2 = 0;
-	}
-	switch (gluLoadBINDlg(v2, gluExpCmpgn_CustomCtrlID_))
+	switch (gluLoadBINDlg(campaign_dialog, gluExpCmpgn_CustomCtrlID_))
 	{
 	case 8:
 		glGluesMode = GLUE_READY_Z;
-		result = changeMenu();
 		break;
 	case 7:
 		glGluesMode = GLUE_READY_T;
-		result = changeMenu();
 		break;
 	case 6:
 		glGluesMode = GLUE_READY_P;
-		result = changeMenu();
 		break;
 	case 5:
 		glGluesMode = GLUE_LOAD;
-		result = changeMenu();
 		break;
 	case 10:
 		glGluesMode = GLUE_CREATE;
-		result = changeMenu();
 		break;
 	case 11:
 		glGluesMode = GLUE_CREATE_MULTI;
-		result = changeMenu();
 		break;
 	case 9:
 		glGluesMode = GLUE_LOGIN;
-		result = changeMenu();
 		break;
 	default:
 		glGluesMode = GLUE_MAIN_MENU;
-		result = changeMenu();
 		break;
 	}
-	return result;
+	changeMenu();
 }
+
+FailStubPatch loadMenu_gluExpCmpgn_patch(loadMenu_gluExpCmpgn);
 
 int loadMenu_gluCustm_(int is_multiplayer)
 {

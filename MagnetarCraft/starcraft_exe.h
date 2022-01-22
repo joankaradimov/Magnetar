@@ -5035,7 +5035,7 @@ void DlgSwooshin(__int16 a1, swishTimer *a2, dialog *a3, signed __int16 a4);
 extern void(*loadTFontPcx)(void);
 extern void(*loadtEffectPcx)(void);
 int registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4);
-extern int (__fastcall*loadFullMenuDLG)(char *szFileName, void *buffer, int read, char *logfilename, int logline);
+extern dialog *(__fastcall*loadFullMenuDLG)(char *szFileName, void *buffer, int read, char *logfilename, int logline);
 extern int(*sub_4DDCF0)();
 extern const char *(__stdcall*get_GluAll_String)(GluAllTblEntry tbl_entry);
 extern int(*sub_4DDE70)();
