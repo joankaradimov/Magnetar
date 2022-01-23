@@ -2303,72 +2303,65 @@ int CreateCampaignGame__(MapData mapData)
 	}
 }
 
-int LoadCampaignWithCharacter_(int a1)
+bool LoadCampaignWithCharacter_(int race)
 {
-	const char *v1; // eax@3
-	int v2; // ecx@9
-	char *v3; // esi@9
-	WORD *result; // eax@11
-	unsigned int v5; // ecx@12
-	WORD v6; // cx@14
-	MapData v7; // dx@15
-	CharacterData v8; // [sp+8h] [bp-70h]@1
-
-	customSingleplayer = 0;
+	customSingleplayer[0] = 0;
 	dword_51CA1C = 0;
-	if (!LoadCharacterData(&v8, playerName))
+	CharacterData character_data;
+	if (!LoadCharacterData(&character_data, playerName))
 	{
-		v1 = (const char *)(*networkTable > 71u ? ((char *)networkTable + networkTable[72]) : "");
-		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&v8, playerName)) && !outOfGame)
+		const char* v1 = *networkTable > 71u ? (const char*)networkTable + networkTable[72] : "";
+		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
+		{
 			doNetTBLError(0, 0, 0, 88);
+		}
 	}
-	v2 = off_5122A0[a1];
-	v3 = (char *)&v8.gap[a1];
+
+	CampaignMenuEntry* v2;
+	int* unlocked_mission;
 	if (IsExpansion)
 	{
-		v2 = off_5122AC[a1];
-		v3 = &v8.more_data[4 * a1];
+		v2 = expcampaign_menu_entries[race];
+		unlocked_mission = &character_data.unlocked_expcampaign_mission[race];
 	}
-	result = (WORD *)loadmenu_GluHist(*(_DWORD *)v3, v2);
-	dword_6D11CC = (int)result;
-	if (result)
+	else
 	{
-		v5 = result[1];
-		if (*(_DWORD *)v3 < v5)
+		v2 = campaign_menu_entries[race];
+		unlocked_mission = &character_data.unlocked_campaign_mission[race];
+	}
+	active_campaign_menu_entry = loadmenu_GluHist(*unlocked_mission, v2);
+	if (active_campaign_menu_entry)
+	{
+		if (*unlocked_mission < active_campaign_menu_entry->next_mission)
 		{
-			*(_DWORD *)v3 = v5;
-			CreateCharacterFile(&v8);
-			result = (WORD *)dword_6D11CC;
+			*unlocked_mission = active_campaign_menu_entry->next_mission;
+			CreateCharacterFile(&character_data);
 		}
-		v6 = result[2];
-		if (v6)
+
+		if (active_campaign_menu_entry->cinematic)
 		{
-			v7 = (MapData) result[1];
-			dword_5122B8 = v6;
-			CampaignIndex = v7;
+			active_cinematic = active_campaign_menu_entry->cinematic;
+			CampaignIndex = active_campaign_menu_entry->next_mission;
 			byte_57F246[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
-			return 1;
 		}
 		else
 		{
-			return CreateCampaignGame__((MapData)result[1]);
+			CreateCampaignGame(active_campaign_menu_entry->next_mission);
 		}
 	}
-	else {
-		return 0;
-	}
+	return active_campaign_menu_entry != NULL;
 }
 
 FailStubPatch LoadCampaignWithCharacter_patch(LoadCampaignWithCharacter);
 
 int sub_4B5110_(int a1)
 {
-	int result = 0;
+	bool result;
 
 	if (!dword_59A0D4[a1])
 	{
-		result = LoadCampaignWithCharacter_(a1) != 0;
+		result = LoadCampaignWithCharacter_(a1);
 	}
 	else {
 		WORD v2;
@@ -2378,7 +2371,7 @@ int sub_4B5110_(int a1)
 			? (v2 < *networkTable ? (v3 = (char *)networkTable + networkTable[v2 + 1]) : (v3 = ""))
 			: (v3 = 0),
 			sub_4B5B20(v3)) {
-			result = LoadCampaignWithCharacter_(a1) != 0;
+			result = LoadCampaignWithCharacter_(a1);
 		}
 	}
 	return result;
@@ -2388,16 +2381,16 @@ FailStubPatch sub_4B5110_patch(sub_4B5110);
 
 bool sub_4B27A0_(Race race)
 {
-	WORD v2; // ax
-	const char* v3; // eax
-	BOOL result; // eax
+	WORD v2;
+	const char* v3;
+	bool result;
 
 	if (!dword_59B760[race]
 		|| ((v2 = (race == Race::RACE_Protoss) + 140, (race == 2) != -141) ? (v2 < *networkTable ? (v3 = (char*)networkTable
 			+ networkTable[v2 + 1]) : (v3 = "")) : (v3 = 0),
 			sub_4B5B20(v3)))
 	{
-		result = LoadCampaignWithCharacter_(race) != 0;
+		result = LoadCampaignWithCharacter_(race);
 	}
 	else
 	{
@@ -3009,8 +3002,8 @@ void GameMainLoop_()
 					GameRun_(GLUE_MAIN_MENU);
 					continue;
 				case GAME_CINEMATIC:
-					PlayMovieWithIntro(dword_5122B8);
-					dword_5122B8 = 28;
+					PlayMovieWithIntro(active_cinematic);
+					active_cinematic = Cinematic::C_NONE;
 					if (gwGameMode == GAME_CINEMATIC)
 						ContinueCampaign(1);
 					continue;

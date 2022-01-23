@@ -121,7 +121,7 @@ enum MegatileFlags;
 enum MapData4;
 enum Tech2;
 enum PlayerTypes;
-struct CharacterData;
+struct __declspec(align(4)) CharacterData;
 enum ResourceType;
 struct CUnitFighter;
 enum WeaponBehavior;
@@ -133,6 +133,7 @@ enum MapData;
 struct __declspec(align(4)) SectionData;
 struct __declspec(align(2)) struct_a1;
 enum GluAllTblEntry;
+enum Cinematic;
 struct ChunkListItem;
 struct UnknownTilesetRelated2;
 struct MapChunks;
@@ -204,6 +205,7 @@ struct TechBW;
 struct __declspec(align(1)) Position;
 struct fontMemStruct;
 struct Action;
+struct CinematicIntro;
 struct __declspec(align(4)) SFX_related;
 struct __declspec(align(1)) GotFileValues;
 struct __declspec(align(2)) ColorShiftData;
@@ -232,6 +234,7 @@ struct CUnitFinder;
 struct TileType;
 struct CUnitWorker;
 struct TPROVIDER;
+struct __declspec(align(2)) CampaignMenuEntry;
 struct PlayerInfo;
 struct Box16;
 struct __declspec(align(2)) AiCaptain;
@@ -817,7 +820,7 @@ enum PlayerTypes : unsigned __int8
   PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
 
-struct CharacterData
+struct __declspec(align(4)) CharacterData
 {
   int char0;
   _BYTE has_ophelia_cheat;
@@ -825,8 +828,9 @@ struct CharacterData
   _DWORD last_access_time;
   char player_name[24];
   int gap0;
-  int gap[3];
-  _BYTE more_data[60];
+  int unlocked_campaign_mission[3];
+  int unlocked_expcampaign_mission[3];
+  _BYTE more_data[48];
 };
 static_assert(sizeof(CharacterData) == 112, "Incorrect size for type `CharacterData`. Expected: 112");
 
@@ -1105,6 +1109,39 @@ enum GluAllTblEntry : __int16
   SCENARIO_FILENAME_TOO_LONG = 0x3D,
   SCENARIO_INVALID_OR_CORRUPTED = 0x3E,
   INVALID_SAVE_GAME = 0x3F,
+};
+
+enum Cinematic : __int8
+{
+  C_BLIZZARD_LOGO = 0x0,
+  C_INTRO = 0x1,
+  C_WASTELAND_PATROL_INTRO = 0x2,
+  C_THE_DOWNING_OF_NORAD_II_INTRO = 0x3,
+  C_OPEN_REBELION_INTRO = 0x4,
+  C_THE_INAUGURATION_INTRO = 0x5,
+  C_WASTELAND_PATROL = 0x6,
+  C_THE_DOWNING_OF_NORAD_II = 0x7,
+  C_OPEN_REBELION = 0x8,
+  C_THE_INAUGURATION = 0x9,
+  C_BATTLE_ON_THE_AMERIGO_INTRO = 0xA,
+  C_THE_WARP_INTRO = 0xB,
+  C_THE_INVASION_OF_AIUR_INTRO = 0xC,
+  C_THE_DREAM = 0xD,
+  C_BATTLE_ON_THE_AMERIGO = 0xE,
+  C_THE_WARP = 0xF,
+  C_THE_INVASION_OF_AIUR = 0x10,
+  C_THE_FALL_OF_FENIX_INTRO = 0x11,
+  C_THE_AMBUSH_INTRO = 0x12,
+  C_THE_RETURN_TO_AIUR_INTRO = 0x13,
+  C_THE_FALL_OF_FENIX = 0x14,
+  C_THE_AMBUSH = 0x15,
+  C_THE_RETURN_TO_AIUR = 0x16,
+  C_THE_DEATH_OF_THE_OVERMIND = 0x17,
+  C_EXPANSION_INTRO = 0x18,
+  C_FURY_OF_THE_XEL_NAGA = 0x19,
+  C_UED_VICTORY_REPORT = 0x1A,
+  C_THE_ASCENTION = 0x1B,
+  C_NONE = 0x19,
 };
 
 typedef __int16 s16;
@@ -3722,6 +3759,13 @@ struct Action
 };
 static_assert(sizeof(Action) == 32, "Incorrect size for type `Action`. Expected: 32");
 
+struct CinematicIntro
+{
+  Cinematic actual_cinematic;
+  Cinematic intro_cinematic;
+};
+static_assert(sizeof(CinematicIntro) == 2, "Incorrect size for type `CinematicIntro`. Expected: 2");
+
 struct __declspec(align(4)) SFX_related
 {
   int f1;
@@ -3996,6 +4040,17 @@ struct TPROVIDER
   _DWORD dword114;
 };
 static_assert(sizeof(TPROVIDER) == 280, "Incorrect size for type `TPROVIDER`. Expected: 280");
+
+struct __declspec(align(2)) CampaignMenuEntry
+{
+  unsigned __int16 glu_hist_tbl_index;
+  MapData next_mission;
+  Cinematic cinematic;
+  char _padding0;
+  Race race;
+  bool hide;
+};
+static_assert(sizeof(CampaignMenuEntry) == 8, "Incorrect size for type `CampaignMenuEntry`. Expected: 8");
 
 struct PlayerInfo
 {

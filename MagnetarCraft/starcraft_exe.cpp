@@ -13425,11 +13425,11 @@ DECL_FUNC(int(*sub_4B4EE0)(), sub_4B4EE0, 0x4b4ee0);
 DECL_FUNC(int (__thiscall*sub_4B4F10)(dialog *dlg, int y, rect *dst), sub_4B4F10, 0x4b4f10);
 DECL_FUNC(bool (__fastcall*gluExpCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluExpCmpgn_CampaignButton, 0x4b4f50);
 DECL_FUNC(char (__cdecl*sub_4B5050)(), sub_4B5050, 0x4b5050);
-BOOL sub_4B5110(int a1) {
+BOOL sub_4B5110(int race) {
     int address = 0x4b5110;
     BOOL result_;
     __asm {
-        mov eax, a1
+        mov eax, race
         call address
         mov result_, eax
     }
@@ -13504,7 +13504,17 @@ DECL_FUNC(int(*DeleteSavedGame)(), DeleteSavedGame, 0x4b62a0);
 DECL_FUNC(bool (__fastcall*gluLoad_List)(dialog *dlg, dlgEvent *evt), gluLoad_List, 0x4b6340);
 DECL_FUNC(bool (__fastcall*gluLoad_Main)(dialog *dlg, struct dlgEvent *evt), gluLoad_Main, 0x4b6410);
 DECL_FUNC(void(*loadMenu_gluLoad)(), loadMenu_gluLoad, 0x4b6490);
-DECL_FUNC(int(*sub_4B6530)(), sub_4B6530, 0x4b6530);
+BOOL sub_4B6530(CampaignMenuEntry *a1, unsigned int a2) {
+    int address = 0x4b6530;
+    BOOL result_;
+    __asm {
+        mov eax, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 dialog *sub_4B6570(dialog *result) {
     int address = 0x4b6570;
     dialog * result_;
@@ -13598,12 +13608,12 @@ DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t si
 DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
 DECL_FUNC(int(*BWFXN_gluPOKCancel_MBox)(), BWFXN_gluPOKCancel_MBox, 0x4b73b0);
 DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
-int loadmenu_GluHist(int a1, int a2) {
+CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries) {
     int address = 0x4b7820;
-    int result_;
+    CampaignMenuEntry * result_;
     __asm {
         mov eax, a1
-        mov ecx, a2
+        mov ecx, menu_entries
         call address
         mov result_, eax
     }
@@ -15966,9 +15976,9 @@ DECL_FUNC(int (__stdcall*append_melee_computer)(char), append_melee_computer, 0x
 DECL_FUNC(int(*sub_4DBBC0)(), sub_4DBBC0, 0x4dbbc0);
 DECL_FUNC(int(*ClearMeleeCompSlots)(), ClearMeleeCompSlots, 0x4dbbe0);
 DECL_FUNC(int(*setSinglePlayerValue)(), setSinglePlayerValue, 0x4dbc00);
-int getCampaignIndex(MapData a1, int a2) {
+CampaignMenuEntry *getCampaignIndex(MapData a1, CampaignMenuEntry **a2) {
     int address = 0x4dbc20;
-    int result_;
+    CampaignMenuEntry * result_;
     __asm {
         mov di, a1
         mov esi, a2
@@ -15978,11 +15988,20 @@ int getCampaignIndex(MapData a1, int a2) {
     return result_;
 }
 DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int a2, int a3, int a4, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
-DECL_FUNC(void (__cdecl*sub_4DBD60)(), sub_4DBD60, 0x4dbd60);
+DECL_FUNC(void (__cdecl*updateActiveCampaignMission)(), updateActiveCampaignMission, 0x4dbd60);
 DECL_FUNC(int(*sub_4DBE50)(), sub_4DBE50, 0x4dbe50);
 DECL_FUNC(int(*initSingle)(), initSingle, 0x4dbea0);
 DECL_FUNC(int(*sub_4DBEC0)(), sub_4DBEC0, 0x4dbec0);
-DECL_FUNC(int(*sub_4DBEE0)(), sub_4DBEE0, 0x4dbee0);
+unsigned int sub_4DBEE0(CampaignMenuEntry *a1) {
+    int address = 0x4dbee0;
+    unsigned result_;
+    __asm {
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4DBF80)(), sub_4DBF80, 0x4dbf80);
 int CreateCampaignGame(MapData a1) {
     int address = 0x4dbfc0;
@@ -18287,10 +18306,10 @@ DECL_FUNC(void(*loadMenu_gluRdyT)(void), loadMenu_gluRdyT, 0x4f7550);
 DECL_FUNC(int(*rdyPFrame)(), rdyPFrame, 0x4f77b0);
 DECL_FUNC(bool (__fastcall*gluRdyP_BINDLG_Loop)(dialog *dlg, dlgEvent *evt), gluRdyP_BINDLG_Loop, 0x4f7810);
 DECL_FUNC(void(*loadMenu_gluRdyP)(void), loadMenu_gluRdyP, 0x4f78b0);
-void PlayMovieWithIntro(unsigned int a1) {
+void PlayMovieWithIntro(Cinematic a1) {
     int address = 0x4f7ae0;
     __asm {
-        mov esi, a1
+        mov si, word ptr a1
         call address
     }
 }
@@ -18806,12 +18825,12 @@ char* aScoreUser = (decltype(aScoreUser + 0)) 0x4ffaa8;
 int* dword_4FFAD4 = (decltype(dword_4FFAD4 + 0)) 0x4ffad4;
 _DWORD* off_4FFAD8 = (decltype(off_4FFAD8 + 0)) 0x4ffad8;
 char *& off_4FFBC8 = * ((decltype(&off_4FFBC8)) 0x4ffbc8);
-wchar_t* aA_1 = (decltype(aA_1 + 0)) 0x4ffd90;
-wchar_t* aJ1 = (decltype(aJ1 + 0)) 0x4ffde8;
-wchar_t* aK2 = (decltype(aK2 + 0)) 0x4ffdf0;
-wchar_t* aL3 = (decltype(aL3 + 0)) 0x4ffdf8;
-wchar_t* aM4 = (decltype(aM4 + 0)) 0x4ffe00;
-wchar_t* a9 = (decltype(a9 + 0)) 0x4ffe78;
+CampaignMenuEntry* terran_campaign_menu_entries = (decltype(terran_campaign_menu_entries + 0)) 0x4ffc20;
+CampaignMenuEntry* zerg_campaign_menu_entries = (decltype(zerg_campaign_menu_entries + 0)) 0x4ffca0;
+CampaignMenuEntry* protoss_campaign_menu_entries = (decltype(protoss_campaign_menu_entries + 0)) 0x4ffd18;
+CampaignMenuEntry* terran_expcampaign_menu_entries = (decltype(terran_expcampaign_menu_entries + 0)) 0x4ffd90;
+CampaignMenuEntry* zerg_expcampaign_menu_entries = (decltype(zerg_expcampaign_menu_entries + 0)) 0x4ffde8;
+CampaignMenuEntry* protoss_expcampaign_menu_entries = (decltype(protoss_expcampaign_menu_entries + 0)) 0x4ffe78;
 char* aRezGlucmpgn_bi = (decltype(aRezGlucmpgn_bi + 0)) 0x4ffecc;
 char* aRezGluexpcmpgn = (decltype(aRezGluexpcmpgn + 0)) 0x4ffee0;
 const char* aLastreplay_1 = (decltype(aLastreplay_1 + 0)) 0x4ffef8;
@@ -18859,7 +18878,7 @@ __int64& cheat_hash_no_glues = * ((decltype(&cheat_hash_no_glues)) 0x500b80);
 __int16* word_500B98 = (decltype(word_500B98 + 0)) 0x500b98;
 char* a_mpc = (decltype(a_mpc + 0)) 0x500bc4;
 char* a_spc = (decltype(a_spc + 0)) 0x500bcc;
-char* cinematic_intros = (decltype(cinematic_intros + 0)) 0x500be4;
+CinematicIntro* cinematic_intros = (decltype(cinematic_intros + 0)) 0x500be4;
 char* aLastreplay = (decltype(aLastreplay + 0)) 0x500c28;
 char* aCputhrottle = (decltype(aCputhrottle + 0)) 0x500c94;
 char* aGamma = (decltype(aGamma + 0)) 0x500cb0;
@@ -20330,9 +20349,9 @@ const char* aGluePalmm = (decltype(aGluePalmm + 0)) 0x50e06c;
 int* dword_50E170 = (decltype(dword_50E170 + 0)) 0x50e170;
 char& byte_50E174 = * ((decltype(&byte_50E174)) 0x50e174);
 void *& off_50E176 = * ((decltype(&off_50E176)) 0x50e176);
-int* off_5122A0 = (decltype(off_5122A0 + 0)) 0x5122a0;
-int* off_5122AC = (decltype(off_5122AC + 0)) 0x5122ac;
-unsigned int& dword_5122B8 = * ((decltype(&dword_5122B8)) 0x5122b8);
+CampaignMenuEntry ** campaign_menu_entries = (decltype(campaign_menu_entries + 0)) 0x5122a0;
+CampaignMenuEntry ** expcampaign_menu_entries = (decltype(expcampaign_menu_entries + 0)) 0x5122ac;
+Cinematic& active_cinematic = * ((decltype(&active_cinematic)) 0x5122b8);
 char* campaignFirstMission = (decltype(campaignFirstMission + 0)) 0x5122bc;
 char* xCampaignFirstMission = (decltype(xCampaignFirstMission + 0)) 0x5122c0;
 char* aInternalVersio = (decltype(aInternalVersio + 0)) 0x5122c8;
@@ -22295,7 +22314,7 @@ MenuPosition& glGluesMode = * ((decltype(&glGluesMode)) 0x6d11bc);
 int& OpheliaEnabled = * ((decltype(&OpheliaEnabled)) 0x6d11c0);
 int& dword_6D11C4 = * ((decltype(&dword_6D11C4)) 0x6d11c4);
 int& IsInGameLoop = * ((decltype(&IsInGameLoop)) 0x6d11c8);
-int& dword_6D11CC = * ((decltype(&dword_6D11CC)) 0x6d11cc);
+CampaignMenuEntry *& active_campaign_menu_entry = * ((decltype(&active_campaign_menu_entry)) 0x6d11cc);
 char& byte_6D11D0 = * ((decltype(&byte_6D11D0)) 0x6d11d0);
 int& dword_6D11D4 = * ((decltype(&dword_6D11D4)) 0x6d11d4);
 int& dword_6D11D8 = * ((decltype(&dword_6D11D8)) 0x6d11d8);
@@ -22356,8 +22375,8 @@ int& dword_6D5A38 = * ((decltype(&dword_6D5A38)) 0x6d5a38);
 dialog *& dword_6D5A3C = * ((decltype(&dword_6D5A3C)) 0x6d5a3c);
 FnInteract *& dword_6D5A40 = * ((decltype(&dword_6D5A40)) 0x6d5a40);
 void *& dword_6D5A44 = * ((decltype(&dword_6D5A44)) 0x6d5a44);
-int& dword_6D5A48 = * ((decltype(&dword_6D5A48)) 0x6d5a48);
-int& dword_6D5A4C = * ((decltype(&dword_6D5A4C)) 0x6d5a4c);
+CampaignMenuEntry *& dword_6D5A48 = * ((decltype(&dword_6D5A48)) 0x6d5a48);
+CampaignMenuEntry *& dword_6D5A4C = * ((decltype(&dword_6D5A4C)) 0x6d5a4c);
 int& dword_6D5A50 = * ((decltype(&dword_6D5A50)) 0x6d5a50);
 int& dword_6D5A54 = * ((decltype(&dword_6D5A54)) 0x6d5a54);
 dialog *& dword_6D5A58 = * ((decltype(&dword_6D5A58)) 0x6d5a58);
