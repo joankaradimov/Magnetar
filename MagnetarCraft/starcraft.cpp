@@ -2272,7 +2272,7 @@ GotFileValues* InitUseMapSettingsTemplate_()
 
 FunctionPatch InitUseMapSettingsTemplate_patch(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
 
-int CreateCampaignGame_(MapData mapData)
+int CreateCampaignGame__(MapData mapData)
 {
 	MapChunks mapChunks;
 	GameData v4;
@@ -2302,8 +2302,6 @@ int CreateCampaignGame_(MapData mapData)
 		return 0;
 	}
 }
-
-FunctionPatch CreateCampaignGame_patch(CreateCampaignGame_, CreateCampaignGame);
 
 int LoadCampaignWithCharacter_(int a1)
 {
@@ -2354,13 +2352,15 @@ int LoadCampaignWithCharacter_(int a1)
 		}
 		else
 		{
-			return CreateCampaignGame_((MapData)result[1]);
+			return CreateCampaignGame__((MapData)result[1]);
 		}
 	}
 	else {
 		return 0;
 	}
 }
+
+FailStubPatch LoadCampaignWithCharacter_patch(LoadCampaignWithCharacter);
 
 int sub_4B5110_(int a1)
 {
@@ -2384,7 +2384,31 @@ int sub_4B5110_(int a1)
 	return result;
 }
 
-signed int __stdcall sub_4B5180_(dialog *a1)
+FailStubPatch sub_4B5110_patch(sub_4B5110);
+
+bool sub_4B27A0_(Race race)
+{
+	WORD v2; // ax
+	const char* v3; // eax
+	BOOL result; // eax
+
+	if (!dword_59B760[race]
+		|| ((v2 = (race == Race::RACE_Protoss) + 140, (race == 2) != -141) ? (v2 < *networkTable ? (v3 = (char*)networkTable
+			+ networkTable[v2 + 1]) : (v3 = "")) : (v3 = 0),
+			sub_4B5B20(v3)))
+	{
+		result = LoadCampaignWithCharacter_(race) != 0;
+	}
+	else
+	{
+		result = 0;
+	}
+	return result;
+}
+
+FailStubPatch sub_4B27A0_patch(sub_4B27A0);
+
+bool sub_4B5180_(dialog* a1)
 {
 	if (LastControlID == 6)
 	{
@@ -2392,54 +2416,112 @@ signed int __stdcall sub_4B5180_(dialog *a1)
 			return 1;
 		LastControlID = 6;
 	}
-	else
+	else if (LastControlID == 7)
 	{
-		if (LastControlID == 7)
+		if (sub_4B5110_(1))
 		{
-			if (sub_4B5110_(1))
-			{
-				LastControlID = 7;
-				return (unsigned __int8)DLG_SwishOut(a1);
-			}
-			return 1;
+			LastControlID = 7;
+			return DLG_SwishOut(a1);
 		}
-		if (LastControlID == 8)
-		{
-			if (sub_4B5110_(0))
-			{
-				LastControlID = 8;
-				return (unsigned __int8)DLG_SwishOut(a1);
-			}
-			return 1;
-		}
+		return 1;
 	}
-	return (unsigned __int8)DLG_SwishOut(a1);
+	else if (LastControlID == 8)
+	{
+		if (sub_4B5110_(0))
+		{
+			LastControlID = 8;
+			return DLG_SwishOut(a1);
+		}
+		return 1;
+	}
+
+	return DLG_SwishOut(a1);
 }
 
-bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog *dlg, struct dlgEvent *evt)
+FailStubPatch sub_4B5180_patch(sub_4B5180);
+
+bool sub_4B2810_(dialog* a1)
+{
+	switch (LastControlID)
+	{
+	case 6:
+		if (!sub_4B27A0_(Race::RACE_Protoss))
+		{
+			return true;
+		}
+		LastControlID = 6;
+		break;
+	case 7:
+		if (sub_4B27A0_(Race::RACE_Terran))
+		{
+			LastControlID = 7;
+			return DLG_SwishOut(a1);
+		}
+		return true;
+	case 8:
+		if (sub_4B27A0_(Race::RACE_Zerg))
+		{
+			LastControlID = 8;
+			return DLG_SwishOut(a1);
+		}
+		return true;
+	}
+	return DLG_SwishOut(a1);
+}
+
+FailStubPatch sub_4B2810_patch(sub_4B2810);
+
+bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == 14)
 	{
-		if (evt->dwUser)
+		if (evt->dwUser == 0)
 		{
-			if (evt->dwUser == 2)
-				return sub_4B5180_(dlg);
-			if (evt->dwUser == 10)
+			DLG_SwishIn(dlg);
+			if (!byte_6D5BBC)
 			{
-				registerMenuFunctions(off_51A818, dlg, 44, 0);
-				DlgSwooshin(2, &stru_512A8C, dlg, 0);
-				return genericDlgInteract(dlg, evt);
+				DLGMusicFade(22);
 			}
 		}
-		else
+		else if (evt->dwUser == 2)
+		{
+			return sub_4B2810_(dlg);
+		}
+		else if (evt->dwUser == 10)
+		{
+			registerMenuFunctions(off_51A93C, dlg, 44, 0);
+			DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FailStubPatch gluCmpgn_Main_patch(gluCmpgn_Main);
+
+bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == 14)
+	{
+		if (evt->dwUser == 0)
 		{
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
 				DLGMusicFade(22);
 		}
+		else if (evt->dwUser == 2)
+		{
+				return sub_4B5180_(dlg);
+		}
+		else if (evt->dwUser == 10)
+		{
+			registerMenuFunctions(off_51A818, dlg, 44, 0);
+			DlgSwooshin(2, &stru_512A8C, dlg, 0);
+		}
 	}
 	return genericDlgInteract(dlg, evt);
 }
+
+FailStubPatch gluExpCmpgn_CustomCtrlID_patch(gluExpCmpgn_CustomCtrlID);
 
 void loadMenu_gluCmpgn_()
 {
@@ -2452,7 +2534,7 @@ void loadMenu_gluCmpgn_()
 		campaign_dialog->lFlags |= 4u;
 		AllocInitDialogData(campaign_dialog, campaign_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	}
-	switch (gluLoadBINDlg(campaign_dialog, gluCmpgn_Main))
+	switch (gluLoadBINDlg(campaign_dialog, gluCmpgn_Main_))
 	{
 	case 5:
 		glGluesMode = GLUE_LOAD;
@@ -2685,7 +2767,7 @@ int SwitchMenu_()
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
-		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
+		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame__((MapData)level_cheat_mission))
 		{
 			goto LABEL_38;
 		}

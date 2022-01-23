@@ -13314,6 +13314,16 @@ int sub_4B26B0(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4B26E0)(), sub_4B26E0, 0x4b26e0);
+BOOL sub_4B27A0(int race) {
+    int address = 0x4b27a0;
+    BOOL result_;
+    __asm {
+        mov eax, race
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4B2810)(int), sub_4B2810, 0x4b2810);
 DECL_FUNC(bool (__fastcall*gluCmpgn_Main)(dialog *dlg, dlgEvent *evt), gluCmpgn_Main, 0x4b28b0);
 DECL_FUNC(int(*loadMenu_gluCmpgn)(), loadMenu_gluCmpgn, 0x4b2930);
@@ -13415,9 +13425,9 @@ DECL_FUNC(int(*sub_4B4EE0)(), sub_4B4EE0, 0x4b4ee0);
 DECL_FUNC(int (__thiscall*sub_4B4F10)(dialog *dlg, int y, rect *dst), sub_4B4F10, 0x4b4f10);
 DECL_FUNC(bool (__fastcall*gluExpCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluExpCmpgn_CampaignButton, 0x4b4f50);
 DECL_FUNC(char (__cdecl*sub_4B5050)(), sub_4B5050, 0x4b5050);
-int sub_4B5110(int a1) {
+BOOL sub_4B5110(int a1) {
     int address = 0x4b5110;
-    int result_;
+    BOOL result_;
     __asm {
         mov eax, a1
         call address
@@ -15984,11 +15994,11 @@ int CreateCampaignGame(MapData a1) {
     }
     return result_;
 }
-int LoadCampaignWithCharacter(int a1) {
+int LoadCampaignWithCharacter(int race) {
     int address = 0x4dc0b0;
     int result_;
     __asm {
-        mov edi, a1
+        mov edi, race
         call address
         mov result_, eax
     }
