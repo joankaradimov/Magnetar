@@ -3065,10 +3065,20 @@ void GameMainLoop_()
 				case GAME_CREDITS:
 					BeginCredits();
 					v2 = gwGameMode == GAME_CREDITS;
+					if (v2)
+					{
+						gwGameMode = GAME_GLUES;
+						glGluesMode = GLUE_MAIN_MENU;
+					}
 					break;
 				case GAME_EPILOG:
 					BeginEpilog();
 					v2 = gwGameMode == GAME_EPILOG;
+					if (v2)
+					{
+						gwGameMode = GAME_GLUES;
+						glGluesMode = GLUE_MAIN_MENU;
+					}
 					break;
 				default:
 					AppExit(0);
