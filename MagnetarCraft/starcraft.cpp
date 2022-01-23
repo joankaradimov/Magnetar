@@ -2952,6 +2952,33 @@ void CreateMainWindow_()
 	}
 }
 
+void PlayMovieWithIntro_(Cinematic a1)
+{
+	int v1 = 10;
+	while (v1--)
+	{
+		if (cinematic_intros[v1].actual_cinematic == a1)
+		{
+			PlayMovie((unsigned __int8)cinematic_intros[v1].intro_cinematic);
+			break;
+		}
+	}
+	if (gwGameMode != GAME_EXIT)
+	{
+		PlayMovie(a1);
+	}
+}
+
+FailStubPatch PlayMovieWithIntro_patch(PlayMovieWithIntro);
+
+void playActiveCinematic_()
+{
+	PlayMovieWithIntro_(active_cinematic);
+	active_cinematic = Cinematic::C_NONE;
+}
+
+FailStubPatch playActiveCinematic_patch(playActiveCinematic);
+
 void GameMainLoop_()
 {
 	bool v2;
@@ -3002,8 +3029,7 @@ void GameMainLoop_()
 					GameRun_(GLUE_MAIN_MENU);
 					continue;
 				case GAME_CINEMATIC:
-					PlayMovieWithIntro(active_cinematic);
-					active_cinematic = Cinematic::C_NONE;
+					playActiveCinematic_();
 					if (gwGameMode == GAME_CINEMATIC)
 						ContinueCampaign(1);
 					continue;

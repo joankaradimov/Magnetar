@@ -15991,7 +15991,7 @@ DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int a2, int a3
 DECL_FUNC(void (__cdecl*updateActiveCampaignMission)(), updateActiveCampaignMission, 0x4dbd60);
 DECL_FUNC(int(*sub_4DBE50)(), sub_4DBE50, 0x4dbe50);
 DECL_FUNC(int(*initSingle)(), initSingle, 0x4dbea0);
-DECL_FUNC(int(*sub_4DBEC0)(), sub_4DBEC0, 0x4dbec0);
+DECL_FUNC(int(*playActiveCinematic)(), playActiveCinematic, 0x4dbec0);
 unsigned int sub_4DBEE0(CampaignMenuEntry *a1) {
     int address = 0x4dbee0;
     unsigned result_;

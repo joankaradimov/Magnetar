@@ -4988,7 +4988,7 @@ extern int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int a2, int a3, i
 extern void (__cdecl*updateActiveCampaignMission)();
 extern int(*sub_4DBE50)();
 extern int(*initSingle)();
-extern int(*sub_4DBEC0)();
+extern int(*playActiveCinematic)();
 unsigned int sub_4DBEE0(CampaignMenuEntry *a1);
 extern int(*sub_4DBF80)();
 int CreateCampaignGame(MapData a1);

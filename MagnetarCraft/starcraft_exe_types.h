@@ -1141,7 +1141,7 @@ enum Cinematic : __int8
   C_FURY_OF_THE_XEL_NAGA = 0x19,
   C_UED_VICTORY_REPORT = 0x1A,
   C_THE_ASCENTION = 0x1B,
-  C_NONE = 0x19,
+  C_NONE = 0x1C,
 };
 
 typedef __int16 s16;
