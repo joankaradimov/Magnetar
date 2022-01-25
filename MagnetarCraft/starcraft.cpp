@@ -369,6 +369,32 @@ void * loadTBL_(int a1, int a2, char *a3, char *filename, char **a5)
 	return result;
 }
 
+void LoadGameData_(DatLoad* a1, char* a2)
+{
+	unsigned int offset;
+
+	int bytes_read = 0;
+	BYTE* v3 = (BYTE*) fastFileRead(&bytes_read, 0, a2, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 356);
+	const void* v5 = (const void*)v3;
+	for (BYTE* i = v3; a1->address; i += offset)
+	{
+		offset = a1->length * a1->entries;
+		if (offset > bytes_read)
+		{
+			break;
+		}
+		memcpy(a1->address, v5, offset);
+		++a1;
+		bytes_read -= offset;
+		v5 = (const void*)(offset + i);
+	}
+	if (bytes_read)
+	{
+		SysWarn_FileNotFound(a2, 24);
+	}
+	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
+}
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -400,7 +426,7 @@ void PreInitData_()
 	dword_6D5E20 = &GameScreenBuffer;
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
-	LoadGameData(mapdataDat, "arr\\mapdata.dat");
+	LoadGameData_(mapdataDat, "arr\\mapdata.dat"); // TODO: is this call needed?
 	dword_51CC30 = loadTBL_(1577, 65, "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames);
 	AppAddExit_(FreeMapdataTable);
 	LoadGameTemplates(Template_Constructor);
@@ -596,7 +622,7 @@ void audioVideoInit_()
 	AppAddExit_(vidinimoDestroy);
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget();
-	LoadGameData(sfxdataDat, "arr\\sfxdata.dat");
+	LoadGameData_(sfxdataDat, "arr\\sfxdata.dat");
 	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 	AppAddExit_(sfxdata_cleanup);
 	if (!byte_6D11D0)
@@ -1204,7 +1230,7 @@ signed int GameInit_()
 	InitializePresetImageArrays();
 	InitializeSpriteArray();
 	InitializeThingyArray();
-	LoadGameData(flingyDat, "arr\\flingy.dat");
+	LoadGameData_(flingyDat, "arr\\flingy.dat");
 	memset(dword_63FEE0, 0, 76u);
 	dword_63FF3C = (CUnit *)dword_63FEE0;
 	dword_63FF38 = (CUnit *)dword_63FEE0;
