@@ -2373,7 +2373,7 @@ bool LoadCampaignWithCharacter_(int race)
 		}
 		else
 		{
-			CreateCampaignGame(active_campaign_menu_entry->next_mission);
+			CreateCampaignGame__(active_campaign_menu_entry->next_mission);
 		}
 	}
 	return active_campaign_menu_entry != NULL;
