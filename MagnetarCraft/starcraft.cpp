@@ -2329,6 +2329,108 @@ int CreateCampaignGame__(MapData mapData)
 	}
 }
 
+CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
+{
+	if (!sub_4B6530(a2, a1))
+	{
+		return a2;
+	}
+
+	dword_6D5A48 = 0;
+	dword_6D5A4C = a2;
+	dword_6D5A50 = a1;
+	dword_6D5A40 = off_51A69C;
+	dword_599D98 = 28;
+	HANDLE glu_hist_file;
+	if (!SFileOpenFileEx(0, "rez\\gluHist.tbl", 0, &glu_hist_file))
+	{
+		SysWarn_FileNotFound("rez\\gluHist.tbl", SErrGetLastError());
+	}
+	LONG glu_hist_file_size = SFileGetFileSize(glu_hist_file, 0);
+	if (glu_hist_file_size == -1)
+	{
+		FileFatal(glu_hist_file, GetLastError());
+		return NULL;
+	}
+	if (!glu_hist_file_size)
+	{
+		SysWarn_FileNotFound("rez\\gluHist.tbl", 24);
+	}
+	void* v9 = SMemAlloc(glu_hist_file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	int read;
+	if (!SFileReadFile(glu_hist_file, v9, glu_hist_file_size, &read, 0))
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(glu_hist_file, 24);
+		}
+		else
+		{
+			FileFatal(glu_hist_file, GetLastError());
+		}
+		return NULL;
+	}
+	if (read != glu_hist_file_size)
+	{
+		FileFatal(glu_hist_file, 24);
+		return NULL;
+	}
+	SFileCloseFile(glu_hist_file);
+	dword_6D5A44 = v9;
+	AllocBackgroundImage("glue\\campaign\\pHist.pcx", &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 602);
+	if (!SFileOpenFileEx(0, "rez\\gluHist.bin", 0, &glu_hist_file))
+	{
+		SysWarn_FileNotFound("rez\\gluHist.bin", SErrGetLastError());
+		return NULL;
+	}
+	LONG v11 = SFileGetFileSize(glu_hist_file, 0);
+	if (v11 == -1)
+	{
+		FileFatal(glu_hist_file, GetLastError());
+		return NULL;
+	}
+	if (!v11)
+	{
+		SysWarn_FileNotFound("rez\\gluHist.bin", 24);
+	}
+	dialog* v14 = (dialog*)SMemAlloc(v11, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	if (!SFileReadFile(glu_hist_file, v14, v11, &read, 0))
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(glu_hist_file, 24);
+			return NULL;
+		}
+		FileFatal(glu_hist_file, GetLastError());
+		return NULL;
+	}
+	if (read != v11)
+	{
+		FileFatal(glu_hist_file, 24);
+		return NULL;
+	}
+	SFileCloseFile(glu_hist_file);
+	if (v14)
+	{
+		v14->lFlags |= 4u;
+		AllocInitDialogData(v14, v14, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 604);
+		dword_6D5A3C = v14;
+	}
+	else
+	{
+		dword_6D5A3C = 0;
+	}
+	gluLoadBINDlg(dword_6D5A3C, sub_4B6E10);
+	if (dword_6D5A44)
+	{
+		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);
+	}
+	dword_6D5A44 = 0;
+	return dword_6D5A48;
+}
+
+FailStubPatch loadmenu_GluHist_patch(loadmenu_GluHist);
+
 bool LoadCampaignWithCharacter_(int race)
 {
 	customSingleplayer[0] = 0;
@@ -2355,7 +2457,7 @@ bool LoadCampaignWithCharacter_(int race)
 		v2 = campaign_menu_entries[race];
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
-	active_campaign_menu_entry = loadmenu_GluHist(*unlocked_mission, v2);
+	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, v2);
 	if (active_campaign_menu_entry)
 	{
 		if (*unlocked_mission < active_campaign_menu_entry->next_mission)
