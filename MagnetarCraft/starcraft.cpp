@@ -757,7 +757,7 @@ void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
 	}
 }
 
-FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
+// FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
 
 void CreateInitialMeleeUnits_()
 {
@@ -788,10 +788,10 @@ void CreateInitialMeleeUnits_()
 					CreateInitialOverlord(player_index);
 				[[fallthrough]];
 			case StartingUnits::SU_WORKER_ONLY:
-				CreateInitialMeleeWorker_(player->nRace, player_index);
-				CreateInitialMeleeWorker_(player->nRace, player_index);
-				CreateInitialMeleeWorker_(player->nRace, player_index);
-				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker(player->nRace, player_index);
+				CreateInitialMeleeWorker(player->nRace, player_index);
+				CreateInitialMeleeWorker(player->nRace, player_index);
+				CreateInitialMeleeWorker(player->nRace, player_index);
 				[[fallthrough]];
 			case StartingUnits::SU_MAP_DEFAULT:
 				break;
