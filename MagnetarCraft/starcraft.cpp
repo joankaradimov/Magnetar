@@ -3106,6 +3106,91 @@ void playActiveCinematic_()
 
 FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 
+int ContinueCampaign_(int a1)
+{
+	gwGameMode = GAME_GLUES;
+	if (dword_51CA1C)
+	{
+		CreateNextCampaignGame();
+		return 1;
+	}
+	if (!a1)
+	{
+		gwGameMode = GAME_RESTART;
+		return 1;
+	}
+	sub_4D91B0();
+	updateActiveCampaignMission();
+	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission == MD_none)
+	{
+		return 0;
+	}
+	if (byte_57F246[0])
+	{
+		active_campaign_menu_entry = sub_4DBDA0(byte_57F246);
+		byte_57F246[0] = 0;
+	}
+	else
+	{
+		active_campaign_menu_entry = active_campaign_menu_entry + 1;
+	}
+	sub_4DBEE0(active_campaign_menu_entry);
+	if (active_campaign_menu_entry->next_mission)
+	{
+		if (active_campaign_menu_entry->cinematic)
+		{
+			CampaignIndex = active_campaign_menu_entry->next_mission;
+			active_cinematic = active_campaign_menu_entry->cinematic;
+			gwGameMode = GAME_CINEMATIC;
+			return 1;
+		}
+		if (CreateCampaignGame(active_campaign_menu_entry->next_mission))
+		{
+			switch (active_campaign_menu_entry->race)
+			{
+			case Race::RACE_Zerg:
+				glGluesMode = MenuPosition::GLUE_READY_Z;
+				break;
+			case Race::RACE_Terran:
+				glGluesMode = MenuPosition::GLUE_READY_T;
+				break;
+			case Race::RACE_Protoss:
+				glGluesMode = MenuPosition::GLUE_READY_P;
+				break;
+			}
+			return 1;
+		}
+		return 0;
+	}
+
+	if (IsExpansion)
+	{
+		if (active_campaign_menu_entry->race == Race::RACE_Zerg)
+		{
+			gwGameMode = GAME_EPILOG;
+		}
+		else
+		{
+			glGluesMode = GLUE_EX_CAMPAIGN;
+		}
+	}
+	else
+	{
+		if (active_campaign_menu_entry->race == Race::RACE_Protoss)
+		{
+			gwGameMode = GAME_EPILOG;
+		}
+		else
+		{
+			glGluesMode = GLUE_CAMPAIGN;
+		}
+	}
+	active_campaign_menu_entry = 0;
+	return 1;
+}
+
+FunctionPatch ContinueCampaign_patch(ContinueCampaign, ContinueCampaign_);
+
 void GameMainLoop_()
 {
 	bool v2;
@@ -3158,7 +3243,7 @@ void GameMainLoop_()
 				case GAME_CINEMATIC:
 					playActiveCinematic_();
 					if (gwGameMode == GAME_CINEMATIC)
-						ContinueCampaign(1);
+						ContinueCampaign_(1);
 					continue;
 				case GAME_RESTART:
 					next_campaign_mission = 1;
