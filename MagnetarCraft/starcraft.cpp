@@ -3267,17 +3267,17 @@ void GameMainLoop_()
 					gwGameMode = GAME_RUN;
 					continue;
 				case GAME_INTRO:
-					PlayMovie(0);
+					PlayMovie(Cinematic::C_BLIZZARD_LOGO);
 					if (gwGameMode == GAME_INTRO)
 					{
 						if (hMpq && SFileOpenFileEx(hMpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 						{
 							SFileCloseFile(phFile);
-							PlayMovie(24);
+							PlayMovie(Cinematic::C_EXPANSION_INTRO);
 						}
 						else
 						{
-							PlayMovie(1);
+							PlayMovie(Cinematic::C_INTRO);
 						}
 						if (gwGameMode == GAME_INTRO)
 							gwGameMode = GAME_GLUES;
@@ -3320,16 +3320,16 @@ void GameMainLoop_()
 			}
 		}
 		dword_6CDFEC &= ~0x800u;
-		PlayMovie(0);
-		PlayMovie(24);
+		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
+		PlayMovie(Cinematic::C_EXPANSION_INTRO);
 	}
 	else
 	{
 		if (!(BYTE1(dword_6CDFEC) & 2))
 			goto LABEL_8;
 		dword_6CDFEC &= ~0x200u;
-		PlayMovie(0);
-		PlayMovie(1);
+		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
+		PlayMovie(Cinematic::C_INTRO);
 	}
 	goto LABEL_8;
 }
