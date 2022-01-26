@@ -15988,7 +15988,29 @@ CampaignMenuEntry *getCampaignIndex(MapData a1, CampaignMenuEntry **a2) {
     return result_;
 }
 DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int a2, int a3, int a4, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
+signed int sub_4DBD20(const char *a1, size_t a2, int *a3) {
+    int address = 0x4dbd20;
+    signed result_;
+    __asm {
+        mov ebx, a1
+        mov edi, a2
+        mov esi, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__cdecl*updateActiveCampaignMission)(), updateActiveCampaignMission, 0x4dbd60);
+CampaignMenuEntry *sub_4DBDA0(const char *a1) {
+    int address = 0x4dbda0;
+    CampaignMenuEntry * result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4DBE50)(), sub_4DBE50, 0x4dbe50);
 DECL_FUNC(int(*initSingle)(), initSingle, 0x4dbea0);
 DECL_FUNC(int(*playActiveCinematic)(), playActiveCinematic, 0x4dbec0);
@@ -16023,7 +16045,7 @@ int LoadCampaignWithCharacter(int race) {
     }
     return result_;
 }
-DECL_FUNC(int(*_CreateNextCampaignGame)(), _CreateNextCampaignGame, 0x4dc1c0);
+DECL_FUNC(int (__cdecl*CreateNextCampaignGame)(), CreateNextCampaignGame, 0x4dc1c0);
 DECL_FUNC(int (__stdcall*ContinueCampaign)(int), ContinueCampaign, 0x4dc320);
 DECL_FUNC(int(*RandomizeShort)(), RandomizeShort, 0x4dc4a0);
 DECL_FUNC(int (__stdcall*sub_4DC4E0)(int), sub_4DC4E0, 0x4dc4e0);
@@ -20954,13 +20976,6 @@ DWORD& ElapsedTimeFrames = * ((decltype(&ElapsedTimeFrames)) 0x57f23c);
 int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
 char* byte_57F246 = (decltype(byte_57F246 + 0)) 0x57f246;
-int& dword_57F24A = * ((decltype(&dword_57F24A)) 0x57f24a);
-int& dword_57F24E = * ((decltype(&dword_57F24E)) 0x57f24e);
-int& dword_57F252 = * ((decltype(&dword_57F252)) 0x57f252);
-int& dword_57F256 = * ((decltype(&dword_57F256)) 0x57f256);
-int& dword_57F25A = * ((decltype(&dword_57F25A)) 0x57f25a);
-int& dword_57F25E = * ((decltype(&dword_57F25E)) 0x57f25e);
-int& dword_57F262 = * ((decltype(&dword_57F262)) 0x57f262);
 char& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
 int& dword_57F267 = * ((decltype(&dword_57F267)) 0x57f267);
 int& dword_57F26B = * ((decltype(&dword_57F26B)) 0x57f26b);
