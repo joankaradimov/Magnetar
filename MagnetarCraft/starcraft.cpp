@@ -2430,6 +2430,20 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 
 FailStubPatch loadmenu_GluHist_patch(loadmenu_GluHist);
 
+void updateActiveCampaignMission_()
+{
+	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission != CampaignIndex)
+	{
+		active_campaign_menu_entry = getCampaignIndex(CampaignIndex, campaign_menu_entries);
+		if (!active_campaign_menu_entry)
+		{
+			active_campaign_menu_entry = getCampaignIndex(CampaignIndex, expcampaign_menu_entries);
+		}
+	}
+}
+
+FunctionPatch updateActiveCampaignMission_patch(updateActiveCampaignMission_, updateActiveCampaignMission);
+
 bool LoadCampaignWithCharacter_(int race)
 {
 	customSingleplayer[0] = 0;
@@ -3120,7 +3134,7 @@ int ContinueCampaign_(int a1)
 		return 1;
 	}
 	sub_4D91B0();
-	updateActiveCampaignMission();
+	updateActiveCampaignMission_();
 	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission == MD_none)
 	{
 		return 0;
