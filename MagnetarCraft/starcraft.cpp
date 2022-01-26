@@ -2328,6 +2328,25 @@ int CreateCampaignGame__(MapData mapData)
 	}
 }
 
+bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == 14)
+	{
+		if (evt->dwUser == 0)
+		{
+			sub_4B6930(dlg);
+		}
+		else if(evt->dwUser == 2)
+		{
+			sub_4B6570(dlg);
+			return sub_4B6D60(dlg, evt);
+		}
+	}
+	return sub_4B6D60(dlg, evt);
+}
+
+FailStubPatch sub_4B6E10_patch(sub_4B6E10);
+
 CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 {
 	if (!sub_4B6530(a2, a1))
@@ -2419,7 +2438,7 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 	{
 		dword_6D5A3C = 0;
 	}
-	gluLoadBINDlg(dword_6D5A3C, sub_4B6E10);
+	gluLoadBINDlg(dword_6D5A3C, sub_4B6E10_);
 	if (dword_6D5A44)
 	{
 		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);
