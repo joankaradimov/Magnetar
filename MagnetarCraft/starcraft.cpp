@@ -3100,7 +3100,7 @@ void PlayMovieWithIntro_(Cinematic a1)
 	{
 		if (cinematic_intros[v1].actual_cinematic == a1)
 		{
-			PlayMovie((unsigned __int8)cinematic_intros[v1].intro_cinematic);
+			PlayMovie(cinematic_intros[v1].intro_cinematic);
 			break;
 		}
 	}
