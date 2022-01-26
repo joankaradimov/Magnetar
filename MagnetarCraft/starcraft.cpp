@@ -2302,7 +2302,6 @@ int CreateCampaignGame__(MapData mapData)
 {
 	MapChunks mapChunks;
 	GameData v4;
-	char v5[32];
 
 	CampaignIndex = mapData;
 	int readSuccess = ReadMapData_(MapdataFilenames[mapData], &mapChunks, 1);
@@ -2317,7 +2316,7 @@ int CreateCampaignGame__(MapData mapData)
 	v4.game_speed = GameSpeed;
 	v4.active_human_players = 1;
 	v4.max_players = 1;
-	GotFileValues* v2 = readTemplate_("Use Map Settings(1)", v5, v5);
+	GotFileValues* v2 = InitUseMapSettingsTemplate_();
 	if (v2 && (memcpy(&v4.got_file_values, v2, sizeof(v4.got_file_values)), SMemFree(v2, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 270, 0), sub_4DBE50()))
 	{
 		isHost = 0;
