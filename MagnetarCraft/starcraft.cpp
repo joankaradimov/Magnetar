@@ -2449,14 +2449,132 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 
 FailStubPatch loadmenu_GluHist_patch(loadmenu_GluHist);
 
+CampaignMenuEntry zerg_campaign_menu_entries_[] = {
+	{0x20, MD_zerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x21, MD_zerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x22, MD_zerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2A, MD_zerg04, C_THE_DREAM, 0, RACE_Zerg, 0},
+	{0x23, MD_zerg04, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x24, MD_zerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2B, MD_zerg06, C_BATTLE_ON_THE_AMERIGO, 0, RACE_Zerg, 0},
+	{0x25, MD_zerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x26, MD_zerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x27, MD_zerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2C, MD_zerg09, C_THE_WARP, 0, RACE_Zerg, 0},
+	{0x28, MD_zerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x29, MD_zerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2D, MD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 0},
+	{0},
+};
+
+CampaignMenuEntry terran_campaign_menu_entries_[] = {
+	{1, MD_tutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{2, MD_terran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{3, MD_terran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xC, MD_terran03, C_WASTELAND_PATROL, 0, RACE_Terran, 0},
+	{4, MD_terran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{5, MD_terran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{6, MD_terran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xD, MD_terran06, C_THE_DOWNING_OF_NORAD_II, 0, RACE_Terran, 0},
+	{7, MD_terran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{8, MD_terran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{9, MD_terran09, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xE, MD_terran11, C_OPEN_REBELION, 0, RACE_Terran, 0},
+	{0xA, MD_terran11, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xB, MD_terran12, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xF, MD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 0},
+	{0},
+};
+
+CampaignMenuEntry protoss_campaign_menu_entries_[] = {
+	{0x11, MD_protoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x12, MD_protoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x13, MD_protoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1B, MD_protoss04, C_THE_FALL_OF_FENIX, 0, RACE_Protoss, 0},
+	{0x14, MD_protoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x15, MD_protoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1C, MD_protoss06, C_THE_AMBUSH, 0, RACE_Protoss, 0},
+	{0x16, MD_protoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x17, MD_protoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1D, MD_protoss08, C_THE_RETURN_TO_AIUR, 0, RACE_Protoss, 0},
+	{0x18, MD_protoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x19, MD_protoss09, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1A, MD_protoss10, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1E, MD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0, RACE_Protoss, 0},
+	{0},
+};
+
+CampaignMenuEntry* campaign_menu_entries_[] = {
+	zerg_campaign_menu_entries_,
+	terran_campaign_menu_entries_,
+	protoss_campaign_menu_entries_,
+};
+
+CampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
+	{0x4A, MD_xzerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4B, MD_xzerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4C, MD_xzerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4D, MD_xzerg04a, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0, MD_xzerg04b, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, MD_xzerg04c, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, MD_xzerg04d, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, MD_xzerg04e, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, MD_xzerg04f, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0x4E, MD_xzerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4F, MD_xzerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x50, MD_xzerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x51, MD_xzerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x52, MD_xzerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0, MD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0x54, MD_xzerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x55, MD_Unknown, C_THE_ASCENTION, 0, RACE_Zerg, 0},
+	{0},
+};
+
+CampaignMenuEntry terran_expcampaign_menu_entries_[] = {
+	{0x41, MD_xterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x42, MD_xterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x43, MD_xterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x44, MD_xterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x45, MD_xterran05a, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x46, MD_xterran05b, C_BLIZZARD_LOGO, 0, RACE_Terran, 1},
+	{0x47, MD_xterran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x48, MD_xterran07, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x49, MD_xterran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x57, MD_xzerg01, C_UED_VICTORY_REPORT, 0, RACE_Terran, 0},
+	{0},
+};
+
+CampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
+	{0x39, MD_xprotoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3A, MD_xprotoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3B, MD_xprotoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3C, MD_xprotoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3D, MD_xprotoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3E, MD_xprotoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3F, MD_xprotoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x40, MD_xprotoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x56, MD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0, RACE_Protoss, 0},
+	{0},
+};
+
+CampaignMenuEntry* expcampaign_menu_entries_[] = {
+	zerg_expcampaign_menu_entries_,
+	terran_expcampaign_menu_entries_,
+	protoss_expcampaign_menu_entries_,
+};
+
+MemoryPatch campaign_menu_entries_patch(0x4DBC8F, campaign_menu_entries, 4);
+MemoryPatch expcampaign_menu_entries_patch(0x4DBC87, expcampaign_menu_entries, 4);
+
 void updateActiveCampaignMission_()
 {
 	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission != CampaignIndex)
 	{
-		active_campaign_menu_entry = getCampaignIndex(CampaignIndex, campaign_menu_entries);
+		active_campaign_menu_entry = getCampaignIndex(CampaignIndex, campaign_menu_entries_);
 		if (!active_campaign_menu_entry)
 		{
-			active_campaign_menu_entry = getCampaignIndex(CampaignIndex, expcampaign_menu_entries);
+			active_campaign_menu_entry = getCampaignIndex(CampaignIndex, expcampaign_menu_entries_);
 		}
 	}
 }
@@ -2481,12 +2599,12 @@ bool LoadCampaignWithCharacter_(int race)
 	int* unlocked_mission;
 	if (IsExpansion)
 	{
-		v2 = expcampaign_menu_entries[race];
+		v2 = expcampaign_menu_entries_[race];
 		unlocked_mission = &character_data.unlocked_expcampaign_mission[race];
 	}
 	else
 	{
-		v2 = campaign_menu_entries[race];
+		v2 = campaign_menu_entries_[race];
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
 	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, v2);
@@ -3150,7 +3268,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	}
 
 	size_t v4 = v2 - a1;
-	CampaignMenuEntry** entries = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaign_menu_entries : campaign_menu_entries;
+	CampaignMenuEntry** entries = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaign_menu_entries_ : campaign_menu_entries_;
 	int v8 = 0;
 	if (sub_4DBD20(a1, v4, &v8))
 	{
