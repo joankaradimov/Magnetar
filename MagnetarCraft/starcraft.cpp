@@ -3139,6 +3139,55 @@ void playActiveCinematic_()
 
 FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 
+CampaignMenuEntry* sub_4DBDA0_(const char* a1)
+{
+	MapData v6;
+	CampaignMenuEntry** v7;
+
+	char* v2 = SStrChrR(a1, '.');
+	if (!v2)
+	{
+		return active_campaign_menu_entry;
+	}
+
+	size_t v4 = v2 - a1;
+	CampaignMenuEntry** entries = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaign_menu_entries : campaign_menu_entries;
+	int v8 = 0;
+	if (sub_4DBD20(a1, v4, &v8))
+	{
+		while (2)
+		{
+			for (int i = 0; i < 3; ++i)
+			{
+				CampaignMenuEntry* result = entries[i];
+				v6 = result->next_mission;
+				if (v6)
+				{
+					while (result->cinematic || v6 != v8)
+					{
+						v6 = result[1].next_mission;
+						++result;
+						if (v6 == MD_none)
+						{
+							goto LABEL_11;
+						}
+					}
+					return result;
+				}
+			LABEL_11:
+				;
+			}
+			++v8;
+			if (sub_4DBD20(a1, v4, &v8))
+			{
+				continue;
+			}
+			break;
+		}
+	}
+	return active_campaign_menu_entry;
+}
+
 int ContinueCampaign_(int a1)
 {
 	gwGameMode = GAME_GLUES;
@@ -3160,7 +3209,7 @@ int ContinueCampaign_(int a1)
 	}
 	if (byte_57F246[0])
 	{
-		active_campaign_menu_entry = sub_4DBDA0(byte_57F246);
+		active_campaign_menu_entry = sub_4DBDA0_(byte_57F246);
 		byte_57F246[0] = 0;
 	}
 	else
