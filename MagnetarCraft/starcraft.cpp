@@ -3188,7 +3188,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	return active_campaign_menu_entry;
 }
 
-int ContinueCampaign_(int a1)
+int __stdcall ContinueCampaign_(int a1)
 {
 	gwGameMode = GAME_GLUES;
 	if (dword_51CA1C)
