@@ -3142,7 +3142,6 @@ FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 {
 	MapData v6;
-	CampaignMenuEntry** v7;
 
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
@@ -3214,7 +3213,7 @@ int __stdcall ContinueCampaign_(int a1)
 	}
 	else
 	{
-		active_campaign_menu_entry = active_campaign_menu_entry + 1;
+		active_campaign_menu_entry += 1;
 	}
 	sub_4DBEE0(active_campaign_menu_entry);
 	if (active_campaign_menu_entry->next_mission)
