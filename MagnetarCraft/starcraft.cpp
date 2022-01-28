@@ -637,42 +637,43 @@ FailStubPatch audioVideoInit_patch(audioVideoInit);
 
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
-	dlgEvent v5;
+	dlgEvent event;
 
 	a1->lFlags |= 0x44000000u;
 	a1->fields[0].dlg.pModalFcn = 0;
 	if (a2)
 		a1->pfcnInteract = a2;
-	u8 *v2 = (u8 *)SMemAlloc(
-		a1->fields[0].dlg.dstBits_wid * a1->fields[0].dlg.dstBits_ht,
-		"Starcraft\\SWAR\\lang\\dlg\\dlg.cpp",
-		481,
-		0);
-	u16 v3 = Mouse.x;
-	a1->fields[0].dlg.dstBits_data = v2;
-	LOWORD(v2) = LOWORD(Mouse.y);
-	v5.cursor.x = v3;
+	size_t size = a1->fields[0].dlg.dstBits_wid * a1->fields[0].dlg.dstBits_ht;
+	a1->fields[0].dlg.dstBits_data = (u8*)SMemAlloc(size, "Starcraft\\SWAR\\lang\\dlg\\dlg.cpp", 481, 0);
 	a1->wIndex = 0;
-	v5.wNo = 14;
-	v5.dwUser = 7;
-	*(_DWORD *)&v5.wSelection = 0;
-	v5.cursor.y = (unsigned __int16)v2;
-	a1->pfcnInteract(a1, &v5);
+
+	event.cursor.x = Mouse.x;
+	event.cursor.y = Mouse.y;
+	event.wNo = 14;
+	event.dwUser = 7;
+	event.wSelection = 0;
+	event.wUnk_0x06 = 0;
+	a1->pfcnInteract(a1, &event);
+
 	a1->rct.right += a1->rct.left;
-	u16 v4 = LOWORD(Mouse.y);
 	a1->rct.bottom += a1->rct.top;
-	v5.cursor.y = v4;
-	v5.wNo = 14;
-	v5.dwUser = 10;
-	*(_DWORD *)&v5.wSelection = 0;
-	v5.cursor.x = Mouse.x;
-	a1->pfcnInteract(a1, &v5);
-	v5.cursor.x = Mouse.x;
-	v5.wNo = 14;
-	v5.dwUser = 0;
-	*(_DWORD *)&v5.wSelection = 0;
-	v5.cursor.y = LOWORD(Mouse.y);
-	a1->pfcnInteract(a1, &v5);
+
+	event.cursor.x = Mouse.x;
+	event.cursor.y = Mouse.y;
+	event.wNo = 14;
+	event.dwUser = 10;
+	event.wSelection = 0;
+	event.wUnk_0x06 = 0;
+	a1->pfcnInteract(a1, &event);
+
+	event.cursor.x = Mouse.x;
+	event.cursor.y = Mouse.y;
+	event.wNo = 14;
+	event.dwUser = 0;
+	event.wSelection = 0;
+	event.wUnk_0x06 = 0;
+	a1->pfcnInteract(a1, &event);
+
 	SetCallbackTimer(12, a1, 100, 0);
 	a1->lFlags &= ~0x4000000u;
 }
