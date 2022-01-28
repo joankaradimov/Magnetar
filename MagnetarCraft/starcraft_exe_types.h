@@ -230,6 +230,7 @@ struct __declspec(align(2)) AiCaptain;
 struct CinematicIntro;
 struct ChunkNode;
 struct UpgradesBW;
+struct __declspec(align(4)) MissionCheatRelated;
 struct dialog_dlg;
 struct UnknownTilesetRelated1;
 struct Bitmap;
@@ -4019,6 +4020,15 @@ struct UpgradesBW
   u8 items[15];
 };
 static_assert(sizeof(UpgradesBW) == 15, "Incorrect size for type `UpgradesBW`. Expected: 15");
+
+struct __declspec(align(4)) MissionCheatRelated
+{
+  const char *campaign_id;
+  Race race;
+  _DWORD dword8;
+  _DWORD is_expansion;
+};
+static_assert(sizeof(MissionCheatRelated) == 16, "Incorrect size for type `MissionCheatRelated`. Expected: 16");
 
 struct dialog_dlg
 {

@@ -13264,7 +13264,7 @@ signed int verifyCheatCode(const void *a1, CheatFlags *game_cheats) {
     }
     return result_;
 }
-signed int campaignTypeCheatStrings(int a2) {
+signed int campaignTypeCheatStrings(char *a2) {
     int address = 0x4b1dc0;
     signed result_;
     __asm {
@@ -14030,7 +14030,7 @@ IDirectSoundBuffer *LoadSoundProc(char *a1, int a2, struct_5 *a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4BC9F0)(), sub_4BC9F0, 0x4bc9f0);
+DECL_FUNC(void (__cdecl*LoadSfx)(), LoadSfx, 0x4bc9f0);
 IDirectSoundBuffer *sub_4BCA30(SfxData a1, struct_5 *a2) {
     int address = 0x4bca30;
     IDirectSoundBuffer * result_;
@@ -15516,7 +15516,17 @@ CImage *CopyImagePaletteType(CImage *result, CImage *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*ISCRIPT_PlayFrame)(), ISCRIPT_PlayFrame, 0x4d5e70);
+CImage *ISCRIPT_PlayFrame(CImage *result, int a2) {
+    int address = 0x4d5e70;
+    CImage * result_;
+    __asm {
+        mov eax, result
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 CImage *updateImageDirection(CImage *result, unsigned int a2, unsigned __int8 a3) {
     int address = 0x4d5ea0;
     CImage * result_;
@@ -15987,7 +15997,7 @@ CampaignMenuEntry *getCampaignIndex(MapData a1, CampaignMenuEntry **a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int a2, int a3, int a4, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
+DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int race, int a3, int is_expansion, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
 signed int sub_4DBD20(const char *a1, size_t a2, int *a3) {
     int address = 0x4dbd20;
     signed result_;
@@ -19414,7 +19424,7 @@ char* aGlueScoretd = (decltype(aGlueScoretd + 0)) 0x50353c;
 char* aGlueScorezv = (decltype(aGlueScorezv + 0)) 0x50354c;
 char* aGlueScorezd = (decltype(aGlueScorezd + 0)) 0x50355c;
 const char* aRezGlucmpgn__0 = (decltype(aRezGlucmpgn__0 + 0)) 0x50356c;
-char *& off_503580 = * ((decltype(&off_503580)) 0x503580);
+MissionCheatRelated* stru_503580 = (decltype(stru_503580 + 0)) 0x503580;
 char* aXprotoss = (decltype(aXprotoss + 0)) 0x5035e0;
 char* aXzerg = (decltype(aXzerg + 0)) 0x5035ec;
 char* aXterran = (decltype(aXterran + 0)) 0x5035f4;
