@@ -519,12 +519,12 @@ BOOL BWFXN_DDrawInitialize_()
 	if (byte_6D5DFC)
 		v4 = (GUID *) 2;
 	HRESULT v5 = DirectDrawCreate(v4, &DDInterface, 0);
-	if (v5 == 0x887600DE)
+	if (v5 == DDERR_NODIRECTDRAWSUPPORT)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", 0x887600DE, 0x6Eu, 124);
 	if (v5)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", v5, 0x66u, 125);
 	HRESULT v6 = DDInterface->SetCooperativeLevel(hWndParent, 16 | DSSCL_PRIORITY | DSSCL_NORMAL);
-	if (v6 != 0x88760245 && v6)
+	if (v6 != DDERR_EXCLUSIVEMODEALREADYSET && v6 != NULL)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetCooperativeLevel", v6, 0x66u, 148);
 #ifndef BYPASS_DDRAW_STUFF
 	if (DDInterface->SetDisplayMode(640, 480, 8))
