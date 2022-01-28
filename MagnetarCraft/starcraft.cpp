@@ -2582,7 +2582,7 @@ void updateActiveCampaignMission_()
 
 FunctionPatch updateActiveCampaignMission_patch(updateActiveCampaignMission_, updateActiveCampaignMission);
 
-bool LoadCampaignWithCharacter_(int race)
+bool LoadCampaignWithCharacter_(Race race)
 {
 	customSingleplayer[0] = 0;
 	dword_51CA1C = 0;
@@ -2634,23 +2634,23 @@ bool LoadCampaignWithCharacter_(int race)
 
 FailStubPatch LoadCampaignWithCharacter_patch(LoadCampaignWithCharacter);
 
-int sub_4B5110_(int a1)
+int sub_4B5110_(int race)
 {
 	bool result;
 
-	if (!dword_59A0D4[a1])
+	if (!dword_59A0D4[race])
 	{
-		result = LoadCampaignWithCharacter_(a1);
+		result = LoadCampaignWithCharacter_((Race) race);
 	}
 	else {
 		WORD v2;
 		char *v3;
 
-		if ((v2 = (a1 != 1) + 142, (a1 != 1) != ~142)
+		if ((v2 = (race != 1) + 142, (race != 1) != ~142)
 			? (v2 < *networkTable ? (v3 = (char *)networkTable + networkTable[v2 + 1]) : (v3 = ""))
 			: (v3 = 0),
 			sub_4B5B20(v3)) {
-			result = LoadCampaignWithCharacter_(a1);
+			result = LoadCampaignWithCharacter_((Race) race);
 		}
 	}
 	return result;
