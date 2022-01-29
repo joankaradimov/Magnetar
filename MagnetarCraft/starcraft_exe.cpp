@@ -14030,7 +14030,7 @@ IDirectSoundBuffer *LoadSoundProc(char *a1, int a2, struct_5 *a3) {
     }
     return result_;
 }
-DECL_FUNC(void (__cdecl*LoadSfx)(), LoadSfx, 0x4bc9f0);
+DECL_FUNC(int(*LoadSfx)(), LoadSfx, 0x4bc9f0);
 IDirectSoundBuffer *sub_4BCA30(SfxData a1, struct_5 *a2) {
     int address = 0x4bca30;
     IDirectSoundBuffer * result_;
@@ -15516,17 +15516,7 @@ CImage *CopyImagePaletteType(CImage *result, CImage *a2) {
     }
     return result_;
 }
-CImage *ISCRIPT_PlayFrame(CImage *result, int a2) {
-    int address = 0x4d5e70;
-    CImage * result_;
-    __asm {
-        mov eax, result
-        mov edx, a2
-        call address
-        mov result_, eax
-    }
-    return result_;
-}
+DECL_FUNC(int(*ISCRIPT_PlayFrame)(), ISCRIPT_PlayFrame, 0x4d5e70);
 CImage *updateImageDirection(CImage *result, unsigned int a2, unsigned __int8 a3) {
     int address = 0x4d5ea0;
     CImage * result_;
