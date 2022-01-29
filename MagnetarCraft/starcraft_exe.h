@@ -3746,7 +3746,7 @@ MapDirEntry *save_Recent_Map_Data(MapDirEntry *result);
 extern int (__stdcall*getMapListEntryCount)(int, int, char *);
 extern int (__stdcall*sub_4A7540)(MapDirEntry *a1);
 int FullyLoadMapDirEntry(MapDirEntry *a1);
-extern int(*sub_4A79D0)();
+void sub_4A79D0(MapDirEntry *a1);
 int LoadReplayMapDirEntry(MapDirEntry *replay);
 extern void (__stdcall*sub_4A7F50)(HWND, UINT, UINT, DWORD);
 extern int(*sub_4A7FC0)();

@@ -12657,7 +12657,13 @@ int FullyLoadMapDirEntry(MapDirEntry *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4A79D0)(), sub_4A79D0, 0x4a79d0);
+void sub_4A79D0(MapDirEntry *a1) {
+    int address = 0x4a79d0;
+    __asm {
+        mov esi, a1
+        call address
+    }
+}
 int LoadReplayMapDirEntry(MapDirEntry *replay) {
     int address = 0x4a7c30;
     int result_;
