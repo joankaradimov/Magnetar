@@ -6,6 +6,7 @@
 #include "patching/CallSitePatch.h"
 #include "patching/MemoryPatch.h"
 #include "patching/NopPatch.h"
+#include "DDrawWrapper.h"
 
 signed int AppAddExit_(AppExitHandle a1)
 {
@@ -521,7 +522,13 @@ BOOL BWFXN_DDrawInitialize_()
 	GUID* v4 = 0;
 	if (byte_6D5DFC)
 		v4 = (GUID *) 2;
+
+//#ifdef _DEBUG
+//	HRESULT v5 = DirectDrawWrapperCreate(v4, &DDInterface, 0);
+//#else
 	HRESULT v5 = DirectDrawCreate(v4, &DDInterface, 0);
+//#endif
+
 	if (v5 == DDERR_NODIRECTDRAWSUPPORT)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", 0x887600DE, 0x6Eu, 124);
 	if (v5)
@@ -535,8 +542,8 @@ BOOL BWFXN_DDrawInitialize_()
 		v7 = GetSystemMetrics(SM_CXSCREEN);
 		v8 = GetSystemMetrics(SM_CYSCREEN);
 		v9 = DDInterface->SetDisplayMode(v7, v8, 8);
-		if (v9)
-			ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetDisplayMode", v9, 0x67u, 160);
+		//if (v9)
+		//	ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetDisplayMode", v9, 0x67u, 160);
 	}
 #endif
 	memset(palette_entries, 0, sizeof(palette_entries));
