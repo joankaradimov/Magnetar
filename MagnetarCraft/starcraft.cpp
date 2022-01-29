@@ -756,6 +756,21 @@ void LoadTitle_()
 
 FailStubPatch LoadTitle_patch(LoadTitle);
 
+void LoadInitIscriptBIN_()
+{
+	int iscript_bin_size;
+	iscript_data = fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	LoadGameData_(imagesDat, "arr\\images.dat");
+	if (!SBmpLoadImage("game\\tselect.pcx", 0, dword_5240B8, 24, 0, 0, 0))
+	{
+		SysWarn_FileNotFound("game\\tselect.pcx", SErrGetLastError());
+	}
+	LoadImageData();
+	InitDamageOverlayCounts();
+}
+
+FailStubPatch LoadInitIscriptBIN_patch(LoadInitIscriptBIN);
+
 UnitType GetWorkerType(Race race)
 {
 	switch (race)
@@ -3416,7 +3431,7 @@ void GameMainLoop_()
 		{
 		LABEL_8:
 			LoadTitle_();
-			LoadInitIscriptBIN();
+			LoadInitIscriptBIN_();
 			AppAddExit_(CleanupIscriptBINHandle);
 			if (gwGameMode != GAME_GLUES && load_screen)
 			{
