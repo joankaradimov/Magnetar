@@ -3043,7 +3043,9 @@ int SwitchMenu_()
 		IsExpansion = level_cheat_is_bw != 0;
 		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame__((MapData)level_cheat_mission))
 		{
-			goto LABEL_38;
+			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
+			IsExpansion = 0;
+			goto LABEL_28;
 		}
 		if (level_cheat_race)
 		{
@@ -3054,7 +3056,6 @@ int SwitchMenu_()
 					glGluesMode = GLUE_READY_P;
 					goto LABEL_26;
 				}
-			LABEL_38:
 				glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 				IsExpansion = 0;
 				goto LABEL_28;
