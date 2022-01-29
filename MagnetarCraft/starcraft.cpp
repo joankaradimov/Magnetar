@@ -1308,6 +1308,135 @@ FunctionPatch GameInit_patch(GameInit, GameInit_);
 FailStubPatch sub_4CD770_patch(sub_4CD770);
 FailStubPatch sub_4A13B0_patch(sub_4A13B0);
 
+signed int LoadGameInit_()
+{
+	stopMusic();
+	if (InReplay)
+	{
+		if (!scenarioChk)
+			LoadReplayFile(CurrentMapFileName, 0);
+		if (InReplay)
+		{
+			*(int*)playerForce = playerForceSomethingReplay;
+			*((int*)playerForce + 1) = dword_6D11A5;
+		}
+	}
+	if (!loadGameFileHandle)
+		ElapsedTimeFrames = 0;
+	if (!LOBYTE(multiPlayerMode))
+	{
+		if (!LevelCheatInitGame() || !LoadGameCreate() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
+			return 0;
+		if (InReplay)
+		{
+			initialSeed = *(int *)((char *)&replaySeed + 1);
+		}
+		else
+		{
+			initialSeed = time(0);
+			*(int *)((char *)&replaySeed + 1) = initialSeed;
+		}
+	}
+	InitializeScreenLayer();
+	ButtonPressSound = mouseOver_Loading_CB;
+	LoadGameFonts();
+	memset(randomCounts, 0, 0x400u);
+	randomCountsTotal = 0;
+	LastRandomNumber = initialSeed;
+	srand(initialSeed);
+	AllocAIPathPool();
+	AppAddExit_(nullsub_1);
+	if (!loadGameFileHandle)
+		initializePlayerColours();
+	BWFXN_RandomizePlayerRaces();
+	if (InReplay)
+		getReplPlayerStructs(Players);
+	savePlayerSlotTypesAndRace();
+	if (!InReplay)
+	{
+		if (loadGameFileHandle)
+			InitializeLoadedGameSlots();
+		else
+			RandomizeSlotsForcesColors();
+	}
+	BWFXN_InitializePlayerConsole();
+	initializeDefaultPlayerNames();
+	memset(randomCounts, 0, 0x400u);
+	randomCountsTotal = 0;
+	LastRandomNumber = initialSeed;
+	srand(initialSeed);
+	LoadRaceUI();
+	hotkeyRemapping();
+	if (!GameInit_())
+		return 0;
+	if (InReplay)
+		getReplPlayerColors((int)factionsColorsOrdering);
+	if (!loadGameFileHandle)
+		sub_49B060();
+
+	int v6;
+	if (!InReplay
+		&& CampaignIndex == MD_none
+		&& !LoadFileArchiveToSBigBuf(CurrentMapFileName, &v6, 1, &mapArchiveHandle)
+		&& !gameData.got_file_values.victory_conditions
+		&& !gameData.got_file_values.starting_units
+		&& !gameData.got_file_values.tournament_mode)
+	{
+		if (loadGameFileHandle)
+		{
+			BigPacketError(99, CurrentMapFileName, 0, 0, 1);
+			return 0;
+		}
+		BigPacketError(97, 0, 0, 0, 1);
+		return 0;
+	}
+	GameCheats = (CheatFlags)((int)GameCheats & (CHEAT_NoGlues | CHEAT_Ophelia | 0x8000000)); // TODO: fix the mess with the flags
+	if (!LoadGameCore())
+		return 0;
+	if (!mapStarted)
+	{
+		if (!chooseTRGTemplate())
+		{
+			BigPacketError(93, 0, 0, 0, 1);
+			return 0;
+		}
+		if (!mapStarted)
+		{
+			*(_DWORD *)playerHasLeft = 0;
+			lossType = 0;
+			*(_DWORD *)&unkVictoryVariable = 0;
+		}
+	}
+	sub_4B2DF0();
+	if (!LOBYTE(multiPlayerMode))
+		TickCounterInit();
+	saveLoadSuccess = (unsigned __int8)mapStarted;
+	elapstedTimeModifier = mapStarted != 0 ? savedElapsedSeconds : 0;
+	SetGameSpeed_maybe(GameSpeed, 0, 1u);
+	if (InReplay)
+	{
+		copyPlayerStructsToReplayPlayerStructs(Players, &gameData);
+		int* v4 = (int*)replayData;
+		dword_6D5BF0 = 0;
+		int v5 = *((_DWORD *)replayData + 2);
+		*(_DWORD *)replayData = 0;
+		v4[1] = 1;
+		v4[7] = v5;
+		ReplayVision = 255;
+		playerVisions = 255;
+		replayShowEntireMap = 0;
+		nextReplayCommandFrame = -1;
+		playerExploredVisions = 65280;
+	}
+	else
+	{
+		createNewGameActionDataBlock();
+	}
+	return 1;
+}
+
+FailStubPatch LoadGameInit_patch(LoadGameInit);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -1459,7 +1588,7 @@ FailStubPatch DestroyGame_patch(DestroyGame);
 void GameRun_(MenuPosition a1)
 {
 	IsInGameLoop = 1;
-	int v1 = LoadGameInit();
+	int v1 = LoadGameInit_();
 	IsInGameLoop = 0;
 	if (!InReplay)
 	{

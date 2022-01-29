@@ -5092,7 +5092,7 @@ extern int(*replay_leaderboard_Hide)();
 extern int(*replay_leaderboard_Show)();
 void sub_4DF4A0(dialog *a1);
 extern void (__thiscall*sub_4DF520)(dialog *this_);
-int LoadReplayFile(char *a1, int a2, int a3);
+int LoadReplayFile(char *a1, int a3);
 extern signed int (__fastcall*savegame_Delete)(dialog *a1, dlgEvent *a2);
 char sub_4DF740(dialog *a1, struct dlgEvent *evt);
 extern int (__stdcall*ReplayFileListIterateItemProc)(int);
