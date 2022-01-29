@@ -656,8 +656,8 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 	event.cursor.x = Mouse.x;
 	event.cursor.y = Mouse.y;
-	event.wNo = 14;
-	event.dwUser = 7;
+	event.wNo = EventNo::EVN_USER;
+	event.dwUser = EventUser::USER_UNK_7;
 	event.wSelection = 0;
 	event.wUnk_0x06 = 0;
 	a1->pfcnInteract(a1, &event);
@@ -667,16 +667,16 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 	event.cursor.x = Mouse.x;
 	event.cursor.y = Mouse.y;
-	event.wNo = 14;
-	event.dwUser = 10;
+	event.wNo = EventNo::EVN_USER;
+	event.dwUser = EventUser::USER_INIT;
 	event.wSelection = 0;
 	event.wUnk_0x06 = 0;
 	a1->pfcnInteract(a1, &event);
 
 	event.cursor.x = Mouse.x;
 	event.cursor.y = Mouse.y;
-	event.wNo = 14;
-	event.dwUser = 0;
+	event.wNo = EventNo::EVN_USER;
+	event.dwUser = EventUser::USER_CREATE;
 	event.wSelection = 0;
 	event.wUnk_0x06 = 0;
 	a1->pfcnInteract(a1, &event);
@@ -687,13 +687,13 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == 14)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == 0)
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			titleInit(dlg);
 		}
-		else if (evt->dwUser == 1)
+		else if (evt->dwUser == EventUser::USER_DESTROY)
 		{
 			DrawBINDialog(dlg);
 			return genericDlgInteract(dlg, evt);
@@ -2338,13 +2338,13 @@ int CreateCampaignGame__(MapData mapData)
 
 bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == 14)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == 0)
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			sub_4B6930(dlg);
 		}
-		else if(evt->dwUser == 2)
+		else if(evt->dwUser == EventUser::USER_ACTIVATE)
 		{
 			sub_4B6570(dlg);
 			return sub_4B6D60(dlg, evt);
@@ -2752,9 +2752,9 @@ FailStubPatch sub_4B2810_patch(sub_4B2810);
 
 bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == 14)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == 0)
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
@@ -2762,11 +2762,11 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 				DLGMusicFade(22);
 			}
 		}
-		else if (evt->dwUser == 2)
+		else if (evt->dwUser == EventUser::USER_ACTIVATE)
 		{
 			return sub_4B2810_(dlg);
 		}
-		else if (evt->dwUser == 10)
+		else if (evt->dwUser == EventUser::USER_INIT)
 		{
 			registerMenuFunctions(off_51A93C, dlg, 44, 0);
 			DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
@@ -2779,19 +2779,19 @@ FailStubPatch gluCmpgn_Main_patch(gluCmpgn_Main);
 
 bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == 14)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == 0)
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
 				DLGMusicFade(22);
 		}
-		else if (evt->dwUser == 2)
+		else if (evt->dwUser == EventUser::USER_ACTIVATE)
 		{
 				return sub_4B5180_(dlg);
 		}
-		else if (evt->dwUser == 10)
+		else if (evt->dwUser == EventUser::USER_INIT)
 		{
 			registerMenuFunctions(off_51A818, dlg, 44, 0);
 			DlgSwooshin(2, &stru_512A8C, dlg, 0);
