@@ -1309,6 +1309,172 @@ FunctionPatch GameInit_patch(GameInit, GameInit_);
 FailStubPatch sub_4CD770_patch(sub_4CD770);
 FailStubPatch sub_4A13B0_patch(sub_4A13B0);
 
+GotFileValues* readTemplate_(char* template_name, char* got_template_name, char* got_template_label)
+{
+	char buff[260];
+	int got_file_size;
+
+	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
+	GotFile* got_file_data = (GotFile*)fastFileRead(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (!got_file_data)
+	{
+		return 0;
+	}
+	if (got_file_size != 97 || got_file_data->version != 3)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 97, 0);
+		return 0;
+	}
+	if (got_file_data->values.template_id >= 129u || got_file_data->values.variation_id >= 8u)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 98, 0);
+		return 0;
+	}
+	memcpy(got_template_name, got_file_data->name, 32u);
+	memcpy(got_template_label, got_file_data->label, 32u);
+	GotFileValues* result = (GotFileValues*)SMemAlloc(sizeof(GotFileValues), "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
+	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
+	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
+	return result;
+}
+
+GotFileValues* InitUseMapSettingsTemplate_()
+{
+	char ununsed[32];
+
+	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
+}
+
+FunctionPatch InitUseMapSettingsTemplate_patch(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
+
+int sub_4CCAC0_(char* a1, MapChunks* a2)
+{
+	char buff[MAX_PATH];
+	char v9[MAX_PATH];
+
+	int v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
+	SStrLen(a1);
+	if (!v3)
+	{
+		SErrSetLastError(0x57u);
+		return 0;
+	}
+	if (!sub_4CC350(v9, a1, (int)&a2->data7, MAX_PATH))
+		return 0;
+	int chk_size = 0;
+	if (v9[0])
+		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
+	else
+		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
+	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	if (chk_data)
+	{
+		int loader_index = 0;
+		if (ReadMapChunks_(a2, chk_data, &loader_index, chk_size))
+		{
+			int v7 = ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, chk_size, chk_loaders_[loader_index].lobby_loaders, chk_data, a2);
+			SMemFree((void*)chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
+			mapHandleDestroy();
+			return v7;
+		}
+		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
+		mapHandleDestroy();
+		return 0;
+	}
+	if (mapArchiveHandle)
+	{
+		SFileCloseArchive(mapArchiveHandle);
+		mapArchiveHandle = 0;
+	}
+	return 0;
+}
+
+FailStubPatch sub_4CCAC0_patch(sub_4CCAC0);
+
+FailStubPatch sub_4CC2A0_patch(sub_4CC2A0);
+
+int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
+{
+	char* v8;
+	__int16 v12;
+	char* v13;
+
+	CurrentMapFileName[0] = 0;
+	if (!is_campaign)
+		CampaignIndex = MD_none;
+	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
+	memset(playerForce, 0, 8);
+	a4->data0 = 0;
+	a4->data1 = 0;
+	a4->data2 = 0;
+	a4->data3 = 0;
+	a4->data4 = 0;
+	a4->data5 = 0;
+	a4->data6 = 0;
+	a4->data7 = 0;
+	if (InReplay)
+	{
+		int loader_index = 0;
+		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
+			|| !ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders_[loader_index].lobby_loaders, scenarioChk, a4))
+			return 0;
+		v8 = source;
+	}
+	else
+	{
+		v8 = source;
+		if (!*source || !sub_4CCAC0_(source, a4))
+			return 0;
+	}
+	int v9 = 12;
+	do
+	{
+		--v9;
+		LobbyPlayers[v9].dwPlayerID = v9;
+		LobbyPlayers[v9].dwStormId = -1;
+		if (LobbyPlayers[v9].nRace == Race::RACE_Select)
+		{
+			LobbyPlayers[v9].nRace = Race::RACE_Random;
+			if (v9 < 8)
+				playerForce[v9] = 1;
+		}
+		if (v9 >= 8)
+		{
+			LobbyPlayers[v9].nType = PlayerType::PT_NotUsed;
+			LobbyPlayers[v9].nRace = Race::RACE_Zerg;
+			LobbyPlayers[v9].nTeam = 0;
+		}
+	} while (v9 > 0);
+	sub_4A91E0();
+	sub_45AC10(&a4->data1);
+	updatePlayerForce();
+	strrchr(v8, '\\');
+	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
+	if (!is_campaign)
+		CampaignIndex = MD_none;
+	v12 = LOWORD(a4->data0);
+	dword_5994DC = 1;
+	if (v12 == 0)
+		goto LABEL_25;
+	if (MapStringTbl.buffer)
+	{
+		if (v12 - 1 < *MapStringTbl.buffer)
+		{
+			v13 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[v12];
+			goto LABEL_26;
+		}
+	LABEL_25:
+		v13 = "";
+		goto LABEL_26;
+	}
+	v13 = 0;
+LABEL_26:
+	SStrCopy(CurrentMapName, v13, 32u);
+	return 1;
+}
+
+FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -2241,134 +2407,6 @@ void initMapData_()
 
 FunctionPatch initMapData_patch(initMapData, initMapData_);
 
-int sub_4CCAC0_(char *a1, MapChunks *a2)
-{
-	char buff[MAX_PATH];
-	char v9[MAX_PATH];
-
-	int v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
-	SStrLen(a1);
-	if (!v3)
-	{
-		SErrSetLastError(0x57u);
-		return 0;
-	}
-	if (!sub_4CC350(v9, a1, (int)&a2->data7, MAX_PATH))
-		return 0;
-	int chk_size = 0;
-	if (v9[0])
-		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
-	else
-		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
-	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
-	if (chk_data)
-	{
-		int loader_index = 0;
-		if (ReadMapChunks_(a2, chk_data, &loader_index, chk_size))
-		{
-			int v7 = ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, chk_size, chk_loaders_[loader_index].lobby_loaders, chk_data, a2);
-			SMemFree((void *)chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
-			mapHandleDestroy();
-			return v7;
-		}
-		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
-		mapHandleDestroy();
-		return 0;
-	}
-	if (mapArchiveHandle)
-	{
-		SFileCloseArchive(mapArchiveHandle);
-		mapArchiveHandle = 0;
-	}
-	return 0;
-}
-
-FailStubPatch sub_4CCAC0_patch(sub_4CCAC0);
-
-FailStubPatch sub_4CC2A0_patch(sub_4CC2A0);
-
-int __stdcall ReadMapData_(char *source, MapChunks *a4, int is_campaign)
-{
-	char *v8;
-	__int16 v12;
-	char *v13;
-
-	CurrentMapFileName[0] = 0;
-	if (!is_campaign)
-		CampaignIndex = MD_none;
-	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
-	memset(playerForce, 0, 8);
-	a4->data0 = 0;
-	a4->data1 = 0;
-	a4->data2 = 0;
-	a4->data3 = 0;
-	a4->data4 = 0;
-	a4->data5 = 0;
-	a4->data6 = 0;
-	a4->data7 = 0;
-	if (InReplay)
-	{
-		int loader_index = 0;
-		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
-			|| !ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders_[loader_index].lobby_loaders, scenarioChk, a4))
-			return 0;
-		v8 = source;
-	}
-	else
-	{
-		v8 = source;
-		if (!*source || !sub_4CCAC0_(source, a4))
-			return 0;
-	}
-	int v9 = 12;
-	do
-	{
-		--v9;
-		LobbyPlayers[v9].dwPlayerID = v9;
-		LobbyPlayers[v9].dwStormId = -1;
-		if (LobbyPlayers[v9].nRace == Race::RACE_Select)
-		{
-			LobbyPlayers[v9].nRace = Race::RACE_Random;
-			if (v9 < 8)
-				playerForce[v9] = 1;
-		}
-		if (v9 >= 8)
-		{
-			LobbyPlayers[v9].nType = PlayerType::PT_NotUsed;
-			LobbyPlayers[v9].nRace = Race::RACE_Zerg;
-			LobbyPlayers[v9].nTeam = 0;
-		}
-	} while (v9 > 0);
-	sub_4A91E0();
-	sub_45AC10(&a4->data1);
-	updatePlayerForce();
-	strrchr(v8, '\\');
-	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
-	if (!is_campaign)
-		CampaignIndex = MD_none;
-	v12 = LOWORD(a4->data0);
-	dword_5994DC = 1;
-	if (v12 == 0)
-		goto LABEL_25;
-	if (MapStringTbl.buffer)
-	{
-		if (v12 - 1 < *MapStringTbl.buffer)
-		{
-			v13 = (char *)MapStringTbl.buffer + MapStringTbl.buffer[v12];
-			goto LABEL_26;
-		}
-	LABEL_25:
-		v13 = "";
-		goto LABEL_26;
-	}
-	v13 = 0;
-LABEL_26:
-	SStrCopy(CurrentMapName, v13, 32u);
-	return 1;
-}
-
-FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
-
 void sub_4CC990_()
 {
 	char buff[MAX_PATH];
@@ -2407,44 +2445,6 @@ void sub_4CC990_()
 }
 
 FunctionPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
-
-GotFileValues* readTemplate_(char* template_name, char* got_template_name, char* got_template_label)
-{
-	char buff[260];
-	int got_file_size;
-
-	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
-	GotFile* got_file_data = (GotFile*)fastFileRead(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	if (!got_file_data)
-	{
-		return 0;
-	}
-	if (got_file_size != 97 || got_file_data->version != 3)
-	{
-		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 97, 0);
-		return 0;
-	}
-	if (got_file_data->values.template_id >= 129u || got_file_data->values.variation_id >= 8u)
-	{
-		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 98, 0);
-		return 0;
-	}
-	memcpy(got_template_name, got_file_data->name, 32u);
-	memcpy(got_template_label, got_file_data->label, 32u);
-	GotFileValues* result = (GotFileValues*)SMemAlloc(sizeof(GotFileValues), "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
-	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
-	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
-	return result;
-}
-
-GotFileValues* InitUseMapSettingsTemplate_()
-{
-	char ununsed[32];
-
-	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
-}
-
-FunctionPatch InitUseMapSettingsTemplate_patch(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
 
 int CreateCampaignGame__(MapData mapData)
 {
