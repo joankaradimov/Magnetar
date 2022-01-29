@@ -1475,6 +1475,13 @@ LABEL_26:
 
 FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
+bool ReadCampaignMapData_(MapChunks* map_chunks)
+{
+	return ReadMapData_(MapdataFilenames[CampaignIndex], map_chunks, 1) != 0;
+}
+
+FailStubPatch ReadCampaignMapData_patch(ReadCampaignMapData);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -2452,7 +2459,7 @@ int CreateCampaignGame__(MapData mapData)
 	GameData v4;
 
 	CampaignIndex = mapData;
-	int readSuccess = ReadMapData_(MapdataFilenames[mapData], &mapChunks, 1);
+	int readSuccess = ReadCampaignMapData_(&mapChunks);
 	if (!readSuccess) {
 		return 0;
 	}

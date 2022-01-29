@@ -4256,7 +4256,7 @@ signed int LoadFileToSBigBuf(char *filename, int a2);
 extern int (__thiscall*sub_4BF370)(FILE *, int, int);
 extern int (__cdecl*LoadMap)();
 extern int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_campaign);
-BOOL sub_4BF780(MapChunks *a1);
+BOOL ReadCampaignMapData(MapChunks *a1);
 extern int(*CMDRECV_MinimapPing)();
 extern int(*sub_4BF7F0)();
 extern int(*nullsub_56)();

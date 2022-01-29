@@ -14171,7 +14171,7 @@ signed int LoadFileToSBigBuf(char *filename, int a2) {
 DECL_FUNC(int (__thiscall*sub_4BF370)(FILE *, int, int), sub_4BF370, 0x4bf370);
 DECL_FUNC(int (__cdecl*LoadMap)(), LoadMap, 0x4bf520);
 DECL_FUNC(int (__stdcall*ReadMapData)(char *source, MapChunks *a4, bool is_campaign), ReadMapData, 0x4bf5d0);
-BOOL sub_4BF780(MapChunks *a1) {
+BOOL ReadCampaignMapData(MapChunks *a1) {
     int address = 0x4bf780;
     BOOL result_;
     __asm {
