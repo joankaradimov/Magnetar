@@ -245,7 +245,7 @@ def extract_function_return_type(ref_type):
     and extracts the return type for it
     """
 
-    return re.search('^\s*(\w+(?:\s*\*)*)', ref_type).group(1).strip()
+    return re.search('^\s*((const\s+)?\w+(?:\s*\*)*)', ref_type).group(1).strip()
 
 def is_function_pointer(declaration):
     # TODO: add documentation

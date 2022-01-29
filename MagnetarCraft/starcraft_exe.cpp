@@ -5795,7 +5795,7 @@ DECL_FUNC(int(*sub_459EC0)(), sub_459EC0, 0x459ec0);
 DECL_FUNC(int (__stdcall*sub_459EF0)(int), sub_459EF0, 0x459ef0);
 const char *SendMapNameData(MapDownload *a1, int a2) {
     int address = 0x459f30;
-    const char* result_;
+    const char * result_;
     __asm {
         mov edi, a1
         push dword ptr a2
