@@ -395,6 +395,14 @@ void LoadGameData_(DatLoad* a1, char* a2)
 	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
 }
 
+void LoadSfx_()
+{
+	LoadGameData_(sfxdataDat, "arr\\sfxdata.dat");
+	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
+}
+
+FailStubPatch LoadSfx_patch(LoadSfx);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -622,8 +630,7 @@ void audioVideoInit_()
 	AppAddExit_(vidinimoDestroy);
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget();
-	LoadGameData_(sfxdataDat, "arr\\sfxdata.dat");
-	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
+	LoadSfx_();
 	AppAddExit_(sfxdata_cleanup);
 	if (!byte_6D11D0)
 	{
