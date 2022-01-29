@@ -105,15 +105,11 @@ int(*signal)(int a1, int a2) = (int(*)(int a1, int a2)) 0x0040C8D5;
 
 void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline)
 {
-	DWORD lastError; // eax@2
-	void *result; // eax@7
-	LONG filesize; // eax@8 MAPDST
-	void *buffer; // ebx@17
-	HANDLE phFile; // [sp+8h] [bp-4h]@1 MAPDST
+	HANDLE phFile;
 
 	if (SFileOpenFileEx(0, filename, searchScope, &phFile))
 	{
-		filesize = SFileGetFileSize(phFile, 0);
+		LONG filesize = SFileGetFileSize(phFile, 0);
 		if (filesize == -1)
 		{
 			FileFatal(phFile, GetLastError());
@@ -129,7 +125,7 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 			}
 			SysWarn_FileNotFound(filename, 24);
 		}
-		buffer = (void *)defaultValue;
+		void* buffer = (void *)defaultValue;
 		if (!defaultValue)
 			buffer = SMemAlloc(filesize, logfilename, logline, defaultValue);
 		if (!SFileReadFile(phFile, buffer, filesize, &bytes_to_read, 0))
@@ -141,11 +137,11 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 		if (bytes_to_read != filesize)
 			FileFatal(phFile, 24);
 		SFileCloseFile(phFile);
-		result = buffer;
+		return buffer;
 	}
 	else
 	{
-		lastError = SErrGetLastError();
+		int lastError = SErrGetLastError();
 		if (!bytes_to_read || lastError != 2 && lastError != 1006)
 		{
 			SysWarn_FileNotFound(filename, lastError);
@@ -153,9 +149,8 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 		}
 		if (bytes_read)
 			*bytes_read = 0;
-		result = 0;
+		return 0;
 	}
-	return result;
 }
 
 void InitializeFontKey_(void)
