@@ -16272,12 +16272,11 @@ void sub_4DF4A0(dialog *a1) {
     }
 }
 DECL_FUNC(void (__thiscall*sub_4DF520)(dialog *this_), sub_4DF520, 0x4df520);
-int LoadReplayFile(char *a1, int a2, int a3) {
+int LoadReplayFile(char *a1, int a3) {
     int address = 0x4df570;
     int result_;
     __asm {
         mov eax, a1
-        mov ecx, a2
         mov edi, a3
         call address
         mov result_, eax
