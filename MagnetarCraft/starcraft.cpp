@@ -2476,6 +2476,8 @@ int CreateCampaignGame__(MapData mapData)
 	}
 }
 
+FailStubPatch CreateCampaignGame__patch(CreateCampaignGame);
+
 bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -3492,7 +3494,7 @@ int __stdcall ContinueCampaign_(int a1)
 			gwGameMode = GAME_CINEMATIC;
 			return 1;
 		}
-		if (CreateCampaignGame(active_campaign_menu_entry->next_mission))
+		if (CreateCampaignGame__(active_campaign_menu_entry->next_mission))
 		{
 			switch (active_campaign_menu_entry->race)
 			{
