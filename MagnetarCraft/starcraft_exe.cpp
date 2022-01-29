@@ -12463,7 +12463,7 @@ DECL_FUNC(void(*drawMinimapUnitBox2)(), drawMinimapUnitBox2, 0x4a47b0);
 DECL_FUNC(void(*drawAllMinimapUnitBoxes)(), drawAllMinimapUnitBoxes, 0x4a48e0);
 DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
 DECL_FUNC(int(*updateMinimapPositioninfoProc)(), updateMinimapPositioninfoProc, 0x4a4a70);
-DECL_FUNC(void(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
+DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(int (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
 DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
 DECL_FUNC(int(*sub_4A4CB4)(), sub_4A4CB4, 0x4a4cb4);
@@ -12491,7 +12491,8 @@ DECL_FUNC(int(*updateMinimapSurfaceInfo2Proc)(), updateMinimapSurfaceInfo2Proc, 
 DECL_FUNC(int(*playerInfoSomethingTvBProc)(), playerInfoSomethingTvBProc, 0x4a4fe0);
 DECL_FUNC(char (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
 DECL_FUNC(void(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
-DECL_FUNC(void(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
+DECL_FUNC(int(*nullsub_70)(), nullsub_70, 0x4a51fd);
+DECL_FUNC(int(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
 void Minimap_InitVisionButton(dialog *a1) {
     int address = 0x4a5230;
     __asm {
@@ -22341,7 +22342,7 @@ int& dword_6D11F0 = * ((decltype(&dword_6D11F0)) 0x6d11f0);
 CUnit *& dword_6D11F4 = * ((decltype(&dword_6D11F4)) 0x6d11f4);
 CBullet *& dword_6D11F8 = * ((decltype(&dword_6D11F8)) 0x6d11f8);
 CUnit *& dword_6D11FC = * ((decltype(&dword_6D11FC)) 0x6d11fc);
-StatusFlags& dword_6D1200 = * ((decltype(&dword_6D1200)) 0x6d1200);
+void *& iscript_data = * ((decltype(&iscript_data)) 0x6d1200);
 int& game_starting_maybe = * ((decltype(&game_starting_maybe)) 0x6d1204);
 int (*&dword_6D1208)(void) = *((decltype(&dword_6D1208)) 0x6d1208);
 HACCEL& hAccTable = * ((decltype(&hAccTable)) 0x6d120c);
