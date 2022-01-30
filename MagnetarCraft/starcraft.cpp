@@ -3947,8 +3947,8 @@ void __cdecl sub_4D9200_()
 	{
 		for (int i = 0; i < 64; i++)
 		{
-			if (campaign_missions[i].mission_index == CampaignIndex)
-				loadInitCreditsBIN_(campaign_missions[i].mission_name);
+			if (establishing_shots[i].campaign_mission == CampaignIndex)
+				loadInitCreditsBIN_(establishing_shots[i].establishing_shot_name);
 		}
 	}
 	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)

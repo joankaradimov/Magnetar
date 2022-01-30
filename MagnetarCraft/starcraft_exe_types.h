@@ -94,7 +94,6 @@ union SaiRegionUser;
 struct __declspec(align(2)) struct_a1;
 struct RTCI;
 enum Tech;
-struct CampaignMission;
 struct dialog_ctrl;
 enum SfxData;
 struct CUnitGhost;
@@ -222,6 +221,7 @@ struct SaiContourHub;
 struct __declspec(align(4)) SFX_related;
 struct pt;
 struct Font;
+struct EstablishingShot;
 struct dialog_dlg;
 struct CUnitVulture;
 struct UnitFinderData;
@@ -396,13 +396,6 @@ enum Tech : __int8
   TECH_unknown_tech43 = 0x2B,
   TECH_none = 0x2C,
 };
-
-struct CampaignMission
-{
-  char *mission_name;
-  int mission_index;
-};
-static_assert(sizeof(CampaignMission) == 8, "Incorrect size for type `CampaignMission`. Expected: 8");
 
 typedef __int32 s32;
 
@@ -3970,6 +3963,13 @@ struct Font
   FontChar *chrs[1];
 };
 static_assert(sizeof(Font) == 12, "Incorrect size for type `Font`. Expected: 12");
+
+struct EstablishingShot
+{
+  char *establishing_shot_name;
+  MapData campaign_mission;
+};
+static_assert(sizeof(EstablishingShot) == 8, "Incorrect size for type `EstablishingShot`. Expected: 8");
 
 struct dialog_dlg
 {

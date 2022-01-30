@@ -15807,16 +15807,13 @@ void *loadInitCreditsBIN(char *a1) {
     }
     return result_;
 }
-int sub_4D8F90(int result, CampaignMission *a2) {
+void sub_4D8F90(int result, EstablishingShot *a2) {
     int address = 0x4d8f90;
-    int result_;
     __asm {
         mov eax, result
         mov ecx, a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void(*BeginCredits)(void), BeginCredits, 0x4d8fd0);
 DECL_FUNC(void(*BeginEpilog)(void), BeginEpilog, 0x4d90c0);
@@ -18874,7 +18871,7 @@ const char* aLastreplay_1 = (decltype(aLastreplay_1 + 0)) 0x4ffef8;
 char* aLocal_dll = (decltype(aLocal_dll + 0)) 0x4fff08;
 EstablishingShotPosition* establishingShotPositions = (decltype(establishingShotPositions + 0)) 0x4fff24;
 char* aA_0 = (decltype(aA_0 + 0)) 0x4fff54;
-CampaignMission* campaign_missions = (decltype(campaign_missions + 0)) 0x4fff60;
+EstablishingShot* establishing_shots = (decltype(establishing_shots + 0)) 0x4fff60;
 CHAR* String2 = (decltype(String2 + 0)) 0x500194;
 char* aStareditScenar = (decltype(aStareditScenar + 0)) 0x5001b4;
 ChkSectionLoader* chk_loaders_version = (decltype(chk_loaders_version + 0)) 0x5001cc;
