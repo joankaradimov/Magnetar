@@ -399,6 +399,13 @@ void LoadSfx_()
 
 FailStubPatch LoadSfx_patch(LoadSfx);
 
+char* MapdataFilenames_[65];
+
+MemoryPatch MapdataFilenames_patch1(0x4280A2, MapdataFilenames_, 4);
+MemoryPatch MapdataFilenames_patch2(0x4A7DC9, MapdataFilenames_, 4);
+MemoryPatch MapdataFilenames_patch3(0x512BA0, MapdataFilenames_, 4);
+MemoryPatch MapdataFilenames_patch4(0x512BA8, (void*) _countof(MapdataFilenames_), 4);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -431,7 +438,7 @@ void PreInitData_()
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
 	LoadGameData_(mapdataDat, "arr\\mapdata.dat"); // TODO: is this call needed?
-	dword_51CC30 = loadTBL_(1577, 65, "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames);
+	dword_51CC30 = loadTBL_(1577, 65, "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames_);
 	AppAddExit_(FreeMapdataTable);
 	LoadGameTemplates(Template_Constructor);
 	AppAddExit_(DestroyGameTemplates);
@@ -1477,7 +1484,7 @@ FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
 
 bool ReadCampaignMapData_(MapChunks* map_chunks)
 {
-	return ReadMapData_(MapdataFilenames[CampaignIndex], map_chunks, 1) != 0;
+	return ReadMapData_(MapdataFilenames_[CampaignIndex], map_chunks, 1) != 0;
 }
 
 FailStubPatch ReadCampaignMapData_patch(ReadCampaignMapData);
@@ -3558,19 +3565,19 @@ FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 
 int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 {
-	if (*a3 >= 65)
+	if (*a3 >= _countof(MapdataFilenames_))
 	{
 		return 0;
 	}
 	while (1)
 	{
-		char* v3 = SStrChrR(MapdataFilenames[*a3], '\\');
+		char* v3 = SStrChrR(MapdataFilenames_[*a3], '\\');
 		if (v3 && !SStrCmpI(v3 + 1, a1, a2))
 		{
 			return 1;
 		}
 		*a3 += 1;
-		if (*a3 >= 65)
+		if (*a3 >= _countof(MapdataFilenames_))
 		{
 			break;
 		}
@@ -4006,7 +4013,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 		}
 		else
 		{
-			_snprintf(buff, 260u, "%s\\%s", MapdataFilenames[CampaignIndex], chk_string);
+			_snprintf(buff, 260u, "%s\\%s", MapdataFilenames_[CampaignIndex], chk_string);
 		}
 		PlayWavByFilename_maybe(buff);
 	}
