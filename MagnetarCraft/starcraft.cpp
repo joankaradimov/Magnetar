@@ -3828,6 +3828,28 @@ MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED, sizeof(*TILESET_
 MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
 MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
 
+int __fastcall TriggerAction_PlayWav_(Action* a1)
+{
+	char buff[260];
+
+	if (!InReplay && dword_6509B0 == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		const char* chk_string = get_chk_String(a1->wavString);
+		if (CampaignIndex == MD_none)
+		{
+			SStrCopy(buff, chk_string, 260u);
+		}
+		else
+		{
+			_snprintf(buff, 260u, "%s\\%s", MapdataFilenames[CampaignIndex], chk_string);
+		}
+		PlayWavByFilename_maybe(buff);
+	}
+	return 1;
+}
+
+FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
+
 void main(HINSTANCE starcraft_exe) {
 	hInst = starcraft_exe;
 	main_thread_id = GetCurrentThreadId();
