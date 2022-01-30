@@ -1482,6 +1482,147 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FailStubPatch ReadCampaignMapData_patch(ReadCampaignMapData);
 
+int LevelCheatInitGame__()
+{
+	if (!OpheliaEnabled)
+	{
+		return 1;
+	}
+
+	MapChunks map_chunks;
+
+	OpheliaEnabled = 0;
+	if (!playerName[0])
+	{
+		const char* v1;
+		if (*networkTable > 0x47u)
+		{
+			v1 = (char*)networkTable + networkTable[72];
+		}
+		else
+		{
+			v1 = empty_string;
+		}
+		SStrCopy(playerName, v1, 25);
+	}
+	if (CampaignIndex == MD_none)
+	{
+		char dest[260];
+		SStrCopy(dest, CurrentMapFileName, 260u);
+		if (!ReadMapData_(dest, &map_chunks, 0))
+		{
+			if (!outOfGame)
+			{
+				leaveGame(3);
+				outOfGame = 1;
+				doNetTBLError(0, 0, 0, 97);
+				if (gwGameMode == GAME_RUN)
+				{
+					GameState = 0;
+					gwNextGameMode = GAME_GLUES;
+					if (!InReplay)
+					{
+						ReplayFrames = ElapsedTimeFrames;
+					}
+				}
+				nextLeaveGameMenu();
+			}
+			return 0;
+		}
+
+		for (int player_index = 0; player_index < 8; player_index++)
+		{
+			if (Players[player_index].nType == PT_OpenSlot && player_index != 0)
+			{
+				Players[player_index].nType = PT_ComputerSlot;
+			}
+		}
+		goto LABEL_21;
+	}
+	if (ReadCampaignMapData_(&map_chunks))
+	{
+	LABEL_21:
+		GameData v6;
+		memset(&v6, 0, 140u);
+		v6.got_file_values.unused3[4] = 0;
+		SStrCopy(v6.player_name, playerName, 24u);
+		SStrCopy(v6.map_name, CurrentMapName, 32u);
+		v6.active_human_players = 1;
+		v6.max_players = 1;
+		v6.game_speed = GameSpeed;
+		GotFileValues* v4 = InitUseMapSettingsTemplate_();
+		if (v4)
+		{
+			memcpy(&v6.got_file_values, v4, sizeof(v6.got_file_values));
+			SMemFree(v4, "Starcraft\\SWAR\\lang\\game.cpp", 342, 0);
+			if (sub_4DBE50())
+			{
+				isHost = 0;
+				return CreateGame(&v6);
+			}
+			else
+			{
+				if (!outOfGame)
+				{
+					leaveGame(3);
+					outOfGame = 1;
+					doNetTBLError(0, 0, 0, 97);
+					if (gwGameMode == GAME_RUN)
+					{
+						GameState = 0;
+						gwNextGameMode = GAME_GLUES;
+						if (!InReplay)
+						{
+							ReplayFrames = ElapsedTimeFrames;
+						}
+					}
+					nextLeaveGameMenu();
+				}
+				return 0;
+			}
+		}
+		else
+		{
+			if (!outOfGame)
+			{
+				leaveGame(3);
+				outOfGame = 1;
+				doNetTBLError(0, 0, 0, 102);
+				if (gwGameMode == GAME_RUN)
+				{
+					GameState = 0;
+					gwNextGameMode = GAME_GLUES;
+					if (!InReplay)
+					{
+						ReplayFrames = ElapsedTimeFrames;
+					}
+				}
+				nextLeaveGameMenu();
+			}
+			return 0;
+		}
+	}
+	if (!outOfGame)
+	{
+		leaveGame(3);
+		outOfGame = 1;
+		doNetTBLError(0, 0, 0, 97);
+		if (gwGameMode == GAME_RUN)
+		{
+			GameState = 0;
+			gwNextGameMode = GAME_GLUES;
+			if (!InReplay)
+			{
+				ReplayFrames = ElapsedTimeFrames;
+			}
+		}
+		nextLeaveGameMenu();
+	}
+	return 0;
+}
+
+FailStubPatch LevelCheatInitGame_patch(LevelCheatInitGame);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -1499,7 +1640,7 @@ signed int LoadGameInit_()
 		ElapsedTimeFrames = 0;
 	if (!LOBYTE(multiPlayerMode))
 	{
-		if (!LevelCheatInitGame() || !LoadGameCreate() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
+		if (!LevelCheatInitGame__() || !LoadGameCreate() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
 			return 0;
 		if (InReplay)
 		{
