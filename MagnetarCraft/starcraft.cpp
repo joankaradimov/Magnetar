@@ -2722,7 +2722,7 @@ CampaignMenuEntry* expcampaign_menu_entries_[] = {
 };
 
 MemoryPatch campaign_menu_entries_patch(0x4DBC8F, campaign_menu_entries, 4);
-MemoryPatch expcampaign_menu_entries_patch(0x4DBC87, expcampaign_menu_entries, 4);
+MemoryPatch expcampaign_menu_entries_patch(0x4DBC88, expcampaign_menu_entries, 4);
 
 void updateActiveCampaignMission_()
 {
