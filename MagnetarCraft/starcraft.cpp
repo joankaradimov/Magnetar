@@ -3415,6 +3415,30 @@ void playActiveCinematic_()
 
 FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 
+int sub_4DBD20_(const char* a1, size_t a2, int* a3)
+{
+	if (*a3 >= 65)
+	{
+		return 0;
+	}
+	while (1)
+	{
+		char* v3 = SStrChrR(MapdataFilenames[*a3], '\\');
+		if (v3 && !SStrCmpI(v3 + 1, a1, a2))
+		{
+			return 1;
+		}
+		*a3 += 1;
+		if (*a3 >= 65)
+		{
+			break;
+		}
+	}
+	return 0;
+}
+
+FailStubPatch sub_4DBD20_patch(sub_4DBD20);
+
 CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 {
 	MapData v6;
@@ -3428,7 +3452,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	size_t v4 = v2 - a1;
 	CampaignMenuEntry** entries = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaign_menu_entries_ : campaign_menu_entries_;
 	int v8 = 0;
-	if (sub_4DBD20(a1, v4, &v8))
+	if (sub_4DBD20_(a1, v4, &v8))
 	{
 		while (2)
 		{
@@ -3453,7 +3477,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 				;
 			}
 			++v8;
-			if (sub_4DBD20(a1, v4, &v8))
+			if (sub_4DBD20_(a1, v4, &v8))
 			{
 				continue;
 			}
