@@ -14086,7 +14086,16 @@ DECL_FUNC(int(*blitTileCacheOnRefresh)(), blitTileCacheOnRefresh, 0x4bcdc0);
 DECL_FUNC(int(*sub_4BCEA0)(), sub_4BCEA0, 0x4bcea0);
 DECL_FUNC(int(*GenerateMegatileDefaultFlags)(), GenerateMegatileDefaultFlags, 0x4bcf50);
 DECL_FUNC(int(*nullsub_55)(), nullsub_55, 0x4bd0b0);
-DECL_FUNC(int(*get_chk_String)(), get_chk_String, 0x4bd0c0);
+const char *get_chk_String(__int16 a2) {
+    int address = 0x4bd0c0;
+    const char * result_;
+    __asm {
+        mov dx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 unsigned int GetGroundHeightAtPos(signed int x, signed int y) {
     int address = 0x4bd0f0;
     unsigned result_;
@@ -21447,6 +21456,8 @@ __int16& word_650970 = * ((decltype(&word_650970)) 0x650970);
 int* dword_650980 = (decltype(dword_650980 + 0)) 0x650980;
 __int16& word_6509A0 = * ((decltype(&word_6509A0)) 0x6509a0);
 char* active_players = (decltype(active_players + 0)) 0x6509a4;
+TriggerListEntry *& dword_6509AC = * ((decltype(&dword_6509AC)) 0x6509ac);
+int& dword_6509B0 = * ((decltype(&dword_6509B0)) 0x6509b0);
 _BYTE* byte_6509B8 = (decltype(byte_6509B8 + 0)) 0x6509b8;
 int& IS_GAME_PAUSED = * ((decltype(&IS_GAME_PAUSED)) 0x6509c4);
 __int16& word_6509CC = * ((decltype(&word_6509CC)) 0x6509cc);
