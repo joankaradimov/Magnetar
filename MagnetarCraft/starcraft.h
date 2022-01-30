@@ -5,4 +5,5 @@
 
 #include "starcraft_exe.h"
 
-void main(HINSTANCE starcraft_exe);
+void localDll_Init_(HINSTANCE a1);
+void GameMainLoop_();

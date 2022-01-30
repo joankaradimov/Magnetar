@@ -91,7 +91,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
 
-	main(starcraftExeData);
+	hInst = starcraftExeData;
+	main_thread_id = GetCurrentThreadId();
+	CheckForOtherInstances("SWarClass");
+	localDll_Init_(hInst);
+	VerifySystemMemory();
+	FastIndexInit();
+	BWSetSecurityInfo();
+	GameMainLoop_();
 
 	return 0;
 }

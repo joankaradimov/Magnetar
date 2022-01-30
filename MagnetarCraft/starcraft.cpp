@@ -4021,14 +4021,3 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 }
 
 FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
-
-void main(HINSTANCE starcraft_exe) {
-	hInst = starcraft_exe;
-	main_thread_id = GetCurrentThreadId();
-	CheckForOtherInstances("SWarClass");
-	localDll_Init_(hInst);
-	VerifySystemMemory();
-	FastIndexInit();
-	BWSetSecurityInfo();
-	GameMainLoop_();
-}
