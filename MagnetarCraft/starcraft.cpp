@@ -2917,6 +2917,16 @@ std::vector<Campaign> campaigns = {
 	{"xzerg", 0, false, Race::RACE_Zerg},
 };
 
+void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race race)
+{
+	Ophelia = 1;
+	level_cheat_mission = (MapData4)mission;
+	level_cheat_race = race;
+	level_cheat_is_bw = is_expansion;
+}
+
+FailStubPatch ContinueCampaignWithLevelCheat_patch(ContinueCampaignWithLevelCheat);
+
 int campaignTypeCheatStrings_(const char* a2)
 {
 	if (multiPlayerMode || (GameCheats & CheatFlags::CHEAT_Ophelia) == 0)
@@ -2943,10 +2953,7 @@ int campaignTypeCheatStrings_(const char* a2)
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
 	if (parseCmpgnCheatTypeString(a2 + prefix_length, relevant_campaign->race, relevant_campaign->first_mission_index, relevant_campaign->is_expansion, &v11) && v11 != MD_xbonus)
 	{
-		Ophelia = 1;
-		level_cheat_mission = v11;
-		level_cheat_race = relevant_campaign->race;
-		level_cheat_is_bw = relevant_campaign->is_expansion;
+		ContinueCampaignWithLevelCheat_(mission, relevant_campaign->is_expansion, relevant_campaign->race);
 		if (gwGameMode == GAME_RUN)
 		{
 			GameState = 0;

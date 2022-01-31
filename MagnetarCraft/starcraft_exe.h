@@ -5007,7 +5007,7 @@ extern int(*sub_4DC530)();
 extern int(*SetInGameLoop)();
 extern int (__stdcall*RandBetween)(int);
 extern void (__cdecl*BWFXN_NetSelectReturnMenu)();
-MapData4 sub_4DC630(MapData4 result, int a2, int a3);
+void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3);
 extern int(*sub_4DC650)();
 extern int(*sub_4DC660)();
 extern BOOL (__stdcall*EnumFunc)(HWND, LPARAM);

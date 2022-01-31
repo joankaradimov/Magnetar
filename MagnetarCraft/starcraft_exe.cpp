@@ -16130,17 +16130,14 @@ DECL_FUNC(int(*sub_4DC530)(), sub_4DC530, 0x4dc530);
 DECL_FUNC(int(*SetInGameLoop)(), SetInGameLoop, 0x4dc540);
 DECL_FUNC(int (__stdcall*RandBetween)(int), RandBetween, 0x4dc550);
 DECL_FUNC(void (__cdecl*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
-MapData4 sub_4DC630(MapData4 result, int a2, int a3) {
+void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3) {
     int address = 0x4dc630;
-    MapData4 result_;
     __asm {
         mov eax, result
         mov edx, a2
         mov ecx, a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4DC650)(), sub_4DC650, 0x4dc650);
 DECL_FUNC(int(*sub_4DC660)(), sub_4DC660, 0x4dc660);
