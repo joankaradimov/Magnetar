@@ -2900,6 +2900,95 @@ CampaignMenuEntry* expcampaign_menu_entries_[] = {
 MemoryPatch campaign_menu_entries_patch(0x4DBC8F, campaign_menu_entries, 4);
 MemoryPatch expcampaign_menu_entries_patch(0x4DBC88, expcampaign_menu_entries, 4);
 
+struct Campaign
+{
+	const char* campaign_id;
+	int first_mission_index;
+	bool is_expansion;
+	Race race;
+};
+
+std::vector<Campaign> campaigns = {
+	{"terran", 0, false, Race::RACE_Terran},
+	{"zerg", 0, false, Race::RACE_Zerg},
+	{"protoss", 0, false, Race::RACE_Protoss},
+	{"xprotoss", 0, false, Race::RACE_Protoss},
+	{"xterran", 0, false, Race::RACE_Terran},
+	{"xzerg", 0, false, Race::RACE_Zerg},
+};
+
+int campaignTypeCheatStrings_(const char* a2)
+{
+	if (multiPlayerMode || (GameCheats & CheatFlags::CHEAT_Ophelia) == 0)
+	{
+		return 0;
+	}
+
+	Campaign* relevant_campaign = NULL;
+	for (Campaign& campaign : campaigns)
+	{
+		int prefix_length = SStrLen(campaign.campaign_id);
+		if (!SStrCmpI(a2, campaign.campaign_id, prefix_length))
+		{
+			relevant_campaign = &campaign;
+			break;
+		}
+	}
+	if (relevant_campaign == NULL)
+	{
+		return 0;
+	}
+
+	MapData4 v11;
+	int prefix_length = SStrLen(relevant_campaign->campaign_id);
+	if (parseCmpgnCheatTypeString(a2 + prefix_length, relevant_campaign->race, relevant_campaign->first_mission_index, relevant_campaign->is_expansion, &v11) && v11 != MD_xbonus)
+	{
+		Ophelia = 1;
+		level_cheat_mission = v11;
+		level_cheat_race = relevant_campaign->race;
+		level_cheat_is_bw = relevant_campaign->is_expansion;
+		if (gwGameMode == GAME_RUN)
+		{
+			GameState = 0;
+			gwNextGameMode = GAME_GLUES;
+			if (!InReplay)
+			{
+				ReplayFrames = ElapsedTimeFrames;
+				glGluesMode = GLUE_MAIN_MENU;
+				return 1;
+			}
+		}
+		else
+		{
+			gwGameMode = GAME_GLUES;
+		}
+		glGluesMode = GLUE_MAIN_MENU;
+	}
+	return 1;
+}
+
+__declspec(naked) int campaignTypeCheatStrings__()
+{
+	const char* a2;
+
+	__asm {
+		push ebp
+		mov ebp, esp
+		mov a2, edi
+	}
+
+	campaignTypeCheatStrings_(a2);
+
+	__asm {
+		mov eax, eax // Put the result in the correct register
+		mov esp, ebp
+		pop ebp
+		ret
+	}
+}
+
+FunctionPatch campaignTypeCheatStrings_patch((void*) 0x4b1dc0, campaignTypeCheatStrings__);
+
 void updateActiveCampaignMission_()
 {
 	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission != CampaignIndex)
