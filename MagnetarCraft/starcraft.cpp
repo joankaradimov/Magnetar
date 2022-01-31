@@ -2897,9 +2897,6 @@ CampaignMenuEntry* expcampaign_menu_entries_[] = {
 	protoss_expcampaign_menu_entries_,
 };
 
-MemoryPatch campaign_menu_entries_patch(0x4DBC8F, campaign_menu_entries, 4);
-MemoryPatch expcampaign_menu_entries_patch(0x4DBC88, expcampaign_menu_entries, 4);
-
 struct Campaign
 {
 	const char* campaign_id;
@@ -2917,6 +2914,56 @@ std::vector<Campaign> campaigns = {
 	{"xzerg", 0, false, Race::RACE_Zerg},
 };
 
+int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
+{
+	char* campaign_index_ = campaign_index;
+	int v5 = strtoul(campaign_index, &campaign_index_, 10) - campaign->first_mission_index;
+	if (v5 < 0)
+	{
+		return 0;
+	}
+
+	CampaignMenuEntry** v7 = campaign->is_expansion ? expcampaign_menu_entries_ : campaign_menu_entries_;
+	CampaignMenuEntry* v8 = v7[campaign->race];
+	if (v8->next_mission == MD_none)
+	{
+		return 0;
+	}
+	while (v8->cinematic || v8->hide || v5--)
+	{
+		++v8;
+		if (v8->next_mission == MD_none)
+		{
+			return 0;
+		}
+	}
+	if (campaign_index_ && *campaign_index_)
+	{
+		int v10 = tolower(*campaign_index_) - 'a';
+		while (v10)
+		{
+			--v10;
+			if (v8->next_mission == MD_none)
+			{
+				return 0;
+			}
+			++v8;
+			if (!v8->hide)
+			{
+				return 0;
+			}
+		}
+		if (v8->next_mission == MD_none)
+		{
+			return 0;
+		}
+	}
+	*a5 = v8->next_mission;
+	return 1;
+}
+
+FailStubPatch parseCmpgnCheatTypeString_patch(parseCmpgnCheatTypeString);
+
 void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race race)
 {
 	Ophelia = 1;
@@ -2927,7 +2974,7 @@ void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race ra
 
 FailStubPatch ContinueCampaignWithLevelCheat_patch(ContinueCampaignWithLevelCheat);
 
-int campaignTypeCheatStrings_(const char* a2)
+int campaignTypeCheatStrings_(char* a2)
 {
 	if (multiPlayerMode || (GameCheats & CheatFlags::CHEAT_Ophelia) == 0)
 	{
@@ -2949,9 +2996,9 @@ int campaignTypeCheatStrings_(const char* a2)
 		return 0;
 	}
 
-	MapData4 v11;
+	MapData mission;
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString(a2 + prefix_length, relevant_campaign->race, relevant_campaign->first_mission_index, relevant_campaign->is_expansion, &v11) && v11 != MD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, a2 + prefix_length, &mission) && mission != MD_xbonus)
 	{
 		ContinueCampaignWithLevelCheat_(mission, relevant_campaign->is_expansion, relevant_campaign->race);
 		if (gwGameMode == GAME_RUN)
@@ -2976,7 +3023,7 @@ int campaignTypeCheatStrings_(const char* a2)
 
 __declspec(naked) int campaignTypeCheatStrings__()
 {
-	const char* a2;
+	char* a2;
 
 	__asm {
 		push ebp
