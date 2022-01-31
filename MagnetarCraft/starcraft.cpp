@@ -399,12 +399,43 @@ void LoadSfx_()
 
 FailStubPatch LoadSfx_patch(LoadSfx);
 
-char* MapdataFilenames_[65];
+char* MapdataFilenames_[73];
 
 MemoryPatch MapdataFilenames_patch1(0x4280A2, MapdataFilenames_, 4);
 MemoryPatch MapdataFilenames_patch2(0x4A7DC9, MapdataFilenames_, 4);
 MemoryPatch MapdataFilenames_patch3(0x512BA0, MapdataFilenames_, 4);
 MemoryPatch MapdataFilenames_patch4(0x512BA8, (void*) _countof(MapdataFilenames_), 4);
+
+void CommandLineCheck_()
+{
+	const char* command_line = GetCommandLineA();
+	if (command_line)
+	{
+		strTokenize(command_line);
+		CheatFlags game_cheats = GameCheats;
+		for (char* argument = strTokenize(0); argument; argument = strTokenize(0))
+		{
+			if (CommandLineCheatCompare(&game_cheats, argument))
+			{
+				cheatActivation(game_cheats, 0);
+			}
+			else
+			{
+				size_t argument_length = strlen(argument);
+				if (!_strnicmp(argument, "nosound", argument_length))
+				{
+					byte_6D11D0 = 1;
+				}
+				else if (!_strnicmp(argument, "ddemulate", argument_length))
+				{
+					byte_6D5DFC = 1;
+				}
+			}
+		}
+	}
+}
+
+FailStubPatch CommandLineCheck_patch(CommandLineCheck);
 
 void PreInitData_()
 {
@@ -414,7 +445,7 @@ void PreInitData_()
 	{
 		signal(21, 1);
 	}
-	CommandLineCheck();
+	CommandLineCheck_();
 	AppAddExit_(CloseAllArchives);
 	InitializeArchiveHandles_();
 	DataVersionCheck("rez\\DataVersion.txt");
