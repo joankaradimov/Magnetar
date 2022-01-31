@@ -1896,10 +1896,7 @@ void DestroyGame_()
 		{
 			char a1[260];
 			createLeagueFile(a1);
-			SNetSendReplayPath(
-				a1,
-				game_id_hash,
-				(char*)(validation_replay_path[0] != 0 ? (unsigned int)validation_replay_path : 0));
+			SNetSendReplayPath(a1, game_id_hash, validation_replay_path[0] != 0 ? validation_replay_path : NULL);
 		}
 		game_id_hash = 0;
 	}
