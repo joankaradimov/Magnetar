@@ -1108,7 +1108,7 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 		{
 			for (int i = 0; i < _countof(chk_loaders_); i++)
 			{
-				if (chk_loaders_[i].version == LOWORD(a1->data6))
+				if (chk_loaders_[i].version == a1->version)
 				{
 					if (!chk_loaders_[i].requires_expansion || IsExpansion)
 					{
@@ -1417,7 +1417,7 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 	a4->data3 = 0;
 	a4->data4 = 0;
 	a4->data5 = 0;
-	a4->data6 = 0;
+	a4->version = 0;
 	a4->data7 = 0;
 	if (InReplay)
 	{
@@ -2164,7 +2164,7 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 	{
 		return 0;
 	}
-	memcpy(&a3->data6, section_data->field1, section_data->size);
+	memcpy(&a3->version, section_data->field1, section_data->size);
 	return 1;
 }
 

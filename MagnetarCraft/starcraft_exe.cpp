@@ -4884,11 +4884,39 @@ DECL_FUNC(int (__stdcall*BattleDrawProfileInfo)(int, int, int, int, int, int, in
 DECL_FUNC(int (__stdcall*DLG_PROFILE_Proc)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam), DLG_PROFILE_Proc, 0x44e1d0);
 DECL_FUNC(int (__stdcall*BattleMakeProfileDialog)(int, int, int, int, int, int, int, int, int, int), BattleMakeProfileDialog, 0x44e390);
 DECL_FUNC(int(*sub_44E400)(), sub_44E400, 0x44e400);
-DECL_FUNC(int(*sub_44E420)(), sub_44E420, 0x44e420);
+void sub_44E420(CheatHashMaybe *result, CheatHashMaybe *a2) {
+    int address = 0x44e420;
+    __asm {
+        mov eax, result
+        mov ecx, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_44E4A0)(), sub_44E4A0, 0x44e4a0);
 DECL_FUNC(int(*sub_44E510)(), sub_44E510, 0x44e510);
-DECL_FUNC(int (__stdcall*makeHash)(int), makeHash, 0x44e550);
-DECL_FUNC(int (__stdcall*sub_44E780)(int), sub_44E780, 0x44e780);
+unsigned int makeHash(int a1, CheatHashRelated *a2, int a3) {
+    int address = 0x44e550;
+    unsigned result_;
+    __asm {
+        mov eax, a1
+        mov edx, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+char *sub_44E780(CheatHashRelated *a1, _WORD *a2) {
+    int address = 0x44e780;
+    char * result_;
+    __asm {
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_44E8D0)(int), sub_44E8D0, 0x44e8d0);
 DECL_FUNC(int (__stdcall*sub_44E950)(int), sub_44E950, 0x44e950);
 DECL_FUNC(int(*sub_44E970)(), sub_44E970, 0x44e970);
@@ -11546,12 +11574,15 @@ DECL_FUNC(int(*sub_499D40)(), sub_499D40, 0x499d40);
 DECL_FUNC(int (__stdcall*GameResultText)(int, int, int), GameResultText, 0x499d50);
 DECL_FUNC(int(*sub_499E00)(), sub_499E00, 0x499e00);
 DECL_FUNC(int(*GetLeagueTimestamp)(), GetLeagueTimestamp, 0x499e20);
-void createLeagueFile(char *a1) {
+int createLeagueFile(char *a1) {
     int address = 0x499ec0;
+    int result_;
     __asm {
         mov eax, a1
         call address
+        mov result_, eax
     }
+    return result_;
 }
 DECL_FUNC(int (__stdcall*StoreString)(char *source), StoreString, 0x49a040);
 DECL_FUNC(int(*sub_49A060)(), sub_49A060, 0x49a060);
@@ -13271,7 +13302,7 @@ signed int verifyCheatCode(const void *a1, CheatFlags *game_cheats) {
     }
     return result_;
 }
-signed int campaignTypeCheatStrings(char *a2) {
+signed int campaignTypeCheatStrings(const char *a2) {
     int address = 0x4b1dc0;
     signed result_;
     __asm {
@@ -13292,8 +13323,29 @@ int makeCheatHash(const char *cheat, __int64 *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*cheatActivation)(int), cheatActivation, 0x4b1fa0);
-DECL_FUNC(signed int (__fastcall*_radioFreeZergCheat)(int a1, const void *a2, CheatFlags *cheat_flags), _radioFreeZergCheat, 0x4b2350);
+int cheatActivation(int result, int a2) {
+    int address = 0x4b1fa0;
+    int result_;
+    __asm {
+        mov eax, result
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+signed int _radioFreeZergCheat(const void *a2, CheatFlags *cheat_flags) {
+    int address = 0x4b2350;
+    signed result_;
+    __asm {
+        mov edx, a2
+        push dword ptr cheat_flags
+        call address
+        mov result_, eax
+        add esp, 4
+    }
+    return result_;
+}
 signed int CommandLineCheatCompare(CheatFlags *game_cheats, const char *a2) {
     int address = 0x4b23e0;
     signed result_;
@@ -15888,6 +15940,16 @@ DECL_FUNC(void(*InitializeFontKey)(void), InitializeFontKey, 0x4d9eb0);
 DECL_FUNC(void (__thiscall*FreeLocalDLL)(bool exit_code), FreeLocalDLL, 0x4d9fc0);
 DECL_FUNC(void (__thiscall*FreeMapdataTable)(bool exit_code), FreeMapdataTable, 0x4da060);
 DECL_FUNC(int(*sub_4DA120)(), sub_4DA120, 0x4da120);
+char *strTokenize(const char *a1) {
+    int address = 0x4da130;
+    char * result_;
+    __asm {
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4DA230)(), sub_4DA230, 0x4da230);
 DECL_FUNC(int(*sub_4DA240)(), sub_4DA240, 0x4da240);
 DECL_FUNC(int(*sub_4DA250)(), sub_4DA250, 0x4da250);
@@ -16000,7 +16062,7 @@ CampaignMenuEntry *getCampaignIndex(MapData a1, CampaignMenuEntry **a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(char *this_, int race, int a3, int is_expansion, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
+DECL_FUNC(int (__thiscall*parseCmpgnCheatTypeString)(const char *campaign_index, int race, int first_mission_index, int is_expansion, MapData4 *a5), parseCmpgnCheatTypeString, 0x4dbc60);
 signed int sub_4DBD20(const char *a1, size_t a2, int *a3) {
     int address = 0x4dbd20;
     signed result_;
@@ -18185,7 +18247,18 @@ DECL_FUNC(int(*sub_4F5B70)(), sub_4F5B70, 0x4f5b70);
 DECL_FUNC(int(*load_wait)(), load_wait, 0x4f5c50);
 DECL_FUNC(bool (__fastcall*sub_4F5CB0)(dialog *dlg, struct dlgEvent *evt), sub_4F5CB0, 0x4f5cb0);
 DECL_FUNC(void (__stdcall*loadOKCancelBIN)(HANDLE phFile), loadOKCancelBIN, 0x4f5d70);
-DECL_FUNC(void (__stdcall*loadOKBIN)(HANDLE phFile), loadOKBIN, 0x4f5ee0);
+int loadOKBIN(int a1, const char *a2, HANDLE phFile) {
+    int address = 0x4f5ee0;
+    int result_;
+    __asm {
+        mov eax, a1
+        mov ecx, a2
+        push dword ptr phFile
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*loadOKCancelDialog)(int, char *a1), loadOKCancelDialog, 0x4f6050);
 DECL_FUNC(int(*sub_4F60E0)(), sub_4F60E0, 0x4f60e0);
 DECL_FUNC(int(*sub_4F60F0)(), sub_4F60F0, 0x4f60f0);
@@ -20602,6 +20675,7 @@ char* a_autgame_hdr_node = (decltype(a_autgame_hdr_node + 0)) 0x51a3c0;
 char* a_autsaved_game_node = (decltype(a_autsaved_game_node + 0)) 0x51a3ec;
 FnInteract* off_51A404 = (decltype(off_51A404 + 0)) 0x51a404;
 char* a_austreamed = (decltype(a_austreamed + 0)) 0x51a42c;
+int& dword_51A43C = * ((decltype(&dword_51A43C)) 0x51a43c);
 char* a_autprovider = (decltype(a_autprovider + 0)) 0x51a448;
 char* a_au_id = (decltype(a_au_id + 0)) 0x51a460;
 FnInteract* off_51A46C = (decltype(off_51A46C + 0)) 0x51a46c;
@@ -21212,8 +21286,8 @@ int& dword_59A33C = * ((decltype(&dword_59A33C)) 0x59a33c);
 int& dword_59B3D0 = * ((decltype(&dword_59B3D0)) 0x59b3d0);
 char* byte_59B3D8 = (decltype(byte_59B3D8 + 0)) 0x59b3d8;
 int* dword_59B410 = (decltype(dword_59B410 + 0)) 0x59b410;
-int& dword_59B414 = * ((decltype(&dword_59B414)) 0x59b414);
-int& dword_59B418 = * ((decltype(&dword_59B418)) 0x59b418);
+int* dword_59B414 = (decltype(dword_59B414 + 0)) 0x59b414;
+int* dword_59B418 = (decltype(dword_59B418 + 0)) 0x59b418;
 char* byte_59B41C = (decltype(byte_59B41C + 0)) 0x59b41c;
 int& dword_59B618 = * ((decltype(&dword_59B618)) 0x59b618);
 int& dword_59B61C = * ((decltype(&dword_59B61C)) 0x59b61c);
@@ -21907,6 +21981,7 @@ void *& dword_68F558 = * ((decltype(&dword_68F558)) 0x68f558);
 __int16* word_68F55C = (decltype(word_68F55C + 0)) 0x68f55c;
 __int16* word_68F55E = (decltype(word_68F55E + 0)) 0x68f55e;
 int* dword_68F560 = (decltype(dword_68F560 + 0)) 0x68f560;
+CheatHashRelated* stru_68F580 = (decltype(stru_68F580 + 0)) 0x68f580;
 LPARAM& dword_68F6B8 = * ((decltype(&dword_68F6B8)) 0x68f6b8);
 void *& a6 = * ((decltype(&a6)) 0x68f6bc);
 void *& dword_68F6C0 = * ((decltype(&dword_68F6C0)) 0x68f6c0);
@@ -22314,7 +22389,7 @@ int& replayShowEntireMap = * ((decltype(&replayShowEntireMap)) 0x6d0f1c);
 int& scenarioChkSize = * ((decltype(&scenarioChkSize)) 0x6d0f20);
 void *& scenarioChk = * ((decltype(&scenarioChk)) 0x6d0f24);
 dialog *& dword_6D0F28 = * ((decltype(&dword_6D0F28)) 0x6d0f28);
-int& dword_6D0F2C = * ((decltype(&dword_6D0F2C)) 0x6d0f2c);
+HANDLE& phFile = * ((decltype(&phFile)) 0x6d0f2c);
 char& byte_6D0F30 = * ((decltype(&byte_6D0F30)) 0x6d0f30);
 int& ReplayFrames = * ((decltype(&ReplayFrames)) 0x6d0f31);
 MapData& word_6D0F35 = * ((decltype(&word_6D0F35)) 0x6d0f35);

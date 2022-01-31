@@ -107,7 +107,7 @@ struct UnknownTilesetRelated2;
 struct TransVectorEntry;
 struct struct_2;
 enum BulletState;
-struct MapChunks;
+struct __declspec(align(4)) MapChunks;
 struct PMD;
 enum UnitType;
 enum MegatileFlags;
@@ -249,6 +249,7 @@ struct CUnitPowerup;
 struct __declspec(align(2)) AiCaptain;
 struct SaiSplit;
 struct CinematicIntro;
+struct __declspec(align(2)) CheatHashMaybe;
 struct Box32;
 struct MapSize;
 struct SaiContour;
@@ -278,6 +279,7 @@ struct GotFile;
 struct __declspec(align(4)) Target_;
 struct AllScoresStruct;
 struct CPPEH_RECORD;
+struct CheatHashRelated;
 union CUnitFields2;
 struct SAI_Paths;
 struct TriggerListEntry;
@@ -1674,7 +1676,7 @@ enum BulletState : unsigned __int8
 
 typedef void (__thiscall *AppExitHandle)(bool exit_code);
 
-struct MapChunks
+struct __declspec(align(4)) MapChunks
 {
   int data0;
   int data1;
@@ -1682,7 +1684,7 @@ struct MapChunks
   int data3;
   int data4;
   int data5;
-  int data6;
+  int version;
   int data7;
 };
 static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
@@ -4144,7 +4146,7 @@ struct __declspec(align(4)) MissionCheatRelated
 {
   const char *campaign_id;
   Race race;
-  _DWORD dword8;
+  _DWORD first_mission_index;
   _DWORD is_expansion;
 };
 static_assert(sizeof(MissionCheatRelated) == 16, "Incorrect size for type `MissionCheatRelated`. Expected: 16");
@@ -4246,6 +4248,12 @@ struct CinematicIntro
   Cinematic intro_cinematic;
 };
 static_assert(sizeof(CinematicIntro) == 2, "Incorrect size for type `CinematicIntro`. Expected: 2");
+
+struct __declspec(align(2)) CheatHashMaybe
+{
+  u32 parts[4];
+};
+static_assert(sizeof(CheatHashMaybe) == 16, "Incorrect size for type `CheatHashMaybe`. Expected: 16");
 
 struct Box32
 {
@@ -4691,6 +4699,13 @@ struct CPPEH_RECORD
   struct _EH3_EXCEPTION_REGISTRATION registration;
 };
 static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
+
+struct CheatHashRelated
+{
+  CheatHashMaybe f0;
+  int f2[9];
+};
+static_assert(sizeof(CheatHashRelated) == 52, "Incorrect size for type `CheatHashRelated`. Expected: 52");
 
 union CUnitFields2
 {
