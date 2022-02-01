@@ -2782,6 +2782,74 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 
 FailStubPatch loadmenu_GluHist_patch(loadmenu_GluHist);
 
+EstablishingShot establishing_shots_[] = {
+	{"EstT0t", MD_tutorial},
+	{"EstT01", MD_terran01},
+	{"EstT02", MD_terran02},
+	{"EstT03", MD_terran03},
+	{"EstT04", MD_terran04},
+	{"EstT05", MD_terran05},
+	{"EstT06", MD_terran06},
+	{"EstT08", MD_terran08},
+	{"EstT09", MD_terran09},
+	{"EstT11", MD_terran11},
+	{"EstT12", MD_terran12},
+	{"EstZ01", MD_zerg01},
+	{"EstZ02", MD_zerg02},
+	{"EstZ03", MD_zerg03},
+	{"EstZ04", MD_zerg04},
+	{"EstZ05", MD_zerg05},
+	{"EstZ06", MD_zerg06},
+	{"EstZ07", MD_zerg07},
+	{"EstZ08", MD_zerg08},
+	{"EstZ09", MD_zerg09},
+	{"EstZ10", MD_zerg10},
+	{"EstP01", MD_protoss01},
+	{"EstP02", MD_protoss02},
+	{"EstP03", MD_protoss03},
+	{"EstP04", MD_protoss04},
+	{"EstP05", MD_protoss05},
+	{"EstP06", MD_protoss06},
+	{"EstP07", MD_protoss07},
+	{"EstP08", MD_protoss08},
+	{"EstP09", MD_protoss09},
+	{"EstP10", MD_protoss10},
+	{"EstP01x", MD_xprotoss01},
+	{"EstP02x", MD_xprotoss02},
+	{"EstP03x", MD_xprotoss03},
+	{"EstP04x", MD_xprotoss04},
+	{"EstP05x", MD_xprotoss05},
+	{"EstP06x", MD_xprotoss06},
+	{"EstP07x", MD_xprotoss07},
+	{"EstP08x", MD_xprotoss08},
+	{"EstT01x", MD_xterran01},
+	{"EstT02x", MD_xterran02},
+	{"EstT03x", MD_xterran03},
+	{"EstT04x", MD_xterran04},
+	{"EstT05ax", MD_xterran05a},
+	{"EstT05bx", MD_xterran05b},
+	{"EstT06x", MD_xterran06},
+	{"EstT07x", MD_xterran07},
+	{"EstT08x", MD_xterran08},
+	{"EstZ01x", MD_xzerg01},
+	{"EstZ02x", MD_xzerg02},
+	{"EstZ03x", MD_xzerg03},
+	{"EstZ04x", MD_xzerg04a},
+	{"EstZ04x", MD_xzerg04b},
+	{"EstZ04x", MD_xzerg04c},
+	{"EstZ04x", MD_xzerg04d},
+	{"EstZ04x", MD_xzerg04e},
+	{"EstZ04x", MD_xzerg04f},
+	{"EstZ05x", MD_xzerg05},
+	{"EstZ06x", MD_xzerg06},
+	{"EstZ07x", MD_xzerg07},
+	{"EstZ08x", MD_xzerg08},
+	{"EstZ09x", MD_xzerg09},
+	{"EstZ09bx", MD_xbonus},
+	{"EstZ10x", MD_xzerg10},
+	{"FinZ09bx", MD_xbonus},
+};
+
 CampaignMenuEntry zerg_campaign_menu_entries_[] = {
 	{0x20, MD_zerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x21, MD_zerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
@@ -4118,8 +4186,8 @@ void __cdecl sub_4D9200_()
 	{
 		for (int i = 0; i < 64; i++)
 		{
-			if (establishing_shots[i].campaign_mission == CampaignIndex)
-				loadInitCreditsBIN_(establishing_shots[i].establishing_shot_name);
+			if (establishing_shots_[i].campaign_mission == CampaignIndex)
+				loadInitCreditsBIN_(establishing_shots_[i].establishing_shot_name);
 		}
 	}
 	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
