@@ -3123,7 +3123,7 @@ void updateActiveCampaignMission_()
 	}
 }
 
-FunctionPatch updateActiveCampaignMission_patch(updateActiveCampaignMission_, updateActiveCampaignMission);
+FunctionPatch updateActiveCampaignMission_patch(updateActiveCampaignMission, updateActiveCampaignMission_);
 
 bool LoadCampaignWithCharacter_(Race race)
 {
