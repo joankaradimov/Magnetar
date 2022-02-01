@@ -469,7 +469,7 @@ void PreInitData_()
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
 	LoadGameData_(mapdataDat, "arr\\mapdata.dat"); // TODO: is this call needed?
-	dword_51CC30 = loadTBL_(1577, 65, "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames_);
+	dword_51CC30 = loadTBL_(1577, _countof(MapdataFilenames_), "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames_);
 	AppAddExit_(FreeMapdataTable);
 	LoadGameTemplates(Template_Constructor);
 	AppAddExit_(DestroyGameTemplates);
