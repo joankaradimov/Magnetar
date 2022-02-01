@@ -2975,11 +2975,11 @@ struct Campaign
 
 std::vector<Campaign> campaigns = {
 	{"terran", 0, false, Race::RACE_Terran},
-	{"zerg", 0, false, Race::RACE_Zerg},
-	{"protoss", 0, false, Race::RACE_Protoss},
-	{"xprotoss", 0, true, Race::RACE_Protoss},
-	{"xterran", 0, true, Race::RACE_Terran},
-	{"xzerg", 0, true, Race::RACE_Zerg},
+	{"zerg", 1, false, Race::RACE_Zerg},
+	{"protoss", 1, false, Race::RACE_Protoss},
+	{"xprotoss", 1, true, Race::RACE_Protoss},
+	{"xterran", 1, true, Race::RACE_Terran},
+	{"xzerg", 1, true, Race::RACE_Zerg},
 };
 
 int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
