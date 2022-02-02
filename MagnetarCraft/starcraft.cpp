@@ -885,6 +885,7 @@ void CreateInitialMeleeUnits_()
 
 FailStubPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits);
 
+bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -900,7 +901,7 @@ ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__std
 }
 
 ChkSectionLoader chk_loaders_version_[] = {
-	CreateChkSectionLoader("TYPE", ChkLoader_TYPE, 0),
+	CreateChkSectionLoader("TYPE", ChkLoader_TYPE_, 0),
 	CreateChkSectionLoader("VER ", ChkLoader_VER_, 1),
 };
 
@@ -2182,6 +2183,13 @@ char* TILESET_NAMES[] = {
 	"Ice",
 	"Twilight",
 };
+
+bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	return 1;
+}
+
+FailStubPatch ChkLoader_TYPE_patch(ChkLoader_TYPE);
 
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3)
 {
