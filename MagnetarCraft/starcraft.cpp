@@ -887,6 +887,7 @@ FailStubPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits);
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
@@ -907,7 +908,7 @@ ChkSectionLoader chk_loaders_version_[] = {
 
 ChkSectionLoader chk_loaders_lobby_[] = {
 	CreateChkSectionLoader("VER ", ChkLoader_VER_, 1),
-	CreateChkSectionLoader("DIM ", ChkLoader_DIM, 1),
+	CreateChkSectionLoader("DIM ", ChkLoader_DIM_, 1),
 	CreateChkSectionLoader("ERA ", ChkLoader_ERA_, 1),
 	CreateChkSectionLoader("OWNR", ChkLoader_OWNR, 1),
 	CreateChkSectionLoader("SIDE", ChkLoader_SIDE, 1),
@@ -2205,6 +2206,22 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 }
 
 FailStubPatch ChkLoader_VER_patch(ChkLoader_VER);
+
+bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size != 4)
+	{
+		return 0;
+	}
+	if (section_data->field1 + section_data->size > (byte*) section_data->field0)
+	{
+		return 0;
+	}
+	memcpy(&map_size, section_data->field1, section_data->size);
+	return 1;
+}
+
+FailStubPatch ChkLoader_DIM_patch(ChkLoader_DIM);
 
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
 {
