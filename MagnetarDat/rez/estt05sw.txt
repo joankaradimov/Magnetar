@@ -1,0 +1,16 @@
+</COMMENT Establishing Shot for TerranSW Level 5>
+
+</FADESPEED 100>
+</DISPLAYTIME 5000>
+
+</COMMENT #############################################################>
+</BACKGROUND glue\palta\TerranA.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLOWERLEFT>
+"EXTERMINATION"
+
+Confederate Base Camp
+Chau Sara
+6:01 SCT, 11.12.2499
+</PAGE>

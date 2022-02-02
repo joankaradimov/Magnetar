@@ -1,0 +1,16 @@
+</COMMENT Establishing Shot for Terran SW Level 1>
+
+</FADESPEED 100>
+
+</COMMENT #############################################################>
+</DISPLAYTIME 5000>
+</BACKGROUND glue\palta\TerranA.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLOWERLEFT>
+"STRONGARM"
+
+Confederate Base Camp
+Chau Sara
+2:12 SCT, 11.08.2499
+</PAGE>

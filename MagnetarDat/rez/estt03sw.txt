@@ -1,0 +1,16 @@
+</COMMENT Establishing Shot for TerranSW Level 3>
+
+</FADESPEED 100>
+</DISPLAYTIME 5000>
+
+</COMMENT #############################################################>
+</BACKGROUND glue\palta\TerranA.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLOWERLEFT>
+"DEN OF THE BEAST"
+
+Confederate Base Camp
+Chau Sara
+23:45 SCT, 11.08.2499
+</PAGE>

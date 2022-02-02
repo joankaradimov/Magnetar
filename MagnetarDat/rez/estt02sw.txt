@@ -1,0 +1,16 @@
+</COMMENT Establishing Shot for TerranSW Level 2>
+
+</FADESPEED 100>
+</DISPLAYTIME 5000>
+
+</COMMENT #############################################################>
+</BACKGROUND glue\palta\TerranA.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLOWERLEFT>
+"THE GAUNTLET"
+
+Confederate Base Camp
+Chau Sara
+Three hours later
+</PAGE>

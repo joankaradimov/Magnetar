@@ -1,0 +1,27 @@
+</COMMENT Establishing Shot for TerranSW Tutorial>
+
+</FADESPEED 100>
+</DISPLAYTIME 35000>
+</COMMENT #############################################################>
+</BACKGROUND glue\palta\Blank.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLEFT>
+TERRAN PREQUEL: LOOMINGS
+
+As a stalwart defender of the Sector-spanning Terran Confederacy, you have been sent on a clandestine mission to the remote border-colony of Chau Sara. The local Magistrate, fearing that the population is preparing to revolt, has asked that you and your Alpha Squadron troops intervene and quell any uprisings that might occur.
+</PAGE>
+
+
+</COMMENT #############################################################>
+</DISPLAYTIME 6000>
+</BACKGROUND glue\palta\TerranA.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLOWERLEFT>
+"BOOT CAMP"
+
+Confederate Base Camp
+Chau Sara
+3:22 SCT, 11.07.2499
+</PAGE>
