@@ -3136,14 +3136,37 @@ __declspec(naked) int campaignTypeCheatStrings__()
 
 FunctionPatch campaignTypeCheatStrings_patch((void*) 0x4b1dc0, campaignTypeCheatStrings__);
 
+CampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
+{
+	CampaignMenuEntry* entry = campaign.entries;
+
+	while (entry->cinematic || entry->next_mission != CampaignIndex)
+	{
+		++entry;
+		if (entry->next_mission == MD_none)
+		{
+			return 0;
+		}
+	}
+	return entry;
+}
+
+FailStubPatch getCampaignIndex_patch(getCampaignIndex);
+
 void updateActiveCampaignMission_()
 {
-	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission != CampaignIndex)
+	if (active_campaign_menu_entry == NULL || active_campaign_menu_entry->next_mission != CampaignIndex)
 	{
-		active_campaign_menu_entry = getCampaignIndex(CampaignIndex, campaign_menu_entries_);
-		if (!active_campaign_menu_entry)
+		for (Campaign& campaign : campaigns)
 		{
-			active_campaign_menu_entry = getCampaignIndex(CampaignIndex, expcampaign_menu_entries_);
+			for (CampaignMenuEntry* entry = campaign.entries; entry->next_mission; entry++)
+			{
+				if (entry->next_mission == CampaignIndex)
+				{
+					active_campaign_menu_entry = getCampaignIndex_(campaign);
+					return;
+				}
+			}
 		}
 	}
 }
