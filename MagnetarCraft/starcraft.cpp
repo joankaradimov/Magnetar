@@ -891,6 +891,7 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
 {
@@ -926,14 +927,14 @@ ChkSectionLoader chk_loaders_briefing_[] = {
 ChkSectionLoader chk_loaders_melee_vanilla_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
 	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
@@ -955,7 +956,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
 	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
@@ -977,7 +978,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
 };
@@ -985,7 +986,7 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
 	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 1),
 	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 1),
@@ -2317,6 +2318,63 @@ bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
 }
 
 FailStubPatch ChkLoader_MTXM_patch(ChkLoader_MTXM);
+
+struct Thingy2Entry
+{
+	union {
+		UnitType unit_type;
+		u16 sprite_type;
+	};
+	Position position;
+	u8 player_id;
+	u8 _unused1;
+	u16 _unused2 : 12;
+	u16 draw_as_sprite : 1;
+	u16 unused3 : 2;
+	u16 disabled : 1;
+};
+
+bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size % 10u)
+	{
+		return 0;
+	}
+
+	if (section_data->field1 + section_data->size > (byte*) section_data->field0)
+	{
+		return 0;
+	}
+
+	Thingy2Entry* entries = (Thingy2Entry*)section_data->field1;
+	for (int i = 0; i < section_size / 10; i++)
+	{
+		if (entries[i].draw_as_sprite)
+		{
+			CreateThingy(entries[i].sprite_type, entries[i].position.x, entries[i].position.y, entries[i].player_id);
+		}
+		else
+		{
+			UnitType unit_type = entries[i].unit_type;
+			if (unit_type == Special_Upper_Level_Door || unit_type == Special_Right_Upper_Level_Door || unit_type == Special_Pit_Door || unit_type == Special_Right_Pit_Door)
+			{
+				entries[i].player_id = 11;
+			}
+			if (gameData.got_file_values.victory_conditions == VC_MAP_DEFAULT && gameData.got_file_values.starting_units == SU_MAP_DEFAULT && !gameData.got_file_values.tournament_mode || entries[i].player_id == 11)
+			{
+				CUnit* unit = CreateUnitAtPos(entries[i].player_id, entries[i].unit_type, entries[i].position.x, entries[i].position.y);
+				if (unit && entries[i].disabled)
+				{
+					Thg2SpecialDIsableUnit(unit);
+				}
+			}
+		}
+	}
+
+	return 1;
+}
+
+FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
