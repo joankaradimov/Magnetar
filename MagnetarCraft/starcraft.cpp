@@ -2971,15 +2971,16 @@ struct Campaign
 	int first_mission_index;
 	bool is_expansion;
 	Race race;
+	CampaignMenuEntry* entries;
 };
 
 std::vector<Campaign> campaigns = {
-	{"terran", 0, false, Race::RACE_Terran},
-	{"zerg", 1, false, Race::RACE_Zerg},
-	{"protoss", 1, false, Race::RACE_Protoss},
-	{"xprotoss", 1, true, Race::RACE_Protoss},
-	{"xterran", 1, true, Race::RACE_Terran},
-	{"xzerg", 1, true, Race::RACE_Zerg},
+	{"terran", 0, false, Race::RACE_Terran, terran_campaign_menu_entries_},
+	{"zerg", 1, false, Race::RACE_Zerg, zerg_campaign_menu_entries_},
+	{"protoss", 1, false, Race::RACE_Protoss, protoss_campaign_menu_entries_},
+	{"xprotoss", 1, true, Race::RACE_Protoss, protoss_expcampaign_menu_entries_},
+	{"xterran", 1, true, Race::RACE_Terran, terran_expcampaign_menu_entries_},
+	{"xzerg", 1, true, Race::RACE_Zerg, zerg_expcampaign_menu_entries_},
 };
 
 int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
@@ -2991,8 +2992,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData
 		return 0;
 	}
 
-	CampaignMenuEntry** v7 = campaign->is_expansion ? expcampaign_menu_entries_ : campaign_menu_entries_;
-	CampaignMenuEntry* v8 = v7[campaign->race];
+	CampaignMenuEntry* v8 = campaign->entries;
 	if (v8->next_mission == MD_none)
 	{
 		return 0;
