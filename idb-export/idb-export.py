@@ -124,22 +124,25 @@ class Function:
         result += '    __asm {\n'
 
         stack_args = []
+        register_args = collections.OrderedDict()
         for arg in arguments:
             is_passed_in_register = '@' in arg
             if is_passed_in_register:
                 register_name = self.register_arg_pattern.search(arg).group(1)
                 arg_name = extract_arg_name(arg)
-                if register_name in {'sil', 'dil'}:
-                    # TODO: handle 64 bit case
-                    # 32-bit assembly does not have the SIL/DIL registers
-                    result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
-                else:
-                    result += '        mov ' + register_name + ', ' + arg_name + '\n'
+                register_args[arg_name] = register_name
+            elif arg == '...':
+                pass # TODO: handle this
             else:
-                if arg == '...':
-                    continue # TODO: handle this
-
                 stack_args.append(extract_arg_name(arg))
+
+        for arg_name, register_name in register_args.items():
+            if register_name in {'sil', 'dil'}:
+                # TODO: handle 64 bit case
+                # 32-bit assembly does not have the SIL/DIL registers
+                result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
+            else:
+                result += '        mov ' + register_name + ', ' + arg_name + '\n'
 
         for arg_name in reversed(stack_args):
             result += '        push dword ptr ' + arg_name + '\n'
