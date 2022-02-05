@@ -932,6 +932,14 @@ ChkSectionLoader chk_loaders_melee_vanilla_[] = {
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 };
 
+ChkSectionLoader chk_loaders_melee_broodwar_[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
+	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
+	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+};
+
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
@@ -974,14 +982,6 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
-};
-
-ChkSectionLoader chk_loaders_melee_broodwar_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
-	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
-	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
-	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
