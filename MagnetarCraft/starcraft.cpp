@@ -892,6 +892,7 @@ bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapC
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
 
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
 {
@@ -928,7 +929,7 @@ ChkSectionLoader chk_loaders_melee_vanilla_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
@@ -947,7 +948,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("TECx", ChkLoader_TECx, 0),
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
@@ -969,7 +970,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("TECx", ChkLoader_TECx, 0),
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
@@ -979,7 +980,7 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
 };
 
@@ -994,7 +995,7 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("PUNI", ChkLoader_PUNI, 1),
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 1),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 1),
-	CreateChkSectionLoader("UNIT", ChkLoader_UNIT, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
@@ -2373,6 +2374,63 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 }
 
 FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
+
+bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
+{
+	if (section_size % sizeof(ChunkUnitEntry))
+	{
+		return 0;
+	}
+	ChunkUnitEntry* unit_entries = (ChunkUnitEntry*)SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 913, 0);
+	if (!unit_entries)
+	{
+		return 0;
+	}
+	if (!CopySectionData(a1, unit_entries))
+	{
+		SMemFree(unit_entries, "Starcraft\\SWAR\\lang\\maphdr.cpp", 916, 0);
+		return 0;
+	}
+	memset(startPositions, 0, 8 * sizeof(Position));
+
+	UnitRelated20* v18 = NULL;
+	UnitRelated20* v19 = NULL;
+	int unit_count = section_size / sizeof(ChunkUnitEntry);
+	for (int i = 0; i < unit_count; i++)
+	{
+		ChunkUnitEntry* unit_entry = unit_entries + i;
+
+		if (!CHK_UNIT_StartLocationSub(startPositions, unit_entry)
+			&& (unit_entry->player >= 8u || Players[unit_entry->player].nType != PT_NotUsed && (Players[unit_entry->player].nType <= PT_Unknown0 || Players[unit_entry->player].nType == PT_Neutral))
+			&& !unitNotNeutral(unit_entry)
+			&& (gameData.got_file_values.victory_conditions
+				|| gameData.got_file_values.starting_units
+				|| gameData.got_file_values.tournament_mode
+				|| !getPlayerForce(unit_entry->player)
+				|| (Unit_GroupFlags[unit_entry->unit_type] & 0x80u) != 0))
+		{
+			CUnit* v11 = sub_4CD740(unit_entry);
+			if (v11)
+			{
+				v19 = CHK_UNIT_Nydus(unit_entry->linked_unit_id, v11, v19, unit_entry->id);
+				v18 = CHK_UNIT_Addon(v11, v18, unit_entry->linked_unit_id, unit_entry->id);
+			}
+		}
+	}
+
+	for (; v19; v19 = sub_4CBD30(v19));
+	for (; v18; v18 = sub_4CCF90(v18));
+	SMemFree(unit_entries, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1003, 0);
+	for (CUnit* i = UnitNodeList_VisibleUnit_First; i; i = i->next)
+	{
+		UpdateUnitSpriteInfo(i);
+	}
+	CanUpdatePoweredStatus = 1;
+
+	return 1;
+}
+
+FailStubPatch ChkLoader_UNIT_patch(ChkLoader_UNIT);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
