@@ -607,37 +607,9 @@ DECL_FUNC(int(*sub_405D74)(), sub_405D74, 0x405d74);
 DECL_FUNC(void(*sub_406504)(), sub_406504, 0x406504);
 DECL_FUNC(int(*sub_40651C)(), sub_40651C, 0x40651c);
 DECL_FUNC(int(*renderTerrainGRPToCache)(), renderTerrainGRPToCache, 0x40aae0);
-char imageRenderFxn0_0(int a1, int a2, int a3, int a4, tagRECT *a5, int a6) {
-    int address = 0x40abbe;
-    char result_;
-    __asm {
-        mov edx, a1
-        mov ecx, a2
-        mov ebp, a3
-        push dword ptr a6
-        push dword ptr a5
-        push dword ptr a4
-        call address
-        mov result_, al
-    }
-    return result_;
-}
+DECL_FUNC(int (__stdcall*imageRenderFxn0_0)(int, tagRECT *, int), imageRenderFxn0_0, 0x40abbe);
 DECL_FUNC(int (__stdcall*sub_40AD04)(int, int, int), sub_40AD04, 0x40ad04);
-char sub_40AE63(int a1, int a2, int a3, grpFrame *a4, int a5, int a6) {
-    int address = 0x40ae63;
-    char result_;
-    __asm {
-        mov edx, a1
-        mov ecx, a2
-        mov ebp, a3
-        push dword ptr a6
-        push dword ptr a5
-        push dword ptr a4
-        call address
-        mov result_, al
-    }
-    return result_;
-}
+DECL_FUNC(int (__stdcall*sub_40AE63)(grpFrame *, int, int), sub_40AE63, 0x40ae63);
 DECL_FUNC(int (__stdcall*sub_40AFD5)(int, int, int), sub_40AFD5, 0x40afd5);
 DECL_FUNC(int (__stdcall*imageRenderFxn3_0)(int, int, int), imageRenderFxn3_0, 0x40b155);
 DECL_FUNC(int (__stdcall*imageRenderFxn8_0)(int, int, int), imageRenderFxn8_0, 0x40b2d3);
@@ -845,7 +817,7 @@ signed int CopySectionData(SectionData *a1, void *a2) {
     return result_;
 }
 DECL_FUNC(int(*sub_413480)(), sub_413480, 0x413480);
-DECL_FUNC(signed int (__stdcall*ChunkNode_Constructor)(int a1, int a2, ChunkNode *a3), ChunkNode_Constructor, 0x4134a0);
+DECL_FUNC(signed int (__stdcall*ChunkNode_Constructor)(SectionData *a1, int a2, ChunkNode *a3), ChunkNode_Constructor, 0x4134a0);
 DECL_FUNC(signed int (__thiscall*sub_413550)(ChkSectionLoader *loader, ChunkNode *a2, int a3, MapChunks *map_chunks), sub_413550, 0x413550);
 signed int sub_4135C0(ChkSectionLoader *chk_section_loaders, ChunkNode *a2, int chk_section_loader_count) {
     int address = 0x4135c0;
@@ -861,14 +833,14 @@ signed int sub_4135C0(ChkSectionLoader *chk_section_loaders, ChunkNode *a2, int 
 }
 DECL_FUNC(int(*sub_413610)(), sub_413610, 0x413610);
 DECL_FUNC(int(*sub_413640)(), sub_413640, 0x413640);
-signed int sub_413670(int a1, ChunkNode *a2, int a3, int (__stdcall *chunk_node_constructor)(_DWORD, _DWORD, ChunkNode *)) {
+signed int sub_413670(Chunk *chk_data, ChunkNode *chunk_node, int chk_size_, int (__stdcall *chunk_node_constructor)(SectionData *, _DWORD, ChunkNode *)) {
     int address = 0x413670;
     signed result_;
     __asm {
-        mov eax, a1
-        mov edi, a2
+        mov eax, chk_data
+        mov edi, chunk_node
         push dword ptr chunk_node_constructor
-        push dword ptr a3
+        push dword ptr chk_size_
         call address
         mov result_, eax
     }
@@ -5856,7 +5828,7 @@ DECL_FUNC(int (__stdcall*sub_45A9B0)(char), sub_45A9B0, 0x45a9b0);
 DECL_FUNC(int (__stdcall*sub_45AB20)(char, char), sub_45AB20, 0x45ab20);
 DECL_FUNC(int(*sub_45ABA0)(), sub_45ABA0, 0x45aba0);
 DECL_FUNC(int (__fastcall*sub_45ABE0)(size_t size_, char *dest), sub_45ABE0, 0x45abe0);
-DECL_FUNC(signed int (__thiscall*sub_45AC10)(int *this_), sub_45AC10, 0x45ac10);
+DECL_FUNC(signed int (__thiscall*sub_45AC10)(u8 *this_), sub_45AC10, 0x45ac10);
 DECL_FUNC(int(*GetEmptiestTeam)(), GetEmptiestTeam, 0x45ad20);
 DECL_FUNC(int(*updatePlayerForce)(), updatePlayerForce, 0x45ad90);
 DECL_FUNC(int(*GetFreeSlotFromEmptiestTeam)(), GetFreeSlotFromEmptiestTeam, 0x45ade0);
@@ -14728,7 +14700,7 @@ DECL_FUNC(void (__thiscall*freeCHKStringHandle)(bool exit_code), freeCHKStringHa
 DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
 DECL_FUNC(bool (__stdcall*ChkLoader_OWNR)(SectionData *, int, MapChunks *), ChkLoader_OWNR, 0x4cb420);
 DECL_FUNC(bool (__stdcall*ChkLoader_SIDE)(SectionData *, int, MapChunks *), ChkLoader_SIDE, 0x4cb490);
-DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *, int, MapChunks *), ChkLoader_VER, 0x4cb500);
+DECL_FUNC(bool (__stdcall*ChkLoader_VER)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_VER, 0x4cb500);
 DECL_FUNC(bool (__stdcall*ChkLoader_TYPE)(SectionData *, int, MapChunks *), ChkLoader_TYPE, 0x4cb550);
 DECL_FUNC(int (__fastcall*sub_4CB560)(int a1), sub_4CB560, 0x4cb560);
 DECL_FUNC(char (__fastcall*sub_4CB5B0)(int a1, UnknownTilesetRelated2 *a2), sub_4CB5B0, 0x4cb5b0);
@@ -15849,15 +15821,12 @@ signed int credits_keyDwn(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*creditsDlgInteract)(dialog *dlg, struct dlgEvent *evt), creditsDlgInteract, 0x4d8d60);
-void *loadInitCreditsBIN(char *a1) {
+void loadInitCreditsBIN(char *a1) {
     int address = 0x4d8df0;
-    void * result_;
     __asm {
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_4D8F90(int result, EstablishingShot *a2) {
     int address = 0x4d8f90;
@@ -18927,8 +18896,7 @@ char* aScoreKills = (decltype(aScoreKills + 0)) 0x4ffa68;
 char* aScoreRazings = (decltype(aScoreRazings + 0)) 0x4ffa88;
 char* aScoreUser = (decltype(aScoreUser + 0)) 0x4ffaa8;
 int* dword_4FFAD4 = (decltype(dword_4FFAD4 + 0)) 0x4ffad4;
-_DWORD* off_4FFAD8 = (decltype(off_4FFAD8 + 0)) 0x4ffad8;
-char *& off_4FFBC8 = * ((decltype(&off_4FFBC8)) 0x4ffbc8);
+GlueRelated* stru_4FFAD8 = (decltype(stru_4FFAD8 + 0)) 0x4ffad8;
 CampaignMenuEntry* terran_campaign_menu_entries = (decltype(terran_campaign_menu_entries + 0)) 0x4ffc20;
 CampaignMenuEntry* zerg_campaign_menu_entries = (decltype(zerg_campaign_menu_entries + 0)) 0x4ffca0;
 CampaignMenuEntry* protoss_campaign_menu_entries = (decltype(protoss_campaign_menu_entries + 0)) 0x4ffd18;
@@ -20438,6 +20406,10 @@ int& dword_50CD50 = * ((decltype(&dword_50CD50)) 0x50cd50);
 int& dword_50CD80 = * ((decltype(&dword_50CD80)) 0x50cd80);
 int& dword_50CD84 = * ((decltype(&dword_50CD84)) 0x50cd84);
 u8* byte_50CDC1 = (decltype(byte_50CDC1 + 0)) 0x50cdc1;
+int& dword_50CECD = * ((decltype(&dword_50CECD)) 0x50cecd);
+int& dword_50CED1 = * ((decltype(&dword_50CED1)) 0x50ced1);
+int& dword_50CED9 = * ((decltype(&dword_50CED9)) 0x50ced9);
+_DWORD* dword_50CEE2 = (decltype(dword_50CEE2 + 0)) 0x50cee2;
 char* aAvtypeInfo = (decltype(aAvtypeInfo + 0)) 0x50cf18;
 char& byte_50DBC8 = * ((decltype(&byte_50DBC8)) 0x50dbc8);
 char& byte_50DBD8 = * ((decltype(&byte_50DBD8)) 0x50dbd8);

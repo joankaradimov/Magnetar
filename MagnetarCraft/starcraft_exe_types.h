@@ -102,18 +102,17 @@ struct LO_Overlays;
 struct ListNode;
 struct RTTICompleteObjectLocator;
 struct PlayerResources;
-struct __declspec(align(4)) SectionData;
 struct UnknownTilesetRelated2;
 struct TransVectorEntry;
 struct struct_2;
 enum BulletState;
-struct __declspec(align(4)) MapChunks;
 struct PMD;
 enum UnitType;
 enum MegatileFlags;
 enum EventNo;
 struct points;
 enum PlayerTypes;
+struct __declspec(align(4)) ChunkNode;
 struct PlayersSelections;
 struct struct_3;
 struct MapDownload;
@@ -140,6 +139,7 @@ enum UnitPrototypeFlags;
 struct CndSignature;
 struct Timer;
 struct _RTTICompleteObjectLocator;
+struct __declspec(align(4)) GlueRelated;
 enum SaiAccessabilityFlags;
 enum MapData;
 struct CUnitSilo;
@@ -151,6 +151,7 @@ struct __declspec(align(4)) CharacterData;
 struct GameSpeeds;
 struct ForceName;
 enum Order;
+enum ForceFlags;
 enum WeaponType;
 struct SpriteTileData;
 struct PlayerAlliance;
@@ -196,7 +197,6 @@ struct dialog_edit;
 struct __declspec(align(1)) Position;
 struct TileType;
 struct Action;
-struct __declspec(align(2)) ChunkData;
 struct CUnitWorker;
 struct __declspec(align(2)) SightStruct;
 struct __declspec(align(2)) CampaignMenuEntry;
@@ -234,6 +234,7 @@ struct CUnitCarrier;
 struct SuppliesPerRace;
 struct ImagesDatExtraOverlayLO_Files;
 struct RTTIBaseClassDescriptor;
+struct __declspec(align(4)) MapChunks;
 struct fontMemStruct;
 struct CUnitResource;
 struct LO_Header;
@@ -253,7 +254,6 @@ struct __declspec(align(2)) CheatHashMaybe;
 struct Box32;
 struct MapSize;
 struct SaiContour;
-struct ChunkNode;
 struct FontChar;
 struct TPROVIDER;
 struct __declspec(align(2)) LobbySlot;
@@ -266,7 +266,10 @@ struct __declspec(align(4)) CSprite;
 union CUnitFields1;
 struct Trigger;
 struct dialog_btn;
+struct Chunk;
+struct __declspec(align(4)) SectionData;
 struct grpHead;
+struct __declspec(align(4)) Map;
 struct dialog_list;
 struct __declspec(align(1)) GameData;
 struct __declspec(align(2)) PathCreateRelated;
@@ -284,8 +287,9 @@ union CUnitFields2;
 struct SAI_Paths;
 struct TriggerListEntry;
 struct __declspec(align(4)) CBullet;
-struct MapDirEntry;
+struct __declspec(align(2)) ChunkData;
 union dialog_fields;
+struct MapDirEntry;
 struct __declspec(align(4)) CFlingy;
 struct COrder;
 struct __declspec(align(4)) CUnit;
@@ -1628,15 +1632,6 @@ struct PlayerResources
 };
 static_assert(sizeof(PlayerResources) == 192, "Incorrect size for type `PlayerResources`. Expected: 192");
 
-struct __declspec(align(4)) SectionData
-{
-  int field0;
-  byte *field1;
-  int chunk_name;
-  int size;
-};
-static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
-
 struct UnknownTilesetRelated2
 {
   _DWORD dword0;
@@ -1675,19 +1670,6 @@ enum BulletState : unsigned __int8
 };
 
 typedef void (__thiscall *AppExitHandle)(bool exit_code);
-
-struct __declspec(align(4)) MapChunks
-{
-  int data0;
-  int data1;
-  int data2;
-  int data3;
-  int data4;
-  int data5;
-  int version;
-  int data7;
-};
-static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
 
 typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
 
@@ -2006,6 +1988,14 @@ enum PlayerTypes : unsigned __int8
   PT_SINGLE_NO_COMPUTERS = 0x3,
   PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
+
+struct __declspec(align(4)) ChunkNode
+{
+  ChunkNode *count;
+  ChunkData *f1;
+  ChunkData *f2;
+};
+static_assert(sizeof(ChunkNode) == 12, "Incorrect size for type `ChunkNode`. Expected: 12");
 
 struct PlayersSelections
 {
@@ -2657,6 +2647,14 @@ struct _RTTICompleteObjectLocator
 };
 static_assert(sizeof(_RTTICompleteObjectLocator) == 20, "Incorrect size for type `_RTTICompleteObjectLocator`. Expected: 20");
 
+struct __declspec(align(4)) GlueRelated
+{
+  char *path;
+  int f1;
+  int f2;
+};
+static_assert(sizeof(GlueRelated) == 12, "Incorrect size for type `GlueRelated`. Expected: 12");
+
 enum SaiAccessabilityFlags : __int16
 {
   SAF_HighGround = 0x1FF9,
@@ -2984,6 +2982,14 @@ enum Order : unsigned __int8
   ORD_None = 0xA9,
   ORD_Unknown = 0xAA,
   ORD_MAX = 0xAB,
+};
+
+enum ForceFlags : unsigned __int8
+{
+  RANDOM_START_LOCATION = 0x1,
+  ALLIES = 0x2,
+  ALLIED_VICTORY = 0x4,
+  SHARED_VISION = 0x8,
 };
 
 enum WeaponType : unsigned __int8
@@ -3733,15 +3739,6 @@ struct Action
 };
 static_assert(sizeof(Action) == 32, "Incorrect size for type `Action`. Expected: 32");
 
-#pragma pack(push, 1)
-struct __declspec(align(2)) ChunkData
-{
-  ChunkListItem field1;
-  SectionData section_data;
-};
-#pragma pack(pop)
-static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
-
 struct CUnitWorker
 {
   CUnit *pPowerup;
@@ -4098,6 +4095,17 @@ struct RTTIBaseClassDescriptor
 #pragma pack(pop)
 static_assert(sizeof(RTTIBaseClassDescriptor) == 24, "Incorrect size for type `RTTIBaseClassDescriptor`. Expected: 24");
 
+struct __declspec(align(4)) MapChunks
+{
+  int data0;
+  u8 player_force[8];
+  u16 tbl_index_force_name[4];
+  ForceFlags force_flags[4];
+  int version;
+  int data7;
+};
+static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
+
 struct fontMemStruct
 {
   u32 tFontData;
@@ -4278,13 +4286,6 @@ struct SaiContour
   u8 unk_relation;
 };
 static_assert(sizeof(SaiContour) == 8, "Incorrect size for type `SaiContour`. Expected: 8");
-
-struct ChunkNode
-{
-  ChunkListItem *count;
-  ChunkListItem field2;
-};
-static_assert(sizeof(ChunkNode) == 12, "Incorrect size for type `ChunkNode`. Expected: 12");
 
 struct FontChar
 {
@@ -4480,6 +4481,23 @@ struct dialog_btn
 };
 static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
 
+struct Chunk
+{
+  Char4 ID;
+  unsigned int size;
+  byte data[];
+};
+static_assert(sizeof(Chunk) == 8, "Incorrect size for type `Chunk`. Expected: 8");
+
+struct __declspec(align(4)) SectionData
+{
+  byte *next_section;
+  byte *start_address;
+  Char4 chunk_name;
+  int size;
+};
+static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
+
 struct grpHead
 {
   u16 wFrames;
@@ -4488,6 +4506,12 @@ struct grpHead
   grpFrame frames[1];
 };
 static_assert(sizeof(grpHead) == 16, "Incorrect size for type `grpHead`. Expected: 16");
+
+struct __declspec(align(4)) Map
+{
+  MapChunks chunks;
+};
+static_assert(sizeof(Map) == 32, "Incorrect size for type `Map`. Expected: 32");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
@@ -4783,6 +4807,28 @@ struct __declspec(align(4)) CBullet
 };
 static_assert(sizeof(CBullet) == 112, "Incorrect size for type `CBullet`. Expected: 112");
 
+#pragma pack(push, 1)
+struct __declspec(align(2)) ChunkData
+{
+  ChunkData *previous;
+  ChunkData *next;
+  SectionData section_data;
+};
+#pragma pack(pop)
+static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
+
+union dialog_fields
+{
+  dialog_ctrl ctrl;
+  dialog_dlg dlg;
+  dialog_btn btn;
+  dialog_optn optn;
+  dialog_edit edit;
+  dialog_scroll scroll;
+  dialog_list list;
+};
+static_assert(sizeof(dialog_fields) == 36, "Incorrect size for type `dialog_fields`. Expected: 36");
+
 struct MapDirEntry
 {
   struct MapDirEntry *previous;
@@ -4817,18 +4863,6 @@ struct MapDirEntry
   int campaign_mission;
 };
 static_assert(sizeof(MapDirEntry) == 1348, "Incorrect size for type `MapDirEntry`. Expected: 1348");
-
-union dialog_fields
-{
-  dialog_ctrl ctrl;
-  dialog_dlg dlg;
-  dialog_btn btn;
-  dialog_optn optn;
-  dialog_edit edit;
-  dialog_scroll scroll;
-  dialog_list list;
-};
-static_assert(sizeof(dialog_fields) == 36, "Incorrect size for type `dialog_fields`. Expected: 36");
 
 struct __declspec(align(4)) CFlingy
 {

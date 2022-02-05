@@ -1053,7 +1053,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 	{
 		while (1)
 		{
-			v6 = a2->field2.previous;
+			v6 = a2->f2;
 			if (v6 > NULL)
 				break;
 		LABEL_8:
@@ -1065,7 +1065,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 		}
 		while (1)
 		{
-			if (v6->section_data.chunk_name == *(DWORD*)loader[v4].name)
+			if (v6->section_data.chunk_name.as_number == *(DWORD*)loader[v4].name)
 			{
 				if (loader[v4].func)
 				{
@@ -1073,7 +1073,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 						break;
 				}
 			}
-			v6 = v6->field1.previous;
+			v6 = v6->next;
 			if ((signed int)v6 <= 0)
 				goto LABEL_8;
 		}
@@ -1085,10 +1085,10 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 {
 	ChunkNode v8;
 
-	v8.field2.next = (ChunkData*)&v8.field2.next;
+	v8.f1 = (ChunkData*)&v8.f1;
 	v8.count = 0;
-	v8.field2.previous = (ChunkData*)~(unsigned int)&v8.field2;
-	sub_413670((int)chk_data, &v8, a2, ChunkNode_Constructor);
+	v8.f2 = (ChunkData*)~(unsigned int)&v8.f1;
+	sub_413670((Chunk*)chk_data, &v8, a2, ChunkNode_Constructor);
 	if (sub_4135C0(chk_section_loader, &v8, chk_section_loader_count))
 	{
 		if (sub_413550_(chk_section_loader, &v8, chk_section_loader_count, a4))
@@ -1108,18 +1108,18 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 	{
 		ChunkNode_Destructor(&v8);
 		_list_unlink((ListNode*)&v8);
-		if (v8.field2.next)
+		if (v8.f1)
 		{
-			if ((signed int)v8.field2.previous <= 0)
+			if ((signed int)v8.f2 <= 0)
 			{
-				*(_DWORD*)~(unsigned int)v8.field2.previous = (DWORD)v8.field2.next;
-				v8.field2.next->field1.previous = v8.field2.previous;
+				*(_DWORD*)~(unsigned int)v8.f2 = (DWORD)v8.f1;
+				v8.f1->next = v8.f2;
 				return 0;
 			}
-			*(ChunkData**)((char*)&v8.field2.previous->field1.next
-				+ (int)&v8.field2
-				- (int)v8.field2.next->field1.previous) = v8.field2.next;
-			v8.field2.next->field1.previous = v8.field2.previous;
+			*(ChunkData**)((char*)&v8.f2->previous
+				+ (int)&v8.f1
+				- (int)v8.f1->next) = v8.f1;
+			v8.f1->next = v8.f2;
 		}
 		return 0;
 	}
@@ -1446,11 +1446,9 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
 	memset(playerForce, 0, 8);
 	a4->data0 = 0;
-	a4->data1 = 0;
-	a4->data2 = 0;
-	a4->data3 = 0;
-	a4->data4 = 0;
-	a4->data5 = 0;
+	memset(a4->player_force, 0, sizeof(a4->player_force));
+	memset(a4->tbl_index_force_name, 0, sizeof(a4->tbl_index_force_name));
+	memset(a4->force_flags, 0, sizeof(a4->force_flags));
 	a4->version = 0;
 	a4->data7 = 0;
 	if (InReplay)
@@ -1487,7 +1485,7 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 		}
 	} while (v9 > 0);
 	sub_4A91E0();
-	sub_45AC10(&a4->data1);
+	sub_45AC10(a4->player_force);
 	updatePlayerForce();
 	strrchr(v8, '\\');
 	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
@@ -2198,11 +2196,11 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 	if (section_size != 2)
 		return 0;
 
-	if ((unsigned int)section_data->field1 + section_data->size > section_data->field0)
+	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return 0;
 	}
-	memcpy(&a3->version, section_data->field1, section_data->size);
+	memcpy(&a3->version, section_data->start_address, section_data->size);
 	return 1;
 }
 
@@ -2214,11 +2212,11 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 	{
 		return 0;
 	}
-	if (section_data->field1 + section_data->size > (byte*) section_data->field0)
+	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return 0;
 	}
-	memcpy(&map_size, section_data->field1, section_data->size);
+	memcpy(&map_size, section_data->start_address, section_data->size);
 	return 1;
 }
 
@@ -2228,10 +2226,10 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 {
 	if (section_size != 2)
 		return 0;
-	if ((unsigned int)section_data->field1 + section_data->size > section_data->field0)
+	if (section_data->start_address + section_data->size > section_data->next_section)
 		return 0;
 
-	memcpy_s(&CurrentTileSet, sizeof(CurrentTileSet), section_data->field1, section_size);
+	memcpy_s(&CurrentTileSet, sizeof(CurrentTileSet), section_data->start_address, section_size);
 	if (CurrentTileSet > Tileset::Jungle && !IsExpansion)
 		return 0;
 
@@ -2282,14 +2280,14 @@ FailStubPatch ChkLoader_VCOD_patch(ChkLoader_VCOD);
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
-bool __stdcall ChkLoader_MTXM_(SectionData *a1, int a2, MapChunks *a3)
+bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 {
-	if (a2 > MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID) || (int)(a1->field1 + a1->size) > a1->field0)
+	if (a2 > MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID) || section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return 0;
 	}
 
-	memcpy(MapTileArray, a1->field1, a1->size);
+	memcpy(MapTileArray, section_data->start_address, section_data->size);
 	sub_4BCEA0();
 
 	MegatileFlags* lowerLeftCournerTiles = &active_tiles[map_size.width * (map_size.height - 2)];
@@ -2341,12 +2339,12 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 		return 0;
 	}
 
-	if (section_data->field1 + section_data->size > (byte*) section_data->field0)
+	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return 0;
 	}
 
-	Thingy2Entry* entries = (Thingy2Entry*)section_data->field1;
+	Thingy2Entry* entries = (Thingy2Entry*)section_data->start_address;
 	for (int i = 0; i < section_size / 10; i++)
 	{
 		if (entries[i].draw_as_sprite)
