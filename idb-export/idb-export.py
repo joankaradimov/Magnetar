@@ -176,7 +176,7 @@ class Function:
                 print(self.arguments)
                 raise Exception('Argument `%s` of function `%s` used unknown register `%s`' % (arg_name, self.signature, register))
 
-        for touched_register in touched_registers:
+        for touched_register in sorted(touched_registers):
             result += '        xor ' + touched_register + ', ' + touched_register + '\n'
 
         for arg_name, register_name in register_args.items():
