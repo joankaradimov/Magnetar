@@ -2263,11 +2263,13 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	if (!hCHKData)
 		return 0;
 
-	if (!CopySectionData(section_data, hCHKData))
+	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		SMemFree(hCHKData, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1174, 0);
 		return 0;
 	}
+	memcpy(hCHKData, section_data->start_address, section_data->size);
+
 	int Hash_Chk = CHK_PerformVCODcheck(LobbyPlayers, 0x1B0u, (int) hCHKData, section_size);
 	int Hash_VCOD = CHK_PerformVCODcheck(LobbyPlayers, 0x1B0u, (int) VCOD_Locked, section_size);
 
@@ -2276,6 +2278,7 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 }
 
 FailStubPatch ChkLoader_VCOD_patch(ChkLoader_VCOD);
+FailStubPatch CopySectionData_patch(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
 
@@ -2381,20 +2384,16 @@ bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 	{
 		return 0;
 	}
-	ChunkUnitEntry* unit_entries = (ChunkUnitEntry*)SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 913, 0);
-	if (!unit_entries)
+	if (a1->start_address + a1->size > a1->next_section)
 	{
 		return 0;
 	}
-	if (!CopySectionData(a1, unit_entries))
-	{
-		SMemFree(unit_entries, "Starcraft\\SWAR\\lang\\maphdr.cpp", 916, 0);
-		return 0;
-	}
+
 	memset(startPositions, 0, 8 * sizeof(Position));
 
 	UnitRelated20* v18 = NULL;
 	UnitRelated20* v19 = NULL;
+	ChunkUnitEntry* unit_entries = (ChunkUnitEntry*)a1->start_address;
 	int unit_count = section_size / sizeof(ChunkUnitEntry);
 	for (int i = 0; i < unit_count; i++)
 	{
@@ -2420,7 +2419,6 @@ bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 
 	for (; v19; v19 = sub_4CBD30(v19));
 	for (; v18; v18 = sub_4CCF90(v18));
-	SMemFree(unit_entries, "Starcraft\\SWAR\\lang\\maphdr.cpp", 1003, 0);
 	for (CUnit* i = UnitNodeList_VisibleUnit_First; i; i = i->next)
 	{
 		UpdateUnitSpriteInfo(i);
