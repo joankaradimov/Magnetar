@@ -4160,6 +4160,34 @@ int __stdcall ContinueCampaign_(int a1)
 
 FunctionPatch ContinueCampaign_patch(ContinueCampaign, ContinueCampaign_);
 
+void BeginEpilog_()
+{
+	int v0 = dword_6CDFE0;
+	if (!dword_6CDFE0 && dword_6CDFE4)
+	{
+		if (directsound)
+		{
+			SFileDdaEnd(directsound);
+			SFileCloseFile(directsound);
+			directsound = 0;
+		}
+		byte_6D5BBC = 0;
+		byte_6D5BBD = 0;
+		bigvolume = 0;
+		dword_6CDFE0 = 50;
+	}
+	DLGMusicFade(9);
+	loadInitCreditsBIN(IsExpansion ? "epilogX" : "epilog");
+	if (gwGameMode == GAME_EPILOG)
+	{
+		loadInitCreditsBIN(IsExpansion ? "crdt_exp" : "crdt_lst");
+	}
+	stopMusic();
+	dword_6CDFE0 = v0;
+}
+
+FailStubPatch BeginEpilog_patch(BeginEpilog);
+
 void GameMainLoop_()
 {
 	HANDLE phFile;
@@ -4251,7 +4279,7 @@ void GameMainLoop_()
 					}
 					break;
 				case GAME_EPILOG:
-					BeginEpilog();
+					BeginEpilog_();
 					if (gwGameMode == GAME_EPILOG)
 					{
 						gwGameMode = GAME_GLUES;
