@@ -104,6 +104,38 @@ class Function:
 
     register_arg_pattern = re.compile(r'@<(\w+)>')
 
+    full_regsiter = {
+        'eax': 'eax',
+        'ax': 'eax',
+        'al': 'eax',
+        'ah': 'eax',
+
+        'ebx': 'ebx',
+        'bx': 'ebx',
+        'bl': 'ebx',
+        'bh': 'ebx',
+
+        'ecx': 'ecx',
+        'cx': 'ecx',
+        'cl': 'ecx',
+        'ch': 'ecx',
+
+        'edx': 'edx',
+        'dx': 'edx',
+        'dl': 'edx',
+        'dh': 'edx',
+
+        'esi': 'esi',
+        'si': 'esi',
+        'sil': 'esi',
+        'sih': 'esi',
+
+        'edi': 'edi',
+        'di': 'edi',
+        'dil': 'edi',
+        'dih': 'edi',
+    }
+
     def get_usercall_wrapper(self):
         result = self.signature
         arguments = map(str.strip, split_args(self.arguments))
@@ -135,6 +167,17 @@ class Function:
                 pass # TODO: handle this
             else:
                 stack_args.append(extract_arg_name(arg))
+
+        touched_registers = set()
+        for arg_name, register in register_args.items():
+            if register in self.full_regsiter:
+                touched_registers.add(self.full_regsiter[register])
+            else:
+                print(self.arguments)
+                raise Exception('Argument `%s` of function `%s` used unknown register `%s`' % (arg_name, self.signature, register))
+
+        for touched_register in touched_registers:
+            result += '        xor ' + touched_register + ', ' + touched_register + '\n'
 
         for arg_name, register_name in register_args.items():
             if register_name in {'sil', 'dil'}:
