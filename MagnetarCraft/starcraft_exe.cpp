@@ -14210,7 +14210,17 @@ FILE *verifyCharacterFile(CharacterData *a1, const char *player_name) {
 }
 DECL_FUNC(int (__stdcall*enumFiles)(int), enumFiles, 0x4a8ab0);
 DECL_FUNC(int(*sub_4A8B70)(), sub_4A8B70, 0x4a8b70);
-DECL_FUNC(int(*getPlayerForce)(), getPlayerForce, 0x4a8b90);
+int getPlayerForce(unsigned __int8 player_id) {
+    int address = 0x4a8b90;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov al, player_id
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4A8BB0)(), sub_4A8BB0, 0x4a8bb0);
 DECL_FUNC(int(*sub_4A8BC0)(), sub_4A8BC0, 0x4a8bc0);
 DECL_FUNC(int(*sub_4A8BD0)(), sub_4A8BD0, 0x4a8bd0);
@@ -16592,7 +16602,7 @@ CUnit *CHK_UNIT_ApplyBurrowFlag(CUnit *result, char a2, CUnit *a3) {
     }
     return result_;
 }
-DECL_FUNC(_DWORD *(__stdcall*sub_4CCF90)(UnitRelated20 *a1), sub_4CCF90, 0x4ccf90);
+DECL_FUNC(UnitRelated20 *(__stdcall*sub_4CCF90)(UnitRelated20 *a1), sub_4CCF90, 0x4ccf90);
 DECL_FUNC(int (__stdcall*sub_4CD070)(char, int), sub_4CD070, 0x4cd070);
 DECL_FUNC(int(*sub_4CD090)(), sub_4CD090, 0x4cd090);
 DECL_FUNC(bool (__stdcall*ChkLoader_MTXM)(SectionData *, int, MapChunks *), ChkLoader_MTXM, 0x4cd0b0);
@@ -22587,7 +22597,7 @@ RenderFunction* render_functions = (decltype(render_functions + 0)) 0x5125a0;
 int& g_ActiveNationID = * ((decltype(&g_ActiveNationID)) 0x512678);
 int& dword_51267C = * ((decltype(&dword_51267C)) 0x51267c);
 int& dword_512680 = * ((decltype(&dword_512680)) 0x512680);
-int& g_LocalNationID = * ((decltype(&g_LocalNationID)) 0x512684);
+unsigned __int8& g_LocalNationID = * ((decltype(&g_LocalNationID)) 0x512684);
 int& g_LocalHumanID = * ((decltype(&g_LocalHumanID)) 0x512688);
 int& playerID = * ((decltype(&playerID)) 0x51268c);
 char ** cinematics = (decltype(cinematics + 0)) 0x512690;
