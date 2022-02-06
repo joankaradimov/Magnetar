@@ -2378,6 +2378,35 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 
 FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
 
+bool IsCritter(UnitType unit_type)
+{
+	return unit_type == Critter_Rhynadon
+		|| unit_type == Critter_Bengalaas
+		|| unit_type == Critter_Ragnasaur
+		|| unit_type == Critter_Scantid
+		|| unit_type == Critter_Kakaru
+		|| unit_type == Critter_Ursadon;
+}
+
+bool IsResource(UnitType unit_type)
+{
+	return unit_type == Resource_Mineral_Field || unit_type == Resource_Mineral_Field_Type_2 || unit_type == Resource_Mineral_Field_Type_3 || unit_type == Resource_Vespene_Geyser;
+}
+
+bool unitIsNeutral(ChunkUnitEntry* unit_entry)
+{
+	if (gameData.got_file_values.starting_units == StartingUnits::SU_MAP_DEFAULT)
+	{
+		return true;
+	}
+	else
+	{
+		return unit_entry->player == 11 && (IsResource(unit_entry->unit_type) || IsCritter(unit_entry->unit_type));
+	}
+}
+
+FailStubPatch unitNotNeutral_patch(unitNotNeutral);
+
 bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 {
 	if (section_size % sizeof(ChunkUnitEntry))
@@ -2401,7 +2430,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 
 		if (!CHK_UNIT_StartLocationSub(startPositions, unit_entry)
 			&& (unit_entry->player >= 8u || Players[unit_entry->player].nType != PT_NotUsed && (Players[unit_entry->player].nType <= PT_Unknown0 || Players[unit_entry->player].nType == PT_Neutral))
-			&& !unitNotNeutral(unit_entry)
+			&& unitIsNeutral(unit_entry)
 			&& (gameData.got_file_values.victory_conditions
 				|| gameData.got_file_values.starting_units
 				|| gameData.got_file_values.tournament_mode
