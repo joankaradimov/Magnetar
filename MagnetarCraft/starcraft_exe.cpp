@@ -16536,7 +16536,7 @@ void sub_4CC610(CUnit *a1, char a2, int a3) {
         call address
     }
 }
-DECL_FUNC(bool (__stdcall*ChkLoader_STR)(SectionData *, int, MapChunks *), ChkLoader_STR, 0x4cc650);
+DECL_FUNC(bool (__stdcall*ChkLoader_STR)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_STR, 0x4cc650);
 int getFullMapChunk(char *filename, int *a3) {
     int address = 0x4cc6e0;
     int result_;
@@ -22753,8 +22753,8 @@ void *& off_5172F0 = * ((decltype(&off_5172F0)) 0x5172f0);
 void *& off_517358 = * ((decltype(&off_517358)) 0x517358);
 void *& off_5173D0 = * ((decltype(&off_5173D0)) 0x5173d0);
 void *& off_517998 = * ((decltype(&off_517998)) 0x517998);
-void *& off_5187EC = * ((decltype(&off_5187EC)) 0x5187ec);
-struct_4* stru_5187F0 = (decltype(stru_5187F0 + 0)) 0x5187f0;
+struct_4* stru_5187EC = (decltype(stru_5187EC + 0)) 0x5187ec;
+int (*&off_5193A4)() = *((decltype(&off_5193A4)) 0x5193a4);
 struct_3* stru_5193A8 = (decltype(stru_5193A8 + 0)) 0x5193a8;
 char ** statusscreen_infobtn = (decltype(statusscreen_infobtn + 0)) 0x519f40;
 __int16* word_519F5C = (decltype(word_519F5C + 0)) 0x519f5c;
@@ -23353,7 +23353,7 @@ MegatileFlags *& megatile_default_flags = * ((decltype(&megatile_default_flags))
 MiniTileMaps_type *& MiniTileFlags = * ((decltype(&MiniTileFlags)) 0x5993d0);
 StringTbl& MapStringTbl = * ((decltype(&MapStringTbl)) 0x5993d4);
 char* byte_5993D8 = (decltype(byte_5993D8 + 0)) 0x5993d8;
-int& amount = * ((decltype(&amount)) 0x5994d8);
+int& chk_string_section_size = * ((decltype(&chk_string_section_size)) 0x5994d8);
 int& dword_5994DC = * ((decltype(&dword_5994DC)) 0x5994dc);
 int* palette = (decltype(palette + 0)) 0x5994e0;
 __int16& megatileCount = * ((decltype(&megatileCount)) 0x5998e0);
