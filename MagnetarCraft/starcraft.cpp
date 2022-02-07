@@ -890,6 +890,7 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -914,26 +915,26 @@ ChkSectionLoader chk_loaders_lobby_[] = {
 	CreateChkSectionLoader("ERA ", ChkLoader_ERA_, 1),
 	CreateChkSectionLoader("OWNR", ChkLoader_OWNR, 1),
 	CreateChkSectionLoader("SIDE", ChkLoader_SIDE, 1),
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("SPRP", ChkLoader_SPRP, 1),
 	CreateChkSectionLoader("FORC", ChkLoader_FORC, 1),
 	CreateChkSectionLoader("VCOD", ChkLoader_VCOD_, 1),
 };
 
 ChkSectionLoader chk_loaders_briefing_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MBRF", ChkLoader_MBRF, 1),
 };
 
 ChkSectionLoader chk_loaders_melee_vanilla_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 };
 
 ChkSectionLoader chk_loaders_melee_broodwar_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
@@ -941,7 +942,7 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
@@ -963,7 +964,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 };
 
 ChkSectionLoader chk_loaders_ums_1_04_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
@@ -985,7 +986,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 };
 
 ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
-	CreateChkSectionLoader("STR ", ChkLoader_STR, 1),
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
@@ -2240,6 +2241,31 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 }
 
 FailStubPatch ChkLoader_ERA_patch(ChkLoader_ERA);
+
+bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (MapStringTbl.buffer)
+	{
+		SMemFree(MapStringTbl.buffer, "Starcraft\\SWAR\\lang\\maphdr.cpp", 356, 0);
+	}
+	MapStringTbl.buffer = (u16*)SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 357, 0);
+	if (MapStringTbl.buffer == NULL)
+	{
+		return false;
+	}
+
+	chk_string_section_size = section_size;
+	AppAddExit(freeCHKStringHandle);
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return false;
+	}
+
+	memcpy(MapStringTbl.buffer, section_data->start_address, section_data->size);
+	return true;
+}
+
+FailStubPatch ChkLoader_STR_patch(ChkLoader_STR);
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
