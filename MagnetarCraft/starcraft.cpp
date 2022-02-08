@@ -4583,7 +4583,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
 	char buff[260];
 
-	if (!InReplay && dword_6509B0 == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	if (!InReplay && active_trigger_player == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
 		const char* chk_string = get_chk_String(a1->wavString);
 		if (CampaignIndex == MD_none)

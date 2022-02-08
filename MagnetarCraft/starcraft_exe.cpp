@@ -10636,11 +10636,30 @@ DECL_FUNC(int(*sub_484EF0)(), sub_484EF0, 0x484ef0);
 DECL_FUNC(int(*sub_484F20)(), sub_484F20, 0x484f20);
 DECL_FUNC(int(*gameIsTeamGame)(), gameIsTeamGame, 0x484f50);
 DECL_FUNC(int (__stdcall*GetMainPlayerForTeam)(char), GetMainPlayerForTeam, 0x484f70);
-DECL_FUNC(int(*getOpenObsPlayerCount)(), getOpenObsPlayerCount, 0x484fc0);
-DECL_FUNC(int(*getNextActivePlayer)(), getNextActivePlayer, 0x484ff0);
+char getOpenObsPlayerCount(char a1) {
+    int address = 0x484fc0;
+    char result_;
+    __asm {
+        xor ebx, ebx
+        mov bl, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
+unsigned int getNextActivePlayer(unsigned int *a1) {
+    int address = 0x484ff0;
+    unsigned result_;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*getTeamString)(), getTeamString, 0x4850f0);
 DECL_FUNC(int(*sub_485130)(), sub_485130, 0x485130);
-DECL_FUNC(int(*sub_485150)(), sub_485150, 0x485150);
 DECL_FUNC(int(*randomizeTeamGame)(), randomizeTeamGame, 0x485160);
 DECL_FUNC(int(*sub_4855E0)(), sub_4855E0, 0x4855e0);
 DECL_FUNC(int(*illegalTeamCheck)(), illegalTeamCheck, 0x485710);
@@ -10958,7 +10977,14 @@ DECL_FUNC(int (__stdcall*ReadTriggerNodeData)(FILE *), ReadTriggerNodeData, 0x48
 DECL_FUNC(int (__stdcall*WriteTriggerData)(FILE *), WriteTriggerData, 0x4899d0);
 DECL_FUNC(int(*initializeTriggerInfo)(), initializeTriggerInfo, 0x489b30);
 DECL_FUNC(int(*UpdateCountdownTimer)(), UpdateCountdownTimer, 0x489c30);
-DECL_FUNC(int(*countdownTimersExecute)(), countdownTimersExecute, 0x489cc0);
+void countdownTimersExecute(unsigned int a2) {
+    int address = 0x489cc0;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+    }
+}
 DECL_FUNC(void(*keyPress_Escape)(), keyPress_Escape, 0x489da0);
 DECL_FUNC(void(*AnnouncePlayerEliminated)(), AnnouncePlayerEliminated, 0x489e80);
 DECL_FUNC(int(*ApplyPlayerLeftRoutine)(), ApplyPlayerLeftRoutine, 0x489fc0);
@@ -23165,7 +23191,7 @@ int& dword_57F1C0 = * ((decltype(&dword_57F1C0)) 0x57f1c0);
 int& dword_57F1C4 = * ((decltype(&dword_57F1C4)) 0x57f1c4);
 char* byte_57F1CB = (decltype(byte_57F1CB + 0)) 0x57f1cb;
 int& dword_57F1CC = * ((decltype(&dword_57F1CC)) 0x57f1cc);
-int& MoveToTile = * ((decltype(&MoveToTile)) 0x57f1d0);
+Position& MoveToTile = * ((decltype(&MoveToTile)) 0x57f1d0);
 MapSize& map_size = * ((decltype(&map_size)) 0x57f1d4);
 __int16& unignored_player_flags = * ((decltype(&unignored_player_flags)) 0x57f1d8);
 __int16& SendTextFilter = * ((decltype(&SendTextFilter)) 0x57f1da);
@@ -23649,11 +23675,13 @@ CBullet *& first_free_bullet = * ((decltype(&first_free_bullet)) 0x64eed8);
 CBullet *& last_free_bullet = * ((decltype(&last_free_bullet)) 0x64eedc);
 CUnit& target = * ((decltype(&target)) 0x64eee0);
 __int16& word_650970 = * ((decltype(&word_650970)) 0x650970);
+char* byte_650974 = (decltype(byte_650974 + 0)) 0x650974;
 int* dword_650980 = (decltype(dword_650980 + 0)) 0x650980;
 __int16& word_6509A0 = * ((decltype(&word_6509A0)) 0x6509a0);
 char* active_players = (decltype(active_players + 0)) 0x6509a4;
 TriggerListEntry *& dword_6509AC = * ((decltype(&dword_6509AC)) 0x6509ac);
-int& dword_6509B0 = * ((decltype(&dword_6509B0)) 0x6509b0);
+int& active_trigger_player = * ((decltype(&active_trigger_player)) 0x6509b0);
+char& byte_6509B4 = * ((decltype(&byte_6509B4)) 0x6509b4);
 _BYTE* byte_6509B8 = (decltype(byte_6509B8 + 0)) 0x6509b8;
 int& IS_GAME_PAUSED = * ((decltype(&IS_GAME_PAUSED)) 0x6509c4);
 __int16& word_6509CC = * ((decltype(&word_6509CC)) 0x6509cc);
