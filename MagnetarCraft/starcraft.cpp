@@ -4600,3 +4600,120 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 }
 
 FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
+
+void ExecuteTriggerActions_(TriggerListEntry* a1)
+{
+	a1->container.dwExecutionFlags = a1->container.dwExecutionFlags | 1;
+	if (a1->container.dwExecutionFlags & 2)
+	{
+		byte_650974[active_trigger_player] = 4;
+	}
+	while (1)
+	{
+		if (a1->container.bCurrentActionIndex >= 64)
+		{
+			break;
+		}
+		Action* action = a1->container.actions + a1->container.bCurrentActionIndex;
+		if ((action->flags & 2) == 0)
+		{
+			if (action->action == 0)
+			{
+				a1->container.bCurrentActionIndex = 64;
+				break;
+			}
+			if (ActionTable[action->action](action) == 0)
+			{
+				break;
+			}
+		}
+		a1->container.bCurrentActionIndex += 1;
+	}
+	if (a1->container.bCurrentActionIndex >= 64)
+	{
+		if ((a1->container.dwExecutionFlags & 0x20) != 0)
+		{
+			ActionTable[6](0);
+		}
+		if (a1->container.dwExecutionFlags & 4)
+		{
+			a1->container.dwExecutionFlags = a1->container.dwExecutionFlags & ~0x51u;
+			a1->container.bCurrentActionIndex = 0;
+		}
+		else
+		{
+			a1->container.dwExecutionFlags = a1->container.dwExecutionFlags | 8;
+		}
+	}
+}
+
+FailStubPatch ExecuteTriggerActions_patch(ExecuteTriggerActions);
+
+void executeGameTrigger_(TriggerList* a1)
+{
+	if (a1->begin <= 0)
+	{
+		return;
+	}
+
+	TriggerListEntry* entry = a1->begin;
+
+	for (TriggerListEntry* entry = a1->begin; (int)entry > 0; entry = entry->next)
+	{
+		if ((entry->container.dwExecutionFlags & 8) == 0)
+		{
+			dword_6509AC = entry;
+			if (entry->container.dwExecutionFlags & 1)
+			{
+				ExecuteTriggerActions_(entry);
+			}
+			else if (ExecuteTriggerConditions(entry))
+			{
+				entry->container.bCurrentActionIndex = 0;
+				ExecuteTriggerActions_(entry);
+			}
+		}
+	}
+}
+
+FailStubPatch executeGameTrigger_patch(executeGameTrigger);
+
+void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
+{
+	if (!IS_GAME_PAUSED || byte_6509B4)
+	{
+		load_endmission();
+		countdownTimersExecute(dwMillisecondsPerFrame);
+		if (word_6509A0-- == 0)
+		{
+			memset(byte_650974, 0, 8);
+			word_6509A0 = 30;
+			byte_685180 = 0;
+			bool trigger_has_executed = false;
+			unsigned player_related = -1;
+
+			while (true)
+			{
+				active_trigger_player = getNextActivePlayer(&player_related);
+
+				if (active_trigger_player >= 8)
+				{
+					break;
+				}
+
+				if (stru_51A218.triggers[active_trigger_player].begin > 0)
+				{
+					executeGameTrigger_(&stru_51A218.triggers[active_trigger_player]);
+					trigger_has_executed = true;
+				}
+			}
+
+			if (trigger_has_executed)
+			{
+				endgameCheck();
+			}
+		}
+	}
+}
+
+FunctionPatch BWFXN_ExecuteGameTriggers_patch(BWFXN_ExecuteGameTriggers, BWFXN_ExecuteGameTriggers_);
