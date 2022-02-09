@@ -1879,10 +1879,10 @@ void DestroyGame_()
 		SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
 		SAIPathing = 0;
 	}
-	if (dword_68C104)
+	if (aiscript_bin_data)
 	{
-		SMemFree(dword_68C104, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1546, 0);
-		dword_68C104 = 0;
+		SMemFree(aiscript_bin_data, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1546, 0);
+		aiscript_bin_data = 0;
 	}
 	if (dword_68C108)
 	{
@@ -3476,7 +3476,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		{
 			active_cinematic = active_campaign_menu_entry->cinematic;
 			CampaignIndex = active_campaign_menu_entry->next_mission;
-			byte_57F246[0] = 0;
+			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
 		}
 		else
@@ -4205,10 +4205,10 @@ int __stdcall ContinueCampaign_(int a1)
 	{
 		return 0;
 	}
-	if (byte_57F246[0])
+	if (next_scenario[0])
 	{
-		active_campaign_menu_entry = sub_4DBDA0_(byte_57F246);
-		byte_57F246[0] = 0;
+		active_campaign_menu_entry = sub_4DBDA0_(next_scenario);
+		next_scenario[0] = 0;
 	}
 	else
 	{

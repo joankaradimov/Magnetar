@@ -582,7 +582,17 @@ char toggleUnitPathingProperties(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*resetAIThreadData)(), resetAIThreadData, 0x403130);
+_DWORD *resetAIThreadData(_DWORD *a2) {
+    int address = 0x403130;
+    _DWORD * result_;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*packAIThreadData)(), packAIThreadData, 0x403230);
 DECL_FUNC(int(*unpackAIThreadData)(), unpackAIThreadData, 0x403310);
 DECL_FUNC(int(*AI_Stop)(), AI_Stop, 0x403380);
@@ -6472,8 +6482,33 @@ void sub_45AE20(int a1) {
         call address
     }
 }
-DECL_FUNC(int(*isAIScriptNameValid)(), isAIScriptNameValid, 0x45aea0);
-DECL_FUNC(int (__stdcall*AI_RunAIScript)(int, int, int), AI_RunAIScript, 0x45aef0);
+BOOL isAIScriptNameValid(int player, int a2) {
+    int address = 0x45aea0;
+    BOOL result_;
+    __asm {
+        xor edx, edx
+        xor esi, esi
+        mov edx, player
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int *AI_RunAIScript(Location *a1, int a2, int a3, int a4) {
+    int address = 0x45aef0;
+    int * result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*AISCRIPT_Get_u32)(), AISCRIPT_Get_u32, 0x45aff0);
 DECL_FUNC(int(*AISCRIPT_Get_u16)(), AISCRIPT_Get_u16, 0x45b010);
 DECL_FUNC(int(*AISCRIPT_Get_u8)(), AISCRIPT_Get_u8, 0x45b030);
@@ -6482,7 +6517,19 @@ DECL_FUNC(int(*nullsub_24)(), nullsub_24, 0x45b070);
 DECL_FUNC(int(*sub_45B080)(), sub_45B080, 0x45b080);
 DECL_FUNC(int(*AI_GetNuclearSilo)(), AI_GetNuclearSilo, 0x45b0d0);
 DECL_FUNC(int (__stdcall*getStandardUnitCount)(char), getStandardUnitCount, 0x45b100);
-DECL_FUNC(int(*parseAIScriptName)(), parseAIScriptName, 0x45b170);
+int ParseAIScriptName(int a1, int *a2) {
+    int address = 0x45b170;
+    int result_;
+    __asm {
+        xor edx, edx
+        xor esi, esi
+        mov edx, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_45B1D0)(int), sub_45B1D0, 0x45b1d0);
 DECL_FUNC(int(*AI_FindSuitableUnit)(), AI_FindSuitableUnit, 0x45b210);
 DECL_FUNC(int (__stdcall*AI_GuardResources)(int, int), AI_GuardResources, 0x45b260);
@@ -16104,9 +16151,9 @@ DECL_FUNC(int (__fastcall*TriggerAction_DisplayTextMessage)(Action *), TriggerAc
 DECL_FUNC(int (__fastcall*TriggerAction_UnpauseGame)(Action *), TriggerAction_UnpauseGame, 0x4c5810);
 DECL_FUNC(int (__stdcall*SetAlliance_maybe)(int), SetAlliance_maybe, 0x4c58f0);
 DECL_FUNC(signed int (__stdcall*ModifyUnitShields)(CUnit *a1, int a2), ModifyUnitShields, 0x4c5a20);
-DECL_FUNC(int (__stdcall*SubtractDeaths)(int), SubtractDeaths, 0x4c5a80);
-DECL_FUNC(int (__stdcall*AddDeaths)(int), AddDeaths, 0x4c5c60);
-DECL_FUNC(int (__stdcall*SetDeaths)(int), SetDeaths, 0x4c5dd0);
+DECL_FUNC(int (__fastcall*SubtractDeaths)(unsigned int player, unsigned __int16 a2, int a3), SubtractDeaths, 0x4c5a80);
+DECL_FUNC(int (__fastcall*AddDeaths)(unsigned int player, unsigned __int16 a2, int a3), AddDeaths, 0x4c5c60);
+DECL_FUNC(int (__fastcall*SetDeaths)(unsigned int player, unsigned __int16 a2, int a3), SetDeaths, 0x4c5dd0);
 DECL_FUNC(int (__fastcall*SubtractScore)(unsigned int a1, __int16 a2, int amount), SubtractScore, 0x4c5f20);
 DECL_FUNC(int (__fastcall*AddScore)(unsigned int a1, __int16 a2, int amount), AddScore, 0x4c61e0);
 DECL_FUNC(int (__stdcall*SetScore)(int), SetScore, 0x4c6400);
@@ -16173,7 +16220,7 @@ signed int sub_4C82C0(int a1, CUnit *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*DestroyUnit_maybe)(int player_id, __int16 a2, int a3, int a4), DestroyUnit_maybe, 0x4c8570);
+DECL_FUNC(int (__fastcall*DestroyUnit_maybe)(int player_id, __int16 a2, int location, int a4), DestroyUnit_maybe, 0x4c8570);
 DECL_FUNC(int (__fastcall*TriggerAction_SetAllianceStatus)(Action *), TriggerAction_SetAllianceStatus, 0x4c86d0);
 DECL_FUNC(int (__fastcall*moveUnitCB)(CUnit *unit, int a2), moveUnitCB, 0x4c8700);
 DECL_FUNC(int (__fastcall*TriggerAction_RemoveUnitAtLocation)(Action *), TriggerAction_RemoveUnitAtLocation, 0x4c8870);
@@ -23212,7 +23259,7 @@ int& dword_57F238 = * ((decltype(&dword_57F238)) 0x57f238);
 DWORD& ElapsedTimeFrames = * ((decltype(&ElapsedTimeFrames)) 0x57f23c);
 int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
-char* byte_57F246 = (decltype(byte_57F246 + 0)) 0x57f246;
+char* next_scenario = (decltype(next_scenario + 0)) 0x57f246;
 char& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
 int& dword_57F267 = * ((decltype(&dword_57F267)) 0x57f267);
 int& dword_57F26B = * ((decltype(&dword_57F26B)) 0x57f26b);
@@ -24024,9 +24071,10 @@ int& dword_68AC94 = * ((decltype(&dword_68AC94)) 0x68ac94);
 dialog *& dword_68AC98 = * ((decltype(&dword_68AC98)) 0x68ac98);
 char& byte_68AC9C = * ((decltype(&byte_68AC9C)) 0x68ac9c);
 int& dword_68ACA0 = * ((decltype(&dword_68ACA0)) 0x68aca0);
+_DWORD& dword_68ACA8 = * ((decltype(&dword_68ACA8)) 0x68aca8);
 int& dword_68C0FC = * ((decltype(&dword_68C0FC)) 0x68c0fc);
 int& dword_68C100 = * ((decltype(&dword_68C100)) 0x68c100);
-void *& dword_68C104 = * ((decltype(&dword_68C104)) 0x68c104);
+void *& aiscript_bin_data = * ((decltype(&aiscript_bin_data)) 0x68c104);
 void *& dword_68C108 = * ((decltype(&dword_68C108)) 0x68c108);
 char* byte_68C10C = (decltype(byte_68C10C + 0)) 0x68c10c;
 dialog *& dword_68C140 = * ((decltype(&dword_68C140)) 0x68c140);
