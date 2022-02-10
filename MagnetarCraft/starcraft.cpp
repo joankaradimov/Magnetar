@@ -2231,7 +2231,7 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	if (section_data->start_address + section_data->size > section_data->next_section)
 		return 0;
 
-	memcpy_s(&CurrentTileSet, sizeof(CurrentTileSet), section_data->start_address, section_size);
+	CurrentTileSet = *(Tileset*)section_data->start_address;
 	if (CurrentTileSet > Tileset::Jungle && !IsExpansion)
 		return 0;
 
