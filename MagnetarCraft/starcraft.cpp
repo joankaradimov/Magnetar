@@ -3539,13 +3539,13 @@ bool sub_4B5180_(dialog* a1)
 {
 	if (LastControlID == 6)
 	{
-		if (!sub_4B5110_(2))
+		if (!sub_4B5110_(Race::RACE_Protoss))
 			return 1;
 		LastControlID = 6;
 	}
 	else if (LastControlID == 7)
 	{
-		if (sub_4B5110_(1))
+		if (sub_4B5110_(Race::RACE_Terran))
 		{
 			LastControlID = 7;
 			return DLG_SwishOut(a1);
@@ -3554,7 +3554,7 @@ bool sub_4B5180_(dialog* a1)
 	}
 	else if (LastControlID == 8)
 	{
-		if (sub_4B5110_(0))
+		if (sub_4B5110_(Race::RACE_Zerg))
 		{
 			LastControlID = 8;
 			return DLG_SwishOut(a1);
