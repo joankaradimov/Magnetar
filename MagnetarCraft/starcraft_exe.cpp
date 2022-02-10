@@ -3315,7 +3315,7 @@ DECL_FUNC(int(*getAllUnitsInBounds)(), getAllUnitsInBounds, 0x42ff80);
 DECL_FUNC(int (__stdcall*getUnitsAtPoint)(int), getUnitsAtPoint, 0x4300e0);
 DECL_FUNC(s32 *(__thiscall*UnitRelManyFinderUMScoutPath)(CUnit *this_, __int16 a2, __int16 a3), UnitRelManyFinderUMScoutPath, 0x430190);
 DECL_FUNC(int (__stdcall*unkUnitRelManyFinderEx)(int), unkUnitRelManyFinderEx, 0x4304d0);
-DECL_FUNC(int (__stdcall*FindAllUnits)(int), FindAllUnits, 0x4308a0);
+DECL_FUNC(int (__stdcall*FindAllUnits)(Box16 *a1), FindAllUnits, 0x4308a0);
 DECL_FUNC(int (__stdcall*findAllUnitsInBoundsUsing)(int, int), findAllUnitsInBoundsUsing, 0x430b00);
 DECL_FUNC(int (__stdcall*getAllUnitsInRegion)(__int16), getAllUnitsInRegion, 0x430b50);
 DECL_FUNC(int (__stdcall*getClosestReachableUnit)(CUnit *a1, signed __int16 a2, __int16 a3), getClosestReachableUnit, 0x430be0);
@@ -4545,7 +4545,19 @@ void GetStaticMinRange(CUnit *a1) {
     }
 }
 DECL_FUNC(CUnit *(__stdcall*GetAttackTargetFromPriority)(CUnit *a1, int a2), GetAttackTargetFromPriority, 0x4405e0);
-DECL_FUNC(int(*sub_440720)(), sub_440720, 0x440720);
+CUnit *sub_440720(Box16 *a1, unsigned __int16 a2) {
+    int address = 0x440720;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov cx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 CUnit *sub_440740(CUnit *a1) {
     int address = 0x440740;
     CUnit * result_;
@@ -6729,7 +6741,21 @@ DECL_FUNC(int(*sub_45EB80)(), sub_45EB80, 0x45eb80);
 DECL_FUNC(int(*updateSelectedUnitPortrait)(), updateSelectedUnitPortrait, 0x45ebc0);
 DECL_FUNC(int (__thiscall*sub_45EC40)(dialog *a1), sub_45EC40, 0x45ec40);
 DECL_FUNC(int(*sub_45ED90)(), sub_45ED90, 0x45ed90);
-DECL_FUNC(int (__stdcall*DisplayTalkingPortrait_maybe)(__int16, int), DisplayTalkingPortrait_maybe, 0x45edd0);
+signed int DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_type, int y) {
+    int address = 0x45edd0;
+    signed result_;
+    __asm {
+        xor edi, edi
+        xor esi, esi
+        mov edi, x
+        mov esi, a2
+        push dword ptr y
+        push dword ptr unit_type
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(bool (__fastcall*statPortBtnInteract)(dialog *dlg, dlgEvent *evt), statPortBtnInteract, 0x45ee90);
 DECL_FUNC(int(*sub_45EF50)(), sub_45EF50, 0x45ef50);
 int *DoUnitEventNotify(CUnit *a1, int a2, char a3, int a4, int *a5, unsigned int a6) {
@@ -8576,7 +8602,7 @@ void sub_46F5B0(int esi0, int a1, int a2, CUnit *a3, signed int a4) {
     }
 }
 DECL_FUNC(int (__stdcall*UI_doSelectUnits_IfAltNotHeld)(int, int), UI_doSelectUnits_IfAltNotHeld, 0x46fa00);
-DECL_FUNC(void (__stdcall*getSelectedUnitsInBox)(int a1), getSelectedUnitsInBox, 0x46fa40);
+DECL_FUNC(void (__stdcall*getSelectedUnitsInBox)(Box16 *a1), getSelectedUnitsInBox, 0x46fa40);
 DECL_FUNC(void (__fastcall*getSelectedUnitsAtPoint)(int a1, int a2), getSelectedUnitsAtPoint, 0x46fb40);
 DECL_FUNC(void (__thiscall*input_dragSelect_MouseBtnUp)(dlgEvent *), input_dragSelect_MouseBtnUp, 0x46fea0);
 DECL_FUNC(void (__thiscall*input_Game_LeftMouseClick)(dlgEvent *), input_Game_LeftMouseClick, 0x46ff70);
@@ -9765,9 +9791,9 @@ void DoWeaponHit(CUnit *target, CUnit *attacker, int show_attacker) {
         call address
     }
 }
-char attackOverlayAndNotify(CUnit *a1, CUnit *a2, unsigned __int8 weapon_type, char a4) {
+int attackOverlayAndNotify(CUnit *a1, CUnit *a2, unsigned __int8 weapon_type, char a4) {
     int address = 0x479730;
-    char result_;
+    int result_;
     __asm {
         xor eax, eax
         xor esi, esi
@@ -9776,7 +9802,7 @@ char attackOverlayAndNotify(CUnit *a1, CUnit *a2, unsigned __int8 weapon_type, c
         push dword ptr a4
         push dword ptr weapon_type
         call address
-        mov result_, al
+        mov result_, eax
     }
     return result_;
 }
@@ -9811,8 +9837,9 @@ unsigned int DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_ty
     }
     return result_;
 }
-void WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
+int WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
     int address = 0x479ae0;
+    int result_;
     __asm {
         xor eax, eax
         xor edx, edx
@@ -9820,7 +9847,9 @@ void WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
         mov eax, target
         push dword ptr dmg_divide
         call address
+        mov result_, eax
     }
+    return result_;
 }
 void ISCRIPT_AttackMelee(CUnit *a1) {
     int address = 0x479b40;
@@ -16149,17 +16178,17 @@ DECL_FUNC(int (__fastcall*TriggerAction_RunAiScriptAtLocation)(Action *), Trigge
 DECL_FUNC(int (__fastcall*TriggerAction_RunAiScript)(Action *), TriggerAction_RunAiScript, 0x4c5720);
 DECL_FUNC(int (__fastcall*TriggerAction_DisplayTextMessage)(Action *), TriggerAction_DisplayTextMessage, 0x4c5770);
 DECL_FUNC(int (__fastcall*TriggerAction_UnpauseGame)(Action *), TriggerAction_UnpauseGame, 0x4c5810);
-DECL_FUNC(int (__stdcall*SetAlliance_maybe)(int), SetAlliance_maybe, 0x4c58f0);
+DECL_FUNC(int (__fastcall*SetAlliance_maybe)(unsigned int player, __int16 a2, int a3), SetAlliance_maybe, 0x4c58f0);
 DECL_FUNC(signed int (__stdcall*ModifyUnitShields)(CUnit *a1, int a2), ModifyUnitShields, 0x4c5a20);
 DECL_FUNC(int (__fastcall*SubtractDeaths)(unsigned int player, unsigned __int16 a2, int a3), SubtractDeaths, 0x4c5a80);
 DECL_FUNC(int (__fastcall*AddDeaths)(unsigned int player, unsigned __int16 a2, int a3), AddDeaths, 0x4c5c60);
 DECL_FUNC(int (__fastcall*SetDeaths)(unsigned int player, unsigned __int16 a2, int a3), SetDeaths, 0x4c5dd0);
-DECL_FUNC(int (__fastcall*SubtractScore)(unsigned int a1, __int16 a2, int amount), SubtractScore, 0x4c5f20);
-DECL_FUNC(int (__fastcall*AddScore)(unsigned int a1, __int16 a2, int amount), AddScore, 0x4c61e0);
-DECL_FUNC(int (__stdcall*SetScore)(int), SetScore, 0x4c6400);
-DECL_FUNC(int (__fastcall*SubtractResource)(unsigned int a1, __int16 a2, int amount), SubtractResource, 0x4c65c0);
-DECL_FUNC(int (__fastcall*AddResource)(unsigned int a1, __int16 a2, int amount), AddResource, 0x4c6700);
-DECL_FUNC(int (__fastcall*SetResource)(unsigned int a1, __int16 a2, int amount), SetResource, 0x4c6830);
+DECL_FUNC(int (__fastcall*SubtractScore)(unsigned int player, __int16 a2, int amount), SubtractScore, 0x4c5f20);
+DECL_FUNC(int (__fastcall*AddScore)(unsigned int player, __int16 a2, int amount), AddScore, 0x4c61e0);
+DECL_FUNC(int (__fastcall*SetScore)(unsigned int player, __int16 a2, int a3), SetScore, 0x4c6400);
+DECL_FUNC(int (__fastcall*SubtractResource)(unsigned int player, __int16 a2, int amount), SubtractResource, 0x4c65c0);
+DECL_FUNC(int (__fastcall*AddResource)(unsigned int player, __int16 a2, int amount), AddResource, 0x4c6700);
+DECL_FUNC(int (__fastcall*SetResource)(unsigned int player, __int16 a2, int amount), SetResource, 0x4c6830);
 DECL_FUNC(int (__fastcall*TriggerAction_UnmuteUnitSpeech)(Action *), TriggerAction_UnmuteUnitSpeech, 0x4c6940);
 DECL_FUNC(int (__fastcall*TriggerAction_MuteUnitSpeech)(Action *), TriggerAction_MuteUnitSpeech, 0x4c6990);
 DECL_FUNC(int (__fastcall*FindUnitType)(CUnit *a1, int a2), FindUnitType, 0x4c69c0);
@@ -16174,7 +16203,19 @@ DECL_FUNC(int (__fastcall*TriggerAction_ModifyUnitResourceAmount)(Action *), Tri
 DECL_FUNC(int (__fastcall*TriggerAction_ModifyUnitShieldPoints)(Action *), TriggerAction_ModifyUnitShieldPoints, 0x4c7170);
 DECL_FUNC(int (__fastcall*TriggerAction_ModifyUnitEnergy)(Action *), TriggerAction_ModifyUnitEnergy, 0x4c7230);
 DECL_FUNC(int (__fastcall*TriggerAction_SetInvincibility)(Action *), TriggerAction_SetInvincibility, 0x4c72f0);
-DECL_FUNC(int (__stdcall*getUnitForDoodadState)(__int16, int), getUnitForDoodadState, 0x4c7380);
+CUnit *getUnitForDoodadState(unsigned __int8 location, __int16 a2, int a3) {
+    int address = 0x4c7380;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        mov al, location
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4C7400)(), sub_4C7400, 0x4c7400);
 DECL_FUNC(int (__fastcall*TriggerAction_MoveLocation)(Action *), TriggerAction_MoveLocation, 0x4c7460);
 DECL_FUNC(int (__fastcall*TriggerAction_TalkingPortrait)(Action *), TriggerAction_TalkingPortrait, 0x4c7570);
@@ -16205,7 +16246,21 @@ char trigMoveUnit(CUnit *unit, __int16 pos_x, int pos_y) {
 DECL_FUNC(int (__stdcall*TriggerKillAllUnits)(int, int, int), TriggerKillAllUnits, 0x4c7d80);
 DECL_FUNC(int(*killUnitsAtLocationProc)(), killUnitsAtLocationProc, 0x4c7e20);
 DECL_FUNC(signed int (__stdcall*GiveUnits)(CUnit *a1, int a2), GiveUnits, 0x4c8040);
-DECL_FUNC(int (__stdcall*TriggerKillUnitsAtLocation)(int, __int16, int, int), TriggerKillUnitsAtLocation, 0x4c8170);
+CUnit *TriggerKillUnitsAtLocation(int location, int a2, __int16 a3, int a4, int a5) {
+    int address = 0x4c8170;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        mov eax, location
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__fastcall*TriggerAction_GiveUnitsToPlayer)(Action *), TriggerAction_GiveUnitsToPlayer, 0x4c8200);
 signed int sub_4C82C0(int a1, CUnit *a2) {
     int address = 0x4c82c0;
@@ -19332,9 +19387,9 @@ CUnit *AI_BestUnit_InBox(__int16 a1, CUnit *a2, int (__fastcall *a3)(CUnit *, CU
     }
     return result_;
 }
-int ModifyUnit_maybe(int a1, CUnit *a2, int (__fastcall *a3)(_DWORD, _DWORD)) {
+CUnit *ModifyUnit_maybe(Box16 *a1, CUnit *a2, int (__fastcall *a3)(_DWORD, _DWORD)) {
     int address = 0x4e8830;
-    int result_;
+    CUnit * result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
@@ -23723,6 +23778,7 @@ CBullet *& last_free_bullet = * ((decltype(&last_free_bullet)) 0x64eedc);
 CUnit& target = * ((decltype(&target)) 0x64eee0);
 __int16& word_650970 = * ((decltype(&word_650970)) 0x650970);
 char* byte_650974 = (decltype(byte_650974 + 0)) 0x650974;
+__int16& word_65097C = * ((decltype(&word_65097C)) 0x65097c);
 int* dword_650980 = (decltype(dword_650980 + 0)) 0x650980;
 __int16& word_6509A0 = * ((decltype(&word_6509A0)) 0x6509a0);
 char* active_players = (decltype(active_players + 0)) 0x6509a4;
@@ -24001,8 +24057,7 @@ int& dword_66FF40 = * ((decltype(&dword_66FF40)) 0x66ff40);
 int& dword_66FF44 = * ((decltype(&dword_66FF44)) 0x66ff44);
 int& dword_66FF48 = * ((decltype(&dword_66FF48)) 0x66ff48);
 int& dword_66FF4C = * ((decltype(&dword_66FF4C)) 0x66ff4c);
-int& dword_66FF50 = * ((decltype(&dword_66FF50)) 0x66ff50);
-int& dword_66FF54 = * ((decltype(&dword_66FF54)) 0x66ff54);
+Box16& stru_66FF50 = * ((decltype(&stru_66FF50)) 0x66ff50);
 int& dword_66FF58 = * ((decltype(&dword_66FF58)) 0x66ff58);
 char& byte_66FF5C = * ((decltype(&byte_66FF5C)) 0x66ff5c);
 int& dword_66FF60 = * ((decltype(&dword_66FF60)) 0x66ff60);
