@@ -2404,6 +2404,10 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 
 FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
 
+const int SCREEN_WDITH = 640;
+const int SCREEN_HEIGHT = 480;
+const int INTERFACE_HEIGHT = 96;
+
 int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 {
 	if (a2->unit_type != Special_Start_Location)
@@ -2415,8 +2419,8 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->player == g_LocalNationID;
 	if (v3)
 	{
-		MoveToTile.x = (a2->position.x / 32 - 10) & ((a2->position.x / 32 - 10 < 0) - 1);
-		MoveToTile.y = a2->position.y / 32 < 6 ? 0 : a2->position.y / 32 - 6;
+		MoveToTile.x = max(a2->position.x - SCREEN_WDITH / 2, 0) / 32;
+		MoveToTile.y = max(a2->position.y - (SCREEN_HEIGHT - INTERFACE_HEIGHT) / 2, 0) / 32;
 	}
 	return 1;
 }
