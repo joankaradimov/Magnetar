@@ -892,7 +892,9 @@ bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapC
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_THGY(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_UNIT_beta(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
 
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
@@ -926,6 +928,13 @@ ChkSectionLoader chk_loaders_briefing_[] = {
 	CreateChkSectionLoader("MBRF", ChkLoader_MBRF, 1),
 };
 
+ChkSectionLoader chk_loaders_melee_beta[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
+	CreateChkSectionLoader("THGY", ChkLoader_THGY, 1),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_beta, 1),
+};
+
 ChkSectionLoader chk_loaders_melee_vanilla_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
@@ -939,6 +948,28 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+};
+
+ChkSectionLoader chk_loaders_ums_beta[] = {
+	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
+	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
+	CreateChkSectionLoader("THGY", ChkLoader_THGY, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
+	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
+	CreateChkSectionLoader("TECS", ChkLoader_TECS, 1),
+	CreateChkSectionLoader("PUNI", ChkLoader_PUNI, 1),
+	CreateChkSectionLoader("UPGR", ChkLoader_UPGR, 1),
+	CreateChkSectionLoader("PTEC", ChkLoader_PTEC, 1),
+	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 0),
+	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 0),
+	CreateChkSectionLoader("TECx", ChkLoader_TECx, 0),
+	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
+	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
+	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_beta, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
+	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
@@ -1004,6 +1035,17 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 };
 
 ChkLoader chk_loaders_[] = {
+	// 17 - Warcraft 2: Tides of Darkness
+	// 19 - Warcraft 2: Beyond the Dark Portal
+	{
+		// Loaders for Starcraft Beta
+		47,
+		chk_loaders_lobby_, _countof(chk_loaders_lobby_),
+		chk_loaders_briefing_, _countof(chk_loaders_briefing_),
+		chk_loaders_melee_beta, _countof(chk_loaders_melee_beta),
+		chk_loaders_ums_beta, _countof(chk_loaders_ums_beta),
+		0
+	},
 	{
 		// Loaders for Starcraft 1.00
 		59,
@@ -1021,6 +1063,15 @@ ChkLoader chk_loaders_[] = {
 		chk_loaders_melee_vanilla_, _countof(chk_loaders_melee_vanilla_),
 		chk_loaders_ums_1_04_, _countof(chk_loaders_ums_1_04_),
 		0
+	},
+	{
+		// Loaders for Brood War Beta
+		75,
+		chk_loaders_lobby_, _countof(chk_loaders_lobby_),
+		chk_loaders_briefing_, _countof(chk_loaders_briefing_),
+		chk_loaders_melee_broodwar_, _countof(chk_loaders_melee_broodwar_),
+		chk_loaders_ums_broodwar_1_04_, _countof(chk_loaders_ums_broodwar_1_04_),
+		1
 	},
 	{
 		// Loaders for Brood War 1.04
@@ -2347,6 +2398,35 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 
 FailStubPatch ChkLoader_MTXM_patch(ChkLoader_MTXM);
 
+struct ThingyEntry
+{
+	u16 sprite_type;
+	Position position;
+};
+
+static_assert(sizeof(ThingyEntry) == 6, "Incorrect size for type `ThingyEntry`. Expected: 6");
+
+bool __stdcall ChkLoader_THGY(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size % sizeof(ThingyEntry))
+	{
+		return 0;
+	}
+
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return 0;
+	}
+
+	ThingyEntry* entries = (ThingyEntry*)section_data->start_address;
+	for (int i = 0; i < section_size / sizeof(ThingyEntry); i++)
+	{
+		CreateThingy(entries[i].sprite_type, entries[i].position.x, entries[i].position.y, 11);
+	}
+
+	return 1;
+}
+
 struct Thingy2Entry
 {
 	union {
@@ -2404,11 +2484,25 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 
 FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
 
+struct ChunkBetaUnitEntry
+{
+	Position position;
+	UnitType unit_type;
+	unsigned __int16 unknown0;
+	unsigned __int16 unknown1;
+	unsigned __int16 unknown2;
+	u8 player;
+	u8 unknown3;
+};
+
+static_assert(sizeof(ChunkBetaUnitEntry) == 14, "Incorrect size for type `ChunkBetaUnitEntry`. Expected: 14");
+
 const int SCREEN_WDITH = 640;
 const int SCREEN_HEIGHT = 480;
 const int INTERFACE_HEIGHT = 96;
 
-int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
+template <typename ChunkUnitEntryType>
+int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntryType* a2)
 {
 	if (a2->unit_type != Special_Start_Location)
 	{
@@ -2442,7 +2536,8 @@ bool IsResource(UnitType unit_type)
 	return unit_type == Resource_Mineral_Field || unit_type == Resource_Mineral_Field_Type_2 || unit_type == Resource_Mineral_Field_Type_3 || unit_type == Resource_Vespene_Geyser;
 }
 
-bool unitIsNeutral(ChunkUnitEntry* unit_entry)
+template <typename ChunkUnitEntryType>
+bool unitIsNeutral(ChunkUnitEntryType* unit_entry)
 {
 	if (gameData.got_file_values.starting_units == StartingUnits::SU_MAP_DEFAULT)
 	{
@@ -2455,6 +2550,55 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 }
 
 FailStubPatch unitNotNeutral_patch(unitNotNeutral);
+
+bool __stdcall ChkLoader_UNIT_beta(SectionData* a1, int section_size, MapChunks* a3)
+{
+	if (section_size % sizeof(ChunkBetaUnitEntry))
+	{
+		return 0;
+	}
+	if (a1->start_address + a1->size > a1->next_section)
+	{
+		return 0;
+	}
+
+	memset(startPositions, 0, 8 * sizeof(Position));
+
+	ChunkBetaUnitEntry* unit_entries = (ChunkBetaUnitEntry*)a1->start_address;
+	int unit_count = section_size / sizeof(ChunkBetaUnitEntry);
+	for (int i = 0; i < unit_count; i++)
+	{
+		ChunkBetaUnitEntry* unit_entry = unit_entries + i;
+
+		if (!CHK_UNIT_StartLocationSub_(startPositions, unit_entry)
+			&& (unit_entry->player >= 8u || Players[unit_entry->player].nType != PT_NotUsed && (Players[unit_entry->player].nType <= PT_Unknown0 || Players[unit_entry->player].nType == PT_Neutral))
+			&& unitIsNeutral(unit_entry)
+			&& (gameData.got_file_values.victory_conditions
+				|| gameData.got_file_values.starting_units
+				|| gameData.got_file_values.tournament_mode
+				|| !getPlayerForce(unit_entry->player)
+				|| (Unit_GroupFlags[unit_entry->unit_type] & 0x80u) != 0))
+		{
+			CUnit* unit = CreateUnitAtPos(unit_entry->player, unit_entry->unit_type, unit_entry->position.x, unit_entry->position.y);
+			if (unit->unitType == UnitType::Resource_Vespene_Geyser)
+			{
+				unit->fields2.resource.resourceCount = 5000;
+			}
+			else if (unit->unitType == UnitType::Resource_Mineral_Field || unit->unitType == UnitType::Resource_Mineral_Field_Type_2 || unit->unitType == UnitType::Resource_Mineral_Field_Type_3)
+			{
+				unit->fields2.resource.resourceCount = 1500;
+			}
+		}
+	}
+
+	for (CUnit* i = UnitNodeList_VisibleUnit_First; i; i = i->next)
+	{
+		UpdateUnitSpriteInfo(i);
+	}
+	CanUpdatePoweredStatus = 1;
+
+	return 1;
+}
 
 bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 {
