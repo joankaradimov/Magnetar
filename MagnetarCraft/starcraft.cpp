@@ -4599,14 +4599,14 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	return 1;
 }
 
-FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
+FailStubPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav);
 
 void ExecuteTriggerActions_(TriggerListEntry* a1)
 {
 	a1->container.dwExecutionFlags = a1->container.dwExecutionFlags | 1;
 	if (a1->container.dwExecutionFlags & 2)
 	{
-		byte_650974[active_trigger_player] = 4;
+		endgame_state[active_trigger_player] = EndgameState::UNKNOWN;
 	}
 	while (1)
 	{
@@ -4686,7 +4686,7 @@ void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 		countdownTimersExecute(dwMillisecondsPerFrame);
 		if (word_6509A0-- == 0)
 		{
-			memset(byte_650974, 0, 8);
+			memset(endgame_state, EndgameState::INITIAL, 8);
 			word_6509A0 = 30;
 			byte_685180 = 0;
 			bool trigger_has_executed = false;

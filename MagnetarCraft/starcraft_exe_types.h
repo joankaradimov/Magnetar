@@ -122,6 +122,7 @@ enum StatusFlags;
 struct TriggerList;
 struct UnitDimentions;
 enum SaiAccessabilityFlags;
+enum EndgameState;
 enum CheatFlags;
 struct struct_4;
 enum WeaponType;
@@ -2219,6 +2220,15 @@ enum SaiAccessabilityFlags : __int16
   SAF_Inaccessible = 0x1FFD,
 };
 
+enum EndgameState : unsigned __int8
+{
+  INITIAL = 0x0,
+  DEFEAT = 0x2,
+  VICTORY = 0x3,
+  UNKNOWN = 0x4,
+  DRAW = 0x5,
+};
+
 enum CheatFlags
 {
   CHEAT_None = 0x0,
@@ -2753,9 +2763,6 @@ enum GluAllTblEntry : __int16
   MINTERALS_MINED = 0xD,
   TOTAL_SPENT = 0xE,
   ELAPSED_TIME = 0xF,
-  DEFEAT = 0x10,
-  VICTORY = 0x11,
-  DRAW = 0x12,
   DISCONNECTED = 0x13,
   UNDECIDED = 0x14,
   DELETE_SAVE_GAME = 0x15,

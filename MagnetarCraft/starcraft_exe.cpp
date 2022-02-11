@@ -6725,13 +6725,11 @@ signed int sub_45E9F0(dlgEvent *a1) {
     }
     return result_;
 }
-void displayUpdatePortrait(int a1, int a2, CUnit *a3, __int16 a4) {
+void displayUpdatePortrait(WORD a1, CUnit *a3, __int16 a4) {
     int address = 0x45ea30;
     __asm {
         xor eax, eax
-        xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov ax, a1
         push dword ptr a4
         push dword ptr a3
         call address
@@ -10191,7 +10189,14 @@ int orders_WatchTarget(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*ToggleDoodadState)(), ToggleDoodadState, 0x47bc10);
+void ToggleDoodadState(CUnit *a1) {
+    int address = 0x47bc10;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 char orders_CloseDoor(CUnit *a1) {
     int address = 0x47bc50;
     char result_;
@@ -11019,7 +11024,7 @@ DECL_FUNC(int(*sub_4892C0)(), sub_4892C0, 0x4892c0);
 DECL_FUNC(int(*sub_4892D0)(), sub_4892D0, 0x4892d0);
 DECL_FUNC(int(*sub_4892E0)(), sub_4892E0, 0x4892e0);
 DECL_FUNC(int(*sub_4892F0)(), sub_4892F0, 0x4892f0);
-char get_player_victory(int player) {
+char GetEndgameState(int player) {
     int address = 0x489300;
     char result_;
     __asm {
@@ -11030,7 +11035,16 @@ char get_player_victory(int player) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_489310)(), sub_489310, 0x489310);
+void SetEndgameState(int player, EndgameState new_endgame_state) {
+    int address = 0x489310;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, player
+        mov dl, new_endgame_state
+        call address
+    }
+}
 DECL_FUNC(int(*sub_489330)(), sub_489330, 0x489330);
 DECL_FUNC(int(*isPlayerIDValidForScoreChange)(), isPlayerIDValidForScoreChange, 0x489350);
 DECL_FUNC(int(*nullsub_47)(), nullsub_47, 0x489390);
@@ -23777,7 +23791,7 @@ CBullet *& first_free_bullet = * ((decltype(&first_free_bullet)) 0x64eed8);
 CBullet *& last_free_bullet = * ((decltype(&last_free_bullet)) 0x64eedc);
 CUnit& target = * ((decltype(&target)) 0x64eee0);
 __int16& word_650970 = * ((decltype(&word_650970)) 0x650970);
-char* byte_650974 = (decltype(byte_650974 + 0)) 0x650974;
+EndgameState* endgame_state = (decltype(endgame_state + 0)) 0x650974;
 __int16& word_65097C = * ((decltype(&word_65097C)) 0x65097c);
 int* dword_650980 = (decltype(dword_650980 + 0)) 0x650980;
 __int16& word_6509A0 = * ((decltype(&word_6509A0)) 0x6509a0);
