@@ -2404,6 +2404,25 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 
 FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
 
+int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
+{
+	if (a2->unit_type != Special_Start_Location)
+	{
+		return 0;
+	}
+	a1[a2->player] = a2->position;
+
+	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->player == g_LocalNationID;
+	if (v3)
+	{
+		MoveToTile.x = (a2->position.x / 32 - 10) & ((a2->position.x / 32 - 10 < 0) - 1);
+		MoveToTile.y = a2->position.y / 32 < 6 ? 0 : a2->position.y / 32 - 6;
+	}
+	return 1;
+}
+
+FailStubPatch CHK_UNIT_StartLocationSub_patch(CHK_UNIT_StartLocationSub);
+
 bool IsCritter(UnitType unit_type)
 {
 	return unit_type == Critter_Rhynadon
@@ -2454,7 +2473,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 	{
 		ChunkUnitEntry* unit_entry = unit_entries + i;
 
-		if (!CHK_UNIT_StartLocationSub(startPositions, unit_entry)
+		if (!CHK_UNIT_StartLocationSub_(startPositions, unit_entry)
 			&& (unit_entry->player >= 8u || Players[unit_entry->player].nType != PT_NotUsed && (Players[unit_entry->player].nType <= PT_Unknown0 || Players[unit_entry->player].nType == PT_Neutral))
 			&& unitIsNeutral(unit_entry)
 			&& (gameData.got_file_values.victory_conditions
