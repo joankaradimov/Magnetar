@@ -4701,9 +4701,10 @@ void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 					break;
 				}
 
-				if (stru_51A218.triggers[active_trigger_player].begin > 0)
+				TriggerList* trigger_list = stru_51A218.triggers + active_trigger_player;
+				if (trigger_list->begin > 0)
 				{
-					executeGameTrigger_(&stru_51A218.triggers[active_trigger_player]);
+					executeGameTrigger_(trigger_list);
 					trigger_has_executed = true;
 				}
 			}
