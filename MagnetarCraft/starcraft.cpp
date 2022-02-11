@@ -3512,44 +3512,38 @@ bool LoadCampaignWithCharacter_(Race race)
 
 FailStubPatch LoadCampaignWithCharacter_patch(LoadCampaignWithCharacter);
 
-int sub_4B5110_(int race)
+int sub_4B5110_(Race race)
 {
-	bool result;
-
-	if (!dword_59A0D4[race])
+	if (dword_59A0D4[race])
 	{
-		result = LoadCampaignWithCharacter_((Race) race);
-	}
-	else {
-		WORD v2;
-		char *v3;
+		int v2 = (race != Race::RACE_Terran) + 142;
+		const char* v3 = ((race != Race::RACE_Terran) != ~142) ? (v2 < *networkTable ? (char*)networkTable + networkTable[v2 + 1] : "") : NULL;
 
-		if ((v2 = (race != 1) + 142, (race != 1) != ~142)
-			? (v2 < *networkTable ? (v3 = (char *)networkTable + networkTable[v2 + 1]) : (v3 = ""))
-			: (v3 = 0),
-			sub_4B5B20(v3)) {
-			result = LoadCampaignWithCharacter_((Race) race);
+		if (!sub_4B5B20(v3))
+		{
+			return 0;
 		}
 	}
-	return result;
+
+	return LoadCampaignWithCharacter_(race);
 }
 
 FailStubPatch sub_4B5110_patch(sub_4B5110);
 
 bool sub_4B27A0_(Race race)
 {
-	WORD v2;
-	const char* v3;
-
-	if (!dword_59B760[race]
-		|| ((v2 = (race == Race::RACE_Protoss) + 140, (race == 2) != -141) ? (v2 < *networkTable ? (v3 = (char*)networkTable
-			+ networkTable[v2 + 1]) : (v3 = "")) : (v3 = 0),
-			sub_4B5B20(v3)))
+	if (dword_59B760[race])
 	{
-		return LoadCampaignWithCharacter_(race);
+		int v2 = (race == Race::RACE_Protoss) + 140;
+		const char* v3 = ((race == Race::RACE_Protoss) != -141) ? (v2 < *networkTable ? (char*)networkTable + networkTable[v2 + 1] : "") : NULL;
+
+		if (!sub_4B5B20(v3))
+		{
+			return 0;
+		}
 	}
 
-	return 0;
+	return LoadCampaignWithCharacter_(race);
 }
 
 FailStubPatch sub_4B27A0_patch(sub_4B27A0);
