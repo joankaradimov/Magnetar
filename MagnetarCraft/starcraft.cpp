@@ -3517,20 +3517,16 @@ bool sub_4B27A0_(Race race)
 {
 	WORD v2;
 	const char* v3;
-	bool result;
 
 	if (!dword_59B760[race]
 		|| ((v2 = (race == Race::RACE_Protoss) + 140, (race == 2) != -141) ? (v2 < *networkTable ? (v3 = (char*)networkTable
 			+ networkTable[v2 + 1]) : (v3 = "")) : (v3 = 0),
 			sub_4B5B20(v3)))
 	{
-		result = LoadCampaignWithCharacter_(race);
+		return LoadCampaignWithCharacter_(race);
 	}
-	else
-	{
-		result = 0;
-	}
-	return result;
+
+	return 0;
 }
 
 FailStubPatch sub_4B27A0_patch(sub_4B27A0);
