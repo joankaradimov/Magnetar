@@ -156,35 +156,34 @@ void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaul
 
 void InitializeFontKey_(void)
 {
-	void *v0; // eax@1
-	void *v1; // eax@5
-	char buff[MAX_PATH]; // [sp+8h] [bp-104h]@1
-
+	char buff[MAX_PATH];
 	_snprintf(buff, MAX_PATH, "%s\\%s.gid", "font", "font");
-	v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	void* v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (v0)
 	{
-		if (cdkey_encrypted_len)
+		if (cdkey_encrypted_len == 0)
+		{
+			SMemFree(v0, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
+		}
+		else
+		{
 			goto LABEL_5;
-		SMemFree(v0, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
+		}
 	}
 	v0 = 0;
 LABEL_5:
 	cdkey_encrypted = v0;
 	_snprintf(buff, MAX_PATH, "%s\\%s.clh", "font", "font");
-	v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	if (!v1)
+	void* v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (v1 == NULL)
 	{
-	LABEL_8:
-		v1 = 0;
-		goto LABEL_9;
+		v1 = NULL;
 	}
-	if (!cdkeyowner_encrypted_len)
+	else if (!cdkeyowner_encrypted_len)
 	{
 		SMemFree(v1, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
-		goto LABEL_8;
+		v1 = NULL;
 	}
-LABEL_9:
 	cdkeyowner_encrypted = v1;
 	_snprintf(buff, MAX_PATH, "%s\\%s.ccd", "font", "font");
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
