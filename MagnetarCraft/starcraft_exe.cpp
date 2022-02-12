@@ -11344,7 +11344,15 @@ void showStatTxtToPlayer(char *result, int player) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*createTextMessageWithTimer)(int), createTextMessageWithTimer, 0x48cf20);
+void createTextMessageWithTimer(const char *text_message, int display_time) {
+    int address = 0x48cf20;
+    __asm {
+        xor esi, esi
+        mov esi, text_message
+        push dword ptr display_time
+        call address
+    }
+}
 DECL_FUNC(int(*sub_48CF40)(), sub_48CF40, 0x48cf40);
 DECL_FUNC(int(*BWFXN_DrawHighTarget)(), BWFXN_DrawHighTarget, 0x48cf60);
 int InfoMessage(int timeout_ms, char *text) {

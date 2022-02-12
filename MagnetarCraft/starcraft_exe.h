@@ -3133,7 +3133,7 @@ extern void (__cdecl*refreshGameTextIfFlagIsSet)();
 void PrintText(const char *text, u8 color, int tick_count, char flags);
 extern int(*resetTextAndLineData)();
 void showStatTxtToPlayer(char *result, int player);
-extern int (__stdcall*createTextMessageWithTimer)(int);
+void createTextMessageWithTimer(const char *text_message, int display_time);
 extern int(*sub_48CF40)();
 extern int(*BWFXN_DrawHighTarget)();
 int InfoMessage(int timeout_ms, char *text);
