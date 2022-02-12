@@ -191,25 +191,20 @@ LABEL_5:
 
 FailStubPatch InitializeFontKey_patch(InitializeFontKey);
 
-int LoadMainModuleStringInfo_()
+void LoadMainModuleStringInfo_()
 {
-	int result; // eax@1
-	DWORD v1; // esi@3
-	const void *v2; // ebx@4
-	unsigned int puLen; // [sp+0h] [bp-Ch]@5
-	DWORD dwHandle; // [sp+4h] [bp-8h]@3
-	LPVOID lpBuffer; // [sp+8h] [bp-4h]@5
-
-	result = GetModuleFileNameA(hInst, tstrFilename, MAX_PATH);
+	int result = GetModuleFileNameA(hInst, tstrFilename, MAX_PATH);
 	if (result)
 	{
-		result = GetFileVersionInfoSizeA(tstrFilename, &dwHandle);
-		v1 = result;
-		if (result)
+		DWORD dwHandle;
+		int v1 = GetFileVersionInfoSizeA(tstrFilename, &dwHandle);
+		if (v1)
 		{
-			v2 = SMemAlloc(result, "Starcraft\\SWAR\\lang\\init.cpp", 345, 0);
+			void* v2 = SMemAlloc(v1, "Starcraft\\SWAR\\lang\\init.cpp", 345, 0);
 			if (GetFileVersionInfoA(tstrFilename, 0, v1, (LPVOID)v2))
 			{
+				LPVOID lpBuffer;
+				unsigned int puLen;
 				if (VerQueryValueA(v2, "\\", &lpBuffer, &puLen))
 					_snprintf(
 						aInternalVersio,
@@ -219,15 +214,16 @@ int LoadMainModuleStringInfo_()
 						(unsigned __int16)*((_DWORD *)lpBuffer + 4),
 						*((_WORD *)lpBuffer + 11));
 			}
-			result = SMemFree((void *)v2, "Starcraft\\SWAR\\lang\\init.cpp", 408, 0);
+			SMemFree(v2, "Starcraft\\SWAR\\lang\\init.cpp", 408, 0);
 		}
 	}
 	else
 	{
 		tstrFilename[0] = 0;
 	}
-	return result;
 }
+
+FailStubPatch LoadMainModuleStringInfo_patch(LoadMainModuleStringInfo);
 
 int InitializeArchiveHandles_()
 {
