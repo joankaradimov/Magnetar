@@ -203,16 +203,16 @@ void LoadMainModuleStringInfo_()
 			void* v2 = SMemAlloc(v1, "Starcraft\\SWAR\\lang\\init.cpp", 345, 0);
 			if (GetFileVersionInfoA(tstrFilename, 0, v1, (LPVOID)v2))
 			{
-				LPVOID lpBuffer;
+				VS_FIXEDFILEINFO* lpBuffer;
 				unsigned int puLen;
-				if (VerQueryValueA(v2, "\\", &lpBuffer, &puLen))
+				if (VerQueryValueA(v2, "\\", (LPVOID*)&lpBuffer, &puLen))
 					_snprintf(
 						aInternalVersio,
 						MAX_PATH,
 						"Version %d.%d.%d",
-						*((_DWORD *)lpBuffer + 4) >> 16,
-						(unsigned __int16)*((_DWORD *)lpBuffer + 4),
-						*((_WORD *)lpBuffer + 11));
+						HIWORD(lpBuffer->dwProductVersionMS),
+						LOWORD(lpBuffer->dwProductVersionMS),
+						HIWORD(lpBuffer->dwProductVersionLS));
 			}
 			SMemFree(v2, "Starcraft\\SWAR\\lang\\init.cpp", 408, 0);
 		}
