@@ -4609,6 +4609,69 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 
 FailStubPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav);
 
+ActionPointer ActionTable_[] = {
+	TriggerAction_NoAction,
+	TriggerAction_Victory,
+	TriggerAction_Defeat,
+	TriggerAction_PreserveTrigger,
+	TriggerAction_Wait,
+	TriggerAction_PauseGame,
+	TriggerAction_UnpauseGame,
+	TriggerAction_Transmission,
+	TriggerAction_PlayWav_,
+	TriggerAction_DisplayTextMessage,
+	TriggerAction_CenterView,
+	TriggerAction_CreateUnitWithProperties,
+	TriggerAction_SetMissionObjectives,
+	TriggerAction_SetSwitch,
+	TriggerAction_SetCountdownTimer,
+	TriggerAction_RunAiScript,
+	TriggerAction_RunAiScriptAtLocation,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_KillUnit,
+	TriggerAction_KillUnitAtLocation,
+	TriggerAction_RemoveUnit,
+	TriggerAction_RemoveUnitAtLocation,
+	TriggerAction_SetResources,
+	TriggerAction_SetScore,
+	TriggerAction_MinimapPing,
+	TriggerAction_TalkingPortrait,
+	TriggerAction_MuteUnitSpeech,
+	TriggerAction_UnmuteUnitSpeech,
+	TriggerAction_LeaderBoardComputerPlayers,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_LeaderBoard,
+	TriggerAction_MoveLocation,
+	TriggerAction_MoveUnit,
+	TriggerAction_LeaderBoard,
+	TriggerAction_SetNextScenario,
+	TriggerAction_SetDoodadState,
+	TriggerAction_SetInvincibility,
+	TriggerAction_CreateUnitWithProperties,
+	TriggerAction_SetDeaths,
+	TriggerAction_Order,
+	TriggerAction_NoAction,
+	TriggerAction_GiveUnitsToPlayer,
+	TriggerAction_ModifyUnitHitPoints,
+	TriggerAction_ModifyUnitEnergy,
+	TriggerAction_ModifyUnitShieldPoints,
+	TriggerAction_ModifyUnitResourceAmount,
+	TriggerAction_ModifyUnitHangarCount,
+	TriggerAction_PauseTimer,
+	TriggerAction_UnpauseTimer,
+	TriggerAction_Draw,
+	TriggerAction_SetAllianceStatus,
+	TriggerAction_DisableDebugMode,
+	TriggerAction_EnableDebugMode,
+};
+
 void ExecuteTriggerActions_(TriggerListEntry* a1)
 {
 	a1->container.dwExecutionFlags = a1->container.dwExecutionFlags | 1;
@@ -4630,7 +4693,7 @@ void ExecuteTriggerActions_(TriggerListEntry* a1)
 				a1->container.bCurrentActionIndex = 64;
 				break;
 			}
-			if (ActionTable[action->action](action) == 0)
+			if (ActionTable_[action->action](action) == 0)
 			{
 				break;
 			}
@@ -4641,7 +4704,7 @@ void ExecuteTriggerActions_(TriggerListEntry* a1)
 	{
 		if ((a1->container.dwExecutionFlags & 0x20) != 0)
 		{
-			ActionTable[6](0);
+			ActionTable_[6](0);
 		}
 		if (a1->container.dwExecutionFlags & 4)
 		{
