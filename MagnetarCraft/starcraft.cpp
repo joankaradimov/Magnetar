@@ -4296,10 +4296,21 @@ void BeginEpilog_()
 		dword_6CDFE0 = 50;
 	}
 	DLGMusicFade(9);
-	loadInitCreditsBIN(IsExpansion ? "epilogX" : "epilog");
-	if (gwGameMode == GAME_EPILOG)
+	if (!IsExpansion)
 	{
-		loadInitCreditsBIN(IsExpansion ? "crdt_exp" : "crdt_lst");
+		loadInitCreditsBIN("epilog");
+		if (gwGameMode == GAME_EPILOG)
+		{
+			loadInitCreditsBIN("crdt_lst");
+		}
+	}
+	else
+	{
+		loadInitCreditsBIN("epilogX");
+		if (gwGameMode == GAME_EPILOG)
+		{
+			loadInitCreditsBIN("crdt_exp");
+		}
 	}
 	stopMusic();
 	dword_6CDFE0 = v0;
