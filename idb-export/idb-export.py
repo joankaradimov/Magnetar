@@ -510,8 +510,8 @@ def export_data(segment, declarations, definitions):
         if data_name == None or data_name == '' or data_type == None or data_name[0] == '?':
             continue
         elif '[' in data_type: # array -> pointer
-            data_type = re.sub('\[[^\]]*\]', '* ' + data_name, data_type, count = 1)
-            definition = '{data_type} = (decltype({data_name} + 0)) {address};\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            data_type = data_type.replace('[', '(&' + data_name + ')[', 1)
+            definition = '{data_type} = * ((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         elif '*)(' in data_type: # function pointer -> reference to function pointer
             data_type = data_type.replace('*)', '*&' + data_name + ')',  1)
             data_type = data_type.replace('__hidden this', '__hidden this_')
