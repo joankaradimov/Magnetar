@@ -835,7 +835,7 @@ void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
 	}
 }
 
-// FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
+FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
 
 void CreateInitialMeleeUnits_()
 {
@@ -2700,6 +2700,8 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	}
 }
 
+FailStubPatch loadParallaxStarGfx_patch(loadParallaxStarGfx);
+
 void initMapData_()
 {
 	char filename[MAX_PATH];
@@ -3857,6 +3859,8 @@ LABEL_37:
 	return result;
 }
 
+FailStubPatch loadMenu_gluCustm_patch(loadMenu_gluCustm);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
@@ -4095,6 +4099,8 @@ void CreateMainWindow_()
 	}
 }
 
+FailStubPatch CreateMainWindow_patch(CreateMainWindow);
+
 void PlayMovieWithIntro_(Cinematic a1)
 {
 	int v1 = 10;
@@ -4193,6 +4199,8 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	}
 	return active_campaign_menu_entry;
 }
+
+FailStubPatch sub_4DBDA0_patch(sub_4DBDA0);
 
 int __stdcall ContinueCampaign_(int a1)
 {
