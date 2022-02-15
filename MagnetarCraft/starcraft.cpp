@@ -4566,8 +4566,19 @@ const char* __stdcall get_Tileset_String(Tileset tileset)
 NopPatch tilsetNameTblArithmetic((void*)0x4A7960, 3);
 CallSitePatch tilsetNameTblCall((void*)0x4A7964, get_Tileset_String);
 
+signed int __fastcall packColorShifts_(int a1, void* a2)
+{
+	for (int i = 0; i < 8; i++)
+	{
+		if (colorShift[i].data == a2)
+			return i;
+	}
+	return 0;
+}
+
+FunctionPatch packColorShifts_patch(packColorShifts, packColorShifts_);
+
 MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES, sizeof(*TILESET_NAMES));
-MemoryPatch tilesetNames_2(0x4D4B26, TILESET_NAMES + 1, sizeof(TILESET_NAMES[1]));
 
 int TILESET_PALETTE_RELATED[] = {
 	0x512778,
