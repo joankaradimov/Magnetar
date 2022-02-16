@@ -4356,7 +4356,7 @@ void GameMainLoop_()
 				}
 				BWFXN_RedrawTarget();
 				if (!dword_6D11E4)
-					IsExpansion = GLUE_MAIN_MENU;
+					IsExpansion = 0;
 				switch (gwGameMode)
 				{
 				case GAME_RUN:
