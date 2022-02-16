@@ -4328,19 +4328,13 @@ void BeginEpilog_()
 	if (active_campaign_menu_entry == campaigns[3].entries + 14)
 	{
 		loadInitCreditsBIN("epilog");
-		if (gwGameMode == GAME_EPILOG)
-		{
-			loadInitCreditsBIN("crdt_lst");
-		}
+		loadInitCreditsBIN("crdt_lst");
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 	else if (active_campaign_menu_entry == campaigns[6].entries + 17)
 	{
 		loadInitCreditsBIN("epilogX");
-		if (gwGameMode == GAME_EPILOG)
-		{
-			loadInitCreditsBIN("crdt_exp");
-		}
+		loadInitCreditsBIN("crdt_exp");
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 	else
