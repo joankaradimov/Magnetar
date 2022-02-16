@@ -3283,13 +3283,55 @@ struct Campaign
 };
 
 std::vector<Campaign> campaigns = {
-	{"swterran", 0, false, Race::RACE_Terran, terran_swcampaign_menu_entries_},
-	{"terran", 0, false, Race::RACE_Terran, terran_campaign_menu_entries_},
-	{"zerg", 1, false, Race::RACE_Zerg, zerg_campaign_menu_entries_},
-	{"protoss", 1, false, Race::RACE_Protoss, protoss_campaign_menu_entries_},
-	{"xprotoss", 1, true, Race::RACE_Protoss, protoss_expcampaign_menu_entries_},
-	{"xterran", 1, true, Race::RACE_Terran, terran_expcampaign_menu_entries_},
-	{"xzerg", 1, true, Race::RACE_Zerg, zerg_expcampaign_menu_entries_},
+	{
+		"swterran",
+		0,
+		false,
+		Race::RACE_Terran,
+		terran_swcampaign_menu_entries_,
+	},
+	{
+		"terran",
+		0,
+		false,
+		Race::RACE_Terran,
+		terran_campaign_menu_entries_,
+	},
+	{
+		"zerg",
+		1,
+		false,
+		Race::RACE_Zerg,
+		zerg_campaign_menu_entries_,
+	},
+	{
+		"protoss",
+		1,
+		false,
+		Race::RACE_Protoss,
+		protoss_campaign_menu_entries_,
+	},
+	{
+		"xprotoss",
+		1,
+		true,
+		Race::RACE_Protoss,
+		protoss_expcampaign_menu_entries_,
+	},
+	{
+		"xterran",
+		1,
+		true,
+		Race::RACE_Terran,
+		terran_expcampaign_menu_entries_,
+	},
+	{
+		"xzerg",
+		1,
+		true,
+		Race::RACE_Zerg,
+		zerg_expcampaign_menu_entries_,
+	},
 };
 
 int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
