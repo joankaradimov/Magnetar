@@ -3650,7 +3650,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
 			{
-				DLGMusicFade(22);
+				DLGMusicFade(MT_TITLE);
 			}
 		}
 		else if (evt->dwUser == EventUser::USER_ACTIVATE)
@@ -3676,7 +3676,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 		{
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
-				DLGMusicFade(22);
+				DLGMusicFade(MT_TITLE);
 		}
 		else if (evt->dwUser == EventUser::USER_ACTIVATE)
 		{
@@ -4317,20 +4317,20 @@ void BeginEpilog_()
 
 	if (active_campaign_menu_entry == campaigns[0].entries + 6)
 	{
-		DLGMusicFade(5);
+		DLGMusicFade(MusicTrack::MT_TERRAN2);
 		loadInitCreditsBIN("epilogsw");
 		glGluesMode = GLUE_CAMPAIGN;
 	}
 	else if (active_campaign_menu_entry == campaigns[3].entries + 14)
 	{
-		DLGMusicFade(9);
+		DLGMusicFade(MusicTrack::MT_PROTOSS3);
 		loadInitCreditsBIN("epilog");
 		loadInitCreditsBIN("crdt_lst");
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 	else if (active_campaign_menu_entry == campaigns[6].entries + 17)
 	{
-		DLGMusicFade(9);
+		DLGMusicFade(MusicTrack::MT_PROTOSS3);
 		loadInitCreditsBIN("epilogX");
 		loadInitCreditsBIN("crdt_exp");
 		glGluesMode = GLUE_MAIN_MENU;

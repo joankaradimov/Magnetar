@@ -14115,11 +14115,11 @@ DECL_FUNC(int(*sub_4A6100)(), sub_4A6100, 0x4a6100);
 DECL_FUNC(int(*PlayMusic)(), PlayMusic, 0x4a6140);
 DECL_FUNC(int(*playNextMusic)(), playNextMusic, 0x4a6250);
 DECL_FUNC(int(*playRadioFreeZerg)(), playRadioFreeZerg, 0x4a62b0);
-void DLGMusicFade(int a1) {
+void DLGMusicFade(MusicTrack music_track) {
     int address = 0x4a6310;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, music_track
         call address
     }
 }
@@ -15718,11 +15718,11 @@ DECL_FUNC(int(*muteSfx)(), muteSfx, 0x4bc110);
 DECL_FUNC(void (__cdecl*BWFXN_DSoundDestroy)(), BWFXN_DSoundDestroy, 0x4bc180);
 DECL_FUNC(signed int (__stdcall*_PlayTransmissionLocation)(SfxData a1, int a2, int a3, CUnit *a4), _PlayTransmissionLocation, 0x4bc270);
 DECL_FUNC(int (__stdcall*playSoundId)(int), playSoundId, 0x4bc2c0);
-void j_DLGMusicFade(int a1) {
+void j_DLGMusicFade(MusicTrack music_track) {
     int address = 0x4bc310;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, music_track
         call address
     }
 }
@@ -17827,7 +17827,7 @@ signed int credits_keyDwn(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*creditsDlgInteract)(dialog *dlg, struct dlgEvent *evt), creditsDlgInteract, 0x4d8d60);
-void loadInitCreditsBIN(char *a1) {
+void loadInitCreditsBIN(const char *a1) {
     int address = 0x4d8df0;
     __asm {
         xor eax, eax
@@ -22781,17 +22781,14 @@ swishTimer(&stru_512A54)[7] = * ((decltype(&stru_512A54)) 0x512a54);
 swishTimer(&stru_512A70)[7] = * ((decltype(&stru_512A70)) 0x512a70);
 swishTimer& stru_512A8C = * ((decltype(&stru_512A8C)) 0x512a8c);
 char *(&off_512A98)[6] = * ((decltype(&off_512A98)) 0x512a98);
-int(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
-int(&dword_512AC8)[6] = * ((decltype(&dword_512AC8)) 0x512ac8);
+MenuPosition(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
+MusicTrack(&dword_512AC8)[6] = * ((decltype(&dword_512AC8)) 0x512ac8);
 int(&dword_512AE0)[12] = * ((decltype(&dword_512AE0)) 0x512ae0);
 swishTimer(&gluCmpgnSwishController)[2] = * ((decltype(&gluCmpgnSwishController)) 0x512b10);
 char(&aRegistration_block)[19] = * ((decltype(&aRegistration_block)) 0x512b18);
 __int16& word_512B98 = * ((decltype(&word_512B98)) 0x512b98);
 DatLoad(&mapdataDat)[1] = * ((decltype(&mapdataDat)) 0x512ba0);
-int(&dword_512BB8)[] = * ((decltype(&dword_512BB8)) 0x512bb8);
-char(&byte_512BBC)[] = * ((decltype(&byte_512BBC)) 0x512bbc);
-char(&byte_512BBD)[] = * ((decltype(&byte_512BBD)) 0x512bbd);
-char(&byte_512BBE)[] = * ((decltype(&byte_512BBE)) 0x512bbe);
+MusicTrackDescription(&music_tracks)[25] = * ((decltype(&music_tracks)) 0x512bb8);
 char(&aRegistration_block_1)[19] = * ((decltype(&aRegistration_block_1)) 0x512c80);
 RECT& stru_512D00 = * ((decltype(&stru_512D00)) 0x512d00);
 int(&dword_512D20)[] = * ((decltype(&dword_512D20)) 0x512d20);
