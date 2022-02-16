@@ -4259,29 +4259,7 @@ int __stdcall ContinueCampaign_(int a1)
 		return 0;
 	}
 
-	if (IsExpansion)
-	{
-		if (active_campaign_menu_entry->race == Race::RACE_Zerg)
-		{
-			gwGameMode = GAME_EPILOG;
-		}
-		else
-		{
-			glGluesMode = GLUE_EX_CAMPAIGN;
-		}
-	}
-	else
-	{
-		if (active_campaign_menu_entry->race == Race::RACE_Protoss)
-		{
-			gwGameMode = GAME_EPILOG;
-		}
-		else
-		{
-			glGluesMode = GLUE_CAMPAIGN;
-		}
-	}
-	active_campaign_menu_entry = 0;
+	gwGameMode = GAME_EPILOG;
 	return 1;
 }
 
@@ -4304,22 +4282,32 @@ void BeginEpilog_()
 		dword_6CDFE0 = 50;
 	}
 	DLGMusicFade(9);
-	if (!IsExpansion)
+
+	if (active_campaign_menu_entry == campaigns[3].entries + 14)
 	{
 		loadInitCreditsBIN("epilog");
 		if (gwGameMode == GAME_EPILOG)
 		{
 			loadInitCreditsBIN("crdt_lst");
 		}
+		glGluesMode = GLUE_MAIN_MENU;
 	}
-	else
+	else if (active_campaign_menu_entry == campaigns[6].entries + 17)
 	{
 		loadInitCreditsBIN("epilogX");
 		if (gwGameMode == GAME_EPILOG)
 		{
 			loadInitCreditsBIN("crdt_exp");
 		}
+		glGluesMode = GLUE_MAIN_MENU;
 	}
+	else
+	{
+		glGluesMode = IsExpansion ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+	}
+	gwGameMode = GAME_GLUES;
+	active_campaign_menu_entry = NULL;
+
 	stopMusic();
 	dword_6CDFE0 = v0;
 }
@@ -4418,11 +4406,6 @@ void GameMainLoop_()
 					break;
 				case GAME_EPILOG:
 					BeginEpilog_();
-					if (gwGameMode == GAME_EPILOG)
-					{
-						gwGameMode = GAME_GLUES;
-						glGluesMode = GLUE_MAIN_MENU;
-					}
 					break;
 				default:
 					AppExit(0);
