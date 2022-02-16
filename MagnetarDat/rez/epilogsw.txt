@@ -1,0 +1,15 @@
+</COMMENT epilogue for StarcraftSW>
+</FADESPEED 100>
+
+</COMMENT #############################################################>
+</DISPLAYTIME 25000>
+</BACKGROUND glue\palta\Blank.pcx>
+</FONTCOLOR glue\palta\tfont.pcx>
+
+</SCREENLEFT>
+EPILOGUE
+
+Over the following weeks the Confederacy instituted a planet-wide lock down which restricted all travel and communication to and from Chau Sara. By imposing these harsh constraints, the Confederates hoped to contain the knowledge of the xenomorphs’ existence.
+
+Meanwhile, a barrage of Confederate propaganda ensured that the operation would only be remembered as a triumphant police action against the Sons of Korhal. The general populace would never suspect that the events on Chau Sara were an omen of darker days to come.
+</PAGE>

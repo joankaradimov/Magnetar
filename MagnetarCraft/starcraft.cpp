@@ -4314,16 +4314,23 @@ void BeginEpilog_()
 		bigvolume = 0;
 		dword_6CDFE0 = 50;
 	}
-	DLGMusicFade(9);
 
-	if (active_campaign_menu_entry == campaigns[3].entries + 14)
+	if (active_campaign_menu_entry == campaigns[0].entries + 6)
 	{
+		DLGMusicFade(5);
+		loadInitCreditsBIN("epilogsw");
+		glGluesMode = GLUE_CAMPAIGN;
+	}
+	else if (active_campaign_menu_entry == campaigns[3].entries + 14)
+	{
+		DLGMusicFade(9);
 		loadInitCreditsBIN("epilog");
 		loadInitCreditsBIN("crdt_lst");
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 	else if (active_campaign_menu_entry == campaigns[6].entries + 17)
 	{
+		DLGMusicFade(9);
 		loadInitCreditsBIN("epilogX");
 		loadInitCreditsBIN("crdt_exp");
 		glGluesMode = GLUE_MAIN_MENU;
