@@ -3213,12 +3213,6 @@ CampaignMenuEntry protoss_campaign_menu_entries_[] = {
 	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 };
 
-CampaignMenuEntry* campaign_menu_entries_[] = {
-	zerg_campaign_menu_entries_,
-	terran_campaign_menu_entries_,
-	protoss_campaign_menu_entries_,
-};
-
 CampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
 	{0x4A, (MapData) ExpandedMapData::EMD_xzerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x4B, (MapData) ExpandedMapData::EMD_xzerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
@@ -3265,12 +3259,6 @@ CampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
 	{0x40, (MapData) ExpandedMapData::EMD_xprotoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x56, (MapData) ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0, RACE_Protoss, 0},
 	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-};
-
-CampaignMenuEntry* expcampaign_menu_entries_[] = {
-	zerg_expcampaign_menu_entries_,
-	terran_expcampaign_menu_entries_,
-	protoss_expcampaign_menu_entries_,
 };
 
 struct Campaign
@@ -3333,6 +3321,9 @@ std::vector<Campaign> campaigns = {
 		zerg_expcampaign_menu_entries_,
 	},
 };
+
+std::vector<Campaign*> campaigns_by_race = { &campaigns[2], &campaigns[1], &campaigns[3] };
+std::vector<Campaign*> expcampaigns_by_race = { &campaigns[6], &campaigns[5], &campaigns[4] };
 
 int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
 {
@@ -3517,12 +3508,12 @@ bool LoadCampaignWithCharacter_(Race race)
 	int* unlocked_mission;
 	if (IsExpansion)
 	{
-		v2 = expcampaign_menu_entries_[race];
+		v2 = expcampaigns_by_race[race]->entries;
 		unlocked_mission = &character_data.unlocked_expcampaign_mission[race];
 	}
 	else
 	{
-		v2 = campaign_menu_entries_[race];
+		v2 = campaigns_by_race[race]->entries;
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
 	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, v2);
@@ -4205,7 +4196,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	}
 
 	size_t v4 = v2 - a1;
-	CampaignMenuEntry** entries = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaign_menu_entries_ : campaign_menu_entries_;
+	auto& campaigns = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaigns_by_race : campaigns_by_race;
 	int v8 = 0;
 	if (sub_4DBD20_(a1, v4, &v8))
 	{
@@ -4213,7 +4204,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 		{
 			for (int i = 0; i < 3; ++i)
 			{
-				CampaignMenuEntry* result = entries[i];
+				CampaignMenuEntry* result = campaigns[i]->entries;
 				v6 = result->next_mission;
 				if (v6)
 				{
