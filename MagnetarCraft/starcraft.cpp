@@ -4681,7 +4681,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav);
+FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
 
 ActionPointer ActionTable_[] = {
 	TriggerAction_NoAction,
