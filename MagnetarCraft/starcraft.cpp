@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <ddraw.h>
 #include <time.h>
 #include "starcraft.h"
@@ -3268,6 +3269,9 @@ struct Campaign
 	bool is_expansion;
 	Race race;
 	CampaignMenuEntry* entries;
+	std::vector<const char*> epilogs;
+	MusicTrack epilog_music_track;
+	MenuPosition post_epilog_menu;
 };
 
 std::vector<Campaign> campaigns = {
@@ -3277,6 +3281,9 @@ std::vector<Campaign> campaigns = {
 		false,
 		Race::RACE_Terran,
 		terran_swcampaign_menu_entries_,
+		{"epilogsw"},
+		MusicTrack::MT_TERRAN2,
+		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
 		"terran",
@@ -3284,6 +3291,9 @@ std::vector<Campaign> campaigns = {
 		false,
 		Race::RACE_Terran,
 		terran_campaign_menu_entries_,
+		{},
+		MusicTrack::MT_NONE,
+		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
 		"zerg",
@@ -3291,6 +3301,9 @@ std::vector<Campaign> campaigns = {
 		false,
 		Race::RACE_Zerg,
 		zerg_campaign_menu_entries_,
+		{},
+		MusicTrack::MT_NONE,
+		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
 		"protoss",
@@ -3298,6 +3311,9 @@ std::vector<Campaign> campaigns = {
 		false,
 		Race::RACE_Protoss,
 		protoss_campaign_menu_entries_,
+		{"epilog", "crdt_lst"},
+		MusicTrack::MT_PROTOSS3,
+		MenuPosition::GLUE_MAIN_MENU,
 	},
 	{
 		"xprotoss",
@@ -3305,6 +3321,9 @@ std::vector<Campaign> campaigns = {
 		true,
 		Race::RACE_Protoss,
 		protoss_expcampaign_menu_entries_,
+		{},
+		MusicTrack::MT_NONE,
+		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
 		"xterran",
@@ -3312,6 +3331,9 @@ std::vector<Campaign> campaigns = {
 		true,
 		Race::RACE_Terran,
 		terran_expcampaign_menu_entries_,
+		{},
+		MusicTrack::MT_NONE,
+		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
 		"xzerg",
@@ -3319,6 +3341,9 @@ std::vector<Campaign> campaigns = {
 		true,
 		Race::RACE_Zerg,
 		zerg_expcampaign_menu_entries_,
+		{"epilogX", "crdt_exp"},
+		MusicTrack::MT_PROTOSS3,
+		MenuPosition::GLUE_MAIN_MENU,
 	},
 };
 
@@ -4298,6 +4323,20 @@ int __stdcall ContinueCampaign_(int a1)
 
 FunctionPatch ContinueCampaign_patch(ContinueCampaign, ContinueCampaign_);
 
+Campaign* GetActiveCampaign()
+{
+	for (Campaign& campaign : campaigns)
+	{
+		CampaignMenuEntry* last_campaign_menu_entry;
+		for (last_campaign_menu_entry = campaign.entries; last_campaign_menu_entry->next_mission; last_campaign_menu_entry++);
+		if (last_campaign_menu_entry == active_campaign_menu_entry)
+		{
+			return &campaign;
+		}
+	}
+	return NULL;
+}
+
 void BeginEpilog_()
 {
 	int v0 = dword_6CDFE0;
@@ -4315,29 +4354,17 @@ void BeginEpilog_()
 		dword_6CDFE0 = 50;
 	}
 
-	if (active_campaign_menu_entry == campaigns[0].entries + 6)
+	Campaign* active_campaign = GetActiveCampaign();
+
+	if (active_campaign)
 	{
-		DLGMusicFade(MusicTrack::MT_TERRAN2);
-		loadInitCreditsBIN("epilogsw");
-		glGluesMode = GLUE_CAMPAIGN;
-	}
-	else if (active_campaign_menu_entry == campaigns[3].entries + 14)
-	{
-		DLGMusicFade(MusicTrack::MT_PROTOSS3);
-		loadInitCreditsBIN("epilog");
-		loadInitCreditsBIN("crdt_lst");
-		glGluesMode = GLUE_MAIN_MENU;
-	}
-	else if (active_campaign_menu_entry == campaigns[6].entries + 17)
-	{
-		DLGMusicFade(MusicTrack::MT_PROTOSS3);
-		loadInitCreditsBIN("epilogX");
-		loadInitCreditsBIN("crdt_exp");
-		glGluesMode = GLUE_MAIN_MENU;
+		DLGMusicFade(active_campaign->epilog_music_track);
+		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN);
+		glGluesMode = active_campaign->post_epilog_menu;
 	}
 	else
 	{
-		glGluesMode = IsExpansion ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 	gwGameMode = GAME_GLUES;
 	active_campaign_menu_entry = NULL;
