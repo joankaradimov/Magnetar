@@ -2231,8 +2231,11 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	if (CurrentTileSet > Tileset::Jungle && !IsExpansion)
 		return 0;
 
-	int tileset_count = sizeof(TILESET_NAMES) / sizeof(*TILESET_NAMES);
-	CurrentTileSet = Tileset(CurrentTileSet % tileset_count);
+	if (CurrentTileSet >= _countof(TILESET_NAMES))
+	{
+		CurrentTileSet = (Tileset) int(CurrentTileSet % 8);
+	}
+
 	return 1;
 }
 
