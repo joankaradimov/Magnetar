@@ -13,13 +13,9 @@
     <ClCompile Include="patching\NopPatch.cpp">
       <Filter>patching</Filter>
     </ClCompile>
-    <ClCompile Include="patching\MemoryPatch.cpp">
-      <Filter>patching</Filter>
-    </ClCompile>
     <ClCompile Include="patching\BasePatch.cpp">
       <Filter>patching</Filter>
     </ClCompile>
-    <ClCompile Include="DDrawWrapper.cpp" />
     <ClCompile Include="..\MemoryModule\MemoryModule.c">
       <Filter>MemoryModule</Filter>
     </ClCompile>
@@ -47,7 +43,6 @@
       <Filter>patching</Filter>
     </ClInclude>
     <ClInclude Include="tbl_file.h" />
-    <ClInclude Include="DDrawWrapper.h" />
     <ClInclude Include="..\MemoryModule\MemoryModule.h">
       <Filter>MemoryModule</Filter>
     </ClInclude>

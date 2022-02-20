@@ -2,16 +2,28 @@
 
 #include "BasePatch.h"
 
+template <typename T>
 class MemoryPatch : public BasePatch
 {
 public:
-	MemoryPatch(UINT32 destination_address, void* block, size_t block_length);
-	MemoryPatch(void* destination_address, void* block, size_t block_length);
+	MemoryPatch(void* destination_address, T data) : BasePatch(destination_address), data(data)
+	{
+	}
 
-	size_t length();
-	void do_apply();
+	MemoryPatch(UINT32 destination_address, T data) : MemoryPatch((void*)destination_address, data)
+	{
+	}
+
+	size_t length()
+	{
+		return sizeof(T);
+	}
+
+	void do_apply()
+	{
+		memcpy(destination_address, &data, sizeof(T));
+	}
 
 private:
-	BYTE* block;
-	size_t block_length;
+	T data;
 };

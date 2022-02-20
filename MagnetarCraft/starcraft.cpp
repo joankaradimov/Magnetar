@@ -397,10 +397,10 @@ FailStubPatch LoadSfx_patch(LoadSfx);
 
 char* MapdataFilenames_[73];
 
-MemoryPatch MapdataFilenames_patch1(0x4280A2, MapdataFilenames_, 4);
-MemoryPatch MapdataFilenames_patch2(0x4A7DC9, MapdataFilenames_, 4);
-MemoryPatch MapdataFilenames_patch3(0x512BA0, MapdataFilenames_, 4);
-MemoryPatch MapdataFilenames_patch4(0x512BA8, (void*) _countof(MapdataFilenames_), 4);
+MemoryPatch MapdataFilenames_patch1(0x4280A2, MapdataFilenames_);
+MemoryPatch MapdataFilenames_patch2(0x4A7DC9, MapdataFilenames_);
+MemoryPatch MapdataFilenames_patch3(0x512BA0, MapdataFilenames_);
+MemoryPatch MapdataFilenames_patch4(0x512BA8, _countof(MapdataFilenames_));
 
 void CommandLineCheck_()
 {
@@ -1029,14 +1029,14 @@ ChkLoader chk_loaders_[] = {
 	},
 };
 
-MemoryPatch chk_loader_patch1(0x4BF65A, &chk_loaders_->lobby_loader_count, 4);
-MemoryPatch chk_loader_patch2(0x4BF660, &chk_loaders_->lobby_loaders, 4);
-MemoryPatch chk_loader_patch3(0x4CC0CD, chk_loaders_, 4);
-MemoryPatch chk_loader_patch4(0x4CC0E1, &chk_loaders_->requires_expansion, 4);
-MemoryPatch chk_loader_patch5(0x4CCA8A, &chk_loaders_->briefing_loader_count, 4);
-MemoryPatch chk_loader_patch6(0x4CCA90, &chk_loaders_->briefing_loaders, 4);
-MemoryPatch chk_loader_patch7(0x4CCBFC, &chk_loaders_->lobby_loader_count, 4);
-MemoryPatch chk_loader_patch8(0x4CCC02, &chk_loaders_->lobby_loaders, 4);
+MemoryPatch chk_loader_patch1(0x4BF65A, &chk_loaders_->lobby_loader_count);
+MemoryPatch chk_loader_patch2(0x4BF660, &chk_loaders_->lobby_loaders);
+MemoryPatch chk_loader_patch3(0x4CC0CD, chk_loaders_);
+MemoryPatch chk_loader_patch4(0x4CC0E1, &chk_loaders_->requires_expansion);
+MemoryPatch chk_loader_patch5(0x4CCA8A, &chk_loaders_->briefing_loader_count);
+MemoryPatch chk_loader_patch6(0x4CCA90, &chk_loaders_->briefing_loaders);
+MemoryPatch chk_loader_patch7(0x4CCBFC, &chk_loaders_->lobby_loader_count);
+MemoryPatch chk_loader_patch8(0x4CCC02, &chk_loaders_->lobby_loaders);
 
 int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 {
@@ -4645,7 +4645,7 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 
 FunctionPatch packColorShifts_patch(packColorShifts, packColorShifts_);
 
-MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES, sizeof(*TILESET_NAMES));
+MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES);
 
 int TILESET_PALETTE_RELATED[] = {
 	0x512778,
@@ -4658,12 +4658,12 @@ int TILESET_PALETTE_RELATED[] = {
 	0x51279C,
 };
 
-MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
-MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
-MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
-MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
-MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
-MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED, sizeof(*TILESET_PALETTE_RELATED));
+MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
 
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {

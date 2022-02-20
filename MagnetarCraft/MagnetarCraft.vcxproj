@@ -173,7 +173,6 @@
     <ClCompile Include="patching\FunctionPatch.cpp" />
     <ClCompile Include="patching\BasePatch.cpp" />
     <ClCompile Include="patching\CallSitePatch.cpp" />
-    <ClCompile Include="patching\MemoryPatch.cpp" />
     <ClCompile Include="patching\NopPatch.cpp" />
     <ClCompile Include="starcraft.cpp" />
     <ClCompile Include="starcraft_exe.cpp" />
