@@ -6836,7 +6836,7 @@ DECL_FUNC(int (__stdcall*GetFoes)(int, int, int), GetFoes, 0x45fd60);
 DECL_FUNC(int (__stdcall*GetNonAlliedVictoryPlayers)(int, int, int), GetNonAlliedVictoryPlayers, 0x45fdd0);
 DECL_FUNC(__int16 (__fastcall*sub_45FE40)(int a1, CUnit *a2), sub_45FE40, 0x45fe40);
 DECL_FUNC(int(*increaseHangerCountsAtLocation)(), increaseHangerCountsAtLocation, 0x45fe80);
-DECL_FUNC(int (__thiscall*isUnitOwnedByPlayerEx)(void *this_, CUnit *a2), isUnitOwnedByPlayerEx, 0x45fef0);
+DECL_FUNC(int (__thiscall*isUnitOwnedByPlayerEx)(int player, CUnit *a2), isUnitOwnedByPlayerEx, 0x45fef0);
 DECL_FUNC(int (__stdcall*Score)(int), Score, 0x45ffe0);
 DECL_FUNC(int (__stdcall*Opponents)(int), Opponents, 0x460160);
 DECL_FUNC(int (__stdcall*Deaths)(int), Deaths, 0x460380);
@@ -10380,7 +10380,17 @@ DECL_FUNC(int(*sub_47EA50)(), sub_47EA50, 0x47ea50);
 DECL_FUNC(int (__stdcall*sub_47EA60)(int, int), sub_47EA60, 0x47ea60);
 DECL_FUNC(int(*GetScrollSpeed)(), GetScrollSpeed, 0x47eab0);
 DECL_FUNC(int(*CenterCursorGameScreen)(), CenterCursorGameScreen, 0x47eb30);
-DECL_FUNC(int (__stdcall*assignCenterViewProc)(int), assignCenterViewProc, 0x47eb70);
+void assignCenterViewProc(int a1, int a2, int (*a3)(void)) {
+    int address = 0x47eb70;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        push dword ptr a3
+        call address
+    }
+}
 DECL_FUNC(int(*sub_47EBB0)(), sub_47EBB0, 0x47ebb0);
 DECL_FUNC(int(*sub_47EBC0)(), sub_47EBC0, 0x47ebc0);
 DECL_FUNC(int(*refreshStars)(), refreshStars, 0x47ebf0);
@@ -11060,7 +11070,7 @@ void executeGameTrigger(TriggerList *a1) {
         call address
     }
 }
-DECL_FUNC(int(*defCenterViewProc)(), defCenterViewProc, 0x4894a0);
+DECL_FUNC(int(*defCenterViewProc)(void), defCenterViewProc, 0x4894a0);
 DECL_FUNC(signed int (__stdcall*AddGameTrigger)(Trigger *a1), AddGameTrigger, 0x4894c0);
 DECL_FUNC(int(*setTriggerPlayerActivityState)(), setTriggerPlayerActivityState, 0x489790);
 DECL_FUNC(int (__stdcall*ReadTriggerNodeData)(FILE *), ReadTriggerNodeData, 0x4897e0);
@@ -13177,7 +13187,19 @@ DECL_FUNC(int(*moveToXScrIncrease)(), moveToXScrIncrease, 0x49c0c0);
 DECL_FUNC(int(*moveToXScrDecrease)(), moveToXScrDecrease, 0x49c1a0);
 DECL_FUNC(int(*moveToYScrIncrease)(), moveToYScrIncrease, 0x49c280);
 DECL_FUNC(int(*moveToYScrDecrease)(), moveToYScrDecrease, 0x49c360);
-DECL_FUNC(int(*BWFXN_MoveScreen)(), BWFXN_MoveScreen, 0x49c440);
+char BWFXN_MoveScreen(unsigned int a1, unsigned int a2) {
+    int address = 0x49c440;
+    char result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int(*updateActiveTileInfo)(), updateActiveTileInfo, 0x49c4c0);
 int drawScreenRowTiles(int a1, TileID *a2, int a3, int a4, int a5) {
     int address = 0x49c620;
@@ -16242,7 +16264,7 @@ DECL_FUNC(int(*sub_4C7400)(), sub_4C7400, 0x4c7400);
 DECL_FUNC(int (__fastcall*TriggerAction_MoveLocation)(Action *), TriggerAction_MoveLocation, 0x4c7460);
 DECL_FUNC(int (__fastcall*TriggerAction_TalkingPortrait)(Action *), TriggerAction_TalkingPortrait, 0x4c7570);
 DECL_FUNC(int (__fastcall*TriggerAction_SetDoodadState)(Action *), TriggerAction_SetDoodadState, 0x4c75b0);
-DECL_FUNC(int (__fastcall*TrgOrder)(CUnit *a1, int a2), TrgOrder, 0x4c7630);
+DECL_FUNC(int (__fastcall*TrgOrder)(CUnit *a1, TriggerOrderRelated *a2), TrgOrder, 0x4c7630);
 DECL_FUNC(int (__fastcall*TriggerAction_PlayWav)(Action *), TriggerAction_PlayWav, 0x4c77d0);
 DECL_FUNC(int (__fastcall*TriggerAction_Transmission)(Action *), TriggerAction_Transmission, 0x4c7890);
 DECL_FUNC(int (__fastcall*TriggerAction_Order)(Action *), TriggerAction_Order, 0x4c79f0);
@@ -19409,7 +19431,7 @@ CUnit *AI_BestUnit_InBox(__int16 a1, CUnit *a2, int (__fastcall *a3)(CUnit *, CU
     }
     return result_;
 }
-CUnit *ModifyUnit_maybe(Box16 *a1, CUnit *a2, int (__fastcall *a3)(_DWORD, _DWORD)) {
+CUnit *ModifyUnit_maybe(Box16 *a1, void *a2, int (__fastcall *a3)(CUnit *, void *)) {
     int address = 0x4e8830;
     CUnit * result_;
     __asm {
@@ -19455,7 +19477,7 @@ DECL_FUNC(int (__stdcall*pixelPosHasCreep)(__int16), pixelPosHasCreep, 0x4e8bc0)
 DECL_FUNC(int(*sub_4E8C00)(), sub_4E8C00, 0x4e8c00);
 DECL_FUNC(int(*sub_4E8C20)(), sub_4E8C20, 0x4e8c20);
 DECL_FUNC(int(*sub_4E8C60)(), sub_4E8C60, 0x4e8c60);
-DECL_FUNC(int(*larvaCounterProc)(), larvaCounterProc, 0x4e8c80);
+DECL_FUNC(int (__fastcall*larvaCounterProc)(CUnit *a1, CUnit *a2), larvaCounterProc, 0x4e8c80);
 DECL_FUNC(int (__stdcall*sub_4E8CB0)(int, int), sub_4E8CB0, 0x4e8cb0);
 DECL_FUNC(int(*UpdateLarvaOrderState_TooFar)(), UpdateLarvaOrderState_TooFar, 0x4e8da0);
 signed int sub_4E8E10(CUnit *a1, int a2) {
@@ -22807,7 +22829,7 @@ DatLoad(&weaponsDat)[24] = * ((decltype(&weaponsDat)) 0x513868);
 char(&aRegistration_block_0)[19] = * ((decltype(&aRegistration_block_0)) 0x513998);
 SightStruct(&line_of_sight)[12] = * ((decltype(&line_of_sight)) 0x513a18);
 ScrollSpeeds& scrollSpeeds = * ((decltype(&scrollSpeeds)) 0x513b68);
-char& byte_513B92 = * ((decltype(&byte_513B92)) 0x513b92);
+char(&byte_513B92)[14] = * ((decltype(&byte_513B92)) 0x513b92);
 __int16(&unknown_campaign_related)[65] = * ((decltype(&unknown_campaign_related)) 0x513ba0);
 char(&byte_513C24)[] = * ((decltype(&byte_513C24)) 0x513c24);
 DatLoad(&unitsDat)[54] = * ((decltype(&unitsDat)) 0x513c30);
