@@ -2709,7 +2709,6 @@ FailStubPatch loadParallaxStarGfx_patch(loadParallaxStarGfx);
 void initMapData_()
 {
 	char filename[MAX_PATH];
-	int read;
 	int bytes_read;
 
 	word_6556FC = 0;
@@ -2739,7 +2738,7 @@ void initMapData_()
 	InitTerrainGraphicsAndCreep_(&a1, MapTileArray, map_size.width, map_size.height, filename);
 	ZergCreepArray = location;
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
-	VX4Data = (vx4entry *)fastFileRead_(&read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	VX4Data = (vx4entry *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
 	HANDLE v4;
 	if (!SFileOpenFileEx(0, filename, 0, &v4))
@@ -2762,10 +2761,9 @@ void initMapData_()
 			SysWarn_FileNotFound(filename, 24);
 		}
 		vr4entry *v8 = (vr4entry *)SMemAlloc(v5, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, v0);
-		HANDLE v9 = v4;
-		if (SFileReadFile(v4, v8, v5, &read, 0))
+		if (SFileReadFile(v4, v8, v5, &bytes_read, 0))
 		{
-			if (read == v5)
+			if (bytes_read == v5)
 			{
 				SFileCloseFile(v4);
 				VR4Data = v8;
@@ -2790,17 +2788,17 @@ void initMapData_()
 			}
 			else
 			{
-				FileFatal(v9, 24);
+				FileFatal(v4, 24);
 			}
 		}
 		else if (GetLastError() == 38)
 		{
-			FileFatal(v9, 24);
+			FileFatal(v4, 24);
 		}
 		else
 		{
 			int v10 = GetLastError();
-			FileFatal(v9, v10);
+			FileFatal(v4, v10);
 		}
 	}
 }
