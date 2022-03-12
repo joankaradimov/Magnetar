@@ -4341,6 +4341,61 @@ Campaign* GetActiveCampaign()
 	return NULL;
 }
 
+void loadInitCreditsBIN_(const char* a1)
+{
+	char buff[MAX_PATH];
+	int read;
+	HANDLE phFile;
+
+	_snprintf(buff, MAX_PATH, "rez\\%s.txt", a1);
+
+	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	dword_51CEBC = dword_51CEA8;
+	dword_51CEB8 = bytes_read;
+	dword_51CEC0 = 0;
+	if (!SFileOpenFileEx(0, "rez\\credits.bin", 0, &phFile))
+	{
+		int v6 = SErrGetLastError();
+		SysWarn_FileNotFound("rez\\credits.bin", v6);
+		throw std::exception("Could not find the credits file");
+	}
+	LONG v3 = SFileGetFileSize(phFile, 0);
+	if (v3 == -1)
+	{
+		FileFatal(phFile, GetLastError());
+		return;
+	}
+	if (!v3)
+		SysWarn_FileNotFound("rez\\credits.bin", 24);
+	dialog* v5 = (dialog*)SMemAlloc(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	if (!SFileReadFile(phFile, v5, v3, &read, 0))
+	{
+		FileFatal(phFile, GetLastError() == 38 ? 24 : GetLastError());
+		return;
+	}
+	if (read != v3)
+	{
+		FileFatal(phFile, 24);
+		return;
+	}
+	SFileCloseFile(phFile);
+	if (v5)
+	{
+		v5->lFlags |= 4u;
+		AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\credits.cpp", 618);
+	}
+	else
+	{
+		v5 = 0;
+	}
+	gluLoadBINDlg(v5, creditsDlgInteract);
+	if (dword_51CEA8)
+		SMemFree(dword_51CEA8, "Starcraft\\SWAR\\lang\\credits.cpp", 623, 0);
+	dword_51CEA8 = 0;
+	dword_51CEBC = 0;
+	dword_51CEB0 = 0;
+}
+
 void BeginEpilog_()
 {
 	int v0 = dword_6CDFE0;
@@ -4363,7 +4418,7 @@ void BeginEpilog_()
 	if (active_campaign)
 	{
 		DLGMusicFade(active_campaign->epilog_music_track);
-		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN);
+		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
 		glGluesMode = active_campaign->post_epilog_menu;
 	}
 	else
@@ -4536,63 +4591,6 @@ void localDll_Init_(HINSTANCE a1)
 	int local_lang = LocalGetLang_();
 	SFileSetLocale(local_lang);
 	AppAddExit_(FreeLocalDLL);
-}
-
-void loadInitCreditsBIN_(const char* a1)
-{
-	LONG v3; // esi MAPDST
-	int v6; // eax
-	char buff[MAX_PATH]; // [esp+Ch] [ebp-10Ch] BYREF
-	int read; // [esp+110h] [ebp-8h] BYREF
-	HANDLE phFile; // [esp+114h] [ebp-4h] MAPDST BYREF
-
-	_snprintf(buff, MAX_PATH, "rez\\%s.txt", a1);
-
-	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	dword_51CEBC = dword_51CEA8;
-	dword_51CEB8 = bytes_read;
-	dword_51CEC0 = 0;
-	if (!SFileOpenFileEx(0, "rez\\credits.bin", 0, &phFile))
-	{
-		v6 = SErrGetLastError();
-		SysWarn_FileNotFound("rez\\credits.bin", v6);
-		throw std::exception("Could not find the credits file");
-	}
-	v3 = SFileGetFileSize(phFile, 0);
-	if (v3 == -1)
-	{
-		FileFatal(phFile, GetLastError());
-		return;
-	}
-	if (!v3)
-		SysWarn_FileNotFound("rez\\credits.bin", 24);
-	dialog* v5 = (dialog*)SMemAlloc(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-	if (!SFileReadFile(phFile, v5, v3, &read, 0))
-	{
-		FileFatal(phFile, GetLastError() == 38 ? 24 : GetLastError());
-		return;
-	}
-	if (read != v3)
-	{
-		FileFatal(phFile, 24);
-		return;
-	}
-	SFileCloseFile(phFile);
-	if (v5)
-	{
-		v5->lFlags |= 4u;
-		AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\credits.cpp", 618);
-	}
-	else
-	{
-		v5 = 0;
-	}
-	gluLoadBINDlg(v5, creditsDlgInteract);
-	if (dword_51CEA8)
-		SMemFree(dword_51CEA8, "Starcraft\\SWAR\\lang\\credits.cpp", 623, 0);
-	dword_51CEA8 = 0;
-	dword_51CEBC = 0;
-	dword_51CEB0 = 0;
 }
 
 void __cdecl sub_4D9200_()
