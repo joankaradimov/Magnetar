@@ -582,7 +582,7 @@ class FunctionPointerDefinition(Definition):
         args = match.group('args')
         args = args.split(',') if len(args) > 0 else []
         for arg in args:
-            types |= set(Definition(arg).types)
+            types |= set(Definition(arg.strip()).types)
 
         return types
 
