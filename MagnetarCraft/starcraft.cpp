@@ -79,7 +79,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		return 1;
 
 
-	hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
+	hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", filename);
 	if (hMpq)
 		return 1;
 
@@ -105,7 +105,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 
 int(*signal)(int a1, int a2) = (int(*)(int a1, int a2)) 0x0040C8D5;
 
-void* fastFileRead_(int *bytes_read, int searchScope, char *filename, int defaultValue, int bytes_to_read, char *logfilename, int logline)
+void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int defaultValue, int bytes_to_read, const char *logfilename, int logline)
 {
 	HANDLE phFile;
 
@@ -330,12 +330,14 @@ signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 	return 0;
 }
 
-void * loadTBL_(int a1, int a2, char *a3, char *filename, char **a5)
+void * loadTBL_(int a1, int a2, const char *a3, const char *filename, char **a5)
 {
 	char **v6; // edi@1
 	void *result; // eax@1
 	unsigned __int16 v9; // cx@3
 	char *v10; // ecx@4
+
+	static char* empty_tbl_string = "";
 
 	v6 = a5;
 	for (result = _fastFileRead(filename, 0, 0, a3, a1); a2; --a2)
@@ -348,7 +350,7 @@ void * loadTBL_(int a1, int a2, char *a3, char *filename, char **a5)
 				if (v9 < *(_WORD *)result)
 					v10 = (char *)result + *((_WORD *)result + v9 + 1);
 				else
-					v10 = "";
+					v10 = empty_tbl_string;
 			}
 			else
 			{
@@ -361,7 +363,7 @@ void * loadTBL_(int a1, int a2, char *a3, char *filename, char **a5)
 	return result;
 }
 
-void LoadGameData_(DatLoad* a1, char* a2)
+void LoadGameData_(DatLoad* a1, const char* a2)
 {
 	unsigned int offset;
 
@@ -511,14 +513,14 @@ char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 	return v5;
 }
 
-void ErrorDDrawInit_(char *source_file, char *function_name, unsigned int last_error, WORD resource, int source_line)
+void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigned int last_error, WORD resource, int source_line)
 {
 	char dwInitParam[512];
 	CHAR Buffer[256];
 
-	char* v5 = source_file;
-	char* v6 = function_name;
-	char* v7 = strrchr(source_file, '\\');
+	const char* v5 = source_file;
+	const char* v6 = function_name;
+	const char* v7 = strrchr(source_file, '\\');
 	if (v7)
 		v5 = v7 + 1;
 	if (!v6)
@@ -1348,7 +1350,7 @@ FunctionPatch GameInit_patch(GameInit, GameInit_);
 FailStubPatch sub_4CD770_patch(sub_4CD770);
 FailStubPatch sub_4A13B0_patch(sub_4A13B0);
 
-GotFileValues* readTemplate_(char* template_name, char* got_template_name, char* got_template_label)
+GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
 	char buff[260];
 	int got_file_size;
@@ -1436,7 +1438,7 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 {
 	char* v8;
 	__int16 v12;
-	char* v13;
+	const char* v13;
 
 	CurrentMapFileName[0] = 0;
 	if (!is_campaign)
@@ -2171,7 +2173,7 @@ void __cdecl setMapSizeConstants_()
 
 FunctionPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
 
-char* TILESET_NAMES[] = {
+const char* TILESET_NAMES[] = {
 	"badlands",
 	"platform",
 	"install",
@@ -3809,7 +3811,7 @@ FailStubPatch loadMenu_gluExpCmpgn_patch(loadMenu_gluExpCmpgn);
 int loadMenu_gluCustm_(int is_multiplayer)
 {
 	char v1; // bl@1
-	char *v2; // ecx@2
+	const char *v2; // ecx@2
 	dialog *v3; // eax@3
 	dialog *v4; // esi@3
 	int v5; // eax@7
@@ -3957,7 +3959,7 @@ int SwitchMenu_()
 		Ophelia = 0;
 		if (!playerName[0])
 		{
-			char* v3;
+			const char* v3;
 			if (*networkTable > 71u)
 				v3 = (char *)networkTable + networkTable[72];
 			else
@@ -4513,7 +4515,7 @@ void localDll_Init_(HINSTANCE a1)
 	char* v1 = strrchr(Filename, '\\');
 	if (!v1)
 		v1 = &Filename[-1];
-	char* v2 = "local.dll";
+	const char* v2 = "local.dll";
 	int i = 0;
 	while (true)
 	{
@@ -4536,7 +4538,7 @@ void localDll_Init_(HINSTANCE a1)
 	AppAddExit_(FreeLocalDLL);
 }
 
-void loadInitCreditsBIN_(char* a1)
+void loadInitCreditsBIN_(const char* a1)
 {
 	LONG v3; // esi MAPDST
 	int v6; // eax
