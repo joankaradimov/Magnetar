@@ -42,18 +42,26 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
-HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile)
+HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename, DWORD dwFlags)
 {
-	if (!GetModuleFileNameA(hInst, a2, MAX_PATH))
+	if (!GetModuleFileNameA(hInst, a2, 0x104u))
+	{
 		*a2 = 0;
+	}
 	char* v4 = strrchr(a2, '\\');
 	if (v4)
+	{
 		*v4 = 0;
-	SStrNCat(a2, (char *)hMpq, MAX_PATH);
-	if (!SFileOpenArchive(a2, (DWORD)phFile, 2u, &hMpq))
-		goto LABEL_15;
+	}
+	SStrNCat(a2, mpq_filename, 260);
+	HANDLE hMpq;
+	if (!SFileOpenArchive(a2, dwFlags, 2u, &hMpq))
+	{
+		return 0;
+	}
 	if (a1)
 	{
+		HANDLE phFile;
 		if (!SFileOpenFileEx(hMpq, a1, 0, &phFile))
 		{
 			SFileCloseArchive(hMpq);
@@ -61,12 +69,10 @@ HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, HANDLE hMpq, HANDLE phFile
 		}
 		SFileCloseFile(phFile);
 	}
-	HANDLE result = hMpq;
-	if (!hMpq)
-		LABEL_15:
-	result = 0;
-	return result;
+	return hMpq;
 }
+
+FailStubPatch LoadInstallArchiveHD_patch(LoadInstallArchiveHD);
 
 signed int InitializeCDArchives_(const char *filename, int a2)
 {
@@ -74,8 +80,8 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		return 1;
 
 	char path_buffer[MAX_PATH];
-	hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\BroodWar.mpq", (HANDLE)1000);
-	if (hMpq || (hMpq = LoadInstallArchiveHD(filename, path_buffer, "\\StarCraft.mpq", (HANDLE)1000)) != 0)
+	hMpq = LoadInstallArchiveHD_(filename, path_buffer, "\\BroodWar.mpq", 1000);
+	if (hMpq || (hMpq = LoadInstallArchiveHD_(filename, path_buffer, "\\StarCraft.mpq", 1000)) != 0)
 		return 1;
 
 
