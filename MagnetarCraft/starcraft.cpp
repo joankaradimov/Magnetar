@@ -343,7 +343,7 @@ void * loadTBL_(int a1, int a2, const char *a3, const char *filename, char **a5)
 	unsigned __int16 v9; // cx@3
 	char *v10; // ecx@4
 
-	static char* empty_tbl_string = "";
+	static char* empty_tbl_string = { 0 };
 
 	v6 = a5;
 	for (result = _fastFileRead(filename, 0, 0, a3, a1); a2; --a2)
