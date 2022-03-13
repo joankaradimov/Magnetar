@@ -18036,7 +18036,7 @@ DECL_FUNC(void (__thiscall*vidinimoDestroy)(bool exit_code), vidinimoDestroy, 0x
 DECL_FUNC(BOOL (__stdcall*LocalErrProc)(HWND, UINT, WPARAM, LPARAM), LocalErrProc, 0x4da350);
 DECL_FUNC(int(*LoadMainModuleStringInfo)(), LoadMainModuleStringInfo, 0x4da440);
 DECL_FUNC(void (__thiscall*DestroyFonts)(bool exit_code), DestroyFonts, 0x4da510);
-HANDLE LoadInstallArchiveHD(const char *a1, CHAR *a2, const char *hMpq, HANDLE phFile) {
+HANDLE LoadInstallArchiveHD(const char *a1, char *a2, const char *hMpq, HANDLE phFile) {
     int address = 0x4da550;
     HANDLE result_;
     __asm {
@@ -18439,7 +18439,7 @@ DECL_FUNC(int (__stdcall*sub_4DECF0)(unsigned __int8 a2), sub_4DECF0, 0x4decf0);
 DECL_FUNC(int(*sub_4DED10)(), sub_4DED10, 0x4ded10);
 DECL_FUNC(int (__stdcall*CopyLastreplay)(int), CopyLastreplay, 0x4ded30);
 DECL_FUNC(int(*replayFrameComputation)(), replayFrameComputation, 0x4deed0);
-int getDirectoryPath(CHAR *a1, DWORD esi0, char *a2) {
+int getDirectoryPath(CHAR *a1, DWORD esi0, const char *a2) {
     int address = 0x4def80;
     int result_;
     __asm {
@@ -21468,8 +21468,8 @@ char(&aPatch_rt_mpq)[] = * ((decltype(&aPatch_rt_mpq)) 0x501a58);
 char(&aStardat_mpq_0)[] = * ((decltype(&aStardat_mpq_0)) 0x501a68);
 char(&aStardat_mpq)[] = * ((decltype(&aStardat_mpq)) 0x501a74);
 char(&aInstall_exe)[13] = * ((decltype(&aInstall_exe)) 0x501a84);
-char(&aStarcraft_mpq)[15] = * ((decltype(&aStarcraft_mpq)) 0x501a94);
-char(&aBroodwar_mpq)[14] = * ((decltype(&aBroodwar_mpq)) 0x501aa4);
+const char(&aStarcraft_mpq)[] = * ((decltype(&aStarcraft_mpq)) 0x501a94);
+const char(&aBroodwar_mpq)[] = * ((decltype(&aBroodwar_mpq)) 0x501aa4);
 char(&aStarcd)[] = * ((decltype(&aStarcd)) 0x501ab4);
 char(&aVersionD_D_D)[] = * ((decltype(&aVersionD_D_D)) 0x501abc);
 char(&aFont8)[6] = * ((decltype(&aFont8)) 0x501ad0);
