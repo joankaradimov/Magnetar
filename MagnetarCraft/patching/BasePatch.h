@@ -19,5 +19,5 @@ protected:
 	BYTE* destination_address;
 
 private:
-	static std::vector<BasePatch*> patches;
+	static std::vector<BasePatch*>& patches();
 };
