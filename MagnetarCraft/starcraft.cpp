@@ -693,6 +693,95 @@ int DSoundCreate_(AudioVideoInitializationError* a1)
 
 FailStubPatch DSoundCreate_patch(DSoundCreate);
 
+int SetCooperativeLevel_(HWND hwnd, AudioVideoInitializationError* a2)
+{
+	a2->error_code = direct_sound->SetCooperativeLevel(hwnd, 2);
+	if (!a2->error_code)
+	{
+		return 1;
+	}
+	a2->error_code = direct_sound->SetCooperativeLevel(hwnd, 1);
+	if (!a2->error_code)
+	{
+		return 1;
+	}
+	a2->function_name = "SetCooperativeLevel";
+	return 0;
+}
+
+FailStubPatch SetCooperativeLevel_patch(SetCooperativeLevel);
+
+int CreateSoundBuffer_(AudioVideoInitializationError* a1)
+{
+	DSBUFFERDESC sound_buffer;
+
+	sound_buffer.dwBufferBytes = 0;
+	sound_buffer.dwReserved = 0;
+	sound_buffer.lpwfxFormat = 0;
+	sound_buffer.dwSize = 20;
+	sound_buffer.dwFlags = 1;
+
+	a1->error_code = direct_sound->CreateSoundBuffer(&sound_buffer, &soundbuffer, 0);
+	if (!a1->error_code)
+	{
+		return 1;
+	}
+	a1->function_name = "CreateSoundBuffer";
+	return 0;
+}
+
+FailStubPatch CreateSoundBuffer_patch(CreateSoundBuffer);
+
+HRESULT SetAudioFormat_()
+{
+	WAVEFORMATEX wave_format;
+	wave_format.cbSize = 0;
+	wave_format.wFormatTag = 1;
+	wave_format.nChannels = 2;
+	wave_format.nSamplesPerSec = 22050;
+	wave_format.wBitsPerSample = 16;
+	wave_format.nBlockAlign = 4;
+	wave_format.nAvgBytesPerSec = 88200;
+
+	return soundbuffer->SetFormat(&wave_format);
+}
+
+FailStubPatch SetAudioFormat_patch(SetAudioFormat);
+
+void LoadBtnSfxFile_()
+{
+	char buff[256];
+
+	if (SFXData_SoundFile[SFX_Misc_Button_1])
+	{
+		_snprintf(buff, 0x104u, "sound\\%s", SFXData_SoundFile[15]);
+		dword_6D1268 = LoadSoundProc(buff, 0);
+	}
+	else
+	{
+		dword_6D1268 = (IDirectSoundBuffer*)SFXData_SoundFile[SFX_Misc_Button_1];
+	}
+}
+
+FailStubPatch LoadBtnSfxFile_patch(LoadBtnSfxFile);
+
+void initVolume_()
+{
+	dword_5998E8 = 50;
+	if (registry_options.Sfx == -1)
+	{
+		registry_options.Sfx = 50;
+	}
+	dword_5999B4 = 25;
+	if (registry_options.Music == -1)
+	{
+		registry_options.Music = 25;
+	}
+	muteBgm(&registry_options);
+}
+
+FailStubPatch initVolume_patch(initVolume);
+
 BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 {
 	if (direct_sound)
@@ -703,18 +792,18 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 	a1->function_name = 0;
 	a1->dword4 = 138;
 	memset(stru_5998F0, 0, sizeof(stru_5998F0));
-	if (!DSoundCreate_(a1) || !SetCooperativeLevel(a2, a1) || !CreateSoundBuffer(a1))
+	if (!DSoundCreate_(a1) || !SetCooperativeLevel_(a2, a1) || !CreateSoundBuffer_(a1))
 	{
 		BWFXN_DSoundDestroy();
 		return 0;
 	}
-	sub_4BBA90();
+	SetAudioFormat_();
 	SFileDdaInitialize(direct_sound);
 	byte_6D1265 = 1;
 	SVidInitialize(direct_sound);
 	byte_6D1266 = 1;
-	LoadBtnSfxFile();
-	initVolume();
+	LoadBtnSfxFile_();
+	initVolume_();
 	if (SRegLoadValue("Starcraft", "Sound Memory Cache", 0, &value))
 	{
 		if ((unsigned int)value < 0x100000)
