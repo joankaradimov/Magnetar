@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <ddraw.h>
+#include <process.h>
 #include <time.h>
 #include "starcraft.h"
 #include "tbl_file.h"
@@ -656,6 +657,95 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 
 FunctionPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
 
+int DSoundCreate_(AudioVideoInitializationError* a1)
+{
+	HRESULT v4 = DirectSoundCreate(0, &direct_sound, 0);
+	a1->error_code = v4;
+	if (v4 == 0x8878000A)
+	{
+		HRESULT v5;
+		do
+		{
+			if (dword_51A43C <= 0)
+			{
+				break;
+			}
+			Sleep(1000u);
+			--dword_51A43C;
+			v5 = DirectSoundCreate(0, &direct_sound, 0);
+			a1->error_code = v5;
+		} while (v5 == -2005401590);
+	}
+	if (a1->error_code)
+	{
+		a1->function_name = "DirectSoundCreate";
+		if (a1->error_code == -2005401590)
+		{
+			a1->dword4 = 135;
+		}
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+
+FailStubPatch DSoundCreate_patch(DSoundCreate);
+
+BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
+{
+	if (direct_sound)
+	{
+		return 1;
+	}
+	a1->error_code = 0;
+	a1->function_name = 0;
+	a1->dword4 = 138;
+	memset(stru_5998F0, 0, sizeof(stru_5998F0));
+	if (!DSoundCreate_(a1) || !SetCooperativeLevel(a2, a1) || !CreateSoundBuffer(a1))
+	{
+		BWFXN_DSoundDestroy();
+		return 0;
+	}
+	sub_4BBA90();
+	SFileDdaInitialize(direct_sound);
+	byte_6D1265 = 1;
+	SVidInitialize(direct_sound);
+	byte_6D1266 = 1;
+	LoadBtnSfxFile();
+	initVolume();
+	if (SRegLoadValue("Starcraft", "Sound Memory Cache", 0, &value))
+	{
+		if ((unsigned int)value < 0x100000)
+		{
+			value = 0x100000;
+		}
+	}
+	else
+	{
+		value = 0x400000;
+	}
+	dword_6D59FC = 0;
+	dword_6D5A00 = CreateEventA(0, 0, 0, 0);
+	if (dword_6D5A00 == NULL)
+	{
+		BWFXN_DSoundDestroy();
+		return 0;
+	}
+	dword_6D5A08 = 1;
+	sound_thread_handle = (HANDLE) _beginthreadex(0, 0, DSoundThread, 0, 0, &ThreadId);
+	if (sound_thread_handle == NULL)
+	{
+		BWFXN_DSoundDestroy();
+		return 0;
+	}
+	byte_6D1264 = 1;
+	return 1;
+}
+
+FailStubPatch DSoundInit_patch(DSoundInit);
+
 void audioVideoInit_()
 {
 	loadColorSettings();
@@ -673,7 +763,7 @@ void audioVideoInit_()
 	if (!byte_6D11D0)
 	{
 		AudioVideoInitializationError error;
-		if (DSoundInit(&error, hWndParent))
+		if (DSoundInit_(&error, hWndParent))
 			AppAddExit_(j_BWFXN_DSoundDestroy);
 	}
 }
