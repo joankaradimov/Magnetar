@@ -965,10 +965,10 @@ void CreateInitialMeleeUnits_()
 					CreateInitialOverlord(player_index);
 				[[fallthrough]];
 			case StartingUnits::SU_WORKER_ONLY:
-				CreateInitialMeleeWorker(player->nRace, player_index);
-				CreateInitialMeleeWorker(player->nRace, player_index);
-				CreateInitialMeleeWorker(player->nRace, player_index);
-				CreateInitialMeleeWorker(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
+				CreateInitialMeleeWorker_(player->nRace, player_index);
 				[[fallthrough]];
 			case StartingUnits::SU_MAP_DEFAULT:
 				break;
