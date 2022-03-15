@@ -4,6 +4,7 @@
 #include "starcraft.h"
 #include <exception>
 #include "patching/BasePatch.h"
+#include "patching/FailStubPatch.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
@@ -71,6 +72,73 @@ void report_error(const char* error_message)
 	va_end(myargs);
 }
 
+int VerifySystemMemory_()
+{
+	double v0;
+	struct _SYSTEM_INFO SystemInfo;
+	struct _MEMORYSTATUS Buffer;
+	DWORD TotalNumberOfClusters;
+	DWORD NumberOfFreeClusters;
+	DWORD BytesPerSector;
+	DWORD SectorsPerCluster;
+
+	GetSystemInfo(&SystemInfo);
+	if (!SystemInfo.wProcessorArchitecture && SystemInfo.dwProcessorType < 486 && !SystemWarning_PentiumProcessor()
+		|| GetDiskFreeSpaceA(RootPathName, &SectorsPerCluster, &BytesPerSector, &NumberOfFreeClusters, &TotalNumberOfClusters)
+		&& (v0 = (double)SectorsPerCluster * 0.0009765625 * ((double)BytesPerSector * 0.0009765625) * (double)NumberOfFreeClusters, v0 < 20.0)
+		&& !SystemWarning_20MBDiskSpace((unsigned __int64)v0))
+	{
+		SErrSuppressErrors(1);
+		AppExit(1);
+		ProcError(1);
+		exit(1);
+	}
+
+	Buffer.dwLength = 32;
+	GlobalMemoryStatus(&Buffer);
+	if (Buffer.dwTotalPhys < 0xD00000 || Buffer.dwTotalPageFile < 0x1E00000)
+	{
+		int v1;
+		if (Buffer.dwTotalPhys >= 0xD00000)
+		{
+			v1 = SystemWarning_Configuration();
+		}
+		else
+		{
+			v1 = SystemWarning_PhysicalMemory();
+		}
+		if (!v1)
+		{
+			SErrSuppressErrors(1);
+			AppExit(1);
+			ProcError(1);
+			exit(1);
+		}
+	}
+
+	int value;
+	if (SRegLoadValue("Starcraft", "ForceLowMem", 0, &value) && value != 0)
+	{
+		low_memory = 1;
+		return value;
+	}
+	else
+	{
+		int result = SRegLoadValue("Starcraft", "ForceHighMem", 0, &value);
+		if (result && (result = value) != 0)
+		{
+			low_memory = 0;
+		}
+		else
+		{
+			low_memory = Buffer.dwTotalPhys < 0x1600000;
+		}
+		return result;
+	}
+}
+
+FailStubPatch VerifySystemMemory_patch(VerifySystemMemory);
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
 	if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END) {
@@ -95,7 +163,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");
 	localDll_Init_(hInst);
-	VerifySystemMemory();
+	VerifySystemMemory_();
 	FastIndexInit();
 	BWSetSecurityInfo();
 	GameMainLoop_();
