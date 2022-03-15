@@ -835,9 +835,52 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 
 FailStubPatch DSoundInit_patch(DSoundInit);
 
+void loadColorSettings_()
+{
+	AppAddExit(saveColorSettings);
+
+	if (SRegLoadValue("Starcraft", "Gamma", 0, &Gamma))
+	{
+		if ((unsigned int)Gamma > 0x8C || (unsigned int)Gamma < 0x3C)
+		{
+			Gamma = 100;
+		}
+	}
+
+	if (SRegLoadValue("Starcraft", "ColorCycle", 0, &ColorCycle))
+	{
+		ColorCycle = (ColorCycle != 0);
+	}
+	else
+	{
+		ColorCycle = 1;
+	}
+
+	if (SRegLoadValue("Starcraft", "UnitPortraits", 0, &UnitPortraits))
+	{
+		UnitPortraits = min(UnitPortraits, 2);
+	}
+	else
+	{
+		UnitPortraits = 2;
+	}
+
+	if (dword_68AC98)
+	{
+		if (ActivePortraitUnit)
+		{
+			UnitType v2 = getLastQueueSlotType(ActivePortraitUnit);
+			WORD v3 = setBuildingSelPortrait(v2);
+			displayUpdatePortrait(v3, ActivePortraitUnit, 1);
+		}
+	}
+}
+
+FailStubPatch loadColorSettings_patch(loadColorSettings);
+
 void audioVideoInit_()
 {
-	loadColorSettings();
+	loadColorSettings_();
 	GameScreenBuffer.wid = 640;
 	GameScreenBuffer.ht = 480;
 	GameScreenBuffer.data = 0;
