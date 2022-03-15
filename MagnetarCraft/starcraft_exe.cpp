@@ -2437,7 +2437,17 @@ DECL_FUNC(int(*SystemWarning_Configuration)(), SystemWarning_Configuration, 0x42
 DECL_FUNC(int(*SystemWarning_PhysicalMemory)(), SystemWarning_PhysicalMemory, 0x4213a0);
 DECL_FUNC(int(*SystemWarning_PentiumProcessor)(), SystemWarning_PentiumProcessor, 0x4213e0);
 DECL_FUNC(int(*sub_421420)(), sub_421420, 0x421420);
-DECL_FUNC(int(*SystemWarning_20MBDiskSpace)(), SystemWarning_20MBDiskSpace, 0x421460);
+BOOL SystemWarning_20MBDiskSpace(int a1) {
+    int address = 0x421460;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4214C0)(), sub_4214C0, 0x4214c0);
 DECL_FUNC(void(*DLGErrFatal)(), DLGErrFatal, 0x4214d0);
 DECL_FUNC(int(*sub_421510)(), sub_421510, 0x421510);
@@ -6916,7 +6926,7 @@ DECL_FUNC(__int16 (__thiscall*IncreaseCompletedUnitCountsAtLocation)(CUnit *this
 DECL_FUNC(int (__fastcall*TrgBringProc)(CUnit *a1, int a2), TrgBringProc, 0x460980);
 DECL_FUNC(int(*Bring)(), Bring, 0x4609d0);
 DECL_FUNC(int(*sub_460A80)(), sub_460A80, 0x460a80);
-DECL_FUNC(int(*sub_460A90)(), sub_460A90, 0x460a90);
+DECL_FUNC(int (__fastcall*sub_460A90)(dialog *a1), sub_460A90, 0x460a90);
 DECL_FUNC(int(*sub_460B00)(), sub_460B00, 0x460b00);
 int sub_460B20(dialog *a1) {
     int address = 0x460b20;
@@ -6955,7 +6965,7 @@ bool spdDlgDestroy(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_460C80)(), sub_460C80, 0x460c80);
+DECL_FUNC(void (__thiscall*sub_460C80)(dialog *this_), sub_460C80, 0x460c80);
 DECL_FUNC(bool (__fastcall*snd_SoundCheckbox)(dialog *dlg, dlgEvent *evt), snd_SoundCheckbox, 0x460cb0);
 DECL_FUNC(bool (__fastcall*snd_SoundSlider)(dialog *dlg, dlgEvent *evt), snd_SoundSlider, 0x460d00);
 DECL_FUNC(int(*snd_dlg_UserCTRLID)(), snd_dlg_UserCTRLID, 0x460d40);
@@ -14203,7 +14213,14 @@ DECL_FUNC(int(*stopMusic)(), stopMusic, 0x4a5f50);
 DECL_FUNC(void (__stdcall*FadeMusicProc)(HWND, UINT, UINT, DWORD), FadeMusicProc, 0x4a6030);
 DECL_FUNC(int(*sub_4A60D0)(), sub_4A60D0, 0x4a60d0);
 DECL_FUNC(int(*sub_4A6100)(), sub_4A6100, 0x4a6100);
-DECL_FUNC(int(*PlayMusic)(), PlayMusic, 0x4a6140);
+void PlayMusic(MusicTrack a1) {
+    int address = 0x4a6140;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
 DECL_FUNC(int(*playNextMusic)(), playNextMusic, 0x4a6250);
 DECL_FUNC(int(*playRadioFreeZerg)(), playRadioFreeZerg, 0x4a62b0);
 void DLGMusicFade(MusicTrack music_track) {
@@ -15688,7 +15705,17 @@ char doNetTBLError(int a1, const CHAR *error_message, char *file_name, int a4) {
 DECL_FUNC(char (__fastcall*BigPacketError)(int a1, const CHAR *a2, char *a3, int a4, int a5), BigPacketError, 0x4bb430);
 DECL_FUNC(int(*sub_4BB4B0)(), sub_4BB4B0, 0x4bb4b0);
 DECL_FUNC(int (__fastcall*ReceiveTurns)(unsigned int *arraydatabytes, char **arraydata, int a1, int arraysize_), ReceiveTurns, 0x4bb530);
-DECL_FUNC(int(*CreateSoundBuffer)(), CreateSoundBuffer, 0x4bb5a0);
+signed int CreateSoundBuffer(AudioVideoInitializationError *a1) {
+    int address = 0x4bb5a0;
+    signed result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int SetCooperativeLevel(HWND a1, AudioVideoInitializationError *a2) {
     int address = 0x4bb600;
     signed result_;
@@ -15713,7 +15740,17 @@ signed int DSoundCreate(AudioVideoInitializationError *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4BB6E0)(), sub_4BB6E0, 0x4bb6e0);
+signed int sub_4BB6E0(AudioVideoInitializationError *a1) {
+    int address = 0x4bb6e0;
+    signed result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4BB720(SfxData a1) {
     int address = 0x4bb720;
     int result_;
@@ -15751,7 +15788,7 @@ DECL_FUNC(int (__stdcall*parseSection)(int), parseSection, 0x4bb9b0);
 DECL_FUNC(int(*sub_4BBA00)(), sub_4BBA00, 0x4bba00);
 DECL_FUNC(int (__stdcall*sub_4BBA20)(int), sub_4BBA20, 0x4bba20);
 DECL_FUNC(void (__thiscall*sfxdata_cleanup)(bool exit_code), sfxdata_cleanup, 0x4bba50);
-DECL_FUNC(int(*sub_4BBA90)(), sub_4BBA90, 0x4bba90);
+DECL_FUNC(int(*SetAudioFormat)(), SetAudioFormat, 0x4bba90);
 signed int sub_4BBAF0(struct_5 *a1, int a2, int a3, SfxData sfx_id, UnitType unit_type, char sfxdata_flags_2, char a7, char sfxdata_flags_1) {
     int address = 0x4bbaf0;
     signed result_;
@@ -15817,7 +15854,14 @@ void j_DLGMusicFade(MusicTrack music_track) {
         call address
     }
 }
-DECL_FUNC(int(*muteBgm)(), muteBgm, 0x4bc320);
+void muteBgm(RegistryOptions *a1) {
+    int address = 0x4bc320;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4BC410)(), sub_4BC410, 0x4bc410);
 DECL_FUNC(int(*initVolume)(), initVolume, 0x4bc450);
 void PlayWavByFilename_maybe(char *a1) {
@@ -15839,15 +15883,13 @@ HANDLE sub_4BC5E0(SfxData a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*DSoundThread)(int), DSoundThread, 0x4bc620);
-IDirectSoundBuffer *LoadSoundProc(char *a1, int a2, struct_5 *a3) {
+DECL_FUNC(unsigned int (__stdcall*DSoundThread)(void *a2), DSoundThread, 0x4bc620);
+IDirectSoundBuffer *LoadSoundProc(char *a1, struct_5 *a3) {
     int address = 0x4bc8c0;
     IDirectSoundBuffer * result_;
     __asm {
         xor eax, eax
-        xor edi, edi
         mov eax, a1
-        mov edi, a2
         push dword ptr a3
         call address
         mov result_, eax
@@ -23034,7 +23076,7 @@ struct_3(&stru_5193A8)[228] = * ((decltype(&stru_5193A8)) 0x5193a8);
 char *(&statusscreen_infobtn)[1] = * ((decltype(&statusscreen_infobtn)) 0x519f40);
 __int16(&word_519F5C)[] = * ((decltype(&word_519F5C)) 0x519f5c);
 __int16& word_519F64 = * ((decltype(&word_519F64)) 0x519f64);
-int *& off_519F7C = * ((decltype(&off_519F7C)) 0x519f7c);
+RegistryOptions *& off_519F7C = * ((decltype(&off_519F7C)) 0x519f7c);
 char& byte_51A0E8 = * ((decltype(&byte_51A0E8)) 0x51a0e8);
 char& byte_51A0E9 = * ((decltype(&byte_51A0E9)) 0x51a0e9);
 DWORD& Gamma = * ((decltype(&Gamma)) 0x51a158);
@@ -23237,11 +23279,11 @@ int (__stdcall *&dword_51BC04)(_DWORD) = *((decltype(&dword_51BC04)) 0x51bc04);
 int& dword_51BC08 = * ((decltype(&dword_51BC08)) 0x51bc08);
 int (__stdcall *&dword_51BC0C)(_DWORD, _DWORD) = *((decltype(&dword_51BC0C)) 0x51bc0c);
 int& dword_51BC10 = * ((decltype(&dword_51BC10)) 0x51bc10);
-int (__stdcall *&dword_51BD68)(_DWORD, _DWORD, _DWORD, _DWORD) = *((decltype(&dword_51BD68)) 0x51bd68);
-int (*&dword_51BD6C)(void) = *((decltype(&dword_51BD6C)) 0x51bd6c);
-int (__stdcall *&dword_51BD70)(_DWORD) = *((decltype(&dword_51BD70)) 0x51bd70);
-int (*&dword_51BD74)(void) = *((decltype(&dword_51BD74)) 0x51bd74);
-int (__stdcall *&dword_51BD78)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD) = *((decltype(&dword_51BD78)) 0x51bd78);
+int (__stdcall *&MessageBoxA_0)(HWND hWnd, LPCSTR lpText, LPCSTR lpCaption, UINT uType) = *((decltype(&MessageBoxA_0)) 0x51bd68);
+HWND (__stdcall *&GetActiveWindow_0)() = *((decltype(&GetActiveWindow_0)) 0x51bd6c);
+HWND (__stdcall *&GetLastActivePopup_0)(HWND hWnd) = *((decltype(&GetLastActivePopup_0)) 0x51bd70);
+HWINSTA (__stdcall *&GetProcessWindowStation_0)() = *((decltype(&GetProcessWindowStation_0)) 0x51bd74);
+BOOL (__stdcall *&GetUserObjectInformationA_0)(HANDLE hObj, int nIndex, PVOID pvInfo, DWORD nLength, LPDWORD lpnLengthNeeded) = *((decltype(&GetUserObjectInformationA_0)) 0x51bd78);
 int& dword_51BD7C = * ((decltype(&dword_51BD7C)) 0x51bd7c);
 int& dword_51BD80 = * ((decltype(&dword_51BD80)) 0x51bd80);
 int& dword_51BD90 = * ((decltype(&dword_51BD90)) 0x51bd90);
@@ -23632,7 +23674,7 @@ int& chk_string_section_size = * ((decltype(&chk_string_section_size)) 0x5994d8)
 int& dword_5994DC = * ((decltype(&dword_5994DC)) 0x5994dc);
 int(&palette)[256] = * ((decltype(&palette)) 0x5994e0);
 __int16& megatileCount = * ((decltype(&megatileCount)) 0x5998e0);
-DWORD& ThreadId = * ((decltype(&ThreadId)) 0x5998e4);
+unsigned int& ThreadId = * ((decltype(&ThreadId)) 0x5998e4);
 int& dword_5998E8 = * ((decltype(&dword_5998E8)) 0x5998e8);
 struct_6(&stru_5998F0)[8] = * ((decltype(&stru_5998F0)) 0x5998f0);
 void *& dword_5999B0 = * ((decltype(&dword_5999B0)) 0x5999b0);
@@ -24068,7 +24110,7 @@ int& dword_65EB28 = * ((decltype(&dword_65EB28)) 0x65eb28);
 char& byte_65EB2C = * ((decltype(&byte_65EB2C)) 0x65eb2c);
 char& byte_65EB2D = * ((decltype(&byte_65EB2D)) 0x65eb2d);
 char& byte_65EB2E = * ((decltype(&byte_65EB2E)) 0x65eb2e);
-__int16& word_65EB30 = * ((decltype(&word_65EB30)) 0x65eb30);
+__int16(&word_65EB30)[] = * ((decltype(&word_65EB30)) 0x65eb30);
 char& byte_65EB32 = * ((decltype(&byte_65EB32)) 0x65eb32);
 char& byte_65EB34 = * ((decltype(&byte_65EB34)) 0x65eb34);
 int& IsMultiplayer = * ((decltype(&IsMultiplayer)) 0x65fbf0);
@@ -24648,16 +24690,7 @@ POINT& Mouse = * ((decltype(&Mouse)) 0x6cddc4);
 CHAR(&Text)[] = * ((decltype(&Text)) 0x6cddd0);
 char& byte_6CDFCF = * ((decltype(&byte_6CDFCF)) 0x6cdfcf);
 int& main_thread_id = * ((decltype(&main_thread_id)) 0x6cdfd0);
-int& GameSpeed = * ((decltype(&GameSpeed)) 0x6cdfd4);
-int& MouseScrollSpeed = * ((decltype(&MouseScrollSpeed)) 0x6cdfd8);
-int& KeyScrollSpeed = * ((decltype(&KeyScrollSpeed)) 0x6cdfdc);
-int& dword_6CDFE0 = * ((decltype(&dword_6CDFE0)) 0x6cdfe0);
-int& dword_6CDFE4 = * ((decltype(&dword_6CDFE4)) 0x6cdfe4);
-int& dword_6CDFE8 = * ((decltype(&dword_6CDFE8)) 0x6cdfe8);
-int& dword_6CDFEC = * ((decltype(&dword_6CDFEC)) 0x6cdfec);
-int& dword_6CDFF0 = * ((decltype(&dword_6CDFF0)) 0x6cdff0);
-int& dword_6CDFF4 = * ((decltype(&dword_6CDFF4)) 0x6cdff4);
-char& byte_6CDFF8 = * ((decltype(&byte_6CDFF8)) 0x6cdff8);
+RegistryOptions& registry_options = * ((decltype(&registry_options)) 0x6cdfd4);
 char(&byte_6CE010)[] = * ((decltype(&byte_6CE010)) 0x6ce010);
 char(&byte_6CE011)[] = * ((decltype(&byte_6CE011)) 0x6ce011);
 char(&byte_6CE012)[] = * ((decltype(&byte_6CE012)) 0x6ce012);
@@ -24866,7 +24899,7 @@ IDirectSound *& direct_sound = * ((decltype(&direct_sound)) 0x6d59f4);
 IDirectSoundBuffer *& soundbuffer = * ((decltype(&soundbuffer)) 0x6d59f8);
 int& dword_6D59FC = * ((decltype(&dword_6D59FC)) 0x6d59fc);
 HANDLE& dword_6D5A00 = * ((decltype(&dword_6D5A00)) 0x6d5a00);
-HANDLE& hHandle = * ((decltype(&hHandle)) 0x6d5a04);
+HANDLE& sound_thread_handle = * ((decltype(&sound_thread_handle)) 0x6d5a04);
 int& dword_6D5A08 = * ((decltype(&dword_6D5A08)) 0x6d5a08);
 int& dword_6D5A0C = * ((decltype(&dword_6D5A0C)) 0x6d5a0c);
 char& outOfGame = * ((decltype(&outOfGame)) 0x6d5a10);
@@ -24907,7 +24940,7 @@ void *& dword_6D5A9C = * ((decltype(&dword_6D5A9C)) 0x6d5a9c);
 void *& dword_6D5AA0 = * ((decltype(&dword_6D5AA0)) 0x6d5aa0);
 char& byte_6D5AA8 = * ((decltype(&byte_6D5AA8)) 0x6d5aa8);
 HANDLE& directsound = * ((decltype(&directsound)) 0x6d5bac);
-int& current_music = * ((decltype(&current_music)) 0x6d5bb0);
+MusicTrack& current_music = * ((decltype(&current_music)) 0x6d5bb0);
 signed int& bigvolume = * ((decltype(&bigvolume)) 0x6d5bb4);
 int& dword_6D5BB8 = * ((decltype(&dword_6D5BB8)) 0x6d5bb8);
 char& byte_6D5BBC = * ((decltype(&byte_6D5BBC)) 0x6d5bbc);

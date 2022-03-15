@@ -458,7 +458,7 @@ void PreInitData_()
 	{
 		DataVersionCheck("rez\\CDversion.txt");
 	}
-	dword_6CDFEC |= 7u;
+	registry_options.field_18 |= 7u;
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
 	LoadNetworkTBL();
@@ -1684,7 +1684,7 @@ int LevelCheatInitGame__()
 		SStrCopy(v6.map_name, CurrentMapName, 32u);
 		v6.active_human_players = 1;
 		v6.max_players = 1;
-		v6.game_speed = GameSpeed;
+		v6.game_speed = registry_options.GameSpeed;
 		GotFileValues* v4 = InitUseMapSettingsTemplate_();
 		if (v4)
 		{
@@ -1862,7 +1862,7 @@ signed int LoadGameInit_()
 		TickCounterInit();
 	saveLoadSuccess = (unsigned __int8)mapStarted;
 	elapstedTimeModifier = mapStarted != 0 ? savedElapsedSeconds : 0;
-	SetGameSpeed_maybe(GameSpeed, 0, 1u);
+	SetGameSpeed_maybe(registry_options.GameSpeed, 0, 1u);
 	if (InReplay)
 	{
 		copyPlayerStructsToReplayPlayerStructs(Players, &gameData);
@@ -2957,7 +2957,7 @@ int CreateCampaignGame__(MapData mapData)
 	v4.got_file_values.unused3[4] = 0;
 	SStrCopy(v4.player_name, playerName, 24u);
 	SStrCopy(v4.map_name, CurrentMapName, 32u);
-	v4.game_speed = GameSpeed;
+	v4.game_speed = registry_options.GameSpeed;
 	v4.active_human_players = 1;
 	v4.max_players = 1;
 	GotFileValues* v2 = InitUseMapSettingsTemplate_();
@@ -4494,8 +4494,8 @@ void loadInitCreditsBIN_(const char* a1)
 
 void BeginEpilog_()
 {
-	int v0 = dword_6CDFE0;
-	if (!dword_6CDFE0 && dword_6CDFE4)
+	int v0 = registry_options.Music;
+	if (!registry_options.Music && registry_options.Sfx)
 	{
 		if (directsound)
 		{
@@ -4506,7 +4506,7 @@ void BeginEpilog_()
 		byte_6D5BBC = 0;
 		byte_6D5BBD = 0;
 		bigvolume = 0;
-		dword_6CDFE0 = 50;
+		registry_options.Music = 50;
 	}
 
 	Campaign* active_campaign = GetActiveCampaign();
@@ -4525,7 +4525,7 @@ void BeginEpilog_()
 	active_campaign_menu_entry = NULL;
 
 	stopMusic();
-	dword_6CDFE0 = v0;
+	registry_options.Music = v0;
 }
 
 FailStubPatch BeginEpilog_patch(BeginEpilog);
@@ -4548,7 +4548,7 @@ void GameMainLoop_()
 	if (hMpq && SFileOpenFileEx(hMpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
 		SFileCloseFile(phFile);
-		if ((dword_6CDFEC & 0x800) == 0)
+		if ((registry_options.field_18 & 0x800) == 0)
 		{
 		LABEL_8:
 			LoadTitle_();
@@ -4631,15 +4631,15 @@ void GameMainLoop_()
 				}
 			}
 		}
-		dword_6CDFEC &= ~0x800u;
+		registry_options.field_18 &= ~0x800u;
 		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
 		PlayMovie(Cinematic::C_EXPANSION_INTRO);
 	}
 	else
 	{
-		if ((dword_6CDFEC & 0x200) == 0)
+		if ((registry_options.field_18 & 0x200) == 0)
 			goto LABEL_8;
-		dword_6CDFEC &= ~0x200u;
+		registry_options.field_18 &= ~0x200u;
 		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
 		PlayMovie(Cinematic::C_INTRO);
 	}
