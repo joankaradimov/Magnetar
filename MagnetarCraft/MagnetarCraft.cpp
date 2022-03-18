@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <mbstring.h>
 #include <stdio.h>
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
@@ -139,6 +140,51 @@ int VerifySystemMemory_()
 
 FailStubPatch VerifySystemMemory_patch(VerifySystemMemory);
 
+HWND GetClassWindow_(const char* a1)
+{
+	char ClassName[512];
+
+	HWND v1 = GetForegroundWindow();
+	if (!v1)
+	{
+		return 0;
+	}
+	do
+	{
+		if (GetClassNameA(v1, ClassName, 512) && !_mbsicmp((const unsigned __int8*)ClassName, (const unsigned __int8*)a1))
+		{
+			break;
+		}
+		v1 = GetWindow(v1, 2u);
+	} while (v1);
+	return v1;
+}
+
+FailStubPatch GetClassWindow_patch(GetClassWindow);
+
+void FastIndexInit_()
+{
+	AppAddExit(destroyFileFindIndexer);
+
+	HWND v0 = GetClassWindow_("MOM Parent");
+	if (v0)
+	{
+		PostMessageA(v0, 0x10u, 0, 0);
+		PostMessageA(v0, 0x12u, 0, 0);
+	}
+	dword_6D11D8 = v0 != 0;
+
+	HWND v2 = GetClassWindow_("Find Fast Indexer");
+	if (v2)
+	{
+		PostMessageA(v2, 0x10u, 0, 0);
+		PostMessageA(v2, 0x12u, 0, 0);
+	}
+	dword_6D11DC = v2 != 0;
+}
+
+FailStubPatch FastIndexInit_patch(FastIndexInit);
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
 	if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END) {
@@ -164,7 +210,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	CheckForOtherInstances("SWarClass");
 	localDll_Init_(hInst);
 	VerifySystemMemory_();
-	FastIndexInit();
+	FastIndexInit_();
 	BWSetSecurityInfo();
 	GameMainLoop_();
 
