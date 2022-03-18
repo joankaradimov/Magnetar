@@ -3035,6 +3035,32 @@ void initMapData_()
 
 FunctionPatch initMapData_patch(initMapData, initMapData_);
 
+unsigned int GetGroundHeightAtPos_(int x, int y)
+{
+	int megatile_index = x / 32 + y / 32 * map_size.width;
+	TileID megatile = ZergCreepArray[megatile_index] ? ZergCreepArray[megatile_index] : MapTileArray[megatile_index];
+
+	u16 v1 = TileSetMap[(megatile >> 4) & 0x7FF].megaTileRef[megatile & 0xF];
+	u16 v2 = MiniTileFlags->tile[v1].miniTile[4 * ((y >> 3) & 3) + ((x >> 3) & 3)];
+
+	int ground_height = (v2 & 6) >> 1;
+	return min(ground_height, 3); // TODO: allow a fourth ground height level
+}
+
+int GetGroundHeightAtPos__()
+{
+	int x, y;
+
+	__asm {
+		mov x, ecx
+		mov y, eax
+	}
+
+	return GetGroundHeightAtPos_(x, y);
+}
+
+FunctionPatch GetGroundHeightAtPos_patch((void*)0x4BD0F0, GetGroundHeightAtPos__);
+
 void sub_4CC990_()
 {
 	char buff[MAX_PATH];
