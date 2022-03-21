@@ -2946,6 +2946,7 @@ void GenerateMegatileDefaultFlags_()
 		unsigned v2 = 0;
 		int mid_elevation_minitiles = 0;
 		int high_elevation_minitiles = 0;
+		int higher_elevation_minitiles = 0;
 		MiniTileFlagArray minitile_flags = MiniTileFlags->tile[megatile_index];
 		for (int i = 0; i < 4; i++)
 		{
@@ -2955,6 +2956,10 @@ void GenerateMegatileDefaultFlags_()
 				if (v9 & 1)
 				{
 					++v2;
+				}
+				if ((v9 & 6) == 6)
+				{
+					++higher_elevation_minitiles;
 				}
 				if (v9 & 4)
 				{
@@ -2984,11 +2989,15 @@ void GenerateMegatileDefaultFlags_()
 		{
 			v18 |= CLIFF_EDGE;
 		}
-		if (high_elevation_minitiles >= 12)
+		if (higher_elevation_minitiles >= 12)
+		{
+			v18 |= (MegatileFlags) 0x80000000;
+		}
+		else if (higher_elevation_minitiles + high_elevation_minitiles >= 12)
 		{
 			v18 |= MORE_THAN_12_HIGH_HEIGHT;
 		}
-		else if (mid_elevation_minitiles + high_elevation_minitiles >= 12)
+		else if (higher_elevation_minitiles + high_elevation_minitiles + mid_elevation_minitiles >= 12)
 		{
 			v18 |= MORE_THAN_12_MEDIUM_HEIGHT;
 		}
@@ -3109,8 +3118,7 @@ unsigned int GetGroundHeightAtPos_(int x, int y)
 	u16 v1 = TileSetMap[(megatile >> 4) & 0x7FF].megaTileRef[megatile & 0xF];
 	u16 v2 = MiniTileFlags->tile[v1].miniTile[4 * ((y >> 3) & 3) + ((x >> 3) & 3)];
 
-	int ground_height = (v2 & 6) >> 1;
-	return min(ground_height, 2); // TODO: allow a fourth ground height level
+	return (v2 & 6) >> 1;
 }
 
 int GetGroundHeightAtPos__()
@@ -3139,6 +3147,7 @@ int isUnitAtHeight_(CUnit* unit, char location_flags)
 		case 0: return location_flags & 8;
 		case 1: return location_flags & 0x10;
 		case 2: return location_flags & 0x20;
+		case 2: return location_flags & 0x80;
 		}
 	}
 	else
@@ -3148,6 +3157,7 @@ int isUnitAtHeight_(CUnit* unit, char location_flags)
 		case 0: return location_flags & 1;
 		case 1: return location_flags & 2;
 		case 2: return location_flags & 4;
+		case 3: return location_flags & 0x40;
 		}
 	}
 	return 0;
@@ -3189,6 +3199,9 @@ int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed in
 				[[fallthrough]];
 			case 1:
 				v15 |= MORE_THAN_12_HIGH_HEIGHT;
+				[[fallthrough]];
+			case 2:
+				v15 |= (MegatileFlags)0x80000000;
 				[[fallthrough]];
 			default:
 				v15 |= HAS_RAMP;
