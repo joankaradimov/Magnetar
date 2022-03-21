@@ -3116,7 +3116,7 @@ int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed in
 		}
 		else
 		{
-			switch (GetGroundHeightAtPos(x, y))
+			switch (GetGroundHeightAtPos_(x, y))
 			{
 			case 0:
 				v15 |= MORE_THAN_12_MEDIUM_HEIGHT;
