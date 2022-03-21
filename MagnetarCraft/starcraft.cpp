@@ -2936,6 +2936,72 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 
 FailStubPatch loadParallaxStarGfx_patch(loadParallaxStarGfx);
 
+void GenerateMegatileDefaultFlags_()
+{
+	megatile_default_flags = (MegatileFlags*)SMemAlloc(4 * megatileCount, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 195, 8);
+
+	for (int megatile_index = 0; megatile_index < megatileCount; megatile_index++)
+	{
+		int v1 = 0;
+		unsigned v2 = 0;
+		int mid_elevation_minitiles = 0;
+		int high_elevation_minitiles = 0;
+		MiniTileFlagArray minitile_flags = MiniTileFlags->tile[megatile_index];
+		for (int i = 0; i < 4; i++)
+		{
+			for (int j = 0; j < 4; j++)
+			{
+				u16 v9 = minitile_flags.miniTile[4 * i + j];
+				if (v9 & 1)
+				{
+					++v2;
+				}
+				if (v9 & 4)
+				{
+					++high_elevation_minitiles;
+				}
+				if (v9 & 2)
+				{
+					++mid_elevation_minitiles;
+				}
+				if (v9 & 8)
+				{
+					++v1;
+				}
+			}
+		}
+
+		MegatileFlags v18 = (MegatileFlags)0;
+		if (v2 > 0xC)
+		{
+			v18 |= MORE_THAN_12_WALKABLE;
+		}
+		else
+		{
+			v18 |= LESS_THAN_13_WALKABLE;
+		}
+		if (v2 && v2 < 0x10)
+		{
+			v18 |= CLIFF_EDGE;
+		}
+		if (high_elevation_minitiles >= 12)
+		{
+			v18 |= MORE_THAN_12_HIGH_HEIGHT;
+		}
+		else if (mid_elevation_minitiles + high_elevation_minitiles >= 12)
+		{
+			v18 |= MORE_THAN_12_MEDIUM_HEIGHT;
+		}
+		if (v1)
+		{
+			v18 |= HAS_RAMP;
+		}
+		megatile_default_flags[megatile_index] = v18;
+	}
+}
+
+FailStubPatch GenerateMegatileDefaultFlags_patch(GenerateMegatileDefaultFlags);
+
 void initMapData_()
 {
 	char filename[MAX_PATH];
@@ -2954,7 +3020,7 @@ void initMapData_()
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	megatileCount = (unsigned int)bytes_read >> 5;
-	GenerateMegatileDefaultFlags();
+	GenerateMegatileDefaultFlags_();
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	TileSetMapSize = bytes_read / 52u;
