@@ -3061,6 +3061,47 @@ int GetGroundHeightAtPos__()
 
 FunctionPatch GetGroundHeightAtPos_patch((void*)0x4BD0F0, GetGroundHeightAtPos__);
 
+int isUnitAtHeight_(CUnit* unit, char location_flags)
+{
+	Position position = unit->sprite->position;
+	unsigned ground_height = GetGroundHeightAtPos_(position.x, position.y);
+
+	if (unit->statusFlags & StatusFlags::InAir)
+	{
+		switch (ground_height)
+		{
+		case 0: return location_flags & 8;
+		case 1: return location_flags & 0x10;
+		case 2: return location_flags & 0x20;
+		}
+	}
+	else
+	{
+		switch (ground_height)
+		{
+		case 0: return location_flags & 1;
+		case 1: return location_flags & 2;
+		case 2: return location_flags & 4;
+		}
+	}
+	return 0;
+}
+
+int __cdecl isUnitAtHeight__()
+{
+	CUnit* unit;
+	int location_flags;
+
+	__asm {
+		mov a1, eax
+		mov location_flags, esi
+	}
+
+	return isUnitAtHeight_(unit, location_flags);
+}
+
+FunctionPatch isUnitAtHeight_patch((void*)0x45F8D0, isUnitAtHeight__);
+
 int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed int x, signed int y, int reveal_from_air)
 {
 	if (vision_mask <= 0xFF)
