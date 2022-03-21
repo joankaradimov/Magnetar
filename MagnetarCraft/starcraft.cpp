@@ -3061,6 +3061,62 @@ int GetGroundHeightAtPos__()
 
 FunctionPatch GetGroundHeightAtPos_patch((void*)0x4BD0F0, GetGroundHeightAtPos__);
 
+int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed int x, signed int y, int reveal_from_air)
+{
+	if (vision_mask <= 0xFF)
+	{
+		int(__fastcall * *v14)(int, int, SightStruct*, MegatileFlags*, unsigned int, unsigned int);
+
+		v14 = &off_504524;
+		MegatileFlags v15 = vision_mask;
+		if (reveal_from_air)
+		{
+			v14 = &off_504528;
+		}
+		else
+		{
+			switch (GetGroundHeightAtPos(x, y))
+			{
+			case 0:
+				v15 |= MORE_THAN_12_MEDIUM_HEIGHT;
+				[[fallthrough]];
+			case 1:
+				v15 |= MORE_THAN_12_HIGH_HEIGHT;
+				[[fallthrough]];
+			default:
+				v15 |= HAS_RAMP;
+			}
+		}
+
+		SightStruct* v6 = &line_of_sight[sight_range];
+		int v11 = v6->tileSightWidth;
+		int v13 = v6->tileSightHeight;
+		if (x / 32 - v11 / 2 < 0 || x / 32 + v11 / 2 >= map_size.width ||
+			y / 32 - v13 / 2 < 0 || y / 32 + v13 / 2 >= map_size.height)
+		{
+			v14 += 2;
+		}
+		unsigned v7 = ~vision_mask & ~(vision_mask << 8);
+		sight_range = (*v14)(x / 32, y / 32, v6, &active_tiles[x / 32 + (y / 32) * map_size.width], v15, v7);
+	}
+	return sight_range;
+}
+
+int __stdcall revealSightAtLocation__(signed int x, signed int y, int reveal_from_air)
+{
+	int sight_range;
+	MegatileFlags vision_mask;
+
+	__asm {
+		mov sight_range, eax
+		mov vision_mask, ecx
+	}
+
+	return revealSightAtLocation_(sight_range, vision_mask, x, y, reveal_from_air);
+}
+
+FunctionPatch revealSightAtLocation_patch((void*)0x4806F0, revealSightAtLocation__);
+
 void sub_4CC990_()
 {
 	char buff[MAX_PATH];
