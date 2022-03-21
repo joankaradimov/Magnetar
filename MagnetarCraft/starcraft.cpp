@@ -3044,7 +3044,7 @@ unsigned int GetGroundHeightAtPos_(int x, int y)
 	u16 v2 = MiniTileFlags->tile[v1].miniTile[4 * ((y >> 3) & 3) + ((x >> 3) & 3)];
 
 	int ground_height = (v2 & 6) >> 1;
-	return min(ground_height, 3); // TODO: allow a fourth ground height level
+	return min(ground_height, 2); // TODO: allow a fourth ground height level
 }
 
 int GetGroundHeightAtPos__()
