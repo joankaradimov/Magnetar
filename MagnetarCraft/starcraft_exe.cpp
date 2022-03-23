@@ -8838,8 +8838,8 @@ void AddFogMask(int a1, int a2, int some_flags_maybe, int x, int y) {
 }
 DECL_FUNC(int(*sub_472F00)(), sub_472F00, 0x472f00);
 DECL_FUNC(int(*sub_472F20)(), sub_472F20, 0x472f20);
-DECL_FUNC(int (__stdcall*sub_472F40)(int, int), sub_472F40, 0x472f40);
-BOOL getActiveTileFlag(__int16 x, __int16 y, int a3, int a4) {
+DECL_FUNC(BOOL (__fastcall*sub_472F40)(__int16 a1, __int16 a2, MegatileFlags a3, MegatileFlags a4), sub_472F40, 0x472f40);
+BOOL getActiveTileFlag(__int16 x, __int16 y, MegatileFlags a3, MegatileFlags a4) {
     int address = 0x472f80;
     BOOL result_;
     __asm {
@@ -8855,7 +8855,23 @@ BOOL getActiveTileFlag(__int16 x, __int16 y, int a3, int a4) {
 }
 DECL_FUNC(int(*sub_472FD0)(), sub_472FD0, 0x472fd0);
 DECL_FUNC(int(*sub_472FF0)(), sub_472FF0, 0x472ff0);
-DECL_FUNC(int (__stdcall*canPlaceCreepBuildingAt)(int, int, int, int, int, int), canPlaceCreepBuildingAt, 0x473010);
+int canPlaceCreepBuildingAt(unsigned __int8 player_id, __int16 a2, __int16 a3, int a4, int a5, int a6, int a7) {
+    int address = 0x473010;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov al, player_id
+        push dword ptr a7
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*canPlaceNydusBuildingAt)(int, int, int, int, int), canPlaceNydusBuildingAt, 0x473150);
 DECL_FUNC(int (__stdcall*sub_473290)(int, int, int), sub_473290, 0x473290);
 DECL_FUNC(int (__stdcall*sub_4732C0)(int, int, int), sub_4732C0, 0x4732c0);
@@ -10407,12 +10423,27 @@ DECL_FUNC(int(*sub_47D540)(), sub_47D540, 0x47d540);
 DECL_FUNC(int(*sub_47D5F0)(), sub_47D5F0, 0x47d5f0);
 DECL_FUNC(int(*sub_47D660)(), sub_47D660, 0x47d660);
 DECL_FUNC(int(*sub_47D730)(), sub_47D730, 0x47d730);
-DECL_FUNC(int (__stdcall*sub_47D770)(int), sub_47D770, 0x47d770);
+DECL_FUNC(int (__stdcall*sub_47D770)(CUnit *a1), sub_47D770, 0x47d770);
 DECL_FUNC(int (__stdcall*sub_47D860)(int, int, CUnit *), sub_47D860, 0x47d860);
 DECL_FUNC(int(*sub_47D920)(), sub_47D920, 0x47d920);
 DECL_FUNC(char (__stdcall*RecheckSurrondingCreepDisappearance)(int x, int y), RecheckSurrondingCreepDisappearance, 0x47dc10);
 DECL_FUNC(int (__stdcall*sub_47DD60)(int), sub_47DD60, 0x47dd60);
-DECL_FUNC(int (__stdcall*sub_47DE40)(int), sub_47DE40, 0x47de40);
+signed int sub_47DE40(int a1, int a2, int eax0, UnitType a3) {
+    int address = 0x47de40;
+    signed result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov ecx, a1
+        mov edx, a2
+        mov eax, eax0
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(signed int (__stdcall*sub_47DF90)(CUnit *a1), sub_47DF90, 0x47df90);
 DECL_FUNC(int (__stdcall*sub_47E100)(int), sub_47E100, 0x47e100);
 DECL_FUNC(char (__stdcall*sub_47E2D0)(int x, int y, int a3, unsigned __int16 a4, int a5), sub_47E2D0, 0x47e2d0);
@@ -10490,10 +10521,10 @@ DECL_FUNC(int(*maskSomething2)(), maskSomething2, 0x47fe10);
 DECL_FUNC(int (__stdcall*fogGraphicSomething)(int, int, int), fogGraphicSomething, 0x47ff10);
 DECL_FUNC(int(*fogGraphicSomething_0)(), fogGraphicSomething_0, 0x480000);
 DECL_FUNC(int(*ResetFogSomething)(), ResetFogSomething, 0x4800a0);
-DECL_FUNC(int (__stdcall*gndSightCB_Edge)(int, int, int, int), gndSightCB_Edge, 0x480110);
-DECL_FUNC(int (__fastcall*gndSightCB_Inside)(int, int, SightStruct *, MegatileFlags *, unsigned int, unsigned int), gndSightCB_Inside, 0x480200);
-DECL_FUNC(int (__stdcall*airSightCB_Edge)(int, int, int, int), airSightCB_Edge, 0x4802a0);
-DECL_FUNC(int (__fastcall*airSightCB_Inside)(int, int, SightStruct *, MegatileFlags *, unsigned int, unsigned int), airSightCB_Inside, 0x480310);
+DECL_FUNC(u32 (__fastcall*gndSightCB_Edge)(int megatile_x, int megatile_y, SightStruct *a3, MegatileFlags *a4, MegatileFlags a5, int a6), gndSightCB_Edge, 0x480110);
+DECL_FUNC(int (__fastcall*gndSightCB_Inside)(int a1, int a2, SightStruct *a3, MegatileFlags *a4, unsigned int a5, MegatileFlags a6), gndSightCB_Inside, 0x480200);
+DECL_FUNC(_DWORD *(__fastcall*airSightCB_Edge)(int megatile_x, int megatile_y, SightStruct *a3, MegatileFlags *a4, int a5, int a6), airSightCB_Edge, 0x4802a0);
+DECL_FUNC(int (__fastcall*airSightCB_Inside)(int a1, int a2, SightStruct *a3, MegatileFlags *a4, unsigned int a5, MegatileFlags a6), airSightCB_Inside, 0x480310);
 DECL_FUNC(int(*DestroyFogSightData)(), DestroyFogSightData, 0x480350);
 DECL_FUNC(int(*sub_480410)(), sub_480410, 0x480410);
 DECL_FUNC(int(*sub_480430)(), sub_480430, 0x480430);
@@ -10501,7 +10532,7 @@ DECL_FUNC(int(*j_maskSomething2)(), j_maskSomething2, 0x4804c0);
 DECL_FUNC(int(*maskSomething1)(), maskSomething1, 0x4804d0);
 DECL_FUNC(int(*sub_4805D0)(), sub_4805D0, 0x4805d0);
 DECL_FUNC(int (__stdcall*updateFog)(int, int), updateFog, 0x4805f0);
-int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int x, signed int y, int a5) {
+int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int x, signed int y, int reveal_from_air) {
     int address = 0x4806f0;
     int result_;
     __asm {
@@ -10509,7 +10540,7 @@ int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int 
         xor ecx, ecx
         mov eax, sight_range
         mov ecx, vision_mask
-        push dword ptr a5
+        push dword ptr reveal_from_air
         push dword ptr y
         push dword ptr x
         call address
@@ -13280,9 +13311,9 @@ char BWFXN_MoveScreen(unsigned int a1, unsigned int a2) {
     return result_;
 }
 DECL_FUNC(int(*updateActiveTileInfo)(), updateActiveTileInfo, 0x49c4c0);
-int drawScreenRowTiles(int a1, TileID *a2, int a3, int a4, int a5) {
+unsigned int drawScreenRowTiles(int a1, TileID *a2, MegatileFlags *a3, int a4, int a5) {
     int address = 0x49c620;
-    int result_;
+    unsigned result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -16425,6 +16456,20 @@ signed int sub_4C82C0(int a1, CUnit *a2) {
         xor ecx, ecx
         mov eax, a1
         mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int trigMoveBuilding(int result, CUnit *a2, int a3) {
+    int address = 0x4c82d0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, result
+        mov edx, a2
+        push dword ptr a3
         call address
         mov result_, eax
     }
@@ -19814,7 +19859,7 @@ DECL_FUNC(int(*sub_4EB0C0)(), sub_4EB0C0, 0x4eb0c0);
 DECL_FUNC(int (__thiscall*sub_4EB0F0)(CUnit *this_), sub_4EB0F0, 0x4eb0f0);
 DECL_FUNC(int(*setNextWaypoint)(), setNextWaypoint, 0x4eb130);
 DECL_FUNC(int (__thiscall*SetUnitUnderDisruptionWeb)(CUnit *this_), SetUnitUnderDisruptionWeb, 0x4eb170);
-DECL_FUNC(int(*sub_4EB240)(), sub_4EB240, 0x4eb240);
+DECL_FUNC(char (__fastcall*sub_4EB240)(int a1, CUnit *a2), sub_4EB240, 0x4eb240);
 int setResourceTarget(CUnit *a1) {
     int address = 0x4eb290;
     int result_;
@@ -20123,12 +20168,12 @@ DECL_FUNC(char (__stdcall*gluLogin_Exit)(dialog *a1), gluLogin_Exit, 0x4ed840);
 DECL_FUNC(char (__stdcall*gluLogin_CharacterCreation)(dialog *a1), gluLogin_CharacterCreation, 0x4ed940);
 DECL_FUNC(bool (__fastcall*gluLogin_Main)(dialog *dlg, struct dlgEvent *evt), gluLogin_Main, 0x4edaa0);
 DECL_FUNC(int(*loadMenu_gluLogin)(), loadMenu_gluLogin, 0x4edc30);
-DECL_FUNC(int (__stdcall*GetClassWindow)(unsigned __int8 *), GetClassWindow, 0x4eddf0);
+DECL_FUNC(HWND (__stdcall*GetClassWindow)(const char *a1), GetClassWindow, 0x4eddf0);
 DECL_FUNC(int (__thiscall*openDlg)(LPCSTR lpDirectory, unsigned __int8 *, int), openDlg, 0x4ede60);
 DECL_FUNC(int (__stdcall*sub_4EDEF0)(int), sub_4EDEF0, 0x4edef0);
-DECL_FUNC(int (__stdcall*sub_4EDF20)(int csidl, int), sub_4EDF20, 0x4edf20);
+DECL_FUNC(int (__stdcall*sub_4EDF20)(int csidl, const char *a2), sub_4EDF20, 0x4edf20);
 DECL_FUNC(void (__thiscall*destroyFileFindIndexer)(bool exit_code), destroyFileFindIndexer, 0x4edfe0);
-DECL_FUNC(int(*FastIndexInit)(), FastIndexInit, 0x4ee070);
+DECL_FUNC(void (__cdecl*FastIndexInit)(), FastIndexInit, 0x4ee070);
 DECL_FUNC(int (__stdcall*mouseOver_Loading_CB)(int), mouseOver_Loading_CB, 0x4ee0f0);
 DECL_FUNC(int(*SinglePlayerMeleeInitGame)(), SinglePlayerMeleeInitGame, 0x4ee110);
 DECL_FUNC(void (__cdecl*BWFXN_InitializePlayerConsole)(), BWFXN_InitializePlayerConsole, 0x4ee180);
@@ -22979,7 +23024,7 @@ SightStruct(&line_of_sight)[12] = * ((decltype(&line_of_sight)) 0x513a18);
 ScrollSpeeds& scrollSpeeds = * ((decltype(&scrollSpeeds)) 0x513b68);
 char(&byte_513B92)[14] = * ((decltype(&byte_513B92)) 0x513b92);
 __int16(&unknown_campaign_related)[65] = * ((decltype(&unknown_campaign_related)) 0x513ba0);
-char(&byte_513C24)[] = * ((decltype(&byte_513C24)) 0x513c24);
+char(&byte_513C24)[12] = * ((decltype(&byte_513C24)) 0x513c24);
 DatLoad(&unitsDat)[54] = * ((decltype(&unitsDat)) 0x513c30);
 DatLoad(&ordersDat)[19] = * ((decltype(&ordersDat)) 0x513ec8);
 DatLoad(&spritesDat)[6] = * ((decltype(&spritesDat)) 0x513fb8);
@@ -23927,7 +23972,7 @@ char& _placementRelated = * ((decltype(&_placementRelated)) 0x64088c);
 char& byte_64088D = * ((decltype(&byte_64088D)) 0x64088d);
 Position& placeBuilding = * ((decltype(&placeBuilding)) 0x640890);
 char(&byte_640898)[] = * ((decltype(&byte_640898)) 0x640898);
-char(&byte_6408F8)[] = * ((decltype(&byte_6408F8)) 0x6408f8);
+char(&byte_6408F8)[96] = * ((decltype(&byte_6408F8)) 0x6408f8);
 int& placeBuildingMessageId = * ((decltype(&placeBuildingMessageId)) 0x640958);
 __int16(&word_64095C)[] = * ((decltype(&word_64095C)) 0x64095c);
 char(&algn_64095E)[2] = * ((decltype(&algn_64095E)) 0x64095e);
@@ -24099,7 +24144,7 @@ int& dword_658B00 = * ((decltype(&dword_658B00)) 0x658b00);
 int& dword_658B04 = * ((decltype(&dword_658B04)) 0x658b04);
 int& dword_658B08 = * ((decltype(&dword_658B08)) 0x658b08);
 int& dword_658B0C = * ((decltype(&dword_658B0C)) 0x658b0c);
-int(&dword_658B10)[] = * ((decltype(&dword_658B10)) 0x658b10);
+int(&dword_658B10)[1024] = * ((decltype(&dword_658B10)) 0x658b10);
 int& dword_65EB10 = * ((decltype(&dword_65EB10)) 0x65eb10);
 int& dword_65EB14 = * ((decltype(&dword_65EB14)) 0x65eb14);
 int& dword_65EB18 = * ((decltype(&dword_65EB18)) 0x65eb18);
@@ -24877,6 +24922,7 @@ char& mapStarted = * ((decltype(&mapStarted)) 0x6d121c);
 WORD *& networkTable = * ((decltype(&networkTable)) 0x6d1220);
 char& byte_6D1224 = * ((decltype(&byte_6D1224)) 0x6d1224);
 char& byte_6D1225 = * ((decltype(&byte_6D1225)) 0x6d1225);
+UnknownTilesetRelated1& stru_6D1228 = * ((decltype(&stru_6D1228)) 0x6d1228);
 void (__thiscall *&dword_6D1234)(dialog *) = *((decltype(&dword_6D1234)) 0x6d1234);
 StringTbl& StatTxtTbl = * ((decltype(&StatTxtTbl)) 0x6d1238);
 void *& dword_6D123C = * ((decltype(&dword_6D123C)) 0x6d123c);
