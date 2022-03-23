@@ -1500,6 +1500,24 @@ int LoadMap_()
 
 FunctionPatch LoadMap_patch(LoadMap, LoadMap_);
 
+UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
+	&stru_512778,
+	&stru_6D1228,
+	&stru_6D1228,
+	&stru_5127B8,
+	&stru_512778,
+	&stru_51279C,
+	&stru_51279C,
+	&stru_51279C,
+};
+
+MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
+MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
+
 signed int GameInit_()
 {
 	memset(Chat_GameText, 0, 2832u);
@@ -1526,7 +1544,7 @@ signed int GameInit_()
 	dword_63FF34 = 0;
 	InitializeBulletArray();
 	InitializeOrderArray();
-	sub_4CB5B0(0, off_5127DC[CurrentTileSet]->y);
+	sub_4CB5B0(0, TILESET_PALETTE_RELATED[CurrentTileSet]->y);
 	sub_41E450(sub_4BDB30, palette);
 	sub_4C99C0();
 	if (!loadGameFileHandle)
@@ -2411,6 +2429,8 @@ const char* TILESET_NAMES[] = {
 	"Ice",
 	"Twilight",
 };
+
+MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES);
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -5059,26 +5079,6 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 }
 
 FunctionPatch packColorShifts_patch(packColorShifts, packColorShifts_);
-
-MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES);
-
-int TILESET_PALETTE_RELATED[] = {
-	0x512778,
-	0x6D1228,
-	0x6D1228,
-	0x5127B8,
-	0x512778,
-	0x51279C,
-	0x51279C,
-	0x51279C,
-};
-
-MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
 
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
