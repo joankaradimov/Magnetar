@@ -3179,7 +3179,7 @@ int __cdecl isUnitAtHeight__()
 	int location_flags;
 
 	__asm {
-		mov a1, eax
+		mov unit, eax
 		mov location_flags, esi
 	}
 
