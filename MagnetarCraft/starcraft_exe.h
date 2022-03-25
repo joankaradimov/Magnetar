@@ -199,7 +199,7 @@ extern BOOL (__stdcall*SNetInitializeProvider)(DWORD providerName, int *provider
 extern BOOL (__stdcall*SNetPerformUpgrade)(DWORD *upgradestatus);
 extern BOOL (__stdcall*SFileGetFileName)(HANDLE hFile, char *buffer, int length);
 extern BOOL (__stdcall*SFileSetIoErrorMode)(int mode, void *callback);
-extern BOOL (__stdcall*SFileOpenFile)(char *filename, HANDLE handle);
+extern BOOL (__stdcall*SFileOpenFile)(const char *filename, HANDLE handle);
 extern LONG (__stdcall*SFileGetFileSize)(HANDLE hFile, LPDWORD lpFileSizeHigh);
 extern BOOL (__stdcall*SFileReadFile)(HANDLE hFile, void *buffer, DWORD nNumberOfBytesToRead, int *read, LONG lpDistanceToMoveHigh);
 extern HANDLE (__stdcall*SBmpAllocLoadImage)(const char *fileName, int *palette, void **buffer, int *width, int *height, int unused6, int unused7, void *(__stdcall *allocFunction)(DWORD));
@@ -4064,7 +4064,7 @@ extern bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted);
 extern int(*BWFXN_gluPOK_MBox)();
-extern int(*BWFXN_gluPOKCancel_MBox)();
+void BWFXN_gluPOKCancel_MBox(const char *a1);
 extern int(*load_gluGameMode_BINDLG)();
 CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries);
 extern int(*load_gluPOKSplitBINDLG)();

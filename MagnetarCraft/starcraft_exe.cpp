@@ -765,7 +765,7 @@ DECL_FUNC(BOOL (__stdcall*SNetInitializeProvider)(DWORD providerName, int *provi
 DECL_FUNC(BOOL (__stdcall*SNetPerformUpgrade)(DWORD *upgradestatus), SNetPerformUpgrade, 0x41012a);
 DECL_FUNC(BOOL (__stdcall*SFileGetFileName)(HANDLE hFile, char *buffer, int length), SFileGetFileName, 0x410130);
 DECL_FUNC(BOOL (__stdcall*SFileSetIoErrorMode)(int mode, void *callback), SFileSetIoErrorMode, 0x410136);
-DECL_FUNC(BOOL (__stdcall*SFileOpenFile)(char *filename, HANDLE handle), SFileOpenFile, 0x41013c);
+DECL_FUNC(BOOL (__stdcall*SFileOpenFile)(const char *filename, HANDLE handle), SFileOpenFile, 0x41013c);
 DECL_FUNC(LONG (__stdcall*SFileGetFileSize)(HANDLE hFile, LPDWORD lpFileSizeHigh), SFileGetFileSize, 0x410142);
 DECL_FUNC(BOOL (__stdcall*SFileReadFile)(HANDLE hFile, void *buffer, DWORD nNumberOfBytesToRead, int *read, LONG lpDistanceToMoveHigh), SFileReadFile, 0x410148);
 DECL_FUNC(HANDLE (__stdcall*SBmpAllocLoadImage)(const char *fileName, int *palette, void **buffer, int *width, int *height, int unused6, int unused7, void *(__stdcall *allocFunction)(DWORD)), SBmpAllocLoadImage, 0x41014e);
@@ -15434,7 +15434,14 @@ DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4
 DECL_FUNC(bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt), sub_4B6E10, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
 DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
-DECL_FUNC(int(*BWFXN_gluPOKCancel_MBox)(), BWFXN_gluPOKCancel_MBox, 0x4b73b0);
+void BWFXN_gluPOKCancel_MBox(const char *a1) {
+    int address = 0x4b73b0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
 CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries) {
     int address = 0x4b7820;
