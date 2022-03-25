@@ -3283,7 +3283,7 @@ void sub_4CC990_()
 
 FunctionPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
 
-int CreateCampaignGame__(MapData mapData)
+int CreateCampaignGame_(MapData mapData)
 {
 	MapChunks mapChunks;
 	GameData v4;
@@ -3313,7 +3313,7 @@ int CreateCampaignGame__(MapData mapData)
 	}
 }
 
-FailStubPatch CreateCampaignGame__patch(CreateCampaignGame);
+FailStubPatch CreateCampaignGame_patch(CreateCampaignGame);
 
 bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -4000,7 +4000,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		}
 		else
 		{
-			CreateCampaignGame__(active_campaign_menu_entry->next_mission);
+			CreateCampaignGame_(active_campaign_menu_entry->next_mission);
 		}
 	}
 	return active_campaign_menu_entry != NULL;
@@ -4405,7 +4405,7 @@ int SwitchMenu_()
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
-		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame__((MapData)level_cheat_mission))
+		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
 		{
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			IsExpansion = 0;
@@ -4739,7 +4739,7 @@ int __stdcall ContinueCampaign_(int a1)
 			gwGameMode = GAME_CINEMATIC;
 			return 1;
 		}
-		if (CreateCampaignGame__(active_campaign_menu_entry->next_mission))
+		if (CreateCampaignGame_(active_campaign_menu_entry->next_mission))
 		{
 			switch (active_campaign_menu_entry->race)
 			{
