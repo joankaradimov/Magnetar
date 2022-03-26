@@ -4064,7 +4064,7 @@ extern bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted);
 extern int(*BWFXN_gluPOK_MBox)();
-void BWFXN_gluPOKCancel_MBox(const char *a1);
+int BWFXN_gluPOKCancel_MBox(const char *a1);
 extern int(*load_gluGameMode_BINDLG)();
 CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries);
 extern int(*load_gluPOKSplitBINDLG)();

@@ -15434,13 +15434,16 @@ DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4
 DECL_FUNC(bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt), sub_4B6E10, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
 DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
-void BWFXN_gluPOKCancel_MBox(const char *a1) {
+int BWFXN_gluPOKCancel_MBox(const char *a1) {
     int address = 0x4b73b0;
+    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
+        mov result_, eax
     }
+    return result_;
 }
 DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
 CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries) {
