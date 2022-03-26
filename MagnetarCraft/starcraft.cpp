@@ -4245,37 +4245,22 @@ void loadMenu_gluExpCmpgn_()
 
 FailStubPatch loadMenu_gluExpCmpgn_patch(loadMenu_gluExpCmpgn);
 
-int loadMenu_gluCustm_(int is_multiplayer)
+void loadMenu_gluCustm_(int is_multiplayer)
 {
-	char v1; // bl@1
-	const char *v2; // ecx@2
-	dialog *v3; // eax@3
-	dialog *v4; // esi@3
-	int v5; // eax@7
-	int result; // eax@37
-
 	dword_59B844 = is_multiplayer;
-	v1 = 0;
-	if (LOBYTE(multiPlayerMode))
-		v2 = "rez\\gluCreat.bin";
-	else
-		v2 = "rez\\gluCustm.bin";
-	v3 = (dialog *)loadFullMenuDLG(v2, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	v4 = v3;
+	char v1 = 0;
+	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
+	dialog* v3 = loadFullMenuDLG(v2, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (v3)
 	{
 		v3->lFlags |= 4u;
 		AllocInitDialogData(v3, v3, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 		v1 = 0;
 	}
-	else
-	{
-		v4 = 0;
-	}
-	dword_6D5A70 = v4;
+	dword_6D5A70 = v3;
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
-	v5 = gluLoadBINDlg(dword_6D5A70, gluCustm_Interact);
+	int v5 = gluLoadBINDlg(dword_6D5A70, gluCustm_Interact);
 	if (v5 != -3)
 	{
 		if (v5 == 12)
@@ -4320,42 +4305,37 @@ int loadMenu_gluCustm_(int is_multiplayer)
 		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
 		scenarioChk = 0;
 	}
+
 	if (!LOBYTE(multiPlayerMode))
 	{
 		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
-		goto LABEL_37;
 	}
-	if ((unsigned int)NetMode.as_number <= 0x4D4F444D)
+	else if (NetMode.as_number == 'SCBL')
 	{
-		if (NetMode.as_number == 0x4D4F444D)
-		{
-		LABEL_32:
-			glGluesMode = MenuPosition::GLUE_MODEM;
-			goto LABEL_37;
-		}
-		if (NetMode.as_number == 1112425812)
-		{
-			glGluesMode = MenuPosition::GLUE_BATTLE;
-			goto LABEL_37;
-		}
-		if (NetMode.as_number == 1296321880)
-			goto LABEL_32;
-		goto LABEL_35;
+		glGluesMode = MenuPosition::GLUE_DIRECT;
 	}
-	if (NetMode.as_number != 1396916812)
+	else if (NetMode.as_number == 'MODM')
 	{
-	LABEL_35:
+		glGluesMode = MenuPosition::GLUE_MODEM;
+	}
+	else if (NetMode.as_number == 'BNET')
+	{
+		glGluesMode = MenuPosition::GLUE_BATTLE;
+	}
+	else if (NetMode.as_number == 'MDMX')
+	{
+		glGluesMode = MenuPosition::GLUE_MODEM;
+	}
+	else
+	{
 		glGluesMode = MenuPosition::GLUE_GAME_SELECT;
-		goto LABEL_37;
 	}
-	glGluesMode = MenuPosition::GLUE_DIRECT;
+
 LABEL_37:
 	changeMenu();
-	result = (int)dword_59BA60;
 	if (dword_59BA60)
-		result = SMemFree(dword_59BA60, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1484, v1);
+		SMemFree(dword_59BA60, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1484, v1);
 	dword_6D5A74 = 0;
-	return result;
 }
 
 FailStubPatch loadMenu_gluCustm_patch(loadMenu_gluCustm);
