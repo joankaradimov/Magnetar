@@ -4159,12 +4159,56 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 
 FailStubPatch gluExpCmpgn_CustomCtrlID_patch(gluExpCmpgn_CustomCtrlID);
 
+dialog* __fastcall loadFullMenuDLG_(const char* szFileName, dialog* buffer, int read, const char* logfilename, int logline)
+{
+	HANDLE phFile;
+
+	if (!SFileOpenFile(szFileName, &phFile))
+	{
+		int v7 = SErrGetLastError();
+		if (v7 != 2 && v7 != 1006)
+		{
+			SysWarn_FileNotFound(szFileName, v7);
+		}
+	}
+
+	int v9 = SFileGetFileSize(phFile, 0);
+	if (v9 == -1)
+	{
+		FileFatal(phFile, GetLastError());
+	}
+	if (read)
+	{
+		*(_DWORD*)read = v9;
+	}
+	if (buffer == NULL)
+	{
+		buffer = (dialog*)SMemAlloc(v9, logfilename, logline, 0);
+	}
+	if (!SFileReadFile(phFile, buffer, v9, &read, 0))
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(phFile, 24);
+		}
+		FileFatal(phFile, GetLastError());
+	}
+	if (read != v9)
+	{
+		FileFatal(phFile, 24);
+	}
+	SFileCloseFile(phFile);
+	return buffer;
+}
+
+FunctionPatch loadFullMenuDLG_patch(loadFullMenuDLG, loadFullMenuDLG_);
+
 void loadMenu_gluCmpgn_()
 {
 	OpheliaEnabled = GLUE_MAIN_MENU;
 	multiPlayerMode = GLUE_MAIN_MENU;
 	sub_4B26E0();
-	dialog* campaign_dialog = loadFullMenuDLG("rez\\gluCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	dialog* campaign_dialog = loadFullMenuDLG_("rez\\gluCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (campaign_dialog)
 	{
 		campaign_dialog->lFlags |= 4u;
@@ -4207,7 +4251,7 @@ void loadMenu_gluExpCmpgn_()
 	OpheliaEnabled = 0;
 	multiPlayerMode = 0;
 	sub_4B5050();
-	dialog* campaign_dialog = loadFullMenuDLG("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	dialog* campaign_dialog = loadFullMenuDLG_("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (campaign_dialog)
 	{
 		campaign_dialog->lFlags |= 4u;
@@ -4250,7 +4294,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	dword_59B844 = is_multiplayer;
 	char v1 = 0;
 	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
-	dialog* v3 = loadFullMenuDLG(v2, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	dialog* v3 = loadFullMenuDLG_(v2, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (v3)
 	{
 		v3->lFlags |= 4u;
