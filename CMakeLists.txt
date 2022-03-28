@@ -21,3 +21,4 @@ add_subdirectory("MemoryModule")
 add_subdirectory("Storm")
 
 set(YAML_CPP_BUILD_TOOLS OFF CACHE INTERNAL "")
+add_subdirectory("yaml-cpp")

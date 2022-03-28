@@ -1,10 +1,13 @@
 #include <Windows.h>
+#include <ShlObj.h>
 #include <mbstring.h>
 #include <stdio.h>
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
 #include <exception>
 #include <sstream>
+#include <fstream>
+#include <yaml-cpp/yaml.h>
 #include "patching/BasePatch.h"
 #include "patching/FailStubPatch.h"
 
@@ -318,15 +321,91 @@ void FastIndexInit_()
 
 FailStubPatch FastIndexInit_patch(FastIndexInit);
 
+std::string LocateStarCraft()
+{
+	BROWSEINFOA browse_Info;
+	browse_Info.hwndOwner = nullptr;
+	browse_Info.pidlRoot = NULL;
+	browse_Info.pszDisplayName = NULL;
+	browse_Info.lpszTitle = "Select a directory with a StarCraft 1.16.1 installation";
+	browse_Info.ulFlags = BIF_USENEWUI | BIF_NONEWFOLDERBUTTON | BIF_UAHINT;
+	browse_Info.lpfn = NULL;
+	browse_Info.lParam = 0;
+	browse_Info.iImage = -1;
+
+	LPITEMIDLIST item = SHBrowseForFolderA(&browse_Info);
+
+	if (item == nullptr)
+	{
+		exit(1);
+	}
+
+	char path[MAX_PATH];
+	SHGetPathFromIDListA(item, path);
+	return path;
+}
+
+const char* CONFIG_FILE = "MagnetarCraft.yml";
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
-	StarCraftExecutable starcraft_exe("StarCraft.exe");
-	starcraft_exe.check();
+	bool starcraft_root_manually_selected = false;
+	YAML::Node config;
+	try
+	{
+		config = YAML::LoadFile(CONFIG_FILE);
+	}
+	catch (const YAML::BadFile& _exception)
+	{
+	}
+
+	std::string starcraft_root;
+	try
+	{
+		starcraft_root = config["starcraft-root"].as<std::string>();
+	}
+	catch (const YAML::TypedBadConversion<std::string>& e)
+	{
+		// TODO: try to find StarCraft path in registry, maybe?
+		starcraft_root = LocateStarCraft();
+		starcraft_root_manually_selected = true;
+	}
+
+	StarCraftExecutable* starcraft_exe = nullptr;
+	while (true)
+	{
+		try
+		{
+			std::string starcraft_exe_path = starcraft_root + "\\StarCraft.exe";
+			starcraft_exe = new StarCraftExecutable(starcraft_exe_path.c_str());
+			starcraft_exe->check();
+
+			break;
+		}
+		catch (const std::exception& e)
+		{
+			if (starcraft_exe)
+			{
+				delete starcraft_exe;
+				starcraft_exe = nullptr;
+			}
+			if (starcraft_root_manually_selected)
+			{
+				report_error(e.what());
+			}
+			starcraft_root = LocateStarCraft();
+			starcraft_root_manually_selected = true;
+		}
+	}
+
+	config["starcraft-root"] = starcraft_root;
+	std::ofstream(CONFIG_FILE) << config;
+	SetCurrentDirectoryA(starcraft_root.c_str());
 
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
 
-	hInst = starcraft_exe.GetModule();
+	hInst = starcraft_exe->GetModule();
 	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");
 	localDll_Init_(hInst);

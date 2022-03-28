@@ -1,3 +1,6 @@
 [submodule "MemoryModule"]
 	path = MemoryModule
 	url = git@github.com:joankaradimov/MemoryModule.git
+[submodule "yaml-cpp"]
+	path = yaml-cpp
+	url = git@github.com:jbeder/yaml-cpp.git

@@ -18,5 +18,8 @@ add_executable(MagnetarCraft WIN32
 	starcraft_exe.cpp
 )
 
+include_directories(${YAML_CPP_INCLUDE_DIRS})
+
 target_link_libraries(MagnetarCraft PRIVATE MemoryModule)
+target_link_libraries(MagnetarCraft PRIVATE "yaml-cpp")
 target_link_libraries(MagnetarCraft PRIVATE "ddraw" "dsound" "version" "imm32")
