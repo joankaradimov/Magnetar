@@ -11,9 +11,57 @@
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
 void* const STARCRAFT_IMAGE_END = (char*)STARCRAFT_IMAGE_BASE + STARCRAFT_IMAGE_SIZE;
+WORD EXPECTED_MAJOR_VERSION = 1;
+WORD EXPECTED_MINOR_VERSION = 16;
+WORD EXPECTED_PATCH_VERSION = 1;
 
 #pragma section(".scimg", read, write)
 __declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 3];
+
+class FileInfo
+{
+public:
+	FileInfo(const char* path): version_data(nullptr)
+	{
+		DWORD _unused;
+		int version_info_size = GetFileVersionInfoSizeA(path, &_unused);
+		if (version_info_size)
+		{
+			version_data = malloc(version_info_size);
+			if (GetFileVersionInfoA(path, 0, version_info_size, version_data))
+			{
+				VS_FIXEDFILEINFO* file_info_buffer;
+				unsigned int file_info_buffer_length;
+				if (VerQueryValueA(version_data, "\\", (LPVOID*)&file_info_buffer, &file_info_buffer_length))
+				{
+					file_info = file_info_buffer;
+				}
+			}
+		}
+	}
+
+	~FileInfo()
+	{
+		if (version_data)
+		{
+			free(version_data);
+		}
+	}
+
+	bool is_valid()
+	{
+		return version_data != nullptr;
+	}
+
+	VS_FIXEDFILEINFO* operator ->()
+	{
+		return file_info;
+	}
+
+private:
+	void* version_data;
+	VS_FIXEDFILEINFO* file_info;
+};
 
 static LPVOID _VirtualAlloc(LPVOID address, SIZE_T size, DWORD allocationType, DWORD protect, void* userdata) {
 	if (address < STARCRAFT_IMAGE_BASE || address >= STARCRAFT_IMAGE_END) {
@@ -49,7 +97,7 @@ static BOOL _VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* user
 class StarCraftExecutable
 {
 public:
-	StarCraftExecutable(const char* path) : module(nullptr)
+	StarCraftExecutable(const char* path) : module(nullptr), file_info(path)
 	{
 		strcpy(executable_path, path);
 		if (const char* trimmed_executable_name = strrchr(executable_path, '\\'))
@@ -97,6 +145,23 @@ public:
 
 	void check()
 	{
+		if (!file_info.is_valid())
+		{
+			std::ostringstream error_message;
+			error_message << "Could not retrieve version info for " << executable_name;
+			throw std::exception(error_message.str().c_str());
+		}
+
+		if (HIWORD(file_info->dwProductVersionMS) != EXPECTED_MAJOR_VERSION ||
+			LOWORD(file_info->dwProductVersionMS) != EXPECTED_MINOR_VERSION ||
+			HIWORD(file_info->dwProductVersionLS) != EXPECTED_PATCH_VERSION)
+		{
+			std::ostringstream error_message;
+			error_message << "Expected '" << executable_name << "' " << EXPECTED_MAJOR_VERSION << '.' << EXPECTED_MINOR_VERSION << '.' << EXPECTED_PATCH_VERSION;
+			error_message << "; found " << HIWORD(file_info->dwProductVersionMS) << '.' << LOWORD(file_info->dwProductVersionMS) << '.' << HIWORD(file_info->dwProductVersionLS);
+			throw std::exception(error_message.str().c_str());
+		}
+
 		HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(module, STARCRAFT_IMAGE_SIZE, _VirtualAlloc, _VirtualFree, _LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
 		if (starcraftModule == NULL)
 		{
@@ -110,6 +175,7 @@ private:
 	char executable_path[MAX_PATH]; // e.g. "C:\\Program Files\\StarCraft.exe"
 	const char* executable_name; // e.g. "StarCraft.exe"
 	HMODULE module;
+	FileInfo file_info;
 };
 
 void init_stacraftexe_clib()
