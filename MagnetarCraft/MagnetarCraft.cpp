@@ -4,6 +4,7 @@
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
 #include <exception>
+#include <sstream>
 #include "patching/BasePatch.h"
 #include "patching/FailStubPatch.h"
 
@@ -44,6 +45,72 @@ static BOOL _VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* user
 	DWORD old_protect;
 	return VirtualProtect(address, size, MEM_RESET, &old_protect);
 }
+
+class StarCraftExecutable
+{
+public:
+	StarCraftExecutable(const char* path) : module(nullptr)
+	{
+		strcpy(executable_path, path);
+		if (const char* trimmed_executable_name = strrchr(executable_path, '\\'))
+		{
+			executable_name = trimmed_executable_name + 1;
+		}
+		else if (const char* trimmed_executable_name = strrchr(executable_path, '/'))
+		{
+			executable_name = trimmed_executable_name + 1;
+		}
+		else
+		{
+			executable_name = executable_path;
+		}
+
+		if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END)
+		{
+			std::ostringstream error_message;
+			error_message << "Could not reserve memory at base address 0x" << std::hex << STARCRAFT_IMAGE_BASE << " for " << executable_name;
+			throw std::exception(error_message.str().c_str());
+		}
+
+		module = LoadLibraryA(executable_path);
+
+		if (module == nullptr)
+		{
+			std::ostringstream error_message;
+			error_message << "Could not load '" << executable_name << '\'';
+			throw std::exception(error_message.str().c_str());
+		}
+	}
+
+	~StarCraftExecutable()
+	{
+		if (module != nullptr)
+		{
+			FreeLibrary(module);
+		}
+	}
+
+	HMODULE GetModule()
+	{
+		return module;
+	}
+
+	void check()
+	{
+		HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(module, STARCRAFT_IMAGE_SIZE, _VirtualAlloc, _VirtualFree, _LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
+		if (starcraftModule == NULL)
+		{
+			std::ostringstream error_message;
+			error_message << "Could not initialize '" << executable_name << "' as a library";
+			throw std::exception(error_message.str().c_str());
+		}
+	}
+
+private:
+	char executable_path[MAX_PATH]; // e.g. "C:\\Program Files\\StarCraft.exe"
+	const char* executable_name; // e.g. "StarCraft.exe"
+	HMODULE module;
+};
 
 void init_stacraftexe_clib()
 {
@@ -187,25 +254,13 @@ FailStubPatch FastIndexInit_patch(FastIndexInit);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
-	if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END) {
-		throw std::exception("Could not reserve memory at base address 0x400000 for Starcraft.exe");
-	}
-
-	HINSTANCE starcraftExeData = LoadLibrary(L"Starcraft.exe");
-
-	if (starcraftExeData == NULL) {
-		throw std::exception("Could not load starcraft.exe to memory");
-	}
-
-	HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(starcraftExeData, STARCRAFT_IMAGE_SIZE, _VirtualAlloc, _VirtualFree, _LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
-	if (starcraftModule == NULL) {
-		throw std::exception("Could not initialize starcraft.exe as a library");
-	}
+	StarCraftExecutable starcraft_exe("StarCraft.exe");
+	starcraft_exe.check();
 
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
 
-	hInst = starcraftExeData;
+	hInst = starcraft_exe.GetModule();
 	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");
 	localDll_Init_(hInst);
