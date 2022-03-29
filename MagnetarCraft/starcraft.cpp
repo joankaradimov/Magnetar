@@ -3607,14 +3607,17 @@ CampaignMenuEntry zerg_campaign_menu_entries_[] = {
 	{0x2A, (MapData) ExpandedMapData::EMD_zerg04, C_THE_DREAM, 0, RACE_Zerg, 0},
 	{0x23, (MapData) ExpandedMapData::EMD_zerg04, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x24, (MapData) ExpandedMapData::EMD_zerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2B, (MapData) ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO, 0, RACE_Zerg, 0},
+	{0x2B, (MapData) ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO_INTRO, 0, RACE_Zerg, 0},
+	{0, (MapData) ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO, 0, RACE_Zerg, 1},
 	{0x25, (MapData) ExpandedMapData::EMD_zerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x26, (MapData) ExpandedMapData::EMD_zerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x27, (MapData) ExpandedMapData::EMD_zerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2C, (MapData) ExpandedMapData::EMD_zerg09, C_THE_WARP, 0, RACE_Zerg, 0},
+	{0x2C, (MapData) ExpandedMapData::EMD_zerg09, C_THE_WARP_INTRO, 0, RACE_Zerg, 0},
+	{0, (MapData) ExpandedMapData::EMD_zerg09, C_THE_WARP, 0, RACE_Zerg, 1},
 	{0x28, (MapData) ExpandedMapData::EMD_zerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x29, (MapData) ExpandedMapData::EMD_zerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2D, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 0},
+	{0x2D, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR_INTRO, 0, RACE_Zerg, 0},
+	{0, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 1},
 	{0},
 };
 
@@ -3622,18 +3625,22 @@ CampaignMenuEntry terran_campaign_menu_entries_[] = {
 	{1, (MapData) ExpandedMapData::EMD_tutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{2, (MapData) ExpandedMapData::EMD_terran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{3, (MapData) ExpandedMapData::EMD_terran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xC, (MapData)ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL, 0, RACE_Terran, 0},
+	{0xC, (MapData) ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL_INTRO, 0, RACE_Terran, 0},
+	{0, (MapData) ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL, 0, RACE_Terran, 1},
 	{4, (MapData) ExpandedMapData::EMD_terran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{5, (MapData) ExpandedMapData::EMD_terran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{6, (MapData) ExpandedMapData::EMD_terran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xD, (MapData)ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II, 0, RACE_Terran, 0},
+	{0xD, (MapData) ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II_INTRO, 0, RACE_Terran, 0},
+	{0, (MapData) ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II, 0, RACE_Terran, 1},
 	{7, (MapData) ExpandedMapData::EMD_terran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{8, (MapData) ExpandedMapData::EMD_terran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{9, (MapData) ExpandedMapData::EMD_terran09, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xE, (MapData) ExpandedMapData::EMD_terran11, C_OPEN_REBELION, 0, RACE_Terran, 0},
+	{0xE, (MapData) ExpandedMapData::EMD_terran11, C_OPEN_REBELION_INTRO, 0, RACE_Terran, 0},
+	{0, (MapData) ExpandedMapData::EMD_terran11, C_OPEN_REBELION, 0, RACE_Terran, 1},
 	{0xA, (MapData) ExpandedMapData::EMD_terran11, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0xB, (MapData) ExpandedMapData::EMD_terran12, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xF, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 0},
+	{0xF, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION_INTRO, 0, RACE_Terran, 0},
+	{0, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 1},
 	{0},
 };
 
@@ -3641,13 +3648,16 @@ CampaignMenuEntry protoss_campaign_menu_entries_[] = {
 	{0x11, (MapData) ExpandedMapData::EMD_protoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x12, (MapData) ExpandedMapData::EMD_protoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x13, (MapData) ExpandedMapData::EMD_protoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1B, (MapData) ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX, 0, RACE_Protoss, 0},
+	{0x1B, (MapData) ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX_INTRO, 0, RACE_Protoss, 0},
+	{0, (MapData) ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX, 0, RACE_Protoss, 1},
 	{0x14, (MapData) ExpandedMapData::EMD_protoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x15, (MapData) ExpandedMapData::EMD_protoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1C, (MapData) ExpandedMapData::EMD_protoss06, C_THE_AMBUSH, 0, RACE_Protoss, 0},
+	{0x1C, (MapData) ExpandedMapData::EMD_protoss06, C_THE_AMBUSH_INTRO, 0, RACE_Protoss, 0},
+	{0, (MapData) ExpandedMapData::EMD_protoss06, C_THE_AMBUSH, 0, RACE_Protoss, 1},
 	{0x16, (MapData) ExpandedMapData::EMD_protoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x17, (MapData) ExpandedMapData::EMD_protoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1D, (MapData) ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR, 0, RACE_Protoss, 0},
+	{0x1D, (MapData) ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR_INTRO, 0, RACE_Protoss, 0},
+	{0, (MapData) ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR, 0, RACE_Protoss, 1},
 	{0x18, (MapData) ExpandedMapData::EMD_protoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x19, (MapData) ExpandedMapData::EMD_protoss09, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x1A, (MapData) ExpandedMapData::EMD_protoss10, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
@@ -4623,32 +4633,7 @@ void CreateMainWindow_()
 }
 
 FailStubPatch CreateMainWindow_patch(CreateMainWindow);
-
-void PlayMovieWithIntro_(Cinematic a1)
-{
-	int v1 = 10;
-	while (v1--)
-	{
-		if (cinematic_intros[v1].actual_cinematic == a1)
-		{
-			PlayMovie(cinematic_intros[v1].intro_cinematic);
-			break;
-		}
-	}
-	if (gwGameMode != GAME_EXIT)
-	{
-		PlayMovie(a1);
-	}
-}
-
 FailStubPatch PlayMovieWithIntro_patch(PlayMovieWithIntro);
-
-void playActiveCinematic_()
-{
-	PlayMovieWithIntro_(active_cinematic);
-	active_cinematic = Cinematic::C_NONE;
-}
-
 FailStubPatch playActiveCinematic_patch(playActiveCinematic);
 
 int sub_4DBD20_(const char* a1, size_t a2, int* a3)
@@ -4944,7 +4929,8 @@ void GameMainLoop_()
 					GameRun_(GLUE_MAIN_MENU);
 					continue;
 				case GAME_CINEMATIC:
-					playActiveCinematic_();
+					PlayMovie(active_cinematic);
+					active_cinematic = Cinematic::C_NONE;
 					if (gwGameMode == GAME_CINEMATIC)
 						ContinueCampaign_(1);
 					continue;
