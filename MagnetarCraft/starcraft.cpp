@@ -3597,7 +3597,7 @@ CampaignMenuEntry terran_swcampaign_menu_entries_[] = {
 	{0x36, (MapData)ExpandedMapData::EMD_swterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0x37, (MapData)ExpandedMapData::EMD_swterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0x38, (MapData)ExpandedMapData::EMD_swterran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0},
 };
 
 CampaignMenuEntry zerg_campaign_menu_entries_[] = {
@@ -3615,7 +3615,7 @@ CampaignMenuEntry zerg_campaign_menu_entries_[] = {
 	{0x28, (MapData) ExpandedMapData::EMD_zerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x29, (MapData) ExpandedMapData::EMD_zerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x2D, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0},
 };
 
 CampaignMenuEntry terran_campaign_menu_entries_[] = {
@@ -3634,7 +3634,7 @@ CampaignMenuEntry terran_campaign_menu_entries_[] = {
 	{0xA, (MapData) ExpandedMapData::EMD_terran11, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0xB, (MapData) ExpandedMapData::EMD_terran12, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0xF, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0},
 };
 
 CampaignMenuEntry protoss_campaign_menu_entries_[] = {
@@ -3652,7 +3652,7 @@ CampaignMenuEntry protoss_campaign_menu_entries_[] = {
 	{0x19, (MapData) ExpandedMapData::EMD_protoss09, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x1A, (MapData) ExpandedMapData::EMD_protoss10, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x1E, (MapData) ExpandedMapData::EMD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0, RACE_Protoss, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0},
 };
 
 CampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
@@ -3673,7 +3673,7 @@ CampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
 	{0, (MapData)ExpandedMapData::EMD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
 	{0x54, (MapData) ExpandedMapData::EMD_xzerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
 	{0x55, (MapData) ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0, RACE_Zerg, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0},
 };
 
 CampaignMenuEntry terran_expcampaign_menu_entries_[] = {
@@ -3687,7 +3687,7 @@ CampaignMenuEntry terran_expcampaign_menu_entries_[] = {
 	{0x48, (MapData) ExpandedMapData::EMD_xterran07, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0x49, (MapData) ExpandedMapData::EMD_xterran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0x57, (MapData) ExpandedMapData::EMD_xzerg01, C_UED_VICTORY_REPORT, 0, RACE_Terran, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0},
 };
 
 CampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
@@ -3700,7 +3700,7 @@ CampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
 	{0x3F, (MapData) ExpandedMapData::EMD_xprotoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x40, (MapData) ExpandedMapData::EMD_xprotoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
 	{0x56, (MapData) ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0, RACE_Protoss, 0},
-	{0, (MapData)ExpandedMapData::EMD_none, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0},
 };
 
 struct Campaign
