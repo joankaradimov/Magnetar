@@ -18,7 +18,7 @@ add_subdirectory("Magnetorm")
 set(TESTSUITE OFF CACHE INTERNAL "")
 set(MEMORY_MODULE_EXAMPLES OFF CACHE INTERNAL "")
 add_subdirectory("MemoryModule")
-add_subdirectory("Storm")
+add_subdirectory("StormNamedSymbols")
 
 set(YAML_CPP_BUILD_TOOLS OFF CACHE INTERNAL "")
 add_subdirectory("yaml-cpp")

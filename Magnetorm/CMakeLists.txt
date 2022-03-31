@@ -4,4 +4,4 @@ add_definitions(-DUNICODE)
 add_definitions(-D_UNICODE)
 
 add_library(magnetorm SHARED dllmain.cpp magnetorm.cpp Magnetorm.def)
-target_link_libraries(magnetorm PRIVATE storm)
+target_link_libraries(magnetorm PRIVATE StormNamedSymbols)
