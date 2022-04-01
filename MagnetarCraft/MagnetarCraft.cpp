@@ -66,37 +66,6 @@ private:
 	VS_FIXEDFILEINFO* file_info;
 };
 
-static LPVOID _VirtualAlloc(LPVOID address, SIZE_T size, DWORD allocationType, DWORD protect, void* userdata) {
-	if (address < STARCRAFT_IMAGE_BASE || address >= STARCRAFT_IMAGE_END) {
-		return nullptr; // TODO: alloc, maybe
-	}
-	DWORD old_protect;
-	BOOL success = VirtualProtect(address, size, protect, &old_protect);
-	if (success) {
-		return address;
-	}
-	else {
-		return nullptr;
-	}
-}
-
-static HCUSTOMMODULE _LoadLibrary(LPCSTR filename, void *userdata)
-{
-	UNREFERENCED_PARAMETER(userdata);
-	if (!strcmp(filename, "storm.dll")) {
-		filename = "Magnetorm.dll";
-	}
-	return LoadLibraryA(filename);
-}
-
-static BOOL _VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* userdata) {
-	if (address < STARCRAFT_IMAGE_BASE || address >= STARCRAFT_IMAGE_END) {
-		return VirtualFree(address, size, freeType);
-	}
-	DWORD old_protect;
-	return VirtualProtect(address, size, MEM_RESET, &old_protect);
-}
-
 class StarCraftExecutable
 {
 public:
@@ -165,7 +134,7 @@ public:
 			throw std::exception(error_message.str().c_str());
 		}
 
-		HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(module, STARCRAFT_IMAGE_SIZE, _VirtualAlloc, _VirtualFree, _LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
+		HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(module, STARCRAFT_IMAGE_SIZE, VirtualAlloc, VirtualFree, LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
 		if (starcraftModule == NULL)
 		{
 			std::ostringstream error_message;
@@ -175,6 +144,43 @@ public:
 	}
 
 private:
+
+	static LPVOID VirtualAlloc(LPVOID address, SIZE_T size, DWORD allocationType, DWORD protect, void* userdata) {
+		if (address < STARCRAFT_IMAGE_BASE || address >= STARCRAFT_IMAGE_END)
+		{
+			return nullptr; // TODO: alloc, maybe
+		}
+		DWORD old_protect;
+		BOOL success = VirtualProtect(address, size, protect, &old_protect);
+		if (success)
+		{
+			return address;
+		}
+		else
+		{
+			return nullptr;
+		}
+	}
+
+	static BOOL VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* userdata) {
+		if (address < STARCRAFT_IMAGE_BASE || address >= STARCRAFT_IMAGE_END)
+		{
+			return ::VirtualFree(address, size, freeType);
+		}
+		DWORD old_protect;
+		return VirtualProtect(address, size, MEM_RESET, &old_protect);
+	}
+
+	static HCUSTOMMODULE LoadLibrary(LPCSTR filename, void* userdata)
+	{
+		UNREFERENCED_PARAMETER(userdata);
+		if (!strcmp(filename, "storm.dll"))
+		{
+			filename = "Magnetorm.dll";
+		}
+		return LoadLibraryA(filename);
+	}
+
 	char executable_path[MAX_PATH]; // e.g. "C:\\Program Files\\StarCraft.exe"
 	const char* executable_name; // e.g. "StarCraft.exe"
 	HMODULE module;
