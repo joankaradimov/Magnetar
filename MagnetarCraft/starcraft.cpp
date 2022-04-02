@@ -5090,6 +5090,84 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 
 FunctionPatch packColorShifts_patch(packColorShifts, packColorShifts_);
 
+int __fastcall TriggerAction_NoAction_(Action* a1)
+{
+	return 1;
+}
+
+FailStubPatch TriggerAction_NoAction_patch(TriggerAction_NoAction);
+
+int __fastcall TriggerAction_Victory_(Action* a1)
+{
+	if (Players[active_trigger_player].nType == PT_Human || Players[active_trigger_player].nType == PT_Computer)
+	{
+		endgame_state[active_trigger_player] = VICTORY;
+	}
+	word_650970 = byte_6509B4 ? 1 : 45;
+	return 1;
+}
+
+FailStubPatch TriggerAction_Victory_patch(TriggerAction_Victory);
+
+int __fastcall TriggerAction_Defeat_(Action* a1)
+{
+	if (endgame_state[active_trigger_player] == EndgameState::VICTORY || endgame_state[active_trigger_player] == EndgameState::UNKNOWN)
+	{
+		return 0;
+	}
+	if (Players[active_trigger_player].nType == PT_Human || Players[active_trigger_player].nType == PT_Computer)
+	{
+		endgame_state[active_trigger_player] = EndgameState::DEFEAT;
+	}
+	word_650970 = byte_6509B4 ? 1 : 45;
+	return 1;
+}
+
+FailStubPatch TriggerAction_Defeat_patch(TriggerAction_Defeat);
+
+int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
+{
+	dword_6509AC->container.dwExecutionFlags |= 4u;
+	return 1;
+}
+
+FailStubPatch TriggerAction_PreserveTrigger_patch(TriggerAction_PreserveTrigger);
+
+int __fastcall TriggerAction_Wait_(Action* a1)
+{
+	if (byte_6509B8[active_trigger_player])
+	{
+		return 0;
+	}
+	if (a1->flags & 1)
+	{
+		a1->flags = a1->flags & 0xFE;
+		return 1;
+	}
+	if ((dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		dword_650980[active_trigger_player] = a1->time;
+		byte_6509B8[active_trigger_player] = 1;
+		a1->flags |= 1u;
+		return 0;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_Wait_patch(TriggerAction_Wait);
+
+unsigned int getTextDisplayTime_(const char* text)
+{
+	if (text == NULL)
+	{
+		return 0;
+	}
+
+	return max(strlen(text) * 50, 4000);
+}
+
+FailStubPatch getTextDisplayTime_patch(getTextDisplayTime);
+
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
 	char buff[260];
@@ -5110,69 +5188,700 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	return 1;
 }
 
-FunctionPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav, TriggerAction_PlayWav_);
+FailStubPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav);
+
+int __fastcall TriggerAction_Transmission_(Action* a1)
+{
+	if (a1->location == 0)
+	{
+		return 1;
+	}
+
+	PlayerType player_type = Players[active_trigger_player].nType;
+	if (player_type == PlayerType::PT_Computer || player_type == PlayerType::PT_Rescuable || player_type == PlayerType::PT_Unknown0 || player_type == PlayerType::PT_Neutral)
+	{
+		return 1;
+	}
+	if (!byte_6509B8[active_trigger_player])
+	{
+		if (a1->flags & 1)
+		{
+			a1->flags = a1->flags & 0xFE;
+			return 1;
+		}
+		if (dword_6509AC->container.dwExecutionFlags & 0x10)
+		{
+			return 1;
+		}
+
+		unsigned int v7;
+		if (a1->number2 == 7)
+		{
+			v7 = a1->number;
+		}
+		else if (a1->number2 == 8)
+		{
+			v7 = a1->time + a1->number;
+		}
+		else if (a1->number2 == 9)
+		{
+			if (a1->time >= a1->number)
+			{
+				v7 = a1->time - a1->number;
+			}
+			else
+			{
+				v7 = 0;
+			}
+		}
+		else
+		{
+			v7 = a1->time;
+		}
+		a1->flags = a1->flags | 1;
+		dword_650980[active_trigger_player] = multiPlayerMode ? v7 : -1;
+		byte_6509B8[active_trigger_player] = 1;
+		if (active_trigger_player == g_LocalNationID)
+		{
+			TriggerAction_PlayWav_(a1);
+			CUnit* unit = getUnitForDoodadState(a1->location - 1, a1->unit, 17);
+			if (unit)
+			{
+				unit->sprite->selectionTimer = 45;
+				MinimapPing_maybe(unit->sprite->position.x, unit->sprite->position.y, 17);
+				DisplayTalkingPortrait_maybe(unit->sprite->position.x, v7, a1->unit, unit->sprite->position.y);
+			}
+			else
+			{
+				DisplayTalkingPortrait_maybe(-1, v7, a1->unit, -1);
+			}
+			if ((registry_options.field_18 & 0x400) != 0 || (a1->flags & 4) != 0)
+			{
+				const char* text_message = get_chk_String(a1->string);
+				unsigned display_time = max(v7, getTextDisplayTime_(text_message));
+				createTextMessageWithTimer(text_message, display_time);
+			}
+		}
+	}
+	return 0;
+}
+
+FailStubPatch TriggerAction_Transmission_patch(TriggerAction_Transmission);
+
+int __fastcall TriggerAction_SetMissionObjectives_(Action* a1)
+{
+	MissionObjectives[active_trigger_player] = a1->string;
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetMissionObjectives_patch(TriggerAction_SetMissionObjectives);
+
+int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
+{
+	const char* text_message;
+
+	if (active_trigger_player == g_LocalNationID && ((registry_options.field_18 & 0x400) || (a1->flags & 4)) && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		if (MapStringTbl.buffer && a1->string)
+		{
+			if (a1->string - 1 < *MapStringTbl.buffer)
+			{
+				text_message = (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string];
+			}
+			else
+			{
+				text_message = "";
+			}
+		}
+		else
+		{
+			text_message = 0;
+		}
+
+		if (text_message)
+		{
+			int display_time = getTextDisplayTime_(text_message);
+			PrintText(text_message, 2u, display_time + GetTickCount(), 1);
+		}
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_DisplayTextMessage_patch(TriggerAction_DisplayTextMessage);
+
+int __fastcall TriggerAction_CenterView_(Action* a1)
+{
+	if (a1->location == 0)
+	{
+		return 1;
+	}
+	if (IS_GAME_PAUSED)
+	{
+		return 1;
+	}
+
+	PlayerType player_type = Players[active_trigger_player].nType;
+	if (player_type == PT_Computer || player_type == PT_Rescuable || player_type == PT_Unknown0 || player_type == PT_Neutral)
+	{
+		return 1;
+	}
+	if (multiPlayerMode)
+	{
+		if (active_trigger_player == g_LocalNationID)
+		{
+			BWFXN_MoveScreen(
+				(LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right) / 2 - 320,
+				(LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom) / 2 - 200);
+		}
+		return 1;
+	}
+	if (!byte_6509B8[active_trigger_player])
+	{
+		if (a1->flags & 1)
+		{
+			a1->flags = a1->flags & 0xFE;
+			CenterCursorGameScreen();
+			return 1;
+		}
+		if (dword_6509AC->container.dwExecutionFlags & 0x10)
+		{
+			return 1;
+		}
+		if (active_trigger_player == g_LocalNationID)
+		{
+			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right) / 2 - 320;
+			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom) / 2 - 200;
+			if (v11 >= 0)
+			{
+				if (v11 + 640 >= (unsigned __int16)map_width_pixels)
+				{
+					v11 = (unsigned __int16)map_width_pixels - 641;
+				}
+			}
+			else
+			{
+				v11 = 0;
+			}
+			if (v12 >= 0)
+			{
+				if (v12 + 400 >= (unsigned __int16)map_height_pixels)
+				{
+					v12 = (unsigned __int16)map_height_pixels - 401;
+				}
+			}
+			else
+			{
+				v12 = 0;
+			}
+			assignCenterViewProc(v12, v11, defCenterViewProc);
+		}
+		a1->flags |= 1u;
+		byte_6509B8[active_trigger_player] = 1;
+		dword_650980[active_trigger_player] = -1;
+	}
+	return 0;
+}
+
+FailStubPatch TriggerAction_CenterView_patch(TriggerAction_CenterView);
+
+void EnableSwitch(unsigned index)
+{
+	TriggerSwitches[index / 32] |= 1 << (index % 32);
+}
+
+void DisableSwitch(unsigned index)
+{
+	TriggerSwitches[index / 32] &= ~(1 << (index % 32));
+}
+
+void ToggleSwitch(unsigned index)
+{
+	TriggerSwitches[index / 32] ^= 1 << (index % 32);
+}
+
+int __fastcall TriggerAction_SetSwitch_(Action* a1)
+{
+	unsigned int v5;
+
+	if (a1->number >= 256)
+	{
+		return 1;
+	}
+	switch (a1->number2)
+	{
+	case 0xBu:
+		if (IsInGameLoop)
+		{
+			++dword_51C6F4;
+			++randomCountsTotal;
+			LastRandomNumber = 22695477 * LastRandomNumber + 1;
+			v5 = (unsigned)(LastRandomNumber) >> 16;
+		}
+		else
+		{
+			v5 = 0;
+		}
+		if ((v5 & 0x80u) == 0)
+		{
+			DisableSwitch(a1->number);
+		}
+		else
+		{
+			EnableSwitch(a1->number);
+		}
+		return 1;
+	case 4u:
+		EnableSwitch(a1->number);
+		return 1;
+	case 5u:
+		DisableSwitch(a1->number);
+		return 1;
+	case 6u:
+		ToggleSwitch(a1->number);
+		return 1;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetSwitch_patch(TriggerAction_SetSwitch);
+
+int __fastcall TriggerAction_SetCountdownTimer_(Action* a1)
+{
+	switch (a1->number2)
+	{
+	case 7u:
+		CountdownTimer = a1->time;
+		break;
+	case 8u:
+		CountdownTimer = CountdownTimer + a1->time;
+		break;
+	case 9u:
+		CountdownTimer = CountdownTimer - a1->time;
+		break;
+	}
+
+	if (CountdownTimer < 0) CountdownTimer = 0;
+	if (CountdownTimer > 359999) CountdownTimer = 359999;
+
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetCountdownTimer_patch(TriggerAction_SetCountdownTimer);
+
+int __fastcall TriggerAction_RunAiScript_(Action* a1)
+{
+	if (isAIScriptNameValid(active_trigger_player, a1->number))
+	{
+		int v5;
+		int v3 = ParseAIScriptName(a1->number, &v5);
+		if (v3)
+		{
+			AI_RunAIScript(0, active_trigger_player, v3, v5);
+		}
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_RunAiScript_patch(TriggerAction_RunAiScript);
+
+int __fastcall TriggerAction_RunAiScriptAtLocation_(Action* a1)
+{
+	if (a1->location)
+	{
+		if (isAIScriptNameValid(active_trigger_player, a1->number))
+		{
+			int v5 = 0;
+			int v3 = ParseAIScriptName(a1->number, &v5);
+			if (v3)
+			{
+				AI_RunAIScript(&LocationTable[a1->location - 1], active_trigger_player, v3, v5);
+			}
+		}
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_RunAiScriptAtLocation_patch(TriggerAction_RunAiScriptAtLocation);
+
+int __fastcall TriggerAction_LeaderBoard_(Action* a1)
+{
+	word_65097C = 1;
+	if (a1->action == 40)
+	{
+		byte_58D70C = a1->action;
+		word_58D70E = 2;
+		dword_58D710 = a1->number;
+	}
+	else if (a1->action != 18 && a1->action != 34)
+	{
+		byte_58D70C = a1->action;
+		word_58D70E = a1->unit;
+		dword_58D710 = a1->number;
+		dword_58D714 = a1->string;
+	}
+	else if (a1->location)
+	{
+		byte_58D70D = a1->location - 1;
+		byte_58D70C = a1->action;
+		word_58D70E = a1->unit;
+		dword_58D710 = a1->number;
+		dword_58D714 = a1->string;
+	}
+	return 1;
+}
+
+FunctionPatch TriggerAction_LeaderBoard_patch(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_);
+
+int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
+{
+	if (a1->number2 == 4)
+	{
+		dword_58D708 = 1;
+	}
+	else if (a1->number2 == 5)
+	{
+		dword_58D708 = 0;
+	}
+	else if (a1->number2 == 6)
+	{
+		dword_58D708 ^= 1;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_LeaderBoardComputerPlayers_patch(TriggerAction_LeaderBoardComputerPlayers);
+
+int __fastcall TriggerAction_KillUnit_(Action* a1)
+{
+	dword_5971DC = 0;
+	DestroyUnit_maybe(a1->player, a1->unit, 255, 999999);
+	byte_685180 = 0;
+	return 1;
+}
+
+FailStubPatch TriggerAction_KillUnit_patch(TriggerAction_KillUnit);
+
+int __fastcall TriggerAction_KillUnitAtLocation_(Action* a1)
+{
+	if (a1->location)
+	{
+		dword_5971DC = 0;
+		DestroyUnit_maybe(a1->player, a1->unit, a1->location - 1, a1->number2 ? a1->number2 : 999999);
+		byte_685180 = 0;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_KillUnitAtLocation_patch(TriggerAction_KillUnitAtLocation);
+
+int __fastcall TriggerAction_RemoveUnit_(Action* a1)
+{
+	dword_5971DC = 1;
+	DestroyUnit_maybe(a1->player, a1->unit, 255, 999999);
+	byte_685180 = 0;
+	return 1;
+}
+
+FailStubPatch TriggerAction_RemoveUnit_patch(TriggerAction_RemoveUnit);
+
+int __fastcall TriggerAction_RemoveUnitAtLocation_(Action* a1)
+{
+	if (a1->location)
+	{
+		dword_5971DC = 1;
+		DestroyUnit_maybe(a1->player, a1->unit, a1->location - 1, a1->number2 ? a1->number2 : 999999);
+		byte_685180 = 0;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_RemoveUnitAtLocation_patch(TriggerAction_RemoveUnitAtLocation);
+
+int __fastcall TriggerAction_SetResources_(Action* a1)
+{
+	switch (a1->number2)
+	{
+	case 7u:
+		SetResource(a1->player, a1->unit, a1->number);
+		return 1;
+	case 8u:
+		AddResource(a1->player, a1->unit, a1->number);
+		return 1;
+	case 9u:
+		SubtractResource(a1->player, a1->unit, a1->number);
+		return 1;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetResources_patch(TriggerAction_SetResources);
+
+int __fastcall TriggerAction_SetScore_(Action* a1)
+{
+	switch (a1->number2)
+	{
+	case 7u:
+		SetScore(a1->player, a1->unit, a1->number);
+		return 1;
+	case 8u:
+		AddScore(a1->player, a1->unit, a1->number);
+		return 1;
+	case 9u:
+		SubtractScore(a1->player, a1->unit, a1->number);
+		return 1;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetScore_patch(TriggerAction_SetScore);
+
+int __fastcall TriggerAction_MinimapPing_(Action* a1)
+{
+	if (a1->location && active_trigger_player == g_LocalNationID && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		Box32& dimensions = LocationTable[a1->location - 1].dimensions;
+		MinimapPing_maybe((dimensions.left + dimensions.right) / 2, (dimensions.top + dimensions.bottom) / 2, 17);
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_MinimapPing_patch_(TriggerAction_MinimapPing);
+
+int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
+{
+	if (active_trigger_player == g_LocalNationID && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		DisplayTalkingPortrait_maybe(-1, a1->time, a1->unit, -1);
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_TalkingPortrait_patch(TriggerAction_TalkingPortrait);
+
+int __fastcall TriggerAction_MuteUnitSpeech_(Action* a1)
+{
+	if (active_trigger_player == g_LocalNationID && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	{
+		MuteUnitSpeech_maybe();
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_MuteUnitSpeech_patch(TriggerAction_MuteUnitSpeech);
+
+int __fastcall TriggerAction_UnmuteUnitSpeech_(Action* a1)
+{
+	if (active_trigger_player == g_LocalNationID)
+	{
+		dword_64086C = 0;
+		if (byte_6D5BBD)
+		{
+			byte_6D5BBD = 0;
+			if (directsound)
+			{
+				SFileDdaSetVolume(directsound, bigvolume, 0);
+			}
+		}
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_UnmuteUnitSpeech_patch(TriggerAction_UnmuteUnitSpeech);
+
+int __fastcall TriggerAction_SetNextScenario_(Action* a1)
+{
+	if (a1->string)
+	{
+		if (MapStringTbl.buffer == 0 || a1->string == 0)
+		{
+			SStrCopy(next_scenario, 0, 32u);
+		}
+		else if (a1->string - 1 >= *MapStringTbl.buffer)
+		{
+			SStrCopy(next_scenario, empty_string, 32u);
+		}
+		else
+		{
+			SStrCopy(next_scenario, (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string], 32u);
+		}
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetNextScenario_patch(TriggerAction_SetNextScenario);
+
+int __fastcall TriggerAction_SetDoodadState_(Action* a1)
+{
+	if (a1->location == 0)
+	{
+		return 1;
+	}
+
+	CUnit* unit = getUnitForDoodadState(a1->location - 1, a1->unit, a1->player);
+	if (!unit)
+	{
+		return 1;
+	}
+	switch (a1->number2)
+	{
+	case 0u:
+	case 6u:
+		ToggleDoodadState(unit);
+		return 1;
+	case 4u:
+		EnableDoodadState(unit);
+		return 1;
+	case 5u:
+		DisableDoodadState(unit);
+		return 1;
+	default:
+		return 1;
+	}
+}
+
+FailStubPatch TriggerAction_SetDoodadState_patch(TriggerAction_SetDoodadState);
+
+int __fastcall TriggerAction_SetDeaths_(Action* a1)
+{
+	switch (a1->number2)
+	{
+	case 7u:
+		SetDeaths(a1->player, a1->unit, a1->number);
+		return 1;
+	case 8u:
+		AddDeaths(a1->player, a1->unit, a1->number);
+		return 1;
+	case 9u:
+		SubtractDeaths(a1->player, a1->unit, a1->number);
+		return 1;
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetDeaths_patch(TriggerAction_SetDeaths);
+
+int __fastcall TriggerAction_PauseTimer_(Action* a1)
+{
+	TimerIsPaused = 1;
+	return 1;
+}
+
+FailStubPatch TriggerAction_PauseTimer_patch(TriggerAction_PauseTimer);
+
+int __fastcall TriggerAction_UnpauseTimer_(Action* a1)
+{
+	TimerIsPaused = 0;
+	return 1;
+}
+
+FailStubPatch TriggerAction_UnpauseTimer_patch(TriggerAction_UnpauseTimer);
+
+int __fastcall TriggerAction_Draw_(Action* a1)
+{
+	if (endgame_state[active_trigger_player] == EndgameState::VICTORY || endgame_state[active_trigger_player] == EndgameState::UNKNOWN)
+	{
+		return 0;
+	}
+	if (Players[active_trigger_player].nType == PT_Human || Players[active_trigger_player].nType == PT_Computer)
+	{
+		endgame_state[active_trigger_player] = EndgameState::DRAW;
+	}
+	word_650970 = byte_6509B4 ? 1 : 45;
+	return 1;
+}
+
+FailStubPatch TriggerAction_Draw_patch(TriggerAction_Draw);
+
+int __fastcall TriggerAction_SetAllianceStatus_(Action* a1)
+{
+	SetAlliance_maybe(a1->player, a1->unit, 0);
+	StopAttackingAllies_maybe(active_trigger_player);
+	if (active_trigger_player == g_LocalNationID)
+	{
+		setAlliance();
+	}
+	return 1;
+}
+
+FailStubPatch TriggerAction_SetAllianceStatus_patch(TriggerAction_SetAllianceStatus);
+
+int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
+{
+	dword_6509AC->container.dwExecutionFlags |= 0x40u;
+	return 1;
+}
+
+FailStubPatch TriggerAction_DisableDebugMode_patch(TriggerAction_DisableDebugMode);
+
+int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
+{
+	dword_6509AC->container.dwExecutionFlags &= ~0x40u;
+	return 1;
+}
+
+FailStubPatch TriggerAction_EnableDebugMode_patch(TriggerAction_EnableDebugMode);
 
 ActionPointer ActionTable_[] = {
-	TriggerAction_NoAction,
-	TriggerAction_Victory,
-	TriggerAction_Defeat,
-	TriggerAction_PreserveTrigger,
-	TriggerAction_Wait,
+	TriggerAction_NoAction_,
+	TriggerAction_Victory_,
+	TriggerAction_Defeat_,
+	TriggerAction_PreserveTrigger_,
+	TriggerAction_Wait_,
 	TriggerAction_PauseGame,
 	TriggerAction_UnpauseGame,
-	TriggerAction_Transmission,
+	TriggerAction_Transmission_,
 	TriggerAction_PlayWav_,
-	TriggerAction_DisplayTextMessage,
-	TriggerAction_CenterView,
+	TriggerAction_DisplayTextMessage_,
+	TriggerAction_CenterView_,
 	TriggerAction_CreateUnitWithProperties,
-	TriggerAction_SetMissionObjectives,
-	TriggerAction_SetSwitch,
-	TriggerAction_SetCountdownTimer,
-	TriggerAction_RunAiScript,
-	TriggerAction_RunAiScriptAtLocation,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_KillUnit,
-	TriggerAction_KillUnitAtLocation,
-	TriggerAction_RemoveUnit,
-	TriggerAction_RemoveUnitAtLocation,
-	TriggerAction_SetResources,
-	TriggerAction_SetScore,
-	TriggerAction_MinimapPing,
-	TriggerAction_TalkingPortrait,
-	TriggerAction_MuteUnitSpeech,
-	TriggerAction_UnmuteUnitSpeech,
-	TriggerAction_LeaderBoardComputerPlayers,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
-	TriggerAction_LeaderBoard,
+	TriggerAction_SetMissionObjectives_,
+	TriggerAction_SetSwitch_,
+	TriggerAction_SetCountdownTimer_,
+	TriggerAction_RunAiScript_,
+	TriggerAction_RunAiScriptAtLocation_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_KillUnit_,
+	TriggerAction_KillUnitAtLocation_,
+	TriggerAction_RemoveUnit_,
+	TriggerAction_RemoveUnitAtLocation_,
+	TriggerAction_SetResources_,
+	TriggerAction_SetScore_,
+	TriggerAction_MinimapPing_,
+	TriggerAction_TalkingPortrait_,
+	TriggerAction_MuteUnitSpeech_,
+	TriggerAction_UnmuteUnitSpeech_,
+	TriggerAction_LeaderBoardComputerPlayers_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_,
 	TriggerAction_MoveLocation,
 	TriggerAction_MoveUnit,
-	TriggerAction_LeaderBoard,
-	TriggerAction_SetNextScenario,
-	TriggerAction_SetDoodadState,
+	TriggerAction_LeaderBoard_,
+	TriggerAction_SetNextScenario_,
+	TriggerAction_SetDoodadState_,
 	TriggerAction_SetInvincibility,
 	TriggerAction_CreateUnitWithProperties,
-	TriggerAction_SetDeaths,
+	TriggerAction_SetDeaths_,
 	TriggerAction_Order,
-	TriggerAction_NoAction,
+	TriggerAction_NoAction_,
 	TriggerAction_GiveUnitsToPlayer,
 	TriggerAction_ModifyUnitHitPoints,
 	TriggerAction_ModifyUnitEnergy,
 	TriggerAction_ModifyUnitShieldPoints,
 	TriggerAction_ModifyUnitResourceAmount,
 	TriggerAction_ModifyUnitHangarCount,
-	TriggerAction_PauseTimer,
-	TriggerAction_UnpauseTimer,
-	TriggerAction_Draw,
-	TriggerAction_SetAllianceStatus,
-	TriggerAction_DisableDebugMode,
-	TriggerAction_EnableDebugMode,
+	TriggerAction_PauseTimer_,
+	TriggerAction_UnpauseTimer_,
+	TriggerAction_Draw_,
+	TriggerAction_SetAllianceStatus_,
+	TriggerAction_DisableDebugMode_,
+	TriggerAction_EnableDebugMode_,
 };
 
 void ExecuteTriggerActions_(TriggerListEntry* a1)
