@@ -1518,6 +1518,75 @@ MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
 MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
 MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+int sub_4EEFD0_()
+{
+	memcpy(dword_59C6C0, palette, sizeof(dword_59C6C0));
+	sub_49BB90();
+	initMapData();
+	InitializePresetImageArrays();
+	InitializeSpriteArray();
+	InitializeThingyArray();
+	LoadGameData(flingyDat, "arr\\flingy.dat");
+	memset(dword_63FEE0, 0, 76u);
+	dword_63FF3C = (CUnit*)dword_63FEE0;
+	dword_63FF38 = (CUnit*)dword_63FEE0;
+	dword_63FEC8 = 0;
+	dword_63FF34 = 0;
+	InitializeBulletArray();
+	InitializeOrderArray();
+	if (!loadGameFileHandle)
+	{
+		InitializeUnitCounts();
+	}
+	initializePsiFieldData();
+	ResetDATFiles();
+	resetOrdersUnitsDAT();
+	createUnitBuildingSpriteValidityArray();
+	if (loadGameFileHandle || LoadMap())
+	{
+		load_gluMinimap();
+		memcpy(palette, dword_59C6C0, sizeof(palette));
+		return 1;
+	}
+	else
+	{
+		if (!dword_6D5BF8 && !outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError(0, 0, 0, 97);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		return 0;
+	}
+}
+
+FailStubPatch sub_4EEFD0_patch(sub_4EEFD0);
+
+void __fastcall MinimapPreviewProc_(dialog* a1)
+{
+	if (dword_5993AC != 1 && dword_5994DC && g_LocalNationID < 8u && (!map_download || IsDownloadComplete(map_download)))
+	{
+		int OriginalIsInGameLoop = IsInGameLoop;
+		dword_5993AC = 1;
+		IsInGameLoop = 1;
+		sub_4EEFD0_();
+		IsInGameLoop = OriginalIsInGameLoop;
+		waitLoopCntd(1, a1);
+	}
+}
+
+FunctionPatch MinimapPreviewProc_patch(MinimapPreviewProc, MinimapPreviewProc_);
+
 signed int GameInit_()
 {
 	memset(Chat_GameText, 0, 2832u);
