@@ -1970,7 +1970,7 @@ signed int LoadGameInit_()
 	if (!GameInit_())
 		return 0;
 	if (InReplay)
-		getReplPlayerColors((int)factionsColorsOrdering);
+		getReplPlayerColors(factionsColorsOrdering);
 	if (!loadGameFileHandle)
 		sub_49B060();
 

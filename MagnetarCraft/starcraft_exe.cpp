@@ -15624,7 +15624,7 @@ signed int gluChat_controlActivation(signed int a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*MinimapPreviewProc)(), MinimapPreviewProc, 0x4b9a50);
+DECL_FUNC(void (__fastcall*MinimapPreviewProc)(dialog *a1), MinimapPreviewProc, 0x4b9a50);
 DECL_FUNC(void (__stdcall*gluChat_HoverMinimapPreview)(dialog *a1), gluChat_HoverMinimapPreview, 0x4b9ac0);
 DECL_FUNC(int(*sub_4B9B10)(), sub_4B9B10, 0x4b9b10);
 DECL_FUNC(int (__stdcall*sub_4B9BF0)(int), sub_4B9BF0, 0x4b9bf0);
@@ -18478,7 +18478,7 @@ DECL_FUNC(int(*sub_4DE8D0)(), sub_4DE8D0, 0x4de8d0);
 DECL_FUNC(int(*sub_4DE8E0)(), sub_4DE8E0, 0x4de8e0);
 DECL_FUNC(int(*sub_4DE8F0)(), sub_4DE8F0, 0x4de8f0);
 DECL_FUNC(int(*sub_4DE920)(), sub_4DE920, 0x4de920);
-void getReplPlayerColors(int result) {
+void getReplPlayerColors(int *result) {
     int address = 0x4de950;
     __asm {
         xor eax, eax
@@ -23547,14 +23547,7 @@ char& byte_57F1E1 = * ((decltype(&byte_57F1E1)) 0x57f1e1);
 char& consoleIndex = * ((decltype(&consoleIndex)) 0x57f1e2);
 char(&customSingleplayer)[9] = * ((decltype(&customSingleplayer)) 0x57f1e3);
 int(&PlayerVision)[12] = * ((decltype(&PlayerVision)) 0x57f1ec);
-int(&factionsColorsOrdering)[] = * ((decltype(&factionsColorsOrdering)) 0x57f21c);
-int& dword_57F220 = * ((decltype(&dword_57F220)) 0x57f220);
-int& dword_57F224 = * ((decltype(&dword_57F224)) 0x57f224);
-int& dword_57F228 = * ((decltype(&dword_57F228)) 0x57f228);
-int& dword_57F22C = * ((decltype(&dword_57F22C)) 0x57f22c);
-int& dword_57F230 = * ((decltype(&dword_57F230)) 0x57f230);
-int& dword_57F234 = * ((decltype(&dword_57F234)) 0x57f234);
-int& dword_57F238 = * ((decltype(&dword_57F238)) 0x57f238);
+int(&factionsColorsOrdering)[8] = * ((decltype(&factionsColorsOrdering)) 0x57f21c);
 DWORD& ElapsedTimeFrames = * ((decltype(&ElapsedTimeFrames)) 0x57f23c);
 int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
@@ -23785,14 +23778,14 @@ char(&byte_59B3D8)[56] = * ((decltype(&byte_59B3D8)) 0x59b3d8);
 int(&dword_59B410)[] = * ((decltype(&dword_59B410)) 0x59b410);
 int(&dword_59B414)[] = * ((decltype(&dword_59B414)) 0x59b414);
 int(&dword_59B418)[] = * ((decltype(&dword_59B418)) 0x59b418);
-char(&byte_59B41C)[] = * ((decltype(&byte_59B41C)) 0x59b41c);
+char(&byte_59B41C)[508] = * ((decltype(&byte_59B41C)) 0x59b41c);
 int& dword_59B618 = * ((decltype(&dword_59B618)) 0x59b618);
 int& dword_59B61C = * ((decltype(&dword_59B61C)) 0x59b61c);
 int& dword_59B620 = * ((decltype(&dword_59B620)) 0x59b620);
 int& dword_59B624 = * ((decltype(&dword_59B624)) 0x59b624);
 char(&byte_59B628)[260] = * ((decltype(&byte_59B628)) 0x59b628);
 void *& dword_59B72C = * ((decltype(&dword_59B72C)) 0x59b72c);
-char(&byte_59B730)[] = * ((decltype(&byte_59B730)) 0x59b730);
+char(&byte_59B730)[12] = * ((decltype(&byte_59B730)) 0x59b730);
 int(&dword_59B73C)[8] = * ((decltype(&dword_59B73C)) 0x59b73c);
 int& dword_59B75C = * ((decltype(&dword_59B75C)) 0x59b75c);
 int(&dword_59B760)[] = * ((decltype(&dword_59B760)) 0x59b760);
@@ -23919,7 +23912,7 @@ char(&validation_replay_path)[3072] = * ((decltype(&validation_replay_path)) 0x6
 char& league_maybe = * ((decltype(&league_maybe)) 0x629268);
 int(&dword_629284)[] = * ((decltype(&dword_629284)) 0x629284);
 SpriteTileData& SpritesOnTileRow = * ((decltype(&SpritesOnTileRow)) 0x629288);
-char(&byte_629A88)[] = * ((decltype(&byte_629A88)) 0x629a88);
+char(&byte_629A88)[520] = * ((decltype(&byte_629A88)) 0x629a88);
 char(&byte_629C90)[] = * ((decltype(&byte_629C90)) 0x629c90);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
