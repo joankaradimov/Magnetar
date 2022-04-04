@@ -1518,11 +1518,13 @@ MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
 MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
 MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void initMapData_();
+
 int sub_4EEFD0_()
 {
 	memcpy(dword_59C6C0, palette, sizeof(dword_59C6C0));
 	sub_49BB90();
-	initMapData();
+	initMapData_();
 	InitializePresetImageArrays();
 	InitializeSpriteArray();
 	InitializeThingyArray();
@@ -1601,7 +1603,7 @@ signed int GameInit_()
 	dword_59CC94 = 60;
 	dword_59CC8C = 15;
 	dword_59CC90 = 6;
-	initMapData();
+	initMapData_();
 	InitializePresetImageArrays();
 	InitializeSpriteArray();
 	InitializeThingyArray();
@@ -3188,7 +3190,7 @@ void initMapData_()
 	}
 }
 
-FunctionPatch initMapData_patch(initMapData, initMapData_);
+FailStubPatch initMapData_patch(initMapData);
 
 unsigned int GetGroundHeightAtPos_(int x, int y)
 {
