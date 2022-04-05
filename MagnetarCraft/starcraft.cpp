@@ -235,16 +235,8 @@ FailStubPatch LoadMainModuleStringInfo_patch(LoadMainModuleStringInfo);
 
 int InitializeArchiveHandles_()
 {
-	char *v0; // eax@3
-	HANDLE v1; // eax@6
-	char *v2; // eax@12
-	HANDLE v3; // eax@15
-	char *v4; // eax@22
-	HANDLE v5; // eax@25
-	BOOL v6; // eax@29
-	CHAR Filename[MAX_PATH]; // [sp+8h] [bp-20Ch]@1
-	CHAR archivename_[MAX_PATH]; // [sp+10Ch] [bp-108h]@20
-	HANDLE phFile; // [sp+210h] [bp-4h]@5
+	CHAR Filename[MAX_PATH];
+	HANDLE phFile;
 
 	dword_51CD44 = 20;
 	dword_51CD48 = aInternalVersio;
@@ -254,27 +246,34 @@ int InitializeArchiveHandles_()
 	LoadMainModuleStringInfo_();
 	if (!GetModuleFileNameA(hInst, Filename, MAX_PATH))
 		Filename[0] = 0;
-	v0 = strrchr(Filename, '\\');
+	char* v0 = strrchr(Filename, '\\');
 	if (v0)
 		*v0 = 0;
 	SStrNCat(Filename, "\\Stardat.mpq", MAX_PATH);
-	if (!SFileOpenArchive(Filename, 2000u, 2u, &phFile) || (v1 = phFile) == 0)
-		v1 = 0;
-	dword_51CC38 = v1;
-	if (!v1)
+	if (SFileOpenArchive(Filename, 2000u, 2u, &phFile))
 	{
+		dword_51CC38 = phFile;
+	}
+	else
+	{
+		dword_51CC38 = 0;
 		int last_error = GetLastError();
 		SysWarn_FileNotFound("Stardat.mpq", last_error);
 	}
 	if (!GetModuleFileNameA(hInst, archivename, MAX_PATH))
 		archivename[0] = 0;
-	v2 = strrchr(archivename, '\\');
+	char* v2 = strrchr(archivename, '\\');
 	if (v2)
 		*v2 = 0;
 	SStrNCat(archivename, "\\patch_rt.mpq", MAX_PATH);
-	if (!SFileOpenArchive(archivename, 7000u, 2u, &phFile) || (v3 = phFile) == 0)
-		v3 = 0;
-	dword_51CC28 = v3;
+	if (SFileOpenArchive(archivename, 7000u, 2u, &phFile))
+	{
+		dword_51CC28 = phFile;
+	}
+	else
+	{
+		dword_51CC28 = 0;
+	}
 
     char magnetarDatFilename[MAX_PATH] = { 0 };
     if (!GetModuleFileNameA(hInst, magnetarDatFilename, MAX_PATH))
@@ -292,28 +291,34 @@ int InitializeArchiveHandles_()
 	broodat_mpq_path[0] = 0;
 	if (!is_spawn)
 	{
+		CHAR archivename_[MAX_PATH];
 		if (!GetModuleFileNameA(hInst, archivename_, MAX_PATH))
 			*archivename_ = 0;
-		v4 = strrchr(archivename_, '\\');
+		char* v4 = strrchr(archivename_, '\\');
 		if (v4)
 			*v4 = 0;
 		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
-		if (!SFileOpenArchive(archivename_, 2500u, 2u, &phFile) || (v5 = phFile) == 0)
-			v5 = 0;
-		dword_51CC2C = v5;
-		if (v5)
+		if (SFileOpenArchive(archivename_, 2500u, 2u, &phFile))
 		{
+			dword_51CC2C = phFile;
+
 			SStrCopy(broodat_mpq_path, archivename_, 0x208u);
 			SStrNCat(broodat_mpq_path, ";", 520);
 		}
+		else
+		{
+			dword_51CC2C = 0;
+		}
 	}
-	v6 = SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile);
-	if (v6)
+	if (SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile))
 	{
 		SFileCloseFile(phFile);
-		v6 = 1;
+		dword_6D11E4 = 1;
 	}
-	dword_6D11E4 = v6;
+	else
+	{
+		dword_6D11E4 = 0;
+	}
 	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
