@@ -4,3 +4,6 @@
 [submodule "yaml-cpp"]
 	path = yaml-cpp
 	url = git@github.com:jbeder/yaml-cpp.git
+[submodule "StormLib"]
+	path = StormLib
+	url = git@github.com:ladislav-zezula/StormLib.git

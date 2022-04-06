@@ -14,11 +14,15 @@ endif ()
 set(CMAKE_CXX_STANDARD 17)
 
 add_subdirectory("MagnetarCraft")
+add_subdirectory("MagnetarDat")
 add_subdirectory("Magnetorm")
 set(TESTSUITE OFF CACHE INTERNAL "")
 set(MEMORY_MODULE_EXAMPLES OFF CACHE INTERNAL "")
 add_subdirectory("MemoryModule")
+add_subdirectory("StormLib")
 add_subdirectory("StormNamedSymbols")
 
 set(YAML_CPP_BUILD_TOOLS OFF CACHE INTERNAL "")
 add_subdirectory("yaml-cpp")
+
+add_dependencies(MagnetarCraft MagnetarDat)
