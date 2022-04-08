@@ -15433,7 +15433,14 @@ DECL_FUNC(bool (__fastcall*fn_interact)(dialog *dlg, struct dlgEvent *evt), fn_i
 DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4B6D60, 0x4b6d60);
 DECL_FUNC(bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt), sub_4B6E10, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
-DECL_FUNC(int(*BWFXN_gluPOK_MBox)(), BWFXN_gluPOK_MBox, 0x4b7180);
+void BWFXN_gluPOK_MBox(const char *a1) {
+    int address = 0x4b7180;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 int BWFXN_gluPOKCancel_MBox(const char *a1) {
     int address = 0x4b73b0;
     int result_;
@@ -15445,7 +15452,7 @@ int BWFXN_gluPOKCancel_MBox(const char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
+DECL_FUNC(int (__cdecl*load_gluGameMode_BINDLG)(), load_gluGameMode_BINDLG, 0x4b75e0);
 CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries) {
     int address = 0x4b7820;
     CampaignMenuEntry * result_;
@@ -16412,7 +16419,23 @@ CUnit *getUnitForDoodadState(unsigned __int8 location, __int16 a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4C7400)(), sub_4C7400, 0x4c7400);
+CUnit *sub_4C7400(int a1, __int16 a2, unsigned __int8 a3, POINT *center) {
+    int address = 0x4c7400;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        xor ecx, ecx
+        xor edi, edi
+        mov eax, a1
+        mov cx, a2
+        mov bl, a3
+        mov edi, center
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__fastcall*TriggerAction_MoveLocation)(Action *), TriggerAction_MoveLocation, 0x4c7460);
 DECL_FUNC(int (__fastcall*TriggerAction_TalkingPortrait)(Action *), TriggerAction_TalkingPortrait, 0x4c7570);
 DECL_FUNC(int (__fastcall*TriggerAction_SetDoodadState)(Action *), TriggerAction_SetDoodadState, 0x4c75b0);
@@ -18200,7 +18223,17 @@ DECL_FUNC(int(*LoadGameFonts)(), LoadGameFonts, 0x4dae50);
 DECL_FUNC(int(*LoadMenuFonts)(), LoadMenuFonts, 0x4daec0);
 DECL_FUNC(void (__cdecl*PreInitData)(), PreInitData, 0x4daf30);
 DECL_FUNC(void (__cdecl*audioVideoInit)(), audioVideoInit, 0x4db060);
-DECL_FUNC(int(*gluMainDestroy)(), gluMainDestroy, 0x4db140);
+BOOL gluMainDestroy(dialog *a1) {
+    int address = 0x4db140;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4DB180)(), sub_4DB180, 0x4db180);
 DECL_FUNC(int(*sub_4DB1C0)(), sub_4DB1C0, 0x4db1c0);
 DECL_FUNC(signed int (__cdecl*loadCampaignBIN)(), loadCampaignBIN, 0x4db200);
@@ -18225,14 +18258,12 @@ signed int loadStareditProcess(dialog *a1) {
     }
     return result_;
 }
-signed int cmpgn_WaitForCDRom(void *a1, __int16 a2, char *filename) {
+BOOL cmpgn_WaitForCDRom(GluAllTblEntry a2, char *filename) {
     int address = 0x4db5c0;
-    signed result_;
+    BOOL result_;
     __asm {
-        xor ecx, ecx
         xor edi, edi
         xor esi, esi
-        mov ecx, a1
         mov di, a2
         mov esi, filename
         call address
@@ -18242,8 +18273,8 @@ signed int cmpgn_WaitForCDRom(void *a1, __int16 a2, char *filename) {
 }
 DECL_FUNC(int(*sub_4DB6A0)(), sub_4DB6A0, 0x4db6a0);
 DECL_FUNC(int(*sub_4DB6C0)(), sub_4DB6C0, 0x4db6c0);
-DECL_FUNC(int (__stdcall*SelGameMode)(int), SelGameMode, 0x4db6e0);
-DECL_FUNC(int(*gluMain_DisplayCDRomErrorBinDlg)(), gluMain_DisplayCDRomErrorBinDlg, 0x4db770);
+DECL_FUNC(int(*SelGameMode)(int a2), SelGameMode, 0x4db6e0);
+DECL_FUNC(BOOL(*gluMain_DisplayCDRomErrorBinDlg)(), gluMain_DisplayCDRomErrorBinDlg, 0x4db770);
 DECL_FUNC(bool (__fastcall*gluMain_Dlg_Interact)(dialog *dlg, struct dlgEvent *evt), gluMain_Dlg_Interact, 0x4db7a0);
 DECL_FUNC(int(*loadMenu_gluMain)(), loadMenu_gluMain, 0x4db930);
 DECL_FUNC(int (__stdcall*append_melee_computer)(char), append_melee_computer, 0x4dbb70);
@@ -21435,7 +21466,7 @@ CampaignMenuEntry(&terran_expcampaign_menu_entries)[11] = * ((decltype(&terran_e
 CampaignMenuEntry(&zerg_expcampaign_menu_entries)[18] = * ((decltype(&zerg_expcampaign_menu_entries)) 0x4ffde8);
 CampaignMenuEntry(&protoss_expcampaign_menu_entries)[10] = * ((decltype(&protoss_expcampaign_menu_entries)) 0x4ffe78);
 char(&aRezGlucmpgn_bi)[] = * ((decltype(&aRezGlucmpgn_bi)) 0x4ffecc);
-char(&aRezGluexpcmpgn)[] = * ((decltype(&aRezGluexpcmpgn)) 0x4ffee0);
+char(&filename)[] = * ((decltype(&filename)) 0x4ffee0);
 const char(&aLastreplay_1)[] = * ((decltype(&aLastreplay_1)) 0x4ffef8);
 char(&aLocal_dll)[10] = * ((decltype(&aLocal_dll)) 0x4fff08);
 EstablishingShotPosition(&establishingShotPositions)[5] = * ((decltype(&establishingShotPositions)) 0x4fff24);
@@ -23604,7 +23635,7 @@ int& dword_58D714 = * ((decltype(&dword_58D714)) 0x58d714);
 int& dword_58D718 = * ((decltype(&dword_58D718)) 0x58d718);
 int& dword_58D71C = * ((decltype(&dword_58D71C)) 0x58d71c);
 Position(&startPositions)[8] = * ((decltype(&startPositions)) 0x58d720);
-int(&TriggerSwitches)[] = * ((decltype(&TriggerSwitches)) 0x58dc40);
+int(&TriggerSwitches)[8] = * ((decltype(&TriggerSwitches)) 0x58dc40);
 Location(&LocationTable)[254] = * ((decltype(&LocationTable)) 0x58dc60);
 char(&byte_58F038)[20] = * ((decltype(&byte_58F038)) 0x58f038);
 int& TimerIsPaused = * ((decltype(&TimerIsPaused)) 0x58f04c);
