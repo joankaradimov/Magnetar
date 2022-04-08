@@ -344,31 +344,28 @@ signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 
 void * loadTBL_(int a1, int a2, const char *a3, const char *filename, char **a5)
 {
-	char **v6; // edi@1
-	void *result; // eax@1
-	unsigned __int16 v9; // cx@3
-	char *v10; // ecx@4
-
 	static char* empty_tbl_string = { 0 };
 
-	v6 = a5;
+	void *result;
+	char** v6 = a5;
+
 	for (result = _fastFileRead(filename, 0, 0, a3, a1); a2; --a2)
 	{
 		if (*v6)
 		{
-			v9 = *(_WORD *)v6 - 1;
-			if (*(_WORD *)v6)
+			unsigned __int16 v9 = *(_WORD *)v6 - 1;
+			if (*(_WORD *)v6 == 0)
 			{
-				if (v9 < *(_WORD *)result)
-					v10 = (char *)result + *((_WORD *)result + v9 + 1);
-				else
-					v10 = empty_tbl_string;
+				*v6 = 0;
+			}
+			else if (v9 < *(_WORD*)result)
+			{
+				*v6 = (char*)result + *((_WORD*)result + v9 + 1);
 			}
 			else
 			{
-				v10 = 0;
+				*v6 = empty_tbl_string;
 			}
-			*v6 = v10;
 		}
 		++v6;
 	}
