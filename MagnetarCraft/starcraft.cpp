@@ -486,15 +486,7 @@ FailStubPatch PreInitData_patch(PreInitData);
 
 char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 {
-	unsigned int v4; // eax@1
-	char *v5; // edi@1
-	unsigned int v6; // eax@10
-	char *i; // ecx@10
-	char v8; // dl@11
-
-	v4 = (a3 >> 16) & 0x1FFF;
-	v5 = lpBuffer;
-	switch (v4)
+	switch ((a3 >> 16) & 0x1FFF)
 	{
 	case 0x878u:
 		DSERR_GetString(a2, lpBuffer);
@@ -506,20 +498,20 @@ char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 		_snprintf(lpBuffer, a2, "MMSYS error 0x%x", a3);
 		break;
 	default:
-		if (!SErrGetErrorStr(a3, lpBuffer, a2) && !FormatMessageA(0x1000u, 0, a3, 0x400u, v5, a2, 0))
-			_snprintf(v5, a2, "unknown error 0x%08x", a3);
+		if (!SErrGetErrorStr(a3, lpBuffer, a2) && !FormatMessageA(0x1000u, 0, a3, 0x400u, lpBuffer, a2, 0))
+			_snprintf(lpBuffer, a2, "unknown error 0x%08x", a3);
 		break;
 	}
-	v6 = strlen(v5);
-	for (i = &v5[v6 - 1]; (signed int)v6 > 0; *i = 0)
+	unsigned v6 = strlen(lpBuffer);
+	for (char* i = &lpBuffer[v6 - 1]; (signed int)v6 > 0; *i = 0)
 	{
-		v8 = *(i - 1);
 		--v6;
 		--i;
+		char v8 = *i;
 		if (v8 != '\r' && v8 != '\n')
 			break;
 	}
-	return v5;
+	return lpBuffer;
 }
 
 void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigned int last_error, WORD resource, int source_line)
