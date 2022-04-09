@@ -4459,6 +4459,239 @@ LABEL_37:
 
 FailStubPatch loadMenu_gluCustm_patch(loadMenu_gluCustm);
 
+int SelGameMode_(int a2)
+{
+	int v4 = LastControlID;
+	switch (load_gluGameMode_BINDLG())
+	{
+	case 6:
+		if (a2 || cmpgn_WaitForCDRom((GluAllTblEntry)167, "rez\\glucmpgn.bin"))
+		{
+			IsExpansion = 0;
+			LastControlID = v4;
+			return 1;
+		}
+		else
+		{
+			LastControlID = v4;
+			return 0;
+		}
+	case 7:
+		if (cmpgn_WaitForCDRom((GluAllTblEntry)168, "rez\\gluexpcmpgn.bin"))
+		{
+			IsExpansion = 1;
+			LastControlID = v4;
+			return 1;
+		}
+		else
+		{
+			LastControlID = v4;
+			return 0;
+		}
+	default:
+		LastControlID = v4;
+		return 0;
+	}
+}
+
+FailStubPatch SelGameMode_patch(SelGameMode);
+
+bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
+{
+	bool result; // al
+
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			gluMainCreate(dlg);
+			DLG_SwishIn(dlg);
+			genericDlgInteract(dlg, evt);
+			if (byte_6D5BBC)
+			{
+				return 1;
+			}
+			DLGMusicFade(MT_TITLE);
+			return 1;
+		case USER_DESTROY:
+			gluMainDestroy(dlg);
+			return genericDlgInteract(dlg, evt);
+		case USER_ACTIVATE:
+			switch (LastControlID)
+			{
+			case 3:
+				if (is_spawn)
+				{
+					if (*networkTable > 0x66u)
+					{
+						BWFXN_gluPOK_MBox((const char*)networkTable + networkTable[103]);
+					}
+					else
+					{
+						BWFXN_gluPOK_MBox(empty_string);
+					}
+					return 1;
+				}
+				if (dword_6D11E4)
+				{
+					if (!SelGameMode_(0))
+					{
+						return 1;
+					}
+					return DLG_SwishOut(dlg);
+				}
+				break;
+			case 4:
+				if (dword_6D11E4)
+				{
+					if (!SelGameMode_(1))
+					{
+						return 1;
+					}
+					return DLG_SwishOut(dlg);
+				}
+				if (is_spawn)
+				{
+					IsExpansion = 0;
+					return DLG_SwishOut(dlg);
+				}
+				break;
+			case 5:
+				loadStareditProcess(dlg);
+				return 1;
+			default:
+				return DLG_SwishOut(dlg);
+			}
+			if (!gluMain_DisplayCDRomErrorBinDlg())
+			{
+				return 1;
+			}
+			IsExpansion = 0;
+			return DLG_SwishOut(dlg);
+		case USER_INIT:
+			registerMenuFunctions(off_51A388, dlg, 44, 0);
+			return genericDlgInteract(dlg, evt);
+		default:
+			return genericDlgInteract(dlg, evt);
+		}
+	}
+	if (evt->wNo == EVN_CHAR && evt->wVirtKey == 32)
+	{
+		return 1;
+	}
+	else
+	{
+		return genericDlgInteract(dlg, evt);
+	}
+}
+
+FailStubPatch gluMain_Dlg_Interact_patch(gluMain_Dlg_Interact);
+
+void loadMenu_gluMain_()
+{
+	HANDLE phFile;
+
+	multiPlayerMode = 0;
+	if (!SFileOpenFileEx(0, "rez\\gluMain.bin", 0, &phFile))
+	{
+		int v0 = SErrGetLastError();
+		if (v0 == 2 || v0 == 1006)
+		{
+			return;
+		}
+		SysWarn_FileNotFound("rez\\gluMain.bin", v0);
+	}
+	int v2 = SFileGetFileSize(phFile, 0);
+	if (v2 == -1)
+	{
+		FileFatal(phFile, GetLastError());
+		return;
+	}
+	if (!v2)
+	{
+		SFileCloseFile(phFile);
+		return;
+	}
+	dialog* v5 = (dialog*)SMemAlloc(v2, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573, 0);
+	int read;
+	if (SFileReadFile(phFile, v5, v2, &read, 0))
+	{
+		if (read != v2)
+		{
+			FileFatal(phFile, 24);
+			return;
+		}
+		SFileCloseFile(phFile);
+		if (v5)
+		{
+			v5->lFlags |= 4u;
+			AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
+			int v8 = gluLoadBINDlg(v5, gluMain_Dlg_Interact_);
+			if (v8 > 65520)
+			{
+			LABEL_23:
+				glGluesMode = GLUE_MAIN_MENU;
+			}
+			else if (v8 != 65520)
+			{
+				GotFileValues* ums_game_template;
+
+				switch (v8)
+				{
+				case 2:
+					gwGameMode = GAME_EXIT;
+					changeMenu();
+					break;
+				case 3:
+					multiPlayerMode = 0;
+					glGluesMode = GLUE_LOGIN;
+					ums_game_template = InitUseMapSettingsTemplate_();
+					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
+					changeMenu();
+					break;
+				case 4:
+					multiPlayerMode = 1;
+					glGluesMode = MenuPosition::GLUE_CONNECT;
+					ums_game_template = InitUseMapSettingsTemplate_();
+					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
+					changeMenu();
+					break;
+				case 5:
+					changeMenu();
+					return;
+				case 8:
+					gwGameMode = GAME_INTRO;
+					changeMenu();
+					break;
+				case 9:
+					gwGameMode = GAME_CREDITS;
+					changeMenu();
+					break;
+				default:
+					goto LABEL_23;
+				}
+				return;
+			}
+			changeMenu();
+			return;
+		}
+	}
+	else
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(phFile, 24);
+			return;
+		}
+		FileFatal(phFile, GetLastError());
+	}
+}
+
+FailStubPatch loadMenu_gluMain_patch(loadMenu_gluMain);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
@@ -4564,7 +4797,7 @@ LABEL_28:
 			break;
 		case GLUE_MAIN_MENU:
 			outOfGame = 0;
-			loadMenu_gluMain();
+			loadMenu_gluMain_();
 			break;
 		case GLUE_LOGIN:
 			dword_51C414 = 0;
