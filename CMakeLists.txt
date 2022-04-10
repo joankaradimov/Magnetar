@@ -19,6 +19,7 @@ add_subdirectory("Magnetorm")
 set(TESTSUITE OFF CACHE INTERNAL "")
 set(MEMORY_MODULE_EXAMPLES OFF CACHE INTERNAL "")
 add_subdirectory("MemoryModule")
+add_subdirectory("MpqBuilder")
 add_subdirectory("StormLib")
 add_subdirectory("StormNamedSymbols")
 
