@@ -16,10 +16,11 @@ int main(int argc, char** argv)
         return 1;
     }
 
-    std::string base_path = argv[1];
+    std::filesystem::path input_path = argv[1];
+    std::filesystem::path output_path = "MagnetarDat.mpq";
     std::vector<std::filesystem::path> file_paths;
 
-    for (const auto& entry : std::filesystem::recursive_directory_iterator(base_path))
+    for (const auto& entry : std::filesystem::recursive_directory_iterator(input_path))
     {
         // TODO: handle symlinks, maybe?
         if (entry.is_regular_file())
@@ -30,10 +31,10 @@ int main(int argc, char** argv)
 
     // TODO: check if the MPQ needs rebuilding
 
-    remove("MagnetarDat.mpq");
+    remove(output_path.generic_string().c_str());
 
     HANDLE magnetar_dat = NULL;
-    if (!SFileCreateArchive("MagnetarDat.mpq", MPQ_CREATE_LISTFILE, file_paths.size() * 3 / 2, &magnetar_dat))
+    if (!SFileCreateArchive(output_path.string().c_str(), MPQ_CREATE_LISTFILE, file_paths.size() * 3 / 2, &magnetar_dat))
     {
         int error = GetLastError();
         printf("Error in SFileCreateArchive %d\n", error);
@@ -42,7 +43,7 @@ int main(int argc, char** argv)
 
     for (const auto& file_path : file_paths)
     {
-        if (!SFileAddFile(magnetar_dat, file_path.generic_string().c_str(), file_path.generic_string().c_str() + base_path.length() + 1, MPQ_FILE_COMPRESS))
+        if (!SFileAddFile(magnetar_dat, file_path.string().c_str(), file_path.string().c_str() + input_path.string().length() + 1, MPQ_FILE_COMPRESS))
         {
             int error = GetLastError();
             printf("Error in SFileAddFile %d\n", error);
