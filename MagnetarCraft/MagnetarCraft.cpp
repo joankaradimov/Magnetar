@@ -6,6 +6,7 @@
 #include "starcraft.h"
 #include <exception>
 #include <sstream>
+#include <filesystem>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 #include "patching/BasePatch.h"
@@ -69,35 +70,21 @@ private:
 class StarCraftExecutable
 {
 public:
-	StarCraftExecutable(const char* path) : module(nullptr), file_info(path)
+	StarCraftExecutable(const char* path) : module(nullptr), file_info(path), executable_path(path)
 	{
-		strcpy(executable_path, path);
-		if (const char* trimmed_executable_name = strrchr(executable_path, '\\'))
-		{
-			executable_name = trimmed_executable_name + 1;
-		}
-		else if (const char* trimmed_executable_name = strrchr(executable_path, '/'))
-		{
-			executable_name = trimmed_executable_name + 1;
-		}
-		else
-		{
-			executable_name = executable_path;
-		}
-
 		if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END)
 		{
 			std::ostringstream error_message;
-			error_message << "Could not reserve memory at base address 0x" << std::hex << STARCRAFT_IMAGE_BASE << " for " << executable_name;
+			error_message << "Could not reserve memory at base address 0x" << std::hex << STARCRAFT_IMAGE_BASE << " for " << executable_path.filename();
 			throw std::exception(error_message.str().c_str());
 		}
 
-		module = LoadLibraryA(executable_path);
+		module = LoadLibraryA(executable_path.generic_string().c_str());
 
 		if (module == nullptr)
 		{
 			std::ostringstream error_message;
-			error_message << "Could not load '" << executable_name << '\'';
+			error_message << "Could not load " << executable_path.filename();
 			throw std::exception(error_message.str().c_str());
 		}
 	}
@@ -120,7 +107,7 @@ public:
 		if (!file_info.is_valid())
 		{
 			std::ostringstream error_message;
-			error_message << "Could not retrieve version info for " << executable_name;
+			error_message << "Could not retrieve version info for " << executable_path.filename();
 			throw std::exception(error_message.str().c_str());
 		}
 
@@ -129,7 +116,7 @@ public:
 			HIWORD(file_info->dwProductVersionLS) != EXPECTED_PATCH_VERSION)
 		{
 			std::ostringstream error_message;
-			error_message << "Expected '" << executable_name << "' " << EXPECTED_MAJOR_VERSION << '.' << EXPECTED_MINOR_VERSION << '.' << EXPECTED_PATCH_VERSION;
+			error_message << "Expected " << executable_path.filename() << ' ' << EXPECTED_MAJOR_VERSION << '.' << EXPECTED_MINOR_VERSION << '.' << EXPECTED_PATCH_VERSION;
 			error_message << "; found " << HIWORD(file_info->dwProductVersionMS) << '.' << LOWORD(file_info->dwProductVersionMS) << '.' << HIWORD(file_info->dwProductVersionLS);
 			throw std::exception(error_message.str().c_str());
 		}
@@ -138,7 +125,7 @@ public:
 		if (starcraftModule == NULL)
 		{
 			std::ostringstream error_message;
-			error_message << "Could not initialize '" << executable_name << "' as a library";
+			error_message << "Could not initialize " << executable_path.filename() << " as a library";
 			throw std::exception(error_message.str().c_str());
 		}
 	}
@@ -181,8 +168,7 @@ private:
 		return LoadLibraryA(filename);
 	}
 
-	char executable_path[MAX_PATH]; // e.g. "C:\\Program Files\\StarCraft.exe"
-	const char* executable_name; // e.g. "StarCraft.exe"
+	std::filesystem::path executable_path; // e.g. "C:\\Program Files\\StarCraft.exe"
 	HMODULE module;
 	FileInfo file_info;
 };
