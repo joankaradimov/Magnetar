@@ -545,15 +545,8 @@ FailStubPatch ErrorDDrawInit_patch(ErrorDDrawInit);
 
 BOOL BWFXN_DDrawInitialize_()
 {
-	int v7; // edi@16
-	int v8; // eax@16
-	unsigned int v9; // ebx@16
-	unsigned int v10; // ebx@18
-	unsigned int v11; // ebx@20
-	unsigned int v12; // ebx@22
-	unsigned int v13; // ebx@25
-	PALETTEENTRY palette_entries[256]; // [sp+Ch] [bp-46Ch]@18
-	DDSURFACEDESC surface_desc; // [sp+40Ch] [bp-6Ch]@20
+	PALETTEENTRY palette_entries[256];
+	DDSURFACEDESC surface_desc;
 
 	ShowWindow(hWndParent, 1);
 	GUID* v4 = 0;
@@ -570,26 +563,26 @@ BOOL BWFXN_DDrawInitialize_()
 #ifndef BYPASS_DDRAW_STUFF
 	if (DDInterface->SetDisplayMode(640, 480, 8))
 	{
-		v7 = GetSystemMetrics(SM_CXSCREEN);
-		v8 = GetSystemMetrics(SM_CYSCREEN);
-		v9 = DDInterface->SetDisplayMode(v7, v8, 8);
+		int v7 = GetSystemMetrics(SM_CXSCREEN);
+		int v8 = GetSystemMetrics(SM_CYSCREEN);
+		unsigned v9 = DDInterface->SetDisplayMode(v7, v8, 8);
 		if (v9)
 			ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetDisplayMode", v9, 0x67u, 160);
 	}
 #endif
 	memset(palette_entries, 0, sizeof(palette_entries));
-	v10 = DDInterface->CreatePalette(DDPCAPS_ALLOW256 | DDPCAPS_8BIT, palette_entries, &PrimaryPalette, 0);
+	unsigned v10 = DDInterface->CreatePalette(DDPCAPS_ALLOW256 | DDPCAPS_8BIT, palette_entries, &PrimaryPalette, 0);
 	if (v10)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "CreatePalette", v10, 0x66u, 182);
 	memset(&surface_desc, 0, sizeof(surface_desc));
 	surface_desc.dwSize = 108;
 	surface_desc.dwFlags = 1;
 	surface_desc.ddsCaps.dwCaps = 512;
-	v11 = DDInterface->CreateSurface(&surface_desc, &PrimarySurface, 0);
+	unsigned v11 = DDInterface->CreateSurface(&surface_desc, &PrimarySurface, 0);
 	if (v11)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "CreatePrimarySurface", v11, 0x66u, 193);
 #ifndef BYPASS_DDRAW_STUFF
-	v12 = PrimarySurface->SetPalette(PrimaryPalette);
+	unsigned v12 = PrimarySurface->SetPalette(PrimaryPalette);
 	if (v12)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetPalette", v12, 0x66u, 203);
 #endif
@@ -602,7 +595,7 @@ BOOL BWFXN_DDrawInitialize_()
 		surface_desc.ddsCaps.dwCaps = 2112;
 		surface_desc.dwWidth = 640;
 		surface_desc.dwHeight = 480;
-		v13 = DDInterface->CreateSurface(&surface_desc, &BackSurface, 0);
+		unsigned v13 = DDInterface->CreateSurface(&surface_desc, &BackSurface, 0);
 		if (v13)
 			ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "CreateBackSurface", v13, 0x66u, 220);
 	}
