@@ -2,10 +2,14 @@ extern "C" {
 	int StormLibNetCreateGame;
 	int StormLibNetDestroy;
 	int StormLibNetEnumDevices;
+	int StormLibNetEnumGames;
 	int StormLibNetEnumProviders;
 	int StormLibNetDropPlayer;
 	int StormLibNetGetGameInfo;
+	int StormLibNetGetNetworkLatency;
 	int StormLibNetGetNumPlayers;
+	int StormLibNetGetOwnerTurnsWaiting;
+	int StormLibNetGetPerformanceData;
 	int StormLibNetGetPlayerCaps;
 	int StormLibNetGetPlayerName;
 	int StormLibNetGetProviderCaps;
@@ -18,9 +22,12 @@ extern "C" {
 	int StormLibNetReceiveMessage;
 	int StormLibNetReceiveTurns;
 	int StormLibNetRegisterEventHandler;
+	int StormLibNetResetLatencyMeasurements;
 	int StormLibNetSelectGame;
+	int StormLibNetSelectProvider;
 	int StormLibNetSendMessage;
 	int StormLibNetSendTurn;
+	int StormLibNetSetBasePlayer;
 	int StormLibNetSetGameMode;
 	int StormLibNetEnumGamesEx;
 	int StormLibNetSendServerChatCommand;
@@ -33,102 +40,235 @@ extern "C" {
 	int StormLibNet144;
 	int StormLibNetLeagueLogout;
 	int StormLibNetGetLeaguePlayerName;
+
+	int StormLibDlgBeginPaint;
+	int StormLibDlgBltToWindowI;
+	int StormLibDlgCheckTimers;
+	int StormLibDlgCreateDialogIndirectParam;
+	int StormLibDlgCreateDialogParam;
 	int StormLibDlgDefDialogProc;
 	int StormLibDlgDialogBoxIndirectParam;
+	int StormLibDlgDialogBoxPara;
+	int StormLibDlgDrawBitmap;
 	int StormLibDlgEndDialog;
+	int StormLibDlgEndPaint;
+	int StormLibDlgKillTimer;
+	int StormLibDlgSetBaseFont;
+	int StormLibDlgSetBitmapI;
 	int StormLibDlgSetControlBitmaps;
+	int StormLibDlgSetCursor;
+	int StormLibDlgSetSystemCursor;
+	int StormLibDlgSetTimer;
+	int StormLibDlgUpdateCursor;
 	int StormLibDlgBltToWindowE;
 	int StormLibDlgSetBitmapE;
 	int StormLibOrdinal224;
+
+	int StormLibFileAuthenticateArchive;
 	int StormLibFileCloseArchive;
 	int StormLibFileCloseFile;
+	int StormLibFileDdaBegin;
 	int StormLibFileDdaBeginEx;
 	int StormLibFileDdaDestroy;
 	int StormLibFileDdaEnd;
 	int StormLibFileDdaGetPos;
+	int StormLibFileDdaGetVolume;
 	int StormLibFileDdaInitialize;
 	int StormLibFileDdaSetVolume;
+	int StormLibFileDestroy;
+	int StormLibFileEnableDirectAccess;
 	int StormLibFileGetFileArchive;
 	int StormLibFileGetFileSize;
 	int StormLibFileOpenArchive;
 	int StormLibFileOpenFile;
 	int StormLibFileOpenFileEx;
 	int StormLibFileReadFile;
+	int StormLibFileSetBasePath;
+	int StormLibFileSetFilePointer;
 	int StormLibFileSetLocale;
+	int StormLibFileGetBasePath;
 	int StormLibFileSetIoErrorMode;
 	int StormLibFileGetArchiveName;
 	int StormLibFileGetFileName;
+	int StormLibFileGetArchiveInfo;
 	int StormLibFileLoadFile;
 	int StormLibFileUnloadFile;
 	int StormLibFileLoadFileEx;
+
+	int StormLibStormDestroy;
+
+	int StormLibBltGetSCode;
 	int StormLibBltROP3;
 	int StormLibBltROP3Clipped;
+	int StormLibBltROP3Tiled;
+
 	int StormLibBmpDecodeImage;
 	int StormLibBmpLoadImage;
+	int StormLibBmpSaveImage;
 	int StormLibBmpAllocLoadImage;
+
 	int StormLibCodeCompile;
 	int StormLibCodeDelete;
 	int StormLibCodeExecute;
+	int StormLibCodeGetPseudocode;
+
+	int StormLibDrawAutoInitialize;
 	int StormLibDrawCaptureScreen;
+	int StormLibDrawClearSurface;
+	int StormLibDrawDestroy;
+	int StormLibDrawFlipPage;
 	int StormLibDrawGetFrameWindow;
+	int StormLibDrawGetObjects;
+	int StormLibDrawGetScreenSize;
+	int StormLibDrawGetServiceLevel;
 	int StormLibDrawLockSurface;
 	int StormLibDrawManualInitialize;
+	int StormLibDrawMessageBox;
+	int StormLibDrawPostClose;
 	int StormLibDrawRealizePalette;
+	int StormLibDrawSelectGdiSurface;
 	int StormLibDrawUnlockSurface;
 	int StormLibDrawUpdatePalette;
+	int StormLibDrawUpdateScreen;
+
+	int StormLibEvtDispatch;
+	int StormLibEvtRegisterHandler;
+	int StormLibEvtUnregisterHandler;
+	int StormLibEvtUnregisterType;
+	int StormLibEvtPopState;
+	int StormLibEvtPushState;
+	int StormLibEvtBreakHandlerChain;
+
+	int StormLibGdiBitBlt;
+	int StormLibGdiCreateFont;
 	int StormLibGdiDeleteObject;
 	int StormLibGdiExtTextOut;
 	int StormLibGdiImportFont;
+	int StormLibGdiLoadFont;
+	int StormLibGdiRectangle;
 	int StormLibGdiSelectObject;
 	int StormLibGdiSetPitch;
+	int StormLibGdiTextOut;
+	int StormLibGdiSetTargetDimensions;
 	int StormLibOrdinal393;
+
 	int StormLibMemAlloc;
 	int StormLibMemFree;
+
+	int StormLibMsgDispatchMessage;
+	int StormLibMsgDoMessageLoop;
+	int StormLibMsgRegisterCommand;
+	int StormLibMsgRegisterKeyDown;
+	int StormLibMsgRegisterKeyUp;
+	int StormLibMsgRegisterMessage;
+	int StormLibMsgPopRegisterState;
+	int StormLibMsgPushRegisterState;
+
 	int StormLibRegLoadData;
 	int StormLibRegLoadString;
 	int StormLibRegLoadValue;
 	int StormLibRegSaveData;
 	int StormLibRegSaveString;
 	int StormLibRegSaveValue;
+	int StormLibRegGetBaseKey;
 	int StormLibRegDeleteValue;
+
 	int StormLibTransBlt;
 	int StormLibTransBltUsingMask;
+	int StormLibTransCreateI;
 	int StormLibTransDelete;
 	int StormLibTransDuplicate;
 	int StormLibTransIntersectDirtyArray;
 	int StormLibTransInvertMask;
+	int StormLibTransLoadI;
 	int StormLibTransSetDirtyArrayInfo;
+	int StormLibTransUpdateDirtyArray;
 	int StormLibTrans442;
 	int StormLibTransCombineMasks;
+	int StormLibTransCreateMaskI;
 	int StormLibTransCreateE;
+	int StormLibTransCreateMaskE;
+	int StormLibTransLoadE;
+
 	int StormLibVidDestroy;
 	int StormLibVidGetSize;
 	int StormLibVidInitialize;
 	int StormLibVidPlayBegin;
+	int StormLibVidPlayBeginFromMemory;
+	int StormLibVidPlayContinue;
 	int StormLibVidPlayContinueSingle;
 	int StormLibVidPlayEnd;
+	int StormLibVidSetVolume;
+
+	int StormLibErrDisplayError;
 	int StormLibErrGetErrorStr;
 	int StormLibErrGetLastError;
+	int StormLibErrRegisterMessageSource;
 	int StormLibErrSetLastError;
+	int StormLibErrReportResourceLeak;
 	int StormLibErrSuppressErrors;
+
+	int StormLibCmdGetBool;
+	int StormLibCmdGetNum;
+	int StormLibCmdGetString;
+	int StormLibCmdProcess;
+	int StormLibCmdRegisterArgList;
+	int StormLibCmdRegisterArgument;
+	int StormLibCmdCheckId;
+
+	int StormLibMemFindNextBlock;
+	int StormLibMemFindNextHeap;
+	int StormLibMemGetHeapByCaller;
+	int StormLibMemGetHeapByPtr;
+	int StormLibMemHeapAlloc;
+	int StormLibMemHeapCreate;
+	int StormLibMemHeapDestroy;
+	int StormLibMemHeapFree;
 	int StormLibMemCopy;
 	int StormLibMemFill;
 	int StormLibMemZero;
 	int StormLibMemCmp;
+
 	int StormLibStrCopy;
 	int StormLibStrHash;
 	int StormLibStrNCat;
+	int StormLibStrTokenize;
+	int StormLibStrPack;
 	int StormLibStrLen;
 	int StormLibStrCmp;
 	int StormLibStrCmpI;
 	int StormLibStrUpper;
+
+	int StormLibMsgBreakHandlerChain;
+	int StormLibMsgUnregisterCommand;
+	int StormLibMsgUnregisterKeyDown;
+	int StormLibMsgUnregisterKeyUp;
+	int StormLibMsgUnregisterMessage;
+
+	int StormLibRgnClear;
 	int StormLibRgn523;
 	int StormLibRgnCreate;
 	int StormLibRgnDelete;
+	int StormLibRgnDuplicate;
+	int StormLibRgnGetRectParams;
 	int StormLibRgn529i;
+	int StormLibRgnGetBoundingRect;
+
+	int StormLibLogClose;
+	int StormLibLogCreate;
+	int StormLibLogDump;
+	int StormLibLogFlush;
+	int StormLibLogFlushAll;
+	int StormLibLogPend;
+	int StormLibLogWrite;
+
+	int StormLibCompCompress;
+	int StormLibCompDecompress;
+
 	int StormLibStrChr;
 	int StormLibStrChrR;
 	int StormLibStrVPrintf;
+
 	int StormLibBigDel;
 	int StormLibBigFromBinary;
 	int StormLibBigNew;

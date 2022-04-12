@@ -3,10 +3,14 @@ EXPORTS
     StormLibNetCreateGame @101
     StormLibNetDestroy @102
     StormLibNetEnumDevices @103
+    StormLibNetEnumGames @104
     StormLibNetEnumProviders @105
     StormLibNetDropPlayer @106
     StormLibNetGetGameInfo @107
+    StormLibNetGetNetworkLatency @108
     StormLibNetGetNumPlayers @109
+    StormLibNetGetOwnerTurnsWaiting @110
+    StormLibNetGetPerformanceData @111
     StormLibNetGetPlayerCaps @112
     StormLibNetGetPlayerName @113
     StormLibNetGetProviderCaps @114
@@ -19,9 +23,12 @@ EXPORTS
     StormLibNetReceiveMessage @121
     StormLibNetReceiveTurns @122
     StormLibNetRegisterEventHandler @123
+    StormLibNetResetLatencyMeasurements @124
     StormLibNetSelectGame @125
+    StormLibNetSelectProvider @126
     StormLibNetSendMessage @127
     StormLibNetSendTurn @128
+    StormLibNetSetBasePlayer @129
     StormLibNetSetGameMode @130
     StormLibNetEnumGamesEx @133
     StormLibNetSendServerChatCommand @134
@@ -34,102 +41,235 @@ EXPORTS
     StormLibNet144 @144
     StormLibNetLeagueLogout @145
     StormLibNetGetLeaguePlayerName @146
+
+    StormLibDlgBeginPaint @201
+    StormLibDlgBltToWindowI @202
+    StormLibDlgCheckTimers @203
+    StormLibDlgCreateDialogIndirectParam @204
+    StormLibDlgCreateDialogParam @205
     StormLibDlgDefDialogProc @206
     StormLibDlgDialogBoxIndirectParam @208
+    StormLibDlgDialogBoxPara @209
+    StormLibDlgDrawBitmap @210
     StormLibDlgEndDialog @211
+    StormLibDlgEndPaint @212
+    StormLibDlgKillTimer @213
+    StormLibDlgSetBaseFont @214
+    StormLibDlgSetBitmapI @215
     StormLibDlgSetControlBitmaps @216
+    StormLibDlgSetCursor @217
+    StormLibDlgSetSystemCursor @218
+    StormLibDlgSetTimer @219
+    StormLibDlgUpdateCursor @220
     StormLibDlgBltToWindowE @221
     StormLibDlgSetBitmapE @222
     StormLibOrdinal224 @224
+
+    StormLibFileAuthenticateArchive @251
     StormLibFileCloseArchive @252
     StormLibFileCloseFile @253
+    StormLibFileDdaBegin @254
     StormLibFileDdaBeginEx @255
     StormLibFileDdaDestroy @256
     StormLibFileDdaEnd @257
     StormLibFileDdaGetPos @258
+    StormLibFileDdaGetVolume @259
     StormLibFileDdaInitialize @260
     StormLibFileDdaSetVolume @261
+    StormLibFileDestroy @262
+    StormLibFileEnableDirectAccess @263
     StormLibFileGetFileArchive @264
     StormLibFileGetFileSize @265
     StormLibFileOpenArchive @266
     StormLibFileOpenFile @267
     StormLibFileOpenFileEx @268
     StormLibFileReadFile @269
+    StormLibFileSetBasePath @270
+    StormLibFileSetFilePointer @271
     StormLibFileSetLocale @272
+    StormLibFileGetBasePath @273
     StormLibFileSetIoErrorMode @274
     StormLibFileGetArchiveName @275
     StormLibFileGetFileName @276
+    StormLibFileGetArchiveInfo @277
     StormLibFileLoadFile @279
     StormLibFileUnloadFile @280
     StormLibFileLoadFileEx @281
+
+    StormLibStormDestroy @301
+
+    StormLibBltGetSCode @312
     StormLibBltROP3 @313
     StormLibBltROP3Clipped @314
+    StormLibBltROP3Tiled @315
+
     StormLibBmpDecodeImage @321
     StormLibBmpLoadImage @323
+    StormLibBmpSaveImage @324
     StormLibBmpAllocLoadImage @325
+
     StormLibCodeCompile @331
     StormLibCodeDelete @332
     StormLibCodeExecute @334
+    StormLibCodeGetPseudocode @335
+
+    StormLibDrawAutoInitialize @341
     StormLibDrawCaptureScreen @342
+    StormLibDrawClearSurface @343
+    StormLibDrawDestroy @344
+    StormLibDrawFlipPage @345
     StormLibDrawGetFrameWindow @346
+    StormLibDrawGetObjects @347
+    StormLibDrawGetScreenSize @348
+    StormLibDrawGetServiceLevel @349
     StormLibDrawLockSurface @350
     StormLibDrawManualInitialize @351
+    StormLibDrawMessageBox @352
+    StormLibDrawPostClose @353
     StormLibDrawRealizePalette @354
+    StormLibDrawSelectGdiSurface @355
     StormLibDrawUnlockSurface @356
     StormLibDrawUpdatePalette @357
+    StormLibDrawUpdateScreen @358
+
+    StormLibEvtDispatch @372
+    StormLibEvtRegisterHandler @373
+    StormLibEvtUnregisterHandler @374
+    StormLibEvtUnregisterType @375
+    StormLibEvtPopState @376
+    StormLibEvtPushState @377
+    StormLibEvtBreakHandlerChain @378
+
+    StormLibGdiBitBlt @381
+    StormLibGdiCreateFont @382
     StormLibGdiDeleteObject @383
     StormLibGdiExtTextOut @385
     StormLibGdiImportFont @386
+    StormLibGdiLoadFont @387
+    StormLibGdiRectangle @388
     StormLibGdiSelectObject @389
     StormLibGdiSetPitch @390
+    StormLibGdiTextOut @391
+    StormLibGdiSetTargetDimensions @392
     StormLibOrdinal393 @393
+
     StormLibMemAlloc @401
     StormLibMemFree @403
+
+    StormLibMsgDispatchMessage @412
+    StormLibMsgDoMessageLoop @413
+    StormLibMsgRegisterCommand @414
+    StormLibMsgRegisterKeyDown @415
+    StormLibMsgRegisterKeyUp @416
+    StormLibMsgRegisterMessage @417
+    StormLibMsgPopRegisterState @418
+    StormLibMsgPushRegisterState @419
+
     StormLibRegLoadData @421
     StormLibRegLoadString @422
     StormLibRegLoadValue @423
     StormLibRegSaveData @424
     StormLibRegSaveString @425
     StormLibRegSaveValue @426
+    StormLibRegGetBaseKey @427
     StormLibRegDeleteValue @428
+
     StormLibTransBlt @431
     StormLibTransBltUsingMask @432
+    StormLibTransCreateI @433
     StormLibTransDelete @434
     StormLibTransDuplicate @436
     StormLibTransIntersectDirtyArray @437
     StormLibTransInvertMask @438
+    StormLibTransLoadI @439
     StormLibTransSetDirtyArrayInfo @440
+    StormLibTransUpdateDirtyArray @441
     StormLibTrans442 @442
     StormLibTransCombineMasks @443
+    StormLibTransCreateMaskI @444
     StormLibTransCreateE @445
+    StormLibTransCreateMaskE @446
+    StormLibTransLoadE @447
+
     StormLibVidDestroy @451
     StormLibVidGetSize @452
     StormLibVidInitialize @453
     StormLibVidPlayBegin @454
+    StormLibVidPlayBeginFromMemory @455
+    StormLibVidPlayContinue @456
     StormLibVidPlayContinueSingle @457
     StormLibVidPlayEnd @458
+    StormLibVidSetVolume @459
+
+    StormLibErrDisplayError @461
     StormLibErrGetErrorStr @462
     StormLibErrGetLastError @463
+    StormLibErrRegisterMessageSource @464
     StormLibErrSetLastError @465
+    StormLibErrReportResourceLeak @467
     StormLibErrSuppressErrors @468
+
+    StormLibCmdGetBool @472
+    StormLibCmdGetNum @473
+    StormLibCmdGetString @474
+    StormLibCmdProcess @475
+    StormLibCmdRegisterArgList @476
+    StormLibCmdRegisterArgument @477
+    StormLibCmdCheckId @478
+
+    StormLibMemFindNextBlock @481
+    StormLibMemFindNextHeap @482
+    StormLibMemGetHeapByCaller @483
+    StormLibMemGetHeapByPtr @484
+    StormLibMemHeapAlloc @485
+    StormLibMemHeapCreate @486
+    StormLibMemHeapDestroy @487
+    StormLibMemHeapFree @488
     StormLibMemCopy @491
     StormLibMemFill @492
     StormLibMemZero @494
     StormLibMemCmp @495
+
     StormLibStrCopy @501
     StormLibStrHash @502
     StormLibStrNCat @503
+    StormLibStrTokenize @504
+    StormLibStrPack @505
     StormLibStrLen @506
     StormLibStrCmp @508
     StormLibStrCmpI @509
     StormLibStrUpper @510
+
+    StormLibMsgBreakHandlerChain @511
+    StormLibMsgUnregisterCommand @512
+    StormLibMsgUnregisterKeyDown @513
+    StormLibMsgUnregisterKeyUp @514
+    StormLibMsgUnregisterMessage @515
+
+    StormLibRgnClear @521
     StormLibRgn523 @523
     StormLibRgnCreate @524
     StormLibRgnDelete @525
+    StormLibRgnDuplicate @527
+    StormLibRgnGetRectParams @528
     StormLibRgn529i @529
+    StormLibRgnGetBoundingRect @530
+
+    StormLibLogClose @541
+    StormLibLogCreate @542
+    StormLibLogDump @544
+    StormLibLogFlush @545
+    StormLibLogFlushAll @546
+    StormLibLogPend @547
+    StormLibLogWrite @548
+
+    StormLibCompCompress @551
+    StormLibCompDecompress @552
+
     StormLibStrChr @571
     StormLibStrChrR @572
     StormLibStrVPrintf @578
+
     StormLibBigDel @606
     StormLibBigFromBinary @609
     StormLibBigNew @624
