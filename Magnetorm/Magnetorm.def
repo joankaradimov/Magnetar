@@ -40,14 +40,14 @@ EXPORTS
     SDlgBltToWindowE = StormLibDlgBltToWindowE @221
     SDlgSetBitmapE = StormLibDlgSetBitmapE @222
     Ordinal224 = StormLibOrdinal224 @224
+    SFileCloseArchive = StormLibFileCloseArchive @252
+    SFileCloseFile = StormLibFileCloseFile @253
     SFileDdaBeginEx = StormLibFileDdaBeginEx @255
     SFileDdaDestroy = StormLibFileDdaDestroy @256
     SFileDdaEnd = StormLibFileDdaEnd @257
     SFileDdaGetPos = StormLibFileDdaGetPos @258
     SFileDdaInitialize = StormLibFileDdaInitialize @260
     SFileDdaSetVolume = StormLibFileDdaSetVolume @261
-    SFileCloseArchive = StormLibFileCloseArchive @252
-    SFileCloseFile = StormLibFileCloseFile @253
     SFileGetFileArchive = StormLibFileGetFileArchive @264
     SFileGetFileSize = StormLibFileGetFileSize @265
     SFileOpenArchive = StormLibFileOpenArchive @266
