@@ -77,17 +77,16 @@ FailStubPatch LoadInstallArchiveHD_patch(LoadInstallArchiveHD);
 
 signed int InitializeCDArchives_(const char *filename, int a2)
 {
-	if (hMpq)
+	if (cd_archive_mpq)
 		return 1;
 
 	char path_buffer[MAX_PATH];
-	hMpq = LoadInstallArchiveHD_(filename, path_buffer, "\\BroodWar.mpq", 1000);
-	if (hMpq || (hMpq = LoadInstallArchiveHD_(filename, path_buffer, "\\StarCraft.mpq", 1000)) != 0)
+	cd_archive_mpq = LoadInstallArchiveHD_(filename, path_buffer, "\\BroodWar.mpq", 1000);
+	if (cd_archive_mpq || (cd_archive_mpq = LoadInstallArchiveHD_(filename, path_buffer, "\\StarCraft.mpq", 1000)) != 0)
 		return 1;
 
-
-	hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", filename);
-	if (hMpq)
+	cd_archive_mpq = LoadInstallArchiveCD(1000u, "\\Install.exe", filename);
+	if (cd_archive_mpq)
 		return 1;
 
 	while (a2)
@@ -103,8 +102,8 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		}
 		if (v4 != 1)
 			goto LABEL_13;
-		hMpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
-		if (hMpq)
+		cd_archive_mpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
+		if (cd_archive_mpq)
 			return 1;
 	}
 	return 0;
@@ -252,11 +251,11 @@ int InitializeArchiveHandles_()
 	SStrNCat(Filename, "\\Stardat.mpq", MAX_PATH);
 	if (SFileOpenArchive(Filename, 2000u, 2u, &phFile))
 	{
-		dword_51CC38 = phFile;
+		stardat_mpq = phFile;
 	}
 	else
 	{
-		dword_51CC38 = 0;
+		stardat_mpq = 0;
 		int last_error = GetLastError();
 		SysWarn_FileNotFound("Stardat.mpq", last_error);
 	}
@@ -268,11 +267,11 @@ int InitializeArchiveHandles_()
 	SStrNCat(archivename, "\\patch_rt.mpq", MAX_PATH);
 	if (SFileOpenArchive(archivename, 7000u, 2u, &phFile))
 	{
-		dword_51CC28 = phFile;
+		patch_rt_mpq = phFile;
 	}
 	else
 	{
-		dword_51CC28 = 0;
+		patch_rt_mpq = 0;
 	}
 
     char magnetarDatFilename[MAX_PATH] = { 0 };
@@ -300,14 +299,14 @@ int InitializeArchiveHandles_()
 		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
 		if (SFileOpenArchive(archivename_, 2500u, 2u, &phFile))
 		{
-			dword_51CC2C = phFile;
+			broodat_mpq = phFile;
 
 			SStrCopy(broodat_mpq_path, archivename_, 0x208u);
 			SStrNCat(broodat_mpq_path, ";", 520);
 		}
 		else
 		{
-			dword_51CC2C = 0;
+			broodat_mpq = 0;
 		}
 	}
 	if (SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile))
@@ -456,7 +455,7 @@ void PreInitData_()
 	AppAddExit_(CloseAllArchives);
 	InitializeArchiveHandles_();
 	DataVersionCheck("rez\\DataVersion.txt");
-	if (hMpq)
+	if (cd_archive_mpq)
 	{
 		DataVersionCheck("rez\\CDversion.txt");
 	}
@@ -5186,7 +5185,7 @@ void GameMainLoop_()
 	SetCursorPos(320, 240);
 	Mouse.x = 320;
 	Mouse.y = 240;
-	if (hMpq && SFileOpenFileEx(hMpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
+	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
 		SFileCloseFile(phFile);
 		if ((registry_options.field_18 & 0x800) == 0)
@@ -5236,7 +5235,7 @@ void GameMainLoop_()
 					PlayMovie(Cinematic::C_BLIZZARD_LOGO);
 					if (gwGameMode == GAME_INTRO)
 					{
-						if (hMpq && SFileOpenFileEx(hMpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
+						if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 						{
 							SFileCloseFile(phFile);
 							PlayMovie(Cinematic::C_EXPANSION_INTRO);
