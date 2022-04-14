@@ -131,13 +131,13 @@ EXPORTS
     SDrawUpdatePalette = StormLibDrawUpdatePalette @357
     SDrawUpdateScreen = StormLibDrawUpdateScreen @358
 
-    StormLibEvtDispatch = StormLibEvtDispatch @372
-    StormLibEvtRegisterHandler = StormLibEvtRegisterHandler @373
-    StormLibEvtUnregisterHandler = StormLibEvtUnregisterHandler @374
-    StormLibEvtUnregisterType = StormLibEvtUnregisterType @375
-    StormLibEvtPopState = StormLibEvtPopState @376
-    StormLibEvtPushState = StormLibEvtPushState @377
-    StormLibEvtBreakHandlerChain = StormLibEvtBreakHandlerChain @378
+    SEvtDispatch = StormLibEvtDispatch @372
+    SEvtRegisterHandler = StormLibEvtRegisterHandler @373
+    SEvtUnregisterHandler = StormLibEvtUnregisterHandler @374
+    SEvtUnregisterType = StormLibEvtUnregisterType @375
+    SEvtPopState = StormLibEvtPopState @376
+    SEvtPushState = StormLibEvtPushState @377
+    SEvtBreakHandlerChain = StormLibEvtBreakHandlerChain @378
 
     SGdiBitBlt = StormLibGdiBitBlt @381
     SGdiCreateFont = StormLibGdiCreateFont @382
