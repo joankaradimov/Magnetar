@@ -29,15 +29,19 @@ extern "C" {
 	int StormLibNetSendTurn;
 	int StormLibNetSetBasePlayer;
 	int StormLibNetSetGameMode;
+	int StormLibNetUnregisterEventHandler;
 	int StormLibNetEnumGamesEx;
 	int StormLibNetSendServerChatCommand;
-	int StormLibNet137;
+	int StormLibNetSendDatagram;
+	int StormLibNetReceiveDatagram;
+	int StormLibDisconnectAll;
 	int StormLibNetCreateLadderGame;
 	int StormLibNetReportGameResult;
+	int StormLibNetCheckDataFile;
 	int StormLibNetSendLeagueCommand;
 	int StormLibNetSendReplayPath;
 	int StormLibNetGetLeagueName;
-	int StormLibNet144;
+	int StormLibGetPlayerNames;
 	int StormLibNetLeagueLogout;
 	int StormLibNetGetLeaguePlayerName;
 
@@ -62,7 +66,8 @@ extern "C" {
 	int StormLibDlgUpdateCursor;
 	int StormLibDlgBltToWindowE;
 	int StormLibDlgSetBitmapE;
-	int StormLibOrdinal224;
+	int StormLibDlgSetLocale;
+	int StormLibDlg224;
 
 	int StormLibFileAuthenticateArchive;
 	int StormLibFileCloseArchive;
@@ -91,11 +96,34 @@ extern "C" {
 	int StormLibFileGetArchiveName;
 	int StormLibFileGetFileName;
 	int StormLibFileGetArchiveInfo;
+	int StormLibFileSetPlatform;
 	int StormLibFileLoadFile;
 	int StormLibFileUnloadFile;
 	int StormLibFileLoadFileEx;
+	int StormLibFilePrioritizeRequest;
+	int StormLibFileCancelRequest;
+	int StormLibFileSetAsyncBudget;
+	int StormLibFileSetDataChunkSize;
+	int StormLibFileEnableSeekOptimization;
+	int StormLibFileReadFileEx;
+	int StormLibFileFileExists;
+	int StormLibFileFileExistsEx;
+	int StormLibFileReadFileEx2;
+	int StormLibFileReadFile2;
+	int StormLibFileLoadFile2;
+	int StormLibFileOpenFileAsArchive;
+	int StormLibFileGetLocale;
+	int StormLibFileRegisterLoadNotifyProc;
+	int StormLibFileGetFileCompressedSize;
+	int StormLibFile297;
+	int StormLibFile298;
+	int StormLibFileAuthenticateArchiveEx;
+	int StormLibFileOpenPathAsArchive;
 
 	int StormLibStormDestroy;
+	int StormLibGetInstance;
+	int StormLibGetOption;
+	int StormLibSetOption;
 
 	int StormLibBltGetSCode;
 	int StormLibBltROP3;
@@ -106,6 +134,7 @@ extern "C" {
 	int StormLibBmpLoadImage;
 	int StormLibBmpSaveImage;
 	int StormLibBmpAllocLoadImage;
+	int StormLibBmpSaveImageEx;
 
 	int StormLibCodeCompile;
 	int StormLibCodeDelete;
@@ -130,6 +159,7 @@ extern "C" {
 	int StormLibDrawUnlockSurface;
 	int StormLibDrawUpdatePalette;
 	int StormLibDrawUpdateScreen;
+	int StormLibDrawWaitForVerticalBlank;
 
 	int StormLibEvtDispatch;
 	int StormLibEvtRegisterHandler;
@@ -142,6 +172,7 @@ extern "C" {
 	int StormLibGdiBitBlt;
 	int StormLibGdiCreateFont;
 	int StormLibGdiDeleteObject;
+	int StormLibGdiDestroy;
 	int StormLibGdiExtTextOut;
 	int StormLibGdiImportFont;
 	int StormLibGdiLoadFont;
@@ -150,10 +181,13 @@ extern "C" {
 	int StormLibGdiSetPitch;
 	int StormLibGdiTextOut;
 	int StormLibGdiSetTargetDimensions;
-	int StormLibOrdinal393;
+	int StormLibGdi393;
 
 	int StormLibMemAlloc;
+	int StormLibMemDestroy;
 	int StormLibMemFree;
+	int StormLibMemGetSize;
+	int StormLibMemReAlloc;
 
 	int StormLibMsgDispatchMessage;
 	int StormLibMsgDoMessageLoop;
@@ -183,7 +217,7 @@ extern "C" {
 	int StormLibTransLoadI;
 	int StormLibTransSetDirtyArrayInfo;
 	int StormLibTransUpdateDirtyArray;
-	int StormLibTrans442;
+	int StormLibPointInMask;
 	int StormLibTransCombineMasks;
 	int StormLibTransCreateMaskI;
 	int StormLibTransCreateE;
@@ -207,6 +241,8 @@ extern "C" {
 	int StormLibErrSetLastError;
 	int StormLibErrReportResourceLeak;
 	int StormLibErrSuppressErrors;
+	int StormLibErrRegisterHandler;
+	int StormLibErrUnregisterHandler;
 
 	int StormLibCmdGetBool;
 	int StormLibCmdGetNum;
@@ -224,10 +260,13 @@ extern "C" {
 	int StormLibMemHeapCreate;
 	int StormLibMemHeapDestroy;
 	int StormLibMemHeapFree;
+	int StormLibMemHeapRealloc;
+	int StormLibMemHeapSize;
 	int StormLibMemCopy;
 	int StormLibMemFill;
 	int StormLibMemZero;
 	int StormLibMemCmp;
+	int StormLibMemDumpState;
 
 	int StormLibStrCopy;
 	int StormLibStrHash;
@@ -235,6 +274,7 @@ extern "C" {
 	int StormLibStrTokenize;
 	int StormLibStrPack;
 	int StormLibStrLen;
+	int StormLibStrDup;
 	int StormLibStrCmp;
 	int StormLibStrCmpI;
 	int StormLibStrUpper;
@@ -244,6 +284,10 @@ extern "C" {
 	int StormLibMsgUnregisterKeyDown;
 	int StormLibMsgUnregisterKeyUp;
 	int StormLibMsgUnregisterMessage;
+	int StormLibMsgGetDispatcher;
+	int StormLibMsgSetDefaultWindow;
+	int StormLibMsgGetDefaultWindow;
+	int StormLibMsg519;
 
 	int StormLibRgnClear;
 	int StormLibRgn523;
@@ -256,18 +300,29 @@ extern "C" {
 
 	int StormLibLogClose;
 	int StormLibLogCreate;
+	int StormLibLog543;
 	int StormLibLogDump;
 	int StormLibLogFlush;
 	int StormLibLogFlushAll;
 	int StormLibLogPend;
 	int StormLibLogWrite;
+	int StormLibLog549;
+	int StormLibLogCriticalLog;
 
 	int StormLibCompCompress;
 	int StormLibCompDecompress;
 
 	int StormLibStrChr;
 	int StormLibStrChrR;
+	int StormLibStrToDouble;
+	int StormLibStrToFloat;
+	int StormLibStrToInt;
+	int StormLibStrToUnsigned;
+	int StormLibStrToInt64;
 	int StormLibStrVPrintf;
+	int StormLibStrLower;
+	int StormLibStrHash64;
+	int StormLibStrPrintf;
 
 	int StormLibBigDel;
 	int StormLibBigFromBinary;

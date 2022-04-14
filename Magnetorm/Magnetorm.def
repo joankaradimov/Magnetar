@@ -29,15 +29,19 @@ EXPORTS
     SNetSendTurn = StormLibNetSendTurn @128
     SNetSetBasePlayer = StormLibNetSetBasePlayer @129
     SNetSetGameMode = StormLibNetSetGameMode @130
+    SNetUnregisterEventHandler = StormLibNetUnregisterEventHandler @131
     SNetEnumGamesEx = StormLibNetEnumGamesEx @133
     SNetSendServerChatCommand = StormLibNetSendServerChatCommand @134
-    SNet137 = StormLibNet137 @137
+    SNetSendDatagram = StormLibNetSendDatagram @135
+    SNetReceiveDatagram = StormLibNetReceiveDatagram @136
+    SNetDisconnectAll = StormLibDisconnectAll @137
     SNetCreateLadderGame = StormLibNetCreateLadderGame @138
     SNetReportGameResult = StormLibNetReportGameResult @139
+    SNetCheckDataFile = StormLibNetCheckDataFile @140
     SNetSendLeagueCommand = StormLibNetSendLeagueCommand @141
     SNetSendReplayPath = StormLibNetSendReplayPath @142
     SNetGetLeagueName = StormLibNetGetLeagueName @143
-    SNet144 = StormLibNet144 @144
+    SNetGetPlayerNames = StormLibGetPlayerNames @144
     SNetLeagueLogout = StormLibNetLeagueLogout @145
     SNetGetLeaguePlayerName = StormLibNetGetLeaguePlayerName @146
 
@@ -62,7 +66,8 @@ EXPORTS
     SDlgUpdateCursor = StormLibDlgUpdateCursor @220
     SDlgBltToWindowE = StormLibDlgBltToWindowE @221
     SDlgSetBitmapE = StormLibDlgSetBitmapE @222
-    Ordinal224 = StormLibOrdinal224 @224
+    SDlgSetLocale = StormLibDlgSetLocale @223
+    SDlg224 = StormLibDlg224 @224
 
     SFileAuthenticateArchive = StormLibFileAuthenticateArchive @251
     SFileCloseArchive = StormLibFileCloseArchive @252
@@ -91,11 +96,34 @@ EXPORTS
     SFileGetArchiveName = StormLibFileGetArchiveName @275
     SFileGetFileName = StormLibFileGetFileName @276
     SFileGetArchiveInfo = StormLibFileGetArchiveInfo @277
+    SFileSetPlatform = StormLibFileSetPlatform @278
     SFileLoadFile = StormLibFileLoadFile @279
     SFileUnloadFile = StormLibFileUnloadFile @280
     SFileLoadFileEx = StormLibFileLoadFileEx @281
+    SFilePrioritizeRequest = StormLibFilePrioritizeRequest @282
+    SFileCancelRequest = StormLibFileCancelRequest @283
+    SFileSetAsyncBudget = StormLibFileSetAsyncBudget @284
+    SFileSetDataChunkSize = StormLibFileSetDataChunkSize @285
+    ;SFileEnableSeekOptimization = StormLibFileEnableSeekOptimization @286
+    ;SFileReadFileEx = StormLibFileReadFileEx @287
+    ;SFileFileExists = StormLibFileFileExists @288
+    ;SFileFileExistsEx = StormLibFileFileExistsEx @289
+    ;SFileReadFileEx2 = StormLibFileReadFileEx2 @290
+    ;SFileReadFile2 = StormLibFileReadFile2 @291
+    ;SFileLoadFile2 = StormLibFileLoadFile2 @292
+    ;SFileOpenFileAsArchive = StormLibFileOpenFileAsArchive @293
+    ;SFileGetLocale = StormLibFileGetLocale @294
+    ;SFileRegisterLoadNotifyProc = StormLibFileRegisterLoadNotifyProc @295
+    ;SFileGetFileCompressedSize = StormLibFileGetFileCompressedSize @296
+    ;SFile297 = StormLibFile297 @297
+    ;SFile298 = StormLibFile298 @298
+    ;SFileAuthenticateArchiveEx = StormLibFileAuthenticateArchiveEx @299
+    ;SFileOpenPathAsArchive = StormLibFileOpenPathAsArchive @300
 
     StormDestroy = StormLibStormDestroy @301
+    StormGetInstance = StormLibGetInstance @302
+    StormGetOption = StormLibGetOption @303
+    StormSetOption = StormLibSetOption @304
 
     SBltGetSCode = StormLibBltGetSCode @312
     SBltROP3 = StormLibBltROP3 @313
@@ -106,6 +134,7 @@ EXPORTS
     SBmpLoadImage = StormLibBmpLoadImage @323
     SBmpSaveImage = StormLibBmpSaveImage @324
     SBmpAllocLoadImage = StormLibBmpAllocLoadImage @325
+    SBmpSaveImageEx = StormLibBmpSaveImageEx @326
 
     SCodeCompile = StormLibCodeCompile @331
     SCodeDelete = StormLibCodeDelete @332
@@ -130,6 +159,7 @@ EXPORTS
     SDrawUnlockSurface = StormLibDrawUnlockSurface @356
     SDrawUpdatePalette = StormLibDrawUpdatePalette @357
     SDrawUpdateScreen = StormLibDrawUpdateScreen @358
+    SDrawWaitForVerticalBlank = StormLibDrawWaitForVerticalBlank @359
 
     SEvtDispatch = StormLibEvtDispatch @372
     SEvtRegisterHandler = StormLibEvtRegisterHandler @373
@@ -142,6 +172,7 @@ EXPORTS
     SGdiBitBlt = StormLibGdiBitBlt @381
     SGdiCreateFont = StormLibGdiCreateFont @382
     SGdiDeleteObject = StormLibGdiDeleteObject @383
+    ;SGdiDestroy = StormLibGdiDestroy @384
     SGdiExtTextOut = StormLibGdiExtTextOut @385
     SGdiImportFont = StormLibGdiImportFont @386
     SGdiLoadFont = StormLibGdiLoadFont @387
@@ -150,10 +181,13 @@ EXPORTS
     SGdiSetPitch = StormLibGdiSetPitch @390
     SGdiTextOut = StormLibGdiTextOut @391
     SGdiSetTargetDimensions = StormLibGdiSetTargetDimensions @392
-    Ordinal393 = StormLibOrdinal393 @393
+    SGdi393 = StormLibGdi393 @393
 
     SMemAlloc = StormLibMemAlloc @401
+    ;SMemDestroy = StormLibMemDestroy @402
     SMemFree = StormLibMemFree @403
+    SMemGetSize = StormLibMemGetSize @404
+    SMemReAlloc = StormLibMemReAlloc @405
 
     SMsgDispatchMessage = StormLibMsgDispatchMessage @412
     SMsgDoMessageLoop = StormLibMsgDoMessageLoop @413
@@ -183,7 +217,7 @@ EXPORTS
     STransLoadI = StormLibTransLoadI @439
     STransSetDirtyArrayInfo = StormLibTransSetDirtyArrayInfo @440
     STransUpdateDirtyArray = StormLibTransUpdateDirtyArray @441
-    STrans442 = StormLibTrans442 @442
+    STransPointInMask = StormLibPointInMask @442
     STransCombineMasks = StormLibTransCombineMasks @443
     STransCreateMaskI = StormLibTransCreateMaskI @444
     STransCreateE = StormLibTransCreateE @445
@@ -207,6 +241,8 @@ EXPORTS
     SErrSetLastError = StormLibErrSetLastError @465
     SErrReportResourceLeak = StormLibErrReportResourceLeak @467
     SErrSuppressErrors = StormLibErrSuppressErrors @468
+    SErrRegisterHandler = StormLibErrRegisterHandler @469
+    SErrUnregisterHandler = StormLibErrUnregisterHandler @470
 
     SCmdGetBool = StormLibCmdGetBool @472
     SCmdGetNum = StormLibCmdGetNum @473
@@ -224,10 +260,13 @@ EXPORTS
     SMemHeapCreate = StormLibMemHeapCreate @486
     SMemHeapDestroy = StormLibMemHeapDestroy @487
     SMemHeapFree = StormLibMemHeapFree @488
+    SMemHeapRealloc = StormLibMemHeapRealloc @489
+    SMemHeapSize = StormLibMemHeapSize @490
     SMemCopy = StormLibMemCopy @491
     SMemFill = StormLibMemFill @492
     SMemZero = StormLibMemZero @494
     SMemCmp = StormLibMemCmp @495
+    SMemDumpState = StormLibMemDumpState @497
 
     SStrCopy = StormLibStrCopy @501
     SStrHash = StormLibStrHash @502
@@ -235,6 +274,7 @@ EXPORTS
     SStrTokenize = StormLibStrTokenize @504
     SStrPack = StormLibStrPack @505
     SStrLen = StormLibStrLen @506
+    SStrDup = StormLibStrDup @507
     SStrCmp = StormLibStrCmp @508
     SStrCmpI = StormLibStrCmpI @509
     SStrUpper = StormLibStrUpper @510
@@ -244,6 +284,10 @@ EXPORTS
     SMsgUnregisterKeyDown = StormLibMsgUnregisterKeyDown @513
     SMsgUnregisterKeyUp = StormLibMsgUnregisterKeyUp @514
     SMsgUnregisterMessage = StormLibMsgUnregisterMessage @515
+    SMsgGetDispatcher = StormLibMsgGetDispatcher @516
+    SMsgSetDefaultWindow = StormLibMsgSetDefaultWindow @517
+    SMsgGetDefaultWindow = StormLibMsgGetDefaultWindow @518
+    SMsg519 = StormLibMsg519 @519
 
     SRgnClear = StormLibRgnClear @521
     SRgn523 = StormLibRgn523 @523
@@ -256,18 +300,29 @@ EXPORTS
 
     SLogClose = StormLibLogClose @541
     SLogCreate = StormLibLogCreate @542
+    SLog543 = StormLibLog543 @543
     SLogDump = StormLibLogDump @544
     SLogFlush = StormLibLogFlush @545
     SLogFlushAll = StormLibLogFlushAll @546
     SLogPend = StormLibLogPend @547
     SLogWrite = StormLibLogWrite @548
+    StormLibLog549 @549
+    StormLibLogCriticalLog @550
 
     SCompCompress = StormLibCompCompress @551
     SCompDecompress = StormLibCompDecompress @552
 
     SStrChr = StormLibStrChr @571
     SStrChrR = StormLibStrChrR @572
+    SStrToDouble = StormLibStrToDouble @573
+    SStrToFloat = StormLibStrToFloat @574
+    SStrToInt= StormLibStrToInt @575
+    SStrToUnsigned = StormLibStrToUnsigned @576
+    SStrToInt64 = StormLibStrToInt64 @577
     SStrVPrintf = StormLibStrVPrintf @578
+    SStrLower = StormLibStrLower @579
+    SStrHash64 = StormLibStrHash64 @580
+    SStrPrintf = StormLibStrPrintf @581
 
     SBigDel = StormLibBigDel @606
     SBigFromBinary = StormLibBigFromBinary @609

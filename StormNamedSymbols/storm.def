@@ -30,15 +30,19 @@ EXPORTS
     StormLibNetSendTurn @128
     StormLibNetSetBasePlayer @129
     StormLibNetSetGameMode @130
+    StormLibNetUnregisterEventHandler @131
     StormLibNetEnumGamesEx @133
     StormLibNetSendServerChatCommand @134
-    StormLibNet137 @137
+    StormLibNetSendDatagram @135
+    StormLibNetReceiveDatagram @136
+    StormLibDisconnectAll @137
     StormLibNetCreateLadderGame @138
     StormLibNetReportGameResult @139
+    StormLibNetCheckDataFile @140
     StormLibNetSendLeagueCommand @141
     StormLibNetSendReplayPath @142
     StormLibNetGetLeagueName @143
-    StormLibNet144 @144
+    StormLibGetPlayerNames @144
     StormLibNetLeagueLogout @145
     StormLibNetGetLeaguePlayerName @146
 
@@ -63,7 +67,8 @@ EXPORTS
     StormLibDlgUpdateCursor @220
     StormLibDlgBltToWindowE @221
     StormLibDlgSetBitmapE @222
-    StormLibOrdinal224 @224
+    StormLibDlgSetLocale @223
+    StormLibDlg224 @224
 
     StormLibFileAuthenticateArchive @251
     StormLibFileCloseArchive @252
@@ -92,11 +97,34 @@ EXPORTS
     StormLibFileGetArchiveName @275
     StormLibFileGetFileName @276
     StormLibFileGetArchiveInfo @277
+    StormLibFileSetPlatform @278
     StormLibFileLoadFile @279
     StormLibFileUnloadFile @280
     StormLibFileLoadFileEx @281
+    StormLibFilePrioritizeRequest @282
+    StormLibFileCancelRequest @283
+    StormLibFileSetAsyncBudget @284
+    StormLibFileSetDataChunkSize @285
+    StormLibFileEnableSeekOptimization @286
+    StormLibFileReadFileEx @287
+    StormLibFileFileExists @288
+    StormLibFileFileExistsEx @289
+    StormLibFileReadFileEx2 @290
+    StormLibFileReadFile2 @291
+    StormLibFileLoadFile2 @292
+    StormLibFileOpenFileAsArchive @293
+    StormLibFileGetLocale @294
+    StormLibFileRegisterLoadNotifyProc @295
+    StormLibFileGetFileCompressedSize @296
+    StormLibFile297 @297
+    StormLibFile298 @298
+    StormLibFileAuthenticateArchiveEx @299
+    StormLibFileOpenPathAsArchive @300
 
     StormLibStormDestroy @301
+    StormLibGetInstance @302
+    StormLibGetOption @303
+    StormLibSetOption @304
 
     StormLibBltGetSCode @312
     StormLibBltROP3 @313
@@ -107,6 +135,7 @@ EXPORTS
     StormLibBmpLoadImage @323
     StormLibBmpSaveImage @324
     StormLibBmpAllocLoadImage @325
+    StormLibBmpSaveImageEx @326
 
     StormLibCodeCompile @331
     StormLibCodeDelete @332
@@ -131,6 +160,7 @@ EXPORTS
     StormLibDrawUnlockSurface @356
     StormLibDrawUpdatePalette @357
     StormLibDrawUpdateScreen @358
+    StormLibDrawWaitForVerticalBlank @359
 
     StormLibEvtDispatch @372
     StormLibEvtRegisterHandler @373
@@ -143,6 +173,7 @@ EXPORTS
     StormLibGdiBitBlt @381
     StormLibGdiCreateFont @382
     StormLibGdiDeleteObject @383
+    StormLibGdiDestroy @384
     StormLibGdiExtTextOut @385
     StormLibGdiImportFont @386
     StormLibGdiLoadFont @387
@@ -151,10 +182,13 @@ EXPORTS
     StormLibGdiSetPitch @390
     StormLibGdiTextOut @391
     StormLibGdiSetTargetDimensions @392
-    StormLibOrdinal393 @393
+    StormLibGdi393 @393
 
     StormLibMemAlloc @401
+    StormLibMemDestroy @402
     StormLibMemFree @403
+    StormLibMemGetSize @404
+    StormLibMemReAlloc @405
 
     StormLibMsgDispatchMessage @412
     StormLibMsgDoMessageLoop @413
@@ -184,7 +218,7 @@ EXPORTS
     StormLibTransLoadI @439
     StormLibTransSetDirtyArrayInfo @440
     StormLibTransUpdateDirtyArray @441
-    StormLibTrans442 @442
+    StormLibPointInMask @442
     StormLibTransCombineMasks @443
     StormLibTransCreateMaskI @444
     StormLibTransCreateE @445
@@ -208,6 +242,8 @@ EXPORTS
     StormLibErrSetLastError @465
     StormLibErrReportResourceLeak @467
     StormLibErrSuppressErrors @468
+    StormLibErrRegisterHandler @469
+    StormLibErrUnregisterHandler @470
 
     StormLibCmdGetBool @472
     StormLibCmdGetNum @473
@@ -225,10 +261,13 @@ EXPORTS
     StormLibMemHeapCreate @486
     StormLibMemHeapDestroy @487
     StormLibMemHeapFree @488
+    StormLibMemHeapRealloc @489
+    StormLibMemHeapSize @490
     StormLibMemCopy @491
     StormLibMemFill @492
     StormLibMemZero @494
     StormLibMemCmp @495
+    StormLibMemDumpState @497
 
     StormLibStrCopy @501
     StormLibStrHash @502
@@ -236,6 +275,7 @@ EXPORTS
     StormLibStrTokenize @504
     StormLibStrPack @505
     StormLibStrLen @506
+    StormLibStrDup @507
     StormLibStrCmp @508
     StormLibStrCmpI @509
     StormLibStrUpper @510
@@ -245,6 +285,10 @@ EXPORTS
     StormLibMsgUnregisterKeyDown @513
     StormLibMsgUnregisterKeyUp @514
     StormLibMsgUnregisterMessage @515
+    StormLibMsgGetDispatcher @516
+    StormLibMsgSetDefaultWindow @517
+    StormLibMsgGetDefaultWindow @518
+    StormLibMsg519 @519
 
     StormLibRgnClear @521
     StormLibRgn523 @523
@@ -257,18 +301,29 @@ EXPORTS
 
     StormLibLogClose @541
     StormLibLogCreate @542
+    StormLibLog543 @543
     StormLibLogDump @544
     StormLibLogFlush @545
     StormLibLogFlushAll @546
     StormLibLogPend @547
     StormLibLogWrite @548
+    StormLibLog549 @549
+    StormLibLogCriticalLog @550
 
     StormLibCompCompress @551
     StormLibCompDecompress @552
 
     StormLibStrChr @571
     StormLibStrChrR @572
+    StormLibStrToDouble @573
+    StormLibStrToFloat @574
+    StormLibStrToInt @575
+    StormLibStrToUnsigned @576
+    StormLibStrToInt64 @577
     StormLibStrVPrintf @578
+    StormLibStrLower @579
+    StormLibStrHash64 @580
+    StormLibStrPrintf @581
 
     StormLibBigDel @606
     StormLibBigFromBinary @609
