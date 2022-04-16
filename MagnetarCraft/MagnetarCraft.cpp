@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "../MemoryModule/MemoryModule.h"
 #include "starcraft.h"
+#include "magnetorm.h"
 #include <exception>
 #include <sstream>
 #include <filesystem>

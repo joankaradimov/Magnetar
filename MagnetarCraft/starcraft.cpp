@@ -3,6 +3,7 @@
 #include <process.h>
 #include <time.h>
 #include "starcraft.h"
+#include "magnetorm.h"
 #include "tbl_file.h"
 #include "patching/FailStubPatch.h"
 #include "patching/FunctionPatch.h"
