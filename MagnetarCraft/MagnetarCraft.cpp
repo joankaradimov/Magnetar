@@ -371,6 +371,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		{
 			std::string starcraft_exe_path = starcraft_root + "\\StarCraft.exe";
 			starcraft_exe = new StarCraftExecutable(starcraft_exe_path.c_str());
+
+			// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
+			// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808
+			SFileDestroy();
+
 			starcraft_exe->check();
 
 			break;
