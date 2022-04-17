@@ -1104,6 +1104,9 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MTXM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -1129,14 +1132,14 @@ ChkSectionLoader chk_loaders_lobby_[] = {
 	CreateChkSectionLoader("OWNR", ChkLoader_OWNR, 1),
 	CreateChkSectionLoader("SIDE", ChkLoader_SIDE, 1),
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
-	CreateChkSectionLoader("SPRP", ChkLoader_SPRP, 1),
-	CreateChkSectionLoader("FORC", ChkLoader_FORC, 1),
+	CreateChkSectionLoader("SPRP", ChkLoader_SPRP_, 1),
+	CreateChkSectionLoader("FORC", ChkLoader_FORC_, 1),
 	CreateChkSectionLoader("VCOD", ChkLoader_VCOD_, 1),
 };
 
 ChkSectionLoader chk_loaders_briefing_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
-	CreateChkSectionLoader("MBRF", ChkLoader_MBRF, 1),
+	CreateChkSectionLoader("MBRF", ChkLoader_MBRF_, 1),
 };
 
 ChkSectionLoader chk_loaders_melee_vanilla_[] = {
@@ -2573,6 +2576,79 @@ bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapCh
 }
 
 FailStubPatch ChkLoader_STR_patch(ChkLoader_STR);
+
+bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size % 2400u != 0)
+	{
+		return false;
+	}
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return false;
+	}
+
+	char* v6 = (char*)SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 482, 0);
+	memcpy(v6, section_data->start_address, section_data->size);
+	int v8 = section_size / 2400u;
+	for (char* i = v6; v8; i += 2400)
+	{
+		--v8;
+		if (!AddBriefingTrigger((int) i))
+		{
+			break;
+		}
+	}
+	SMemFree(v6, "Starcraft\\SWAR\\lang\\maphdr.cpp", 498, 0);
+	return true;
+}
+
+FailStubPatch ChkLoader_MBRF_patch(ChkLoader_MBRF);
+
+bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size != 4)
+	{
+		return false;
+	}
+
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return false;
+	}
+	memcpy(a3, section_data->start_address, section_data->size);
+	return true;
+}
+
+FailStubPatch ChkLoader_SPRP_patch(ChkLoader_SPRP);
+
+bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size > 20)
+	{
+		return false;
+	}
+
+	for (int i = 0; i < 8; i++)
+	{
+		a3->player_force[i] = 0;
+	}
+
+	for (int i = 0; i < 4; i++)
+	{
+		a3->tbl_index_force_name[i] = 0;
+		a3->force_flags[i] = (ForceFlags) 0;
+	}
+
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return false;
+	}
+	memcpy(a3->player_force, section_data->start_address, section_data->size);
+	return true;
+}
+
+FailStubPatch ChkLoader_FORC_patch(ChkLoader_FORC);
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
