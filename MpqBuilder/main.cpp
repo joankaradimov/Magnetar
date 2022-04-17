@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     std::filesystem::path input_path = argv[1];
     std::filesystem::path output_path = "MagnetarDat.mpq";
     std::vector<std::filesystem::path> file_paths;
-    std::filesystem::file_time_type last_input_change = std::filesystem::file_time_type::min();
+    std::filesystem::file_time_type last_input_change = std::filesystem::last_write_time(input_path);
 
     for (const auto& entry : std::filesystem::recursive_directory_iterator(input_path))
     {
@@ -28,6 +28,10 @@ int main(int argc, char** argv)
         {
             last_input_change = std::max(last_input_change, entry.last_write_time());
             file_paths.push_back(entry.path());
+        }
+        else if (entry.is_directory())
+        {
+            last_input_change = std::max(last_input_change, entry.last_write_time());
         }
     }
 
