@@ -1104,7 +1104,7 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 bool __stdcall ChkLoader_VCOD_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3);
-bool __stdcall ChkLoader_MTXM_(SectionData* a1, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_MTXM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
 
@@ -2763,13 +2763,13 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 
 FailStubPatch unitNotNeutral_patch(unitNotNeutral);
 
-bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
+bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	if (section_size % sizeof(ChunkUnitEntry))
 	{
 		return 0;
 	}
-	if (a1->start_address + a1->size > a1->next_section)
+	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return 0;
 	}
@@ -2778,7 +2778,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* a1, int section_size, MapChunks* a3)
 
 	UnitRelated20* v18 = NULL;
 	UnitRelated20* v19 = NULL;
-	ChunkUnitEntry* unit_entries = (ChunkUnitEntry*)a1->start_address;
+	ChunkUnitEntry* unit_entries = (ChunkUnitEntry*)section_data->start_address;
 	int unit_count = section_size / sizeof(ChunkUnitEntry);
 	for (int i = 0; i < unit_count; i++)
 	{
