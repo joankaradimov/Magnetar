@@ -2588,11 +2588,9 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 		return false;
 	}
 
-	int v8 = section_size / 2400u;
-	for (char* i = (char*) section_data->start_address; v8; i += 2400)
+	for (int i = 0; i < section_size / 2400; i++)
 	{
-		--v8;
-		if (!AddBriefingTrigger((int) i))
+		if (!AddBriefingTrigger((int) section_data->start_address + i * 2400))
 		{
 			break;
 		}
