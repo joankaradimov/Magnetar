@@ -2588,10 +2588,8 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 		return false;
 	}
 
-	char* v6 = (char*)SMemAlloc(section_size, "Starcraft\\SWAR\\lang\\maphdr.cpp", 482, 0);
-	memcpy(v6, section_data->start_address, section_data->size);
 	int v8 = section_size / 2400u;
-	for (char* i = v6; v8; i += 2400)
+	for (char* i = (char*) section_data->start_address; v8; i += 2400)
 	{
 		--v8;
 		if (!AddBriefingTrigger((int) i))
@@ -2599,7 +2597,6 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 			break;
 		}
 	}
-	SMemFree(v6, "Starcraft\\SWAR\\lang\\maphdr.cpp", 498, 0);
 	return true;
 }
 
