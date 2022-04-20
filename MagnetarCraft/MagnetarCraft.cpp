@@ -370,6 +370,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		try
 		{
 			std::string starcraft_exe_path = starcraft_root + "\\StarCraft.exe";
+			SetDllDirectoryA(starcraft_root.c_str());
 			starcraft_exe = new StarCraftExecutable(starcraft_exe_path.c_str());
 
 			// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
@@ -398,7 +399,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	config["starcraft-root"] = starcraft_root;
 	std::ofstream(CONFIG_FILE) << config;
-	SetCurrentDirectoryA(starcraft_root.c_str());
 
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
