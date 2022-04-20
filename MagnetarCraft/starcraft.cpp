@@ -5242,6 +5242,39 @@ void BeginEpilog_()
 
 FailStubPatch BeginEpilog_patch(BeginEpilog);
 
+void BeginCredits_()
+{
+	int v0 = registry_options.Music;
+	if (!registry_options.Music && registry_options.Sfx)
+	{
+		if (directsound)
+		{
+			SFileDdaEnd(directsound);
+			SFileCloseFile(directsound);
+			directsound = 0;
+		}
+		byte_6D5BBC = 0;
+		byte_6D5BBD = 0;
+		bigvolume = 0;
+		registry_options.Music = 50;
+	}
+
+	DLGMusicFade(MT_TERRAN2);
+	dword_51CEC0 = 0;
+	if (dword_6D11E4)
+	{
+		loadInitCreditsBIN_("crdt_exp");
+	}
+	if (dword_51CEC0 == 0)
+	{
+		loadInitCreditsBIN_("crdt_lst");
+	}
+	stopMusic();
+	registry_options.Music = v0;
+}
+
+FailStubPatch BeginCredits_patch(BeginCredits);
+
 void GameMainLoop_()
 {
 	HANDLE phFile;
@@ -5326,7 +5359,7 @@ void GameMainLoop_()
 					SwitchMenu_();
 					continue;
 				case GAME_CREDITS:
-					BeginCredits();
+					BeginCredits_();
 					if (gwGameMode == GAME_CREDITS)
 					{
 						gwGameMode = GAME_GLUES;
