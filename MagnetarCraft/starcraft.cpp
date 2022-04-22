@@ -5347,9 +5347,8 @@ void GameMainLoop_()
 					continue;
 				case GAME_RESTART:
 					next_campaign_mission = 1;
-					goto LABEL_23;
+					[[fallthrough]];
 				case GAME_RUNINIT:
-				LABEL_23:
 					gwGameMode = GAME_RUN;
 					continue;
 				case GAME_INTRO:
