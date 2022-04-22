@@ -5288,6 +5288,9 @@ void BeginCredits_()
 
 FailStubPatch BeginCredits_patch(BeginCredits);
 
+FailStubPatch sub_4A60D0_patch(sub_4A60D0);
+FailStubPatch sub_48EB90_patch(sub_48EB90);
+
 void GameMainLoop_()
 {
 	HANDLE phFile;
