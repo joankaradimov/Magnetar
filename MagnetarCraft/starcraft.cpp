@@ -5127,6 +5127,16 @@ void loadInitCreditsBIN_(const char* a1)
 	dword_51CEB0 = 0;
 }
 
+void sub_4D91B0_()
+{
+	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && CampaignIndex == MD_xbonus)
+	{
+		loadInitCreditsBIN_("FinZ09bx");
+	}
+}
+
+FailStubPatch sub_4D91B0_patch(sub_4D91B0);
+
 int __stdcall ContinueCampaign_(int a1)
 {
 	gwGameMode = GAME_GLUES;
@@ -5140,7 +5150,7 @@ int __stdcall ContinueCampaign_(int a1)
 		gwGameMode = GAME_RESTART;
 		return 1;
 	}
-	sub_4D91B0();
+	sub_4D91B0_();
 	updateActiveCampaignMission_();
 	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission == MD_none)
 	{
