@@ -4756,6 +4756,95 @@ void loadMenu_gluMain_()
 
 FailStubPatch loadMenu_gluMain_patch(loadMenu_gluMain);
 
+void sub_4D9200_();
+
+void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
+{
+	stopMusic();
+	DLGMusicFade(music_track);
+	sub_4D9200_();
+	if (gwGameMode == GAME_GLUES)
+	{
+		dword_50E064 = -1;
+		HANDLE phFile;
+		if (!SFileOpenFileEx(0, bin_path, 0, &phFile))
+		{
+			SysWarn_FileNotFound(bin_path, SErrGetLastError());
+		}
+		long v1 = SFileGetFileSize(phFile, 0);
+		if (v1 == -1)
+		{
+			FileFatal(phFile, GetLastError());
+			return;
+		}
+		if (!v1)
+		{
+			SysWarn_FileNotFound(bin_path, 24);
+		}
+		dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+		int read;
+		if (SFileReadFile(phFile, v4, v1, &read, 0))
+		{
+			if (read != v1)
+			{
+				FileFatal(phFile, 24);
+				return;
+			}
+			SFileCloseFile(phFile);
+			if (v4)
+			{
+				v4->lFlags |= 4u;
+				AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 157);
+			}
+
+			switch (gluLoadBINDlg(v4, BINDLG_Loop))
+			{
+			case 14:
+				if (multiPlayerMode)
+				{
+					BWFXN_NetSelectReturnMenu();
+				}
+				else
+				{
+					glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+				}
+				stopMusic();
+				DLGMusicFade(MT_TITLE);
+				break;
+			case 19:
+				ContinueCampaign(1);
+				break;
+			case 100:
+				stopMusic();
+				DLGMusicFade(MT_TITLE);
+				break;
+			case 101:
+				gwGameMode = GAME_RUNINIT;
+				break;
+			default:
+				glGluesMode = GLUE_MAIN_MENU;
+				stopMusic();
+				DLGMusicFade(MT_TITLE);
+				break;
+			}
+			changeMenu();
+		}
+		else
+		{
+			if (GetLastError() == 38)
+			{
+				FileFatal(phFile, 24);
+				return;
+			}
+			FileFatal(phFile, GetLastError());
+		}
+	}
+}
+
+FailStubPatch loadMenu_gluRdyT_patch(loadMenu_gluRdyT);
+FailStubPatch loadMenu_gluRdyZ_patch(loadMenu_gluRdyZ);
+FailStubPatch loadMenu_gluRdyP_patch(loadMenu_gluRdyP);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
@@ -4871,13 +4960,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdyT();
+			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdyT_BINDLG_Loop);
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdyZ();
+			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin", gluRdyZ_BINDLG_Loop);
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdyP();
+			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin", gluRdyP_BINDLG_Loop);
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
@@ -5454,7 +5543,7 @@ void localDll_Init_(HINSTANCE a1)
 
 FailStubPatch localDll_Init_patch(localDll_Init);
 
-void __cdecl sub_4D9200_()
+void sub_4D9200_()
 {
 	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
 	{
@@ -5480,7 +5569,7 @@ void __cdecl sub_4D9200_()
 	}
 }
 
-FunctionPatch sub_4D9200_patch(sub_4D9200, sub_4D9200_);
+FailStubPatch sub_4D9200_patch(sub_4D9200);
 
 const char* __stdcall get_Tileset_String(Tileset tileset)
 {
