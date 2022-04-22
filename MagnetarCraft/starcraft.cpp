@@ -4562,8 +4562,6 @@ FailStubPatch SelGameMode_patch(SelGameMode);
 
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
-	bool result; // al
-
 	if (evt->wNo == EVN_USER)
 	{
 		switch (evt->dwUser)
@@ -4694,7 +4692,6 @@ void loadMenu_gluMain_()
 			int v8 = gluLoadBINDlg(v5, gluMain_Dlg_Interact_);
 			if (v8 > 65520)
 			{
-			LABEL_23:
 				glGluesMode = GLUE_MAIN_MENU;
 			}
 			else if (v8 != 65520)
@@ -4705,7 +4702,6 @@ void loadMenu_gluMain_()
 				{
 				case 2:
 					gwGameMode = GAME_EXIT;
-					changeMenu();
 					break;
 				case 3:
 					multiPlayerMode = 0;
@@ -4713,7 +4709,6 @@ void loadMenu_gluMain_()
 					ums_game_template = InitUseMapSettingsTemplate_();
 					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
 					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
-					changeMenu();
 					break;
 				case 4:
 					multiPlayerMode = 1;
@@ -4721,23 +4716,19 @@ void loadMenu_gluMain_()
 					ums_game_template = InitUseMapSettingsTemplate_();
 					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
 					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
-					changeMenu();
 					break;
 				case 5:
-					changeMenu();
-					return;
+					break;;
 				case 8:
 					gwGameMode = GAME_INTRO;
-					changeMenu();
 					break;
 				case 9:
 					gwGameMode = GAME_CREDITS;
-					changeMenu();
 					break;
 				default:
-					goto LABEL_23;
+					glGluesMode = GLUE_MAIN_MENU;
+					break;
 				}
-				return;
 			}
 			changeMenu();
 			return;
