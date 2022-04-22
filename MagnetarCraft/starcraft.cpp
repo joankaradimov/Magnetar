@@ -5449,7 +5449,7 @@ void __cdecl sub_4D9200_()
 {
 	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && CampaignIndex)
 	{
-		for (int i = 0; i < 64; i++)
+		for (int i = 0; i < _countof(establishing_shots_) - 1; i++)
 		{
 			if (establishing_shots_[i].campaign_mission == CampaignIndex)
 				loadInitCreditsBIN_(establishing_shots_[i].establishing_shot_name);
