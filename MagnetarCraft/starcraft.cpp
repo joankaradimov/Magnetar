@@ -276,7 +276,7 @@ int InitializeArchiveHandles_()
 	}
 
     char magnetarDatFilename[MAX_PATH] = { 0 };
-    if (!GetModuleFileNameA(hInst, magnetarDatFilename, MAX_PATH))
+    if (!GetModuleFileNameA(NULL, magnetarDatFilename, MAX_PATH))
 		*magnetarDatFilename = 0;
     auto separator = strrchr(magnetarDatFilename, '\\');
     if (separator)
