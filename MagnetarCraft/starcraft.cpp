@@ -5127,6 +5127,8 @@ void loadInitCreditsBIN_(const char* a1)
 	dword_51CEB0 = 0;
 }
 
+FailStubPatch loadInitCreditsBIN_patch(loadInitCreditsBIN);
+
 void sub_4D91B0_()
 {
 	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && CampaignIndex == MD_xbonus)
@@ -5136,6 +5138,7 @@ void sub_4D91B0_()
 }
 
 FailStubPatch sub_4D91B0_patch(sub_4D91B0);
+FailStubPatch sub_4D8F90_patch(sub_4D8F90);
 
 int __stdcall ContinueCampaign_(int a1)
 {
