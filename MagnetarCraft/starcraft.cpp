@@ -5407,7 +5407,7 @@ void GameMainLoop_()
 	goto LABEL_8;
 }
 
-unsigned __int32 LocalGetLang_()
+unsigned int LocalGetLang_()
 {
 	CHAR Buffer[16];
 	char *v2;
@@ -5417,6 +5417,8 @@ unsigned __int32 LocalGetLang_()
 	else
 		return 1033;
 }
+
+FunctionPatch LocalGetLang_patch(LocalGetLang, LocalGetLang_);
 
 void localDll_Init_(HINSTANCE a1)
 {
@@ -5449,6 +5451,8 @@ void localDll_Init_(HINSTANCE a1)
 	SFileSetLocale(local_lang);
 	AppAddExit_(FreeLocalDLL);
 }
+
+FailStubPatch localDll_Init_patch(localDll_Init);
 
 void __cdecl sub_4D9200_()
 {
