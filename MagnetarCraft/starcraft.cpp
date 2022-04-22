@@ -4560,6 +4560,67 @@ int SelGameMode_(int a2)
 
 FailStubPatch SelGameMode_patch(SelGameMode);
 
+signed int loadStareditProcess_(dialog* a1)
+{
+	CHAR CommandLine[260];
+	CHAR Filename[260];
+
+	if (!GetModuleFileNameA(hInst, Filename, 0x104u))
+	{
+		Filename[0] = 0;
+	}
+	char* v2 = strrchr(Filename, '\\');
+	if (v2)
+	{
+		v2[1] = 0;
+	}
+	SStrCopy(CommandLine, Filename, 0x104u);
+	SStrNCat(CommandLine, "StarEdit.exe", 260);
+
+	struct _PROCESS_INFORMATION ProcessInformation;
+	struct _STARTUPINFOA StartupInfo;
+	memset(&StartupInfo, 0, sizeof(StartupInfo));
+	StartupInfo.cb = 68;
+
+	if (CreateProcessA(0, CommandLine, 0, 0, 0, 0x20u, 0, Filename, &StartupInfo, &ProcessInformation))
+	{
+		HWND v3 = GetDesktopWindow();
+		SetForegroundWindow(v3);
+		dialog* v4 = a1;
+		if (a1->wCtrlType)
+		{
+			v4 = a1->fields[0].ctrl.pDlg;
+		}
+		dialog* v5 = v4->fields[0].dlg.pFirstChild;
+		if (v5)
+		{
+			while (v5->wIndex != 5)
+			{
+				v5 = v5->pNext;
+				if (v5 == NULL)
+				{
+					break;
+				}
+			}
+		}
+
+		DisableControl(v5);
+		WaitForInputIdle(ProcessInformation.hProcess, -1u);
+		EnableControl(v5);
+		CloseHandle(ProcessInformation.hThread);
+		CloseHandle(ProcessInformation.hProcess);
+		return 1;
+	}
+	else
+	{
+		const char* v8 = get_GluAll_String(SPAWNED_BY);
+		BWFXN_gluPOK_MBox(v8);
+		return 0;
+	}
+}
+
+FailStubPatch loadStareditProcess_patch(loadStareditProcess);
+
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -4620,7 +4681,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				break;
 			case 5:
-				loadStareditProcess(dlg);
+				loadStareditProcess_(dlg);
 				return 1;
 			default:
 				return DLG_SwishOut(dlg);
