@@ -8320,7 +8320,7 @@ void Unit_ExecPathingState(CUnit *a1) {
 DECL_FUNC(int (__stdcall*sub_46C6E0)(int, int), sub_46C6E0, 0x46c6e0);
 DECL_FUNC(int(*waitLoop)(), waitLoop, 0x46c750);
 DECL_FUNC(int(*sub_46C770)(), sub_46C770, 0x46c770);
-DECL_FUNC(int (__stdcall*AddBriefingTrigger)(int), AddBriefingTrigger, 0x46c790);
+DECL_FUNC(signed int (__stdcall*AddBriefingTrigger)(BriefingEntry *a1), AddBriefingTrigger, 0x46c790);
 DECL_FUNC(int (__thiscall*BRF_RectLoop2)(dialog *a1), BRF_RectLoop2, 0x46c940);
 DECL_FUNC(int(*BRF_RectLoop1)(), BRF_RectLoop1, 0x46c960);
 DECL_FUNC(int(*textScrollLoop)(), textScrollLoop, 0x46c990);
@@ -15574,7 +15574,7 @@ int ConnSel_InitChildren(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*_BeginBNET)(), _BeginBNET, 0x4bade0);
+DECL_FUNC(int (__cdecl*BeginBNET)(), BeginBNET, 0x4bade0);
 DECL_FUNC(bool (__fastcall*ConnSel_Interact)(dialog *dlg, struct dlgEvent *evt), ConnSel_Interact, 0x4bae20);
 DECL_FUNC(int(*loadMenu_gluConn)(), loadMenu_gluConn, 0x4baf30);
 DECL_FUNC(int(*sub_4BB0A0)(), sub_4BB0A0, 0x4bb0a0);
@@ -17911,12 +17911,12 @@ void loadInitCreditsBIN(const char *a1) {
         call address
     }
 }
-void sub_4D8F90(int result, EstablishingShot *a2) {
+void sub_4D8F90(int a1, EstablishingShot *a2) {
     int address = 0x4d8f90;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, result
+        mov eax, a1
         mov ecx, a2
         call address
     }
@@ -21349,7 +21349,7 @@ ChkSectionLoader(&chk_loaders_melee_broodwar)[5] = * ((decltype(&chk_loaders_mel
 ChkSectionLoader(&chk_loaders_ums_broodwar_1_04)[15] = * ((decltype(&chk_loaders_ums_broodwar_1_04)) 0x5004a8);
 ChkLoader(&chk_loaders)[3] = * ((decltype(&chk_loaders)) 0x500560);
 ChkLoader& dword_5005D8 = * ((decltype(&dword_5005D8)) 0x5005d8);
-size_t(&dword_5005F8)[120] = * ((decltype(&dword_5005F8)) 0x5005f8);
+size_t(&size)[120] = * ((decltype(&size)) 0x5005f8);
 char(&byte_5007D8)[256] = * ((decltype(&byte_5007D8)) 0x5007d8);
 char(&byte_5008D8)[4] = * ((decltype(&byte_5008D8)) 0x5008d8);
 int(&dword_5008EC)[] = * ((decltype(&dword_5008EC)) 0x5008ec);
@@ -22872,7 +22872,7 @@ int& dword_51267C = * ((decltype(&dword_51267C)) 0x51267c);
 int& dword_512680 = * ((decltype(&dword_512680)) 0x512680);
 unsigned __int8& g_LocalNationID = * ((decltype(&g_LocalNationID)) 0x512684);
 int& g_LocalHumanID = * ((decltype(&g_LocalHumanID)) 0x512688);
-int& playerID = * ((decltype(&playerID)) 0x51268c);
+int& playerid = * ((decltype(&playerid)) 0x51268c);
 char *(&cinematics)[28] = * ((decltype(&cinematics)) 0x512690);
 char(&byte_512700)[] = * ((decltype(&byte_512700)) 0x512700);
 char *(&off_512708)[19] = * ((decltype(&off_512708)) 0x512708);
@@ -23363,7 +23363,7 @@ dialog *& dword_51CEB0 = * ((decltype(&dword_51CEB0)) 0x51ceb0);
 int& dword_51CEB4 = * ((decltype(&dword_51CEB4)) 0x51ceb4);
 int& dword_51CEB8 = * ((decltype(&dword_51CEB8)) 0x51ceb8);
 char *& dword_51CEBC = * ((decltype(&dword_51CEBC)) 0x51cebc);
-int& dword_51CEC0 = * ((decltype(&dword_51CEC0)) 0x51cec0);
+int& credits_interrupted = * ((decltype(&credits_interrupted)) 0x51cec0);
 int& dword_51CEC4 = * ((decltype(&dword_51CEC4)) 0x51cec4);
 char& byte_51CEC8 = * ((decltype(&byte_51CEC8)) 0x51cec8);
 int(&dword_51CECC)[] = * ((decltype(&dword_51CECC)) 0x51cecc);
@@ -24437,7 +24437,7 @@ int& dword_68FEB4 = * ((decltype(&dword_68FEB4)) 0x68feb4);
 int& a8 = * ((decltype(&a8)) 0x68feb8);
 int& dword_68FEBC = * ((decltype(&dword_68FEBC)) 0x68febc);
 int& dword_68FEC0 = * ((decltype(&dword_68FEC0)) 0x68fec0);
-void *& dword_68FEC4 = * ((decltype(&dword_68FEC4)) 0x68fec4);
+void *& a5 = * ((decltype(&a5)) 0x68fec4);
 int& dword_68FEC8 = * ((decltype(&dword_68FEC8)) 0x68fec8);
 int& dword_68FECC = * ((decltype(&dword_68FECC)) 0x68fecc);
 WPARAM& wParam = * ((decltype(&wParam)) 0x68fed0);
@@ -24985,7 +24985,7 @@ HMODULE& ddraw_dll = * ((decltype(&ddraw_dll)) 0x6d5e04);
 IDirectDraw *& DDInterface = * ((decltype(&DDInterface)) 0x6d5e08);
 IDirectDrawPalette *& PrimaryPalette = * ((decltype(&PrimaryPalette)) 0x6d5e0c);
 IDirectDrawSurface *& BackSurface = * ((decltype(&BackSurface)) 0x6d5e10);
-int& dword_6D5E14 = * ((decltype(&dword_6D5E14)) 0x6d5e14);
+int& handle = * ((decltype(&handle)) 0x6d5e14);
 int& dword_6D5E18 = * ((decltype(&dword_6D5E18)) 0x6d5e18);
 int& dword_6D5E1C = * ((decltype(&dword_6D5E1C)) 0x6d5e1c);
 Bitmap *& dword_6D5E20 = * ((decltype(&dword_6D5E20)) 0x6d5e20);
@@ -25295,7 +25295,7 @@ HINSTANCE& dword_6D6384 = * ((decltype(&dword_6D6384)) 0x6d6384);
 int& dword_6D6388 = * ((decltype(&dword_6D6388)) 0x6d6388);
 char& byte_6D638C = * ((decltype(&byte_6D638C)) 0x6d638c);
 SfxData& dword_6D6390 = * ((decltype(&dword_6D6390)) 0x6d6390);
-char& byte_6D6394 = * ((decltype(&byte_6D6394)) 0x6d6394);
+char& src = * ((decltype(&src)) 0x6d6394);
 int& dword_6D63AC = * ((decltype(&dword_6D63AC)) 0x6d63ac);
 int& dword_6D63B0 = * ((decltype(&dword_6D63B0)) 0x6d63b0);
 int& dword_6D63B4 = * ((decltype(&dword_6D63B4)) 0x6d63b4);
@@ -25331,7 +25331,7 @@ int& cached_game_screen_region_check_y = * ((decltype(&cached_game_screen_region
 HIMC& dword_6D6438 = * ((decltype(&dword_6D6438)) 0x6d6438);
 int& dword_6D643C = * ((decltype(&dword_6D643C)) 0x6d643c);
 int& dword_6D683C = * ((decltype(&dword_6D683C)) 0x6d683c);
-size_t& size = * ((decltype(&size)) 0x6d6c3c);
+size_t& amount = * ((decltype(&amount)) 0x6d6c3c);
 int& dword_6D6C40 = * ((decltype(&dword_6D6C40)) 0x6d6c40);
 const CHAR& buff = * ((decltype(&buff)) 0x6d7448);
 char& byte_6D754C = * ((decltype(&byte_6D754C)) 0x6d754c);

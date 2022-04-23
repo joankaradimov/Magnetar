@@ -2590,7 +2590,7 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 
 	for (int i = 0; i < section_size / 2400; i++)
 	{
-		if (!AddBriefingTrigger((int) section_data->start_address + i * 2400))
+		if (!AddBriefingTrigger((BriefingEntry*) section_data->start_address + i * 2400))
 		{
 			break;
 		}
@@ -5224,7 +5224,7 @@ void loadInitCreditsBIN_(const char* a1)
 	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	dword_51CEBC = dword_51CEA8;
 	dword_51CEB8 = bytes_read;
-	dword_51CEC0 = 0;
+	credits_interrupted = 0;
 	if (!SFileOpenFileEx(0, "rez\\credits.bin", 0, &phFile))
 	{
 		int v6 = SErrGetLastError();
@@ -5414,12 +5414,12 @@ void BeginCredits_()
 	}
 
 	DLGMusicFade(MT_TERRAN2);
-	dword_51CEC0 = 0;
+	credits_interrupted = 0;
 	if (dword_6D11E4)
 	{
 		loadInitCreditsBIN_("crdt_exp");
 	}
-	if (dword_51CEC0 == 0)
+	if (credits_interrupted == 0)
 	{
 		loadInitCreditsBIN_("crdt_lst");
 	}
