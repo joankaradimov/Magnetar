@@ -4897,6 +4897,46 @@ FailStubPatch loadMenu_gluRdyT_patch(loadMenu_gluRdyT);
 FailStubPatch loadMenu_gluRdyZ_patch(loadMenu_gluRdyZ);
 FailStubPatch loadMenu_gluRdyP_patch(loadMenu_gluRdyP);
 
+bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			getGameList(dlg);
+			DLG_SwishIn(dlg);
+			return genericDlgInteract(dlg, evt);
+		case USER_DESTROY:
+			DestroyProviderList(dlg);
+			return genericDlgInteract(dlg, evt);
+		case USER_ACTIVATE:
+			if (LastControlID == 9)
+			{
+				if (!BeginBNET())
+				{
+					return 1;
+				}
+				LastControlID = 9;
+			}
+			return DLG_SwishOut(dlg);
+		case USER_INIT:
+			ConnSel_InitChildren(dlg);
+			return genericDlgInteract(dlg, evt);
+		case 0x405:
+			showDialog(getControlFromIndex(dword_6D5A24, 12));
+			showDialog(getControlFromIndex(dword_6D5A24, 13));
+			showDialog(getControlFromIndex(dword_6D5A24, 14));
+			return genericDlgInteract(dlg, evt);
+		default:
+			return genericDlgInteract(dlg, evt);
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FailStubPatch ConnSel_Interact_patch(ConnSel_Interact);
+
 void loadMenu_gluConn_()
 {
 	int read;
@@ -4933,7 +4973,7 @@ void loadMenu_gluConn_()
 		}
 
 		dword_6D5A24 = v4;
-		if (gluLoadBINDlg(v4, ConnSel_Interact) == 9)
+		if (gluLoadBINDlg(v4, ConnSel_Interact_) == 9)
 		{
 			if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
 			{
