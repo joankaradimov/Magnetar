@@ -4185,31 +4185,30 @@ FailStubPatch sub_4B27A0_patch(sub_4B27A0);
 
 bool sub_4B5180_(dialog* a1)
 {
-	if (LastControlID == 6)
+	switch (LastControlID)
 	{
+	case 6:
 		if (!sub_4B5110_(Race::RACE_Protoss))
-			return 1;
+		{
+			return true;
+		}
 		LastControlID = 6;
-	}
-	else if (LastControlID == 7)
-	{
-		if (sub_4B5110_(Race::RACE_Terran))
+		break;
+	case 7:
+		if (!sub_4B5110_(Race::RACE_Terran))
 		{
-			LastControlID = 7;
-			return DLG_SwishOut(a1);
+			return true;
 		}
-		return 1;
-	}
-	else if (LastControlID == 8)
-	{
-		if (sub_4B5110_(Race::RACE_Zerg))
+		LastControlID = 7;
+		break;
+	case 8:
+		if (!sub_4B5110_(Race::RACE_Zerg))
 		{
-			LastControlID = 8;
-			return DLG_SwishOut(a1);
+			return true;
 		}
-		return 1;
+		LastControlID = 8;
+		break;
 	}
-
 	return DLG_SwishOut(a1);
 }
 
@@ -4227,19 +4226,19 @@ bool sub_4B2810_(dialog* a1)
 		LastControlID = 6;
 		break;
 	case 7:
-		if (sub_4B27A0_(Race::RACE_Terran))
+		if (!sub_4B27A0_(Race::RACE_Terran))
 		{
-			LastControlID = 7;
-			return DLG_SwishOut(a1);
+			return true;
 		}
-		return true;
+		LastControlID = 7;
+		break;
 	case 8:
-		if (sub_4B27A0_(Race::RACE_Zerg))
+		if (!sub_4B27A0_(Race::RACE_Zerg))
 		{
-			LastControlID = 8;
-			return DLG_SwishOut(a1);
+			return true;
 		}
-		return true;
+		LastControlID = 8;
+		break;
 	}
 	return DLG_SwishOut(a1);
 }
