@@ -139,9 +139,8 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 			buffer = SMemAlloc(filesize, logfilename, logline, defaultValue);
 		if (!SFileReadFile(phFile, buffer, filesize, &bytes_to_read, 0))
 		{
-			if (GetLastError() == 38)
-				FileFatal(phFile, 24);
-			FileFatal(phFile, GetLastError());
+			DWORD last_error = GetLastError();
+			FileFatal(phFile, last_error == 38 ? 24 : last_error);
 		}
 		if (bytes_to_read != filesize)
 			FileFatal(phFile, 24);
@@ -972,7 +971,12 @@ void LoadTitle_()
 			SysWarn_FileNotFound("rez\\titledlg.bin", 24);
 		dialog *v4 = (dialog *)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 		int read;
-		if (SFileReadFile(phFile, v4, v1, &read, 0))
+		if (!SFileReadFile(phFile, v4, v1, &read, 0))
+		{
+			DWORD last_error = GetLastError();
+			FileFatal(phFile, last_error == 38 ? 24 : last_error);
+		}
+		else
 		{
 			if (read == v1)
 			{
@@ -993,15 +997,6 @@ void LoadTitle_()
 			{
 				FileFatal(phFile, 24);
 			}
-		}
-		else if (GetLastError() == 38)
-		{
-			FileFatal(phFile, 24);
-		}
-		else
-		{
-			int v6 = GetLastError();
-			FileFatal(phFile, v6);
 		}
 	}
 }
@@ -3072,14 +3067,8 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	}
 	else
 	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(hFile, 24);
-		}
-		else
-		{
-			FileFatal(hFile, GetLastError());
-		}
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
 	}
 }
 
@@ -3206,7 +3195,12 @@ void initMapData_()
 			SysWarn_FileNotFound(filename, 24);
 		}
 		vr4entry *v8 = (vr4entry *)SMemAlloc(v5, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, v0);
-		if (SFileReadFile(v4, v8, v5, &bytes_read, 0))
+		if (!SFileReadFile(v4, v8, v5, &bytes_read, 0))
+		{
+			DWORD last_error = GetLastError();
+			FileFatal(v4, last_error == 38 ? 24 : last_error);
+		}
+		else
 		{
 			if (bytes_read == v5)
 			{
@@ -3235,15 +3229,6 @@ void initMapData_()
 			{
 				FileFatal(v4, 24);
 			}
-		}
-		else if (GetLastError() == 38)
-		{
-			FileFatal(v4, 24);
-		}
-		else
-		{
-			int v10 = GetLastError();
-			FileFatal(v4, v10);
 		}
 	}
 }
@@ -3494,14 +3479,8 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 	int read;
 	if (!SFileReadFile(glu_hist_file, v9, glu_hist_file_size, &read, 0))
 	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(glu_hist_file, 24);
-		}
-		else
-		{
-			FileFatal(glu_hist_file, GetLastError());
-		}
+		DWORD last_error = GetLastError();
+		FileFatal(glu_hist_file, last_error == 38 ? 24 : last_error);
 		return NULL;
 	}
 	if (read != glu_hist_file_size)
@@ -3530,12 +3509,8 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 	dialog* v14 = (dialog*)SMemAlloc(v11, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 	if (!SFileReadFile(glu_hist_file, v14, v11, &read, 0))
 	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(glu_hist_file, 24);
-			return NULL;
-		}
-		FileFatal(glu_hist_file, GetLastError());
+		DWORD last_error = GetLastError();
+		FileFatal(glu_hist_file, last_error == 38 ? 24 : last_error);
 		return NULL;
 	}
 	if (read != v11)
@@ -4732,7 +4707,12 @@ void loadMenu_gluMain_()
 	}
 	dialog* v5 = (dialog*)SMemAlloc(v2, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573, 0);
 	int read;
-	if (SFileReadFile(phFile, v5, v2, &read, 0))
+	if (!SFileReadFile(phFile, v5, v2, &read, 0))
+	{
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
+	}
+	else
 	{
 		if (read != v2)
 		{
@@ -4789,15 +4769,6 @@ void loadMenu_gluMain_()
 			return;
 		}
 	}
-	else
-	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(phFile, 24);
-			return;
-		}
-		FileFatal(phFile, GetLastError());
-	}
 }
 
 FailStubPatch loadMenu_gluMain_patch(loadMenu_gluMain);
@@ -4829,7 +4800,12 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 		}
 		dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 		int read;
-		if (SFileReadFile(phFile, v4, v1, &read, 0))
+		if (!SFileReadFile(phFile, v4, v1, &read, 0))
+		{
+			DWORD last_error = GetLastError();
+			FileFatal(phFile, last_error == 38 ? 24 : last_error);
+		}
+		else
 		{
 			if (read != v1)
 			{
@@ -4874,15 +4850,6 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 				break;
 			}
 			changeMenu();
-		}
-		else
-		{
-			if (GetLastError() == 38)
-			{
-				FileFatal(phFile, 24);
-				return;
-			}
-			FileFatal(phFile, GetLastError());
 		}
 	}
 }
@@ -4952,7 +4919,11 @@ void loadMenu_gluConn_()
 		SysWarn_FileNotFound("rez\\gluConn.bin", 24);
 	}
 	dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-	if (SFileReadFile(phFile, v4, v1, &read, 0))
+	if (!SFileReadFile(phFile, v4, v1, &read, 0))
+	{
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
+	}
 	{
 		if (read != v1)
 		{
@@ -4984,17 +4955,6 @@ void loadMenu_gluConn_()
 		{
 			glGluesMode = GLUE_MAIN_MENU;
 			changeMenu();
-		}
-	}
-	else
-	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(phFile, 24);
-		}
-		else
-		{
-			FileFatal(phFile, GetLastError());
 		}
 	}
 }
