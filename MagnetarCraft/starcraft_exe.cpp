@@ -15506,12 +15506,31 @@ DECL_FUNC(int(*sub_4BA0A0)(), sub_4BA0A0, 0x4ba0a0);
 DECL_FUNC(int(*sub_4BA0C0)(), sub_4BA0C0, 0x4ba0c0);
 DECL_FUNC(int(*get_tFontGam_PCX_0)(), get_tFontGam_PCX_0, 0x4ba120);
 DECL_FUNC(int(*get_tFontGam_PCX)(), get_tFontGam_PCX, 0x4ba160);
-DECL_FUNC(int(*DlgPszTextMemFree)(), DlgPszTextMemFree, 0x4ba1a0);
+BOOL DlgPszTextMemFree(dialog *a1, __int16 a2) {
+    int address = 0x4ba1a0;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov cx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4BA1F0)(int amount), sub_4BA1F0, 0x4ba1f0);
 DECL_FUNC(int(*sub_4BA240)(), sub_4BA240, 0x4ba240);
 DECL_FUNC(int (__thiscall*sub_4BA290)(dialog *this_), sub_4BA290, 0x4ba290);
 DECL_FUNC(int(*sub_4BA320)(), sub_4BA320, 0x4ba320);
-DECL_FUNC(int(*DestroyProviderList)(), DestroyProviderList, 0x4ba330);
+void DestroyProviderList(dialog *a1) {
+    int address = 0x4ba330;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+    }
+}
 void sub_4BA370(dialog *a1, size_t a2, __int16 a3, const char *a4) {
     int address = 0x4ba370;
     __asm {
