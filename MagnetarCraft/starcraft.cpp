@@ -4897,6 +4897,76 @@ FailStubPatch loadMenu_gluRdyT_patch(loadMenu_gluRdyT);
 FailStubPatch loadMenu_gluRdyZ_patch(loadMenu_gluRdyZ);
 FailStubPatch loadMenu_gluRdyP_patch(loadMenu_gluRdyP);
 
+void loadMenu_gluConn_()
+{
+	int read;
+	HANDLE phFile;
+
+	if (!SFileOpenFileEx(0, "rez\\gluConn.bin", 0, &phFile))
+	{
+		int v8 = SErrGetLastError();
+		SysWarn_FileNotFound("rez\\gluConn.bin", v8);
+	}
+	LONG v1 = SFileGetFileSize(phFile, 0);
+	if (v1 == -1)
+	{
+		FileFatal(phFile, GetLastError());
+		return;
+	}
+	if (!v1)
+	{
+		SysWarn_FileNotFound("rez\\gluConn.bin", 24);
+	}
+	dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	if (SFileReadFile(phFile, v4, v1, &read, 0))
+	{
+		if (read != v1)
+		{
+			FileFatal(phFile, 24);
+			return;
+		}
+		SFileCloseFile(phFile);
+		if (v4)
+		{
+			v4->lFlags |= 4u;
+			AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluConn.cpp", 646);
+		}
+
+		dword_6D5A24 = v4;
+		if (gluLoadBINDlg(v4, ConnSel_Interact) == 9)
+		{
+			if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
+			{
+				glGluesMode = glGluesRelated_maybe;
+				changeMenu();
+			}
+			else
+			{
+				glGluesMode = GLUE_CONNECT;
+				changeMenu();
+			}
+		}
+		else
+		{
+			glGluesMode = GLUE_MAIN_MENU;
+			changeMenu();
+		}
+	}
+	else
+	{
+		if (GetLastError() == 38)
+		{
+			FileFatal(phFile, 24);
+		}
+		else
+		{
+			FileFatal(phFile, GetLastError());
+		}
+	}
+}
+
+FailStubPatch loadMenu_gluConn_patch(loadMenu_gluConn);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
@@ -5024,7 +5094,7 @@ LABEL_28:
 			loadMenu_gluExpCmpgn_();
 			break;
 		case GLUE_CONNECT:
-			loadMenu_gluConn();
+			loadMenu_gluConn_();
 			break;
 		case GLUE_MODEM:
 			loadMenu_gluModem();
