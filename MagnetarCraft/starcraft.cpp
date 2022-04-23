@@ -4938,24 +4938,19 @@ void loadMenu_gluConn_()
 		}
 
 		dword_6D5A24 = v4;
-		if (gluLoadBINDlg(v4, ConnSel_Interact_) == 9)
+		if (gluLoadBINDlg(v4, ConnSel_Interact_) != 9)
 		{
-			if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
-			{
-				glGluesMode = glGluesRelated_maybe;
-				changeMenu();
-			}
-			else
-			{
-				glGluesMode = GLUE_CONNECT;
-				changeMenu();
-			}
+			glGluesMode = GLUE_MAIN_MENU;
+		}
+		else if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
+		{
+			glGluesMode = glGluesRelated_maybe;
 		}
 		else
 		{
-			glGluesMode = GLUE_MAIN_MENU;
-			changeMenu();
+			glGluesMode = GLUE_CONNECT;
 		}
+		changeMenu();
 	}
 }
 
