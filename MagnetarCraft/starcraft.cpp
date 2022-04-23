@@ -4308,28 +4308,25 @@ dialog* __fastcall loadFullMenuDLG_(const char* szFileName, dialog* buffer, int 
 		}
 	}
 
-	int v9 = SFileGetFileSize(phFile, 0);
-	if (v9 == -1)
+	int file_size = SFileGetFileSize(phFile, 0);
+	if (file_size == -1)
 	{
 		FileFatal(phFile, GetLastError());
 	}
 	if (read)
 	{
-		*(_DWORD*)read = v9;
+		*(_DWORD*)read = file_size;
 	}
 	if (buffer == NULL)
 	{
-		buffer = (dialog*)SMemAlloc(v9, logfilename, logline, 0);
+		buffer = (dialog*)SMemAlloc(file_size, logfilename, logline, 0);
 	}
-	if (!SFileReadFile(phFile, buffer, v9, &read, 0))
+	if (!SFileReadFile(phFile, buffer, file_size, &read, 0))
 	{
-		if (GetLastError() == 38)
-		{
-			FileFatal(phFile, 24);
-		}
-		FileFatal(phFile, GetLastError());
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
 	}
-	if (read != v9)
+	if (read != file_size)
 	{
 		FileFatal(phFile, 24);
 	}
