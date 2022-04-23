@@ -4249,22 +4249,21 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == EventUser::USER_CREATE)
+		switch (evt->dwUser)
 		{
+		case EventUser::USER_CREATE:
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
 			{
 				DLGMusicFade(MT_TITLE);
 			}
-		}
-		else if (evt->dwUser == EventUser::USER_ACTIVATE)
-		{
+			break;
+		case EventUser::USER_ACTIVATE:
 			return sub_4B2810_(dlg);
-		}
-		else if (evt->dwUser == EventUser::USER_INIT)
-		{
+		case EventUser::USER_INIT:
 			registerMenuFunctions(off_51A93C, dlg, 44, 0);
 			DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
+			break;
 		}
 	}
 	return genericDlgInteract(dlg, evt);
@@ -4276,20 +4275,19 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == EventUser::USER_CREATE)
+		switch (evt->dwUser)
 		{
+		case EventUser::USER_CREATE:
 			DLG_SwishIn(dlg);
 			if (!byte_6D5BBC)
 				DLGMusicFade(MT_TITLE);
-		}
-		else if (evt->dwUser == EventUser::USER_ACTIVATE)
-		{
-				return sub_4B5180_(dlg);
-		}
-		else if (evt->dwUser == EventUser::USER_INIT)
-		{
+			break;
+		case EventUser::USER_ACTIVATE:
+			return sub_4B5180_(dlg);
+		case EventUser::USER_INIT:
 			registerMenuFunctions(off_51A818, dlg, 44, 0);
 			DlgSwooshin(2, &stru_512A8C, dlg, 0);
+			break;
 		}
 	}
 	return genericDlgInteract(dlg, evt);
