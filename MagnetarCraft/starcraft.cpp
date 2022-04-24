@@ -2321,7 +2321,7 @@ void minimapVisionUpdateMegatile(int flags, int x, int y)
 }
 
 template <int PIXEL_STRIDE>
-void __cdecl minimapVisionUpdate_()
+void minimapVisionUpdate_()
 {
 	for (int i = 0; i < map_size.height / word_59CC68; i++)
 	{
@@ -2387,7 +2387,7 @@ void minimapSurfaceUpdateMegatile(int x, int y)
 }
 
 template <int PIXEL_STRIDE>
-void __cdecl minimapSurfaceUpdate_()
+void minimapSurfaceUpdate_()
 {
 	for (int i = 0; i < map_size.height / word_59CC68; i++)
 	{
