@@ -376,7 +376,7 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 	unsigned int offset;
 
 	int bytes_read = 0;
-	BYTE* v3 = (BYTE*) fastFileRead(&bytes_read, 0, a2, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 356);
+	BYTE* v3 = (BYTE*) fastFileRead_(&bytes_read, 0, a2, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 356);
 	const void* v5 = (const void*)v3;
 	for (BYTE* i = v3; a1->address; i += offset)
 	{
@@ -1658,7 +1658,7 @@ GotFileValues* readTemplate_(const char* template_name, char* got_template_name,
 	int got_file_size;
 
 	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
-	GotFile* got_file_data = (GotFile*)fastFileRead(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	GotFile* got_file_data = (GotFile*)fastFileRead_(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!got_file_data)
 	{
 		return 0;
