@@ -4400,7 +4400,6 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	{
 		v3->lFlags |= 4u;
 		AllocInitDialogData(v3, v3, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-		v1 = 0;
 	}
 	dword_6D5A70 = v3;
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
