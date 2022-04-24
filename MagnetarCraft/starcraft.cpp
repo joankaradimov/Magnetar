@@ -166,19 +166,12 @@ void InitializeFontKey_(void)
 	char buff[MAX_PATH];
 	_snprintf(buff, MAX_PATH, "%s\\%s.gid", "font", "font");
 	void* v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	if (v0)
+	if (v0 && cdkey_encrypted_len == 0)
 	{
-		if (cdkey_encrypted_len == 0)
-		{
-			SMemFree(v0, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
-		}
-		else
-		{
-			goto LABEL_5;
-		}
+		SMemFree(v0, "Starcraft\\SWAR\\lang\\grid.cpp", 118, 0);
+		v0 = NULL;
 	}
-	v0 = 0;
-LABEL_5:
+
 	cdkey_encrypted = v0;
 	_snprintf(buff, MAX_PATH, "%s\\%s.clh", "font", "font");
 	void* v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
