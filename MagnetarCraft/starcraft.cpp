@@ -5,11 +5,7 @@
 #include "starcraft.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
-#include "patching/FailStubPatch.h"
-#include "patching/FunctionPatch.h"
-#include "patching/CallSitePatch.h"
-#include "patching/MemoryPatch.h"
-#include "patching/NopPatch.h"
+#include "patching/patching.h"
 
 signed int AppAddExit_(AppExitHandle a1)
 {
@@ -74,7 +70,7 @@ HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename,
 	return hMpq;
 }
 
-FailStubPatch LoadInstallArchiveHD_patch(LoadInstallArchiveHD);
+FAIL_STUB_PATCH(LoadInstallArchiveHD);
 
 signed int InitializeCDArchives_(const char *filename, int a2)
 {
@@ -189,7 +185,7 @@ void InitializeFontKey_(void)
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
 
-FailStubPatch InitializeFontKey_patch(InitializeFontKey);
+FAIL_STUB_PATCH(InitializeFontKey);
 
 void LoadMainModuleStringInfo_()
 {
@@ -223,7 +219,7 @@ void LoadMainModuleStringInfo_()
 	}
 }
 
-FailStubPatch LoadMainModuleStringInfo_patch(LoadMainModuleStringInfo);
+FAIL_STUB_PATCH(LoadMainModuleStringInfo);
 
 int InitializeArchiveHandles_()
 {
@@ -314,7 +310,7 @@ int InitializeArchiveHandles_()
 	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
-FailStubPatch InitializeArchiveHandles_patch(InitializeArchiveHandles);
+FAIL_STUB_PATCH(InitializeArchiveHandles);
 
 signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 {
@@ -396,14 +392,14 @@ void LoadSfx_()
 	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 }
 
-FailStubPatch LoadSfx_patch(LoadSfx);
+FAIL_STUB_PATCH(LoadSfx);
 
 char* MapdataFilenames_[73];
 
-MemoryPatch MapdataFilenames_patch1(0x4280A2, MapdataFilenames_);
-MemoryPatch MapdataFilenames_patch2(0x4A7DC9, MapdataFilenames_);
-MemoryPatch MapdataFilenames_patch3(0x512BA0, MapdataFilenames_);
-MemoryPatch MapdataFilenames_patch4(0x512BA8, _countof(MapdataFilenames_));
+MEMORY_PATCH(0x4280A2, MapdataFilenames_);
+MEMORY_PATCH(0x4A7DC9, MapdataFilenames_);
+MEMORY_PATCH(0x512BA0, MapdataFilenames_);
+MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
 
 void CommandLineCheck_()
 {
@@ -434,7 +430,7 @@ void CommandLineCheck_()
 	}
 }
 
-FailStubPatch CommandLineCheck_patch(CommandLineCheck);
+FAIL_STUB_PATCH(CommandLineCheck);
 
 void PreInitData_()
 {
@@ -474,7 +470,7 @@ void PreInitData_()
 	AppAddExit_(DestroyGameTemplates);
 }
 
-FailStubPatch PreInitData_patch(PreInitData);
+FAIL_STUB_PATCH(PreInitData);
 
 char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 {
@@ -533,7 +529,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 	DLGErrFatal();
 }
 
-FailStubPatch ErrorDDrawInit_patch(ErrorDDrawInit);
+FAIL_STUB_PATCH(ErrorDDrawInit);
 
 BOOL BWFXN_DDrawInitialize_()
 {
@@ -598,7 +594,7 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
-FunctionPatch BWFXN_DDrawInitialize_patch(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
+FUNCTION_PATCH(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
 
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
@@ -634,7 +630,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	BWFXN_drawAllThingys();
 }
 
-FunctionPatch DrawGameProc_patch(DrawGameProc, DrawGameProc_);
+FUNCTION_PATCH(DrawGameProc, DrawGameProc_);
 
 int DSoundCreate_(AudioVideoInitializationError* a1)
 {
@@ -670,7 +666,7 @@ int DSoundCreate_(AudioVideoInitializationError* a1)
 	}
 }
 
-FailStubPatch DSoundCreate_patch(DSoundCreate);
+FAIL_STUB_PATCH(DSoundCreate);
 
 int SetCooperativeLevel_(HWND hwnd, AudioVideoInitializationError* a2)
 {
@@ -688,7 +684,7 @@ int SetCooperativeLevel_(HWND hwnd, AudioVideoInitializationError* a2)
 	return 0;
 }
 
-FailStubPatch SetCooperativeLevel_patch(SetCooperativeLevel);
+FAIL_STUB_PATCH(SetCooperativeLevel);
 
 int CreateSoundBuffer_(AudioVideoInitializationError* a1)
 {
@@ -709,7 +705,7 @@ int CreateSoundBuffer_(AudioVideoInitializationError* a1)
 	return 0;
 }
 
-FailStubPatch CreateSoundBuffer_patch(CreateSoundBuffer);
+FAIL_STUB_PATCH(CreateSoundBuffer);
 
 HRESULT SetAudioFormat_()
 {
@@ -725,7 +721,7 @@ HRESULT SetAudioFormat_()
 	return soundbuffer->SetFormat(&wave_format);
 }
 
-FailStubPatch SetAudioFormat_patch(SetAudioFormat);
+FAIL_STUB_PATCH(SetAudioFormat);
 
 void LoadBtnSfxFile_()
 {
@@ -742,7 +738,7 @@ void LoadBtnSfxFile_()
 	}
 }
 
-FailStubPatch LoadBtnSfxFile_patch(LoadBtnSfxFile);
+FAIL_STUB_PATCH(LoadBtnSfxFile);
 
 void initVolume_()
 {
@@ -759,7 +755,7 @@ void initVolume_()
 	muteBgm(&registry_options);
 }
 
-FailStubPatch initVolume_patch(initVolume);
+FAIL_STUB_PATCH(initVolume);
 
 BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 {
@@ -812,7 +808,7 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 	return 1;
 }
 
-FailStubPatch DSoundInit_patch(DSoundInit);
+FAIL_STUB_PATCH(DSoundInit);
 
 void loadColorSettings_()
 {
@@ -855,7 +851,7 @@ void loadColorSettings_()
 	}
 }
 
-FailStubPatch loadColorSettings_patch(loadColorSettings);
+FAIL_STUB_PATCH(loadColorSettings);
 
 void audioVideoInit_()
 {
@@ -879,7 +875,7 @@ void audioVideoInit_()
 	}
 }
 
-FailStubPatch audioVideoInit_patch(audioVideoInit);
+FAIL_STUB_PATCH(audioVideoInit);
 
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
@@ -941,7 +937,7 @@ bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FailStubPatch TitleDlgProc_patch(TitleDlgProc);
+FAIL_STUB_PATCH(TitleDlgProc);
 
 void LoadTitle_()
 {
@@ -994,7 +990,7 @@ void LoadTitle_()
 	}
 }
 
-FailStubPatch LoadTitle_patch(LoadTitle);
+FAIL_STUB_PATCH(LoadTitle);
 
 void LoadInitIscriptBIN_()
 {
@@ -1009,7 +1005,7 @@ void LoadInitIscriptBIN_()
 	InitDamageOverlayCounts();
 }
 
-FailStubPatch LoadInitIscriptBIN_patch(LoadInitIscriptBIN);
+FAIL_STUB_PATCH(LoadInitIscriptBIN);
 
 UnitType GetWorkerType(Race race)
 {
@@ -1041,7 +1037,7 @@ void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
 	}
 }
 
-FailStubPatch CreateInitialMeleeWorker_patch(CreateInitialMeleeWorker);
+FAIL_STUB_PATCH(CreateInitialMeleeWorker);
 
 void CreateInitialMeleeUnits_()
 {
@@ -1084,7 +1080,7 @@ void CreateInitialMeleeUnits_()
 	}
 }
 
-FailStubPatch CreateInitialMeleeUnits_patch(CreateInitialMeleeUnits);
+FAIL_STUB_PATCH(CreateInitialMeleeUnits);
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -1237,14 +1233,14 @@ ChkLoader chk_loaders_[] = {
 	},
 };
 
-MemoryPatch chk_loader_patch1(0x4BF65A, &chk_loaders_->lobby_loader_count);
-MemoryPatch chk_loader_patch2(0x4BF660, &chk_loaders_->lobby_loaders);
-MemoryPatch chk_loader_patch3(0x4CC0CD, chk_loaders_);
-MemoryPatch chk_loader_patch4(0x4CC0E1, &chk_loaders_->requires_expansion);
-MemoryPatch chk_loader_patch5(0x4CCA8A, &chk_loaders_->briefing_loader_count);
-MemoryPatch chk_loader_patch6(0x4CCA90, &chk_loaders_->briefing_loaders);
-MemoryPatch chk_loader_patch7(0x4CCBFC, &chk_loaders_->lobby_loader_count);
-MemoryPatch chk_loader_patch8(0x4CCC02, &chk_loaders_->lobby_loaders);
+MEMORY_PATCH(0x4BF65A, &chk_loaders_->lobby_loader_count);
+MEMORY_PATCH(0x4BF660, &chk_loaders_->lobby_loaders);
+MEMORY_PATCH(0x4CC0CD, chk_loaders_);
+MEMORY_PATCH(0x4CC0E1, &chk_loaders_->requires_expansion);
+MEMORY_PATCH(0x4CCA8A, &chk_loaders_->briefing_loader_count);
+MEMORY_PATCH(0x4CCA90, &chk_loaders_->briefing_loaders);
+MEMORY_PATCH(0x4CCBFC, &chk_loaders_->lobby_loader_count);
+MEMORY_PATCH(0x4CCC02, &chk_loaders_->lobby_loaders);
 
 int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 {
@@ -1443,7 +1439,7 @@ BOOL sub_4CC7F0_(char* a1)
 	}
 }
 
-FailStubPatch sub_4CC7F0_patch(sub_4CC7F0);
+FAIL_STUB_PATCH(sub_4CC7F0);
 
 int LoadMap_()
 {
@@ -1476,7 +1472,7 @@ int LoadMap_()
 	return 0;
 }
 
-FunctionPatch LoadMap_patch(LoadMap, LoadMap_);
+FUNCTION_PATCH(LoadMap, LoadMap_);
 
 UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_512778,
@@ -1489,12 +1485,12 @@ UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_51279C,
 };
 
-MemoryPatch tilesetRelated_1(0x4BDD8A, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_2(0x4C99E4, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_3(0x4CB56A, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_4(0x4CB5DF, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_5(0x4CBEDA, TILESET_PALETTE_RELATED);
-MemoryPatch tilesetRelated_6(0x4EEEB7, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4BDD8A, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4C99E4, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4CB56A, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
 void initMapData_();
 
@@ -1550,7 +1546,7 @@ int sub_4EEFD0_()
 	}
 }
 
-FailStubPatch sub_4EEFD0_patch(sub_4EEFD0);
+FAIL_STUB_PATCH(sub_4EEFD0);
 
 void __fastcall MinimapPreviewProc_(dialog* a1)
 {
@@ -1565,7 +1561,7 @@ void __fastcall MinimapPreviewProc_(dialog* a1)
 	}
 }
 
-FunctionPatch MinimapPreviewProc_patch(MinimapPreviewProc, MinimapPreviewProc_);
+FUNCTION_PATCH(MinimapPreviewProc, MinimapPreviewProc_);
 
 signed int GameInit_()
 {
@@ -1641,9 +1637,9 @@ signed int GameInit_()
 	return 0;
 }
 
-FunctionPatch GameInit_patch(GameInit, GameInit_);
-FailStubPatch sub_4CD770_patch(sub_4CD770);
-FailStubPatch sub_4A13B0_patch(sub_4A13B0);
+FUNCTION_PATCH(GameInit, GameInit_);
+FAIL_STUB_PATCH(sub_4CD770);
+FAIL_STUB_PATCH(sub_4A13B0);
 
 GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
@@ -1681,7 +1677,7 @@ GotFileValues* InitUseMapSettingsTemplate_()
 	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
 }
 
-FunctionPatch InitUseMapSettingsTemplate_patch(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
+FUNCTION_PATCH(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
 
 int sub_4CCAC0_(char* a1, MapChunks* a2)
 {
@@ -1725,9 +1721,8 @@ int sub_4CCAC0_(char* a1, MapChunks* a2)
 	return 0;
 }
 
-FailStubPatch sub_4CCAC0_patch(sub_4CCAC0);
-
-FailStubPatch sub_4CC2A0_patch(sub_4CC2A0);
+FAIL_STUB_PATCH(sub_4CCAC0);
+FAIL_STUB_PATCH(sub_4CC2A0);
 
 int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 {
@@ -1807,14 +1802,14 @@ LABEL_26:
 	return 1;
 }
 
-FunctionPatch ReadMapData_patch(ReadMapData, ReadMapData_);
+FUNCTION_PATCH(ReadMapData, ReadMapData_);
 
 bool ReadCampaignMapData_(MapChunks* map_chunks)
 {
 	return ReadMapData_(MapdataFilenames_[CampaignIndex], map_chunks, 1) != 0;
 }
 
-FailStubPatch ReadCampaignMapData_patch(ReadCampaignMapData);
+FAIL_STUB_PATCH(ReadCampaignMapData);
 
 int LevelCheatInitGame__()
 {
@@ -1955,7 +1950,7 @@ int LevelCheatInitGame__()
 	return 0;
 }
 
-FailStubPatch LevelCheatInitGame_patch(LevelCheatInitGame);
+FAIL_STUB_PATCH(LevelCheatInitGame);
 
 signed int LoadGameInit_()
 {
@@ -2084,7 +2079,7 @@ signed int LoadGameInit_()
 	return 1;
 }
 
-FailStubPatch LoadGameInit_patch(LoadGameInit);
+FAIL_STUB_PATCH(LoadGameInit);
 
 void DestroyGame_()
 {
@@ -2229,7 +2224,7 @@ void DestroyGame_()
 	}
 }
 
-FailStubPatch DestroyGame_patch(DestroyGame);
+FAIL_STUB_PATCH(DestroyGame);
 
 void GameRun_(MenuPosition a1)
 {
@@ -2270,7 +2265,7 @@ void GameRun_(MenuPosition a1)
 	}
 }
 
-FailStubPatch GameRun_patch(GameRun);
+FAIL_STUB_PATCH(GameRun);
 
 void setup_HUD_()
 {
@@ -2305,7 +2300,7 @@ void setup_HUD_()
 	CanUpdateStatDataDialog = 1;
 }
 
-FunctionPatch setup_HUD_patch(setup_HUD, setup_HUD_);
+FUNCTION_PATCH(setup_HUD, setup_HUD_);
 
 template <int PIXEL_STRIDE>
 void minimapVisionUpdateMegatile(int flags, int x, int y)
@@ -2368,9 +2363,9 @@ void minimapVisionUpdate_()
 	}
 }
 
-FailStubPatch minimapVisionUpdate_64_patch(minimapVisionUpdate_64);
-FailStubPatch minimapVisionUpdate_96_128_patch(minimapVisionUpdate_96_128);
-FailStubPatch minimapVisionUpdate_192_256_patch(minimapVisionUpdate_192_256);
+FAIL_STUB_PATCH(minimapVisionUpdate_64);
+FAIL_STUB_PATCH(minimapVisionUpdate_96_128);
+FAIL_STUB_PATCH(minimapVisionUpdate_192_256);
 
 template <int PIXEL_STRIDE>
 void minimapSurfaceUpdateMegatile(int x, int y)
@@ -2398,9 +2393,9 @@ void minimapSurfaceUpdate_()
 	}
 }
 
-FailStubPatch minimapSurfaceUpdate_64_patch(minimapSurfaceUpdate_64);
-FailStubPatch minimapSurfaceUpdate_96_128_patch(minimapSurfaceUpdate_96_128);
-FailStubPatch minimapSurfaceUpdate_192_256_patch(minimapSurfaceUpdate_192_256);
+FAIL_STUB_PATCH(minimapSurfaceUpdate_64);
+FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
+FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
 
 void __cdecl setMapSizeConstants_()
 {
@@ -2466,7 +2461,7 @@ void __cdecl setMapSizeConstants_()
 	stru_512D00.bottom = minimap_dialog->rct.top + minimap_surface_height + 314;
 }
 
-FunctionPatch setMapSizeConstants_patch(setMapSizeConstants, setMapSizeConstants_);
+FUNCTION_PATCH(setMapSizeConstants, setMapSizeConstants_);
 
 const char* TILESET_NAMES[] = {
 	"badlands",
@@ -2479,14 +2474,14 @@ const char* TILESET_NAMES[] = {
 	"Twilight",
 };
 
-MemoryPatch tilesetNames_1(0x4D6D41, TILESET_NAMES);
+MEMORY_PATCH(0x4D6D41, TILESET_NAMES);
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	return 1;
 }
 
-FailStubPatch ChkLoader_TYPE_patch(ChkLoader_TYPE);
+FAIL_STUB_PATCH(ChkLoader_TYPE);
 
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2501,7 +2496,7 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FailStubPatch ChkLoader_VER_patch(ChkLoader_VER);
+FAIL_STUB_PATCH(ChkLoader_VER);
 
 bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2517,7 +2512,7 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FailStubPatch ChkLoader_DIM_patch(ChkLoader_DIM);
+FAIL_STUB_PATCH(ChkLoader_DIM);
 
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2538,7 +2533,7 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FailStubPatch ChkLoader_ERA_patch(ChkLoader_ERA);
+FAIL_STUB_PATCH(ChkLoader_ERA);
 
 bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2563,7 +2558,7 @@ bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapCh
 	return true;
 }
 
-FailStubPatch ChkLoader_STR_patch(ChkLoader_STR);
+FAIL_STUB_PATCH(ChkLoader_STR);
 
 bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2586,7 +2581,7 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FailStubPatch ChkLoader_MBRF_patch(ChkLoader_MBRF);
+FAIL_STUB_PATCH(ChkLoader_MBRF);
 
 bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2603,7 +2598,7 @@ bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FailStubPatch ChkLoader_SPRP_patch(ChkLoader_SPRP);
+FAIL_STUB_PATCH(ChkLoader_SPRP);
 
 bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2631,7 +2626,7 @@ bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FailStubPatch ChkLoader_FORC_patch(ChkLoader_FORC);
+FAIL_STUB_PATCH(ChkLoader_FORC);
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
@@ -2669,8 +2664,8 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
-FailStubPatch ChkLoader_VCOD_patch(ChkLoader_VCOD);
-FailStubPatch CopySectionData_patch(CopySectionData);
+FAIL_STUB_PATCH(ChkLoader_VCOD);
+FAIL_STUB_PATCH(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
 
@@ -2711,7 +2706,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 	return SAI_PathCreate(active_tiles) != 0;
 }
 
-FailStubPatch ChkLoader_MTXM_patch(ChkLoader_MTXM);
+FAIL_STUB_PATCH(ChkLoader_MTXM);
 
 struct Thingy2Entry
 {
@@ -2768,7 +2763,7 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FailStubPatch ChkLoader_THG2_patch(ChkLoader_THG2);
+FAIL_STUB_PATCH(ChkLoader_THG2);
 
 const int SCREEN_WDITH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -2791,7 +2786,7 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	return 1;
 }
 
-FailStubPatch CHK_UNIT_StartLocationSub_patch(CHK_UNIT_StartLocationSub);
+FAIL_STUB_PATCH(CHK_UNIT_StartLocationSub);
 
 bool IsCritter(UnitType unit_type)
 {
@@ -2820,7 +2815,7 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 	}
 }
 
-FailStubPatch unitNotNeutral_patch(unitNotNeutral);
+FAIL_STUB_PATCH(unitNotNeutral);
 
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -2872,7 +2867,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FailStubPatch ChkLoader_UNIT_patch(ChkLoader_UNIT);
+FAIL_STUB_PATCH(ChkLoader_UNIT);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
@@ -2909,7 +2904,7 @@ void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, voi
 	}
 }
 
-FailStubPatch InitTerrainGraphicsAndCreep_patch(InitTerrainGraphicsAndCreep);
+FAIL_STUB_PATCH(InitTerrainGraphicsAndCreep);
 
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
@@ -2953,7 +2948,7 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 	return cycle_struct_index;
 }
 
-FailStubPatch DoCycle_patch(DoCycle);
+FAIL_STUB_PATCH(DoCycle);
 
 void __cdecl colorCycleInterval_()
 {
@@ -2992,7 +2987,7 @@ void __cdecl updateHUDInformation_()
 	refreshGameTextIfCounterActive();
 }
 
-FunctionPatch updateHUDInformation_patch(updateHUDInformation, updateHUDInformation_);
+FUNCTION_PATCH(updateHUDInformation, updateHUDInformation_);
 
 void loadParallaxStarGfx_(const char* parallaxFile)
 {
@@ -3065,7 +3060,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	}
 }
 
-FailStubPatch loadParallaxStarGfx_patch(loadParallaxStarGfx);
+FAIL_STUB_PATCH(loadParallaxStarGfx);
 
 void GenerateMegatileDefaultFlags_()
 {
@@ -3131,7 +3126,7 @@ void GenerateMegatileDefaultFlags_()
 	}
 }
 
-FailStubPatch GenerateMegatileDefaultFlags_patch(GenerateMegatileDefaultFlags);
+FAIL_STUB_PATCH(GenerateMegatileDefaultFlags);
 
 void initMapData_()
 {
@@ -3226,7 +3221,7 @@ void initMapData_()
 	}
 }
 
-FailStubPatch initMapData_patch(initMapData);
+FAIL_STUB_PATCH(initMapData);
 
 unsigned int GetGroundHeightAtPos_(int x, int y)
 {
@@ -3252,7 +3247,7 @@ int GetGroundHeightAtPos__()
 	return GetGroundHeightAtPos_(x, y);
 }
 
-FunctionPatch GetGroundHeightAtPos_patch((void*)0x4BD0F0, GetGroundHeightAtPos__);
+FUNCTION_PATCH((void*)0x4BD0F0, GetGroundHeightAtPos__);
 
 int isUnitAtHeight_(CUnit* unit, char location_flags)
 {
@@ -3293,7 +3288,7 @@ int __cdecl isUnitAtHeight__()
 	return isUnitAtHeight_(unit, location_flags);
 }
 
-FunctionPatch isUnitAtHeight_patch((void*)0x45F8D0, isUnitAtHeight__);
+FUNCTION_PATCH((void*)0x45F8D0, isUnitAtHeight__);
 
 int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed int x, signed int y, int reveal_from_air)
 {
@@ -3349,7 +3344,7 @@ int __stdcall revealSightAtLocation__(signed int x, signed int y, int reveal_fro
 	return revealSightAtLocation_(sight_range, vision_mask, x, y, reveal_from_air);
 }
 
-FunctionPatch revealSightAtLocation_patch((void*)0x4806F0, revealSightAtLocation__);
+FUNCTION_PATCH((void*)0x4806F0, revealSightAtLocation__);
 
 void sub_4CC990_()
 {
@@ -3388,7 +3383,7 @@ void sub_4CC990_()
 	}
 }
 
-FunctionPatch sub_4CC990_patch(sub_4CC990, sub_4CC990_);
+FUNCTION_PATCH(sub_4CC990, sub_4CC990_);
 
 int CreateCampaignGame_(MapData mapData)
 {
@@ -3420,7 +3415,7 @@ int CreateCampaignGame_(MapData mapData)
 	}
 }
 
-FailStubPatch CreateCampaignGame_patch(CreateCampaignGame);
+FAIL_STUB_PATCH(CreateCampaignGame);
 
 bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -3439,7 +3434,7 @@ bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 	return sub_4B6D60(dlg, evt);
 }
 
-FailStubPatch sub_4B6E10_patch(sub_4B6E10);
+FAIL_STUB_PATCH(sub_4B6E10);
 
 CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 {
@@ -3531,7 +3526,7 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 	return dword_6D5A48;
 }
 
-FailStubPatch loadmenu_GluHist_patch(loadmenu_GluHist);
+FAIL_STUB_PATCH(loadmenu_GluHist);
 
 enum ExpandedMapData : u16
 {
@@ -3945,7 +3940,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData
 	return 1;
 }
 
-FailStubPatch parseCmpgnCheatTypeString_patch(parseCmpgnCheatTypeString);
+FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
 
 void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race race)
 {
@@ -3955,7 +3950,7 @@ void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race ra
 	level_cheat_is_bw = is_expansion;
 }
 
-FailStubPatch ContinueCampaignWithLevelCheat_patch(ContinueCampaignWithLevelCheat);
+FAIL_STUB_PATCH(ContinueCampaignWithLevelCheat);
 
 int campaignTypeCheatStrings_(char* a2)
 {
@@ -4024,7 +4019,7 @@ __declspec(naked) int campaignTypeCheatStrings__()
 	}
 }
 
-FunctionPatch campaignTypeCheatStrings_patch((void*) 0x4b1dc0, campaignTypeCheatStrings__);
+FUNCTION_PATCH((void*) 0x4b1dc0, campaignTypeCheatStrings__);
 
 CampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
 {
@@ -4041,7 +4036,7 @@ CampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
 	return entry;
 }
 
-FailStubPatch getCampaignIndex_patch(getCampaignIndex);
+FAIL_STUB_PATCH(getCampaignIndex);
 
 void updateActiveCampaignMission_()
 {
@@ -4061,7 +4056,7 @@ void updateActiveCampaignMission_()
 	}
 }
 
-FunctionPatch updateActiveCampaignMission_patch(updateActiveCampaignMission, updateActiveCampaignMission_);
+FUNCTION_PATCH(updateActiveCampaignMission, updateActiveCampaignMission_);
 
 bool LoadCampaignWithCharacter_(Race race)
 {
@@ -4113,7 +4108,7 @@ bool LoadCampaignWithCharacter_(Race race)
 	return active_campaign_menu_entry != NULL;
 }
 
-FailStubPatch LoadCampaignWithCharacter_patch(LoadCampaignWithCharacter);
+FAIL_STUB_PATCH(LoadCampaignWithCharacter);
 
 int sub_4B5110_(Race race)
 {
@@ -4131,7 +4126,7 @@ int sub_4B5110_(Race race)
 	return LoadCampaignWithCharacter_(race);
 }
 
-FailStubPatch sub_4B5110_patch(sub_4B5110);
+FAIL_STUB_PATCH(sub_4B5110);
 
 bool sub_4B27A0_(Race race)
 {
@@ -4149,7 +4144,7 @@ bool sub_4B27A0_(Race race)
 	return LoadCampaignWithCharacter_(race);
 }
 
-FailStubPatch sub_4B27A0_patch(sub_4B27A0);
+FAIL_STUB_PATCH(sub_4B27A0);
 
 bool sub_4B5180_(dialog* a1)
 {
@@ -4180,7 +4175,7 @@ bool sub_4B5180_(dialog* a1)
 	return DLG_SwishOut(a1);
 }
 
-FailStubPatch sub_4B5180_patch(sub_4B5180);
+FAIL_STUB_PATCH(sub_4B5180);
 
 bool sub_4B2810_(dialog* a1)
 {
@@ -4211,7 +4206,7 @@ bool sub_4B2810_(dialog* a1)
 	return DLG_SwishOut(a1);
 }
 
-FailStubPatch sub_4B2810_patch(sub_4B2810);
+FAIL_STUB_PATCH(sub_4B2810);
 
 bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -4237,7 +4232,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FailStubPatch gluCmpgn_Main_patch(gluCmpgn_Main);
+FAIL_STUB_PATCH(gluCmpgn_Main);
 
 bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -4261,7 +4256,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FailStubPatch gluExpCmpgn_CustomCtrlID_patch(gluExpCmpgn_CustomCtrlID);
+FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
 
 dialog* __fastcall loadFullMenuDLG_(const char* szFileName, dialog* buffer, int read, const char* logfilename, int logline)
 {
@@ -4302,7 +4297,7 @@ dialog* __fastcall loadFullMenuDLG_(const char* szFileName, dialog* buffer, int 
 	return buffer;
 }
 
-FunctionPatch loadFullMenuDLG_patch(loadFullMenuDLG, loadFullMenuDLG_);
+FUNCTION_PATCH(loadFullMenuDLG, loadFullMenuDLG_);
 
 void loadMenu_gluCmpgn_()
 {
@@ -4345,7 +4340,7 @@ void loadMenu_gluCmpgn_()
 	changeMenu();
 }
 
-FailStubPatch loadMenu_gluCmpgn_patch(loadMenu_gluCmpgn);
+FAIL_STUB_PATCH(loadMenu_gluCmpgn);
 
 void loadMenu_gluExpCmpgn_()
 {
@@ -4388,7 +4383,7 @@ void loadMenu_gluExpCmpgn_()
 	changeMenu();
 }
 
-FailStubPatch loadMenu_gluExpCmpgn_patch(loadMenu_gluExpCmpgn);
+FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
 
 void loadMenu_gluCustm_(int is_multiplayer)
 {
@@ -4482,7 +4477,7 @@ LABEL_37:
 	dword_6D5A74 = 0;
 }
 
-FailStubPatch loadMenu_gluCustm_patch(loadMenu_gluCustm);
+FAIL_STUB_PATCH(loadMenu_gluCustm);
 
 int SelGameMode_(int a2)
 {
@@ -4519,7 +4514,7 @@ int SelGameMode_(int a2)
 	}
 }
 
-FailStubPatch SelGameMode_patch(SelGameMode);
+FAIL_STUB_PATCH(SelGameMode);
 
 signed int loadStareditProcess_(dialog* a1)
 {
@@ -4580,7 +4575,7 @@ signed int loadStareditProcess_(dialog* a1)
 	}
 }
 
-FailStubPatch loadStareditProcess_patch(loadStareditProcess);
+FAIL_STUB_PATCH(loadStareditProcess);
 
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -4670,7 +4665,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 	}
 }
 
-FailStubPatch gluMain_Dlg_Interact_patch(gluMain_Dlg_Interact);
+FAIL_STUB_PATCH(gluMain_Dlg_Interact);
 
 void loadMenu_gluMain_()
 {
@@ -4763,7 +4758,7 @@ void loadMenu_gluMain_()
 	}
 }
 
-FailStubPatch loadMenu_gluMain_patch(loadMenu_gluMain);
+FAIL_STUB_PATCH(loadMenu_gluMain);
 
 void sub_4D9200_();
 
@@ -4846,9 +4841,9 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 	}
 }
 
-FailStubPatch loadMenu_gluRdyT_patch(loadMenu_gluRdyT);
-FailStubPatch loadMenu_gluRdyZ_patch(loadMenu_gluRdyZ);
-FailStubPatch loadMenu_gluRdyP_patch(loadMenu_gluRdyP);
+FAIL_STUB_PATCH(loadMenu_gluRdyT);
+FAIL_STUB_PATCH(loadMenu_gluRdyZ);
+FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
 bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -4888,7 +4883,7 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FailStubPatch ConnSel_Interact_patch(ConnSel_Interact);
+FAIL_STUB_PATCH(ConnSel_Interact);
 
 void loadMenu_gluConn_()
 {
@@ -4946,7 +4941,7 @@ void loadMenu_gluConn_()
 	}
 }
 
-FailStubPatch loadMenu_gluConn_patch(loadMenu_gluConn);
+FAIL_STUB_PATCH(loadMenu_gluConn);
 
 int SwitchMenu_()
 {
@@ -5142,7 +5137,7 @@ LABEL_28:
 	return sub_4DC870();
 }
 
-FailStubPatch SwitchMenu_patch(SwitchMenu);
+FAIL_STUB_PATCH(SwitchMenu);
 
 void CreateMainWindow_()
 {
@@ -5186,9 +5181,9 @@ void CreateMainWindow_()
 	}
 }
 
-FailStubPatch CreateMainWindow_patch(CreateMainWindow);
-FailStubPatch PlayMovieWithIntro_patch(PlayMovieWithIntro);
-FailStubPatch playActiveCinematic_patch(playActiveCinematic);
+FAIL_STUB_PATCH(CreateMainWindow);
+FAIL_STUB_PATCH(PlayMovieWithIntro);
+FAIL_STUB_PATCH(playActiveCinematic);
 
 int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 {
@@ -5212,7 +5207,7 @@ int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 	return 0;
 }
 
-FailStubPatch sub_4DBD20_patch(sub_4DBD20);
+FAIL_STUB_PATCH(sub_4DBD20);
 
 CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 {
@@ -5262,7 +5257,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	return active_campaign_menu_entry;
 }
 
-FailStubPatch sub_4DBDA0_patch(sub_4DBDA0);
+FAIL_STUB_PATCH(sub_4DBDA0);
 
 void loadInitCreditsBIN_(const char* a1)
 {
@@ -5319,7 +5314,7 @@ void loadInitCreditsBIN_(const char* a1)
 	dword_51CEB0 = 0;
 }
 
-FailStubPatch loadInitCreditsBIN_patch(loadInitCreditsBIN);
+FAIL_STUB_PATCH(loadInitCreditsBIN);
 
 void sub_4D91B0_()
 {
@@ -5329,8 +5324,8 @@ void sub_4D91B0_()
 	}
 }
 
-FailStubPatch sub_4D91B0_patch(sub_4D91B0);
-FailStubPatch sub_4D8F90_patch(sub_4D8F90);
+FAIL_STUB_PATCH(sub_4D91B0);
+FAIL_STUB_PATCH(sub_4D8F90);
 
 int __stdcall ContinueCampaign_(int a1)
 {
@@ -5393,7 +5388,7 @@ int __stdcall ContinueCampaign_(int a1)
 	return 1;
 }
 
-FunctionPatch ContinueCampaign_patch(ContinueCampaign, ContinueCampaign_);
+FUNCTION_PATCH(ContinueCampaign, ContinueCampaign_);
 
 Campaign* GetActiveCampaign()
 {
@@ -5445,7 +5440,7 @@ void BeginEpilog_()
 	registry_options.Music = v0;
 }
 
-FailStubPatch BeginEpilog_patch(BeginEpilog);
+FAIL_STUB_PATCH(BeginEpilog);
 
 void BeginCredits_()
 {
@@ -5478,10 +5473,9 @@ void BeginCredits_()
 	registry_options.Music = v0;
 }
 
-FailStubPatch BeginCredits_patch(BeginCredits);
-
-FailStubPatch sub_4A60D0_patch(sub_4A60D0);
-FailStubPatch sub_48EB90_patch(sub_48EB90);
+FAIL_STUB_PATCH(BeginCredits);
+FAIL_STUB_PATCH(sub_4A60D0);
+FAIL_STUB_PATCH(sub_48EB90);
 
 void GameMainLoop_()
 {
@@ -5610,7 +5604,7 @@ unsigned int LocalGetLang_()
 		return 1033;
 }
 
-FunctionPatch LocalGetLang_patch(LocalGetLang, LocalGetLang_);
+FUNCTION_PATCH(LocalGetLang, LocalGetLang_);
 
 void localDll_Init_(HINSTANCE a1)
 {
@@ -5644,7 +5638,7 @@ void localDll_Init_(HINSTANCE a1)
 	AppAddExit_(FreeLocalDLL);
 }
 
-FailStubPatch localDll_Init_patch(localDll_Init);
+FAIL_STUB_PATCH(localDll_Init);
 
 void sub_4D9200_()
 {
@@ -5672,7 +5666,7 @@ void sub_4D9200_()
 	}
 }
 
-FailStubPatch sub_4D9200_patch(sub_4D9200);
+FAIL_STUB_PATCH(sub_4D9200);
 
 const char* __stdcall get_Tileset_String(Tileset tileset)
 {
@@ -5681,8 +5675,8 @@ const char* __stdcall get_Tileset_String(Tileset tileset)
 	return tbl_file[tileset];
 }
 
-NopPatch tilsetNameTblArithmetic((void*)0x4A7960, 3);
-CallSitePatch tilsetNameTblCall((void*)0x4A7964, get_Tileset_String);
+NOP_PATCH((void*)0x4A7960, 3);
+CALL_SITE_PATCH((void*)0x4A7964, get_Tileset_String);
 
 signed int __fastcall packColorShifts_(int a1, void* a2)
 {
@@ -5694,14 +5688,14 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 	return 0;
 }
 
-FunctionPatch packColorShifts_patch(packColorShifts, packColorShifts_);
+FUNCTION_PATCH(packColorShifts, packColorShifts_);
 
 int __fastcall TriggerAction_NoAction_(Action* a1)
 {
 	return 1;
 }
 
-FailStubPatch TriggerAction_NoAction_patch(TriggerAction_NoAction);
+FAIL_STUB_PATCH(TriggerAction_NoAction);
 
 int __fastcall TriggerAction_Victory_(Action* a1)
 {
@@ -5713,7 +5707,7 @@ int __fastcall TriggerAction_Victory_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_Victory_patch(TriggerAction_Victory);
+FAIL_STUB_PATCH(TriggerAction_Victory);
 
 int __fastcall TriggerAction_Defeat_(Action* a1)
 {
@@ -5729,7 +5723,7 @@ int __fastcall TriggerAction_Defeat_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_Defeat_patch(TriggerAction_Defeat);
+FAIL_STUB_PATCH(TriggerAction_Defeat);
 
 int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
 {
@@ -5737,7 +5731,7 @@ int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_PreserveTrigger_patch(TriggerAction_PreserveTrigger);
+FAIL_STUB_PATCH(TriggerAction_PreserveTrigger);
 
 int __fastcall TriggerAction_Wait_(Action* a1)
 {
@@ -5760,7 +5754,7 @@ int __fastcall TriggerAction_Wait_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_Wait_patch(TriggerAction_Wait);
+FAIL_STUB_PATCH(TriggerAction_Wait);
 
 unsigned int getTextDisplayTime_(const char* text)
 {
@@ -5772,7 +5766,7 @@ unsigned int getTextDisplayTime_(const char* text)
 	return max(strlen(text) * 50, 4000);
 }
 
-FailStubPatch getTextDisplayTime_patch(getTextDisplayTime);
+FAIL_STUB_PATCH(getTextDisplayTime);
 
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
@@ -5794,7 +5788,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_PlayWav_patch(TriggerAction_PlayWav);
+FAIL_STUB_PATCH(TriggerAction_PlayWav);
 
 int __fastcall TriggerAction_Transmission_(Action* a1)
 {
@@ -5872,7 +5866,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 	return 0;
 }
 
-FailStubPatch TriggerAction_Transmission_patch(TriggerAction_Transmission);
+FAIL_STUB_PATCH(TriggerAction_Transmission);
 
 int __fastcall TriggerAction_SetMissionObjectives_(Action* a1)
 {
@@ -5880,7 +5874,7 @@ int __fastcall TriggerAction_SetMissionObjectives_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetMissionObjectives_patch(TriggerAction_SetMissionObjectives);
+FAIL_STUB_PATCH(TriggerAction_SetMissionObjectives);
 
 int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 {
@@ -5913,7 +5907,7 @@ int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_DisplayTextMessage_patch(TriggerAction_DisplayTextMessage);
+FAIL_STUB_PATCH(TriggerAction_DisplayTextMessage);
 
 int __fastcall TriggerAction_CenterView_(Action* a1)
 {
@@ -5988,7 +5982,7 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 	return 0;
 }
 
-FailStubPatch TriggerAction_CenterView_patch(TriggerAction_CenterView);
+FAIL_STUB_PATCH(TriggerAction_CenterView);
 
 void EnableSwitch(unsigned index)
 {
@@ -6049,7 +6043,7 @@ int __fastcall TriggerAction_SetSwitch_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetSwitch_patch(TriggerAction_SetSwitch);
+FAIL_STUB_PATCH(TriggerAction_SetSwitch);
 
 int __fastcall TriggerAction_SetCountdownTimer_(Action* a1)
 {
@@ -6072,7 +6066,7 @@ int __fastcall TriggerAction_SetCountdownTimer_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetCountdownTimer_patch(TriggerAction_SetCountdownTimer);
+FAIL_STUB_PATCH(TriggerAction_SetCountdownTimer);
 
 int __fastcall TriggerAction_RunAiScript_(Action* a1)
 {
@@ -6088,7 +6082,7 @@ int __fastcall TriggerAction_RunAiScript_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_RunAiScript_patch(TriggerAction_RunAiScript);
+FAIL_STUB_PATCH(TriggerAction_RunAiScript);
 
 int __fastcall TriggerAction_RunAiScriptAtLocation_(Action* a1)
 {
@@ -6107,7 +6101,7 @@ int __fastcall TriggerAction_RunAiScriptAtLocation_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_RunAiScriptAtLocation_patch(TriggerAction_RunAiScriptAtLocation);
+FAIL_STUB_PATCH(TriggerAction_RunAiScriptAtLocation);
 
 int __fastcall TriggerAction_LeaderBoard_(Action* a1)
 {
@@ -6136,7 +6130,7 @@ int __fastcall TriggerAction_LeaderBoard_(Action* a1)
 	return 1;
 }
 
-FunctionPatch TriggerAction_LeaderBoard_patch(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_);
+FUNCTION_PATCH(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_);
 
 int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
 {
@@ -6155,7 +6149,7 @@ int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_LeaderBoardComputerPlayers_patch(TriggerAction_LeaderBoardComputerPlayers);
+FAIL_STUB_PATCH(TriggerAction_LeaderBoardComputerPlayers);
 
 int __fastcall TriggerAction_KillUnit_(Action* a1)
 {
@@ -6165,7 +6159,7 @@ int __fastcall TriggerAction_KillUnit_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_KillUnit_patch(TriggerAction_KillUnit);
+FAIL_STUB_PATCH(TriggerAction_KillUnit);
 
 int __fastcall TriggerAction_KillUnitAtLocation_(Action* a1)
 {
@@ -6178,7 +6172,7 @@ int __fastcall TriggerAction_KillUnitAtLocation_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_KillUnitAtLocation_patch(TriggerAction_KillUnitAtLocation);
+FAIL_STUB_PATCH(TriggerAction_KillUnitAtLocation);
 
 int __fastcall TriggerAction_RemoveUnit_(Action* a1)
 {
@@ -6188,7 +6182,7 @@ int __fastcall TriggerAction_RemoveUnit_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_RemoveUnit_patch(TriggerAction_RemoveUnit);
+FAIL_STUB_PATCH(TriggerAction_RemoveUnit);
 
 int __fastcall TriggerAction_RemoveUnitAtLocation_(Action* a1)
 {
@@ -6201,7 +6195,7 @@ int __fastcall TriggerAction_RemoveUnitAtLocation_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_RemoveUnitAtLocation_patch(TriggerAction_RemoveUnitAtLocation);
+FAIL_STUB_PATCH(TriggerAction_RemoveUnitAtLocation);
 
 int __fastcall TriggerAction_SetResources_(Action* a1)
 {
@@ -6220,7 +6214,7 @@ int __fastcall TriggerAction_SetResources_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetResources_patch(TriggerAction_SetResources);
+FAIL_STUB_PATCH(TriggerAction_SetResources);
 
 int __fastcall TriggerAction_SetScore_(Action* a1)
 {
@@ -6239,7 +6233,7 @@ int __fastcall TriggerAction_SetScore_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetScore_patch(TriggerAction_SetScore);
+FAIL_STUB_PATCH(TriggerAction_SetScore);
 
 int __fastcall TriggerAction_MinimapPing_(Action* a1)
 {
@@ -6251,7 +6245,7 @@ int __fastcall TriggerAction_MinimapPing_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_MinimapPing_patch_(TriggerAction_MinimapPing);
+FAIL_STUB_PATCH(TriggerAction_MinimapPing);
 
 int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
 {
@@ -6262,7 +6256,7 @@ int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_TalkingPortrait_patch(TriggerAction_TalkingPortrait);
+FAIL_STUB_PATCH(TriggerAction_TalkingPortrait);
 
 int __fastcall TriggerAction_MuteUnitSpeech_(Action* a1)
 {
@@ -6273,7 +6267,7 @@ int __fastcall TriggerAction_MuteUnitSpeech_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_MuteUnitSpeech_patch(TriggerAction_MuteUnitSpeech);
+FAIL_STUB_PATCH(TriggerAction_MuteUnitSpeech);
 
 int __fastcall TriggerAction_UnmuteUnitSpeech_(Action* a1)
 {
@@ -6292,7 +6286,7 @@ int __fastcall TriggerAction_UnmuteUnitSpeech_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_UnmuteUnitSpeech_patch(TriggerAction_UnmuteUnitSpeech);
+FAIL_STUB_PATCH(TriggerAction_UnmuteUnitSpeech);
 
 int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 {
@@ -6314,7 +6308,7 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetNextScenario_patch(TriggerAction_SetNextScenario);
+FAIL_STUB_PATCH(TriggerAction_SetNextScenario);
 
 int __fastcall TriggerAction_SetDoodadState_(Action* a1)
 {
@@ -6345,7 +6339,7 @@ int __fastcall TriggerAction_SetDoodadState_(Action* a1)
 	}
 }
 
-FailStubPatch TriggerAction_SetDoodadState_patch(TriggerAction_SetDoodadState);
+FAIL_STUB_PATCH(TriggerAction_SetDoodadState);
 
 int __fastcall TriggerAction_SetDeaths_(Action* a1)
 {
@@ -6364,7 +6358,7 @@ int __fastcall TriggerAction_SetDeaths_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetDeaths_patch(TriggerAction_SetDeaths);
+FAIL_STUB_PATCH(TriggerAction_SetDeaths);
 
 int __fastcall TriggerAction_PauseTimer_(Action* a1)
 {
@@ -6372,7 +6366,7 @@ int __fastcall TriggerAction_PauseTimer_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_PauseTimer_patch(TriggerAction_PauseTimer);
+FAIL_STUB_PATCH(TriggerAction_PauseTimer);
 
 int __fastcall TriggerAction_UnpauseTimer_(Action* a1)
 {
@@ -6380,7 +6374,7 @@ int __fastcall TriggerAction_UnpauseTimer_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_UnpauseTimer_patch(TriggerAction_UnpauseTimer);
+FAIL_STUB_PATCH(TriggerAction_UnpauseTimer);
 
 int __fastcall TriggerAction_Draw_(Action* a1)
 {
@@ -6396,7 +6390,7 @@ int __fastcall TriggerAction_Draw_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_Draw_patch(TriggerAction_Draw);
+FAIL_STUB_PATCH(TriggerAction_Draw);
 
 int __fastcall TriggerAction_SetAllianceStatus_(Action* a1)
 {
@@ -6409,7 +6403,7 @@ int __fastcall TriggerAction_SetAllianceStatus_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_SetAllianceStatus_patch(TriggerAction_SetAllianceStatus);
+FAIL_STUB_PATCH(TriggerAction_SetAllianceStatus);
 
 int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
 {
@@ -6417,7 +6411,7 @@ int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_DisableDebugMode_patch(TriggerAction_DisableDebugMode);
+FAIL_STUB_PATCH(TriggerAction_DisableDebugMode);
 
 int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 {
@@ -6425,7 +6419,7 @@ int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 	return 1;
 }
 
-FailStubPatch TriggerAction_EnableDebugMode_patch(TriggerAction_EnableDebugMode);
+FAIL_STUB_PATCH(TriggerAction_EnableDebugMode);
 
 ActionPointer ActionTable_[] = {
 	TriggerAction_NoAction_,
@@ -6536,7 +6530,7 @@ void ExecuteTriggerActions_(TriggerListEntry* a1)
 	}
 }
 
-FailStubPatch ExecuteTriggerActions_patch(ExecuteTriggerActions);
+FAIL_STUB_PATCH(ExecuteTriggerActions);
 
 void executeGameTrigger_(TriggerList* a1)
 {
@@ -6565,7 +6559,7 @@ void executeGameTrigger_(TriggerList* a1)
 	}
 }
 
-FailStubPatch executeGameTrigger_patch(executeGameTrigger);
+FAIL_STUB_PATCH(executeGameTrigger);
 
 void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 {
@@ -6606,4 +6600,4 @@ void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 	}
 }
 
-FunctionPatch BWFXN_ExecuteGameTriggers_patch(BWFXN_ExecuteGameTriggers, BWFXN_ExecuteGameTriggers_);
+FUNCTION_PATCH(BWFXN_ExecuteGameTriggers, BWFXN_ExecuteGameTriggers_);

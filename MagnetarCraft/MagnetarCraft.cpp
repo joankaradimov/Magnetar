@@ -10,8 +10,7 @@
 #include <filesystem>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
-#include "patching/BasePatch.h"
-#include "patching/FailStubPatch.h"
+#include "patching/patching.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
@@ -267,7 +266,7 @@ int VerifySystemMemory_()
 	}
 }
 
-FailStubPatch VerifySystemMemory_patch(VerifySystemMemory);
+FAIL_STUB_PATCH(VerifySystemMemory);
 
 HWND GetClassWindow_(const char* a1)
 {
@@ -289,7 +288,7 @@ HWND GetClassWindow_(const char* a1)
 	return v1;
 }
 
-FailStubPatch GetClassWindow_patch(GetClassWindow);
+FAIL_STUB_PATCH(GetClassWindow);
 
 void FastIndexInit_()
 {
@@ -312,7 +311,7 @@ void FastIndexInit_()
 	dword_6D11DC = v2 != 0;
 }
 
-FailStubPatch FastIndexInit_patch(FastIndexInit);
+FAIL_STUB_PATCH(FastIndexInit);
 
 std::string LocateStarCraft()
 {
