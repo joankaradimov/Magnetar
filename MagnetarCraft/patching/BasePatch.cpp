@@ -1,9 +1,14 @@
 #include <algorithm>
+#include <sstream>
 #include <Windows.h>
 
 #include "BasePatch.h"
 
-BasePatch::BasePatch(void* destination_address): destination_address((BYTE*)destination_address), pending(true)
+BasePatch::BasePatch(const char* file, int line, void* destination_address):
+	file(file),
+	line(line),
+	destination_address((BYTE*)destination_address),
+	pending(true)
 {
 	patches().push_back(this);
 }
@@ -27,7 +32,11 @@ void BasePatch::apply_pending_patches() {
 	{
 		if (previous_patch && patch->destination_address <= previous_patch->destination_address + previous_patch->length())
 		{
-			throw std::exception("Two patches overlap and are in conflict");
+			std::ostringstream error_message;
+			error_message << "Two patches overlap and are in conflict:" << std::endl;
+			error_message << '\t' << patch->file << ':' << patch->line << std::endl;
+			error_message << '\t' << previous_patch->file << ':' << previous_patch->line << std::endl;
+			throw std::exception(error_message.str().c_str());
 		}
 		else
 		{

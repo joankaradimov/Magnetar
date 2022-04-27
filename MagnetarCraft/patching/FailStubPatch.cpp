@@ -3,8 +3,8 @@
 
 #include "FailStubPatch.h"
 
-FailStubPatch::FailStubPatch(void* destination_function) :
-	BasePatch(destination_function)
+FailStubPatch::FailStubPatch(const char* file, int line, void* destination_function) :
+	BasePatch(file, line, destination_function)
 {
 }
 

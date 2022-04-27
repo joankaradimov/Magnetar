@@ -5,7 +5,7 @@
 
 class BasePatch {
 public:
-	BasePatch(void* destination_address);
+	BasePatch(const char* file, int line, void* destination_address);
 
 	bool is_pending();
 	virtual size_t length() = 0;
@@ -17,6 +17,8 @@ public:
 protected:
 	bool pending;
 	BYTE* destination_address;
+	const char* file;
+	int line;
 
 private:
 	static std::vector<BasePatch*>& patches();

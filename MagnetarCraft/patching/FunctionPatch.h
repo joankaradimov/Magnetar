@@ -5,7 +5,7 @@
 class FunctionPatch: public BasePatch
 {
 public:
-	FunctionPatch(void* destination_function, void* replacement_function);
+	FunctionPatch(const char* file, int line, void* destination_function, void* replacement_function);
 
 	size_t length();
 	void do_apply();

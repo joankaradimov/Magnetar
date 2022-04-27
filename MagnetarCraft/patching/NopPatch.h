@@ -5,7 +5,7 @@
 class NopPatch : public BasePatch
 {
 public:
-	NopPatch(void* destination_address, size_t block_length);
+	NopPatch(const char* file, int line, void* destination_address, size_t block_length);
 
 	size_t length();
 	void do_apply();

@@ -6,11 +6,13 @@ template <typename T>
 class MemoryPatch : public BasePatch
 {
 public:
-	MemoryPatch(void* destination_address, T data) : BasePatch(destination_address), data(data)
+	MemoryPatch(const char* file, int line, void* destination_address, T data) :
+		BasePatch(file, line, destination_address), data(data)
 	{
 	}
 
-	MemoryPatch(UINT32 destination_address, T data) : MemoryPatch((void*)destination_address, data)
+	MemoryPatch(const char* file, int line, UINT32 destination_address, T data) :
+		MemoryPatch(file, line, (void*)destination_address, data)
 	{
 	}
 
