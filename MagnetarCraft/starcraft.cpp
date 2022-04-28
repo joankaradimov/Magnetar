@@ -947,26 +947,26 @@ void LoadTitle_()
 		int v8 = SErrGetLastError();
 		SysWarn_FileNotFound("rez\\titledlg.bin", v8);
 	}
-	LONG v1 = SFileGetFileSize(phFile, 0);
-	if (v1 == -1)
+	LONG file_size = SFileGetFileSize(phFile, 0);
+	if (file_size == -1)
 	{
 		int v3 = GetLastError();
 		FileFatal(phFile, v3);
 	}
 	else
 	{
-		if (!v1)
+		if (!file_size)
 			SysWarn_FileNotFound("rez\\titledlg.bin", 24);
-		dialog *v4 = (dialog *)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+		dialog *v4 = (dialog *)SMemAlloc(file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 		int read;
-		if (!SFileReadFile(phFile, v4, v1, &read, 0))
+		if (!SFileReadFile(phFile, v4, file_size, &read, 0))
 		{
 			DWORD last_error = GetLastError();
 			FileFatal(phFile, last_error == 38 ? 24 : last_error);
 		}
 		else
 		{
-			if (read == v1)
+			if (read == file_size)
 			{
 				SFileCloseFile(phFile);
 				if (v4)
