@@ -4257,20 +4257,20 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
 
-dialog* __fastcall loadFullMenuDLG_(const char* szFileName, dialog* buffer, int read, const char* logfilename, int logline)
+dialog* __fastcall loadFullMenuDLG_(const char* filename, dialog* buffer, int read, const char* logfilename, int logline)
 {
 	HANDLE phFile;
 
-	if (!SFileOpenFile(szFileName, &phFile))
+	if (!SFileOpenFile(filename, &phFile))
 	{
-		int v7 = SErrGetLastError();
-		if (v7 != 2 && v7 != 1006)
+		int last_error = SErrGetLastError();
+		if (last_error != 2 && last_error != 1006)
 		{
-			SysWarn_FileNotFound(szFileName, v7);
+			SysWarn_FileNotFound(filename, last_error);
 		}
 	}
 
-	int file_size = SFileGetFileSize(phFile, 0);
+	LONG file_size = SFileGetFileSize(phFile, 0);
 	if (file_size == -1)
 	{
 		FileFatal(phFile, GetLastError());
