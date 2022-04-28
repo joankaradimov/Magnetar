@@ -112,7 +112,18 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 {
 	HANDLE phFile;
 
-	if (SFileOpenFileEx(0, filename, searchScope, &phFile))
+	if (!SFileOpenFileEx(0, filename, searchScope, &phFile))
+	{
+		int lastError = SErrGetLastError();
+		if (!bytes_to_read || lastError != 2 && lastError != 1006)
+		{
+			SysWarn_FileNotFound(filename, lastError);
+		}
+		if (bytes_read)
+			*bytes_read = 0;
+		return 0;
+	}
+	else
 	{
 		LONG filesize = SFileGetFileSize(phFile, 0);
 		if (filesize == -1)
@@ -142,18 +153,6 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 			FileFatal(phFile, 24);
 		SFileCloseFile(phFile);
 		return buffer;
-	}
-	else
-	{
-		int lastError = SErrGetLastError();
-		if (!bytes_to_read || lastError != 2 && lastError != 1006)
-		{
-			SysWarn_FileNotFound(filename, lastError);
-			//JUMPOUT(*(_DWORD *)byte_4D2E37);
-		}
-		if (bytes_read)
-			*bytes_read = 0;
-		return 0;
 	}
 }
 
