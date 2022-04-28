@@ -4853,10 +4853,10 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 		case USER_CREATE:
 			getGameList(dlg);
 			DLG_SwishIn(dlg);
-			return genericDlgInteract(dlg, evt);
+			break;
 		case USER_DESTROY:
 			DestroyProviderList(dlg);
-			return genericDlgInteract(dlg, evt);
+			break;
 		case USER_ACTIVATE:
 			if (LastControlID == 9)
 			{
@@ -4869,14 +4869,12 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
 			ConnSel_InitChildren(dlg);
-			return genericDlgInteract(dlg, evt);
+			break;
 		case 0x405:
 			showDialog(getControlFromIndex(dword_6D5A24, 12));
 			showDialog(getControlFromIndex(dword_6D5A24, 13));
 			showDialog(getControlFromIndex(dword_6D5A24, 14));
-			return genericDlgInteract(dlg, evt);
-		default:
-			return genericDlgInteract(dlg, evt);
+			break;
 		}
 	}
 	return genericDlgInteract(dlg, evt);
