@@ -154,6 +154,45 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 	return buffer;
 }
 
+dialog* LoadDialog(const char* bin_path)
+{
+	HANDLE phFile;
+	if (!SFileOpenFileEx(0, bin_path, 0, &phFile))
+	{
+		SysWarn_FileNotFound(bin_path, SErrGetLastError());
+	}
+	LONG file_size = SFileGetFileSize(phFile, 0);
+	if (file_size == -1)
+	{
+		FileFatal(phFile, GetLastError());
+	}
+	if (file_size == 0)
+	{
+		SysWarn_FileNotFound(bin_path, 24);
+	}
+	dialog* bin_dialog = (dialog*)SMemAlloc(file_size, __FILE__, __LINE__, 0);
+
+	int read;
+	if (!SFileReadFile(phFile, bin_dialog, file_size, &read, 0))
+	{
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
+	}
+
+	if (read != file_size)
+	{
+		FileFatal(phFile, 24);
+	}
+	SFileCloseFile(phFile);
+	if (bin_dialog)
+	{
+		bin_dialog->lFlags |= 4u;
+		AllocInitDialogData(bin_dialog, bin_dialog, AllocBackgroundImage, __FILE__, __LINE__);
+	}
+
+	return bin_dialog;
+}
+
 void InitializeFontKey_(void)
 {
 	char buff[MAX_PATH];
@@ -938,53 +977,8 @@ FAIL_STUB_PATCH(TitleDlgProc);
 
 void LoadTitle_()
 {
-	HANDLE phFile;
-
-	if (!SFileOpenFileEx(0, "rez\\titledlg.bin", 0, &phFile))
-	{
-		int v8 = SErrGetLastError();
-		SysWarn_FileNotFound("rez\\titledlg.bin", v8);
-	}
-	LONG file_size = SFileGetFileSize(phFile, 0);
-	if (file_size == -1)
-	{
-		int v3 = GetLastError();
-		FileFatal(phFile, v3);
-	}
-	else
-	{
-		if (!file_size)
-			SysWarn_FileNotFound("rez\\titledlg.bin", 24);
-		dialog *v4 = (dialog *)SMemAlloc(file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-		int read;
-		if (!SFileReadFile(phFile, v4, file_size, &read, 0))
-		{
-			DWORD last_error = GetLastError();
-			FileFatal(phFile, last_error == 38 ? 24 : last_error);
-		}
-		else
-		{
-			if (read == file_size)
-			{
-				SFileCloseFile(phFile);
-				if (v4)
-				{
-					v4->lFlags |= 4u;
-					AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\title.cpp", 190);
-					load_screen = v4;
-				}
-				else
-				{
-					load_screen = 0;
-				}
-				InitializeDialog_(load_screen, TitleDlgProc_);
-			}
-			else
-			{
-				FileFatal(phFile, 24);
-			}
-		}
-	}
+	load_screen = LoadDialog("rez\\titledlg.bin");
+	InitializeDialog_(load_screen, TitleDlgProc_);
 }
 
 FAIL_STUB_PATCH(LoadTitle);
@@ -4761,42 +4755,9 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 	if (gwGameMode == GAME_GLUES)
 	{
 		dword_50E064 = -1;
-		HANDLE phFile;
-		if (!SFileOpenFileEx(0, bin_path, 0, &phFile))
-		{
-			SysWarn_FileNotFound(bin_path, SErrGetLastError());
-		}
-		long v1 = SFileGetFileSize(phFile, 0);
-		if (v1 == -1)
-		{
-			FileFatal(phFile, GetLastError());
-			return;
-		}
-		if (!v1)
-		{
-			SysWarn_FileNotFound(bin_path, 24);
-		}
-		dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-		int read;
-		if (!SFileReadFile(phFile, v4, v1, &read, 0))
-		{
-			DWORD last_error = GetLastError();
-			FileFatal(phFile, last_error == 38 ? 24 : last_error);
-		}
+		dialog* bin_dialog = LoadDialog(bin_path);
 
-		if (read != v1)
-		{
-			FileFatal(phFile, 24);
-			return;
-		}
-		SFileCloseFile(phFile);
-		if (v4)
-		{
-			v4->lFlags |= 4u;
-			AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 157);
-		}
-
-		switch (gluLoadBINDlg(v4, BINDLG_Loop))
+		switch (gluLoadBINDlg(bin_dialog, BINDLG_Loop))
 		{
 		case 14:
 			if (multiPlayerMode)
@@ -4874,45 +4835,9 @@ FAIL_STUB_PATCH(ConnSel_Interact);
 
 void loadMenu_gluConn_()
 {
-	int read;
-	HANDLE phFile;
+	dword_6D5A24 = LoadDialog("rez\\gluConn.bin");
 
-	if (!SFileOpenFileEx(0, "rez\\gluConn.bin", 0, &phFile))
-	{
-		int v8 = SErrGetLastError();
-		SysWarn_FileNotFound("rez\\gluConn.bin", v8);
-	}
-	LONG v1 = SFileGetFileSize(phFile, 0);
-	if (v1 == -1)
-	{
-		FileFatal(phFile, GetLastError());
-		return;
-	}
-	if (!v1)
-	{
-		SysWarn_FileNotFound("rez\\gluConn.bin", 24);
-	}
-	dialog* v4 = (dialog*)SMemAlloc(v1, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-	if (!SFileReadFile(phFile, v4, v1, &read, 0))
-	{
-		DWORD last_error = GetLastError();
-		FileFatal(phFile, last_error == 38 ? 24 : last_error);
-	}
-
-	if (read != v1)
-	{
-		FileFatal(phFile, 24);
-		return;
-	}
-	SFileCloseFile(phFile);
-	if (v4)
-	{
-		v4->lFlags |= 4u;
-		AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluConn.cpp", 646);
-	}
-
-	dword_6D5A24 = v4;
-	if (gluLoadBINDlg(v4, ConnSel_Interact_) != 9)
+	if (gluLoadBINDlg(dword_6D5A24, ConnSel_Interact_) != 9)
 	{
 		glGluesMode = GLUE_MAIN_MENU;
 	}
