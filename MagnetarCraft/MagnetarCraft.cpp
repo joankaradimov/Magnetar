@@ -20,7 +20,7 @@ WORD EXPECTED_MINOR_VERSION = 16;
 WORD EXPECTED_PATCH_VERSION = 1;
 
 #pragma section(".scimg", read, write)
-__declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 3];
+__declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 2];
 
 class FileInfo
 {
