@@ -4599,14 +4599,8 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			case 3:
 				if (is_spawn)
 				{
-					if (*networkTable > 0x66u)
-					{
-						BWFXN_gluPOK_MBox((const char*)networkTable + networkTable[103]);
-					}
-					else
-					{
-						BWFXN_gluPOK_MBox(empty_string);
-					}
+					const char* s = *networkTable > 0x66u ? (const char*)networkTable + networkTable[103] : "";
+					BWFXN_gluPOK_MBox(s);
 					return 1;
 				}
 				if (dword_6D11E4)
