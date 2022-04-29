@@ -4586,10 +4586,10 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			genericDlgInteract(dlg, evt);
 			if (byte_6D5BBC)
 			{
-				return 1;
+				return true;
 			}
 			DLGMusicFade(MT_TITLE);
-			return 1;
+			return true;
 		case USER_DESTROY:
 			gluMainDestroy(dlg);
 			return genericDlgInteract(dlg, evt);
@@ -4601,7 +4601,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				{
 					const char* s = *networkTable > 0x66u ? (const char*)networkTable + networkTable[103] : "";
 					BWFXN_gluPOK_MBox(s);
-					return 1;
+					return true;
 				}
 				if (dword_6D11E4)
 				{
@@ -4609,7 +4609,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					{
 						return DLG_SwishOut(dlg);
 					}
-					return 1;
+					return true;
 				}
 				break;
 			case 4:
@@ -4619,7 +4619,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					{
 						return DLG_SwishOut(dlg);
 					}
-					return 1;
+					return true;
 				}
 				if (is_spawn)
 				{
@@ -4629,13 +4629,13 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				break;
 			case 5:
 				loadStareditProcess_(dlg);
-				return 1;
+				return true;
 			default:
 				return DLG_SwishOut(dlg);
 			}
 			if (!gluMain_DisplayCDRomErrorBinDlg())
 			{
-				return 1;
+				return true;
 			}
 			IsExpansion = 0;
 			return DLG_SwishOut(dlg);
@@ -4648,7 +4648,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 	}
 	if (evt->wNo == EVN_CHAR && evt->wVirtKey == 32)
 	{
-		return 1;
+		return true;
 	}
 	else
 	{
