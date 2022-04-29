@@ -114,46 +114,44 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 
 	if (!SFileOpenFileEx(0, filename, searchScope, &phFile))
 	{
-		int lastError = SErrGetLastError();
-		if (!bytes_to_read || lastError != 2 && lastError != 1006)
+		int last_error = SErrGetLastError();
+		if (!bytes_to_read || last_error != 2 && last_error != 1006)
 		{
-			SysWarn_FileNotFound(filename, lastError);
+			SysWarn_FileNotFound(filename, last_error);
 		}
 		if (bytes_read)
 			*bytes_read = 0;
 		return 0;
 	}
-	else
+
+	LONG file_size = SFileGetFileSize(phFile, 0);
+	if (file_size == -1)
 	{
-		LONG filesize = SFileGetFileSize(phFile, 0);
-		if (filesize == -1)
-		{
-			FileFatal(phFile, GetLastError());
-		}
-		if (bytes_read)
-			*bytes_read = filesize;
-		if (!filesize)
-		{
-			if (bytes_to_read)
-			{
-				SFileCloseFile(phFile);
-				return 0;
-			}
-			SysWarn_FileNotFound(filename, 24);
-		}
-		void* buffer = (void *)defaultValue;
-		if (!defaultValue)
-			buffer = SMemAlloc(filesize, logfilename, logline, defaultValue);
-		if (!SFileReadFile(phFile, buffer, filesize, &bytes_to_read, 0))
-		{
-			DWORD last_error = GetLastError();
-			FileFatal(phFile, last_error == 38 ? 24 : last_error);
-		}
-		if (bytes_to_read != filesize)
-			FileFatal(phFile, 24);
-		SFileCloseFile(phFile);
-		return buffer;
+		FileFatal(phFile, GetLastError());
 	}
+	if (bytes_read)
+		*bytes_read = file_size;
+	if (!file_size)
+	{
+		if (bytes_to_read)
+		{
+			SFileCloseFile(phFile);
+			return 0;
+		}
+		SysWarn_FileNotFound(filename, 24);
+	}
+	void* buffer = (void *)defaultValue;
+	if (!defaultValue)
+		buffer = SMemAlloc(file_size, logfilename, logline, defaultValue);
+	if (!SFileReadFile(phFile, buffer, file_size, &bytes_to_read, 0))
+	{
+		DWORD last_error = GetLastError();
+		FileFatal(phFile, last_error == 38 ? 24 : last_error);
+	}
+	if (bytes_to_read != file_size)
+		FileFatal(phFile, 24);
+	SFileCloseFile(phFile);
+	return buffer;
 }
 
 void InitializeFontKey_(void)
