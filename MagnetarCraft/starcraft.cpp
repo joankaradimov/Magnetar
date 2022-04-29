@@ -4690,62 +4690,62 @@ void loadMenu_gluMain_()
 		DWORD last_error = GetLastError();
 		FileFatal(phFile, last_error == 38 ? 24 : last_error);
 	}
-	else
-	{
-		if (read != v2)
-		{
-			FileFatal(phFile, 24);
-			return;
-		}
-		SFileCloseFile(phFile);
-		if (v5)
-		{
-			v5->lFlags |= 4u;
-			AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
-			int v8 = gluLoadBINDlg(v5, gluMain_Dlg_Interact_);
-			if (v8 > 65520)
-			{
-				glGluesMode = GLUE_MAIN_MENU;
-			}
-			else if (v8 != 65520)
-			{
-				GotFileValues* ums_game_template;
 
-				switch (v8)
-				{
-				case 2:
-					gwGameMode = GAME_EXIT;
-					break;
-				case 3:
-					multiPlayerMode = 0;
-					glGluesMode = GLUE_LOGIN;
-					ums_game_template = InitUseMapSettingsTemplate_();
-					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
-					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
-					break;
-				case 4:
-					multiPlayerMode = 1;
-					glGluesMode = MenuPosition::GLUE_CONNECT;
-					ums_game_template = InitUseMapSettingsTemplate_();
-					memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
-					SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
-					break;
-				case 5:
-					break;;
-				case 8:
-					gwGameMode = GAME_INTRO;
-					break;
-				case 9:
-					gwGameMode = GAME_CREDITS;
-					break;
-				default:
-					glGluesMode = GLUE_MAIN_MENU;
-					break;
-				}
-			}
-			changeMenu();
-			return;
+	if (read != v2)
+	{
+		FileFatal(phFile, 24);
+		return;
+	}
+	SFileCloseFile(phFile);
+
+	if (v5)
+	{
+		v5->lFlags |= 4u;
+		AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
+
+		int v8 = gluLoadBINDlg(v5, gluMain_Dlg_Interact_);
+		if (v8 > 65520)
+		{
+			glGluesMode = GLUE_MAIN_MENU;
 		}
+		else if (v8 != 65520)
+		{
+			GotFileValues* ums_game_template;
+
+			switch (v8)
+			{
+			case 2:
+				gwGameMode = GAME_EXIT;
+				break;
+			case 3:
+				multiPlayerMode = 0;
+				glGluesMode = GLUE_LOGIN;
+				ums_game_template = InitUseMapSettingsTemplate_();
+				memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+				SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
+				break;
+			case 4:
+				multiPlayerMode = 1;
+				glGluesMode = MenuPosition::GLUE_CONNECT;
+				ums_game_template = InitUseMapSettingsTemplate_();
+				memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+				SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
+				break;
+			case 5:
+				break;;
+			case 8:
+				gwGameMode = GAME_INTRO;
+				break;
+			case 9:
+				gwGameMode = GAME_CREDITS;
+				break;
+			default:
+				glGluesMode = GLUE_MAIN_MENU;
+				break;
+			}
+		}
+		changeMenu();
+		return;
 	}
 }
 
@@ -4783,52 +4783,50 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 			DWORD last_error = GetLastError();
 			FileFatal(phFile, last_error == 38 ? 24 : last_error);
 		}
-		else
-		{
-			if (read != v1)
-			{
-				FileFatal(phFile, 24);
-				return;
-			}
-			SFileCloseFile(phFile);
-			if (v4)
-			{
-				v4->lFlags |= 4u;
-				AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 157);
-			}
 
-			switch (gluLoadBINDlg(v4, BINDLG_Loop))
-			{
-			case 14:
-				if (multiPlayerMode)
-				{
-					BWFXN_NetSelectReturnMenu();
-				}
-				else
-				{
-					glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
-				}
-				stopMusic();
-				DLGMusicFade(MT_TITLE);
-				break;
-			case 19:
-				ContinueCampaign(1);
-				break;
-			case 100:
-				stopMusic();
-				DLGMusicFade(MT_TITLE);
-				break;
-			case 101:
-				gwGameMode = GAME_RUNINIT;
-				break;
-			default:
-				glGluesMode = GLUE_MAIN_MENU;
-				stopMusic();
-				DLGMusicFade(MT_TITLE);
-				break;
-			}
-			changeMenu();
+		if (read != v1)
+		{
+			FileFatal(phFile, 24);
+			return;
 		}
+		SFileCloseFile(phFile);
+		if (v4)
+		{
+			v4->lFlags |= 4u;
+			AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 157);
+		}
+
+		switch (gluLoadBINDlg(v4, BINDLG_Loop))
+		{
+		case 14:
+			if (multiPlayerMode)
+			{
+				BWFXN_NetSelectReturnMenu();
+			}
+			else
+			{
+				glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+			}
+			stopMusic();
+			DLGMusicFade(MT_TITLE);
+			break;
+		case 19:
+			ContinueCampaign(1);
+			break;
+		case 100:
+			stopMusic();
+			DLGMusicFade(MT_TITLE);
+			break;
+		case 101:
+			gwGameMode = GAME_RUNINIT;
+			break;
+		default:
+			glGluesMode = GLUE_MAIN_MENU;
+			stopMusic();
+			DLGMusicFade(MT_TITLE);
+			break;
+		}
+		changeMenu();
 	}
 }
 
@@ -4900,34 +4898,33 @@ void loadMenu_gluConn_()
 		DWORD last_error = GetLastError();
 		FileFatal(phFile, last_error == 38 ? 24 : last_error);
 	}
-	{
-		if (read != v1)
-		{
-			FileFatal(phFile, 24);
-			return;
-		}
-		SFileCloseFile(phFile);
-		if (v4)
-		{
-			v4->lFlags |= 4u;
-			AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluConn.cpp", 646);
-		}
 
-		dword_6D5A24 = v4;
-		if (gluLoadBINDlg(v4, ConnSel_Interact_) != 9)
-		{
-			glGluesMode = GLUE_MAIN_MENU;
-		}
-		else if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
-		{
-			glGluesMode = glGluesRelated_maybe;
-		}
-		else
-		{
-			glGluesMode = GLUE_CONNECT;
-		}
-		changeMenu();
+	if (read != v1)
+	{
+		FileFatal(phFile, 24);
+		return;
 	}
+	SFileCloseFile(phFile);
+	if (v4)
+	{
+		v4->lFlags |= 4u;
+		AllocInitDialogData(v4, v4, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluConn.cpp", 646);
+	}
+
+	dword_6D5A24 = v4;
+	if (gluLoadBINDlg(v4, ConnSel_Interact_) != 9)
+	{
+		glGluesMode = GLUE_MAIN_MENU;
+	}
+	else if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
+	{
+		glGluesMode = glGluesRelated_maybe;
+	}
+	else
+	{
+		glGluesMode = GLUE_CONNECT;
+	}
+	changeMenu();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
