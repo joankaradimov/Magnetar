@@ -4605,21 +4605,21 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				if (dword_6D11E4)
 				{
-					if (!SelGameMode_(0))
+					if (SelGameMode_(0))
 					{
-						return 1;
+						return DLG_SwishOut(dlg);
 					}
-					return DLG_SwishOut(dlg);
+					return 1;
 				}
 				break;
 			case 4:
 				if (dword_6D11E4)
 				{
-					if (!SelGameMode_(1))
+					if (SelGameMode_(1))
 					{
-						return 1;
+						return DLG_SwishOut(dlg);
 					}
-					return DLG_SwishOut(dlg);
+					return 1;
 				}
 				if (is_spawn)
 				{
