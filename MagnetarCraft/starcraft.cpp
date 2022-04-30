@@ -3673,126 +3673,136 @@ EstablishingShot establishing_shots_[] = {
 	{"FinZ09bx", (MapData) EMD_xbonus},
 };
 
-CampaignMenuEntry terran_swcampaign_menu_entries_[] = {
-	{0x33, (MapData)ExpandedMapData::EMD_swtutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x34, (MapData)ExpandedMapData::EMD_swterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x35, (MapData)ExpandedMapData::EMD_swterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x36, (MapData)ExpandedMapData::EMD_swterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x37, (MapData)ExpandedMapData::EMD_swterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x38, (MapData)ExpandedMapData::EMD_swterran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+struct __declspec(align(2)) ExpandedCampaignMenuEntry
+{
+	unsigned __int16 glu_hist_tbl_index;
+	ExpandedMapData next_mission;
+	Cinematic cinematic;
+	char _padding0;
+	Race race;
+	bool hide;
+};
+
+ExpandedCampaignMenuEntry terran_swcampaign_menu_entries_[] = {
+	{0x33, ExpandedMapData::EMD_swtutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x34, ExpandedMapData::EMD_swterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x35, ExpandedMapData::EMD_swterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x36, ExpandedMapData::EMD_swterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x37, ExpandedMapData::EMD_swterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x38, ExpandedMapData::EMD_swterran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
 	{0},
 };
 
-CampaignMenuEntry zerg_campaign_menu_entries_[] = {
-	{0x20, (MapData) ExpandedMapData::EMD_zerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x21, (MapData) ExpandedMapData::EMD_zerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x22, (MapData) ExpandedMapData::EMD_zerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2A, (MapData) ExpandedMapData::EMD_zerg04, C_THE_DREAM, 0, RACE_Zerg, 0},
-	{0x23, (MapData) ExpandedMapData::EMD_zerg04, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x24, (MapData) ExpandedMapData::EMD_zerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2B, (MapData) ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO_INTRO, 0, RACE_Zerg, 0},
-	{0, (MapData) ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO, 0, RACE_Zerg, 1},
-	{0x25, (MapData) ExpandedMapData::EMD_zerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x26, (MapData) ExpandedMapData::EMD_zerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x27, (MapData) ExpandedMapData::EMD_zerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2C, (MapData) ExpandedMapData::EMD_zerg09, C_THE_WARP_INTRO, 0, RACE_Zerg, 0},
-	{0, (MapData) ExpandedMapData::EMD_zerg09, C_THE_WARP, 0, RACE_Zerg, 1},
-	{0x28, (MapData) ExpandedMapData::EMD_zerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x29, (MapData) ExpandedMapData::EMD_zerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x2D, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR_INTRO, 0, RACE_Zerg, 0},
-	{0, (MapData) ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 1},
+ExpandedCampaignMenuEntry zerg_campaign_menu_entries_[] = {
+	{0x20, ExpandedMapData::EMD_zerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x21, ExpandedMapData::EMD_zerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x22, ExpandedMapData::EMD_zerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2A, ExpandedMapData::EMD_zerg04, C_THE_DREAM, 0, RACE_Zerg, 0},
+	{0x23, ExpandedMapData::EMD_zerg04, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x24, ExpandedMapData::EMD_zerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2B, ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO_INTRO, 0, RACE_Zerg, 0},
+	{0, ExpandedMapData::EMD_zerg06, C_BATTLE_ON_THE_AMERIGO, 0, RACE_Zerg, 1},
+	{0x25, ExpandedMapData::EMD_zerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x26, ExpandedMapData::EMD_zerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x27, ExpandedMapData::EMD_zerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2C, ExpandedMapData::EMD_zerg09, C_THE_WARP_INTRO, 0, RACE_Zerg, 0},
+	{0, ExpandedMapData::EMD_zerg09, C_THE_WARP, 0, RACE_Zerg, 1},
+	{0x28, ExpandedMapData::EMD_zerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x29, ExpandedMapData::EMD_zerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x2D, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR_INTRO, 0, RACE_Zerg, 0},
+	{0, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 0, RACE_Zerg, 1},
 	{0},
 };
 
-CampaignMenuEntry terran_campaign_menu_entries_[] = {
-	{1, (MapData) ExpandedMapData::EMD_tutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{2, (MapData) ExpandedMapData::EMD_terran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{3, (MapData) ExpandedMapData::EMD_terran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xC, (MapData) ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL_INTRO, 0, RACE_Terran, 0},
-	{0, (MapData) ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL, 0, RACE_Terran, 1},
-	{4, (MapData) ExpandedMapData::EMD_terran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{5, (MapData) ExpandedMapData::EMD_terran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{6, (MapData) ExpandedMapData::EMD_terran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xD, (MapData) ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II_INTRO, 0, RACE_Terran, 0},
-	{0, (MapData) ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II, 0, RACE_Terran, 1},
-	{7, (MapData) ExpandedMapData::EMD_terran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{8, (MapData) ExpandedMapData::EMD_terran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{9, (MapData) ExpandedMapData::EMD_terran09, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xE, (MapData) ExpandedMapData::EMD_terran11, C_OPEN_REBELION_INTRO, 0, RACE_Terran, 0},
-	{0, (MapData) ExpandedMapData::EMD_terran11, C_OPEN_REBELION, 0, RACE_Terran, 1},
-	{0xA, (MapData) ExpandedMapData::EMD_terran11, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xB, (MapData) ExpandedMapData::EMD_terran12, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0xF, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION_INTRO, 0, RACE_Terran, 0},
-	{0, (MapData) ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 1},
+ExpandedCampaignMenuEntry terran_campaign_menu_entries_[] = {
+	{1, ExpandedMapData::EMD_tutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{2, ExpandedMapData::EMD_terran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{3, ExpandedMapData::EMD_terran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xC, ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL_INTRO, 0, RACE_Terran, 0},
+	{0, ExpandedMapData::EMD_terran03, C_WASTELAND_PATROL, 0, RACE_Terran, 1},
+	{4, ExpandedMapData::EMD_terran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{5, ExpandedMapData::EMD_terran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{6, ExpandedMapData::EMD_terran05, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xD, ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II_INTRO, 0, RACE_Terran, 0},
+	{0, ExpandedMapData::EMD_terran06, C_THE_DOWNING_OF_NORAD_II, 0, RACE_Terran, 1},
+	{7, ExpandedMapData::EMD_terran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{8, ExpandedMapData::EMD_terran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{9, ExpandedMapData::EMD_terran09, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xE, ExpandedMapData::EMD_terran11, C_OPEN_REBELION_INTRO, 0, RACE_Terran, 0},
+	{0, ExpandedMapData::EMD_terran11, C_OPEN_REBELION, 0, RACE_Terran, 1},
+	{0xA, ExpandedMapData::EMD_terran11, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xB, ExpandedMapData::EMD_terran12, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0xF, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION_INTRO, 0, RACE_Terran, 0},
+	{0, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 0, RACE_Terran, 1},
 	{0},
 };
 
-CampaignMenuEntry protoss_campaign_menu_entries_[] = {
-	{0x11, (MapData) ExpandedMapData::EMD_protoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x12, (MapData) ExpandedMapData::EMD_protoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x13, (MapData) ExpandedMapData::EMD_protoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1B, (MapData) ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX_INTRO, 0, RACE_Protoss, 0},
-	{0, (MapData) ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX, 0, RACE_Protoss, 1},
-	{0x14, (MapData) ExpandedMapData::EMD_protoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x15, (MapData) ExpandedMapData::EMD_protoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1C, (MapData) ExpandedMapData::EMD_protoss06, C_THE_AMBUSH_INTRO, 0, RACE_Protoss, 0},
-	{0, (MapData) ExpandedMapData::EMD_protoss06, C_THE_AMBUSH, 0, RACE_Protoss, 1},
-	{0x16, (MapData) ExpandedMapData::EMD_protoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x17, (MapData) ExpandedMapData::EMD_protoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1D, (MapData) ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR_INTRO, 0, RACE_Protoss, 0},
-	{0, (MapData) ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR, 0, RACE_Protoss, 1},
-	{0x18, (MapData) ExpandedMapData::EMD_protoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x19, (MapData) ExpandedMapData::EMD_protoss09, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1A, (MapData) ExpandedMapData::EMD_protoss10, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x1E, (MapData) ExpandedMapData::EMD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0, RACE_Protoss, 0},
+ExpandedCampaignMenuEntry protoss_campaign_menu_entries_[] = {
+	{0x11, ExpandedMapData::EMD_protoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x12, ExpandedMapData::EMD_protoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x13, ExpandedMapData::EMD_protoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1B, ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX_INTRO, 0, RACE_Protoss, 0},
+	{0, ExpandedMapData::EMD_protoss04, C_THE_FALL_OF_FENIX, 0, RACE_Protoss, 1},
+	{0x14, ExpandedMapData::EMD_protoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x15, ExpandedMapData::EMD_protoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1C, ExpandedMapData::EMD_protoss06, C_THE_AMBUSH_INTRO, 0, RACE_Protoss, 0},
+	{0, ExpandedMapData::EMD_protoss06, C_THE_AMBUSH, 0, RACE_Protoss, 1},
+	{0x16, ExpandedMapData::EMD_protoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x17, ExpandedMapData::EMD_protoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1D, ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR_INTRO, 0, RACE_Protoss, 0},
+	{0, ExpandedMapData::EMD_protoss08, C_THE_RETURN_TO_AIUR, 0, RACE_Protoss, 1},
+	{0x18, ExpandedMapData::EMD_protoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x19, ExpandedMapData::EMD_protoss09, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1A, ExpandedMapData::EMD_protoss10, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x1E, ExpandedMapData::EMD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0, RACE_Protoss, 0},
 	{0},
 };
 
-CampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
-	{0x4A, (MapData) ExpandedMapData::EMD_xzerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x4B, (MapData) ExpandedMapData::EMD_xzerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x4C, (MapData) ExpandedMapData::EMD_xzerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x4D, (MapData) ExpandedMapData::EMD_xzerg04a, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0, (MapData) ExpandedMapData::EMD_xzerg04b, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0, (MapData) ExpandedMapData::EMD_xzerg04c, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0, (MapData) ExpandedMapData::EMD_xzerg04d, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0, (MapData) ExpandedMapData::EMD_xzerg04e, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0, (MapData) ExpandedMapData::EMD_xzerg04f, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0x4E, (MapData) ExpandedMapData::EMD_xzerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x4F, (MapData) ExpandedMapData::EMD_xzerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x50, (MapData) ExpandedMapData::EMD_xzerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x51, (MapData) ExpandedMapData::EMD_xzerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x52, (MapData) ExpandedMapData::EMD_xzerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0, (MapData)ExpandedMapData::EMD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
-	{0x54, (MapData) ExpandedMapData::EMD_xzerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
-	{0x55, (MapData) ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0, RACE_Zerg, 0},
+ExpandedCampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
+	{0x4A, ExpandedMapData::EMD_xzerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4B, ExpandedMapData::EMD_xzerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4C, ExpandedMapData::EMD_xzerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4D, ExpandedMapData::EMD_xzerg04a, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0, ExpandedMapData::EMD_xzerg04b, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, ExpandedMapData::EMD_xzerg04c, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, ExpandedMapData::EMD_xzerg04d, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, ExpandedMapData::EMD_xzerg04e, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0, ExpandedMapData::EMD_xzerg04f, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0x4E, ExpandedMapData::EMD_xzerg05, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x4F, ExpandedMapData::EMD_xzerg06, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x50, ExpandedMapData::EMD_xzerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x51, ExpandedMapData::EMD_xzerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x52, ExpandedMapData::EMD_xzerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0, ExpandedMapData::EMD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1},
+	{0x54, ExpandedMapData::EMD_xzerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0},
+	{0x55, ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0, RACE_Zerg, 0},
 	{0},
 };
 
-CampaignMenuEntry terran_expcampaign_menu_entries_[] = {
-	{0x41, (MapData) ExpandedMapData::EMD_xterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x42, (MapData) ExpandedMapData::EMD_xterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x43, (MapData) ExpandedMapData::EMD_xterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x44, (MapData) ExpandedMapData::EMD_xterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x45, (MapData) ExpandedMapData::EMD_xterran05a, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x46, (MapData) ExpandedMapData::EMD_xterran05b, C_BLIZZARD_LOGO, 0, RACE_Terran, 1},
-	{0x47, (MapData) ExpandedMapData::EMD_xterran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x48, (MapData) ExpandedMapData::EMD_xterran07, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x49, (MapData) ExpandedMapData::EMD_xterran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
-	{0x57, (MapData) ExpandedMapData::EMD_xzerg01, C_UED_VICTORY_REPORT, 0, RACE_Terran, 0},
+ExpandedCampaignMenuEntry terran_expcampaign_menu_entries_[] = {
+	{0x41, ExpandedMapData::EMD_xterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x42, ExpandedMapData::EMD_xterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x43, ExpandedMapData::EMD_xterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x44, ExpandedMapData::EMD_xterran04, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x45, ExpandedMapData::EMD_xterran05a, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x46, ExpandedMapData::EMD_xterran05b, C_BLIZZARD_LOGO, 0, RACE_Terran, 1},
+	{0x47, ExpandedMapData::EMD_xterran06, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x48, ExpandedMapData::EMD_xterran07, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x49, ExpandedMapData::EMD_xterran08, C_BLIZZARD_LOGO, 0, RACE_Terran, 0},
+	{0x57, ExpandedMapData::EMD_xzerg01, C_UED_VICTORY_REPORT, 0, RACE_Terran, 0},
 	{0},
 };
 
-CampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
-	{0x39, (MapData) ExpandedMapData::EMD_xprotoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3A, (MapData) ExpandedMapData::EMD_xprotoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3B, (MapData) ExpandedMapData::EMD_xprotoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3C, (MapData) ExpandedMapData::EMD_xprotoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3D, (MapData) ExpandedMapData::EMD_xprotoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3E, (MapData) ExpandedMapData::EMD_xprotoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x3F, (MapData) ExpandedMapData::EMD_xprotoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x40, (MapData) ExpandedMapData::EMD_xprotoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
-	{0x56, (MapData) ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0, RACE_Protoss, 0},
+ExpandedCampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
+	{0x39, ExpandedMapData::EMD_xprotoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3A, ExpandedMapData::EMD_xprotoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3B, ExpandedMapData::EMD_xprotoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3C, ExpandedMapData::EMD_xprotoss04, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3D, ExpandedMapData::EMD_xprotoss05, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3E, ExpandedMapData::EMD_xprotoss06, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x3F, ExpandedMapData::EMD_xprotoss07, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x40, ExpandedMapData::EMD_xprotoss08, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0},
+	{0x56, ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0, RACE_Protoss, 0},
 	{0},
 };
 
@@ -3802,7 +3812,7 @@ struct Campaign
 	int first_mission_index;
 	bool is_expansion;
 	Race race;
-	CampaignMenuEntry* entries;
+	ExpandedCampaignMenuEntry* entries;
 	std::vector<const char*> epilogs;
 	MusicTrack epilog_music_track;
 	MenuPosition post_epilog_menu;
@@ -3884,7 +3894,7 @@ std::vector<Campaign> campaigns = {
 std::vector<Campaign*> campaigns_by_race = { &campaigns[2], &campaigns[1], &campaigns[3] };
 std::vector<Campaign*> expcampaigns_by_race = { &campaigns[6], &campaigns[5], &campaigns[4] };
 
-int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData* a5)
+int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, ExpandedMapData* a5)
 {
 	char* campaign_index_ = campaign_index;
 	int v5 = strtoul(campaign_index, &campaign_index_, 10) - campaign->first_mission_index;
@@ -3893,7 +3903,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData
 		return 0;
 	}
 
-	CampaignMenuEntry* v8 = campaign->entries;
+	ExpandedCampaignMenuEntry* v8 = campaign->entries;
 	if (v8->next_mission == MD_none)
 	{
 		return 0;
@@ -3933,7 +3943,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, MapData
 
 FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
 
-void ContinueCampaignWithLevelCheat_(MapData mission, bool is_expansion, Race race)
+void ContinueCampaignWithLevelCheat_(ExpandedMapData mission, bool is_expansion, Race race)
 {
 	Ophelia = 1;
 	level_cheat_mission = (MapData4)mission;
@@ -3965,9 +3975,9 @@ int campaignTypeCheatStrings_(char* a2)
 		return 0;
 	}
 
-	MapData mission;
+	ExpandedMapData mission;
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString_(relevant_campaign, a2 + prefix_length, &mission) && mission != MD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, a2 + prefix_length, &mission) && mission != EMD_xbonus)
 	{
 		ContinueCampaignWithLevelCheat_(mission, relevant_campaign->is_expansion, relevant_campaign->race);
 		if (gwGameMode == GAME_RUN)
@@ -4014,7 +4024,7 @@ FUNCTION_PATCH((void*) 0x4b1dc0, campaignTypeCheatStrings__);
 
 CampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
 {
-	CampaignMenuEntry* entry = campaign.entries;
+	CampaignMenuEntry* entry = (CampaignMenuEntry*) campaign.entries;
 
 	while (entry->cinematic || entry->next_mission != CampaignIndex)
 	{
@@ -4035,7 +4045,7 @@ void updateActiveCampaignMission_()
 	{
 		for (Campaign& campaign : campaigns)
 		{
-			for (CampaignMenuEntry* entry = campaign.entries; entry->next_mission; entry++)
+			for (ExpandedCampaignMenuEntry* entry = campaign.entries; entry->next_mission; entry++)
 			{
 				if (entry->next_mission == CampaignIndex)
 				{
@@ -4063,7 +4073,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		}
 	}
 
-	CampaignMenuEntry* v2;
+	ExpandedCampaignMenuEntry* v2;
 	int* unlocked_mission;
 	if (IsExpansion)
 	{
@@ -4075,7 +4085,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		v2 = campaigns_by_race[race]->entries;
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
-	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, v2);
+	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, (CampaignMenuEntry*) v2);
 	if (active_campaign_menu_entry)
 	{
 		if (*unlocked_mission < active_campaign_menu_entry->next_mission)
@@ -5122,7 +5132,7 @@ FAIL_STUB_PATCH(sub_4DBD20);
 
 CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 {
-	MapData v6;
+	ExpandedMapData v6;
 
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
@@ -5139,7 +5149,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 		{
 			for (int i = 0; i < 3; ++i)
 			{
-				CampaignMenuEntry* result = campaigns[i]->entries;
+				ExpandedCampaignMenuEntry* result = campaigns[i]->entries;
 				v6 = result->next_mission;
 				if (v6)
 				{
@@ -5152,7 +5162,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 							goto LABEL_11;
 						}
 					}
-					return result;
+					return (CampaignMenuEntry*) result;
 				}
 			LABEL_11:
 				;
@@ -5305,9 +5315,9 @@ Campaign* GetActiveCampaign()
 {
 	for (Campaign& campaign : campaigns)
 	{
-		CampaignMenuEntry* last_campaign_menu_entry;
+		ExpandedCampaignMenuEntry* last_campaign_menu_entry;
 		for (last_campaign_menu_entry = campaign.entries; last_campaign_menu_entry->next_mission; last_campaign_menu_entry++);
-		if (last_campaign_menu_entry == active_campaign_menu_entry)
+		if (last_campaign_menu_entry == (ExpandedCampaignMenuEntry*) active_campaign_menu_entry)
 		{
 			return &campaign;
 		}
