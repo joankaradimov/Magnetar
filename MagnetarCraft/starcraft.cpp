@@ -3427,15 +3427,17 @@ bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(sub_4B6E10);
 
-CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
+struct ExpandedCampaignMenuEntry;
+
+ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
 {
-	if (!sub_4B6530(a2, a1))
+	if (!sub_4B6530((CampaignMenuEntry*) a2, a1))
 	{
 		return a2;
 	}
 
 	dword_6D5A48 = 0;
-	dword_6D5A4C = a2;
+	dword_6D5A4C = (CampaignMenuEntry*) a2;
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
@@ -3514,7 +3516,7 @@ CampaignMenuEntry* loadmenu_GluHist_(int a1, CampaignMenuEntry* a2)
 		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);
 	}
 	dword_6D5A44 = 0;
-	return dword_6D5A48;
+	return (ExpandedCampaignMenuEntry*) dword_6D5A48;
 }
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
@@ -4022,14 +4024,14 @@ __declspec(naked) int campaignTypeCheatStrings__()
 
 FUNCTION_PATCH((void*) 0x4b1dc0, campaignTypeCheatStrings__);
 
-CampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
+ExpandedCampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
 {
-	CampaignMenuEntry* entry = (CampaignMenuEntry*) campaign.entries;
+	ExpandedCampaignMenuEntry* entry = campaign.entries;
 
 	while (entry->cinematic || entry->next_mission != CampaignIndex)
 	{
 		++entry;
-		if (entry->next_mission == MD_none)
+		if (entry->next_mission == EMD_none)
 		{
 			return 0;
 		}
@@ -4049,7 +4051,7 @@ void updateActiveCampaignMission_()
 			{
 				if (entry->next_mission == CampaignIndex)
 				{
-					active_campaign_menu_entry = getCampaignIndex_(campaign);
+					active_campaign_menu_entry = (CampaignMenuEntry*) getCampaignIndex_(campaign);
 					return;
 				}
 			}
@@ -4085,7 +4087,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		v2 = campaigns_by_race[race]->entries;
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
-	active_campaign_menu_entry = loadmenu_GluHist_(*unlocked_mission, (CampaignMenuEntry*) v2);
+	active_campaign_menu_entry = (CampaignMenuEntry*) loadmenu_GluHist_(*unlocked_mission, v2);
 	if (active_campaign_menu_entry)
 	{
 		if (*unlocked_mission < active_campaign_menu_entry->next_mission)
@@ -5130,14 +5132,14 @@ int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 
 FAIL_STUB_PATCH(sub_4DBD20);
 
-CampaignMenuEntry* sub_4DBDA0_(const char* a1)
+ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 {
 	ExpandedMapData v6;
 
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
 	{
-		return active_campaign_menu_entry;
+		return (ExpandedCampaignMenuEntry*) active_campaign_menu_entry;
 	}
 
 	size_t v4 = v2 - a1;
@@ -5162,7 +5164,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 							goto LABEL_11;
 						}
 					}
-					return (CampaignMenuEntry*) result;
+					return result;
 				}
 			LABEL_11:
 				;
@@ -5175,7 +5177,7 @@ CampaignMenuEntry* sub_4DBDA0_(const char* a1)
 			break;
 		}
 	}
-	return active_campaign_menu_entry;
+	return (ExpandedCampaignMenuEntry*) active_campaign_menu_entry;
 }
 
 FAIL_STUB_PATCH(sub_4DBDA0);
@@ -5269,7 +5271,7 @@ int __stdcall ContinueCampaign_(int a1)
 	}
 	if (next_scenario[0])
 	{
-		active_campaign_menu_entry = sub_4DBDA0_(next_scenario);
+		active_campaign_menu_entry = (CampaignMenuEntry*) sub_4DBDA0_(next_scenario);
 		next_scenario[0] = 0;
 	}
 	else
