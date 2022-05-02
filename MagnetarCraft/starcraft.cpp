@@ -3408,6 +3408,94 @@ int CreateCampaignGame_(MapData mapData)
 
 FAIL_STUB_PATCH(CreateCampaignGame);
 
+enum ExpandedMapData : u16
+{
+	EMD_none = 0x0,
+	EMD_swtutorial = 0x1,
+	EMD_swterran01 = 0x2,
+	EMD_swterran02 = 0x3,
+	EMD_swterran03 = 0x4,
+	EMD_swterran04 = 0x5,
+	EMD_swterran05 = 0x6,
+	EMD_tutorial = 0x7,
+	EMD_terran01 = 0x8,
+	EMD_terran02 = 0x9,
+	EMD_terran03 = 0xA,
+	EMD_terran04 = 0xB,
+	EMD_terran05 = 0xC,
+	EMD_terran06 = 0xD,
+	EMD_terran07 = 0xE,
+	EMD_terran08 = 0xF,
+	EMD_terran09 = 0x10,
+	EMD_terran10 = 0x11,
+	EMD_terran11 = 0x12,
+	EMD_terran12 = 0x13,
+	EMD_zerg01 = 0x14,
+	EMD_zerg02 = 0x15,
+	EMD_zerg03 = 0x16,
+	EMD_zerg04 = 0x17,
+	EMD_zerg05 = 0x18,
+	EMD_zerg06 = 0x19,
+	EMD_zerg07 = 0x1A,
+	EMD_zerg08 = 0x1B,
+	EMD_zerg09 = 0x1C,
+	EMD_zerg10 = 0x1D,
+	EMD_protoss01 = 0x1E,
+	EMD_protoss02 = 0x1F,
+	EMD_protoss03 = 0x20,
+	EMD_protoss04 = 0x21,
+	EMD_protoss05 = 0x22,
+	EMD_protoss06 = 0x23,
+	EMD_protoss07 = 0x24,
+	EMD_protoss08 = 0x25,
+	EMD_protoss09 = 0x26,
+	EMD_protoss10 = 0x27,
+	EMD_xprotoss01 = 0x28,
+	EMD_xprotoss02 = 0x29,
+	EMD_xprotoss03 = 0x2A,
+	EMD_xprotoss04 = 0x2B,
+	EMD_xprotoss05 = 0x2C,
+	EMD_xprotoss06 = 0x2D,
+	EMD_xprotoss07 = 0x2E,
+	EMD_xprotoss08 = 0x2F,
+	EMD_xterran01 = 0x30,
+	EMD_xterran02 = 0x31,
+	EMD_xterran03 = 0x32,
+	EMD_xterran04 = 0x33,
+	EMD_xterran05a = 0x34,
+	EMD_xterran05b = 0x35,
+	EMD_xterran06 = 0x36,
+	EMD_xterran07 = 0x37,
+	EMD_xterran08 = 0x38,
+	EMD_xzerg01 = 0x39,
+	EMD_xzerg02 = 0x3A,
+	EMD_xzerg03 = 0x3B,
+	EMD_xzerg04a = 0x3C,
+	EMD_xzerg04b = 0x3D,
+	EMD_xzerg04c = 0x3E,
+	EMD_xzerg04d = 0x3F,
+	EMD_xzerg04e = 0x40,
+	EMD_xzerg04f = 0x41,
+	EMD_xzerg05 = 0x42,
+	EMD_xzerg06 = 0x43,
+	EMD_xzerg07 = 0x44,
+	EMD_xzerg08 = 0x45,
+	EMD_xzerg09 = 0x46,
+	EMD_xbonus = 0x47,
+	EMD_xzerg10 = 0x48,
+	EMD_Unknown = 0x49,
+};
+
+struct __declspec(align(2)) ExpandedCampaignMenuEntry
+{
+	unsigned __int16 glu_hist_tbl_index;
+	ExpandedMapData next_mission;
+	Cinematic cinematic;
+	char _padding0;
+	Race race;
+	bool hide;
+};
+
 bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -3427,11 +3515,25 @@ bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(sub_4B6E10);
 
-struct ExpandedCampaignMenuEntry;
+BOOL sub_4B6530_(ExpandedCampaignMenuEntry* a1, unsigned int a2)
+{
+	unsigned i = 0;
+	for (ExpandedMapData v2 = a1->next_mission; v2; ++a1)
+	{
+		if (v2 <= a2 && a1->glu_hist_tbl_index)
+		{
+			++i;
+		}
+		v2 = a1[1].next_mission;
+	}
+	return i > 1;
+}
+
+FAIL_STUB_PATCH(sub_4B6530);
 
 ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
 {
-	if (!sub_4B6530((CampaignMenuEntry*) a2, a1))
+	if (!sub_4B6530_(a2, a1))
 	{
 		return a2;
 	}
@@ -3521,84 +3623,6 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
 
-enum ExpandedMapData : u16
-{
-	EMD_none = 0x0,
-	EMD_swtutorial = 0x1,
-	EMD_swterran01 = 0x2,
-	EMD_swterran02 = 0x3,
-	EMD_swterran03 = 0x4,
-	EMD_swterran04 = 0x5,
-	EMD_swterran05 = 0x6,
-	EMD_tutorial = 0x7,
-	EMD_terran01 = 0x8,
-	EMD_terran02 = 0x9,
-	EMD_terran03 = 0xA,
-	EMD_terran04 = 0xB,
-	EMD_terran05 = 0xC,
-	EMD_terran06 = 0xD,
-	EMD_terran07 = 0xE,
-	EMD_terran08 = 0xF,
-	EMD_terran09 = 0x10,
-	EMD_terran10 = 0x11,
-	EMD_terran11 = 0x12,
-	EMD_terran12 = 0x13,
-	EMD_zerg01 = 0x14,
-	EMD_zerg02 = 0x15,
-	EMD_zerg03 = 0x16,
-	EMD_zerg04 = 0x17,
-	EMD_zerg05 = 0x18,
-	EMD_zerg06 = 0x19,
-	EMD_zerg07 = 0x1A,
-	EMD_zerg08 = 0x1B,
-	EMD_zerg09 = 0x1C,
-	EMD_zerg10 = 0x1D,
-	EMD_protoss01 = 0x1E,
-	EMD_protoss02 = 0x1F,
-	EMD_protoss03 = 0x20,
-	EMD_protoss04 = 0x21,
-	EMD_protoss05 = 0x22,
-	EMD_protoss06 = 0x23,
-	EMD_protoss07 = 0x24,
-	EMD_protoss08 = 0x25,
-	EMD_protoss09 = 0x26,
-	EMD_protoss10 = 0x27,
-	EMD_xprotoss01 = 0x28,
-	EMD_xprotoss02 = 0x29,
-	EMD_xprotoss03 = 0x2A,
-	EMD_xprotoss04 = 0x2B,
-	EMD_xprotoss05 = 0x2C,
-	EMD_xprotoss06 = 0x2D,
-	EMD_xprotoss07 = 0x2E,
-	EMD_xprotoss08 = 0x2F,
-	EMD_xterran01 = 0x30,
-	EMD_xterran02 = 0x31,
-	EMD_xterran03 = 0x32,
-	EMD_xterran04 = 0x33,
-	EMD_xterran05a = 0x34,
-	EMD_xterran05b = 0x35,
-	EMD_xterran06 = 0x36,
-	EMD_xterran07 = 0x37,
-	EMD_xterran08 = 0x38,
-	EMD_xzerg01 = 0x39,
-	EMD_xzerg02 = 0x3A,
-	EMD_xzerg03 = 0x3B,
-	EMD_xzerg04a = 0x3C,
-	EMD_xzerg04b = 0x3D,
-	EMD_xzerg04c = 0x3E,
-	EMD_xzerg04d = 0x3F,
-	EMD_xzerg04e = 0x40,
-	EMD_xzerg04f = 0x41,
-	EMD_xzerg05 = 0x42,
-	EMD_xzerg06 = 0x43,
-	EMD_xzerg07 = 0x44,
-	EMD_xzerg08 = 0x45,
-	EMD_xzerg09 = 0x46,
-	EMD_xbonus = 0x47,
-	EMD_xzerg10 = 0x48,
-	EMD_Unknown = 0x49,
-};
-
 EstablishingShot establishing_shots_[] = {
 	{"Estt0tsw", (MapData) EMD_swtutorial},
 	{"Estt01sw", (MapData) EMD_swterran01},
@@ -3673,16 +3697,6 @@ EstablishingShot establishing_shots_[] = {
 	{"EstZ09bx", (MapData) EMD_xbonus},
 	{"EstZ10x", (MapData) EMD_xzerg10},
 	{"FinZ09bx", (MapData) EMD_xbonus},
-};
-
-struct __declspec(align(2)) ExpandedCampaignMenuEntry
-{
-	unsigned __int16 glu_hist_tbl_index;
-	ExpandedMapData next_mission;
-	Cinematic cinematic;
-	char _padding0;
-	Race race;
-	bool hide;
 };
 
 ExpandedCampaignMenuEntry terran_swcampaign_menu_entries_[] = {
