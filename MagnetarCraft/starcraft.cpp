@@ -3497,23 +3497,23 @@ struct __declspec(align(2)) ExpandedCampaignMenuEntry
 	bool hide;
 };
 
-bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
+bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
 		if (evt->dwUser == EventUser::USER_CREATE)
 		{
-			sub_4B6930(dlg);
+			gluHist_Create(dlg);
 		}
 		else if(evt->dwUser == EventUser::USER_ACTIVATE)
 		{
-			sub_4B6570(dlg);
+			gluHist_Activate(dlg);
 		}
 	}
 	return sub_4B6D60(dlg, evt);
 }
 
-FAIL_STUB_PATCH(sub_4B6E10);
+FAIL_STUB_PATCH(gluHist_Interact);
 
 BOOL sub_4B6530_(ExpandedCampaignMenuEntry* a1, unsigned int a2)
 {
@@ -3577,7 +3577,7 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 
 	dword_6D5A3C = LoadDialog("rez\\gluHist.bin");
 
-	gluLoadBINDlg(dword_6D5A3C, sub_4B6E10_);
+	gluLoadBINDlg(dword_6D5A3C, gluHist_Interact_);
 	if (dword_6D5A44)
 	{
 		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);

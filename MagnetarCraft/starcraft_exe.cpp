@@ -15199,7 +15199,7 @@ BOOL sub_4B6530(CampaignMenuEntry *a1, unsigned int a2) {
     }
     return result_;
 }
-void sub_4B6570(dialog *result) {
+void gluHist_Activate(dialog *result) {
     int address = 0x4b6570;
     __asm {
         xor eax, eax
@@ -15248,7 +15248,7 @@ void sub_4B68C0(dialog *a1) {
         call address
     }
 }
-unsigned __int8 sub_4B6930(dialog *a1) {
+unsigned __int8 gluHist_Create(dialog *a1) {
     int address = 0x4b6930;
     unsigned result_;
     __asm {
@@ -15293,7 +15293,7 @@ int sub_4B6C70(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*fn_interact)(dialog *dlg, struct dlgEvent *evt), fn_interact, 0x4b6cc0);
 DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4B6D60, 0x4b6d60);
-DECL_FUNC(bool (__fastcall*sub_4B6E10)(dialog *dlg, struct dlgEvent *evt), sub_4B6E10, 0x4b6e10);
+DECL_FUNC(bool (__fastcall*gluHist_Interact)(dialog *dlg, struct dlgEvent *evt), gluHist_Interact, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
 void BWFXN_gluPOK_MBox(const char *a1) {
     int address = 0x4b7180;
