@@ -4906,7 +4906,7 @@ FAIL_STUB_PATCH(loadMenu_gluLoad);
 
 int SwitchMenu_()
 {
-	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
+	if (!GetModuleFileNameA(NULL, main_directory, MAX_PATH))
 		main_directory[0] = 0;
 
 	char* lastDirectorySeparator = strrchr(main_directory, '\\');
