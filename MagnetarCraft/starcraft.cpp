@@ -4845,6 +4845,33 @@ void loadMenu_gluConn_()
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
 
+void loadMenu_gluLoad_()
+{
+	dialog* v0 = loadFullMenuDLG("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	if (v0)
+	{
+		v0->lFlags |= 4u;
+		AllocInitDialogData(v0, v0, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	}
+	glu_load_Dlg = v0;
+	switch (gluLoadBINDlg(glu_load_Dlg, gluLoad_Main))
+	{
+	case 4:
+		CMDRECV_LoadGame(byte_599DA4);
+		break;
+	case 5:
+		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		break;
+	default:
+		glGluesMode = GLUE_MAIN_MENU;
+		break;
+	}
+
+	changeMenu();
+}
+
+FAIL_STUB_PATCH(loadMenu_gluLoad);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(0u, main_directory, MAX_PATH))
@@ -4991,7 +5018,7 @@ LABEL_28:
 			loadMenu_gluChat();
 			break;
 		case GLUE_LOAD:
-			loadMenu_gluLoad();
+			loadMenu_gluLoad_();
 			break;
 		case GLUE_SCORE_Z_DEFEAT:
 		case GLUE_SCORE_Z_VICTORY:
