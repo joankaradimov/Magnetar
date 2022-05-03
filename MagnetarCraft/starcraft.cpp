@@ -967,7 +967,6 @@ bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 		else if (evt->dwUser == EventUser::USER_DESTROY)
 		{
 			DrawBINDialog(dlg);
-			return genericDlgInteract(dlg, evt);
 		}
 	}
 	return genericDlgInteract(dlg, evt);
@@ -3509,7 +3508,6 @@ bool __fastcall sub_4B6E10_(dialog* dlg, struct dlgEvent* evt)
 		else if(evt->dwUser == EventUser::USER_ACTIVATE)
 		{
 			sub_4B6570(dlg);
-			return sub_4B6D60(dlg, evt);
 		}
 	}
 	return sub_4B6D60(dlg, evt);
