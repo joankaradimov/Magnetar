@@ -4955,26 +4955,25 @@ int SwitchMenu_()
 			IsExpansion = 0;
 			goto LABEL_28;
 		}
-		if (level_cheat_race)
-		{
-			if (level_cheat_race != 1)
-			{
-				if (level_cheat_race == 2)
-				{
-					glGluesMode = GLUE_READY_P;
-					goto LABEL_26;
-				}
-				glGluesMode = MenuPosition::GLUE_MAIN_MENU;
-				IsExpansion = 0;
-				goto LABEL_28;
-			}
-			glGluesMode = GLUE_READY_T;
-		}
-		else
+		if (level_cheat_race == Race::RACE_Zerg)
 		{
 			glGluesMode = GLUE_READY_Z;
 		}
-	LABEL_26:
+		else if (level_cheat_race == Race::RACE_Terran)
+		{
+			glGluesMode = GLUE_READY_T;
+		}
+		else if (level_cheat_race == Race::RACE_Protoss)
+		{
+			glGluesMode = GLUE_READY_P;
+		}
+		else
+		{
+			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
+			IsExpansion = 0;
+			goto LABEL_28;
+		}
+
 		OpheliaEnabled = 1;
 		if (GameCheats & CheatFlags::CHEAT_NoGlues)
 			gwGameMode = GAME_RUNINIT;
