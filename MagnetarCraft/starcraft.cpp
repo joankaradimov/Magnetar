@@ -4367,6 +4367,38 @@ void loadMenu_gluExpCmpgn_()
 
 FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
 
+void loadMenu_gluJoin_()
+{
+	InReplay = 0;
+	if (scenarioChk)
+	{
+		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
+		scenarioChk = NULL;
+	}
+
+	gluJoin_Dlg = LoadDialog("rez\\gluJoin.bin");
+
+	switch (gluLoadBINDlg(gluJoin_Dlg, gluJoin_Main))
+	{
+	case 13:
+		glGluesMode = GLUE_CHAT;
+		break;
+	case 14:
+		glGluesMode = NetMode.as_number != 'SCBL' ? GLUE_LOGIN : GLUE_CONNECT;
+		break;
+	case 15:
+		glGluesMode = GLUE_CREATE;
+		break;
+	default:
+		glGluesMode = GLUE_MAIN_MENU;
+		break;
+	}
+
+	changeMenu();
+}
+
+FAIL_STUB_PATCH(loadMenu_gluJoin);
+
 void loadMenu_gluCustm_(int is_multiplayer)
 {
 	dword_59B844 = is_multiplayer;
@@ -5006,7 +5038,7 @@ LABEL_28:
 			break;
 		case GLUE_GAME_SELECT:
 		case GLUE_DIRECT:
-			loadMenu_gluJoin();
+			loadMenu_gluJoin_();
 			break;
 		case GLUE_CREATE:
 			loadMenu_gluCustm_(0);
