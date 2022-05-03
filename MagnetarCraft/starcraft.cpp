@@ -2948,6 +2948,22 @@ void __cdecl colorCycleInterval_()
 		DoCycle_(&cycle_colors[v0], v0, 0x100u);
 }
 
+FAIL_STUB_PATCH(colorCycleInterval);
+
+void sub_4D93B0_()
+{
+	if (dword_51BFA8 && ColorCycle && !IS_GAME_PAUSED)
+	{
+		DWORD tick_count = GetTickCount();
+		if (tick_count - dword_6D6374 >= 0xA)
+		{
+			dword_6D6374 = tick_count;
+			colorCycleInterval_();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4D93B0);
 
 void __cdecl updateHUDInformation_()
 {
@@ -2960,21 +2976,7 @@ void __cdecl updateHUDInformation_()
 	updateCurrentButtonset();
 	sub_458120();
 	refreshScreen();
-	if (dword_51BFA8)
-	{
-		if (ColorCycle)
-		{
-			if (!IS_GAME_PAUSED)
-			{
-				DWORD tickCount = GetTickCount();
-				if (tickCount - dword_6D6374 >= 0xA)
-				{
-					dword_6D6374 = tickCount;
-					colorCycleInterval_();
-				}
-			}
-		}
-	}
+	sub_4D93B0_();
 	refreshGameTextIfCounterActive();
 }
 
