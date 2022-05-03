@@ -4813,9 +4813,9 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 			ConnSel_InitChildren(dlg);
 			break;
 		case 0x405:
-			showDialog(getControlFromIndex(dword_6D5A24, 12));
-			showDialog(getControlFromIndex(dword_6D5A24, 13));
-			showDialog(getControlFromIndex(dword_6D5A24, 14));
+			showDialog(getControlFromIndex(gluConn_Dlg, 12));
+			showDialog(getControlFromIndex(gluConn_Dlg, 13));
+			showDialog(getControlFromIndex(gluConn_Dlg, 14));
 			break;
 		}
 	}
@@ -4826,9 +4826,9 @@ FAIL_STUB_PATCH(ConnSel_Interact);
 
 void loadMenu_gluConn_()
 {
-	dword_6D5A24 = LoadDialog("rez\\gluConn.bin");
+	gluConn_Dlg = LoadDialog("rez\\gluConn.bin");
 
-	if (gluLoadBINDlg(dword_6D5A24, ConnSel_Interact_) != 9)
+	if (gluLoadBINDlg(gluConn_Dlg, ConnSel_Interact_) != 9)
 	{
 		glGluesMode = GLUE_MAIN_MENU;
 	}
