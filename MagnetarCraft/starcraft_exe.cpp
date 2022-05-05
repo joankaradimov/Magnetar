@@ -15082,12 +15082,12 @@ int sub_4B4600(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*gluScore_Tab)(dialog *dlg, dlgEvent *evt), gluScore_Tab, 0x4b47c0);
 DECL_FUNC(bool (__fastcall*gluScore_SaveReplay)(dialog *dlg, dlgEvent *evt), gluScore_SaveReplay, 0x4b4960);
-int gluScore_CustomCtrlID(dialog *a1) {
+int gluScore_CustomCtrlID(dialog *dlg) {
     int address = 0x4b4a00;
     int result_;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, dlg
         call address
         mov result_, eax
     }
@@ -16217,7 +16217,18 @@ DECL_FUNC(int(*sub_4C4140)(), sub_4C4140, 0x4c4140);
 DECL_FUNC(int (__stdcall*UpdateGameMode)(int), UpdateGameMode, 0x4c4160);
 DECL_FUNC(int(*sub_4C41E0)(), sub_4C41E0, 0x4c41e0);
 DECL_FUNC(int(*isMultiplayerModeBNET)(), isMultiplayerModeBNET, 0x4c4200);
-DECL_FUNC(int (__stdcall*ApplyGameVictoryStatus)(int), ApplyGameVictoryStatus, 0x4c4220);
+int ApplyGameVictoryStatus(_DWORD *a1, _DWORD *a2) {
+    int address = 0x4c4220;
+    int result_;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__thiscall*leaveOnQuit)(bool exit_code), leaveOnQuit, 0x4c4680);
 DECL_FUNC(int(*RECV_MakeGamePublic)(), RECV_MakeGamePublic, 0x4c46e0);
 DECL_FUNC(int(*ReportGameResult)(), ReportGameResult, 0x4c4790);
@@ -23135,6 +23146,7 @@ FnInteract(&off_51A7F0)[5] = * ((decltype(&off_51A7F0)) 0x51a7f0);
 FnInteract(&off_51A804)[2] = * ((decltype(&off_51A804)) 0x51a804);
 FnInteract(&off_51A80C)[3] = * ((decltype(&off_51A80C)) 0x51a80c);
 FnInteract(&off_51A818)[11] = * ((decltype(&off_51A818)) 0x51a818);
+swishTimer& gluScoreSwishController = * ((decltype(&gluScoreSwishController)) 0x51a844);
 FnInteract(&off_51A848)[61] = * ((decltype(&off_51A848)) 0x51a848);
 FnInteract(&off_51A93C)[11] = * ((decltype(&off_51A93C)) 0x51a93c);
 char(&a_au_phonenumber)[19] = * ((decltype(&a_au_phonenumber)) 0x51a970);
@@ -23712,7 +23724,7 @@ int& dword_59A28C = * ((decltype(&dword_59A28C)) 0x59a28c);
 int& dword_59A290 = * ((decltype(&dword_59A290)) 0x59a290);
 int& dword_59A294 = * ((decltype(&dword_59A294)) 0x59a294);
 int& dword_59A33C = * ((decltype(&dword_59A33C)) 0x59a33c);
-int& dword_59B3D0 = * ((decltype(&dword_59B3D0)) 0x59b3d0);
+_DWORD& dword_59B3D0 = * ((decltype(&dword_59B3D0)) 0x59b3d0);
 char(&byte_59B3D8)[56] = * ((decltype(&byte_59B3D8)) 0x59b3d8);
 int(&dword_59B410)[] = * ((decltype(&dword_59B410)) 0x59b410);
 int(&dword_59B414)[] = * ((decltype(&dword_59B414)) 0x59b414);
@@ -23720,7 +23732,7 @@ int(&dword_59B418)[] = * ((decltype(&dword_59B418)) 0x59b418);
 char(&byte_59B41C)[508] = * ((decltype(&byte_59B41C)) 0x59b41c);
 int& dword_59B618 = * ((decltype(&dword_59B618)) 0x59b618);
 int& dword_59B61C = * ((decltype(&dword_59B61C)) 0x59b61c);
-dialog *& glyScore_Dlg = * ((decltype(&glyScore_Dlg)) 0x59b620);
+dialog *& gluScore_Dlg = * ((decltype(&gluScore_Dlg)) 0x59b620);
 int& dword_59B624 = * ((decltype(&dword_59B624)) 0x59b624);
 char(&byte_59B628)[260] = * ((decltype(&byte_59B628)) 0x59b628);
 void *& dword_59B72C = * ((decltype(&dword_59B72C)) 0x59b72c);
