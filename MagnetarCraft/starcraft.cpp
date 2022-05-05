@@ -4240,7 +4240,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
 
-dialog* __fastcall loadFullMenuDLG_(const char* filename, dialog* buffer, int read, const char* logfilename, int logline)
+dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int read, const char* logfilename, int logline)
 {
 	HANDLE phFile;
 
@@ -4279,7 +4279,7 @@ dialog* __fastcall loadFullMenuDLG_(const char* filename, dialog* buffer, int re
 	return buffer;
 }
 
-FUNCTION_PATCH(loadFullMenuDLG, loadFullMenuDLG_);
+FAIL_STUB_PATCH(loadFullMenuDLG);
 
 void loadMenu_gluCmpgn_()
 {
@@ -4882,7 +4882,7 @@ FAIL_STUB_PATCH(loadMenu_gluConn);
 
 void loadMenu_gluLoad_()
 {
-	glu_load_Dlg = loadFullMenuDLG("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	glu_load_Dlg = loadFullMenuDLG_("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (glu_load_Dlg)
 	{
 		glu_load_Dlg->lFlags |= 4u;
