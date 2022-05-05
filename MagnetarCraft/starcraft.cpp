@@ -4882,13 +4882,13 @@ FAIL_STUB_PATCH(loadMenu_gluConn);
 
 void loadMenu_gluLoad_()
 {
-	dialog* v0 = loadFullMenuDLG("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (v0)
+	glu_load_Dlg = loadFullMenuDLG("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	if (glu_load_Dlg)
 	{
-		v0->lFlags |= 4u;
-		AllocInitDialogData(v0, v0, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+		glu_load_Dlg->lFlags |= 4u;
+		AllocInitDialogData(glu_load_Dlg, glu_load_Dlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	}
-	glu_load_Dlg = v0;
+
 	switch (gluLoadBINDlg(glu_load_Dlg, gluLoad_Main))
 	{
 	case 4:
