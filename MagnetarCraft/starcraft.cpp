@@ -5610,7 +5610,9 @@ void sub_4D9200_()
 		for (int i = 0; i < _countof(establishing_shots_) - 1; i++)
 		{
 			if (establishing_shots_[i].campaign_mission == CampaignIndex)
+			{
 				loadInitCreditsBIN_(establishing_shots_[i].establishing_shot_name);
+			}
 		}
 	}
 	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
