@@ -1667,7 +1667,7 @@ GotFileValues* InitUseMapSettingsTemplate_()
 	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
 }
 
-FUNCTION_PATCH(InitUseMapSettingsTemplate, InitUseMapSettingsTemplate_);
+FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
 
 int sub_4CCAC0_(char* a1, MapChunks* a2)
 {
