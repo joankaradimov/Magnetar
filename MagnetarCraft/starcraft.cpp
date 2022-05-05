@@ -4677,9 +4677,9 @@ FAIL_STUB_PATCH(gluMain_Dlg_Interact);
 
 void loadMenu_gluMain_()
 {
-	HANDLE phFile;
-
 	multiPlayerMode = 0;
+
+	HANDLE phFile;
 	if (!SFileOpenFileEx(0, "rez\\gluMain.bin", 0, &phFile))
 	{
 		int v0 = SErrGetLastError();
@@ -4700,9 +4700,9 @@ void loadMenu_gluMain_()
 		SFileCloseFile(phFile);
 		return;
 	}
-	dialog* v5 = (dialog*)SMemAlloc(v2, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573, 0);
+	dialog* bin_dialog = (dialog*)SMemAlloc(v2, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573, 0);
 	int read;
-	if (!SFileReadFile(phFile, v5, v2, &read, 0))
+	if (!SFileReadFile(phFile, bin_dialog, v2, &read, 0))
 	{
 		DWORD last_error = GetLastError();
 		FileFatal(phFile, last_error == 38 ? 24 : last_error);
@@ -4715,12 +4715,15 @@ void loadMenu_gluMain_()
 	}
 	SFileCloseFile(phFile);
 
-	if (v5)
+	if (bin_dialog)
 	{
-		v5->lFlags |= 4u;
-		AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
+		bin_dialog->lFlags |= 4u;
+		AllocInitDialogData(bin_dialog, bin_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
+	}
 
-		int v8 = gluLoadBINDlg(v5, gluMain_Dlg_Interact_);
+	if (bin_dialog)
+	{
+		int v8 = gluLoadBINDlg(bin_dialog, gluMain_Dlg_Interact_);
 		if (v8 > 65520)
 		{
 			glGluesMode = GLUE_MAIN_MENU;
