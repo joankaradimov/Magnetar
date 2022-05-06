@@ -468,6 +468,37 @@ void CommandLineCheck_()
 
 FAIL_STUB_PATCH(CommandLineCheck);
 
+GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
+{
+	char buff[260];
+	int got_file_size;
+
+	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
+	GotFile* got_file_data = (GotFile*)fastFileRead_(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (!got_file_data)
+	{
+		return 0;
+	}
+	if (got_file_size != 97 || got_file_data->version != 3)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 97, 0);
+		return 0;
+	}
+	if (got_file_data->values.template_id >= 129u || got_file_data->values.variation_id >= 8u)
+	{
+		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 98, 0);
+		return 0;
+	}
+	memcpy(got_template_name, got_file_data->name, 32u);
+	memcpy(got_template_label, got_file_data->label, 32u);
+	GotFileValues* result = (GotFileValues*)SMemAlloc(sizeof(GotFileValues), "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
+	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
+	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
+	return result;
+}
+
+FAIL_STUB_PATCH(readTemplate);
+
 int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 {
 	char buff[260];
@@ -492,7 +523,7 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 
 		char got_template_name[32];
 		char got_template_label[32];
-		GotFileValues* got_template_values = readTemplate(v7, got_template_name, got_template_label);
+		GotFileValues* got_template_values = readTemplate_(v7, got_template_name, got_template_label);
 		if (got_template_values)
 		{
 			template_constructor(got_template_name, got_template_label, got_template_values, 0);
@@ -1671,35 +1702,6 @@ signed int GameInit_()
 FUNCTION_PATCH(GameInit, GameInit_);
 FAIL_STUB_PATCH(sub_4CD770);
 FAIL_STUB_PATCH(sub_4A13B0);
-
-GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
-{
-	char buff[260];
-	int got_file_size;
-
-	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
-	GotFile* got_file_data = (GotFile*)fastFileRead_(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	if (!got_file_data)
-	{
-		return 0;
-	}
-	if (got_file_size != 97 || got_file_data->version != 3)
-	{
-		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 97, 0);
-		return 0;
-	}
-	if (got_file_data->values.template_id >= 129u || got_file_data->values.variation_id >= 8u)
-	{
-		SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 98, 0);
-		return 0;
-	}
-	memcpy(got_template_name, got_file_data->name, 32u);
-	memcpy(got_template_label, got_file_data->label, 32u);
-	GotFileValues* result = (GotFileValues*)SMemAlloc(sizeof(GotFileValues), "Starcraft\\SWAR\\lang\\gametype.cpp", 74, 0);
-	memcpy(result, &got_file_data->values, sizeof(GotFileValues));
-	SMemFree(got_file_data, "Starcraft\\SWAR\\lang\\gametype.cpp", 78, 0);
-	return result;
-}
 
 GotFileValues* InitUseMapSettingsTemplate_()
 {
