@@ -3641,6 +3641,7 @@ struct __declspec(align(2)) ExpandedCampaignMenuEntry
 	Race race;
 	bool hide;
 	const char* establishing_shot;
+	const char* epilog;
 };
 
 MEMORY_PATCH(0x4B69CA, (BYTE) sizeof(ExpandedCampaignMenuEntry));
@@ -3859,7 +3860,7 @@ ExpandedCampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
 	{0x50, ExpandedMapData::EMD_xzerg07, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ07x"},
 	{0x51, ExpandedMapData::EMD_xzerg08, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ08x"},
 	{0x52, ExpandedMapData::EMD_xzerg09, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ09x"},
-	{0, ExpandedMapData::EMD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1, "EstZ09bx"},
+	{0, ExpandedMapData::EMD_xbonus, C_BLIZZARD_LOGO, 0, RACE_Zerg, 1, "EstZ09bx", "FinZ09bx"},
 	{0x54, ExpandedMapData::EMD_xzerg10, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ10x"},
 	{0x55, ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0, RACE_Zerg, 0},
 	{0},
@@ -5617,9 +5618,13 @@ FAIL_STUB_PATCH(loadInitCreditsBIN);
 
 void sub_4D91B0_()
 {
-	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && CampaignIndex == MD_xbonus)
+	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && active_campaign_menu_entry)
 	{
-		loadInitCreditsBIN_("FinZ09bx");
+		const char* epilog = ((ExpandedCampaignMenuEntry*)active_campaign_menu_entry)->epilog;
+		if (epilog)
+		{
+			loadInitCreditsBIN_(epilog);
+		}
 	}
 }
 
