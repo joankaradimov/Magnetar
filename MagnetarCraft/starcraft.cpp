@@ -3703,7 +3703,7 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 	{
 		SysWarn_FileNotFound("rez\\gluHist.tbl", 24);
 	}
-	void* v9 = SMemAlloc(glu_hist_file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
+	BYTE* v9 = (BYTE*) SMemAlloc(glu_hist_file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 	int read;
 	if (!SFileReadFile(glu_hist_file, v9, glu_hist_file_size, &read, 0))
 	{
