@@ -15556,7 +15556,7 @@ void sub_4BA370(dialog *a1, size_t a2, __int16 a3, const char *a4) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*sub_4BA3C0)(int, int, int), sub_4BA3C0, 0x4ba3c0);
+DECL_FUNC(void (__fastcall*sub_4BA3C0)(dialog *a1, u8 a2, rect *a3, int a4, int a5), sub_4BA3C0, 0x4ba3c0);
 unsigned __int8 ListBNGateways(dialog *a1) {
     int address = 0x4ba530;
     unsigned result_;
@@ -15579,7 +15579,7 @@ void selConn_connectionList_setSelection(dialog *a1) {
         call address
     }
 }
-void InitBnetGateways(dialog *a1) {
+void InitNetProviders(dialog *a1) {
     int address = 0x4baa80;
     __asm {
         xor eax, eax
@@ -17996,8 +17996,8 @@ void sub_4D8F90(int a1, EstablishingShot *a2) {
 }
 DECL_FUNC(void(*BeginCredits)(void), BeginCredits, 0x4d8fd0);
 DECL_FUNC(void(*BeginEpilog)(void), BeginEpilog, 0x4d90c0);
-DECL_FUNC(void (__cdecl*sub_4D91B0)(), sub_4D91B0, 0x4d91b0);
-DECL_FUNC(void (__cdecl*sub_4D9200)(), sub_4D9200, 0x4d9200);
+DECL_FUNC(void (__cdecl*DisplayMissionEpilog)(), DisplayMissionEpilog, 0x4d91b0);
+DECL_FUNC(void (__cdecl*DisplayEstablishingShot)(), DisplayEstablishingShot, 0x4d9200);
 DECL_FUNC(int(*sub_4D9250)(), sub_4D9250, 0x4d9250);
 DECL_FUNC(int(*sub_4D9260)(), sub_4D9260, 0x4d9260);
 DECL_FUNC(int(*lmissionInitSelf)(), lmissionInitSelf, 0x4d9270);

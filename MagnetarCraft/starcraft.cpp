@@ -154,6 +154,8 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 	return buffer;
 }
 
+DEFINE_ENUM_FLAG_OPERATORS(DialogFlags);
+
 dialog* LoadDialog(const char* bin_path)
 {
 	HANDLE phFile;
@@ -186,7 +188,7 @@ dialog* LoadDialog(const char* bin_path)
 	SFileCloseFile(phFile);
 	if (bin_dialog)
 	{
-		bin_dialog->lFlags |= 4u;
+		bin_dialog->lFlags |= DialogFlags::CTRL_ACTIVE;
 		AllocInitDialogData(bin_dialog, bin_dialog, AllocBackgroundImage, __FILE__, __LINE__);
 	}
 
@@ -989,7 +991,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 {
 	dlgEvent event;
 
-	a1->lFlags |= 0x44000000u;
+	a1->lFlags |= CTRL_DLG_ACTIVE | CTRL_VALIGN_BOTTOM;
 	a1->fields.dlg.pModalFcn = 0;
 	if (a2)
 		a1->pfcnInteract = a2;
@@ -1025,7 +1027,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->pfcnInteract(a1, &event);
 
 	SetCallbackTimer(12, a1, 100, 0);
-	a1->lFlags &= ~0x4000000u;
+	a1->lFlags &= ~CTRL_VALIGN_BOTTOM;
 }
 
 bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
@@ -4392,7 +4394,7 @@ dialog* loadAndInitFullMenuDLG_(const char* filename)
 	dialog* dlg = loadFullMenuDLG_(filename, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	if (dlg)
 	{
-		dlg->lFlags |= 4u;
+		dlg->lFlags |= DialogFlags::CTRL_ACTIVE;
 		AllocInitDialogData(dlg, dlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
 	}
 	return dlg;
@@ -4824,7 +4826,7 @@ void loadMenu_gluMain_()
 
 	if (bin_dialog)
 	{
-		bin_dialog->lFlags |= 4u;
+		bin_dialog->lFlags |= DialogFlags::CTRL_ACTIVE;
 		AllocInitDialogData(bin_dialog, bin_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluMain.cpp", 624);
 	}
 
@@ -4878,13 +4880,13 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
-void sub_4D9200_();
+void DisplayEstablishingShot_();
 
 void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
 {
 	stopMusic();
 	DLGMusicFade(music_track);
-	sub_4D9200_();
+	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
 		dword_50E064 = -1;
@@ -4940,11 +4942,11 @@ void selConn_connectionList_Create_(dialog* a1)
 	{
 		v2 = v2->pNext;
 	}
-	v2->lFlags |= 2u;
-	InitBnetGateways(a1);
-	if ((v2->lFlags & 1) == 0)
+	v2->lFlags |= CTRL_DISABLED;
+	InitNetProviders(a1);
+	if ((v2->lFlags & CTRL_UPDATE) == 0)
 	{
-		v2->lFlags = v2->lFlags | 1;
+		v2->lFlags |= CTRL_UPDATE;
 		updateDialog(v2);
 	}
 }
@@ -4961,7 +4963,7 @@ bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 			selConn_connectionList_Create_(dlg);
 			break;
 		case EventUser::USER_INIT:
-			dlg->lFlags |= 0x20000u;
+			dlg->lFlags |= DialogFlags::CTRL_PLAIN;
 			return genericListboxInteract(dlg, evt);
 		case EventUser::USER_SELECT:
 			genericListboxInteract(dlg, evt);
@@ -5599,7 +5601,7 @@ void loadInitCreditsBIN_(const char* a1)
 	SFileCloseFile(phFile);
 	if (v5)
 	{
-		v5->lFlags |= 4u;
+		v5->lFlags |= DialogFlags::CTRL_ACTIVE;
 		AllocInitDialogData(v5, v5, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\credits.cpp", 618);
 	}
 	else
@@ -5616,7 +5618,7 @@ void loadInitCreditsBIN_(const char* a1)
 
 FAIL_STUB_PATCH(loadInitCreditsBIN);
 
-void sub_4D91B0_()
+void DisplayMissionEpilog_()
 {
 	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && active_campaign_menu_entry)
 	{
@@ -5628,7 +5630,7 @@ void sub_4D91B0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D91B0);
+FAIL_STUB_PATCH(DisplayMissionEpilog);
 FAIL_STUB_PATCH(sub_4D8F90);
 
 int CreateNextCampaignGame_()
@@ -5693,7 +5695,7 @@ int __stdcall ContinueCampaign_(int a1)
 		gwGameMode = GAME_RESTART;
 		return 1;
 	}
-	sub_4D91B0_();
+	DisplayMissionEpilog_();
 	updateActiveCampaignMission_();
 	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission == MD_none)
 	{
@@ -5993,7 +5995,7 @@ void localDll_Init_(HINSTANCE a1)
 
 FAIL_STUB_PATCH(localDll_Init);
 
-void sub_4D9200_()
+void DisplayEstablishingShot_()
 {
 	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && active_campaign_menu_entry)
 	{
@@ -6019,7 +6021,7 @@ void sub_4D9200_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D9200);
+FAIL_STUB_PATCH(DisplayEstablishingShot);
 
 const char* __stdcall get_Tileset_String(Tileset tileset)
 {
