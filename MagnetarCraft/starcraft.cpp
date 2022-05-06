@@ -1985,6 +1985,41 @@ int LevelCheatInitGame__()
 
 FAIL_STUB_PATCH(LevelCheatInitGame);
 
+signed int LoadGameCreate_()
+{
+	if (!loadGameFileHandle)
+	{
+		return 1;
+	}
+	if (sub_4CF5F0() && sub_4DBE50())
+	{
+		isHost = 0;
+		return CreateGame(&gameData);
+	}
+	else
+	{
+		if (!outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError(0, 0, 0, 97);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(LoadGameCreate);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -2002,7 +2037,7 @@ signed int LoadGameInit_()
 		ElapsedTimeFrames = 0;
 	if (!LOBYTE(multiPlayerMode))
 	{
-		if (!LevelCheatInitGame__() || !LoadGameCreate() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
+		if (!LevelCheatInitGame__() || !LoadGameCreate_() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
 			return 0;
 		if (InReplay)
 		{
