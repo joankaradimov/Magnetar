@@ -3642,6 +3642,41 @@ struct __declspec(align(2)) ExpandedCampaignMenuEntry
 	bool hide;
 };
 
+MEMORY_PATCH(0x4B69CA, (BYTE) sizeof(ExpandedCampaignMenuEntry));
+
+void gluHist_Activate_(dialog* dlg)
+{
+	if (LastControlID == 1)
+	{
+		if (dlg->wCtrlType)
+		{
+			dlg = dlg->fields.ctrl.pDlg;
+		}
+		dialog* v1 = dlg->fields.dlg.pFirstChild;
+		if (v1)
+		{
+			while (v1->wIndex != 6)
+			{
+				v1 = v1->pNext;
+				if (!v1)
+				{
+					return;
+				}
+			}
+			if (v1->fields.list.bStrs)
+			{
+				u8 v2 = v1->fields.list.bCurrStr;
+				if (v2 != 0xFF)
+				{
+					dword_6D5A48 = (CampaignMenuEntry*) ((ExpandedCampaignMenuEntry*) dword_6D5A4C + v1->fields.list.pdwData[v2]);
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(gluHist_Activate);
+
 bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -3652,7 +3687,7 @@ bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 		}
 		else if(evt->dwUser == EventUser::USER_ACTIVATE)
 		{
-			gluHist_Activate(dlg);
+			gluHist_Activate_(dlg);
 		}
 	}
 	return sub_4B6D60(dlg, evt);
@@ -5577,7 +5612,7 @@ int __stdcall ContinueCampaign_(int a1)
 	}
 	else
 	{
-		active_campaign_menu_entry += 1;
+		active_campaign_menu_entry = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)active_campaign_menu_entry + 1);
 	}
 	sub_4DBEE0(active_campaign_menu_entry);
 	if (active_campaign_menu_entry->next_mission)
