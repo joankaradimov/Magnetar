@@ -15591,7 +15591,7 @@ signed int getGameList(dialog *dlg) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*selConn_connectionList_Create)(int), selConn_connectionList_Create, 0x4bacb0);
+DECL_FUNC(void (__stdcall*selConn_connectionList_Create)(dialog *a1), selConn_connectionList_Create, 0x4bacb0);
 DECL_FUNC(bool (__fastcall*selConn_ConnectionList_Interact)(dialog *dlg, dlgEvent *evt), selConn_ConnectionList_Interact, 0x4bad10);
 int ConnSel_InitChildren(dialog *a1) {
     int address = 0x4bad70;

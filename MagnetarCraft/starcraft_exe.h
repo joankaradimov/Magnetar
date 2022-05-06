@@ -4001,7 +4001,7 @@ extern bool (__fastcall*GatewayListProc)(dialog *dlg, dlgEvent *evt);
 void selConn_connectionList_setSelection(dialog *a1);
 extern int(*sub_4BAA80)();
 signed int getGameList(dialog *dlg);
-extern int (__stdcall*selConn_connectionList_Create)(int);
+extern void (__stdcall*selConn_connectionList_Create)(dialog *a1);
 extern bool (__fastcall*selConn_ConnectionList_Interact)(dialog *dlg, dlgEvent *evt);
 int ConnSel_InitChildren(dialog *a1);
 extern int (__cdecl*BeginBNET)();

@@ -4903,6 +4903,29 @@ FAIL_STUB_PATCH(loadMenu_gluRdyT);
 FAIL_STUB_PATCH(loadMenu_gluRdyZ);
 FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
+bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			selConn_connectionList_Create(dlg);
+			break;
+		case EventUser::USER_INIT:
+			dlg->lFlags |= 0x20000u;
+			return genericListboxInteract(dlg, evt);
+		case EventUser::USER_SELECT:
+			genericListboxInteract(dlg, evt);
+			selConn_connectionList_setSelection(dlg);
+			return 1;
+		}
+	}
+	return genericListboxInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(selConn_ConnectionList_Interact);
+
 int ConnSel_InitChildren_(dialog* a1)
 {
 	FnInteract v2[14] = {
@@ -4910,7 +4933,7 @@ int ConnSel_InitChildren_(dialog* a1)
 		0,
 		0,
 		0,
-		selConn_ConnectionList_Interact,
+		selConn_ConnectionList_Interact_,
 		0,
 		0,
 		0,
