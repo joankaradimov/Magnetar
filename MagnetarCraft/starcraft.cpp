@@ -5290,12 +5290,61 @@ void sub_4D91B0_()
 FAIL_STUB_PATCH(sub_4D91B0);
 FAIL_STUB_PATCH(sub_4D8F90);
 
+int CreateNextCampaignGame_()
+{
+	if (!next_scenario[0])
+	{
+		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		return 1;
+	}
+	GotFileValues* v1 = InitUseMapSettingsTemplate_();
+	if (v1)
+	{
+		int v2 = v1->template_id | ((v1->unused1 | (v1->variation_id << 8)) << 8);
+		SMemFree(v1, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 319, 0);
+
+		char dest[260];
+		SStrCopy(dest, CurrentMapFileName, 0x104u);
+		char* v3 = strrchr(dest, '\\');
+
+		if (v3)
+		{
+			v3[1] = 0;
+			SStrNCat(dest, next_scenario, 260);
+
+			if (!LoadScenarioSingle(dest, v2, playerName, registry_options.GameSpeed))
+			{
+				switch (Players[g_LocalNationID].nRace)
+				{
+				case RACE_Zerg:
+					glGluesMode = GLUE_READY_Z;
+					return 1;
+				case RACE_Terran:
+					glGluesMode = GLUE_READY_T;
+					return 1;
+				case RACE_Protoss:
+					glGluesMode = GLUE_READY_P;
+					return 1;
+				}
+			}
+		}
+	}
+	if (!outOfGame)
+	{
+		doNetTBLError(0, 0, 0, 106);
+	}
+	glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+	return 0;
+}
+
+FAIL_STUB_PATCH(CreateNextCampaignGame);
+
 int __stdcall ContinueCampaign_(int a1)
 {
 	gwGameMode = GAME_GLUES;
 	if (dword_51CA1C)
 	{
-		CreateNextCampaignGame();
+		CreateNextCampaignGame_();
 		return 1;
 	}
 	if (!a1)
