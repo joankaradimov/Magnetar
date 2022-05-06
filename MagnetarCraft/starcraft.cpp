@@ -5047,14 +5047,16 @@ void loadMenu_gluConn_()
 	{
 		glGluesMode = GLUE_MAIN_MENU;
 	}
-	else if (network_provider_id.as_number != 'BNET' || (stopMusic(), Begin_BNET(network_provider_id)))
+	else if (network_provider_id.as_number == 'BNET')
 	{
-		glGluesMode = glGluesRelated_maybe;
+		stopMusic();
+		glGluesMode = Begin_BNET(network_provider_id) ? glGluesRelated_maybe : GLUE_CONNECT;
 	}
 	else
 	{
-		glGluesMode = GLUE_CONNECT;
+		glGluesMode = glGluesRelated_maybe;
 	}
+
 	changeMenu();
 }
 
