@@ -15579,7 +15579,14 @@ void selConn_connectionList_setSelection(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int(*sub_4BAA80)(), sub_4BAA80, 0x4baa80);
+void InitBnetGateways(dialog *a1) {
+    int address = 0x4baa80;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 signed int getGameList(dialog *dlg) {
     int address = 0x4bab10;
     signed result_;

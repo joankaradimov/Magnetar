@@ -4903,6 +4903,37 @@ FAIL_STUB_PATCH(loadMenu_gluRdyT);
 FAIL_STUB_PATCH(loadMenu_gluRdyZ);
 FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
+void selConn_connectionList_Create_(dialog* a1)
+{
+	dialog* v1 = gluConn_Dlg;
+	if (gluConn_Dlg->wCtrlType)
+	{
+		v1 = gluConn_Dlg->fields[0].ctrl.pDlg;
+	}
+	dialog* v2 = v1->fields[0].dlg.pFirstChild;
+	if (v2)
+	{
+		while (v2->wIndex != 9)
+		{
+			v2 = v2->pNext;
+			if (!v2)
+			{
+				v2 = 0;
+				break;
+			}
+		}
+	}
+	v2->lFlags |= 2u;
+	InitBnetGateways(a1);
+	if ((v2->lFlags & 1) == 0)
+	{
+		v2->lFlags = v2->lFlags | 1;
+		updateDialog(v2);
+	}
+}
+
+FAIL_STUB_PATCH(selConn_connectionList_Create);
+
 bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -4910,7 +4941,7 @@ bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			selConn_connectionList_Create(dlg);
+			selConn_connectionList_Create_(dlg);
 			break;
 		case EventUser::USER_INIT:
 			dlg->lFlags |= 0x20000u;
