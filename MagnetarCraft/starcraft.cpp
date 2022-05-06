@@ -5154,6 +5154,170 @@ void loadMenu_gluLoad_()
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
 
+void gluScore_CustomCtrlID_(dialog* dlg)
+{
+	DlgSwooshin(1, &gluScoreSwishController, dlg, 500);
+	registerMenuFunctions(off_51A848, dlg, 244, 0);
+}
+
+FAIL_STUB_PATCH(gluScore_CustomCtrlID);
+
+bool __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B4600(dlg);
+			DLG_SwishIn(dlg);
+			break;
+		case USER_DESTROY:
+			Sleep(0x3E8u);
+			sub_4B30A0(dlg);
+			break;
+		case USER_ACTIVATE:
+			stopSounds();
+			return DLG_SwishOut(dlg);
+		case USER_INIT:
+			gluScore_CustomCtrlID_(dlg);
+			break;
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluScore_Main);
+
+void sub_4DBEE0_(ExpandedCampaignMenuEntry* a1)
+{
+	CharacterData v5;
+
+	if (!LoadCharacterData(&v5, playerName))
+	{
+		const char* v1 = (const char*)(*networkTable > 0x47u ? ((char*)networkTable + networkTable[72]) : "");
+		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&v5, playerName)) && !outOfGame)
+		{
+			doNetTBLError(0, 0, 0, 88);
+		}
+	}
+	int* v3 = IsExpansion ? v5.unlocked_expcampaign_mission + a1->race : v5.unlocked_campaign_mission + a1->race;
+	if (*v3 < a1->next_mission)
+	{
+		*v3 = a1->next_mission;
+		CreateCharacterFile(&v5);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4DBEE0);
+
+void sub_4DBF80_()
+{
+	if (!multiPlayerMode && !dword_51CA1C)
+	{
+		updateActiveCampaignMission();
+		if (active_campaign_menu_entry && active_campaign_menu_entry->next_mission)
+		{
+			sub_4DBEE0_((ExpandedCampaignMenuEntry*) active_campaign_menu_entry + 1);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4DBF80);
+
+void loadMenu_gluScore_()
+{
+	char v25[260];
+
+	ApplyGameVictoryStatus(dword_59B73C, &dword_59B3D0);
+	int v0 = 1;
+	dword_59B75C = dword_59B3D0 == 1;
+	if (!dword_6D5A60)
+	{
+		v0 = (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
+	}
+	char* v1 = off_512A98[v0];
+	char** v2 = &off_512A98[v0];
+	glGluesMode = dword_512AB0[v0];
+	int v3 = byte_59B628 - v1;
+
+	char v4;
+	do
+	{
+		v4 = *v1;
+		v1[v3] = *v1;
+		++v1;
+	} while (v4);
+
+	DLGMusicFade(dword_512AC8[v0]);
+	int v5 = 0;
+	char v6;
+	do
+	{
+		v6 = byte_59B628[v5];
+		v25[v5++] = v6;
+	} while (v6);
+
+	char* v7 = v25 - 1;
+	while (*++v7);
+	strcpy(v7, "iScore.grp");
+	dword_59B72C = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
+
+	int v9 = 0;
+	char v10;
+	do
+	{
+		v10 = byte_59B628[v9];
+		v25[v9++] = v10;
+	} while (v10);
+	char* v11 = v25 - 1;
+	while (*++v11);
+	strcpy(v11, "tminimap.pcx");
+	if (!SBmpLoadImage(v25, 0, byte_59B730, 12, 0, 0, 0))
+	{
+		SysWarn_FileNotFound(v25, SErrGetLastError());
+	}
+	char* v13 = *v2;
+	int v14 = byte_59B628 - *v2;
+	char v15;
+	do
+	{
+		v15 = *v13;
+		v13[v14] = *v13;
+		++v13;
+	} while (v15);
+	sub_4BCA80(SFX_glue_scorefill);
+
+	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
+
+	if (gluLoadBINDlg(gluScore_Dlg, gluScore_Main_) == 7)
+	{
+		if (multiPlayerMode)
+		{
+			BWFXN_NetSelectReturnMenu();
+		}
+		else if (!ContinueCampaign(dword_59B75C))
+		{
+			glGluesMode = GLUE_MAIN_MENU;
+		}
+	}
+	else
+	{
+		sub_4DBF80_();
+		glGluesMode = GLUE_MAIN_MENU;
+	}
+
+	changeMenu();
+	stopMusic();
+	if (dword_59B72C)
+	{
+		SMemFree(dword_59B72C, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1409, 0);
+	}
+	dword_59B618 = 0;
+}
+
+FAIL_STUB_PATCH(loadMenu_gluScore);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(NULL, main_directory, MAX_PATH))
@@ -5307,7 +5471,7 @@ LABEL_28:
 		case GLUE_SCORE_T_VICTORY:
 		case GLUE_SCORE_P_DEFEAT:
 		case GLUE_SCORE_P_VICTORY:
-			loadMenu_gluScore();
+			loadMenu_gluScore_();
 			break;
 		case GLUE_BATTLE:
 			dword_51C414 = 1;
@@ -5614,7 +5778,7 @@ int __stdcall ContinueCampaign_(int a1)
 	{
 		active_campaign_menu_entry = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)active_campaign_menu_entry + 1);
 	}
-	sub_4DBEE0(active_campaign_menu_entry);
+	sub_4DBEE0_((ExpandedCampaignMenuEntry*) active_campaign_menu_entry);
 	if (active_campaign_menu_entry->next_mission)
 	{
 		if (active_campaign_menu_entry->cinematic)
