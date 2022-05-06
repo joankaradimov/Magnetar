@@ -990,11 +990,11 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	dlgEvent event;
 
 	a1->lFlags |= 0x44000000u;
-	a1->fields[0].dlg.pModalFcn = 0;
+	a1->fields.dlg.pModalFcn = 0;
 	if (a2)
 		a1->pfcnInteract = a2;
-	size_t size = a1->fields[0].dlg.dstBits_wid * a1->fields[0].dlg.dstBits_ht;
-	a1->fields[0].dlg.dstBits_data = (u8*)SMemAlloc(size, "Starcraft\\SWAR\\lang\\dlg\\dlg.cpp", 481, 0);
+	size_t size = a1->fields.dlg.dstBits_wid * a1->fields.dlg.dstBits_ht;
+	a1->fields.dlg.dstBits_data = (u8*)SMemAlloc(size, "Starcraft\\SWAR\\lang\\dlg\\dlg.cpp", 481, 0);
 	a1->wIndex = 0;
 
 	event.cursor.x = Mouse.x;
@@ -4705,9 +4705,9 @@ signed int loadStareditProcess_(dialog* a1)
 		dialog* v4 = a1;
 		if (a1->wCtrlType)
 		{
-			v4 = a1->fields[0].ctrl.pDlg;
+			v4 = a1->fields.ctrl.pDlg;
 		}
-		dialog* v5 = v4->fields[0].dlg.pFirstChild;
+		dialog* v5 = v4->fields.dlg.pFirstChild;
 		if (v5)
 		{
 			while (v5->wIndex != 5)
@@ -4972,9 +4972,9 @@ void selConn_connectionList_Create_(dialog* a1)
 	dialog* v1 = gluConn_Dlg;
 	if (gluConn_Dlg->wCtrlType)
 	{
-		v1 = gluConn_Dlg->fields[0].ctrl.pDlg;
+		v1 = gluConn_Dlg->fields.ctrl.pDlg;
 	}
-	dialog* v2 = v1->fields[0].dlg.pFirstChild;
+	dialog* v2 = v1->fields.dlg.pFirstChild;
 	while (v2 && v2->wIndex != 9)
 	{
 		v2 = v2->pNext;

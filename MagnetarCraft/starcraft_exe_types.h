@@ -5185,7 +5185,7 @@ struct __declspec(align(2)) dialog
   int lUser;
   FnInteract pfcnInteract;
   FnUpdate pfcnUpdate;
-  dialog_fields fields[9];
+  dialog_fields fields;
 };
 #pragma pack(pop)
-static_assert(sizeof(dialog) == 374, "Incorrect size for type `dialog`. Expected: 374");
+static_assert(sizeof(dialog) == 86, "Incorrect size for type `dialog`. Expected: 86");
