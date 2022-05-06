@@ -14462,7 +14462,21 @@ signed int sub_4AADF0(GotFileValues *got_template_values, char *template_label, 
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4AAE20)(int, int), sub_4AAE20, 0x4aae20);
+int sub_4AAE20(char *a1, unsigned int *a2, _BYTE **a3, unsigned int a4) {
+    int address = 0x4aae20;
+    int result_;
+    __asm {
+        xor ebx, ebx
+        xor edi, edi
+        mov ebx, a1
+        mov edi, a2
+        push dword ptr a4
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__stdcall*eventSetGameType)(s_evt *evt), eventSetGameType, 0x4aaea0);
 DECL_FUNC(int(*sub_4AAF30)(), sub_4AAF30, 0x4aaf30);
 DECL_FUNC(int(*sub_4AAF50)(), sub_4AAF50, 0x4aaf50);
@@ -18242,18 +18256,15 @@ CampaignMenuEntry *sub_4DBDA0(const char *a1) {
 DECL_FUNC(int(*sub_4DBE50)(), sub_4DBE50, 0x4dbe50);
 DECL_FUNC(int(*initSingle)(), initSingle, 0x4dbea0);
 DECL_FUNC(int(*playActiveCinematic)(), playActiveCinematic, 0x4dbec0);
-unsigned int sub_4DBEE0(CampaignMenuEntry *a1) {
+void sub_4DBEE0(CampaignMenuEntry *a1) {
     int address = 0x4dbee0;
-    unsigned result_;
     __asm {
         xor edi, edi
         mov edi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(int(*sub_4DBF80)(), sub_4DBF80, 0x4dbf80);
+DECL_FUNC(void (__cdecl*sub_4DBF80)(), sub_4DBF80, 0x4dbf80);
 int CreateCampaignGame(MapData a1) {
     int address = 0x4dbfc0;
     int result_;
@@ -18389,7 +18400,7 @@ int registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
     return result_;
 }
 DECL_FUNC(dialog *(__fastcall*loadFullMenuDLG)(const char *szFileName, void *buffer, int read, const char *logfilename, int logline), loadFullMenuDLG, 0x4ddbe0);
-DECL_FUNC(int(*sub_4DDCF0)(), sub_4DDCF0, 0x4ddcf0);
+DECL_FUNC(int(*loadAndInitFullMenuDLG)(), loadAndInitFullMenuDLG, 0x4ddcf0);
 DECL_FUNC(const char *(__stdcall*get_GluAll_String)(GluAllTblEntry tbl_entry), get_GluAll_String, 0x4ddd30);
 DECL_FUNC(int(*sub_4DDE70)(), sub_4DDE70, 0x4dde70);
 DECL_FUNC(void (__cdecl*loadDlgGrp)(), loadDlgGrp, 0x4ddf00);
@@ -23323,8 +23334,8 @@ int& dword_51BFA8 = * ((decltype(&dword_51BFA8)) 0x51bfa8);
 HINSTANCE& hInst = * ((decltype(&hInst)) 0x51bfac);
 HWND& hWndParent = * ((decltype(&hWndParent)) 0x51bfb0);
 int& dword_51BFB4 = * ((decltype(&dword_51BFB4)) 0x51bfb4);
-char& byte_51BFB8 = * ((decltype(&byte_51BFB8)) 0x51bfb8);
-char(&byte_51BFB9)[] = * ((decltype(&byte_51BFB9)) 0x51bfb9);
+char(&byte_51BFB8)[1] = * ((decltype(&byte_51BFB8)) 0x51bfb8);
+char(&byte_51BFB9)[27] = * ((decltype(&byte_51BFB9)) 0x51bfb9);
 int& dword_51BFD4 = * ((decltype(&dword_51BFD4)) 0x51bfd4);
 char& byte_51BFD8 = * ((decltype(&byte_51BFD8)) 0x51bfd8);
 int& dword_51BFDC = * ((decltype(&dword_51BFDC)) 0x51bfdc);
