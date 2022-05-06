@@ -2020,6 +2020,70 @@ signed int LoadGameCreate_()
 
 FAIL_STUB_PATCH(LoadGameCreate);
 
+int RestartGame_()
+{
+	if (!next_campaign_mission)
+	{
+		return 1;
+	}
+	Race v1 = Players[g_LocalNationID].nRace;
+	next_campaign_mission = 0;
+	char dest[260];
+	SStrCopy(dest, CurrentMapFileName, 0x104u);
+	MapChunks a4;
+	if (ReadMapData(dest, &a4, 1))
+	{
+		if (sub_4DBE50())
+		{
+			Players[g_LocalNationID].nRace = v1;
+			isHost = 0;
+			return CreateGame(&gameData);
+		}
+		else
+		{
+			if (!outOfGame)
+			{
+				leaveGame(3);
+				outOfGame = 1;
+				doNetTBLError(0, 0, 0, 97);
+				if (gwGameMode == GAME_RUN)
+				{
+					GameState = 0;
+					gwNextGameMode = GAME_GLUES;
+					if (!InReplay)
+					{
+						ReplayFrames = ElapsedTimeFrames;
+					}
+				}
+				nextLeaveGameMenu();
+			}
+			return 0;
+		}
+	}
+	else
+	{
+		if (!outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError(0, 0, 0, 97);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(RestartGame);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -2037,7 +2101,7 @@ signed int LoadGameInit_()
 		ElapsedTimeFrames = 0;
 	if (!LOBYTE(multiPlayerMode))
 	{
-		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
+		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !RestartGame_() || !SinglePlayerMeleeInitGame())
 			return 0;
 		if (InReplay)
 		{

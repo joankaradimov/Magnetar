@@ -20155,7 +20155,7 @@ DECL_FUNC(int(*SinglePlayerMeleeInitGame)(), SinglePlayerMeleeInitGame, 0x4ee110
 DECL_FUNC(void (__cdecl*BWFXN_InitializePlayerConsole)(), BWFXN_InitializePlayerConsole, 0x4ee180);
 DECL_FUNC(int(*sub_4EE210)(), sub_4EE210, 0x4ee210);
 DECL_FUNC(void (__cdecl*LoadRaceUI)(), LoadRaceUI, 0x4ee2d0);
-DECL_FUNC(int(*sub_4EE3D0)(), sub_4EE3D0, 0x4ee3d0);
+DECL_FUNC(int(*RestartGame)(), RestartGame, 0x4ee3d0);
 DECL_FUNC(int(*LoadGameCreate)(), LoadGameCreate, 0x4ee520);
 DECL_FUNC(int(*LevelCheatInitGame)(), LevelCheatInitGame, 0x4ee5b0);
 DECL_FUNC(void (__cdecl*DestroyGame)(), DestroyGame, 0x4ee8c0);
@@ -24925,7 +24925,7 @@ dialog *& lobby_dlg = * ((decltype(&lobby_dlg)) 0x6d5a30);
 int& dword_6D5A38 = * ((decltype(&dword_6D5A38)) 0x6d5a38);
 dialog *& dword_6D5A3C = * ((decltype(&dword_6D5A3C)) 0x6d5a3c);
 FnInteract *& dword_6D5A40 = * ((decltype(&dword_6D5A40)) 0x6d5a40);
-void *& dword_6D5A44 = * ((decltype(&dword_6D5A44)) 0x6d5a44);
+BYTE *& dword_6D5A44 = * ((decltype(&dword_6D5A44)) 0x6d5a44);
 CampaignMenuEntry *& dword_6D5A48 = * ((decltype(&dword_6D5A48)) 0x6d5a48);
 CampaignMenuEntry *& dword_6D5A4C = * ((decltype(&dword_6D5A4C)) 0x6d5a4c);
 int& dword_6D5A50 = * ((decltype(&dword_6D5A50)) 0x6d5a50);
