@@ -468,6 +468,47 @@ void CommandLineCheck_()
 
 FAIL_STUB_PATCH(CommandLineCheck);
 
+int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
+{
+	char buff[260];
+	char v7[260];
+	int v10;
+
+	_snprintf(buff, 0x104u, "%s%s", "Templates\\", "templates.lst");
+	BYTE* v1 = (BYTE*)fastFileRead(&v10, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
+	if (v1 == nullptr)
+	{
+		FatalError("Unable to read game templates.");
+	}
+	BYTE* v11 = v1;
+	while (sub_4AAE20(v7, (unsigned int*)&v10, (_BYTE**) &v11, 0x104u))
+	{
+		char* v2 = strrchr(v7, '.');
+		if (v2)
+		{
+			*v2 = 0;
+		}
+
+		char got_template_name[32];
+		char got_template_label[32];
+		GotFileValues* got_template_values = readTemplate(v7, got_template_name, got_template_label);
+		if (got_template_values)
+		{
+			template_constructor(got_template_name, got_template_label, got_template_values, 0);
+			SMemFree(got_template_values, "Starcraft\\SWAR\\lang\\gametype.cpp", 231, 0);
+		}
+	}
+	if (v1)
+	{
+		SMemFree(v1, "Starcraft\\SWAR\\lang\\gametype.cpp", 233, 0);
+	}
+	return 1;
+}
+
+FUNCTION_PATCH(LoadGameTemplates, LoadGameTemplates_);
+FAIL_STUB_PATCH(sub_4AB970);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -502,7 +543,7 @@ void PreInitData_()
 	LoadGameData_(mapdataDat, "arr\\mapdata.dat"); // TODO: is this call needed?
 	dword_51CC30 = loadTBL_(1577, _countof(MapdataFilenames_), "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames_);
 	AppAddExit_(FreeMapdataTable);
-	LoadGameTemplates(Template_Constructor);
+	LoadGameTemplates_(Template_Constructor);
 	AppAddExit_(DestroyGameTemplates);
 }
 
