@@ -4281,17 +4281,26 @@ dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int read, const c
 
 FAIL_STUB_PATCH(loadFullMenuDLG);
 
+dialog* loadAndInitFullMenuDLG_(const char* filename)
+{
+	dialog* dlg = loadFullMenuDLG_(filename, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	if (dlg)
+	{
+		dlg->lFlags |= 4u;
+		AllocInitDialogData(dlg, dlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
+	}
+	return dlg;
+}
+
+FAIL_STUB_PATCH(loadAndInitFullMenuDLG);
+
 void loadMenu_gluCmpgn_()
 {
 	OpheliaEnabled = GLUE_MAIN_MENU;
 	multiPlayerMode = GLUE_MAIN_MENU;
 	sub_4B26E0();
-	dialog* campaign_dialog = loadFullMenuDLG_("rez\\gluCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (campaign_dialog)
-	{
-		campaign_dialog->lFlags |= 4u;
-		AllocInitDialogData(campaign_dialog, campaign_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	}
+	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluCmpgn.bin");
+
 	switch (gluLoadBINDlg(campaign_dialog, gluCmpgn_Main_))
 	{
 	case 5:
@@ -4329,12 +4338,8 @@ void loadMenu_gluExpCmpgn_()
 	OpheliaEnabled = 0;
 	multiPlayerMode = 0;
 	sub_4B5050();
-	dialog* campaign_dialog = loadFullMenuDLG_("rez\\gluExpCmpgn.bin", 0, GLUE_MAIN_MENU, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (campaign_dialog)
-	{
-		campaign_dialog->lFlags |= 4u;
-		AllocInitDialogData(campaign_dialog, campaign_dialog, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	}
+	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluExpCmpgn.bin");
+
 	switch (gluLoadBINDlg(campaign_dialog, gluExpCmpgn_CustomCtrlID_))
 	{
 	case 8:
@@ -4404,12 +4409,8 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	dword_59B844 = is_multiplayer;
 	char v1 = 0;
 	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
-	dialog* v3 = loadFullMenuDLG_(v2, 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (v3)
-	{
-		v3->lFlags |= 4u;
-		AllocInitDialogData(v3, v3, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	}
+	dialog* v3 = loadAndInitFullMenuDLG_(v2);
+
 	dword_6D5A70 = v3;
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
@@ -4882,12 +4883,7 @@ FAIL_STUB_PATCH(loadMenu_gluConn);
 
 void loadMenu_gluLoad_()
 {
-	glu_load_Dlg = loadFullMenuDLG_("rez\\gluLoad.bin", 0, 0, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	if (glu_load_Dlg)
-	{
-		glu_load_Dlg->lFlags |= 4u;
-		AllocInitDialogData(glu_load_Dlg, glu_load_Dlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\glues.cpp", 1168);
-	}
+	glu_load_Dlg = loadAndInitFullMenuDLG_("rez\\gluLoad.bin");
 
 	switch (gluLoadBINDlg(glu_load_Dlg, gluLoad_Main))
 	{
