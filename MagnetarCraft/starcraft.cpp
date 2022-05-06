@@ -4975,17 +4975,9 @@ void selConn_connectionList_Create_(dialog* a1)
 		v1 = gluConn_Dlg->fields[0].ctrl.pDlg;
 	}
 	dialog* v2 = v1->fields[0].dlg.pFirstChild;
-	if (v2)
+	while (v2 && v2->wIndex != 9)
 	{
-		while (v2->wIndex != 9)
-		{
-			v2 = v2->pNext;
-			if (!v2)
-			{
-				v2 = 0;
-				break;
-			}
-		}
+		v2 = v2->pNext;
 	}
 	v2->lFlags |= 2u;
 	InitBnetGateways(a1);
