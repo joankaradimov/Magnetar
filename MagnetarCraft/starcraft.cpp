@@ -1844,7 +1844,7 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
 
-int LevelCheatInitGame__()
+int LevelCheatInitGame_()
 {
 	if (!OpheliaEnabled)
 	{
@@ -2037,7 +2037,7 @@ signed int LoadGameInit_()
 		ElapsedTimeFrames = 0;
 	if (!LOBYTE(multiPlayerMode))
 	{
-		if (!LevelCheatInitGame__() || !LoadGameCreate_() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
+		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !sub_4EE3D0() || !SinglePlayerMeleeInitGame())
 			return 0;
 		if (InReplay)
 		{
