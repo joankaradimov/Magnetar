@@ -4277,7 +4277,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 			return sub_4B5180_(dlg);
 		case EventUser::USER_INIT:
 			registerMenuFunctions(off_51A818, dlg, 44, 0);
-			DlgSwooshin(2, &stru_512A8C, dlg, 0);
+			DlgSwooshin(2, commonSwishControllers + 40, dlg, 0);
 			break;
 		}
 	}
