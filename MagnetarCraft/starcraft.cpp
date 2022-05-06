@@ -4868,6 +4868,31 @@ FAIL_STUB_PATCH(loadMenu_gluRdyT);
 FAIL_STUB_PATCH(loadMenu_gluRdyZ);
 FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
+int ConnSel_InitChildren_(dialog* a1)
+{
+	FnInteract v2[14] = {
+		0,
+		0,
+		0,
+		0,
+		selConn_ConnectionList_Interact,
+		0,
+		0,
+		0,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		0,
+		GatewayListProc,
+		0,
+		0,
+	};
+
+	DlgSwooshin(5, commonSwishControllers, a1, 0);
+	return registerMenuFunctions(v2, a1, sizeof(v2), 0);
+}
+
+FAIL_STUB_PATCH(ConnSel_InitChildren);
+
 bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -4892,7 +4917,7 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 			}
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
-			ConnSel_InitChildren(dlg);
+			ConnSel_InitChildren_(dlg);
 			break;
 		case 0x405:
 			showDialog(getControlFromIndex(gluConn_Dlg, 12));
