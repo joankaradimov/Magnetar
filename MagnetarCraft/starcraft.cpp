@@ -5130,6 +5130,66 @@ void loadMenu_gluConn_()
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
 
+void loadMenu_gluChat_()
+{
+	update_lobby_glue = 0;
+	dword_5999E8 = 0;
+	commonSwishControllers[9] = { 1, 0 };
+	dword_5999CC = 0;
+	lobby_dlg = LoadDialog("rez\\gluChat.bin");
+
+	playerOwnerDropdownCreate2(lobby_dlg);
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (dword_6D6438 == NULL)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		ImmAssociateContext(hWndParent, dword_6D6438);
+	}
+	int v9 = gluLoadBINDlg(lobby_dlg, gluChat_Main);
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (dword_6D6438 == NULL)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		dword_6D6438 = ImmAssociateContext(hWndParent, 0u);
+	}
+	switch (v9)
+	{
+	case 556:
+		break;
+	case 8:
+	case 557:
+		if (NetMode.as_number == 'BNET')
+		{
+			glGluesMode = GLUE_BATTLE;
+		}
+		else if (NetMode.as_number == 'MDMX' || NetMode.as_number == 'MODM')
+		{
+			glGluesMode = GLUE_MODEM;
+		}
+		else
+		{
+			glGluesMode = GLUE_GAME_SELECT;
+		}
+		InReplay = 0;
+		if (scenarioChk)
+		{
+			SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
+			scenarioChk = NULL;
+		}
+		break;
+	default:
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
+		break;
+	}
+	changeMenu();
+}
+
+FAIL_STUB_PATCH(loadMenu_gluChat);
+
 void loadMenu_gluLoad_()
 {
 	glu_load_Dlg = loadAndInitFullMenuDLG_("rez\\gluLoad.bin");
@@ -5524,7 +5584,7 @@ LABEL_28:
 			loadMenu_gluCustm_(1);
 			break;
 		case GLUE_CHAT:
-			loadMenu_gluChat();
+			loadMenu_gluChat_();
 			break;
 		case GLUE_LOAD:
 			loadMenu_gluLoad_();
