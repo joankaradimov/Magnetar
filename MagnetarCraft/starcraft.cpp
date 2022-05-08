@@ -5254,6 +5254,38 @@ void loadMenu_gluLoad_()
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
 
+bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			if (dword_6D5A60 || saveLoadSuccess || CampaignIndex || is_spawn)
+			{
+				DisableControl(dlg);
+			}
+			break;
+		case EventUser::USER_ACTIVATE:
+			if (LoadSaveGameBIN_Main(dword_59B75C, Players[g_LocalNationID].nRace))
+			{
+				dlg->pszText = (char*)get_GluAll_String((GluAllTblEntry)177);
+				if ((dlg->lFlags & CTRL_UPDATE) == 0)
+				{
+					dlg->lFlags = dlg->lFlags | CTRL_UPDATE;
+					updateDialog(dlg);
+				}
+				DisableControl(dlg);
+			}
+			return 1;
+		}
+	}
+
+	return Menu_Generic_Button(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluScore_SaveReplay);
+
 void gluScore_CustomCtrlID_(dialog* dlg)
 {
 	static swishTimer timers[] = { {1, 0} };
@@ -5319,7 +5351,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_SaveReplay,
+		gluScore_SaveReplay_,
 	};
 
 	DlgSwooshin(_countof(timers), timers, dlg, 500);
