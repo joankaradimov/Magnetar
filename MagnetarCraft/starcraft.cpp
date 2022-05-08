@@ -5015,6 +5015,33 @@ bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(selConn_ConnectionList_Interact);
 
+bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			dlg->fields.list.pDrawItemFcn = sub_4BA3C0;
+			ListBNGateways(dlg);
+			break;
+		case USER_INIT:
+			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
+			break;
+		case USER_DESTROY:
+			sub_4BA240(dlg->fields.list.bStrs ? dlg->fields.scroll.bSliderGraphic : -1);
+			[[fallthrough]];
+		case USER_SELECT:
+			genericListboxInteract(dlg, evt);
+			return 1;
+		}
+	}
+
+	return genericListboxInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(GatewayListProc);
+
 int ConnSel_InitChildren_(dialog* a1)
 {
 	FnInteract v2[14] = {
@@ -5029,7 +5056,7 @@ int ConnSel_InitChildren_(dialog* a1)
 		Menu_Generic_Button,
 		Menu_Generic_Button,
 		0,
-		GatewayListProc,
+		GatewayListProc_,
 		0,
 		0,
 	};
