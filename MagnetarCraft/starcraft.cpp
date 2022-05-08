@@ -1601,7 +1601,7 @@ int sub_4EEFD0_()
 				gwNextGameMode = GAME_GLUES;
 				if (!InReplay)
 				{
-					ReplayFrames = ElapsedTimeFrames;
+					replay_header.ReplayFrames = ElapsedTimeFrames;
 				}
 			}
 			nextLeaveGameMenu();
@@ -1693,7 +1693,7 @@ signed int GameInit_()
 			gwNextGameMode = GamePosition::GAME_GLUES;
 			if (!InReplay)
 			{
-				ReplayFrames = ElapsedTimeFrames;
+				replay_header.ReplayFrames = ElapsedTimeFrames;
 			}
 		}
 		nextLeaveGameMenu();
@@ -1886,7 +1886,7 @@ int LevelCheatInitGame_()
 					gwNextGameMode = GAME_GLUES;
 					if (!InReplay)
 					{
-						ReplayFrames = ElapsedTimeFrames;
+						replay_header.ReplayFrames = ElapsedTimeFrames;
 					}
 				}
 				nextLeaveGameMenu();
@@ -1937,7 +1937,7 @@ int LevelCheatInitGame_()
 						gwNextGameMode = GAME_GLUES;
 						if (!InReplay)
 						{
-							ReplayFrames = ElapsedTimeFrames;
+							replay_header.ReplayFrames = ElapsedTimeFrames;
 						}
 					}
 					nextLeaveGameMenu();
@@ -1958,7 +1958,7 @@ int LevelCheatInitGame_()
 					gwNextGameMode = GAME_GLUES;
 					if (!InReplay)
 					{
-						ReplayFrames = ElapsedTimeFrames;
+						replay_header.ReplayFrames = ElapsedTimeFrames;
 					}
 				}
 				nextLeaveGameMenu();
@@ -1977,7 +1977,7 @@ int LevelCheatInitGame_()
 			gwNextGameMode = GAME_GLUES;
 			if (!InReplay)
 			{
-				ReplayFrames = ElapsedTimeFrames;
+				replay_header.ReplayFrames = ElapsedTimeFrames;
 			}
 		}
 		nextLeaveGameMenu();
@@ -2011,7 +2011,7 @@ signed int LoadGameCreate_()
 				gwNextGameMode = GAME_GLUES;
 				if (!InReplay)
 				{
-					ReplayFrames = ElapsedTimeFrames;
+					replay_header.ReplayFrames = ElapsedTimeFrames;
 				}
 			}
 			nextLeaveGameMenu();
@@ -2054,7 +2054,7 @@ int RestartGame_()
 					gwNextGameMode = GAME_GLUES;
 					if (!InReplay)
 					{
-						ReplayFrames = ElapsedTimeFrames;
+						replay_header.ReplayFrames = ElapsedTimeFrames;
 					}
 				}
 				nextLeaveGameMenu();
@@ -2075,7 +2075,7 @@ int RestartGame_()
 				gwNextGameMode = GAME_GLUES;
 				if (!InReplay)
 				{
-					ReplayFrames = ElapsedTimeFrames;
+					replay_header.ReplayFrames = ElapsedTimeFrames;
 				}
 			}
 			nextLeaveGameMenu();
@@ -2095,8 +2095,10 @@ signed int LoadGameInit_()
 			LoadReplayFile(CurrentMapFileName, 0);
 		if (InReplay)
 		{
-			*(int*)playerForce = playerForceSomethingReplay;
-			*((int*)playerForce + 1) = dword_6D11A5;
+			for (int i = 0; i < 8; i++)
+			{
+				playerForce[i] = replay_header.playerForce[i];
+			}
 		}
 	}
 	if (!loadGameFileHandle)
@@ -2107,12 +2109,12 @@ signed int LoadGameInit_()
 			return 0;
 		if (InReplay)
 		{
-			initialSeed = *(int *)((char *)&replaySeed + 1);
+			initialSeed = replay_header.initial_seed;
 		}
 		else
 		{
 			initialSeed = time(0);
-			*(int *)((char *)&replaySeed + 1) = initialSeed;
+			replay_header.initial_seed = initialSeed;
 		}
 	}
 	InitializeScreenLayer();
@@ -4075,7 +4077,7 @@ int campaignTypeCheatStrings_(char* a2)
 			gwNextGameMode = GAME_GLUES;
 			if (!InReplay)
 			{
-				ReplayFrames = ElapsedTimeFrames;
+				replay_header.ReplayFrames = ElapsedTimeFrames;
 				glGluesMode = GLUE_MAIN_MENU;
 				return 1;
 			}

@@ -235,6 +235,7 @@ struct __declspec(align(2)) CheatHashMaybe;
 struct CUnitWorker;
 struct __declspec(align(4)) MapChunks;
 struct __declspec(align(2)) MusicTrackDescription;
+struct __unaligned __declspec(align(1)) ReplayHeader;
 struct pt;
 struct Condition;
 struct ScrollSpeeds;
@@ -4179,6 +4180,36 @@ struct __declspec(align(2)) MusicTrackDescription
   u8 in_game_music_index;
 };
 static_assert(sizeof(MusicTrackDescription) == 8, "Incorrect size for type `MusicTrackDescription`. Expected: 8");
+
+#pragma pack(push, 1)
+struct __unaligned __declspec(align(1)) ReplayHeader
+{
+  char is_expansion;
+  int ReplayFrames;
+  MapData campaign_index;
+  char unknown;
+  int initial_seed;
+  char field_B[3];
+  int field_F;
+  char field_13;
+  _BYTE gap14[37];
+  char field_39;
+  char field_3A;
+  _BYTE gap3B[11];
+  char field_46;
+  _BYTE gap47[522];
+  int field_251;
+  int field_255;
+  int field_259;
+  int field_25D;
+  int field_261;
+  int field_265;
+  int field_269;
+  int field_26D;
+  byte playerForce[8];
+};
+#pragma pack(pop)
+static_assert(sizeof(ReplayHeader) == 633, "Incorrect size for type `ReplayHeader`. Expected: 633");
 
 struct pt
 {

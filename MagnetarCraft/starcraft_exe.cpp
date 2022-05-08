@@ -18571,7 +18571,7 @@ void SetGameSpeed_maybe(int game_speed, unsigned __int8 a2, unsigned int a3) {
 }
 DECL_FUNC(int (__stdcall*sub_4DECF0)(unsigned __int8 a2), sub_4DECF0, 0x4decf0);
 DECL_FUNC(int(*sub_4DED10)(), sub_4DED10, 0x4ded10);
-DECL_FUNC(int (__stdcall*CopyLastreplay)(int), CopyLastreplay, 0x4ded30);
+DECL_FUNC(signed int (__stdcall*CopyLastreplay)(char *a1), CopyLastreplay, 0x4ded30);
 DECL_FUNC(int(*replayFrameComputation)(), replayFrameComputation, 0x4deed0);
 int getDirectoryPath(CHAR *a1, DWORD esi0, const char *a2) {
     int address = 0x4def80;
@@ -18679,14 +18679,14 @@ int CopyLastReplayTo(char *a1) {
 }
 DECL_FUNC(int(*saveGame_Create)(), saveGame_Create, 0x4dfdd0);
 DECL_FUNC(bool (__fastcall*savegameBIN_Main)(dialog *dlg, struct dlgEvent *evt), savegameBIN_Main, 0x4dfef0);
-int LoadSaveGameBIN_Main(int a1, int a2) {
+int LoadSaveGameBIN_Main(int a1, Race a2) {
     int address = 0x4dffc0;
     int result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, a1
-        mov ecx, a2
+        mov cl, a2
         call address
         mov result_, eax
     }
@@ -24914,26 +24914,7 @@ int& scenarioChkSize = * ((decltype(&scenarioChkSize)) 0x6d0f20);
 void *& scenarioChk = * ((decltype(&scenarioChk)) 0x6d0f24);
 dialog *& savegame_Dlg = * ((decltype(&savegame_Dlg)) 0x6d0f28);
 HANDLE& phFile = * ((decltype(&phFile)) 0x6d0f2c);
-char& byte_6D0F30 = * ((decltype(&byte_6D0F30)) 0x6d0f30);
-int& ReplayFrames = * ((decltype(&ReplayFrames)) 0x6d0f31);
-MapData& word_6D0F35 = * ((decltype(&word_6D0F35)) 0x6d0f35);
-int& replaySeed = * ((decltype(&replaySeed)) 0x6d0f37);
-int& dword_6D0F3B = * ((decltype(&dword_6D0F3B)) 0x6d0f3b);
-int& dword_6D0F3F = * ((decltype(&dword_6D0F3F)) 0x6d0f3f);
-char& byte_6D0F43 = * ((decltype(&byte_6D0F43)) 0x6d0f43);
-char& byte_6D0F69 = * ((decltype(&byte_6D0F69)) 0x6d0f69);
-char& byte_6D0F6A = * ((decltype(&byte_6D0F6A)) 0x6d0f6a);
-char& byte_6D0F76 = * ((decltype(&byte_6D0F76)) 0x6d0f76);
-int& dword_6D1181 = * ((decltype(&dword_6D1181)) 0x6d1181);
-int& dword_6D1185 = * ((decltype(&dword_6D1185)) 0x6d1185);
-int& dword_6D1189 = * ((decltype(&dword_6D1189)) 0x6d1189);
-int& dword_6D118D = * ((decltype(&dword_6D118D)) 0x6d118d);
-int& dword_6D1191 = * ((decltype(&dword_6D1191)) 0x6d1191);
-int& dword_6D1195 = * ((decltype(&dword_6D1195)) 0x6d1195);
-int& dword_6D1199 = * ((decltype(&dword_6D1199)) 0x6d1199);
-int& dword_6D119D = * ((decltype(&dword_6D119D)) 0x6d119d);
-int& playerForceSomethingReplay = * ((decltype(&playerForceSomethingReplay)) 0x6d11a1);
-int& dword_6D11A5 = * ((decltype(&dword_6D11A5)) 0x6d11a5);
+ReplayHeader& replay_header = * ((decltype(&replay_header)) 0x6d0f30);
 int& dword_6D11AC = * ((decltype(&dword_6D11AC)) 0x6d11ac);
 int& is_replay_paused = * ((decltype(&is_replay_paused)) 0x6d11b0);
 int& dword_6D11B4 = * ((decltype(&dword_6D11B4)) 0x6d11b4);
