@@ -5125,8 +5125,74 @@ FAIL_STUB_PATCH(loadMenu_gluLoad);
 
 void gluScore_CustomCtrlID_(dialog* dlg)
 {
-	DlgSwooshin(1, &gluScoreSwishController, dlg, 500);
-	registerMenuFunctions(off_51A848, dlg, 244, 0);
+	static swishTimer timers[] = { {1, 0} };
+
+	static FnInteract gluScore_menu_functions[] = {
+		genericImageInteract,
+		genericLabelInteract,
+		gluScore_Tab,
+		gluScore_Tab,
+		gluScore_Tab,
+		gluScore_Tab,
+		Menu_Generic_Button,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_PlayerRaceIcon,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		statRes_Text_Interact,
+		gluScore_PlayerScoreTotal,
+		gluScore_SaveReplay,
+	};
+
+	DlgSwooshin(_countof(timers), timers, dlg, 500);
+	registerMenuFunctions(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions), 0);
 }
 
 FAIL_STUB_PATCH(gluScore_CustomCtrlID);
