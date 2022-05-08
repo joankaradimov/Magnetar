@@ -4880,6 +4880,45 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
+{
+	static swishTimer timers[] =
+	{
+		{5, 3},
+		{6, 0},
+		{7, 3},
+		{9, 0},
+		{10, 0},
+		{11, 2},
+		{12, 2},
+	};
+
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			DLG_SwishIn(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			briefingFramesCleanup(dlg);
+			break;
+		case EventUser::USER_ACTIVATE:
+			return sub_46D160(dlg);
+		case EventUser::USER_INIT:
+			sub_46D3C0(dlg);
+			DlgSwooshin(_countof(timers), timers, dlg, 80);
+			registerMenuFunctions(off_51A750, dlg, 80, 0);
+			break;
+		case 0x405:
+			RdyTFrame(dlg);
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluRdyT_BINDLG_Loop);
+
 void DisplayEstablishingShot_();
 
 void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
@@ -5362,7 +5401,7 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdyT_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdyT_BINDLG_Loop_);
 			break;
 		case GLUE_READY_Z:
 			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin", gluRdyZ_BINDLG_Loop);
