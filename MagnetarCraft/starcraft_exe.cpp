@@ -5612,15 +5612,66 @@ signed int Begin_BNET(Char4 network_provider_id) {
 DECL_FUNC(int(*sub_452A70)(), sub_452A70, 0x452a70);
 DECL_FUNC(int(*sub_452A90)(), sub_452A90, 0x452a90);
 DECL_FUNC(int (__stdcall*sub_452AB0)(int), sub_452AB0, 0x452ab0);
+char *GetBattleNetOption(char *a1, BNetGateways *a2) {
+    int address = 0x452af0;
+    char * result_;
+    __asm {
+        xor edi, edi
+        xor esi, esi
+        mov edi, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_452BA0)(), sub_452BA0, 0x452ba0);
-DECL_FUNC(int (__stdcall*sub_452BD0)(int), sub_452BD0, 0x452bd0);
-DECL_FUNC(int(*OverwriteBNGatewayList)(), OverwriteBNGatewayList, 0x452c40);
-DECL_FUNC(int (__stdcall*LoadDefaultGatewayList)(int), LoadDefaultGatewayList, 0x452ce0);
-DECL_FUNC(int(*sub_452EC0)(), sub_452EC0, 0x452ec0);
+const char *sub_452BD0(int a1, BNetGateways *a2) {
+    int address = 0x452bd0;
+    const char * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+void *OverwriteBNGatewayList(BNetGateways *a1) {
+    int address = 0x452c40;
+    void * result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(BOOL (__stdcall*LoadDefaultGatewayList)(BNetGateways *a1), LoadDefaultGatewayList, 0x452ce0);
+char *sub_452EC0(BNetGateways *a1) {
+    int address = 0x452ec0;
+    char * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_452F00)(int), sub_452F00, 0x452f00);
 DECL_FUNC(int (__stdcall*sub_452F40)(char *), sub_452F40, 0x452f40);
-DECL_FUNC(int (__stdcall*sub_452F80)(int, int), sub_452F80, 0x452f80);
-DECL_FUNC(int(*LoadBNGatewayList)(), LoadBNGatewayList, 0x453020);
+DECL_FUNC(BNetGateways *(__stdcall*sub_452F80)(BNetGateways *a1, int a2), sub_452F80, 0x452f80);
+void LoadBNGatewayList(BNetGateways *a1) {
+    int address = 0x453020;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_453150)(), sub_453150, 0x453150);
 DECL_FUNC(int(*sub_453170)(), sub_453170, 0x453170);
 DECL_FUNC(int(*sub_4531A0)(), sub_4531A0, 0x4531a0);
@@ -8360,7 +8411,17 @@ char BriefingStart(dialog *a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_46D160)(), sub_46D160, 0x46d160);
+int sub_46D160(dialog *a1) {
+    int address = 0x46d160;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__thiscall*MissionBriefingLoop)(dialog *this_), MissionBriefingLoop, 0x46d1b0);
 DECL_FUNC(int(*sub_46D1F0)(), sub_46D1F0, 0x46d1f0);
 DECL_FUNC(int (__stdcall*sub_46D200)(int a1), sub_46D200, 0x46d200);
@@ -15531,7 +15592,17 @@ BOOL DlgPszTextMemFree(dialog *a1, __int16 a2) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4BA1F0)(int amount), sub_4BA1F0, 0x4ba1f0);
-DECL_FUNC(int(*sub_4BA240)(), sub_4BA240, 0x4ba240);
+int sub_4BA240(int a1) {
+    int address = 0x4ba240;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__thiscall*sub_4BA290)(dialog *this_), sub_4BA290, 0x4ba290);
 DECL_FUNC(int(*sub_4BA320)(), sub_4BA320, 0x4ba320);
 void DestroyProviderList(dialog *a1) {
@@ -20869,7 +20940,17 @@ int orders_Special(CUnit *a1) {
 DECL_FUNC(int(*RdyZFrame)(), RdyZFrame, 0x4f70f0);
 DECL_FUNC(bool (__fastcall*gluRdyZ_BINDLG_Loop)(dialog *dlg, struct dlgEvent *evt), gluRdyZ_BINDLG_Loop, 0x4f7150);
 DECL_FUNC(void(*loadMenu_gluRdyZ)(void), loadMenu_gluRdyZ, 0x4f71f0);
-DECL_FUNC(int(*RdyTFrame)(), RdyTFrame, 0x4f7450);
+void *RdyTFrame(dialog *a1) {
+    int address = 0x4f7450;
+    void * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(bool (__fastcall*gluRdyT_BINDLG_Loop)(dialog *dlg, dlgEvent *evt), gluRdyT_BINDLG_Loop, 0x4f74b0);
 DECL_FUNC(void(*loadMenu_gluRdyT)(void), loadMenu_gluRdyT, 0x4f7550);
 DECL_FUNC(int(*rdyPFrame)(), rdyPFrame, 0x4f77b0);
@@ -24406,10 +24487,7 @@ char *(&SFXData_SoundFile)[1144] = * ((decltype(&SFXData_SoundFile)) 0x68daa0);
 dialog *& dlgFatal_Dlg = * ((decltype(&dlgFatal_Dlg)) 0x68ec80);
 void *& dword_68EC84 = * ((decltype(&dword_68EC84)) 0x68ec84);
 void *& dword_68EC88 = * ((decltype(&dword_68EC88)) 0x68ec88);
-int& dword_68EC90 = * ((decltype(&dword_68EC90)) 0x68ec90);
-int& dword_68EC94 = * ((decltype(&dword_68EC94)) 0x68ec94);
-int& dword_68EC98 = * ((decltype(&dword_68EC98)) 0x68ec98);
-int& dword_68EC9C = * ((decltype(&dword_68EC9C)) 0x68ec9c);
+BNetGateways& bnet_gateways = * ((decltype(&bnet_gateways)) 0x68ec8c);
 LobbySlot(&lobby_slots)[12] = * ((decltype(&lobby_slots)) 0x68ecb0);
 int& dword_68F4F0 = * ((decltype(&dword_68F4F0)) 0x68f4f0);
 int& dword_68F4F4 = * ((decltype(&dword_68F4F4)) 0x68f4f4);
