@@ -2369,6 +2369,54 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
+GamePosition BeginGame_(MenuPosition a1)
+{
+	visionUpdateCount = 1;
+	DLGMusicFade((MusicTrack) currentMusicId);
+	SetCursorPos(320, 240);
+	GameState = 1;
+	TickCountSomething(0);
+	DoGameLoop(a1);
+	RefreshLayer5();
+	int v1 = getCursorType();
+	_drawCursor(v1);
+	cursorRefresh();
+	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
+	{
+		loadTips_BINDLG(1);
+	}
+	SetMapStartStatus();
+	SetCurrentPaletteInfo(palette, 0x100u, 0);
+	get_tFontGam_PCX();
+	TitlePaletteUpdate(3);
+	if (multiPlayerMode)
+	{
+		registry_options.GameSpeed = (unsigned __int8)gameData.game_speed;
+	}
+	else if (CampaignIndex == MD_none)
+	{
+		registry_options.GameSpeed = 4;
+	}
+	newGame(1);
+	BWFXN_videoLoop(0);
+	loseSightSelection();
+	turn_counter = 0;
+	GameKeepAlive();
+	while (GameState && !gameLoopTurns())
+	{
+		BWFXN_RedrawTarget();
+	}
+	GameLoop_Top(a1);
+	newGame(0);
+	stopAllSound();
+	sub_41E9E0(3);
+	get_tFontGam_PCX_0();
+	RefreshCursor_0();
+	return gwNextGameMode;
+}
+
+FAIL_STUB_PATCH(BeginGame);
+
 void GameRun_(MenuPosition a1)
 {
 	IsInGameLoop = 1;
@@ -2397,7 +2445,7 @@ void GameRun_(MenuPosition a1)
 	}
 	if (v1)
 	{
-		GamePosition next_game_position = BeginGame(a1);
+		GamePosition next_game_position = BeginGame_(a1);
 		DestroyGame_();
 		gwGameMode = next_game_position;
 	}
