@@ -2217,6 +2217,17 @@ signed int LoadGameInit_()
 
 FAIL_STUB_PATCH(LoadGameInit);
 
+void __cdecl freeChkFileMem_()
+{
+	if (scenarioChk)
+	{
+		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
+		scenarioChk = nullptr;
+	}
+}
+
+FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -2339,11 +2350,7 @@ void DestroyGame_()
 	if (InReplay)
 	{
 		replayData->field2 = 0;
-		if (scenarioChk != 0)
-		{
-			SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
-			scenarioChk = 0;
-		}
+		freeChkFileMem_();
 		InReplay = 0;
 		game_id_hash = 0;
 	}
@@ -4485,11 +4492,7 @@ FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
 void loadMenu_gluJoin_()
 {
 	InReplay = 0;
-	if (scenarioChk)
-	{
-		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
-		scenarioChk = NULL;
-	}
+	freeChkFileMem_();
 
 	gluJoin_Dlg = LoadDialog("rez\\gluJoin.bin");
 
@@ -4563,11 +4566,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		}
 	}
 	InReplay = 0;
-	if (scenarioChk)
-	{
-		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
-		scenarioChk = 0;
-	}
+	freeChkFileMem_();
 
 	if (!LOBYTE(multiPlayerMode))
 	{
@@ -5174,11 +5173,7 @@ void loadMenu_gluChat_()
 			glGluesMode = GLUE_GAME_SELECT;
 		}
 		InReplay = 0;
-		if (scenarioChk)
-		{
-			SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1106, 0);
-			scenarioChk = NULL;
-		}
+		freeChkFileMem_();
 		break;
 	default:
 		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
