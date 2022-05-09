@@ -17141,6 +17141,17 @@ int WriteGameActions(FILE *a2, GameActionDataBlock *a3) {
     }
     return result_;
 }
+BOOL sub_4CE220(FILE *a1) {
+    int address = 0x4ce220;
+    BOOL result_;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4CE270)(), sub_4CE270, 0x4ce270);
 DECL_FUNC(void (__cdecl*createNewGameActionDataBlock)(), createNewGameActionDataBlock, 0x4ce280);
 DECL_FUNC(int(*closeLoadGameFile)(), closeLoadGameFile, 0x4ce440);
@@ -18663,7 +18674,7 @@ void sub_4DF4A0(dialog *a1) {
     }
 }
 DECL_FUNC(void (__thiscall*sub_4DF520)(dialog *this_), sub_4DF520, 0x4df520);
-int LoadReplayFile(char *a1, int a3) {
+int LoadReplayFile(char *a1, int *a3) {
     int address = 0x4df570;
     int result_;
     __asm {
