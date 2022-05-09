@@ -2033,7 +2033,7 @@ int RestartGame_()
 	char dest[260];
 	SStrCopy(dest, CurrentMapFileName, 0x104u);
 	MapChunks a4;
-	if (ReadMapData(dest, &a4, 1))
+	if (ReadMapData_(dest, &a4, 1))
 	{
 		if (sub_4DBE50())
 		{
