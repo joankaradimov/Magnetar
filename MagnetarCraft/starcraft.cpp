@@ -4459,6 +4459,39 @@ dialog* loadAndInitFullMenuDLG_(const char* filename)
 
 FAIL_STUB_PATCH(loadAndInitFullMenuDLG);
 
+void loadMenu_gluLogin_()
+{
+	gluLogin_Dlg = LoadDialog("rez\\gluLogin.bin");
+
+	switch (gluLoadBINDlg(gluLogin_Dlg, gluLogin_Main))
+	{
+	case 4:
+		if (!multiPlayerMode)
+		{
+			glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		}
+		else if (NetMode.as_number == 'MDMX' || NetMode.as_number == 'MODM')
+		{
+			glGluesMode = GLUE_MODEM;
+		}
+		else
+		{
+			glGluesMode = NetMode.as_number == 'SCBL' ? GLUE_DIRECT : GLUE_GAME_SELECT;
+		}
+		break;
+	case 5:
+		leaveOnQuit(0);
+		glGluesMode = multiPlayerMode != 0 ? GLUE_CONNECT : GLUE_MAIN_MENU;
+		break;
+	default:
+		glGluesMode = GLUE_MAIN_MENU;
+	}
+
+	changeMenu();
+}
+
+FAIL_STUB_PATCH(loadMenu_gluLogin);
+
 void loadMenu_gluCmpgn_()
 {
 	OpheliaEnabled = GLUE_MAIN_MENU;
@@ -5624,7 +5657,7 @@ LABEL_28:
 			break;
 		case GLUE_LOGIN:
 			dword_51C414 = 0;
-			loadMenu_gluLogin();
+			loadMenu_gluLogin_();
 			break;
 		case GLUE_CAMPAIGN:
 			loadMenu_gluCmpgn_();
