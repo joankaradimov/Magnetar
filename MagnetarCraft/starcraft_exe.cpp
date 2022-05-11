@@ -18149,7 +18149,19 @@ void DoGameLoop(MenuPosition a1) {
     }
 }
 DECL_FUNC(int(*GameLoopWaitSendTurn)(), GameLoopWaitSendTurn, 0x4d9550);
-DECL_FUNC(int(*GameLoop_State)(), GameLoop_State, 0x4d9670);
+int GameLoop_State(void *a1, MenuPosition a2) {
+    int address = 0x4d9670;
+    int result_;
+    __asm {
+        xor ebx, ebx
+        xor ecx, ecx
+        mov ecx, a1
+        mov ebx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void GameLoop_Top(MenuPosition a1) {
     int address = 0x4d9840;
     __asm {
@@ -18431,7 +18443,7 @@ DECL_FUNC(int (__stdcall*sub_4DC4E0)(int), sub_4DC4E0, 0x4dc4e0);
 DECL_FUNC(int(*sub_4DC510)(), sub_4DC510, 0x4dc510);
 DECL_FUNC(int(*sub_4DC520)(), sub_4DC520, 0x4dc520);
 DECL_FUNC(int(*sub_4DC530)(), sub_4DC530, 0x4dc530);
-DECL_FUNC(int(*SetInGameLoop)(), SetInGameLoop, 0x4dc540);
+DECL_FUNC(void (__thiscall*SetInGameLoop)(int this_), SetInGameLoop, 0x4dc540);
 DECL_FUNC(int (__stdcall*RandBetween)(int), RandBetween, 0x4dc550);
 DECL_FUNC(void (__cdecl*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
 void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3) {
@@ -23087,7 +23099,7 @@ int& playerid = * ((decltype(&playerid)) 0x51268c);
 char *(&cinematics)[28] = * ((decltype(&cinematics)) 0x512690);
 char(&byte_512700)[8] = * ((decltype(&byte_512700)) 0x512700);
 char *(&off_512708)[19] = * ((decltype(&off_512708)) 0x512708);
-__int16& word_51275C = * ((decltype(&word_51275C)) 0x51275c);
+__int16(&word_51275C)[6] = * ((decltype(&word_51275C)) 0x51275c);
 __int16(&word_512768)[2] = * ((decltype(&word_512768)) 0x512768);
 __int16& word_51276C = * ((decltype(&word_51276C)) 0x51276c);
 __int16& word_512770 = * ((decltype(&word_512770)) 0x512770);
