@@ -2369,6 +2369,56 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
+void DoGameLoop_(MenuPosition a1)
+{
+	GameLoop(a1);
+	updateHUDInformation();
+	GameLoop(a1);
+	updateHUDInformation();
+}
+
+FAIL_STUB_PATCH(DoGameLoop);
+
+void GameLoop_Top_(MenuPosition a1)
+{
+	FramesUntilNextTurn = 1;
+	byte_51CE9D = 0;
+	dword_51CE94 = GetTickCount();
+	bool v2 = false;
+	while (GameState)
+	{
+		BWFXN_videoLoop(3);
+		DWORD v1 = GetTickCount();
+		if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.GameSpeed])
+		{
+			dword_51CE94 = v1;
+		}
+		BWFXN_NextFrameHelperFunctionTarget();
+		if (v1 + dword_51CE8C[0] > 0xA)
+		{
+			dword_51CE8C[0] = -v1;
+			PollInput();
+			v2 = true;
+		}
+		RecvMessage();
+		LeagueChatFilter();
+		if ((int)(v1 - dword_51CE94) >= 0)
+		{
+			GameLoop_State(0, a1);
+			v2 = true;
+		}
+		updateHUDInformation();
+		if (dword_5968EC || v2)
+		{
+			dword_5968EC = 0;
+			v2 = false;
+			BWFXN_RedrawTarget();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(GameLoop_Top);
+
 GamePosition BeginGame_(MenuPosition a1)
 {
 	visionUpdateCount = 1;
@@ -2376,7 +2426,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	SetCursorPos(320, 240);
 	GameState = 1;
 	TickCountSomething(0);
-	DoGameLoop(a1);
+	DoGameLoop_(a1);
 	RefreshLayer5();
 	int v1 = getCursorType();
 	_drawCursor(v1);
@@ -2406,7 +2456,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	{
 		BWFXN_RedrawTarget();
 	}
-	GameLoop_Top(a1);
+	GameLoop_Top_(a1);
 	newGame(0);
 	stopAllSound();
 	sub_41E9E0(3);
