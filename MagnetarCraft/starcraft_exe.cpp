@@ -17304,9 +17304,20 @@ DECL_FUNC(int(*getCursorType)(), getCursorType, 0x4d1460);
 DECL_FUNC(int(*BWFXN_NextFrameHelperFunctionTarget)(), BWFXN_NextFrameHelperFunctionTarget, 0x4d14d0);
 DECL_FUNC(int(*LoadCursors)(), LoadCursors, 0x4d1560);
 DECL_FUNC(int (__stdcall*sub_4D16F0)(int), sub_4D16F0, 0x4d16f0);
+int GameShowCursor(bool a1) {
+    int address = 0x4d1750;
+    int result_;
+    __asm {
+        xor esi, esi
+        mov si, word ptr a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*Game_NumLockInit)(), Game_NumLockInit, 0x4d17b0);
 DECL_FUNC(int(*BWFXN_Game_KeyState)(), BWFXN_Game_KeyState, 0x4d1810);
-DECL_FUNC(int(*Game_Close)(), Game_Close, 0x4d1880);
+DECL_FUNC(dlgEvent *(*Game_Close)(), Game_Close, 0x4d1880);
 void Game_MouseWheel(__int16 a1, int a2, void (__thiscall *a3)(dlgEvent *)) {
     int address = 0x4d1900;
     __asm {
@@ -17363,7 +17374,7 @@ DECL_FUNC(void (__cdecl*TakeScreenshot)(), TakeScreenshot, 0x4d1b40);
 DECL_FUNC(DWORD (__stdcall*BWFXN_videoLoop)(int flag), BWFXN_videoLoop, 0x4d1bf0);
 DECL_FUNC(int(*sub_4D1D30)(), sub_4D1D30, 0x4d1d30);
 DECL_FUNC(int(*Game_Capturechanged)(), Game_Capturechanged, 0x4d1d40);
-DECL_FUNC(int (__stdcall*MainWindowProc)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam), MainWindowProc, 0x4d1d70);
+DECL_FUNC(LRESULT (__stdcall*MainWindowProc)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam), MainWindowProc, 0x4d1d70);
 DECL_FUNC(void *(__stdcall*allocFunction)(DWORD), allocFunction, 0x4d26b0);
 DECL_FUNC(int(*sub_4D26D0)(), sub_4D26D0, 0x4d26d0);
 DECL_FUNC(int (__fastcall*sub_4D26E0)(int logline, char *logfilename), sub_4D26E0, 0x4d26e0);
@@ -18148,7 +18159,7 @@ void DoGameLoop(MenuPosition a1) {
         call address
     }
 }
-DECL_FUNC(int(*GameLoopWaitSendTurn)(), GameLoopWaitSendTurn, 0x4d9550);
+DECL_FUNC(signed int (__thiscall*GameLoopWaitSendTurn)(int *this_), GameLoopWaitSendTurn, 0x4d9550);
 int GameLoop_State(void *a1, MenuPosition a2) {
     int address = 0x4d9670;
     int result_;
@@ -23822,7 +23833,7 @@ char(&byte_5982A0)[768] = * ((decltype(&byte_5982A0)) 0x5982a0);
 char(&byte_5985A0)[] = * ((decltype(&byte_5985A0)) 0x5985a0);
 char(&byte_5992A0)[256] = * ((decltype(&byte_5992A0)) 0x5992a0);
 void *& dword_5993A0 = * ((decltype(&dword_5993A0)) 0x5993a0);
-int& result = * ((decltype(&result)) 0x5993a4);
+int& dword_5993A4 = * ((decltype(&dword_5993A4)) 0x5993a4);
 TileID *& ZergCreepArray = * ((decltype(&ZergCreepArray)) 0x5993a8);
 int& dword_5993AC = * ((decltype(&dword_5993AC)) 0x5993ac);
 RECT& game_screen_pos = * ((decltype(&game_screen_pos)) 0x5993b0);

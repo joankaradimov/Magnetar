@@ -721,7 +721,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	else
 	{
 		maskSomething1();
-		refreshImageRange(result, dword_5993C0);
+		refreshImageRange(dword_5993A4, dword_5993C0);
 		maskSomething2();
 		BWFXN_drawMapTiles();
 		blitTileCacheOnRefresh();
