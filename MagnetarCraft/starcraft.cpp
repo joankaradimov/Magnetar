@@ -2452,14 +2452,14 @@ void updateHUDInformation_()
 	refreshGameTextIfCounterActive();
 }
 
-FUNCTION_PATCH(updateHUDInformation, updateHUDInformation_);
+FAIL_STUB_PATCH(updateHUDInformation);
 
 void DoGameLoop_(MenuPosition a1)
 {
 	GameLoop(a1);
-	updateHUDInformation();
+	updateHUDInformation_();
 	GameLoop(a1);
-	updateHUDInformation();
+	updateHUDInformation_();
 }
 
 FAIL_STUB_PATCH(DoGameLoop);
@@ -2492,7 +2492,7 @@ void GameLoop_Top_(MenuPosition a1)
 			GameLoop_State(0, a1);
 			v2 = true;
 		}
-		updateHUDInformation();
+		updateHUDInformation_();
 		if (dword_5968EC || v2)
 		{
 			dword_5968EC = 0;
