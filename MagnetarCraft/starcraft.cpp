@@ -2464,6 +2464,77 @@ void DoGameLoop_(MenuPosition a1)
 
 FAIL_STUB_PATCH(DoGameLoop);
 
+void GameLoop_State_(MenuPosition a2)
+{
+	DWORD v10 = GetTickCount() + 2000;
+	int v9 = 0;
+	dword_6D11F0 = 0;
+	for (int i = 0; i < FrameSkip; i++)
+	{
+		if (InReplay)
+		{
+			replayLoop();
+		}
+
+		int v5;
+		if (!GameLoopWaitSendTurn(&v5))
+		{
+			dword_6D11F0 = 1;
+			break;
+		}
+		if (InReplay && is_replay_paused)
+		{
+			replayFrameComputation();
+			dword_6D11F0 = 2;
+			break;
+		}
+		if (!GameState)
+		{
+			dword_6D11F0 = 4;
+			break;
+		}
+		if (dword_51BFA8 || multiPlayerMode)
+		{
+			ScreenLayers[5].bits |= 2u;
+			if (BWFXN_IsPaused())
+			{
+				RefreshAllUnits();
+			}
+			else
+			{
+				++ElapsedTimeFrames;
+				++v9;
+				GameLoop(a2);
+			}
+			SetInGameLoop(1);
+			BWFXN_ExecuteGameTriggers(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
+			SetInGameLoop(0);
+			if (InReplay)
+			{
+				replayFrameComputation();
+			}
+		}
+		dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed];
+		DWORD v6 = GetTickCount();
+		if (v6 < dword_51CE94)
+		{
+			dword_6D11F0 = 5;
+			break;
+		}
+		if (v10 < v6)
+		{
+			dword_6D11F0 = 6;
+			break;
+		}
+		if (v5 && (!InReplay || !dword_6D11E8))
+		{
+			dword_6D11F0 = 7;
+			break;
+		}
+	}
+	IsRunning = v9;
+}
+
 void GameLoop_Top_(MenuPosition a1)
 {
 	FramesUntilNextTurn = 1;
@@ -2489,7 +2560,7 @@ void GameLoop_Top_(MenuPosition a1)
 		LeagueChatFilter();
 		if ((int)(v1 - dword_51CE94) >= 0)
 		{
-			GameLoop_State(0, a1);
+			GameLoop_State_(a1);
 			v2 = true;
 		}
 		updateHUDInformation_();
