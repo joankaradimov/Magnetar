@@ -2369,6 +2369,30 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
+void GameLoop_(MenuPosition a1)
+{
+	SetInGameLoop(1);
+	InitializeRandomizerInfo();
+	AI_Loop();
+	if (visionUpdateCount == 0)
+	{
+		visionUpdateCount = 100;
+	}
+	visionUpdated = visionUpdateCount-- == 1;
+	if (visionUpdated)
+	{
+		updateActiveTileInfo();
+		RemoveFoWCheat();
+	}
+	UpdateUnits();
+	ImageDrawingBulletDrawing();
+	UpdateImages(a1);
+	updateThingys(a1);
+	SetInGameLoop(0);
+}
+
+FAIL_STUB_PATCH(GameLoop);
+
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
 	int v4 = 0, v5 = 255;
@@ -2456,9 +2480,9 @@ FAIL_STUB_PATCH(updateHUDInformation);
 
 void DoGameLoop_(MenuPosition a1)
 {
-	GameLoop(a1);
+	GameLoop_(a1);
 	updateHUDInformation_();
-	GameLoop(a1);
+	GameLoop_(a1);
 	updateHUDInformation_();
 }
 
@@ -2504,7 +2528,7 @@ void GameLoop_State_(MenuPosition a2)
 			{
 				++ElapsedTimeFrames;
 				++v9;
-				GameLoop(a2);
+				GameLoop_(a2);
 			}
 			SetInGameLoop(1);
 			BWFXN_ExecuteGameTriggers(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
