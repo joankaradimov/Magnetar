@@ -541,6 +541,8 @@ def is_type_blacklisted(type_ordinal):
         return True
     if local_type_name.endswith('_Ref_count_base'):
         return True
+    if local_type_name == 'VirtualKey':
+        return True
     return False
 
 class Definition(object):
