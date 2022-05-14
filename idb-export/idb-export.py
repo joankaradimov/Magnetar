@@ -439,23 +439,29 @@ def export(root_dir):
     function_declarations = []
     function_definitions = []
     export_functions(function_declarations, function_definitions)
-    export_data('.rdata', function_declarations, function_definitions)
-    export_data('.data', function_declarations, function_definitions)
+
+    data_declarations = []
+    data_definitions = []
+    export_data('.rdata', data_declarations, data_definitions)
+    export_data('.data', data_declarations, data_definitions)
 
     type_declarations = []
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
     with open(root_dir + 'starcraft_exe.cpp', 'wt') as cpp_file:
-        cpp_file.write(CPP_TEMPLATE.format(definitions = ''.join(function_definitions)))
+        cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
 
     with open(root_dir + 'starcraft_exe.h', 'wt') as header_file:
-        header_file.write(HEADER_TEMPLATE.format(declarations = ''.join(function_declarations)))
+        header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
 
     with open(root_dir + 'starcraft_exe_types.h', 'wt') as types_header_file:
         content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 
+    print('Exported %d function symbols' % len(function_declarations))
+    print('Exported %d data symbols' % len(data_declarations))
+    print('Exported %d types' % len(type_declarations))
 
 def is_blacklisted(text):
     blacklisted_identifiers = [
