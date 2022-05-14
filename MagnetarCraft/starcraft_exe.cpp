@@ -2345,7 +2345,14 @@ int _ClipCursor(RECT *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4216F0)(), sub_4216F0, 0x4216f0);
-DECL_FUNC(int(*doCursorClip)(), doCursorClip, 0x421730);
+void doCursorClip(int a1) {
+    int address = 0x421730;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_421770)(), sub_421770, 0x421770);
 DECL_FUNC(int (__stdcall*sub_4217E0)(__int16, char), sub_4217E0, 0x4217e0);
 DECL_FUNC(int(*sub_4218E0)(), sub_4218E0, 0x4218e0);
@@ -9571,6 +9578,7 @@ BOOL IsBetterTarget_maybe(CUnit *old_target, CUnit *unit, CUnit *new_target) {
     return result_;
 }
 __int64 sub_476A50(CUnit *a1, CUnit *a2){ throw "not implemented"; }
+
 BOOL sub_476C50(CUnit *a1, CUnit *a2) {
     int address = 0x476c50;
     BOOL result_;
@@ -10691,8 +10699,8 @@ int SAI_PathCreate_Sub5(SaiRegion *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_483200)(), sub_483200, 0x483200);
-DECL_FUNC(int(*sub_483230)(), sub_483230, 0x483230);
+DECL_FUNC(void (__cdecl*FreeSAI_Paths)(), FreeSAI_Paths, 0x483200);
+DECL_FUNC(void (__cdecl*AllocateSAI_Paths)(), AllocateSAI_Paths, 0x483230);
 DECL_FUNC(int(*SAI_PathCreate_Sub3_4)(), SAI_PathCreate_Sub3_4, 0x483260);
 DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_0)(int, int, __int16), SAI_PathCreate_Sub3_0_0, 0x483960);
 int SAI_PathCreate_Sub3_1(int a1, SAI_Paths *a2) {
@@ -16326,7 +16334,7 @@ signed int updateBuildingLandUnitSelection(CUnit *a2) {
     }
     return result_;
 }
-DECL_FUNC(void(*setup_HUD)(), setup_HUD, 0x4c3bb0);
+DECL_FUNC(void (__cdecl*setup_HUD)(), setup_HUD, 0x4c3bb0);
 DECL_FUNC(int(*sub_4C3C80)(), sub_4C3C80, 0x4c3c80);
 DECL_FUNC(void (__stdcall*eventSetPlayerFlag)(s_evt *evt), eventSetPlayerFlag, 0x4c3c90);
 DECL_FUNC(int(*clearPlayerFlags)(), clearPlayerFlags, 0x4c3cd0);
@@ -17304,33 +17312,30 @@ DECL_FUNC(int(*getCursorType)(), getCursorType, 0x4d1460);
 DECL_FUNC(int(*BWFXN_NextFrameHelperFunctionTarget)(), BWFXN_NextFrameHelperFunctionTarget, 0x4d14d0);
 DECL_FUNC(int(*LoadCursors)(), LoadCursors, 0x4d1560);
 DECL_FUNC(int (__stdcall*sub_4D16F0)(int), sub_4D16F0, 0x4d16f0);
-int GameShowCursor(bool a1) {
+void GameShowCursor(bool show_cursor) {
     int address = 0x4d1750;
-    int result_;
     __asm {
         xor esi, esi
-        mov si, word ptr a1
+        mov si, word ptr show_cursor
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(int(*Game_NumLockInit)(), Game_NumLockInit, 0x4d17b0);
+DECL_FUNC(void (__cdecl*Game_NumLockInit)(), Game_NumLockInit, 0x4d17b0);
 DECL_FUNC(int(*BWFXN_Game_KeyState)(), BWFXN_Game_KeyState, 0x4d1810);
-DECL_FUNC(dlgEvent *(*Game_Close)(), Game_Close, 0x4d1880);
-void Game_MouseWheel(__int16 a1, int a2, void (__thiscall *a3)(dlgEvent *)) {
+DECL_FUNC(void (__cdecl*Game_Close)(), Game_Close, 0x4d1880);
+void Game_MouseWheel(EventNo wNo, int a2, InputProcedure a3) {
     int address = 0x4d1900;
     __asm {
         xor eax, eax
         xor ecx, ecx
         xor edi, edi
-        mov ax, a1
+        mov ax, wNo
         mov ecx, a2
         mov edi, a3
         call address
     }
 }
-void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int a3, __int16 a4) {
+void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
     int address = 0x4d1940;
     __asm {
         xor eax, eax
@@ -17343,7 +17348,7 @@ void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int
         call address
     }
 }
-void BWFXN_Game_ButtonDown(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, __int16 a4) {
+void BWFXN_Game_ButtonDown(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
     int address = 0x4d19c0;
     __asm {
         xor eax, eax
@@ -17356,7 +17361,7 @@ void BWFXN_Game_ButtonDown(int result, void (__thiscall *a2)(dlgEvent *), unsign
         call address
     }
 }
-void Game_BtnDoubleClick(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, __int16 a4) {
+void Game_BtnDoubleClick(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
     int address = 0x4d1a50;
     __asm {
         xor eax, eax
@@ -21462,6 +21467,7 @@ char(&aApril)[6] = * ((decltype(&aApril)) 0x4ff4dc);
 char(&aMarch)[6] = * ((decltype(&aMarch)) 0x4ff4e4);
 char(&aFebruary)[9] = * ((decltype(&aFebruary)) 0x4ff4ec);
 char(&aJanuary)[8] = * ((decltype(&aJanuary)) 0x4ff4f8);
+void *& off_4FF500 = * ((decltype(&off_4FF500)) 0x4ff500);
 char(&aNov)[4] = * ((decltype(&aNov)) 0x4ff504);
 char(&aOct)[4] = * ((decltype(&aOct)) 0x4ff508);
 char(&aSep)[4] = * ((decltype(&aSep)) 0x4ff50c);
@@ -23013,6 +23019,7 @@ __int16& word_50B4FA = * ((decltype(&word_50B4FA)) 0x50b4fa);
 __int16& word_50B50A = * ((decltype(&word_50B50A)) 0x50b50a);
 __int16& word_50B51A = * ((decltype(&word_50B51A)) 0x50b51a);
 int& __xc_z_0 = * ((decltype(&__xc_z_0)) 0x50c4bc);
+int (*&dword_50C4D4)(void) = *((decltype(&dword_50C4D4)) 0x50c4d4);
 int& __xt_a_0 = * ((decltype(&__xt_a_0)) 0x50c4d8);
 int& __xt_z_0 = * ((decltype(&__xt_z_0)) 0x50c4e0);
 int& __xt_a_1 = * ((decltype(&__xt_a_1)) 0x50c4e4);
@@ -23039,6 +23046,7 @@ int& dword_50CA18 = * ((decltype(&dword_50CA18)) 0x50ca18);
 int& dword_50CA1C = * ((decltype(&dword_50CA1C)) 0x50ca1c);
 wchar_t *& off_50CB80 = * ((decltype(&off_50CB80)) 0x50cb80);
 void *& off_50CB84 = * ((decltype(&off_50CB84)) 0x50cb84);
+char *(&off_50CB98)[43] = * ((decltype(&off_50CB98)) 0x50cb98);
 void *& off_50CC54 = * ((decltype(&off_50CC54)) 0x50cc54);
 void *& off_50CC58 = * ((decltype(&off_50CC58)) 0x50cc58);
 void *& off_50CC5C = * ((decltype(&off_50CC5C)) 0x50cc5c);
@@ -23233,7 +23241,7 @@ char(&aBigok_dialog)[13] = * ((decltype(&aBigok_dialog)) 0x5159d8);
 char(&aOkcancel_dialo)[16] = * ((decltype(&aOkcancel_dialo)) 0x5159f8);
 char(&aBigokcancel_dialog)[19] = * ((decltype(&aBigokcancel_dialog)) 0x515a18);
 DatLoad(&flingyDat)[8] = * ((decltype(&flingyDat)) 0x515a38);
-int (*(&off_515A98)[24])() = * ((decltype(&off_515A98)) 0x515a98);
+int (*(&trigger_conditions)[24])() = * ((decltype(&trigger_conditions)) 0x515a98);
 char(&byte_515AF8)[] = * ((decltype(&byte_515AF8)) 0x515af8);
 char(&byte_515B08)[] = * ((decltype(&byte_515B08)) 0x515b08);
 __int16(&word_515B18)[] = * ((decltype(&word_515B18)) 0x515b18);
@@ -23294,6 +23302,7 @@ char(&a_au_hiddenctrl)[18] = * ((decltype(&a_au_hiddenctrl)) 0x51a370);
 FnInteract(&off_51A388)[11] = * ((decltype(&off_51A388)) 0x51a388);
 int& consoleRaceSpecific = * ((decltype(&consoleRaceSpecific)) 0x51a3b4);
 char(&a_autgame_hdr_node)[21] = * ((decltype(&a_autgame_hdr_node)) 0x51a3c0);
+int& is_cursor_shown = * ((decltype(&is_cursor_shown)) 0x51a3d8);
 char(&a_autsaved_game_node)[23] = * ((decltype(&a_autsaved_game_node)) 0x51a3ec);
 FnInteract(&off_51A404)[8] = * ((decltype(&off_51A404)) 0x51a404);
 char(&a_austreamed)[15] = * ((decltype(&a_austreamed)) 0x51a42c);
@@ -23759,29 +23768,7 @@ InputProcedure& AcceleratorTables = * ((decltype(&AcceleratorTables)) 0x5968fc);
 GamePosition& gwGameMode = * ((decltype(&gwGameMode)) 0x596904);
 char(&byte_596910)[260] = * ((decltype(&byte_596910)) 0x596910);
 int& dword_596A14 = * ((decltype(&dword_596A14)) 0x596a14);
-char(&is_keycode_used)[] = * ((decltype(&is_keycode_used)) 0x596a18);
-char& byte_596A20 = * ((decltype(&byte_596A20)) 0x596a20);
-char& is_holding_shift = * ((decltype(&is_holding_shift)) 0x596a28);
-char& is_holding_ctrl = * ((decltype(&is_holding_ctrl)) 0x596a29);
-char& is_holding_alt = * ((decltype(&is_holding_alt)) 0x596a2a);
-char& byte_596A39 = * ((decltype(&byte_596A39)) 0x596a39);
-char& byte_596A3A = * ((decltype(&byte_596A3A)) 0x596a3a);
-char& byte_596A3B = * ((decltype(&byte_596A3B)) 0x596a3b);
-char& byte_596A3C = * ((decltype(&byte_596A3C)) 0x596a3c);
-char& byte_596A3D = * ((decltype(&byte_596A3D)) 0x596a3d);
-char& byte_596A3E = * ((decltype(&byte_596A3E)) 0x596a3e);
-char& byte_596A3F = * ((decltype(&byte_596A3F)) 0x596a3f);
-char& byte_596A40 = * ((decltype(&byte_596A40)) 0x596a40);
-char& byte_596A78 = * ((decltype(&byte_596A78)) 0x596a78);
-char& byte_596A79 = * ((decltype(&byte_596A79)) 0x596a79);
-char& byte_596A7A = * ((decltype(&byte_596A7A)) 0x596a7a);
-char& byte_596A7B = * ((decltype(&byte_596A7B)) 0x596a7b);
-char& byte_596A7C = * ((decltype(&byte_596A7C)) 0x596a7c);
-char& byte_596A7D = * ((decltype(&byte_596A7D)) 0x596a7d);
-char& byte_596A7E = * ((decltype(&byte_596A7E)) 0x596a7e);
-char& byte_596A7F = * ((decltype(&byte_596A7F)) 0x596a7f);
-char& byte_596A80 = * ((decltype(&byte_596A80)) 0x596a80);
-char& byte_596A81 = * ((decltype(&byte_596A81)) 0x596a81);
+char(&is_keycode_used)[256] = * ((decltype(&is_keycode_used)) 0x596a18);
 dialog *& dlg = * ((decltype(&dlg)) 0x596b18);
 int(&dword_596B20)[] = * ((decltype(&dword_596B20)) 0x596b20);
 int& dword_596B24 = * ((decltype(&dword_596B24)) 0x596b24);
@@ -23791,6 +23778,7 @@ int& possible_gamescreen_y_min = * ((decltype(&possible_gamescreen_y_min)) 0x596
 int& dword_596B70 = * ((decltype(&dword_596B70)) 0x596b70);
 int& possible_gamescreen_y_max = * ((decltype(&possible_gamescreen_y_max)) 0x596b74);
 LPTOP_LEVEL_EXCEPTION_FILTER& lpTopLevelExceptionFilter = * ((decltype(&lpTopLevelExceptionFilter)) 0x596b78);
+int(&dword_596B7C)[12] = * ((decltype(&dword_596B7C)) 0x596b7c);
 int& dword_596BAC = * ((decltype(&dword_596BAC)) 0x596bac);
 int& dword_596BB0 = * ((decltype(&dword_596BB0)) 0x596bb0);
 int& dword_596BB4 = * ((decltype(&dword_596BB4)) 0x596bb4);
@@ -24673,7 +24661,7 @@ int& dword_68FEE0 = * ((decltype(&dword_68FEE0)) 0x68fee0);
 int& dword_68FEE4 = * ((decltype(&dword_68FEE4)) 0x68fee4);
 AI_Main(&AIScriptController)[8] = * ((decltype(&AIScriptController)) 0x68fee8);
 int& dword_692628 = * ((decltype(&dword_692628)) 0x692628);
-__int16(&word_69262C)[] = * ((decltype(&word_69262C)) 0x69262c);
+unsigned __int16(&word_69262C)[24] = * ((decltype(&word_69262C)) 0x69262c);
 int& dword_69265C = * ((decltype(&dword_69265C)) 0x69265c);
 int(&dword_692660)[] = * ((decltype(&dword_692660)) 0x692660);
 int& dword_692684 = * ((decltype(&dword_692684)) 0x692684);
@@ -24722,12 +24710,12 @@ int& dword_6957A0 = * ((decltype(&dword_6957A0)) 0x6957a0);
 int& dword_6957A4 = * ((decltype(&dword_6957A4)) 0x6957a4);
 int& dword_6957A8 = * ((decltype(&dword_6957A8)) 0x6957a8);
 int& dword_6957AC = * ((decltype(&dword_6957AC)) 0x6957ac);
-int(&dword_6957B0)[] = * ((decltype(&dword_6957B0)) 0x6957b0);
+int(&dword_6957B0)[8] = * ((decltype(&dword_6957B0)) 0x6957b0);
 int& dword_6957D0 = * ((decltype(&dword_6957D0)) 0x6957d0);
 int& dword_6957D4 = * ((decltype(&dword_6957D4)) 0x6957d4);
 int& dword_6957D8 = * ((decltype(&dword_6957D8)) 0x6957d8);
 AiCaptain *(&AiRegionCaptains)[1] = * ((decltype(&AiRegionCaptains)) 0x69a604);
-char(&byte_69A628)[] = * ((decltype(&byte_69A628)) 0x69a628);
+char(&byte_69A628)[19988] = * ((decltype(&byte_69A628)) 0x69a628);
 int(&dword_69F448)[] = * ((decltype(&dword_69F448)) 0x69f448);
 int& dword_69F44C = * ((decltype(&dword_69F44C)) 0x69f44c);
 int& dword_69F450 = * ((decltype(&dword_69F450)) 0x69f450);
@@ -24883,6 +24871,7 @@ int& PrintXY_PositionX = * ((decltype(&PrintXY_PositionX)) 0x6ce108);
 int& dword_6CE10C = * ((decltype(&dword_6CE10C)) 0x6ce10c);
 char& PrintXY_Size = * ((decltype(&PrintXY_Size)) 0x6ce110);
 char& byte_6CE111 = * ((decltype(&byte_6CE111)) 0x6ce111);
+char(&byte_6CE118)[392] = * ((decltype(&byte_6CE118)) 0x6ce118);
 CycleStruct(&cycle_colors)[8] = * ((decltype(&cycle_colors)) 0x6ce2a0);
 PALETTEENTRY(&GamePalette)[256] = * ((decltype(&GamePalette)) 0x6ce320);
 PALETTEENTRY(&stru_6CE720)[256] = * ((decltype(&stru_6CE720)) 0x6ce720);
@@ -25497,7 +25486,7 @@ int& dword_6D6374 = * ((decltype(&dword_6D6374)) 0x6d6374);
 int& dword_6D6378 = * ((decltype(&dword_6D6378)) 0x6d6378);
 int& dword_6D637C = * ((decltype(&dword_6D637C)) 0x6d637c);
 int& message_handling_tick = * ((decltype(&message_handling_tick)) 0x6d6380);
-HINSTANCE& dword_6D6384 = * ((decltype(&dword_6D6384)) 0x6d6384);
+HCURSOR& cursor = * ((decltype(&cursor)) 0x6d6384);
 int& dword_6D6388 = * ((decltype(&dword_6D6388)) 0x6d6388);
 char& byte_6D638C = * ((decltype(&byte_6D638C)) 0x6d638c);
 SfxData& dword_6D6390 = * ((decltype(&dword_6D6390)) 0x6d6390);
@@ -25611,5 +25600,4 @@ int& dword_6DD684 = * ((decltype(&dword_6DD684)) 0x6dd684);
 void *& dword_6DD688 = * ((decltype(&dword_6DD688)) 0x6dd688);
 int& dword_6DD68C = * ((decltype(&dword_6DD68C)) 0x6dd68c);
 int& dword_6DD690 = * ((decltype(&dword_6DD690)) 0x6dd690);
-
 #undef DECL_FUNC
