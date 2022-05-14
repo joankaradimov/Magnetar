@@ -215,9 +215,6 @@ class Function:
         return result
 
     def build_export_definition(self):
-        if self.skip:
-            return ''
-
         if self.name.find('@') >= 0:
             raise IdbExportError('Function name contains invalid character: %s' % self.name)
 
@@ -227,9 +224,6 @@ class Function:
             return self.get_usercall_wrapper()
 
     def build_export_declaration(self):
-        if self.skip:
-            return ''
-
         if is_function_pointer(self.signature):
             return 'extern ' + self.signature + ';\n'
         else:
@@ -487,6 +481,9 @@ def export_functions(declarations, definitions):
     text_segment = idaapi.get_segm_by_name('.text')
     for function_ea in Functions(text_segment.start_ea, text_segment.end_ea):
         function = Function(function_ea)
+        if function.skip:
+            continue
+
         declaration = function.build_export_declaration()
         definition = function.build_export_definition()
 
