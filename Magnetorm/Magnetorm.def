@@ -142,7 +142,7 @@ EXPORTS
     SCodeGetPseudocode = StormLibCodeGetPseudocode @335
 
     SDrawAutoInitialize = StormLibDrawAutoInitialize @341
-    SDrawCaptureScreen = StormLibDrawCaptureScreen @342
+    SDrawCaptureScreen@4 = StormLibDrawCaptureScreen @342
     SDrawClearSurface = StormLibDrawClearSurface @343
     SDrawDestroy = StormLibDrawDestroy @344
     SDrawFlipPage = StormLibDrawFlipPage @345

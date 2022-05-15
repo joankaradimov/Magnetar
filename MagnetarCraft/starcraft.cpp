@@ -5961,6 +5961,34 @@ LABEL_28:
 
 FAIL_STUB_PATCH(SwitchMenu);
 
+void TakeScreenshot_()
+{
+	SYSTEMTIME SystemTime;
+	GetLocalTime(&SystemTime);
+
+	char buff[MAX_PATH];
+	_snprintf(
+		buff,
+		MAX_PATH,
+		"SCScrnShot_%02d%02d%02d_%02d%02d%02d.pcx",
+		SystemTime.wMonth,
+		SystemTime.wDay,
+		SystemTime.wYear % 100,
+		SystemTime.wHour,
+		SystemTime.wMinute,
+		SystemTime.wSecond);
+
+	if (SDrawCaptureScreen(buff) && gwGameMode == GAME_RUN)
+	{
+		char* v0 = (*networkTable > 0x6Du) ? (char*)networkTable + networkTable[110] : "";
+		char text[512];
+		_snprintf(text, 0x200u, v0, buff);
+		InfoMessage(2000, text);
+	}
+}
+
+FAIL_STUB_PATCH(TakeScreenshot);
+
 LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	dlgEvent v16;
@@ -6038,7 +6066,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		is_keycode_used[VK_MENU] = (GetKeyState(VK_MENU) & 0x8000) != 0;
 		if (wParam == VK_SNAPSHOT)
 		{
-			TakeScreenshot();
+			TakeScreenshot_();
 			return 1;
 		}
 		if ((InputFlags & 0x2A) == 0)
