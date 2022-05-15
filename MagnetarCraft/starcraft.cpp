@@ -2311,8 +2311,7 @@ void DestroyGame_()
 			SMemFree(v4, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 333, 0);
 			SAIPathing->contours = 0;
 		}
-		SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
-		SAIPathing = 0;
+		FreeSAI_Paths();
 	}
 	if (aiscript_bin_data)
 	{
