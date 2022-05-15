@@ -3092,6 +3092,45 @@ FAIL_STUB_PATCH(CopySectionData);
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
+void AllocateSAI_Paths_()
+{
+	SAIPathing = (SAI_Paths*) SMemAlloc(621088, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
+	memset(SAIPathing, 0, sizeof(SAI_Paths));
+}
+
+FAIL_STUB_PATCH(AllocateSAI_Paths);
+
+MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
+
+bool SAI_PathCreate_(MegatileFlags* a1)
+{
+	AllocateSAI_Paths_();
+	LOWORD(SAIPathing->regionCount) = 0; // TODO: this looks redundant
+
+	SAI_PathCreate_Sub1(a1);
+
+	PathCreateRelated v5;
+	v5.field0 = 0;
+	v5.field1 = 0;
+	v5.map_size = map_size;
+	CreateUIUnreachableRegion(SAIPathing);
+
+	if (!SAI_PathCreate_Sub3(&v5, SAIPathing))
+	{
+		return false;
+	}
+
+	SAI_PathCreate_Sub4(SAIPathing);
+	for (int i = 0; i < SLOWORD(SAIPathing->regionCount); i++)
+	{
+		SaiRegion* sai_region = SAIPathing->regions + i;
+		sai_region->defencePriority = SAI_PathCreate_Sub5(sai_region);
+	}
+	return true;
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate);
+
 bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 {
 	if (a2 > MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID) || section_data->start_address + section_data->size > section_data->next_section)
@@ -3124,7 +3163,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 
 	SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
 	AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
-	return SAI_PathCreate(active_tiles) != 0;
+	return SAI_PathCreate_(active_tiles) != 0;
 }
 
 FAIL_STUB_PATCH(ChkLoader_MTXM);
