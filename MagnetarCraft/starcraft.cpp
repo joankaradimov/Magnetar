@@ -2133,7 +2133,7 @@ signed int LoadGameInit_()
 	if (InReplay)
 	{
 		if (!scenarioChk)
-			LoadReplayFile(CurrentMapFileName, 0);
+			LoadReplayFile(CurrentMapFileName, NULL);
 		if (InReplay)
 		{
 			for (int i = 0; i < 8; i++)
