@@ -2400,7 +2400,7 @@ DECL_FUNC(int (__stdcall*sub_422600)(int, char), sub_422600, 0x422600);
 DECL_FUNC(int (__stdcall*sub_4228E0)(int), sub_4228E0, 0x4228e0);
 DECL_FUNC(int(*nullsub_9)(), nullsub_9, 0x422a40);
 DECL_FUNC(int(*sub_422A50)(), sub_422A50, 0x422a50);
-signed int sub_422A90(_DWORD a1, int a2) {
+signed int sub_422A90(int a1, Position *a2) {
     int address = 0x422a90;
     signed result_;
     __asm {
@@ -19076,7 +19076,20 @@ int toggleUnitPath(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*getAllocatedPath)(), getAllocatedPath, 0x4e42f0);
-DECL_FUNC(int (__stdcall*sub_4E4380)(int), sub_4E4380, 0x4e4380);
+signed int sub_4E4380(Position *a1, int a2, int a3) {
+    int address = 0x4e4380;
+    signed result_;
+    __asm {
+        xor ebx, ebx
+        xor edi, edi
+        mov ebx, a1
+        mov edi, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4E44B0)(int), sub_4E44B0, 0x4e44b0);
 DECL_FUNC(int (__stdcall*sub_4E4520)(int), sub_4E4520, 0x4e4520);
 int sub_4E4590(dialog *a1) {
@@ -23262,6 +23275,7 @@ struct_4(&stru_5187EC)[375] = * ((decltype(&stru_5187EC)) 0x5187ec);
 struct_3(&stru_5193A0)[228] = * ((decltype(&stru_5193A0)) 0x5193a0);
 BriefingAction(&briefing_actions)[10] = * ((decltype(&briefing_actions)) 0x519e50);
 char *(&statusscreen_infobtn)[1] = * ((decltype(&statusscreen_infobtn)) 0x519f40);
+__int16(&word_519F54)[] = * ((decltype(&word_519F54)) 0x519f54);
 __int16(&word_519F5C)[] = * ((decltype(&word_519F5C)) 0x519f5c);
 __int16& word_519F64 = * ((decltype(&word_519F64)) 0x519f64);
 RegistryOptions *& off_519F7C = * ((decltype(&off_519F7C)) 0x519f7c);
@@ -23805,7 +23819,7 @@ int(&dword_597250)[] = * ((decltype(&dword_597250)) 0x597250);
 int(&dword_597254)[] = * ((decltype(&dword_597254)) 0x597254);
 int(&dword_597258)[] = * ((decltype(&dword_597258)) 0x597258);
 int(&dword_59725C)[] = * ((decltype(&dword_59725C)) 0x59725c);
-int(&dword_597260)[] = * ((decltype(&dword_597260)) 0x597260);
+int(&dword_597260)[7] = * ((decltype(&dword_597260)) 0x597260);
 int& dword_59727C = * ((decltype(&dword_59727C)) 0x59727c);
 char& byte_597280 = * ((decltype(&byte_597280)) 0x597280);
 dialog *& statlb_Dlg = * ((decltype(&statlb_Dlg)) 0x597284);
@@ -24021,7 +24035,7 @@ int& unknown_y_tile = * ((decltype(&unknown_y_tile)) 0x6284ac);
 int& unknown_y_pixel = * ((decltype(&unknown_y_pixel)) 0x6284b0);
 int& map_height_pixels = * ((decltype(&map_height_pixels)) 0x6284b4);
 CUnit *(&PlayerSelection)[12] = * ((decltype(&PlayerSelection)) 0x6284b8);
-PlayersSelections& playersSelections = * ((decltype(&playersSelections)) 0x6284e8);
+CUnit *(&playersSelections)[8][12] = * ((decltype(&playersSelections)) 0x6284e8);
 char(&validation_replay_path)[3072] = * ((decltype(&validation_replay_path)) 0x628668);
 char& league_maybe = * ((decltype(&league_maybe)) 0x629268);
 int(&dword_629284)[] = * ((decltype(&dword_629284)) 0x629284);
