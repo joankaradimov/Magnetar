@@ -5078,7 +5078,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			return genericDlgInteract(dlg, evt);
 		}
 	}
-	if (evt->wNo == EventNo::EVN_CHAR && evt->wVirtKey == 32)
+	if (evt->wNo == EventNo::EVN_CHAR && evt->wVirtKey == VK_SPACE)
 	{
 		return true;
 	}
