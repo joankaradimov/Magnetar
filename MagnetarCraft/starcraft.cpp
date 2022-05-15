@@ -641,6 +641,10 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 
 FAIL_STUB_PATCH(ErrorDDrawInit);
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+const int INTERFACE_HEIGHT = 96;
+
 BOOL BWFXN_DDrawInitialize_()
 {
 	PALETTEENTRY palette_entries[256];
@@ -659,7 +663,7 @@ BOOL BWFXN_DDrawInitialize_()
 	if (v6 != DDERR_EXCLUSIVEMODEALREADYSET && v6 != NULL)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetCooperativeLevel", v6, 0x66u, 148);
 #ifndef BYPASS_DDRAW_STUFF
-	if (DDInterface->SetDisplayMode(640, 480, 8))
+	if (DDInterface->SetDisplayMode(SCREEN_WIDTH, SCREEN_HEIGHT, 8))
 	{
 		int v7 = GetSystemMetrics(SM_CXSCREEN);
 		int v8 = GetSystemMetrics(SM_CYSCREEN);
@@ -691,8 +695,8 @@ BOOL BWFXN_DDrawInitialize_()
 		surface_desc.dwSize = 108;
 		surface_desc.dwFlags = 7;
 		surface_desc.ddsCaps.dwCaps = 2112;
-		surface_desc.dwWidth = 640;
-		surface_desc.dwHeight = 480;
+		surface_desc.dwWidth = SCREEN_WIDTH;
+		surface_desc.dwHeight = SCREEN_HEIGHT;
 		unsigned v13 = DDInterface->CreateSurface(&surface_desc, &BackSurface, 0);
 		if (v13)
 			ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "CreateBackSurface", v13, 0x66u, 220);
@@ -966,10 +970,10 @@ FAIL_STUB_PATCH(loadColorSettings);
 void audioVideoInit_()
 {
 	loadColorSettings_();
-	GameScreenBuffer.wid = 640;
-	GameScreenBuffer.ht = 480;
+	GameScreenBuffer.wid = SCREEN_WIDTH;
+	GameScreenBuffer.ht = SCREEN_HEIGHT;
 	GameScreenBuffer.data = 0;
-	GameScreenBuffer.data = (u8 *)SMemAlloc(640 * 480, "Starcraft\\SWAR\\lang\\gds\\vidinimo.cpp", 55, 0);
+	GameScreenBuffer.data = (u8 *)SMemAlloc(SCREEN_WIDTH * SCREEN_HEIGHT, "Starcraft\\SWAR\\lang\\gds\\vidinimo.cpp", 55, 0);
 	BWFXN_DDrawInitialize_();
 	dword_6D5DF8 = 1;
 	AppAddExit_(vidinimoDestroy);
@@ -2643,7 +2647,7 @@ GamePosition BeginGame_(MenuPosition a1)
 {
 	visionUpdateCount = 1;
 	DLGMusicFade((MusicTrack) currentMusicId);
-	SetCursorPos(320, 240);
+	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	GameState = 1;
 	TickCountSomething(0);
 	DoGameLoop_(a1);
@@ -3266,10 +3270,6 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 
 FAIL_STUB_PATCH(ChkLoader_THG2);
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int INTERFACE_HEIGHT = 96;
-
 int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 {
 	if (a2->unit_type != Special_Start_Location)
@@ -3553,7 +3553,7 @@ void initMapData_()
 
 	word_6556FC = 0;
 	byte_66FF5C = 0;
-	MapTileArray = (TileID *)SMemAlloc(0x80000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
+	MapTileArray = (TileID *)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
 	CellMap = (__int16*)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
 	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
 	active_tiles = (MegatileFlags*)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
@@ -6667,9 +6667,9 @@ void GameMainLoop_()
 	AppAddExit_(SaveCPUThrottleOption);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
 		CpuThrottle = phFile != 0;
-	SetCursorPos(320, 240);
-	Mouse.x = 320;
-	Mouse.y = 240;
+	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	Mouse.x = SCREEN_WIDTH / 2;
+	Mouse.y = SCREEN_HEIGHT / 2;
 	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
 		SFileCloseFile(phFile);
