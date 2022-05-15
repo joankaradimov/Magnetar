@@ -18211,7 +18211,7 @@ GamePosition BeginGame(MenuPosition a1) {
 DECL_FUNC(int(*sub_4D9AA0)(), sub_4D9AA0, 0x4d9aa0);
 DECL_FUNC(int(*sub_4D9AB0)(), sub_4D9AB0, 0x4d9ab0);
 DECL_FUNC(void (__thiscall*DestroyFontKey)(bool exit_code), DestroyFontKey, 0x4d9ac0);
-DECL_FUNC(int(*sub_4D9B10)(), sub_4D9B10, 0x4d9b10);
+DECL_FUNC(void(*DetectExpansionInstallation)(), DetectExpansionInstallation, 0x4d9b10);
 void ClearAndFreeCdkeyStrings(const char *cdkeyowner, const char *cdkey) {
     int address = 0x4d9b50;
     __asm {
@@ -25036,7 +25036,7 @@ char& byte_6D11D0 = * ((decltype(&byte_6D11D0)) 0x6d11d0);
 int& dword_6D11D4 = * ((decltype(&dword_6D11D4)) 0x6d11d4);
 int& dword_6D11D8 = * ((decltype(&dword_6D11D8)) 0x6d11d8);
 int& dword_6D11DC = * ((decltype(&dword_6D11DC)) 0x6d11dc);
-int& dword_6D11E4 = * ((decltype(&dword_6D11E4)) 0x6d11e4);
+int& is_expansion_installed = * ((decltype(&is_expansion_installed)) 0x6d11e4);
 int& dword_6D11E8 = * ((decltype(&dword_6D11E8)) 0x6d11e8);
 char& GameState = * ((decltype(&GameState)) 0x6d11ec);
 int& dword_6D11F0 = * ((decltype(&dword_6D11F0)) 0x6d11f0);

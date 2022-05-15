@@ -252,6 +252,22 @@ void LoadMainModuleStringInfo_()
 
 FAIL_STUB_PATCH(LoadMainModuleStringInfo);
 
+void DetectExpansionInstallation_()
+{
+	HANDLE phFile;
+	if (SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile))
+	{
+		SFileCloseFile(phFile);
+		is_expansion_installed = 1;
+	}
+	else
+	{
+		is_expansion_installed = 0;
+	}
+}
+
+FAIL_STUB_PATCH(DetectExpansionInstallation);
+
 int InitializeArchiveHandles_()
 {
 	CHAR Filename[MAX_PATH];
@@ -329,15 +345,8 @@ int InitializeArchiveHandles_()
 			broodat_mpq = 0;
 		}
 	}
-	if (SFileOpenFileEx(0, "rez\\epilogX.txt", 0, &phFile))
-	{
-		SFileCloseFile(phFile);
-		dword_6D11E4 = 1;
-	}
-	else
-	{
-		dword_6D11E4 = 0;
-	}
+
+	DetectExpansionInstallation_();
 	return SStrNCat(broodat_mpq_path, Filename, 520);
 }
 
@@ -5027,7 +5036,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					BWFXN_gluPOK_MBox(s);
 					return true;
 				}
-				if (dword_6D11E4)
+				if (is_expansion_installed)
 				{
 					if (SelGameMode_(0))
 					{
@@ -5037,7 +5046,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				break;
 			case 4:
-				if (dword_6D11E4)
+				if (is_expansion_installed)
 				{
 					if (SelGameMode_(1))
 					{
@@ -5811,7 +5820,7 @@ int SwitchMenu_()
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
-		if (level_cheat_is_bw && !dword_6D11E4 || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
+		if (level_cheat_is_bw && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
 		{
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			IsExpansion = 0;
@@ -6304,7 +6313,7 @@ void CreateMainWindow_()
 		FatalError("RegisterClass");
 	}
 
-	const char* v0 = dword_6D11E4 ? "Brood War" : "Starcraft";
+	const char* v0 = is_expansion_installed ? "Brood War" : "Starcraft";
 	int v3 = GetSystemMetrics(1);
 	int v1 = GetSystemMetrics(0);
 	hWndParent = CreateWindowExA(0, "SWarClass", v0, 0x90080000, 0, 0, v1, v3, 0, 0, hInst, 0);
@@ -6659,7 +6668,7 @@ void BeginCredits_()
 
 	DLGMusicFade(MT_TERRAN2);
 	credits_interrupted = 0;
-	if (dword_6D11E4)
+	if (is_expansion_installed)
 	{
 		loadInitCreditsBIN_("crdt_exp");
 	}
@@ -6716,7 +6725,7 @@ void GameMainLoop_()
 					}
 				}
 				BWFXN_RedrawTarget();
-				if (!dword_6D11E4)
+				if (!is_expansion_installed)
 					IsExpansion = 0;
 				switch (gwGameMode)
 				{
