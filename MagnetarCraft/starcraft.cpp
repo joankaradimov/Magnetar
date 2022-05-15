@@ -3027,7 +3027,7 @@ FAIL_STUB_PATCH(ChkLoader_STR);
 
 bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapChunks* a3)
 {
-	if (section_size % 2400u != 0)
+	if (section_size % sizeof(BriefingEntry) != 0)
 	{
 		return false;
 	}
@@ -3036,9 +3036,9 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 		return false;
 	}
 
-	for (int i = 0; i < section_size / 2400; i++)
+	for (int i = 0; i < section_size / sizeof(BriefingEntry); i++)
 	{
-		if (!AddBriefingTrigger((BriefingEntry*) section_data->start_address + i * 2400))
+		if (!AddBriefingTrigger((BriefingEntry*) section_data->start_address + i * sizeof(BriefingEntry)))
 		{
 			break;
 		}
