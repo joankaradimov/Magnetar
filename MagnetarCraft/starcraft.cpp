@@ -3142,7 +3142,6 @@ MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
 bool SAI_PathCreate_(MegatileFlags* a1)
 {
 	AllocateSAI_Paths_();
-	LOWORD(SAIPathing->regionCount) = 0; // TODO: this looks redundant
 
 	SAI_PathCreate_Sub1(a1);
 
