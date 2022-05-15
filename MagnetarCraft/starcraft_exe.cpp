@@ -10730,13 +10730,13 @@ int SAI_PathCreate_Sub1(MegatileFlags *a1) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*freeSaiPaths)(), freeSaiPaths, 0x483dd0);
-int SAI_PathCreate_Sub3_0(SAI_Paths *a1, int a2, DWORD dwProcessId) {
+int SAI_PathCreate_Sub3_0(SAI_Paths *a1, Position a2, MapSize size_) {
     int address = 0x483e30;
     int result_;
     __asm {
         xor edi, edi
         mov edi, a1
-        push dword ptr dwProcessId
+        push dword ptr size_
         push dword ptr a2
         call address
         mov result_, eax
@@ -13289,7 +13289,18 @@ DECL_FUNC(int(*sub_49C900)(), sub_49C900, 0x49c900);
 DECL_FUNC(int(*sub_49C930)(), sub_49C930, 0x49c930);
 DECL_FUNC(int(*sub_49C950)(), sub_49C950, 0x49c950);
 DECL_FUNC(int(*sub_49C980)(), sub_49C980, 0x49c980);
-DECL_FUNC(int (__stdcall*SAI_GetRegionIdFromPx)(int), SAI_GetRegionIdFromPx, 0x49c9a0);
+u16 SAI_GetRegionIdFromPx(__int16 x, __int16 y) {
+    int address = 0x49c9a0;
+    u16 result_;
+    __asm {
+        xor eax, eax
+        mov ax, x
+        push dword ptr y
+        call address
+        mov result_, ax
+    }
+    return result_;
+}
 unsigned __int16 GetRegionIdAtPosEx(signed int x, signed int y) {
     int address = 0x49c9f0;
     unsigned result_;
@@ -17335,7 +17346,7 @@ void Game_MouseWheel(EventNo wNo, int a2, InputProcedure a3) {
         call address
     }
 }
-void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
+void BWFXN_Game_ButtonUp(int a1, InputProcedure a2, Position a3, EventNo a4) {
     int address = 0x4d1940;
     __asm {
         xor eax, eax
@@ -17348,26 +17359,26 @@ void BWFXN_Game_ButtonUp(int a1, void (__thiscall *a2)(dlgEvent *), unsigned int
         call address
     }
 }
-void BWFXN_Game_ButtonDown(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
+void BWFXN_Game_ButtonDown(int a1, InputProcedure a2, Position a3, EventNo a4) {
     int address = 0x4d19c0;
     __asm {
         xor eax, eax
         xor edi, edi
         xor esi, esi
-        mov eax, result
+        mov eax, a1
         mov edi, a2
         mov esi, a3
         push dword ptr a4
         call address
     }
 }
-void Game_BtnDoubleClick(int result, void (__thiscall *a2)(dlgEvent *), unsigned int a3, EventNo a4) {
+void Game_BtnDoubleClick(int a1, InputProcedure a2, Position a3, EventNo a4) {
     int address = 0x4d1a50;
     __asm {
         xor eax, eax
         xor edi, edi
         xor esi, esi
-        mov eax, result
+        mov eax, a1
         mov edi, a2
         mov esi, a3
         push dword ptr a4
@@ -19076,7 +19087,7 @@ int toggleUnitPath(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*getAllocatedPath)(), getAllocatedPath, 0x4e42f0);
-signed int sub_4E4380(Position *a1, int a2, int a3) {
+signed int sub_4E4380(Position *a1, int a2, Position a3) {
     int address = 0x4e4380;
     signed result_;
     __asm {
@@ -19091,7 +19102,18 @@ signed int sub_4E4380(Position *a1, int a2, int a3) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4E44B0)(int), sub_4E44B0, 0x4e44b0);
-DECL_FUNC(int (__stdcall*sub_4E4520)(int), sub_4E4520, 0x4e4520);
+signed int sub_4E4520(CUnit *a1, Position *a2) {
+    int address = 0x4e4520;
+    signed result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4E4590(dialog *a1) {
     int address = 0x4e4590;
     int result_;
@@ -22363,7 +22385,7 @@ int (__stdcall *(&off_50439C)[2])(int) = * ((decltype(&off_50439C)) 0x50439c);
 char(&aStarcraftSw_34)[32] = * ((decltype(&aStarcraftSw_34)) 0x5043a8);
 char(&aStarcraftSw_98)[] = * ((decltype(&aStarcraftSw_98)) 0x5043c8);
 char(&aStarcraftSw_33)[30] = * ((decltype(&aStarcraftSw_33)) 0x5043ec);
-char(&aTheMapCouldNot)[167] = * ((decltype(&aTheMapCouldNot)) 0x504410);
+const CHAR(&aTheMapCouldNot)[] = * ((decltype(&aTheMapCouldNot)) 0x504410);
 char(&aStarcraftSw_29)[] = * ((decltype(&aStarcraftSw_29)) 0x5044b8);
 char(&aRezSpd_dlg_bin)[] = * ((decltype(&aRezSpd_dlg_bin)) 0x5044e0);
 char(&aStarcraftSw_82)[] = * ((decltype(&aStarcraftSw_82)) 0x5044f0);
@@ -22436,7 +22458,7 @@ char(&aRezLmission_bi)[] = * ((decltype(&aRezLmission_bi)) 0x504880);
 char(&aRezWmission_bi)[] = * ((decltype(&aRezWmission_bi)) 0x504894);
 char(&aRezSnd_dlg_bin)[] = * ((decltype(&aRezSnd_dlg_bin)) 0x5048a8);
 char(&aRezStatport_bi)[] = * ((decltype(&aRezStatport_bi)) 0x5048b8);
-char(&a1)[] = * ((decltype(&a1)) 0x5048cc);
+char(&aArrPortdata)[] = * ((decltype(&aArrPortdata)) 0x5048cc);
 char(&aGame)[6] = * ((decltype(&aGame)) 0x5048e0);
 char(&aConover_pcx)[12] = * ((decltype(&aConover_pcx)) 0x5048e8);
 char(&aStarcraftSw_28)[] = * ((decltype(&aStarcraftSw_28)) 0x5048f4);

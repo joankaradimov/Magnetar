@@ -3147,8 +3147,8 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	SAI_PathCreate_Sub1(a1);
 
 	PathCreateRelated v5;
-	v5.field0 = 0;
-	v5.field1 = 0;
+	v5.position.x = 0;
+	v5.position.y = 0;
 	v5.map_size = map_size;
 	CreateUIUnreachableRegion(SAIPathing);
 
@@ -3158,7 +3158,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	}
 
 	SAI_PathCreate_Sub4(SAIPathing);
-	for (int i = 0; i < SLOWORD(SAIPathing->regionCount); i++)
+	for (int i = 0; i < SAIPathing->regionCount; i++)
 	{
 		SaiRegion* sai_region = SAIPathing->regions + i;
 		sai_region->defencePriority = SAI_PathCreate_Sub5(sai_region);
