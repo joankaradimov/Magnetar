@@ -3207,6 +3207,7 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 }
 
 FAIL_STUB_PATCH(ChkLoader_MTXM);
+FAIL_STUB_PATCH(sub_49CC30);
 
 struct Thingy2Entry
 {
