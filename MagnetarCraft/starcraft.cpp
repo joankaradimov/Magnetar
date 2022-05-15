@@ -2086,6 +2086,47 @@ int RestartGame_()
 
 FAIL_STUB_PATCH(RestartGame);
 
+int LoadGameCore_()
+{
+	memset(PlayerSelection, 0, sizeof(PlayerSelection));
+	memset(playersSelections, 0, sizeof(playersSelections));
+	dword_59724C[0] = 0;
+	dword_597250[0] = 0;
+	dword_597254[0] = 0;
+	setAlliance();
+	if (!loadGameFileHandle || loadGameFull())
+	{
+		setup_HUD();
+		dword_51CE8C[0] = -GetTickCount();
+		resetLastInputFrameCounts();
+		memcpy(dword_596B7C, playersSelections[g_LocalHumanID], sizeof(dword_596B7C));
+		memset(&playersSelections, 0, sizeof(playersSelections));
+		return 1;
+	}
+	else
+	{
+		if (!outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError(0, 0, 0, 98);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					replay_header.ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(LoadGameCore);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -2171,7 +2212,7 @@ signed int LoadGameInit_()
 		return 0;
 	}
 	GameCheats = (CheatFlags)((int)GameCheats & (CHEAT_NoGlues | CHEAT_Ophelia | 0x8000000)); // TODO: fix the mess with the flags
-	if (!LoadGameCore())
+	if (!LoadGameCore_())
 		return 0;
 	if (!mapStarted)
 	{
