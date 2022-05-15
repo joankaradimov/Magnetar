@@ -42,7 +42,7 @@ EXPORTS
     SNetSendReplayPath@12 = StormLibNetSendReplayPath @142
     SNetGetLeagueName = StormLibNetGetLeagueName @143
     SNetGetPlayerNames = StormLibGetPlayerNames @144
-    SNetLeagueLogout = StormLibNetLeagueLogout @145
+    SNetLeagueLogout@4 = StormLibNetLeagueLogout @145
     SNetGetLeaguePlayerName = StormLibNetGetLeaguePlayerName @146
 
     SDlgBeginPaint = StormLibDlgBeginPaint @201

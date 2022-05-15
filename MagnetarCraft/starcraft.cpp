@@ -5969,6 +5969,301 @@ LABEL_28:
 
 FAIL_STUB_PATCH(SwitchMenu);
 
+LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
+{
+	dlgEvent v16;
+
+	switch (Msg)
+	{
+	case WM_DESTROY:
+		hWndParent = NULL;
+		break;
+	case WM_PAINT:
+		{
+			PAINTSTRUCT paint;
+			BeginPaint(hWnd, &paint);
+			EndPaint(hWnd, &paint);
+		}
+		dword_6D5E1C = 1;
+		return 0;
+	case WM_CLOSE:
+		Game_Close();
+		return 0;
+	case WM_ERASEBKGND:
+	case WM_SETCURSOR:
+		return 1;
+	case WM_ACTIVATEAPP:
+		dword_51BFA8 = wParam;
+		GameShowCursor(dword_51BFA8 == 0);
+		doCursorClip(dword_51BFA8);
+		memset(is_keycode_used, 0, sizeof(is_keycode_used));
+		if (dword_51BFA8)
+		{
+			dword_6D5E1C = 1;
+			if (gwGameMode == GAME_GLUES && glGluesMode == MenuPosition::GLUE_BATTLE)
+			{
+				SetFocus(FindWindowA("SDlgDialog", 0));
+			}
+		}
+		break;
+	case WM_NCACTIVATE:
+		if (wParam)
+		{
+			memset(is_keycode_used, 0, sizeof(is_keycode_used));
+		}
+		break;
+	case WM_KEYDOWN:
+	case WM_SYSKEYDOWN:
+		is_keycode_used[wParam] = 1;
+		if (wParam == VK_NUMLOCK)
+		{
+			Game_NumLockInit();
+		}
+		is_keycode_used[VK_MENU] = (GetKeyState(VK_MENU) & 0x8000) != 0;
+		if ((InputFlags & 0x2A) == 0)
+		{
+			v16.wVirtKey = wParam;
+			v16.wUnk_0x0A = BWFXN_Game_KeyState();
+			v16.wNo = (lParam & 0x40000000) ? EVN_KEYRPT : EVN_KEYFIRST;
+			if (!sendInputToAllDialogs(&v16))
+			{
+				InputProcedure v11 = (lParam & 0x40000000) ? input_procedures[EventNo::EVN_KEYRPT] : input_procedures[EventNo::EVN_KEYDOWN];
+				if (v11)
+				{
+					v11(&v16);
+				}
+			}
+		}
+		if (wParam == VK_SCROLL)
+		{
+			dword_6D5E1C = 1;
+			return DefWindowProcA(hWnd, Msg, VK_SCROLL, lParam);
+		}
+		break;
+	case WM_KEYUP:
+	case WM_SYSKEYUP:
+		is_keycode_used[wParam] = 0;
+		is_keycode_used[VK_MENU] = (GetKeyState(VK_MENU) & 0x8000) != 0;
+		if (wParam == VK_SNAPSHOT)
+		{
+			TakeScreenshot();
+			return 1;
+		}
+		if ((InputFlags & 0x2A) == 0)
+		{
+			v16.wVirtKey = wParam;
+			v16.wUnk_0x0A = BWFXN_Game_KeyState();
+			v16.wNo = EventNo::EVN_KEYUP;
+			if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_KEYUP])
+			{
+				input_procedures[EventNo::EVN_KEYUP](&v16);
+			}
+		}
+		break;
+	case WM_CHAR:
+		if ((InputFlags & 0x2A) == 0)
+		{
+			v16.wNo = EventNo::EVN_CHAR;
+			v16.wVirtKey = wParam;
+			v16.wUnk_0x0A = BWFXN_Game_KeyState();
+			dlg = 0;
+			if (lParam & 0x40000000)
+			{
+				HIBYTE(v16.wUnk_0x0A) |= 1u;
+			}
+			if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+			{
+				input_procedures[EventNo::EVN_CHAR](&v16);
+			}
+		}
+		return 1;
+	case WM_IME_STARTCOMPOSITION:
+	case WM_IME_ENDCOMPOSITION:
+		return 1;
+	case WM_IME_COMPOSITION:
+		if (GetUserDefaultLangID() != 1042)
+		{
+			break;
+		}
+		if (InputFlags & 0x2A)
+		{
+			return 1;
+		}
+
+		{
+			HIMC v7 = ImmGetContext(hWnd);
+			DWORD v12;
+			if (lParam & 2048)
+			{
+				v12 = 2048;
+			}
+			else if (lParam & 8)
+			{
+				v12 = 8;
+			}
+			else
+			{
+				ImmReleaseContext(hWnd, v7);
+				break;
+			}
+			DWORD v14 = ImmGetCompositionStringA(v7, v12, 0, 0);
+			unsigned __int8* v13 = (unsigned __int8*)malloc(v14);
+			ImmGetCompositionStringA(v7, v12, v13, v14);
+			ImmReleaseContext(hWnd, v7);
+			if (dword_6DC2E0 == 1)
+			{
+				v16.wNo = EventNo::EVN_CHAR;
+				v16.wVirtKey = VK_BACK;
+				v16.wUnk_0x0A = 160;
+				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				{
+					input_procedures[EventNo::EVN_CHAR](&v16);
+				}
+				dword_6DC2E0 = 0;
+			}
+			if (v14 >= 2)
+			{
+				dlg = (dialog*)1;
+				dword_596A14 = 0;
+			}
+			if (v14 == 0)
+			{
+				goto LABEL_52;
+			}
+
+			int v10 = 0;
+			while (1)
+			{
+				v16.wNo = EventNo::EVN_CHAR;
+				v16.wVirtKey = v13[v10];
+				v16.wUnk_0x0A = 160;
+				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				{
+					input_procedures[EventNo::EVN_CHAR](&v16);
+				}
+				if (dword_596A14 == 1)
+				{
+					break;
+				}
+				if (++v10 >= v14)
+				{
+					if ((lParam & 8) != 0 && v14)
+					{
+						dword_6DC2E0 = 1;
+					}
+					goto LABEL_52;
+				}
+			}
+			ImmSetCompositionStringA(v7, 9u, 0, 0, 0, 0);
+			if (v10 == 1)
+			{
+				v16.wNo = EventNo::EVN_CHAR;
+				v16.wVirtKey = VK_BACK;
+				v16.wUnk_0x0A = 160;
+				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				{
+					input_procedures[EventNo::EVN_CHAR](&v16);
+				}
+				dword_6DC2E0 = 0;
+			}
+
+		LABEL_52:
+			free(v13);
+			ImmReleaseContext(hWnd, v7);
+			return 1;
+		}
+	case WM_COMMAND:
+		if (input_procedures[EventNo::EVN_SYSCHAR])
+		{
+			v16.wNo = EventNo::EVN_SYSCHAR;
+			v16.wVirtKey = wParam;
+			input_procedures[EventNo::EVN_SYSCHAR](&v16);
+		}
+		return 1;
+	case WM_SYSCOMMAND:
+		if (wParam != SC_CLOSE)
+		{
+			if (wParam != SC_KEYMENU && wParam != SC_PREVWINDOW)
+			{
+				break;
+			}
+		}
+		else if (!load_screen)
+		{
+			if (gwGameMode != GAME_RUN)
+			{
+				SNetLeagueLogout(playerName);
+				Game_Close();
+				return 0;
+			}
+			PostMessageA(hWnd, WM_COMMAND, 0xFFFF9C6B, 0);
+			return DefWindowProcA(hWnd, Msg, SC_RESTORE, lParam);
+		}
+
+		return 0;
+	case WM_MOUSEMOVE:
+		LOBYTE(InputFlags) = InputFlags | 1;
+		Mouse.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+		return 1;
+	case WM_LBUTTONDOWN:
+		BWFXN_Game_ButtonDown(2, input_procedures[EventNo::EVN_LBUTTONDOWN], lParam, EventNo::EVN_LBUTTONDOWN);
+		return 1;
+	case WM_LBUTTONUP:
+		BWFXN_Game_ButtonUp(2, input_procedures[EventNo::EVN_LBUTTONUP], lParam, EventNo::EVN_LBUTTONUP);
+		return 1;
+	case WM_LBUTTONDBLCLK:
+		Game_BtnDoubleClick(2, input_procedures[EventNo::EVN_LBUTTONDBLCLK], lParam, EventNo::EVN_LBUTTONDBLCLK);
+		return 1;
+	case WM_RBUTTONDOWN:
+		BWFXN_Game_ButtonDown(8, input_procedures[EventNo::EVN_RBUTTONDOWN], lParam, EventNo::EVN_RBUTTONDOWN);
+		return 1;
+	case WM_RBUTTONUP:
+		BWFXN_Game_ButtonUp(8, input_procedures[EventNo::EVN_RBUTTONUP], lParam, EventNo::EVN_RBUTTONUP);
+		return 1;
+	case WM_RBUTTONDBLCLK:
+		Game_BtnDoubleClick(8, input_procedures[EventNo::EVN_RBUTTONDBLCLK], lParam, EventNo::EVN_RBUTTONDBLCLK);
+		return 1;
+	case WM_MBUTTONDOWN:
+		BWFXN_Game_ButtonDown(32, input_procedures[EventNo::EVN_MBUTTONDOWN], lParam, EventNo::EVN_MBUTTONDOWN);
+		return 1;
+	case WM_MBUTTONUP:
+		BWFXN_Game_ButtonUp(32, input_procedures[EventNo::EVN_MBUTTONUP], lParam, EventNo::EVN_MBUTTONUP);
+		return 1;
+	case WM_MBUTTONDBLCLK:
+		Game_BtnDoubleClick(32, input_procedures[EventNo::EVN_MBUTTONDBLCLK], lParam, EventNo::EVN_MBUTTONDBLCLK);
+		return 1;
+	case WM_MOUSEWHEEL:
+		if (SHIWORD(wParam) >= 120)
+		{
+			Game_MouseWheel(EventNo::EVN_WHEELUP, lParam, input_procedures[EventNo::EVN_WHEELUP]);
+		}
+		else if (SHIWORD(wParam) <= -120)
+		{
+			Game_MouseWheel(EventNo::EVN_WHEELDWN, lParam, input_procedures[EventNo::EVN_WHEELDWN]);
+		}
+		return 1;
+	case WM_CAPTURECHANGED:
+		Game_Capturechanged();
+		break;
+	case WM_IME_NOTIFY:
+		GetUserDefaultLangID();
+		return DefWindowProcA(hWnd, WM_IME_NOTIFY, wParam, lParam);
+	case WM_QUERYNEWPALETTE:
+		dword_6D5E1C = 1;
+		return 1;
+	case WM_PALETTECHANGED:
+		if ((HWND)wParam != hWnd)
+		{
+			dword_6D5E1C = 1;
+		}
+		break;
+	}
+	return DefWindowProcA(hWnd, Msg, wParam, lParam);
+}
+
+FAIL_STUB_PATCH(MainWindowProc);
+
 void CreateMainWindow_()
 {
 	WNDCLASSEXA window_class;
@@ -5976,7 +6271,7 @@ void CreateMainWindow_()
 	memset(&window_class, 0, sizeof(window_class));
 	window_class.cbSize = sizeof(window_class);
 	window_class.style = 8;
-	window_class.lpfnWndProc = (WNDPROC)MainWindowProc;
+	window_class.lpfnWndProc = MainWindowProc_;
 	window_class.hInstance = hInst;
 	window_class.hIcon = LoadIconA(hInst, (LPCSTR)0x66);
 	window_class.hIconSm = (HICON)LoadImageA(hInst, (LPCSTR)0x66, 1u, 16, 16, 0x8000u);
