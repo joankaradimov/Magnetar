@@ -9,22 +9,16 @@
 
 signed int AppAddExit_(AppExitHandle a1)
 {
-	AppExitHandle* app_exit_handles_ = app_exit_handles;
 	if (!app_exit_handles)
 	{
-		app_exit_handles_ = (AppExitHandle *)SMemAlloc(
-			128,
-			"Starcraft\\SWAR\\lang\\gds\\appaddex.cpp",
-			42,
-			(int)app_exit_handles);
-		memset(app_exit_handles_, 0, 128u);
-		app_exit_handles = app_exit_handles_;
+		app_exit_handles = (AppExitHandle *)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gds\\appaddex.cpp", 42, (int)app_exit_handles);
+		memset(app_exit_handles, 0, 128u);
 	}
 	int v2 = -1;
 	int v3 = 0;
 	do
 	{
-		AppExitHandle exit_handle = app_exit_handles_[v3];
+		AppExitHandle exit_handle = app_exit_handles[v3];
 		if (exit_handle == a1)
 			return 0;
 		if (v2 == -1 && !exit_handle)
@@ -34,9 +28,8 @@ signed int AppAddExit_(AppExitHandle a1)
 	if (v2 == -1)
 	{
 		FatalError("APPADDEX:1");
-		app_exit_handles_ = app_exit_handles;
 	}
-	app_exit_handles_[v2] = a1;
+	app_exit_handles[v2] = a1;
 	return 1;
 }
 
