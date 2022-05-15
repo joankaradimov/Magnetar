@@ -2297,7 +2297,7 @@ void DestroyGame_()
 		if (gwGameMode == GAME_RUN)
 		{
 			hAccTable = DlgAccelerator;
-			input_procedures[16] = AcceleratorTables;
+			input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
 		}
 		byte_6D1214 = 0;
 	}
@@ -5008,7 +5008,7 @@ FAIL_STUB_PATCH(loadStareditProcess);
 
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5078,7 +5078,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			return genericDlgInteract(dlg, evt);
 		}
 	}
-	if (evt->wNo == EVN_CHAR && evt->wVirtKey == 32)
+	if (evt->wNo == EventNo::EVN_CHAR && evt->wVirtKey == 32)
 	{
 		return true;
 	}
@@ -5199,7 +5199,7 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 		{12, 2},
 	};
 
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5300,7 +5300,7 @@ FAIL_STUB_PATCH(selConn_connectionList_Create);
 
 bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5323,7 +5323,7 @@ FAIL_STUB_PATCH(selConn_ConnectionList_Interact);
 
 bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5375,7 +5375,7 @@ FAIL_STUB_PATCH(ConnSel_InitChildren);
 
 bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5514,7 +5514,7 @@ FAIL_STUB_PATCH(loadMenu_gluLoad);
 
 bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -5620,7 +5620,7 @@ FAIL_STUB_PATCH(gluScore_CustomCtrlID);
 
 bool __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
