@@ -2622,7 +2622,7 @@ void GameLoop_Top_(MenuPosition a1)
 		}
 		RecvMessage();
 		LeagueChatFilter();
-		if ((int)(v1 - dword_51CE94) >= 0)
+		if (v1 >= dword_51CE94)
 		{
 			GameLoop_State_(a1);
 			v2 = true;
