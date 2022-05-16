@@ -6019,6 +6019,33 @@ LABEL_28:
 
 FAIL_STUB_PATCH(SwitchMenu);
 
+void Game_Close_()
+{
+	dword_5967F0 = 1;
+	if (glGluesMode == GLUE_BATTLE)
+	{
+		DWORD dwProcessId;
+		GetWindowThreadProcessId(hWndParent, &dwProcessId);
+		EnumWindows(EnumFunc, dwProcessId);
+	}
+	glGluesMode = GLUE_GENERIC;
+	if (gwGameMode == GAME_RUN)
+	{
+		GameState = 0;
+		gwNextGameMode = GAME_EXIT;
+		if (!InReplay)
+		{
+			replay_header.ReplayFrames = ElapsedTimeFrames;
+		}
+	}
+	else
+	{
+		gwGameMode = GAME_EXIT;
+	}
+}
+
+FAIL_STUB_PATCH(Game_Close);
+
 void TakeScreenshot_()
 {
 	SYSTEMTIME SystemTime;
@@ -6150,7 +6177,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		dword_6D5E1C = 1;
 		return 0;
 	case WM_CLOSE:
-		Game_Close();
+		Game_Close_();
 		return 0;
 	case WM_ERASEBKGND:
 	case WM_SETCURSOR:
@@ -6356,7 +6383,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			if (gwGameMode != GAME_RUN)
 			{
 				SNetLeagueLogout(playerName);
-				Game_Close();
+				Game_Close_();
 				return 0;
 			}
 			PostMessageA(hWnd, WM_COMMAND, 0xFFFF9C6B, 0);
