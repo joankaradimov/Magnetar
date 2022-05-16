@@ -6046,6 +6046,30 @@ void Game_Close_()
 
 FAIL_STUB_PATCH(Game_Close);
 
+void Game_NumLockInit_()
+{
+	is_keycode_used[VK_NUMPAD0] = 0;
+	is_keycode_used[VK_NUMPAD1] = 0;
+	is_keycode_used[VK_NUMPAD2] = 0;
+	is_keycode_used[VK_NUMPAD3] = 0;
+	is_keycode_used[VK_NUMPAD4] = 0;
+	is_keycode_used[VK_NUMPAD5] = 0;
+	is_keycode_used[VK_NUMPAD6] = 0;
+	is_keycode_used[VK_NUMPAD7] = 0;
+	is_keycode_used[VK_NUMPAD8] = 0;
+	is_keycode_used[VK_NUMPAD9] = 0;
+	is_keycode_used[VK_PRIOR] = 0;
+	is_keycode_used[VK_NEXT] = 0;
+	is_keycode_used[VK_END] = 0;
+	is_keycode_used[VK_HOME] = 0;
+	is_keycode_used[VK_LEFT] = 0;
+	is_keycode_used[VK_UP] = 0;
+	is_keycode_used[VK_RIGHT] = 0;
+	is_keycode_used[VK_DOWN] = 0;
+}
+
+FAIL_STUB_PATCH(Game_NumLockInit);
+
 void TakeScreenshot_()
 {
 	SYSTEMTIME SystemTime;
@@ -6207,7 +6231,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		is_keycode_used[wParam] = 1;
 		if (wParam == VK_NUMLOCK)
 		{
-			Game_NumLockInit();
+			Game_NumLockInit_();
 		}
 		is_keycode_used[VK_MENU] = (GetKeyState(VK_MENU) & 0x8000) != 0;
 		if ((InputFlags & 0x2A) == 0)
