@@ -2295,6 +2295,14 @@ void __cdecl freeChkFileMem_()
 
 FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
 
+void FreeSAI_Paths_()
+{
+	SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
+	SAIPathing = NULL;
+}
+
+FAIL_STUB_PATCH(FreeSAI_Paths);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -2378,7 +2386,7 @@ void DestroyGame_()
 			SMemFree(v4, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 333, 0);
 			SAIPathing->contours = 0;
 		}
-		FreeSAI_Paths();
+		FreeSAI_Paths_();
 	}
 	if (aiscript_bin_data)
 	{
