@@ -402,6 +402,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
 
+	ScrSize.right = SCREEN_WIDTH;
+	ScrSize.bottom = SCREEN_HEIGHT;
+	ScrLimit.right = SCREEN_WIDTH - 1;
+	ScrLimit.bottom = SCREEN_HEIGHT - 1;
+
 	hInst = starcraft_exe->GetModule();
 	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");
