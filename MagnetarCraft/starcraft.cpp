@@ -6039,6 +6039,91 @@ void TakeScreenshot_()
 
 FAIL_STUB_PATCH(TakeScreenshot);
 
+void BWFXN_Game_ButtonDown_(int a1, EventNo a4, LPARAM lParam)
+{
+	if (((unsigned __int8)InputFlags & (unsigned __int8)~(_BYTE)a1 & 0x2A) == 0)
+	{
+		LOWORD(InputFlags) = a1 | InputFlags;
+		SetCapture(hWndParent);
+
+		dlgEvent event;
+		event.wNo = a4;
+
+		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+
+		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		{
+			input_procedures[a4](&event);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_Game_ButtonDown);
+
+void BWFXN_Game_ButtonUp_(int a1, EventNo a4, LPARAM lParam)
+{
+	__int16 v4 = InputFlags & ~(_WORD)a1;
+	if ((v4 & 0x2A) == 0)
+	{
+		LOWORD(InputFlags) = v4;
+		ReleaseCapture();
+
+		dlgEvent event;
+		event.wNo = a4;
+
+		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+
+		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		{
+			input_procedures[a4](&event);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_Game_ButtonUp);
+
+void Game_BtnDoubleClick_(int a1, EventNo a4, LPARAM lParam)
+{
+	if (((unsigned __int8)InputFlags & (unsigned __int8)~(_BYTE)a1 & 0x2A) == 0)
+	{
+		LOWORD(InputFlags) = a1 | InputFlags;
+		SetCapture(hWndParent);
+
+		dlgEvent event;
+		event.wNo = a4;
+
+		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+
+		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		{
+			input_procedures[a4](&event);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(Game_BtnDoubleClick);
+
+void Game_MouseWheel_(EventNo wNo, int a2)
+{
+	dlgEvent v3;
+
+	v3.wNo = wNo;
+	v3.wSelection = a2;
+	v3.dwUser = USER_CREATE;
+	v3.wVirtKey = 0;
+	v3.cursor.x = 0;
+	v3.cursor.y = 0;
+	if (!sendInputToAllDialogs(&v3) && input_procedures[wNo])
+	{
+		input_procedures[wNo](&v3);
+	}
+}
+
+FAIL_STUB_PATCH(Game_MouseWheel);
+
 LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	dlgEvent v16;
@@ -6277,40 +6362,40 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		Mouse.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 		return 1;
 	case WM_LBUTTONDOWN:
-		BWFXN_Game_ButtonDown(2, input_procedures[EventNo::EVN_LBUTTONDOWN], lParam, EventNo::EVN_LBUTTONDOWN);
+		BWFXN_Game_ButtonDown_(2, EventNo::EVN_LBUTTONDOWN, lParam);
 		return 1;
 	case WM_LBUTTONUP:
-		BWFXN_Game_ButtonUp(2, input_procedures[EventNo::EVN_LBUTTONUP], lParam, EventNo::EVN_LBUTTONUP);
+		BWFXN_Game_ButtonUp_(2, EventNo::EVN_LBUTTONUP, lParam);
 		return 1;
 	case WM_LBUTTONDBLCLK:
-		Game_BtnDoubleClick(2, input_procedures[EventNo::EVN_LBUTTONDBLCLK], lParam, EventNo::EVN_LBUTTONDBLCLK);
+		Game_BtnDoubleClick_(2, EventNo::EVN_LBUTTONDBLCLK, lParam);
 		return 1;
 	case WM_RBUTTONDOWN:
-		BWFXN_Game_ButtonDown(8, input_procedures[EventNo::EVN_RBUTTONDOWN], lParam, EventNo::EVN_RBUTTONDOWN);
+		BWFXN_Game_ButtonDown_(8, EventNo::EVN_RBUTTONDOWN, lParam);
 		return 1;
 	case WM_RBUTTONUP:
-		BWFXN_Game_ButtonUp(8, input_procedures[EventNo::EVN_RBUTTONUP], lParam, EventNo::EVN_RBUTTONUP);
+		BWFXN_Game_ButtonUp_(8, EventNo::EVN_RBUTTONUP, lParam);
 		return 1;
 	case WM_RBUTTONDBLCLK:
-		Game_BtnDoubleClick(8, input_procedures[EventNo::EVN_RBUTTONDBLCLK], lParam, EventNo::EVN_RBUTTONDBLCLK);
+		Game_BtnDoubleClick_(8, EventNo::EVN_RBUTTONDBLCLK, lParam);
 		return 1;
 	case WM_MBUTTONDOWN:
-		BWFXN_Game_ButtonDown(32, input_procedures[EventNo::EVN_MBUTTONDOWN], lParam, EventNo::EVN_MBUTTONDOWN);
+		BWFXN_Game_ButtonDown_(32, EventNo::EVN_MBUTTONDOWN, lParam);
 		return 1;
 	case WM_MBUTTONUP:
-		BWFXN_Game_ButtonUp(32, input_procedures[EventNo::EVN_MBUTTONUP], lParam, EventNo::EVN_MBUTTONUP);
+		BWFXN_Game_ButtonUp_(32, EventNo::EVN_MBUTTONUP, lParam);
 		return 1;
 	case WM_MBUTTONDBLCLK:
-		Game_BtnDoubleClick(32, input_procedures[EventNo::EVN_MBUTTONDBLCLK], lParam, EventNo::EVN_MBUTTONDBLCLK);
+		Game_BtnDoubleClick_(32, EventNo::EVN_MBUTTONDBLCLK, lParam);
 		return 1;
 	case WM_MOUSEWHEEL:
 		if (SHIWORD(wParam) >= 120)
 		{
-			Game_MouseWheel(EventNo::EVN_WHEELUP, lParam, input_procedures[EventNo::EVN_WHEELUP]);
+			Game_MouseWheel_(EventNo::EVN_WHEELUP, lParam);
 		}
 		else if (SHIWORD(wParam) <= -120)
 		{
-			Game_MouseWheel(EventNo::EVN_WHEELDWN, lParam, input_procedures[EventNo::EVN_WHEELDWN]);
+			Game_MouseWheel_(EventNo::EVN_WHEELDWN, lParam);
 		}
 		return 1;
 	case WM_CAPTURECHANGED:
