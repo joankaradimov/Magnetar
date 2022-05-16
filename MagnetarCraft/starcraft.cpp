@@ -675,7 +675,7 @@ BOOL BWFXN_DDrawInitialize_()
 	if (v10)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "CreatePalette", v10, 0x66u, 182);
 	memset(&surface_desc, 0, sizeof(surface_desc));
-	surface_desc.dwSize = 108;
+	surface_desc.dwSize = sizeof(DDSURFACEDESC);
 	surface_desc.dwFlags = 1;
 	surface_desc.ddsCaps.dwCaps = 512;
 	unsigned v11 = DDInterface->CreateSurface(&surface_desc, &PrimarySurface, 0);
@@ -686,11 +686,11 @@ BOOL BWFXN_DDrawInitialize_()
 	if (v12)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "SetPalette", v12, 0x66u, 203);
 #endif
-	surface_desc.dwSize = 108;
+	surface_desc.dwSize = sizeof(DDSURFACEDESC);
 	if (PrimarySurface->Lock(0, &surface_desc, 1, 0))
 	{
 		memset(&surface_desc, 0, sizeof(surface_desc));
-		surface_desc.dwSize = 108;
+		surface_desc.dwSize = sizeof(DDSURFACEDESC);
 		surface_desc.dwFlags = 7;
 		surface_desc.ddsCaps.dwCaps = 2112;
 		surface_desc.dwWidth = SCREEN_WIDTH;
@@ -826,10 +826,10 @@ int CreateSoundBuffer_(AudioVideoInitializationError* a1)
 {
 	DSBUFFERDESC sound_buffer;
 
+	sound_buffer.dwSize = sizeof(DSBUFFERDESC);
 	sound_buffer.dwBufferBytes = 0;
 	sound_buffer.dwReserved = 0;
 	sound_buffer.lpwfxFormat = 0;
-	sound_buffer.dwSize = 20;
 	sound_buffer.dwFlags = 1;
 
 	a1->error_code = direct_sound->CreateSoundBuffer(&sound_buffer, &soundbuffer, 0);
@@ -3181,7 +3181,7 @@ FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
 void AllocateSAI_Paths_()
 {
-	SAIPathing = (SAI_Paths*) SMemAlloc(621088, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
+	SAIPathing = (SAI_Paths*) SMemAlloc(sizeof(SAI_Paths), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
 	memset(SAIPathing, 0, sizeof(SAI_Paths));
 }
 
