@@ -2106,7 +2106,22 @@ DECL_FUNC(int (__stdcall*BlitCursorSurface)(int, __int16), BlitCursorSurface, 0x
 DECL_FUNC(int(*sub_41E000)(), sub_41E000, 0x41e000);
 DECL_FUNC(int(*InitializeImage)(), InitializeImage, 0x41e050);
 DECL_FUNC(void (__thiscall*DestroyImage)(bool exit_code), DestroyImage, 0x41e0a0);
-DECL_FUNC(int (__stdcall*BWFXN_RefreshTarget)(int), BWFXN_RefreshTarget, 0x41e0d0);
+signed int BWFXN_RefreshTarget(signed int left, signed int bottom, signed int top, signed int right) {
+    int address = 0x41e0d0;
+    signed result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, left
+        mov edx, bottom
+        mov ecx, top
+        push dword ptr right
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_41E1A0)(), sub_41E1A0, 0x41e1a0);
 DECL_FUNC(int(*RefreshCursorScreen)(), RefreshCursorScreen, 0x41e230);
 DECL_FUNC(int(*DirtyArrayHandling)(), DirtyArrayHandling, 0x41e280);
@@ -12684,7 +12699,14 @@ int SpriteDestructor(CSprite *a1) {
 }
 DECL_FUNC(int(*sub_497C10)(), sub_497C10, 0x497c10);
 DECL_FUNC(int(*UpdateVisibilityHash)(), UpdateVisibilityHash, 0x497c30);
-DECL_FUNC(int(*drawImage)(), drawImage, 0x497ce0);
+void drawImage(CImage *a1) {
+    int address = 0x497ce0;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_497D60)(), sub_497D60, 0x497d60);
 DECL_FUNC(int(*sub_497D80)(), sub_497D80, 0x497d80);
 DECL_FUNC(int(*sub_497DA0)(), sub_497DA0, 0x497da0);
@@ -12831,16 +12853,13 @@ void sub_498B50(CSprite *a1, unsigned __int8 a2) {
     }
 }
 DECL_FUNC(int(*SetAllSpriteImageOverlaysDirection)(), SetAllSpriteImageOverlaysDirection, 0x498c30);
-int drawSprite(CSprite *a1) {
+void drawSprite(CSprite *a1) {
     int address = 0x498c50;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void refreshImageRange(int result, unsigned int a2) {
     int address = 0x498cb0;
@@ -13280,7 +13299,7 @@ unsigned int drawScreenRowTiles(int a1, TileID *a2, MegatileFlags *a3, int a4, i
     }
     return result_;
 }
-DECL_FUNC(int(*BWFXN_drawMapTiles)(), BWFXN_drawMapTiles, 0x49c780);
+DECL_FUNC(void (__cdecl*BWFXN_drawMapTiles)(), BWFXN_drawMapTiles, 0x49c780);
 DECL_FUNC(int(*sub_49C870)(), sub_49C870, 0x49c870);
 DECL_FUNC(int (__stdcall*sub_49C890)(int), sub_49C890, 0x49c890);
 DECL_FUNC(int (__stdcall*getRegionNeighborsFromId)(int), getRegionNeighborsFromId, 0x49c8c0);
@@ -16041,7 +16060,7 @@ DECL_FUNC(int(*InitialSetScreenToStartLocation)(), InitialSetScreenToStartLocati
 DECL_FUNC(int(*sub_4BD4B0)(), sub_4BD4B0, 0x4bd4b0);
 DECL_FUNC(void (__thiscall*input_targetOrder_LeftMouseClick)(dlgEvent *), input_targetOrder_LeftMouseClick, 0x4bd500);
 DECL_FUNC(void (__stdcall*DrawGameProc)(Bitmap *, bounds *), DrawGameProc, 0x4bd580);
-DECL_FUNC(int(*InitializeGameLayer)(), InitializeGameLayer, 0x4bd630);
+DECL_FUNC(void (__cdecl*InitializeGameLayer)(), InitializeGameLayer, 0x4bd630);
 DECL_FUNC(int(*initMapData)(), initMapData, 0x4bd6f0);
 DECL_FUNC(int(*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
 DECL_FUNC(int (__thiscall*sub_4BDB30)(int *this_, int a2), sub_4BDB30, 0x4bdb30);
@@ -23115,6 +23134,7 @@ int& dword_50CECD = * ((decltype(&dword_50CECD)) 0x50cecd);
 int& dword_50CED1 = * ((decltype(&dword_50CED1)) 0x50ced1);
 int& dword_50CED9 = * ((decltype(&dword_50CED9)) 0x50ced9);
 _DWORD(&dword_50CEE2)[3] = * ((decltype(&dword_50CEE2)) 0x50cee2);
+int& dword_50CEF0 = * ((decltype(&dword_50CEF0)) 0x50cef0);
 char(&aAvtypeInfo)[16] = * ((decltype(&aAvtypeInfo)) 0x50cf18);
 int(&dword_50D2B0)[256] = * ((decltype(&dword_50D2B0)) 0x50d2b0);
 char& byte_50DBC8 = * ((decltype(&byte_50DBC8)) 0x50dbc8);
@@ -23746,7 +23766,7 @@ char& byte_581D69 = * ((decltype(&byte_581D69)) 0x581d69);
 char(&byte_581D6A)[11] = * ((decltype(&byte_581D6A)) 0x581d6a);
 char& byte_581D75 = * ((decltype(&byte_581D75)) 0x581d75);
 int(&dword_581D76)[] = * ((decltype(&dword_581D76)) 0x581d76);
-int(&dword_581D7A)[] = * ((decltype(&dword_581D7A)) 0x581d7a);
+int(&dword_581D7A)[15] = * ((decltype(&dword_581D7A)) 0x581d7a);
 char(&byte_581DD5)[] = * ((decltype(&byte_581DD5)) 0x581dd5);
 u8(&PlayerColors)[12] = * ((decltype(&PlayerColors)) 0x581dd6);
 AllScoresStruct& AllScores = * ((decltype(&AllScores)) 0x581de4);
@@ -24398,7 +24418,7 @@ char(&Orders_Unused5)[189] = * ((decltype(&Orders_Unused5)) 0x6657c0);
 WeaponType(&Orders_TargetingWeapon)[189] = * ((decltype(&Orders_TargetingWeapon)) 0x665880);
 char(&Orders_Unused2)[189] = * ((decltype(&Orders_Unused2)) 0x665940);
 char(&Orders_Unused3)[189] = * ((decltype(&Orders_Unused3)) 0x665a00);
-char(&Sprites_IsVisible)[] = * ((decltype(&Sprites_IsVisible)) 0x665c48);
+char(&Sprites_IsVisible)[390] = * ((decltype(&Sprites_IsVisible)) 0x665c48);
 char(&byte_665DCE)[] = * ((decltype(&byte_665DCE)) 0x665dce);
 char(&byte_665F56)[] = * ((decltype(&byte_665F56)) 0x665f56);
 unsigned __int16(&Sprites_Image)[] = * ((decltype(&Sprites_Image)) 0x666160);
