@@ -643,10 +643,6 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 
 FAIL_STUB_PATCH(ErrorDDrawInit);
 
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-const int INTERFACE_HEIGHT = 96;
-
 BOOL BWFXN_DDrawInitialize_()
 {
 	PALETTEENTRY palette_entries[256];

@@ -6,5 +6,9 @@
 
 #include "starcraft_exe.h"
 
+const int SCREEN_WIDTH = 640;
+const int SCREEN_HEIGHT = 480;
+const int INTERFACE_HEIGHT = 96;
+
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
