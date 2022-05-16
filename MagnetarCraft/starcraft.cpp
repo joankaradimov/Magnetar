@@ -2295,6 +2295,14 @@ void __cdecl freeChkFileMem_()
 
 FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
 
+void AllocateSAI_Paths_()
+{
+	SAIPathing = (SAI_Paths*)SMemAlloc(sizeof(SAI_Paths), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
+	memset(SAIPathing, 0, sizeof(SAI_Paths));
+}
+
+FAIL_STUB_PATCH(AllocateSAI_Paths);
+
 void FreeSAI_Paths_()
 {
 	SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
@@ -3186,14 +3194,6 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 }
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
-
-void AllocateSAI_Paths_()
-{
-	SAIPathing = (SAI_Paths*) SMemAlloc(sizeof(SAI_Paths), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
-	memset(SAIPathing, 0, sizeof(SAI_Paths));
-}
-
-FAIL_STUB_PATCH(AllocateSAI_Paths);
 
 MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
 
