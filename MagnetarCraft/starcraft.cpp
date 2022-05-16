@@ -742,7 +742,31 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	BWFXN_drawAllThingys();
 }
 
-FUNCTION_PATCH(DrawGameProc, DrawGameProc_);
+FAIL_STUB_PATCH(DrawGameProc);
+
+void InitializeGameLayer_()
+{
+	SetRect(&game_screen_pos, 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 80 - 1);
+	ScreenLayers[5].left = 0;
+	ScreenLayers[5].top = 0;
+	ScreenLayers[5].pSurface = 0;
+	ScreenLayers[5].bits = 0;
+	ScreenLayers[5].width = SCREEN_WIDTH;
+	ScreenLayers[5].height = SCREEN_HEIGHT - 80;
+	ScreenLayers[5].pUpdate = DrawGameProc_;
+	memset(RefreshRegions, 1u, sizeof(RefreshRegions));
+	for (int i = 3; i <= 5; ++i)
+	{
+		ScreenLayers[i].bits |= 1u;
+		int left = ScreenLayers[i].left;
+		int top = ScreenLayers[i].top;
+		int bottom = top + ScreenLayers[i].height - 1;
+		int right = left + ScreenLayers[i].width - 1;
+		BWFXN_RefreshTarget(left, bottom, top, right);
+	}
+}
+
+FAIL_STUB_PATCH(InitializeGameLayer);
 
 int DSoundCreate_(AudioVideoInitializationError* a1)
 {
@@ -3642,7 +3666,7 @@ void initMapData_()
 				{
 					ScreenLayers[5].buffers = 1;
 					sub_480960();
-					InitializeGameLayer();
+					InitializeGameLayer_();
 				}
 				byte_658AC0 = 0;
 				dword_658AA4 = 0;
