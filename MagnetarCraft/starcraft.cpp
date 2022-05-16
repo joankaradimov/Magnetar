@@ -3138,6 +3138,27 @@ FAIL_STUB_PATCH(CopySectionData);
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
+int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
+{
+	int old_region_count = a2->regionCount;
+
+	if (!SAI_PathCreate_Sub3_0(a2, a1->position, a1->map_size))
+	{
+		return 0;
+	}
+
+	SAI_PathCreate_Sub3_1(old_region_count, a2);
+	SAI_PathCreate_Sub3_2(a2);
+	SAI_PathCreate_Sub3_3(a2);
+	SAI_PathCreate_Sub3_1(old_region_count, a2);
+	a2->splitTiles_end = a2->splitTiles;
+	SAI_PathCreate_Sub3_4();
+	memset(&a2->regions[a2->regionCount], 0, (5000 - a2->regionCount) << 6);
+	return 1;
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
+
 void AllocateSAI_Paths_()
 {
 	SAIPathing = (SAI_Paths*) SMemAlloc(621088, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
@@ -3160,7 +3181,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	v5.map_size = map_size;
 	CreateUIUnreachableRegion(SAIPathing);
 
-	if (!SAI_PathCreate_Sub3(&v5, SAIPathing))
+	if (!SAI_PathCreate_Sub3_(&v5, SAIPathing))
 	{
 		return false;
 	}
