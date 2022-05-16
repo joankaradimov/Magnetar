@@ -6046,6 +6046,41 @@ void Game_Close_()
 
 FAIL_STUB_PATCH(Game_Close);
 
+void GameShowCursor_(bool show_cursor)
+{
+	if (cursor == NULL)
+	{
+		cursor = LoadCursor(NULL, IDC_ARROW);
+	}
+	SetCursor(show_cursor ? cursor : NULL);
+
+	POINT Point;
+	GetCursorPos(&Point);
+	SetCursorPos(Point.x, Point.y);
+	if (is_cursor_shown != show_cursor)
+	{
+		is_cursor_shown = show_cursor;
+		ShowCursor(show_cursor);
+	}
+}
+
+FAIL_STUB_PATCH(GameShowCursor);
+
+void doCursorClip_(int a1)
+{
+	if (a1 != dword_6D5DD0)
+	{
+		dword_6D5DD0 = a1;
+		if (a1 && !dword_6D5DD4)
+		{
+			SetCursorClipBounds();
+		}
+		ClipCursor(dword_6D5DD0 ? &screen : NULL);
+	}
+}
+
+FAIL_STUB_PATCH(doCursorClip);
+
 void Game_NumLockInit_()
 {
 	is_keycode_used[VK_NUMPAD0] = 0;
@@ -6208,8 +6243,8 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		return 1;
 	case WM_ACTIVATEAPP:
 		dword_51BFA8 = wParam;
-		GameShowCursor(dword_51BFA8 == 0);
-		doCursorClip(dword_51BFA8);
+		GameShowCursor_(dword_51BFA8 == 0);
+		doCursorClip_(dword_51BFA8);
 		memset(is_keycode_used, 0, sizeof(is_keycode_used));
 		if (dword_51BFA8)
 		{
