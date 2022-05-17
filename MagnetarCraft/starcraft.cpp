@@ -1417,6 +1417,8 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 	}
 }
 
+FAIL_STUB_PATCH(ReadChunkNodes);
+
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
 	if (out_version_loader_index && chk_data)
@@ -1453,6 +1455,44 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 	return 0;
 }
 
+FAIL_STUB_PATCH(ReadMapChunks);
+
+int ReadLobbyChunks(void* chk_data, int chk_size, MapChunks* a4)
+{
+	int loader_index = 0;
+	if (!ReadMapChunks_(a4, chk_data, &loader_index, chk_size))
+	{
+		return 0;
+	}
+
+	return ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, chk_size, chk_loaders_[loader_index].lobby_loaders, chk_data, a4);
+}
+
+int ReadGameChunks(void* chk_data, int chk_size)
+{
+	int loader_index = 0;
+	if (!ReadMapChunks_(0, chk_data, &loader_index, chk_size))
+	{
+		return 0;
+	}
+
+	ChkSectionLoader* loaders;
+	int loader_count;
+	if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
+	{
+		loaders = chk_loaders_[loader_index].melee_loaders;
+		loader_count = chk_loaders_[loader_index].melee_loader_count;
+	}
+	else
+	{
+		loaders = chk_loaders_[loader_index].ums_loaders;
+		loader_count = chk_loaders_[loader_index].ums_loader_count;
+	}
+	return ReadChunkNodes_(loader_count, chk_size, loaders, chk_data, 0);
+}
+
+FAIL_STUB_PATCH(sub_4CC2A0);
+
 BOOL sub_4CC7F0_(char* a1)
 {
 	char buff[260];
@@ -1481,52 +1521,23 @@ BOOL sub_4CC7F0_(char* a1)
 		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
 	}
 	void* chk_data = (void*)fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2141);
+	int result;
 	if (chk_data)
 	{
-		int loader_index = 0;
-		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
-		{
-			ChkSectionLoader* loaders;
-			int loader_count;
-			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
-			{
-				loaders = chk_loaders_[loader_index].melee_loaders;
-				loader_count = chk_loaders_[loader_index].melee_loader_count;
-			}
-			else
-			{
-				loaders = chk_loaders_[loader_index].ums_loaders;
-				loader_count = chk_loaders_[loader_index].ums_loader_count;
-			}
-			int result = ReadChunkNodes_(loader_count, chk_size, loaders, chk_data, 0);
-			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2159, 0);
-			if (mapArchiveHandle)
-			{
-				SFileCloseArchive(mapArchiveHandle);
-				mapArchiveHandle = 0;
-			}
-			return result;
-		}
-		else
-		{
-			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2149, 0);
-			if (mapArchiveHandle)
-			{
-				SFileCloseArchive(mapArchiveHandle);
-				mapArchiveHandle = 0;
-			}
-			return 0;
-		}
+		result = ReadGameChunks(chk_data, chk_size);
+		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2159, 0);
 	}
 	else
 	{
-		if (mapArchiveHandle)
-		{
-			SFileCloseArchive(mapArchiveHandle);
-			mapArchiveHandle = 0;
-		}
-		return 0;
+		result = 0;
 	}
+
+	if (mapArchiveHandle)
+	{
+		SFileCloseArchive(mapArchiveHandle);
+		mapArchiveHandle = NULL;
+	}
+	return result;
 }
 
 FAIL_STUB_PATCH(sub_4CC7F0);
@@ -1535,24 +1546,7 @@ int LoadMap_()
 {
 	if (InReplay)
 	{
-		int loader_index = 0;
-		int result = ReadMapChunks_(0, scenarioChk, &loader_index, scenarioChkSize);
-		if (result)
-		{
-			ChkSectionLoader* loaders;
-			int loader_count;
-			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
-			{
-				loaders = chk_loaders_[loader_index].melee_loaders;
-				loader_count = chk_loaders_[loader_index].melee_loader_count;
-			}
-			else
-			{
-				loaders = chk_loaders_[loader_index].ums_loaders;
-				loader_count = chk_loaders_[loader_index].ums_loader_count;
-			}
-			return ReadChunkNodes_(loader_count, scenarioChkSize, loaders, scenarioChk, 0);
-		}
+		return ReadGameChunks(scenarioChk, scenarioChkSize);
 	}
 	else if (CurrentMapFileName[0])
 	{
@@ -1762,17 +1756,10 @@ int sub_4CCAC0_(char* a1, MapChunks* a2)
 	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (chk_data)
 	{
-		int loader_index = 0;
-		if (ReadMapChunks_(a2, chk_data, &loader_index, chk_size))
-		{
-			int v7 = ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, chk_size, chk_loaders_[loader_index].lobby_loaders, chk_data, a2);
-			SMemFree((void*)chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
-			mapHandleDestroy();
-			return v7;
-		}
-		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2068, 0);
+		int v7 = ReadLobbyChunks(chk_data, chk_size, a2);
+		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2077, 0);
 		mapHandleDestroy();
-		return 0;
+		return v7;
 	}
 	if (mapArchiveHandle)
 	{
@@ -1783,7 +1770,6 @@ int sub_4CCAC0_(char* a1, MapChunks* a2)
 }
 
 FAIL_STUB_PATCH(sub_4CCAC0);
-FAIL_STUB_PATCH(sub_4CC2A0);
 
 int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 {
@@ -1804,10 +1790,10 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 	a4->data7 = 0;
 	if (InReplay)
 	{
-		int loader_index = 0;
-		if (!ReadMapChunks_(a4, scenarioChk, &loader_index, scenarioChkSize)
-			|| !ReadChunkNodes_(chk_loaders_[loader_index].lobby_loader_count, scenarioChkSize, chk_loaders_[loader_index].lobby_loaders, scenarioChk, a4))
+		if (!ReadLobbyChunks(scenarioChk, scenarioChkSize, a4))
+		{
 			return 0;
+		}
 		v8 = source;
 	}
 	else
