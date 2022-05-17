@@ -1184,6 +1184,7 @@ bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapC
 bool __stdcall ChkLoader_MTXM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapChunks* a3);
 
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
@@ -1229,7 +1230,7 @@ ChkSectionLoader chk_loaders_melee_broodwar_[] = {
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
-	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+	CreateChkSectionLoader("COLR", ChkLoader_COLR_, 1),
 };
 
 ChkSectionLoader chk_loaders_ums_1_00_[] = {
@@ -1291,7 +1292,7 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
-	CreateChkSectionLoader("COLR", ChkLoader_COLR, 1),
+	CreateChkSectionLoader("COLR", ChkLoader_COLR_, 1),
 };
 
 ChkLoader chk_loaders_[] = {
@@ -3478,6 +3479,24 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 }
 
 FAIL_STUB_PATCH(ChkLoader_UNIT);
+
+bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size != 8)
+	{
+		return 0;
+	}
+
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return 0;
+	}
+
+	setPlayerColours(8, (char*) section_data->start_address);
+	return 1;
+}
+
+FAIL_STUB_PATCH(ChkLoader_COLR);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
