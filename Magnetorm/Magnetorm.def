@@ -227,11 +227,11 @@ EXPORTS
     SVidDestroy = StormLibVidDestroy @451
     SVidGetSize = StormLibVidGetSize @452
     SVidInitialize@4 = StormLibVidInitialize @453
-    SVidPlayBegin = StormLibVidPlayBegin @454
+    SVidPlayBegin@28 = StormLibVidPlayBegin @454
     SVidPlayBeginFromMemory = StormLibVidPlayBeginFromMemory @455
     SVidPlayContinue = StormLibVidPlayContinue @456
-    SVidPlayContinueSingle = StormLibVidPlayContinueSingle @457
-    SVidPlayEnd = StormLibVidPlayEnd @458
+    SVidPlayContinueSingle@12 = StormLibVidPlayContinueSingle @457
+    SVidPlayEnd@4 = StormLibVidPlayEnd @458
     SVidSetVolume = StormLibVidSetVolume @459
 
     SErrDisplayError = StormLibErrDisplayError @461

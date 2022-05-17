@@ -6886,6 +6886,38 @@ FAIL_STUB_PATCH(BeginCredits);
 FAIL_STUB_PATCH(sub_4A60D0);
 FAIL_STUB_PATCH(sub_48EB90);
 
+void PlayMovie_(Cinematic cinematic)
+{
+	RefreshCursor_0();
+	InitializeInputProcs();
+	input_procedures[EventNo::EVN_CHAR] = endVideoProc;
+	input_procedures[EventNo::EVN_LBUTTONUP] = endVideoProc;
+	input_procedures[EventNo::EVN_RBUTTONUP] = endVideoProc;
+	dword_5967F0 = 0;
+
+	HANDLE video;
+	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, cinematic < 0x19 ? 0x10280808 : 0x10A80808, &video);
+	if (video)
+	{
+		while (!dword_5967F0)
+		{
+			if (dword_51BFA8 && !SVidPlayContinueSingle(video, 0, 0))
+			{
+				break;
+			}
+			BWFXN_videoLoop(3);
+			Sleep(0);
+		}
+		SVidPlayEnd(video);
+	}
+	else if (cinematic != 1 && cinematic != 24)
+	{
+		SysWarn_FileNotFound(cinematics[cinematic], 2);
+	}
+}
+
+FAIL_STUB_PATCH(PlayMovie);
+
 void GameMainLoop_()
 {
 	HANDLE phFile;
@@ -6935,7 +6967,7 @@ void GameMainLoop_()
 					GameRun_(GLUE_MAIN_MENU);
 					continue;
 				case GAME_CINEMATIC:
-					PlayMovie(active_cinematic);
+					PlayMovie_(active_cinematic);
 					active_cinematic = Cinematic::C_NONE;
 					if (gwGameMode == GAME_CINEMATIC)
 						ContinueCampaign_(1);
@@ -6947,17 +6979,17 @@ void GameMainLoop_()
 					gwGameMode = GAME_RUN;
 					continue;
 				case GAME_INTRO:
-					PlayMovie(Cinematic::C_BLIZZARD_LOGO);
+					PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
 					if (gwGameMode == GAME_INTRO)
 					{
 						if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 						{
 							SFileCloseFile(phFile);
-							PlayMovie(Cinematic::C_EXPANSION_INTRO);
+							PlayMovie_(Cinematic::C_EXPANSION_INTRO);
 						}
 						else
 						{
-							PlayMovie(Cinematic::C_INTRO);
+							PlayMovie_(Cinematic::C_INTRO);
 						}
 						if (gwGameMode == GAME_INTRO)
 							gwGameMode = GAME_GLUES;
@@ -6988,16 +7020,16 @@ void GameMainLoop_()
 			}
 		}
 		registry_options.field_18 &= ~0x800u;
-		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
-		PlayMovie(Cinematic::C_EXPANSION_INTRO);
+		PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+		PlayMovie_(Cinematic::C_EXPANSION_INTRO);
 	}
 	else
 	{
 		if ((registry_options.field_18 & 0x200) == 0)
 			goto LABEL_8;
 		registry_options.field_18 &= ~0x200u;
-		PlayMovie(Cinematic::C_BLIZZARD_LOGO);
-		PlayMovie(Cinematic::C_INTRO);
+		PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+		PlayMovie_(Cinematic::C_INTRO);
 	}
 	goto LABEL_8;
 }
