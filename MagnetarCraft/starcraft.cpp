@@ -3160,6 +3160,59 @@ FAIL_STUB_PATCH(CopySectionData);
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
+u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
+{
+	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	if (region_id >= 0x2000u)
+	{
+		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+	}
+	return region_id;
+}
+
+u16 SAI_GetRegionIdFromPx__(__int16 y)
+{
+	__int16 x;
+
+	__asm mov x, ax
+
+	return SAI_GetRegionIdFromPx_(x, y);
+}
+
+FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
+
+u16 GetRegionIdAtPosEx_(int x, int y)
+{
+	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	if (region_id >= 0x2000u)
+	{
+		if ((1 << (((y / 8) & 3) + 4 * ((x / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
+		{
+			return SAIPathing->splitTiles[region_id - 0x2000].rgn2;
+		}
+		else
+		{
+			return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+		}
+	}
+	return region_id;
+}
+
+u16 GetRegionIdAtPosEx__()
+{
+	int x, y;
+
+	__asm
+	{
+		mov x, ecx
+		mov y, edi
+	}
+
+	return GetRegionIdAtPosEx_(x, y);
+}
+
+FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__);
+
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
 	int old_region_count = a2->regionCount;
