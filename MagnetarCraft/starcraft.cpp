@@ -1184,6 +1184,7 @@ bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapC
 bool __stdcall ChkLoader_MTXM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapChunks* a3);
 
 ChkSectionLoader CreateChkSectionLoader(const char(&section_name)[5], bool(__stdcall* func)(SectionData*, int, MapChunks*), int flags)
 {
@@ -1235,7 +1236,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK_, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
 	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
 	CreateChkSectionLoader("TECS", ChkLoader_TECS, 1),
@@ -1257,7 +1258,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK_, 1),
 	CreateChkSectionLoader("UNIS", ChkLoader_UNIS, 1),
 	CreateChkSectionLoader("UPGS", ChkLoader_UPGS, 1),
 	CreateChkSectionLoader("TECS", ChkLoader_TECS, 1),
@@ -1279,7 +1280,7 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("STR ", ChkLoader_STR_, 1),
 	CreateChkSectionLoader("MTXM", ChkLoader_MTXM_, 1),
 	CreateChkSectionLoader("THG2", ChkLoader_THG2_, 1),
-	CreateChkSectionLoader("MASK", ChkLoader_MASK, 1),
+	CreateChkSectionLoader("MASK", ChkLoader_MASK_, 1),
 	CreateChkSectionLoader("UNIx", ChkLoader_UNIx, 1),
 	CreateChkSectionLoader("UPGx", ChkLoader_UPGx, 1),
 	CreateChkSectionLoader("TECx", ChkLoader_TECx, 1),
@@ -3358,6 +3359,25 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 }
 
 FAIL_STUB_PATCH(ChkLoader_THG2);
+
+bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return 0;
+	}
+
+	u8* v4 = section_data->start_address;
+	for (int i = 0; i < section_size; i++)
+	{
+		active_tiles[i] &= (MegatileFlags)~0xFFFF;
+		active_tiles[i] |= (MegatileFlags)v4[i];
+		active_tiles[i] |= (MegatileFlags)(v4[i] << 8);
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(ChkLoader_MASK);
 
 int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 {
