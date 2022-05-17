@@ -3162,6 +3162,8 @@ FAIL_STUB_PATCH(CopySectionData);
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
+// TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
+
 u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
 {
 	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
