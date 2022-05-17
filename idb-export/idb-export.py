@@ -211,7 +211,7 @@ class Function:
         if has_return_value:
             result += '    return result_;\n'
 
-        result += '}\n'
+        result += '}'
         return result
 
     def build_export_definition(self):
@@ -219,15 +219,15 @@ class Function:
             raise IdbExportError('Function name contains invalid character: %s' % self.name)
 
         if is_function_pointer(self.signature):
-            return 'DECL_FUNC({decl}, {name}, {address});\n'.format(decl = self.signature, name = self.name, address = hex(self.ref))
+            return 'DECL_FUNC({decl}, {name}, {address});'.format(decl = self.signature, name = self.name, address = hex(self.ref))
         else:
             return self.get_usercall_wrapper()
 
     def build_export_declaration(self):
         if is_function_pointer(self.signature):
-            return 'extern ' + self.signature + ';\n'
+            return 'extern ' + self.signature + ';'
         else:
-            return self.signature + ';\n'
+            return self.signature + ';'
 
 def split_args(arguments_str):
     """
@@ -514,16 +514,16 @@ def export_data(segment, declarations, definitions):
             continue
         elif '[' in data_type: # array -> pointer
             data_type = data_type.replace('[', '(&' + data_name + ')[', 1)
-            definition = '{data_type} = * ((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = * ((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         elif '*)(' in data_type: # function pointer -> reference to function pointer
             data_type = data_type.replace('*)', '*&' + data_name + ')',  1)
             data_type = data_type.replace('__hidden this', '__hidden this_')
-            definition = '{data_type} = *((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = *((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
         else: # scalar value -> reference
             data_type = data_type + '& ' + data_name
-            definition = '{data_type} = * ((decltype(&{data_name})) {address});\n'.format(data_type = data_type, data_name = data_name, address = hex(ea))
+            definition = '{data_type} = * ((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
 
-        declaration = 'extern ' + data_type + ';\n'
+        declaration = 'extern ' + data_type + ';'
 
         if is_blacklisted(declaration):
             continue
