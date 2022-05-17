@@ -705,7 +705,6 @@ DECL_FUNC(int (__stdcall*imageRenderFxn17_1_cntd)(int, int, int), imageRenderFxn
 DECL_FUNC(int (__stdcall*imageRenderFxn0_1)(int, int, int), imageRenderFxn0_1, 0x40bf60);
 DECL_FUNC(int (__stdcall*imageRenderFxn10_1)(int, int, int), imageRenderFxn10_1, 0x40c0ae);
 DECL_FUNC(int(*BlitToBitmap)(), BlitToBitmap, 0x40c200);
-DECL_FUNC(int(*sub_40C214)(), sub_40C214, 0x40c214);
 DECL_FUNC(int(*BWFXN_blitMapTiles)(), BWFXN_blitMapTiles, 0x40c253);
 DECL_FUNC(int (__stdcall*BlitTerrainCacheToGameBitmap)(int, int), BlitTerrainCacheToGameBitmap, 0x40c2bd);
 DECL_FUNC(int (__stdcall*getDistancePrecise)(int, int), getDistancePrecise, 0x40c300);
@@ -13170,7 +13169,18 @@ DECL_FUNC(int(*sub_49B030)(), sub_49B030, 0x49b030);
 DECL_FUNC(int(*sub_49B050)(), sub_49B050, 0x49b050);
 DECL_FUNC(int(*sub_49B060)(), sub_49B060, 0x49b060);
 DECL_FUNC(int(*getColourID)(), getColourID, 0x49b0e0);
-DECL_FUNC(int (__stdcall*setPlayerColours)(int), setPlayerColours, 0x49b130);
+int setPlayerColours(int result, char *a2) {
+    int address = 0x49b130;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_49B1C0)(), sub_49B1C0, 0x49b1c0);
 char sub_49B1E0(CUnit *a1) {
     int address = 0x49b1e0;
@@ -16830,7 +16840,7 @@ BOOL unitNotNeutral(ChunkUnitEntry *a1) {
     }
     return result_;
 }
-DECL_FUNC(bool (__stdcall*ChkLoader_COLR)(SectionData *, int, MapChunks *), ChkLoader_COLR, 0x4cbe70);
+DECL_FUNC(bool (__stdcall*ChkLoader_COLR)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_COLR, 0x4cbe70);
 DECL_FUNC(int(*sub_4CBED0)(), sub_4CBED0, 0x4cbed0);
 UnitRelated20 *CHK_UNIT_Nydus(int a1, CUnit *a2, UnitRelated20 *a3, int a4) {
     int address = 0x4cbef0;
