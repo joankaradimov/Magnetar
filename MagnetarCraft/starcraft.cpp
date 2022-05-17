@@ -7371,8 +7371,8 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		if (active_trigger_player == g_LocalNationID)
 		{
 			BWFXN_MoveScreen(
-				(LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right) / 2 - 320,
-				(LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom) / 2 - 200);
+				(LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - SCREEN_WIDTH) / 2,
+				(LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - (SCREEN_HEIGHT - 80)) / 2);
 		}
 		return 1;
 	}
@@ -7390,8 +7390,8 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		}
 		if (active_trigger_player == g_LocalNationID)
 		{
-			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right) / 2 - 320;
-			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom) / 2 - 200;
+			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - SCREEN_WIDTH) / 2;
+			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - (SCREEN_HEIGHT - 80)) / 2;
 			if (v11 >= 0)
 			{
 				if (v11 + 640 >= (unsigned __int16)map_width_pixels)
