@@ -3828,12 +3828,8 @@ void sub_4CC990_()
 		if (ReadMapChunks_(0, chk_data, &loader_index, chk_size))
 		{
 			ReadChunkNodes_(chk_loaders_[loader_index].briefing_loader_count, chk_size, chk_loaders_[loader_index].briefing_loaders, chk_data, 0);
-			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 		}
-		else
-		{
-			SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2104, 0);
-		}
+		SMemFree(chk_data, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2113, 0);
 	}
 }
 
