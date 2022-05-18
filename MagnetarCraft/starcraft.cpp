@@ -4958,74 +4958,67 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
-	int v5 = gluLoadBINDlg(dword_6D5A70, gluCustm_Interact);
-	if (v5 != -3)
+	switch(gluLoadBINDlg(gluCreateOrCustm_bin, gluCustm_Interact))
 	{
-		if (v5 == 12)
+	case 12:
+		if (LOBYTE(multiPlayerMode) != v1)
 		{
-			if (LOBYTE(multiPlayerMode) == v1)
-			{
-				if (gameData.got_file_values.victory_conditions != v1
-					|| gameData.got_file_values.starting_units != v1
-					|| gameData.got_file_values.tournament_mode != v1
-					|| InReplay)
-				{
-					gwGameMode = GAME_RUNINIT;
-				}
-				else if (Players[g_LocalNationID].nRace == 0)
-				{
-					glGluesMode = GLUE_READY_Z;
-				}
-				else if (Players[g_LocalNationID].nRace == 1)
-				{
-					glGluesMode = GLUE_READY_T;
-				}
-				else if (Players[g_LocalNationID].nRace == 2)
-				{
-					glGluesMode = GLUE_READY_P;
-				}
-			}
-			else
-			{
-				glGluesMode = GLUE_CHAT;
-			}
-			goto LABEL_37;
+			glGluesMode = GLUE_CHAT;
 		}
-		if (v5 != 13)
+		else if (gameData.got_file_values.victory_conditions != v1
+			|| gameData.got_file_values.starting_units != v1
+			|| gameData.got_file_values.tournament_mode != v1
+			|| InReplay)
 		{
-			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
-			goto LABEL_37;
+			gwGameMode = GAME_RUNINIT;
 		}
-	}
-	InReplay = 0;
-	freeChkFileMem_();
+		else if (Players[g_LocalNationID].nRace == 0)
+		{
+			glGluesMode = GLUE_READY_Z;
+		}
+		else if (Players[g_LocalNationID].nRace == 1)
+		{
+			glGluesMode = GLUE_READY_T;
+		}
+		else if (Players[g_LocalNationID].nRace == 2)
+		{
+			glGluesMode = GLUE_READY_P;
+		}
+		break;
+	case -3:
+	case 13:
+		InReplay = 0;
+		freeChkFileMem_();
 
-	if (!LOBYTE(multiPlayerMode))
-	{
-		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
-	}
-	else if (NetMode.as_number == 'SCBL')
-	{
-		glGluesMode = MenuPosition::GLUE_DIRECT;
-	}
-	else if (NetMode.as_number == 'MODM')
-	{
-		glGluesMode = MenuPosition::GLUE_MODEM;
-	}
-	else if (NetMode.as_number == 'BNET')
-	{
-		glGluesMode = MenuPosition::GLUE_BATTLE;
-	}
-	else if (NetMode.as_number == 'MDMX')
-	{
-		glGluesMode = MenuPosition::GLUE_MODEM;
-	}
-	else
-	{
-		glGluesMode = MenuPosition::GLUE_GAME_SELECT;
+		if (!LOBYTE(multiPlayerMode))
+		{
+			glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		}
+		else if (NetMode.as_number == 'SCBL')
+		{
+			glGluesMode = MenuPosition::GLUE_DIRECT;
+		}
+		else if (NetMode.as_number == 'MODM')
+		{
+			glGluesMode = MenuPosition::GLUE_MODEM;
+		}
+		else if (NetMode.as_number == 'BNET')
+		{
+			glGluesMode = MenuPosition::GLUE_BATTLE;
+		}
+		else if (NetMode.as_number == 'MDMX')
+		{
+			glGluesMode = MenuPosition::GLUE_MODEM;
+		}
+		else
+		{
+			glGluesMode = MenuPosition::GLUE_GAME_SELECT;
+		}
+		break;
+	default:
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 
-LABEL_37:
 	changeMenu();
 	if (dword_59BA60)
 		SMemFree(dword_59BA60, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1484, v1);
