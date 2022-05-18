@@ -14311,7 +14311,7 @@ LRESULT GetMapDirListIndex(const char *filename, LRESULT (__stdcall *a2)(LPARAM 
     }
     return result_;
 }
-int GetMapDirEntryInformation(MapDirEntry *entry, int a2) {
+int GetMapDirEntryInformation(MapDirEntry *entry, struct_a2 *a2) {
     int address = 0x4a6dd0;
     int result_;
     __asm {
@@ -14688,9 +14688,9 @@ dialog *sub_4AD440(dialog *result) {
     }
     return result_;
 }
-signed int sub_4AD460(dialog *dlg) {
+int gluCustmHasComputerPlayerMaybe(dialog *dlg) {
     int address = 0x4ad460;
-    signed result_;
+    int result_;
     __asm {
         xor eax, eax
         mov eax, dlg
@@ -14720,7 +14720,14 @@ void sub_4AD640(dialog *a1) {
     }
 }
 DECL_FUNC(void (__fastcall*gluCustm_ListboxEntryUpdate)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y), gluCustm_ListboxEntryUpdate, 0x4ad6b0);
-DECL_FUNC(int(*sub_4AD850)(), sub_4AD850, 0x4ad850);
+void gluCustmSinglePlayerInitRaces(dialog *a1) {
+    int address = 0x4ad850;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*HideShowDlgCallback)(int, int, int), HideShowDlgCallback, 0x4ad950);
 DECL_FUNC(void (__fastcall*gluCustm_UpdateCB)(dialog *dlg, int x, int y, rect *dst), gluCustm_UpdateCB, 0x4ad980);
 int gluCustm_initSwish(dialog *a1) {
@@ -14735,13 +14742,13 @@ int gluCustm_initSwish(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4ADB10)(), sub_4ADB10, 0x4adb10);
-void sub_4ADD90(int a1, dialog *a2) {
+void sub_4ADD90(int a1, dialog *player_type_dropdown) {
     int address = 0x4add90;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, a1
-        mov ecx, a2
+        mov ecx, player_type_dropdown
         call address
     }
 }
@@ -14755,7 +14762,7 @@ void gluCustm_raceDropdown(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*sub_4ADFE0)(dialog *dlg, __int16 a2), sub_4ADFE0, 0x4adfe0);
+DECL_FUNC(void (__fastcall*gluCustmInitPlayerTypes)(dialog *dlg, __int16 a2), gluCustmInitPlayerTypes, 0x4adfe0);
 DECL_FUNC(int(*sub_4AE1E0)(), sub_4AE1E0, 0x4ae1e0);
 DECL_FUNC(int (__stdcall*sub_4AE1F0)(int, int, int, int), sub_4AE1F0, 0x4ae1f0);
 dialog *sub_4AE250(dialog *result) {
@@ -14815,7 +14822,7 @@ void *SingleMakeCreateGameDialog(dialog *a1) {
 DECL_FUNC(bool (__fastcall*gluCustm_RaceSlot)(dialog *dlg, dlgEvent *evt), gluCustm_RaceSlot, 0x4aed40);
 DECL_FUNC(bool (__fastcall*gluCustm_PlayerSlot)(dialog *dlg, dlgEvent *evt), gluCustm_PlayerSlot, 0x4aed80);
 DECL_FUNC(bool (__fastcall*gluCustm_Player1)(dialog *dlg, dlgEvent *evt), gluCustm_Player1, 0x4aede0);
-DECL_FUNC(int(*sub_4AEE40)(), sub_4AEE40, 0x4aee40);
+DECL_FUNC(int(*gluCustmSinglePlayerInit)(), gluCustmSinglePlayerInit, 0x4aee40);
 DECL_FUNC(int(*sub_4AEEB0)(), sub_4AEEB0, 0x4aeeb0);
 DECL_FUNC(void (__stdcall*sub_4AEED0)(dialog *a1), sub_4AEED0, 0x4aeed0);
 DECL_FUNC(bool (__fastcall*gluCustm_GameListboxUpdate)(dialog *dlg, dlgEvent *evt), gluCustm_GameListboxUpdate, 0x4af020);
@@ -23406,8 +23413,8 @@ FnInteract(&off_51A9AC)[13] = * ((decltype(&off_51A9AC)) 0x51a9ac);
 char(&separators_maybe)[8] = * ((decltype(&separators_maybe)) 0x51a9e8);
 swishTimer(&gluCustmSwishController)[5] = * ((decltype(&gluCustmSwishController)) 0x51a9f0);
 FnInteract(&off_51AA08)[38] = * ((decltype(&off_51AA08)) 0x51aa08);
-int& singleRaceSelect = * ((decltype(&singleRaceSelect)) 0x51aaa0);
-int& singleTypeSelect = * ((decltype(&singleTypeSelect)) 0x51aaa8);
+RaceDropdownSelect(&singleRaceSelect)[4] = * ((decltype(&singleRaceSelect)) 0x51aaa0);
+TypeDropdownSelect(&singleTypeSelect)[2] = * ((decltype(&singleTypeSelect)) 0x51aaa8);
 char(&a_au_drawtext)[16] = * ((decltype(&a_au_drawtext)) 0x51aab8);
 char(&a_auttemplate)[16] = * ((decltype(&a_auttemplate)) 0x51aad0);
 char(&a_aulistentry)[16] = * ((decltype(&a_aulistentry)) 0x51aae8);
@@ -23754,8 +23761,7 @@ int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
 char(&next_scenario)[32] = * ((decltype(&next_scenario)) 0x57f246);
 char& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
-int& dword_57F267 = * ((decltype(&dword_57F267)) 0x57f267);
-int& dword_57F26B = * ((decltype(&dword_57F26B)) 0x57f26b);
+Race(&byte_57F267)[8] = * ((decltype(&byte_57F267)) 0x57f267);
 __int16(&word_57F270)[] = * ((decltype(&word_57F270)) 0x57f270);
 __int16(&word_57F272)[5] = * ((decltype(&word_57F272)) 0x57f272);
 UnitAvail& UnitAvailability = * ((decltype(&UnitAvailability)) 0x57f27c);
@@ -23982,7 +23988,7 @@ int (*&dword_59B830)(void) = *((decltype(&dword_59B830)) 0x59b830);
 int& dword_59B834 = * ((decltype(&dword_59B834)) 0x59b834);
 dialog *& glu_modem_status_Dlg = * ((decltype(&glu_modem_status_Dlg)) 0x59b838);
 int& dword_59B83C = * ((decltype(&dword_59B83C)) 0x59b83c);
-int& custom_game_slots = * ((decltype(&custom_game_slots)) 0x59b840);
+dialog *& custom_game_slots = * ((decltype(&custom_game_slots)) 0x59b840);
 int& dword_59B844 = * ((decltype(&dword_59B844)) 0x59b844);
 int& dword_59B848 = * ((decltype(&dword_59B848)) 0x59b848);
 char(&menuMapRelativePath)[260] = * ((decltype(&menuMapRelativePath)) 0x59b850);
@@ -23995,7 +24001,7 @@ char& byte_59BB6C = * ((decltype(&byte_59BB6C)) 0x59bb6c);
 char(&CurrentMapFolder)[260] = * ((decltype(&CurrentMapFolder)) 0x59bb70);
 dialog *& custom_game_submode = * ((decltype(&custom_game_submode)) 0x59bc74);
 dialog *& map_listbox = * ((decltype(&map_listbox)) 0x59bc7c);
-int& custom_game_mode = * ((decltype(&custom_game_mode)) 0x59bc80);
+dialog *& custom_game_mode = * ((decltype(&custom_game_mode)) 0x59bc80);
 char(&menuMapFileName)[260] = * ((decltype(&menuMapFileName)) 0x59bc88);
 int& dword_59BD8C = * ((decltype(&dword_59BD8C)) 0x59bd8c);
 HGDIOBJ& dword_59BD90 = * ((decltype(&dword_59BD90)) 0x59bd90);
@@ -24690,7 +24696,7 @@ MapDirEntry *& bnet_selected_map_maybe = * ((decltype(&bnet_selected_map_maybe))
 char(&byte_68F948)[] = * ((decltype(&byte_68F948)) 0x68f948);
 int& dword_68FA48 = * ((decltype(&dword_68FA48)) 0x68fa48);
 int& bnet_browse_icons_dimensions = * ((decltype(&bnet_browse_icons_dimensions)) 0x68fa4c);
-int(&dword_68FA50)[] = * ((decltype(&dword_68FA50)) 0x68fa50);
+int(&dword_68FA50)[3] = * ((decltype(&dword_68FA50)) 0x68fa50);
 HWND& bnet_recent_maps_box = * ((decltype(&bnet_recent_maps_box)) 0x68fa5c);
 HWND& dword_68FA60 = * ((decltype(&dword_68FA60)) 0x68fa60);
 HWND& dword_68FA64 = * ((decltype(&dword_68FA64)) 0x68fa64);
@@ -25133,7 +25139,7 @@ int& dword_6D5A60 = * ((decltype(&dword_6D5A60)) 0x6d5a60);
 int& game_id_hash = * ((decltype(&game_id_hash)) 0x6d5a64);
 int& saveLoadSuccess = * ((decltype(&saveLoadSuccess)) 0x6d5a68);
 CheatFlags& GameCheats = * ((decltype(&GameCheats)) 0x6d5a6c);
-dialog *& dword_6D5A70 = * ((decltype(&dword_6D5A70)) 0x6d5a70);
+dialog *& gluCreateOrCustm_bin = * ((decltype(&gluCreateOrCustm_bin)) 0x6d5a70);
 int& dword_6D5A74 = * ((decltype(&dword_6D5A74)) 0x6d5a74);
 int& dword_6D5A78 = * ((decltype(&dword_6D5A78)) 0x6d5a78);
 void *& dword_6D5A7C = * ((decltype(&dword_6D5A7C)) 0x6d5a7c);

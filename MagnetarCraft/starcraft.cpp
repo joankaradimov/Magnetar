@@ -4955,7 +4955,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	char v1 = 0;
 	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
 
-	dword_6D5A70 = loadAndInitFullMenuDLG_(v2);
+	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
 	int v5 = gluLoadBINDlg(dword_6D5A70, gluCustm_Interact);
