@@ -5263,46 +5263,40 @@ void loadMenu_gluMain_()
 
 	if (bin_dialog)
 	{
-		int v8 = gluLoadBINDlg(bin_dialog, gluMain_Dlg_Interact_);
-		if (v8 > 65520)
-		{
-			glGluesMode = GLUE_MAIN_MENU;
-		}
-		else if (v8 != 65520)
-		{
-			GotFileValues* ums_game_template;
+		GotFileValues* ums_game_template;
 
-			switch (v8)
-			{
-			case 2:
-				gwGameMode = GAME_EXIT;
-				break;
-			case 3:
-				multiPlayerMode = 0;
-				glGluesMode = GLUE_LOGIN;
-				ums_game_template = InitUseMapSettingsTemplate_();
-				memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
-				SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
-				break;
-			case 4:
-				multiPlayerMode = 1;
-				glGluesMode = MenuPosition::GLUE_CONNECT;
-				ums_game_template = InitUseMapSettingsTemplate_();
-				memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
-				SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
-				break;
-			case 5:
-				break;;
-			case 8:
-				gwGameMode = GAME_INTRO;
-				break;
-			case 9:
-				gwGameMode = GAME_CREDITS;
-				break;
-			default:
-				glGluesMode = GLUE_MAIN_MENU;
-				break;
-			}
+		switch (gluLoadBINDlg(bin_dialog, gluMain_Dlg_Interact_))
+		{
+		case 2:
+			gwGameMode = GAME_EXIT;
+			break;
+		case 3:
+			multiPlayerMode = 0;
+			glGluesMode = GLUE_LOGIN;
+			ums_game_template = InitUseMapSettingsTemplate_();
+			memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+			SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
+			break;
+		case 4:
+			multiPlayerMode = 1;
+			glGluesMode = MenuPosition::GLUE_CONNECT;
+			ums_game_template = InitUseMapSettingsTemplate_();
+			memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
+			SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 635, 0);
+			break;
+		case 5:
+			break;
+		case 8:
+			gwGameMode = GAME_INTRO;
+			break;
+		case 9:
+			gwGameMode = GAME_CREDITS;
+			break;
+		case 65520:
+			break;
+		default:
+			glGluesMode = GLUE_MAIN_MENU;
+			break;
 		}
 		changeMenu();
 		return;
