@@ -5134,8 +5134,9 @@ FAIL_STUB_PATCH(loadStareditProcess);
 
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EventNo::EVN_USER)
+	switch (evt->wNo)
 	{
+	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
@@ -5150,7 +5151,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			return true;
 		case USER_DESTROY:
 			gluMainDestroy(dlg);
-			return genericDlgInteract(dlg, evt);
+			break;
 		case USER_ACTIVATE:
 			switch (LastControlID)
 			{
@@ -5199,19 +5200,17 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
 			registerMenuFunctions(off_51A388, dlg, 44, 0);
-			return genericDlgInteract(dlg, evt);
-		default:
-			return genericDlgInteract(dlg, evt);
+			break;
+		}
+		break;
+	case EventNo::EVN_CHAR:
+		if (evt->wVirtKey == VK_SPACE)
+		{
+			return true;
 		}
 	}
-	if (evt->wNo == EventNo::EVN_CHAR && evt->wVirtKey == VK_SPACE)
-	{
-		return true;
-	}
-	else
-	{
-		return genericDlgInteract(dlg, evt);
-	}
+
+	return genericDlgInteract(dlg, evt);
 }
 
 FAIL_STUB_PATCH(gluMain_Dlg_Interact);
