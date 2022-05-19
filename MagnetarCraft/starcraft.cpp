@@ -6691,11 +6691,11 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		Game_BtnDoubleClick_(32, EventNo::EVN_MBUTTONDBLCLK, lParam);
 		return 1;
 	case WM_MOUSEWHEEL:
-		if (SHIWORD(wParam) >= 120)
+		if (GET_WHEEL_DELTA_WPARAM(wParam) >= WHEEL_DELTA)
 		{
 			Game_MouseWheel_(EventNo::EVN_WHEELUP, lParam);
 		}
-		else if (SHIWORD(wParam) <= -120)
+		else if (GET_WHEEL_DELTA_WPARAM(wParam) <= -WHEEL_DELTA)
 		{
 			Game_MouseWheel_(EventNo::EVN_WHEELDWN, lParam);
 		}
