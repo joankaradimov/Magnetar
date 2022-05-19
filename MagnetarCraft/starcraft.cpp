@@ -33,6 +33,18 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+void sub_4BD3A0_()
+{
+	if (GameState)
+	{
+		dword_5993A4 = max(MoveToTile.y - 4, 0);
+		dword_5993C0 = min(MoveToTile.y + 404, map_size.height - 1);
+		DoVisibilityUpdate(dword_5993A4, dword_5993C0);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4BD3A0);
+
 DEFINE_ENUM_FLAG_OPERATORS(DialogFlags);
 
 void updateAllDlgs_()
@@ -69,7 +81,7 @@ FAIL_STUB_PATCH(realizePalette);
 
 void BWFXN_RedrawTarget_()
 {
-	sub_4BD3A0();
+	sub_4BD3A0_();
 	if (realizePalette_())
 	{
 		if (ScreenLayers[1].buffers)
