@@ -5033,6 +5033,65 @@ void loadMenu_gluJoin_()
 
 FAIL_STUB_PATCH(loadMenu_gluJoin);
 
+bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			gluCustm_initSwish(dlg);
+			DLG_SwishIn(dlg);
+			break;
+		case EventUser::USER_ACTIVATE:
+			if (LastControlID == 12 && !gluCustmLoadMapFromList())
+			{
+				return 1;
+			}
+			waitLoopCntd(5, gluCreateOrCustm_bin);
+			return DLG_SwishOut(dlg);
+		case EventUser::USER_INIT:
+			gluCustm_CustomCtrl_InitializeChildren(dlg);
+			break;
+		case 1029:
+			InitGlueMapListBox();
+			break;
+		}
+	}
+	else if (evt->wNo == EventNo::EVN_WHEELUP)
+	{
+		dlgEvent event;
+		event.dwUser = USER_SCROLLUP;
+		event.wSelection = 0;
+		event.wUnk_0x06 = 0;
+		event.wNo = EVN_USER;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+
+		dialog* v4 = map_listbox->fields.list.pScrlBar;
+		v4->pfcnInteract(v4, &event);
+		return 1;
+	}
+	else if (evt->wNo == EventNo::EVN_WHEELDWN)
+	{
+		dlgEvent event;
+		event.dwUser = USER_SCROLLDOWN;
+		event.wSelection = 0;
+		event.wUnk_0x06 = 0;
+		event.wNo = EVN_USER;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+
+		dialog* v4 = map_listbox->fields.list.pScrlBar;
+		v4->pfcnInteract(v4, &event);
+		return 1;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluCustm_Interact);
+
 void loadMenu_gluCustm_(int is_multiplayer)
 {
 	dword_59B844 = is_multiplayer;
@@ -5042,7 +5101,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
-	switch(gluLoadBINDlg(gluCreateOrCustm_bin, gluCustm_Interact))
+	switch(gluLoadBINDlg(gluCreateOrCustm_bin, gluCustm_Interact_))
 	{
 	case 12:
 		if (LOBYTE(multiPlayerMode) != v1)
