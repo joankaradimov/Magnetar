@@ -1958,12 +1958,24 @@ BOOL sub_41BED0(rect *a1) {
 }
 DECL_FUNC(int(*sub_41BF30)(), sub_41BF30, 0x41bf30);
 DECL_FUNC(int(*isRectBoundsInside_Assign_16)(), isRectBoundsInside_Assign_16, 0x41bf60);
-DECL_FUNC(int(*isRectBoundsInside_Assign_32)(), isRectBoundsInside_Assign_32, 0x41bfc0);
+BOOL isRectBoundsInside_Assign_32(LPRECT a1, RECT *a2) {
+    int address = 0x41bfc0;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_41C010)(), sub_41C010, 0x41c010);
 DECL_FUNC(int(*sub_41C030)(), sub_41C030, 0x41c030);
 DECL_FUNC(int (__stdcall*sub_41C050)(LPRECT lprc), sub_41C050, 0x41c050);
 DECL_FUNC(int (__stdcall*sub_41C080)(int), sub_41C080, 0x41c080);
-void _RgnUnk(tagRECT *a1) {
+void _RgnUnk(LPRECT a1) {
     int address = 0x41c200;
     __asm {
         xor eax, eax
@@ -8470,7 +8482,7 @@ u32 sub_46D220(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_46D340)(), sub_46D340, 0x46d340);
+DECL_FUNC(bool (__fastcall*sub_46D340)(dialog *this_), sub_46D340, 0x46d340);
 signed int sub_46D3C0(dialog *a1) {
     int address = 0x46d3c0;
     signed result_;
@@ -18566,7 +18578,7 @@ void setDialogString(dialog *a1, __int16 a2, const char *a3) {
 }
 DECL_FUNC(int (__cdecl*changeMenu)(), changeMenu, 0x4dcfa0);
 DECL_FUNC(char (__stdcall*DLG_SwishOut)(dialog *a1), DLG_SwishOut, 0x4dd040);
-DECL_FUNC(int(*jmpNoMenu)(), jmpNoMenu, 0x4dd1c0);
+DECL_FUNC(void (__cdecl*jmpNoMenu)(), jmpNoMenu, 0x4dd1c0);
 DECL_FUNC(int (__stdcall*buttonMouseOver)(int), buttonMouseOver, 0x4dd1d0);
 DECL_FUNC(int (__thiscall*DLG_SwishInLock)(dialog *this_), DLG_SwishInLock, 0x4dd220);
 void **DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
@@ -23761,7 +23773,7 @@ int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
 char(&next_scenario)[32] = * ((decltype(&next_scenario)) 0x57f246);
 char& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
-Race(&byte_57F267)[8] = * ((decltype(&byte_57F267)) 0x57f267);
+Race(&single_player_opponent_races)[8] = * ((decltype(&single_player_opponent_races)) 0x57f267);
 __int16(&word_57F270)[] = * ((decltype(&word_57F270)) 0x57f270);
 __int16(&word_57F272)[5] = * ((decltype(&word_57F272)) 0x57f272);
 UnitAvail& UnitAvailability = * ((decltype(&UnitAvailability)) 0x57f27c);
@@ -25261,7 +25273,7 @@ __int16& word_6D5E28 = * ((decltype(&word_6D5E28)) 0x6d5e28);
 int& dword_6D5E2C = * ((decltype(&dword_6D5E2C)) 0x6d5e2c);
 int& dword_6D5E30 = * ((decltype(&dword_6D5E30)) 0x6d5e30);
 dialog *& DialogList = * ((decltype(&DialogList)) 0x6d5e34);
-int (__thiscall *&dword_6D5E38)(_DWORD) = *((decltype(&dword_6D5E38)) 0x6d5e38);
+void (__cdecl *&dword_6D5E38)() = *((decltype(&dword_6D5E38)) 0x6d5e38);
 int& dword_6D5E3C = * ((decltype(&dword_6D5E3C)) 0x6d5e3c);
 dialog *(&EventDialogs)[19] = * ((decltype(&EventDialogs)) 0x6d5e40);
 activation_delays(&stru_6D5E8C)[4] = * ((decltype(&stru_6D5E8C)) 0x6d5e8c);

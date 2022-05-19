@@ -5977,7 +5977,7 @@ LABEL_28:
 		BWFXN_RedrawTarget();
 	}
 	RefreshCursor_0();
-	dword_6D5E38 = (int(__thiscall *)(_DWORD))jmpNoMenu;
+	dword_6D5E38 = jmpNoMenu;
 	if (glue_background_palette[0].data)
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
