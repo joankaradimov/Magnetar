@@ -6478,12 +6478,13 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		is_keycode_used[VK_MENU] = (GetKeyState(VK_MENU) & 0x8000) != 0;
 		if ((InputFlags & 0x2A) == 0)
 		{
+			WORD key_flags = HIWORD(lParam);
 			v16.wVirtKey = wParam;
 			v16.wUnk_0x0A = BWFXN_Game_KeyState();
-			v16.wNo = (lParam & 0x40000000) ? EVN_KEYRPT : EVN_KEYFIRST;
+			v16.wNo = (key_flags & KF_REPEAT) ? EVN_KEYRPT : EVN_KEYFIRST;
 			if (!sendInputToAllDialogs(&v16))
 			{
-				InputProcedure v11 = (lParam & 0x40000000) ? input_procedures[EventNo::EVN_KEYRPT] : input_procedures[EventNo::EVN_KEYDOWN];
+				InputProcedure v11 = (key_flags & KF_REPEAT) ? input_procedures[EventNo::EVN_KEYRPT] : input_procedures[EventNo::EVN_KEYDOWN];
 				if (v11)
 				{
 					v11(&v16);
