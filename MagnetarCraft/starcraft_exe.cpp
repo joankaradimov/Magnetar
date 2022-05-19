@@ -2979,7 +2979,17 @@ DECL_FUNC(int(*sub_42D350)(), sub_42D350, 0x42d350);
 DECL_FUNC(int(*sub_42D370)(), sub_42D370, 0x42d370);
 DECL_FUNC(int(*sub_42D400)(), sub_42D400, 0x42d400);
 DECL_FUNC(int(*getFirstSprite)(), getFirstSprite, 0x42d460);
-DECL_FUNC(int(*sub_42D4C0)(), sub_42D4C0, 0x42d4c0);
+int sub_42D4C0(CSprite *a1) {
+    int address = 0x42d4c0;
+    int result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*isVisible)(), isVisible, 0x42d560);
 DECL_FUNC(int(*sub_42D600)(), sub_42D600, 0x42d600);
 DECL_FUNC(int(*getUnitCollision_CB)(), getUnitCollision_CB, 0x42d650);
@@ -16084,7 +16094,7 @@ unsigned int GetGroundHeightAtPos(signed int x, signed int y) {
 }
 DECL_FUNC(int(*DestroyMapData)(), DestroyMapData, 0x4bd190);
 DECL_FUNC(int(*RefreshLayer5)(), RefreshLayer5, 0x4bd350);
-DECL_FUNC(int(*sub_4BD3A0)(), sub_4BD3A0, 0x4bd3a0);
+DECL_FUNC(void (__cdecl*sub_4BD3A0)(), sub_4BD3A0, 0x4bd3a0);
 DECL_FUNC(int(*InitialSetScreenToStartLocation)(), InitialSetScreenToStartLocation, 0x4bd3f0);
 DECL_FUNC(int(*sub_4BD4B0)(), sub_4BD4B0, 0x4bd4b0);
 DECL_FUNC(void (__thiscall*input_targetOrder_LeftMouseClick)(dlgEvent *), input_targetOrder_LeftMouseClick, 0x4bd500);
@@ -16092,7 +16102,7 @@ DECL_FUNC(void (__stdcall*DrawGameProc)(Bitmap *, bounds *), DrawGameProc, 0x4bd
 DECL_FUNC(void (__cdecl*InitializeGameLayer)(), InitializeGameLayer, 0x4bd630);
 DECL_FUNC(int(*initMapData)(), initMapData, 0x4bd6f0);
 DECL_FUNC(int(*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
-DECL_FUNC(int (__thiscall*sub_4BDB30)(int *this_, int a2), sub_4BDB30, 0x4bdb30);
+DECL_FUNC(char *(__thiscall*sub_4BDB30)(int *this_, PALETTEENTRY a2), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(int(*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
 DECL_FUNC(int(*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
 DECL_FUNC(void (__stdcall*sub_4BDDD0)(const char *tileset_name), sub_4BDDD0, 0x4bddd0);
@@ -18864,7 +18874,23 @@ __int16 genericLightupBtnUserDestroyEventHandler(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4E0BE0)(int, int), sub_4E0BE0, 0x4e0be0);
+int sub_4E0BE0(dialog *a1, dialog *a2, rect *a3, int a4, int a5) {
+    int address = 0x4e0be0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        mov ecx, a3
+        push dword ptr a5
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4E0D10)(), sub_4E0D10, 0x4e0d10);
 void genericLightupBtnMouseUpdate(dlgEvent *a1, rect *a2, dialog *a3) {
     int address = 0x4e0d40;
@@ -22392,7 +22418,7 @@ char(&aMusicZerg3_wav)[16] = * ((decltype(&aMusicZerg3_wav)) 0x504040);
 char(&aMusicZerg2_wav)[16] = * ((decltype(&aMusicZerg2_wav)) 0x504050);
 char(&aMusicZerg1_wav)[16] = * ((decltype(&aMusicZerg1_wav)) 0x504060);
 char(&aRezMinimap_bin)[] = * ((decltype(&aRezMinimap_bin)) 0x504070);
-char(&aGameTblink_pcx)[] = * ((decltype(&aGameTblink_pcx)) 0x504080);
+char(&a1)[] = * ((decltype(&a1)) 0x504080);
 char(&grp_path)[] = * ((decltype(&grp_path)) 0x504090);
 char(&aRezMinimapprev)[] = * ((decltype(&aRezMinimapprev)) 0x5040a0);
 char(&aStarcraftSw_44)[] = * ((decltype(&aStarcraftSw_44)) 0x5040b8);
@@ -23918,7 +23944,7 @@ StringTbl& MapStringTbl = * ((decltype(&MapStringTbl)) 0x5993d4);
 char(&byte_5993D8)[] = * ((decltype(&byte_5993D8)) 0x5993d8);
 int& chk_string_section_size = * ((decltype(&chk_string_section_size)) 0x5994d8);
 int& dword_5994DC = * ((decltype(&dword_5994DC)) 0x5994dc);
-int(&palette)[256] = * ((decltype(&palette)) 0x5994e0);
+PALETTEENTRY(&palette)[256] = * ((decltype(&palette)) 0x5994e0);
 __int16& megatileCount = * ((decltype(&megatileCount)) 0x5998e0);
 unsigned int& ThreadId = * ((decltype(&ThreadId)) 0x5998e4);
 int& dword_5998E8 = * ((decltype(&dword_5998E8)) 0x5998e8);
@@ -24110,7 +24136,7 @@ char& league_maybe = * ((decltype(&league_maybe)) 0x629268);
 int(&dword_629284)[] = * ((decltype(&dword_629284)) 0x629284);
 SpriteTileData& SpritesOnTileRow = * ((decltype(&SpritesOnTileRow)) 0x629288);
 char(&byte_629A88)[520] = * ((decltype(&byte_629A88)) 0x629a88);
-char(&byte_629C90)[] = * ((decltype(&byte_629C90)) 0x629c90);
+char(&byte_629C90)[256] = * ((decltype(&byte_629C90)) 0x629c90);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
 int& dword_63FD28 = * ((decltype(&dword_63FD28)) 0x63fd28);
