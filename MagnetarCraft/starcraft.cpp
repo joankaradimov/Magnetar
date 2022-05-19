@@ -4077,6 +4077,43 @@ void sub_4CC990_()
 
 FUNCTION_PATCH(sub_4CC990, sub_4CC990_);
 
+int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
+{
+	sub_4195E0();
+	a1->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
+	LastControlID = -3;
+	InitializeDialog_(a1, fn_interact);
+	while (true)
+	{
+		if (dword_6D5E38)
+		{
+			dword_6D5E38();
+		}
+		for (dialog* v3 = DialogList; v3; v3 = v3->pNext)
+		{
+			if (v3->fields.dlg.pModalFcn)
+			{
+				v3->fields.dlg.pModalFcn(v3);
+			}
+		}
+		BWFXN_videoLoop(3);
+		BWFXN_RedrawTarget_();
+
+		if (a1 == NULL)
+		{
+			return LastControlID;
+		}
+
+		for (dialog* v6 = DialogList; v6 != a1; v6 = v6->pNext)
+		{
+			if (v6 == NULL)
+			{
+				return LastControlID;
+			}
+		}
+	}
+}
+
 int CreateCampaignGame_(MapData mapData)
 {
 	MapChunks mapChunks;
@@ -4317,7 +4354,7 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 
 	dword_6D5A3C = LoadDialog("rez\\gluHist.bin");
 
-	gluLoadBINDlg(dword_6D5A3C, gluHist_Interact_);
+	gluLoadBINDlg_(dword_6D5A3C, gluHist_Interact_);
 	if (dword_6D5A44)
 	{
 		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);
@@ -4962,7 +4999,7 @@ void loadMenu_gluLogin_()
 {
 	gluLogin_Dlg = LoadDialog("rez\\gluLogin.bin");
 
-	switch (gluLoadBINDlg(gluLogin_Dlg, gluLogin_Main))
+	switch (gluLoadBINDlg_(gluLogin_Dlg, gluLogin_Main))
 	{
 	case 4:
 		if (!multiPlayerMode)
@@ -4998,7 +5035,7 @@ void loadMenu_gluCmpgn_()
 	sub_4B26E0();
 	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluCmpgn.bin");
 
-	switch (gluLoadBINDlg(campaign_dialog, gluCmpgn_Main_))
+	switch (gluLoadBINDlg_(campaign_dialog, gluCmpgn_Main_))
 	{
 	case 5:
 		glGluesMode = GLUE_LOAD;
@@ -5037,7 +5074,7 @@ void loadMenu_gluExpCmpgn_()
 	sub_4B5050();
 	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluExpCmpgn.bin");
 
-	switch (gluLoadBINDlg(campaign_dialog, gluExpCmpgn_CustomCtrlID_))
+	switch (gluLoadBINDlg_(campaign_dialog, gluExpCmpgn_CustomCtrlID_))
 	{
 	case 8:
 		glGluesMode = GLUE_READY_Z;
@@ -5076,7 +5113,7 @@ void loadMenu_gluJoin_()
 
 	gluJoin_Dlg = LoadDialog("rez\\gluJoin.bin");
 
-	switch (gluLoadBINDlg(gluJoin_Dlg, gluJoin_Main))
+	switch (gluLoadBINDlg_(gluJoin_Dlg, gluJoin_Main))
 	{
 	case 13:
 		glGluesMode = GLUE_CHAT;
@@ -5165,7 +5202,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
 	dword_6D5A74 = GAME_RUNINIT;
-	switch(gluLoadBINDlg(gluCreateOrCustm_bin, gluCustm_Interact_))
+	switch(gluLoadBINDlg_(gluCreateOrCustm_bin, gluCustm_Interact_))
 	{
 	case 12:
 		if (LOBYTE(multiPlayerMode) != v1)
@@ -5465,7 +5502,7 @@ void loadMenu_gluMain_()
 	{
 		GotFileValues* ums_game_template;
 
-		switch (gluLoadBINDlg(bin_dialog, gluMain_Dlg_Interact_))
+		switch (gluLoadBINDlg_(bin_dialog, gluMain_Dlg_Interact_))
 		{
 		case 2:
 			gwGameMode = GAME_EXIT;
@@ -5556,7 +5593,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 		dword_50E064 = -1;
 		dialog* bin_dialog = LoadDialog(bin_path);
 
-		switch (gluLoadBINDlg(bin_dialog, BINDLG_Loop))
+		switch (gluLoadBINDlg_(bin_dialog, BINDLG_Loop))
 		{
 		case 14:
 			if (multiPlayerMode)
@@ -5734,7 +5771,7 @@ void loadMenu_gluConn_()
 {
 	gluConn_Dlg = LoadDialog("rez\\gluConn.bin");
 
-	if (gluLoadBINDlg(gluConn_Dlg, ConnSel_Interact_) != 9)
+	if (gluLoadBINDlg_(gluConn_Dlg, ConnSel_Interact_) != 9)
 	{
 		glGluesMode = GLUE_MAIN_MENU;
 	}
@@ -5770,7 +5807,7 @@ void loadMenu_gluChat_()
 		}
 		ImmAssociateContext(hWndParent, dword_6D6438);
 	}
-	int v9 = gluLoadBINDlg(lobby_dlg, gluChat_Main);
+	int v9 = gluLoadBINDlg_(lobby_dlg, gluChat_Main);
 	if (GetUserDefaultLangID() == 1042)
 	{
 		if (dword_6D6438 == NULL)
@@ -5813,7 +5850,7 @@ void loadMenu_gluLoad_()
 {
 	glu_load_Dlg = loadAndInitFullMenuDLG_("rez\\gluLoad.bin");
 
-	switch (gluLoadBINDlg(glu_load_Dlg, gluLoad_Main))
+	switch (gluLoadBINDlg_(glu_load_Dlg, gluLoad_Main))
 	{
 	case 4:
 		CMDRECV_LoadGame(byte_599DA4);
@@ -6065,7 +6102,7 @@ void loadMenu_gluScore_()
 
 	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
 
-	if (gluLoadBINDlg(gluScore_Dlg, gluScore_Main_) == 7)
+	if (gluLoadBINDlg_(gluScore_Dlg, gluScore_Main_) == 7)
 	{
 		if (multiPlayerMode)
 		{
@@ -6952,7 +6989,7 @@ void loadInitCreditsBIN_(const char* a1)
 	{
 		v5 = 0;
 	}
-	gluLoadBINDlg(v5, creditsDlgInteract);
+	gluLoadBINDlg_(v5, creditsDlgInteract);
 	if (dword_51CEA8)
 		SMemFree(dword_51CEA8, "Starcraft\\SWAR\\lang\\credits.cpp", 623, 0);
 	dword_51CEA8 = 0;
