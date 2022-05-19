@@ -1663,6 +1663,70 @@ MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
 void initMapData_();
+void setMapSizeConstants_();
+
+void load_gluMinimap_()
+{
+	word_59C19C = MoveToTile.y;
+	word_59CC70 = MoveToTile.x;
+	dword_59C2B8 = 0;
+	dword_59C1A8 = 0;
+	dword_59C1AC = (void*)LoadGraphic("game\\blink.grp", 0, "Starcraft\\SWAR\\lang\\minimap.cpp", 2011);
+	if (!SBmpLoadImage("game\\tblink.pcx", 0, byte_59CAC0, sizeof(byte_59CAC0), 0, 0, 0))
+	{
+		SysWarn_FileNotFound("game\\tblink.pcx", SErrGetLastError());
+	}
+
+	for (int i = 0; i < _countof(palette); i++)
+	{
+		if (dword_5993AC)
+		{
+			byte_59CB60[i] = sub_4BDB30(dword_59C6C0, palette[i]);
+		}
+		else if (sub_4CB560(i))
+		{
+			byte_59CB60[i] = sub_4BDB30(palette, palette[i]);
+		}
+		else
+		{
+			byte_59CB60[i] = i;
+		}
+	}
+
+	for (int i = 0; i < _countof(stru_59C1B8); i++)
+	{
+		stru_59C1B8[i].a0 = 0;
+	}
+
+	if (dword_5993AC)
+	{
+		setMapSizeConstants_();
+		minimapSurfaceUpdate();
+		if (dword_5993AC == 1 || !byte_6D5BBF)
+		{
+			sub_4A3A00();
+			minimapVisionUpdate();
+		}
+		else
+		{
+			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
+		}
+		drawAllMinimapBoxes();
+		sub_4A3870();
+		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+		{
+			minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(minimap_dialog);
+		}
+	}
+	else
+	{
+		minimap_Dlg = LoadDialog("rez\\minimap.bin");
+		InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract);
+	}
+}
+
+FAIL_STUB_PATCH(load_gluMinimap);
 
 int sub_4EEFD0_()
 {
@@ -1690,7 +1754,7 @@ int sub_4EEFD0_()
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle || LoadMap())
 	{
-		load_gluMinimap();
+		load_gluMinimap_();
 		memcpy(palette, dword_59C6C0, sizeof(palette));
 		return 1;
 	}
@@ -2859,7 +2923,7 @@ void setup_HUD_()
 	load_statbtn_BIN();
 	load_Statf10_BIN();
 	ctextbox_BIN();
-	load_gluMinimap();
+	load_gluMinimap_();
 	if (GameScreenConsole.data != NULL)
 	{
 		SMemFree(GameScreenConsole.data, "Starcraft\\SWAR\\lang\\status.cpp", 217, NULL);
