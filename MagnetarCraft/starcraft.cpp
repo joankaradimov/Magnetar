@@ -33,6 +33,22 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+DEFINE_ENUM_FLAG_OPERATORS(DialogFlags);
+
+void updateAllDlgs_()
+{
+	for (dialog* dlg = DialogList; dlg; dlg = dlg->pNext)
+	{
+		if ((dlg->lFlags & CTRL_UPDATE) == 0)
+		{
+			dlg->lFlags |= CTRL_UPDATE;
+			updateDialog(dlg);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(updateAllDlgs);
+
 bool realizePalette_()
 {
 	if (!PrimarySurface || !dword_51BFA8 || !hWndParent || IsIconic(hWndParent))
@@ -43,7 +59,7 @@ bool realizePalette_()
 	{
 		SDrawRealizePalette();
 		memset(RefreshRegions, 1u, sizeof(RefreshRegions));
-		updateAllDlgs();
+		updateAllDlgs_();
 		dword_6D5E1C = 0;
 	}
 	return true;
@@ -204,8 +220,6 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 	SFileCloseFile(phFile);
 	return buffer;
 }
-
-DEFINE_ENUM_FLAG_OPERATORS(DialogFlags);
 
 dialog* LoadDialog(const char* bin_path)
 {
