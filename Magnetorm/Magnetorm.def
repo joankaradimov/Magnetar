@@ -292,7 +292,7 @@ EXPORTS
     SRgnClear = StormLibRgnClear @521
     SRgn523 = StormLibRgn523 @523
     SRgnCreate = StormLibRgnCreate @524
-    SRgnDelete = StormLibRgnDelete @525
+    SRgnDelete@4 = StormLibRgnDelete @525
     SRgnDuplicate = StormLibRgnDuplicate @527
     SRgnGetRectParams = StormLibRgnGetRectParams @528
     SRgn529i = StormLibRgn529i @529

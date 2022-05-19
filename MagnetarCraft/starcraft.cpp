@@ -33,6 +33,46 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+void BWFXN_RedrawTarget_()
+{
+	sub_4BD3A0();
+	if (realizePalette())
+	{
+		if (ScreenLayers[1].buffers)
+		{
+			if (ScreenLayers[1].width)
+			{
+				RECT rc;
+				SetRect(&rc, ScreenLayers[1].left, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1, ScreenLayers[1].height + ScreenLayers[1].top - 1);
+				isRectBoundsInside_Assign_32(&rc, &ScrLimit);
+				sub_41C2A0(&rc);
+				sub_41C2A0(&stru_6D63F4);
+				stru_6D63F4 = rc;
+			}
+			else
+			{
+				if (stru_6D63F4.left || stru_6D63F4.right)
+				{
+					sub_41C2A0(&stru_6D63F4);
+				}
+				if (stru_6D63F4.left || stru_6D63F4.right || stru_6D63F4.top || stru_6D63F4.bottom)
+				{
+					stru_6D63F4.top = stru_6D63F4.bottom + 1;
+				}
+			}
+		}
+		DirtyArrayHandling();
+	}
+
+	if (dword_6D5E2C)
+	{
+		SRgnDelete(dword_6D5E2C);
+		dword_6D5E2C = 0;
+	}
+}
+
+FUNCTION_PATCH(BWFXN_RedrawTarget, BWFXN_RedrawTarget_);
+
 HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename, DWORD dwFlags)
 {
 	if (!GetModuleFileNameA(hInst, a2, 0x104u))
@@ -1000,7 +1040,7 @@ void audioVideoInit_()
 	dword_6D5DF8 = 1;
 	AppAddExit_(vidinimoDestroy);
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
-	BWFXN_RedrawTarget();
+	BWFXN_RedrawTarget_();
 	LoadSfx_();
 	AppAddExit_(sfxdata_cleanup);
 	if (!byte_6D11D0)
@@ -2662,7 +2702,7 @@ void GameLoop_Top_(MenuPosition a1)
 		{
 			dword_5968EC = 0;
 			v2 = false;
-			BWFXN_RedrawTarget();
+			BWFXN_RedrawTarget_();
 		}
 	}
 }
@@ -2704,7 +2744,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	GameKeepAlive();
 	while (GameState && !gameLoopTurns())
 	{
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 	GameLoop_Top_(a1);
 	newGame(0);
@@ -5974,7 +6014,7 @@ LABEL_28:
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
 		gluDlgFadePalette(3u);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
 	dword_6D5E38 = jmpNoMenu;
@@ -6063,7 +6103,7 @@ LABEL_28:
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
 		gluDlgFadePalette(3u);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
 	playsound_init_UI(0);
@@ -7038,7 +7078,7 @@ void GameMainLoop_()
 						drawCursor();
 					}
 				}
-				BWFXN_RedrawTarget();
+				BWFXN_RedrawTarget_();
 				if (!is_expansion_installed)
 					IsExpansion = 0;
 				switch (gwGameMode)
