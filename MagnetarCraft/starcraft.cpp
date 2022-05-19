@@ -33,10 +33,28 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+bool realizePalette_()
+{
+	if (!PrimarySurface || !dword_51BFA8 || !hWndParent || IsIconic(hWndParent))
+	{
+		return false;
+	}
+	if (dword_6D5E1C)
+	{
+		SDrawRealizePalette();
+		memset(RefreshRegions, 1u, sizeof(RefreshRegions));
+		updateAllDlgs();
+		dword_6D5E1C = 0;
+	}
+	return true;
+}
+
+FAIL_STUB_PATCH(realizePalette);
+
 void BWFXN_RedrawTarget_()
 {
 	sub_4BD3A0();
-	if (realizePalette())
+	if (realizePalette_())
 	{
 		if (ScreenLayers[1].buffers)
 		{

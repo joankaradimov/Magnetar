@@ -154,7 +154,7 @@ EXPORTS
     SDrawManualInitialize@32 = StormLibDrawManualInitialize @351
     SDrawMessageBox = StormLibDrawMessageBox @352
     SDrawPostClose = StormLibDrawPostClose @353
-    SDrawRealizePalette = StormLibDrawRealizePalette @354
+    SDrawRealizePalette@0 = StormLibDrawRealizePalette @354
     SDrawSelectGdiSurface = StormLibDrawSelectGdiSurface @355
     SDrawUnlockSurface = StormLibDrawUnlockSurface @356
     SDrawUpdatePalette@16 = StormLibDrawUpdatePalette @357
