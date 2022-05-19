@@ -5546,7 +5546,7 @@ FAIL_STUB_PATCH(GatewayListProc);
 
 int ConnSel_InitChildren_(dialog* a1)
 {
-	FnInteract v2[14] = {
+	static FnInteract v2[14] = {
 		0,
 		0,
 		0,
