@@ -6350,10 +6350,12 @@ void Game_MouseWheel_(EventNo wNo, int a2)
 {
 	dlgEvent v3;
 
-	v3.wNo = wNo;
-	v3.wSelection = a2;
 	v3.dwUser = USER_CREATE;
+	v3.wSelection = LOWORD(a2);
+	v3.wUnk_0x06 = HIWORD(a2);
 	v3.wVirtKey = 0;
+	v3.wUnk_0x0A = 0;
+	v3.wNo = wNo;
 	v3.cursor.x = 0;
 	v3.cursor.y = 0;
 	if (!sendInputToAllDialogs(&v3) && input_procedures[wNo])
