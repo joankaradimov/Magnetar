@@ -1681,7 +1681,7 @@ void load_gluMinimap_()
 	{
 		if (dword_5993AC)
 		{
-			byte_59CB60[i] = sub_4BDB30(dword_59C6C0, palette[i]);
+			byte_59CB60[i] = sub_4BDB30(stru_59C6C0, palette[i]);
 		}
 		else if (sub_4CB560(i))
 		{
@@ -1730,7 +1730,7 @@ FAIL_STUB_PATCH(load_gluMinimap);
 
 int sub_4EEFD0_()
 {
-	memcpy(dword_59C6C0, palette, sizeof(dword_59C6C0));
+	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
 	sub_49BB90();
 	initMapData_();
 	InitializePresetImageArrays();
@@ -1755,7 +1755,7 @@ int sub_4EEFD0_()
 	if (loadGameFileHandle || LoadMap())
 	{
 		load_gluMinimap_();
-		memcpy(palette, dword_59C6C0, sizeof(palette));
+		memcpy(palette, stru_59C6C0, sizeof(palette));
 		return 1;
 	}
 	else
@@ -5704,7 +5704,7 @@ bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(GatewayListProc);
 
-int ConnSel_InitChildren_(dialog* a1)
+void ConnSel_InitChildren_(dialog* a1)
 {
 	static FnInteract v2[14] = {
 		0,
@@ -5724,7 +5724,7 @@ int ConnSel_InitChildren_(dialog* a1)
 	};
 
 	DlgSwooshin(5, commonSwishControllers, a1, 0);
-	return registerMenuFunctions(v2, a1, sizeof(v2), 0);
+	registerMenuFunctions(v2, a1, sizeof(v2), 0);
 }
 
 FAIL_STUB_PATCH(ConnSel_InitChildren);
