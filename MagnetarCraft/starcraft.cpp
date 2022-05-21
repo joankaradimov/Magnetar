@@ -5723,7 +5723,7 @@ bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
 			break;
 		case USER_DESTROY:
-			sub_4BA240(dlg->fields.list.bStrs ? dlg->fields.scroll.bSliderGraphic : -1);
+			sub_4BA240(dlg->fields.list.bStrs ? dlg->fields.list.bCurrStr : -1);
 			[[fallthrough]];
 		case USER_SELECT:
 			genericListboxInteract(dlg, evt);
