@@ -1045,33 +1045,30 @@ void freeTimers(dialog *a1) {
         call address
     }
 }
-void *waitLoopCntd(__int16 a1, dialog *a2) {
+Timer *waitLoopCntd(__int16 timer_id, dialog *a2) {
     int address = 0x416000;
-    void * result_;
+    Timer * result_;
     __asm {
         xor edx, edx
         xor esi, esi
-        mov dx, a1
+        mov dx, timer_id
         mov esi, a2
         call address
         mov result_, eax
     }
     return result_;
 }
-int *SetCallbackTimer(__int16 a1, dialog *a2, int a3, int a4) {
+void SetCallbackTimer(__int16 timer_id, dialog *dlg, int a3, void (__fastcall *a4)(dialog *, __int16)) {
     int address = 0x416090;
-    int * result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov ax, a1
-        mov ecx, a2
+        mov ax, timer_id
+        mov ecx, dlg
         push dword ptr a4
         push dword ptr a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4161B0)(), sub_4161B0, 0x4161b0);
 signed int koreanTextLeadByteCheck(int byte_position, const char *text) {
@@ -1116,7 +1113,7 @@ char dlgEditDestroy(dialog *a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*sub_416600)(dialog *a1, __int16 a2), sub_416600, 0x416600);
+DECL_FUNC(void (__fastcall*sub_416600)(dialog *, __int16), sub_416600, 0x416600);
 void sub_416650(const char *a1, dialog *a2) {
     int address = 0x416650;
     __asm {
@@ -1145,7 +1142,16 @@ void sub_416710(dialog *a1, char a2) {
         call address
     }
 }
-DECL_FUNC(int (__thiscall*SetTextBoxTimer)(dialog *a1), SetTextBoxTimer, 0x416790);
+void SetTextBoxTimer(char a1, dialog *a2) {
+    int address = 0x416790;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov al, a1
+        mov ecx, a2
+        call address
+    }
+}
 void DlgDrawEditText(dialog *a1) {
     int address = 0x4167f0;
     __asm {
@@ -1610,8 +1616,15 @@ __int16 sub_419290(DlgGrp *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_419450)(), sub_419450, 0x419450);
-DECL_FUNC(int(*sub_419460)(), sub_419460, 0x419460);
-DECL_FUNC(int(*sub_419470)(), sub_419470, 0x419470);
+void sub_419460(int (__stdcall *result)(_DWORD)) {
+    int address = 0x419460;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+    }
+}
+DECL_FUNC(void (__thiscall*sub_419470)(void *this_), sub_419470, 0x419470);
 DECL_FUNC(int(*sub_419480)(), sub_419480, 0x419480);
 DECL_FUNC(int(*sub_4194B0)(), sub_4194B0, 0x4194b0);
 void AllocInitDialogData(dialog *a1, dialog *a1_, FnAllocBackgroundImage allocFunction, const char *logfile, int logline) {
@@ -5502,8 +5515,8 @@ void StartUnitPortrait(dialog *a1) {
     }
 }
 DECL_FUNC(int (__stdcall*sub_44EE40)(__int16), sub_44EE40, 0x44ee40);
-DECL_FUNC(int(*videoSpeakingPortraitLoop)(), videoSpeakingPortraitLoop, 0x44ee80);
-DECL_FUNC(int (__stdcall*sub_44EED0)(int), sub_44EED0, 0x44eed0);
+DECL_FUNC(void (__fastcall*videoSpeakingPortraitLoop)(dialog *a1, __int16 timer_id), videoSpeakingPortraitLoop, 0x44ee80);
+DECL_FUNC(int (__stdcall*sub_44EED0)(int a3), sub_44EED0, 0x44eed0);
 void gluRdy_Portrait_InitChildren(dialog *a1) {
     int address = 0x44ef00;
     __asm {
@@ -5546,8 +5559,8 @@ void sub_44FF20(dialog *a1) {
 }
 DECL_FUNC(int(*sub_44FF30)(), sub_44FF30, 0x44ff30);
 DECL_FUNC(int(*sub_44FF50)(), sub_44FF50, 0x44ff50);
-DECL_FUNC(int(*getPlayerCaps)(), getPlayerCaps, 0x450030);
-DECL_FUNC(int(*sub_4500D0)(), sub_4500D0, 0x4500d0);
+DECL_FUNC(void (__fastcall*getPlayerCaps)(dialog *, __int16), getPlayerCaps, 0x450030);
+DECL_FUNC(void (__fastcall*sub_4500D0)(dialog *, __int16), sub_4500D0, 0x4500d0);
 DECL_FUNC(int(*updateDownloadPercentages)(), updateDownloadPercentages, 0x450210);
 DECL_FUNC(int(*sub_4502F0)(), sub_4502F0, 0x4502f0);
 DECL_FUNC(void (__fastcall*sub_450330)(dialog *dlg, int x, int y, rect *dst), sub_450330, 0x450330);
@@ -6772,7 +6785,7 @@ DECL_FUNC(int (__stdcall*rgbValue)(int), rgbValue, 0x45e450);
 DECL_FUNC(int (__thiscall*sub_45E4C0)(HANDLE video, int a2), sub_45E4C0, 0x45e4c0);
 DECL_FUNC(int(*sub_45E560)(), sub_45E560, 0x45e560);
 DECL_FUNC(int (__stdcall*sub_45E570)(char), sub_45E570, 0x45e570);
-DECL_FUNC(int(*GameTalkingPortrait_CB)(), GameTalkingPortrait_CB, 0x45e610);
+DECL_FUNC(void (__fastcall*GameTalkingPortrait_CB)(dialog *a1, __int16 timer_id), GameTalkingPortrait_CB, 0x45e610);
 DECL_FUNC(int (__stdcall*statPortBtnUpdate)(int, int), statPortBtnUpdate, 0x45e650);
 DECL_FUNC(int(*clearSelectionPortrait)(), clearSelectionPortrait, 0x45e710);
 DECL_FUNC(int(*sub_45E770)(), sub_45E770, 0x45e770);
@@ -6803,7 +6816,7 @@ void displayUpdatePortrait(WORD a1, CUnit *a3, __int16 a4) {
 }
 DECL_FUNC(int(*sub_45EB80)(), sub_45EB80, 0x45eb80);
 DECL_FUNC(int(*updateSelectedUnitPortrait)(), updateSelectedUnitPortrait, 0x45ebc0);
-DECL_FUNC(int (__thiscall*sub_45EC40)(dialog *a1), sub_45EC40, 0x45ec40);
+DECL_FUNC(void (__fastcall*sub_45EC40)(dialog *a1, __int16 timer_id), sub_45EC40, 0x45ec40);
 DECL_FUNC(int(*sub_45ED90)(), sub_45ED90, 0x45ed90);
 signed int DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_type, int y) {
     int address = 0x45edd0;
@@ -6821,7 +6834,7 @@ signed int DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_typ
     return result_;
 }
 DECL_FUNC(bool (__fastcall*statPortBtnInteract)(dialog *dlg, dlgEvent *evt), statPortBtnInteract, 0x45ee90);
-DECL_FUNC(int(*sub_45EF50)(), sub_45EF50, 0x45ef50);
+DECL_FUNC(int (__thiscall*sub_45EF50)(dialog *a2), sub_45EF50, 0x45ef50);
 int *DoUnitEventNotify(CUnit *a1, int a2, char a3, int a4, int *a5, unsigned int a6) {
     int address = 0x45efe0;
     int * result_;
@@ -6963,16 +6976,13 @@ DECL_FUNC(int(*sub_460F20)(), sub_460F20, 0x460f20);
 DECL_FUNC(int(*lmissionDlgActivate)(), lmissionDlgActivate, 0x460f30);
 DECL_FUNC(int(*sub_460F70)(), sub_460F70, 0x460f70);
 DECL_FUNC(void (__cdecl*sub_460FA0)(), sub_460FA0, 0x460fa0);
-int *lmissionDlgCreate(dialog *a1) {
+void lmissionDlgCreate(dialog *a1) {
     int address = 0x461020;
-    int * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_461160)(), sub_461160, 0x461160);
 DECL_FUNC(bool (__fastcall*lmission_DLG_Interact)(dialog *dlg, dlgEvent *evt), lmission_DLG_Interact, 0x461430);
@@ -8440,12 +8450,19 @@ void Unit_ExecPathingState(CUnit *a1) {
     }
 }
 DECL_FUNC(int (__stdcall*sub_46C6E0)(int, int), sub_46C6E0, 0x46c6e0);
-DECL_FUNC(int(*waitLoop)(), waitLoop, 0x46c750);
-DECL_FUNC(int(*sub_46C770)(), sub_46C770, 0x46c770);
+DECL_FUNC(void (__fastcall*waitLoop)(dialog *, __int16), waitLoop, 0x46c750);
+void sub_46C770(int a1) {
+    int address = 0x46c770;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(signed int (__stdcall*AddBriefingTrigger)(BriefingEntry *a1), AddBriefingTrigger, 0x46c790);
-DECL_FUNC(int (__thiscall*BRF_RectLoop2)(dialog *a1), BRF_RectLoop2, 0x46c940);
-DECL_FUNC(int(*BRF_RectLoop1)(), BRF_RectLoop1, 0x46c960);
-DECL_FUNC(int(*textScrollLoop)(), textScrollLoop, 0x46c990);
+DECL_FUNC(void (__fastcall*BRF_RectLoop2)(dialog *dlg, __int16 timer_id), BRF_RectLoop2, 0x46c940);
+DECL_FUNC(void (__fastcall*BRF_RectLoop1)(dialog *, __int16), BRF_RectLoop1, 0x46c960);
+DECL_FUNC(void (__fastcall*textScrollLoop)(dialog *, __int16), textScrollLoop, 0x46c990);
 DECL_FUNC(int(*CreateSkipTutorialButton)(), CreateSkipTutorialButton, 0x46c9c0);
 DECL_FUNC(int(*HidePortrait)(), HidePortrait, 0x46ca30);
 DECL_FUNC(void (__thiscall*sub_46CA90)(void *this_, dialog *a2), sub_46CA90, 0x46ca90);
@@ -8469,7 +8486,7 @@ void briefingFramesCleanup(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*SpeakingPortrait)(int), SpeakingPortrait, 0x46d040);
+DECL_FUNC(void (__fastcall*SpeakingPortrait)(unsigned __int8 a1, int a2, int a3), SpeakingPortrait, 0x46d040);
 char BriefingStart(dialog *a1, int a2) {
     int address = 0x46d090;
     char result_;
@@ -8493,7 +8510,7 @@ int sub_46D160(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*MissionBriefingLoop)(dialog *this_), MissionBriefingLoop, 0x46d1b0);
+DECL_FUNC(void (__fastcall*MissionBriefingLoop)(dialog *dlg, __int16 a2), MissionBriefingLoop, 0x46d1b0);
 DECL_FUNC(int(*sub_46D1F0)(), sub_46D1F0, 0x46d1f0);
 DECL_FUNC(int (__stdcall*sub_46D200)(int a1), sub_46D200, 0x46d200);
 u32 sub_46D220(dialog *a1) {
@@ -11670,7 +11687,14 @@ void get_statTxt_Str_0(int player, CUnit *unit, int a3) {
         call address
     }
 }
-DECL_FUNC(int(*playBuildPlacementSound_0)(), playBuildPlacementSound_0, 0x48eff0);
+void playBuildPlacementSound_0(unsigned __int16 a1) {
+    int address = 0x48eff0;
+    __asm {
+        xor eax, eax
+        mov ax, a1
+        call address
+    }
+}
 void playUpgradeCompleteSound(CUnit *a1) {
     int address = 0x48f070;
     __asm {
@@ -14173,7 +14197,7 @@ DECL_FUNC(void (__fastcall*drawMinimapUnitBox)(int player_id), drawMinimapUnitBo
 DECL_FUNC(void(*drawMinimapUnitBox2)(), drawMinimapUnitBox2, 0x4a47b0);
 DECL_FUNC(void(*drawAllMinimapUnitBoxes)(), drawAllMinimapUnitBoxes, 0x4a48e0);
 DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
-DECL_FUNC(int(*updateMinimapPositioninfoProc)(), updateMinimapPositioninfoProc, 0x4a4a70);
+DECL_FUNC(void (__fastcall*updateMinimapPositioninfoProc)(dialog *, __int16), updateMinimapPositioninfoProc, 0x4a4a70);
 DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(int (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
 DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
@@ -14199,10 +14223,10 @@ void minimapGameMouseUpdate(dialog *a1, dialog *a2) {
         call address
     }
 }
-DECL_FUNC(void(*Minimap_TimerRefresh)(), Minimap_TimerRefresh, 0x4a4e00);
-DECL_FUNC(int(*updateMinimapSurfaceInfoProc)(), updateMinimapSurfaceInfoProc, 0x4a4e40);
-DECL_FUNC(int(*updateMinimapSurfaceInfo2Proc)(), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
-DECL_FUNC(int(*playerInfoSomethingTvBProc)(), playerInfoSomethingTvBProc, 0x4a4fe0);
+DECL_FUNC(void (__fastcall*Minimap_TimerRefresh)(dialog *dlg, __int16 timer_id), Minimap_TimerRefresh, 0x4a4e00);
+DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfoProc)(dialog *, __int16), updateMinimapSurfaceInfoProc, 0x4a4e40);
+DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfo2Proc)(dialog *, __int16), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
+DECL_FUNC(void (__fastcall*playerInfoSomethingTvBProc)(dialog *, __int16), playerInfoSomethingTvBProc, 0x4a4fe0);
 DECL_FUNC(char (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
 DECL_FUNC(void(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
 DECL_FUNC(int(*nullsub_70)(), nullsub_70, 0x4a51fd);
@@ -14810,7 +14834,7 @@ void gluCustm_raceDropdown(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*gluCustmInitPlayerTypes)(dialog *dlg, __int16 a2), gluCustmInitPlayerTypes, 0x4adfe0);
+DECL_FUNC(void (__fastcall*gluCustmInitPlayerTypes)(dialog *, __int16), gluCustmInitPlayerTypes, 0x4adfe0);
 DECL_FUNC(int(*sub_4AE1E0)(), sub_4AE1E0, 0x4ae1e0);
 DECL_FUNC(int (__stdcall*sub_4AE1F0)(int, int, int, int), sub_4AE1F0, 0x4ae1f0);
 dialog *sub_4AE250(dialog *result) {
@@ -14993,7 +15017,7 @@ int sub_4B0070(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(DWORD (__fastcall*sub_4B0140)(dialog *a1, int a2), sub_4B0140, 0x4b0140);
+DECL_FUNC(void (__fastcall*sub_4B0140)(dialog *dlg, __int16 timer_id), sub_4B0140, 0x4b0140);
 int sub_4B01F0(dialog *a1) {
     int address = 0x4b01f0;
     int result_;
@@ -15165,8 +15189,8 @@ signed int CommandLineCheatCompare(CheatFlags *game_cheats, const char *a2) {
     return result_;
 }
 DECL_FUNC(unsigned int (__fastcall*sub_4B24B0)(dialog *a1, dlgEvent *a2), sub_4B24B0, 0x4b24b0);
-DECL_FUNC(int(*gluCmpgnBtn_UpdateTimer)(), gluCmpgnBtn_UpdateTimer, 0x4b2500);
-DECL_FUNC(void (__thiscall*gluCmpgnBtn_InitTimer)(dialog *this_), gluCmpgnBtn_InitTimer, 0x4b2570);
+DECL_FUNC(void (__fastcall*gluCmpgnBtn_UpdateTimer)(dialog *, __int16), gluCmpgnBtn_UpdateTimer, 0x4b2500);
+DECL_FUNC(void (__fastcall*gluCmpgnBtn_InitTimer)(dialog *dlg, __int16 timer_id), gluCmpgnBtn_InitTimer, 0x4b2570);
 DECL_FUNC(void (__fastcall*gluCmpgnBtn_BtnLightupUpdate)(dialog *dlg, int x, int y, rect *dst), gluCmpgnBtn_BtnLightupUpdate, 0x4b25a0);
 DECL_FUNC(bool (__fastcall*gluCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluCmpgn_CampaignButton, 0x4b25e0);
 int sub_4B26B0(dialog *a1) {
@@ -15236,7 +15260,7 @@ int sub_4B3600(dialog *a1, int a2, int a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*DLG_GlueScoreFillEnd)(dialog *this_), DLG_GlueScoreFillEnd, 0x4b3670);
+DECL_FUNC(void (__fastcall*DLG_GlueScoreFillEnd)(dialog *, __int16), DLG_GlueScoreFillEnd, 0x4b3670);
 DECL_FUNC(void (__thiscall*sub_4B3820)(dialog *this_, int a2, int a3), sub_4B3820, 0x4b3820);
 DECL_FUNC(void (__fastcall*sub_4B38A0)(dialog *dlg, int x, int y, rect *dst), sub_4B38A0, 0x4b38a0);
 DECL_FUNC(void (__fastcall*sub_4B3A40)(dialog *dlg, int x, int y, rect *dst), sub_4B3A40, 0x4b3a40);
@@ -15245,27 +15269,21 @@ DECL_FUNC(void (__stdcall*sub_4B3BC0)(dialog *a1), sub_4B3BC0, 0x4b3bc0);
 DECL_FUNC(bool (__fastcall*gluScore_PlayerRaceIcon)(dialog *dlg, dlgEvent *evt), gluScore_PlayerRaceIcon, 0x4b3fd0);
 DECL_FUNC(bool (__fastcall*gluScore_PlayerScoreTotal)(dialog *dlg, dlgEvent *evt), gluScore_PlayerScoreTotal, 0x4b4160);
 DECL_FUNC(int(*sub_4B42D0)(), sub_4B42D0, 0x4b42d0);
-int DLG_GlueScoreFill(dialog *a1) {
+void DLG_GlueScoreFill(dialog *a1) {
     int address = 0x4b43f0;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-int sub_4B4520(dialog *a1) {
+void sub_4B4520(dialog *a1) {
     int address = 0x4b4520;
-    int result_;
     __asm {
         xor edi, edi
         mov edi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_4B4600(dialog *a1) {
     int address = 0x4b4600;
@@ -15294,8 +15312,8 @@ int gluScore_CustomCtrlID(dialog *dlg) {
 DECL_FUNC(bool (__fastcall*gluScore_Main)(dialog *dlg, struct dlgEvent *evt), gluScore_Main, 0x4b4a30);
 DECL_FUNC(int(*loadMenu_gluScore)(), loadMenu_gluScore, 0x4b4af0);
 DECL_FUNC(bool (__fastcall*sub_4B4E20)(dialog *dlg, struct dlgEvent *evt), sub_4B4E20, 0x4b4e20);
-DECL_FUNC(int(*sub_4B4E70)(), sub_4B4E70, 0x4b4e70);
-DECL_FUNC(int(*sub_4B4EE0)(), sub_4B4EE0, 0x4b4ee0);
+DECL_FUNC(void (__fastcall*sub_4B4E70)(dialog *, __int16), sub_4B4E70, 0x4b4e70);
+DECL_FUNC(void (__fastcall*sub_4B4EE0)(dialog *, __int16), sub_4B4EE0, 0x4b4ee0);
 DECL_FUNC(int (__thiscall*sub_4B4F10)(dialog *dlg, int y, rect *dst), sub_4B4F10, 0x4b4f10);
 DECL_FUNC(bool (__fastcall*gluExpCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluExpCmpgn_CampaignButton, 0x4b4f50);
 DECL_FUNC(char (__cdecl*sub_4B5050)(), sub_4B5050, 0x4b5050);
@@ -15561,16 +15579,13 @@ int sub_4B8340(dialog *a1) {
     }
     return result_;
 }
-void **sub_4B8460(dialog *a1) {
+void sub_4B8460(dialog *a1) {
     int address = 0x4b8460;
-    void ** result_;
     __asm {
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*gluJoin_Listbox)(dialog *dlg, dlgEvent *evt), gluJoin_Listbox, 0x4b84a0);
 DECL_FUNC(bool (__fastcall*gluJoin_Main)(dialog *dlg, struct dlgEvent *evt), gluJoin_Main, 0x4b8590);
@@ -15578,7 +15593,7 @@ DECL_FUNC(int(*loadMenu_gluJoin)(), loadMenu_gluJoin, 0x4b86c0);
 DECL_FUNC(int(*bootReason)(), bootReason, 0x4b8870);
 DECL_FUNC(int(*sub_4B8920)(), sub_4B8920, 0x4b8920);
 DECL_FUNC(int(*sub_4B8930)(), sub_4B8930, 0x4b8930);
-DECL_FUNC(signed int (__fastcall*gluChat_Button)(dialog *a1, dlgEvent *a2), gluChat_Button, 0x4b8940);
+DECL_FUNC(bool (__fastcall*gluChat_Button)(dialog *a1, dlgEvent *a2), gluChat_Button, 0x4b8940);
 DECL_FUNC(int(*sub_4B8970)(), sub_4B8970, 0x4b8970);
 DECL_FUNC(int(*sub_4B8990)(), sub_4B8990, 0x4b8990);
 DECL_FUNC(int(*sub_4B89A0)(), sub_4B89A0, 0x4b89a0);
@@ -15593,7 +15608,14 @@ void updateMinimapPreviewDisplayOffOn(int a1, dialog *a2, int a3) {
         call address
     }
 }
-DECL_FUNC(int(*updatePasswordDisplay)(), updatePasswordDisplay, 0x4b8c80);
+void updatePasswordDisplay(dialog *a1) {
+    int address = 0x4b8c80;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 void *sub_4B8D70(dialog *a1) {
     int address = 0x4b8d70;
     void * result_;
@@ -15626,7 +15648,7 @@ char gluChat_Textbox_onCharEvent(dlgEvent *a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(unsigned int (__fastcall*gluChat_GameStatsLabel)(dialog *dlg, dlgEvent *evt), gluChat_GameStatsLabel, 0x4b8e70);
+DECL_FUNC(bool (__fastcall*gluChat_GameStatsLabel)(dialog *dlg, dlgEvent *evt), gluChat_GameStatsLabel, 0x4b8e70);
 DECL_FUNC(bool (__fastcall*gluChat_Textbox_Interact)(dialog *a1, dlgEvent *a2), gluChat_Textbox_Interact, 0x4b8ed0);
 DECL_FUNC(int (__stdcall*sub_4B8F10)(int), sub_4B8F10, 0x4b8f10);
 void gluChat_Listbox_Create(dialog *a1) {
@@ -15691,8 +15713,8 @@ signed int gluChat_controlActivation(signed int a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(void (__fastcall*MinimapPreviewProc)(dialog *a1), MinimapPreviewProc, 0x4b9a50);
-DECL_FUNC(void (__stdcall*gluChat_HoverMinimapPreview)(dialog *a1), gluChat_HoverMinimapPreview, 0x4b9ac0);
+DECL_FUNC(void (__fastcall*MinimapPreviewProc)(dialog *a1, __int16 timer_id), MinimapPreviewProc, 0x4b9a50);
+DECL_FUNC(void (__stdcall*gluChat_HoverMinimapPreview)(dialog *dlg), gluChat_HoverMinimapPreview, 0x4b9ac0);
 DECL_FUNC(int(*sub_4B9B10)(), sub_4B9B10, 0x4b9b10);
 DECL_FUNC(void (__cdecl*sub_4B9BF0)(dialog *a2), sub_4B9BF0, 0x4b9bf0);
 DECL_FUNC(bool (__fastcall*gluChat_Main)(dialog *dlg, struct dlgEvent *evt), gluChat_Main, 0x4b9c20);
@@ -15989,7 +16011,7 @@ DECL_FUNC(void(*stopAllSound)(void), stopAllSound, 0x4bc100);
 DECL_FUNC(int(*muteSfx)(), muteSfx, 0x4bc110);
 DECL_FUNC(void (__cdecl*BWFXN_DSoundDestroy)(), BWFXN_DSoundDestroy, 0x4bc180);
 DECL_FUNC(signed int (__stdcall*_PlayTransmissionLocation)(SfxData a1, int a2, int a3, CUnit *a4), _PlayTransmissionLocation, 0x4bc270);
-DECL_FUNC(int (__stdcall*playSoundId)(int), playSoundId, 0x4bc2c0);
+DECL_FUNC(void (__stdcall*playSoundId)(SfxData a1), playSoundId, 0x4bc2c0);
 void j_DLGMusicFade(MusicTrack a1) {
     int address = 0x4bc310;
     __asm {
@@ -16166,10 +16188,10 @@ DECL_FUNC(int(*sub_4BE610)(), sub_4BE610, 0x4be610);
 DECL_FUNC(char (__stdcall*sub_4BE670)(dialog *a1), sub_4BE670, 0x4be670);
 DECL_FUNC(int (__stdcall*hideLeaderboard)(dialog *a1), hideLeaderboard, 0x4be860);
 DECL_FUNC(int(*hideLeaderboardCmd)(), hideLeaderboardCmd, 0x4beb40);
-DECL_FUNC(int(*leaderboardUpdateProc)(), leaderboardUpdateProc, 0x4beb90);
+DECL_FUNC(void (__fastcall*leaderboardUpdateProc)(dialog *dlg, __int16 a2), leaderboardUpdateProc, 0x4beb90);
 DECL_FUNC(int(*sub_4BEBC0)(), sub_4BEBC0, 0x4bebc0);
 DECL_FUNC(int(*ToggleLeaderboardList)(), ToggleLeaderboardList, 0x4bec00);
-DECL_FUNC(int (__stdcall*statlb_Dlg_Create)(int), statlb_Dlg_Create, 0x4bec40);
+DECL_FUNC(void (__stdcall*statlb_Dlg_Create)(dialog *a1), statlb_Dlg_Create, 0x4bec40);
 DECL_FUNC(bool (__fastcall*statlb_Dlg_Interact)(dialog *dlg, dlgEvent *evt), statlb_Dlg_Interact, 0x4becf0);
 DECL_FUNC(int(*load_statlb)(), load_statlb, 0x4bed70);
 int getNameFromPath(char *out_buf, const char *path, size_t size_) {
@@ -16660,7 +16682,7 @@ int sub_4C90C0(dialog *a1) {
     return result_;
 }
 DECL_FUNC(void (__thiscall*sub_4C9120)(bool exit_code), sub_4C9120, 0x4c9120);
-DECL_FUNC(void (__thiscall*sub_4C9150)(dialog *this_), sub_4C9150, 0x4c9150);
+DECL_FUNC(void (__fastcall*sub_4C9150)(dialog *dlg, __int16 a2), sub_4C9150, 0x4c9150);
 DECL_FUNC(int (__thiscall*BWFXN_QuitReplay_maybe)(dialog *a1), BWFXN_QuitReplay_maybe, 0x4c9280);
 DECL_FUNC(int(*options_OK)(), options_OK, 0x4c9360);
 int sub_4C93A0(dialog *a1) {
@@ -16682,16 +16704,13 @@ void sub_4C9410(dialog *a1) {
         call address
     }
 }
-char sub_4C9440(dialog *a1) {
+void sub_4C9440(dialog *a1) {
     int address = 0x4c9440;
-    char result_;
     __asm {
         xor edi, edi
         mov edi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 void sub_4C94F0(dialog *a1) {
     int address = 0x4c94f0;
@@ -16718,7 +16737,7 @@ bool options_Cancel(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*saveGameCBProc)(dialog *this_), saveGameCBProc, 0x4c9890);
+DECL_FUNC(void (__fastcall*saveGameCBProc)(dialog *, __int16), saveGameCBProc, 0x4c9890);
 bool j_options_Cancel(dialog *a1, dlgEvent *a2) {
     int address = 0x4c99b0;
     bool result_;
@@ -16733,16 +16752,13 @@ bool j_options_Cancel(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(int(*sub_4C99C0)(), sub_4C99C0, 0x4c99c0);
-void **checkSaveGameDialog(dialog *a1) {
+void checkSaveGameDialog(dialog *a1) {
     int address = 0x4c9a90;
-    void ** result_;
     __asm {
         xor edi, edi
         mov edi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_4C9CC0(dialog *a1) {
     int address = 0x4c9cc0;
@@ -17639,7 +17655,7 @@ void sub_4D45A0(dialog *a1) {
     }
 }
 DECL_FUNC(int(*sub_4D4620)(), sub_4D4620, 0x4d4620);
-DECL_FUNC(dialog *(__thiscall*TitleLoopTimer)(dialog *this_), TitleLoopTimer, 0x4d4640);
+DECL_FUNC(void (__fastcall*TitleLoopTimer)(dialog *, __int16), TitleLoopTimer, 0x4d4640);
 void DrawBINDialog(dialog *a1) {
     int address = 0x4d46a0;
     __asm {
@@ -17648,27 +17664,21 @@ void DrawBINDialog(dialog *a1) {
         call address
     }
 }
-int *TitleBlitAndLoop(dialog *dlg) {
+void TitleBlitAndLoop(dialog *dlg) {
     int address = 0x4d46f0;
-    int * result_;
     __asm {
         xor eax, eax
         mov eax, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
-int *titleInit(dialog *dlg) {
+void titleInit(dialog *dlg) {
     int address = 0x4d4870;
-    int * result_;
     __asm {
         xor eax, eax
         mov eax, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*TitleDlgProc)(dialog *dlg, struct dlgEvent *evt), TitleDlgProc, 0x4d4960);
 DECL_FUNC(void (__cdecl*LoadTitle)(), LoadTitle, 0x4d49a0);
@@ -18606,8 +18616,8 @@ int DestroyChildren(dialog *a1) {
 }
 DECL_FUNC(void (__cdecl*nextLeaveGameMenu)(), nextLeaveGameMenu, 0x4dcc50);
 DECL_FUNC(int(*loadMenu_None)(), loadMenu_None, 0x4dcc90);
-DECL_FUNC(int (__thiscall*DLGSwishOutProc)(dialog *a1), DLGSwishOutProc, 0x4dcd00);
-DECL_FUNC(int(*sub_4DCEA0)(), sub_4DCEA0, 0x4dcea0);
+DECL_FUNC(void (__fastcall*DLGSwishOutProc)(dialog *, __int16), DLGSwishOutProc, 0x4dcd00);
+DECL_FUNC(void (__fastcall*sub_4DCEA0)(dialog *, __int16), sub_4DCEA0, 0x4dcea0);
 DECL_FUNC(int(*sub_4DCEE0)(), sub_4DCEE0, 0x4dcee0);
 void setDialogString(dialog *a1, __int16 a2, const char *a3) {
     int address = 0x4dcf30;
@@ -18624,11 +18634,10 @@ void setDialogString(dialog *a1, __int16 a2, const char *a3) {
 DECL_FUNC(int (__cdecl*changeMenu)(), changeMenu, 0x4dcfa0);
 DECL_FUNC(char (__stdcall*DLG_SwishOut)(dialog *a1), DLG_SwishOut, 0x4dd040);
 DECL_FUNC(void (__cdecl*jmpNoMenu)(), jmpNoMenu, 0x4dd1c0);
-DECL_FUNC(int (__stdcall*buttonMouseOver)(int), buttonMouseOver, 0x4dd1d0);
-DECL_FUNC(int (__thiscall*DLG_SwishInLock)(dialog *this_), DLG_SwishInLock, 0x4dd220);
-void **DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
+DECL_FUNC(void (__stdcall*buttonMouseOver)(int a1), buttonMouseOver, 0x4dd1d0);
+DECL_FUNC(void (__fastcall*DLG_SwishInLock)(dialog *, __int16), DLG_SwishInLock, 0x4dd220);
+void DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
     int address = 0x4dd540;
-    void ** result_;
     __asm {
         xor edx, edx
         xor esi, esi
@@ -18636,9 +18645,8 @@ void **DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
         mov esi, a2
         push dword ptr a3
         call address
-        mov result_, eax
+        add esp, 4
     }
-    return result_;
 }
 void DlgSwooshin(__int16 a1, swishTimer *a2, dialog *a3, signed __int16 a4) {
     int address = 0x4dd5e0;
@@ -18674,17 +18682,14 @@ DECL_FUNC(void(*loadCursor)(void), loadCursor, 0x4ddf90);
 DECL_FUNC(int (__fastcall*sub_4DE040)(dialog *dlg, struct dlgEvent *evt), sub_4DE040, 0x4de040);
 DECL_FUNC(void(*init_gluesounds)(void), init_gluesounds, 0x4de0b0);
 DECL_FUNC(int(*sub_4DE130)(), sub_4DE130, 0x4de130);
-DECL_FUNC(int(*DLGSwishInProc)(), DLGSwishInProc, 0x4de140);
-int *DLG_SwishIn(dialog *a1) {
+DECL_FUNC(void (__fastcall*DLGSwishInProc)(dialog *, __int16), DLGSwishInProc, 0x4de140);
+void DLG_SwishIn(dialog *a1) {
     int address = 0x4de150;
-    int * result_;
     __asm {
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*SwitchMenu)(), SwitchMenu, 0x4de200);
 DECL_FUNC(int (__stdcall*sub_4DE740)(int), sub_4DE740, 0x4de740);
@@ -18864,7 +18869,6 @@ int CopyLastReplayTo(char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*saveGame_Create)(), saveGame_Create, 0x4dfdd0);
 DECL_FUNC(bool (__fastcall*savegameBIN_Main)(dialog *dlg, struct dlgEvent *evt), savegameBIN_Main, 0x4dfef0);
 int LoadSaveGameBIN_Main(int a1, Race a2) {
     int address = 0x4dffc0;
@@ -18949,7 +18953,7 @@ int activateDialog(dialog *a1, dialog *a2) {
     return result_;
 }
 DECL_FUNC(int(*sub_4E0E40)(), sub_4E0E40, 0x4e0e40);
-DECL_FUNC(void (__thiscall*PlayVideoFrame)(dialog *this_), PlayVideoFrame, 0x4e0f50);
+DECL_FUNC(void (__fastcall*PlayVideoFrame)(dialog *, __int16), PlayVideoFrame, 0x4e0f50);
 void sub_4E1020(dialog *a1, char a2) {
     int address = 0x4e1020;
     __asm {
@@ -19319,7 +19323,7 @@ void showSupplyInfo(dialog *a1, __int16 a2, unsigned __int16 a3, unsigned __int1
 DECL_FUNC(void (__fastcall*statRes_Text_Update)(dialog *dlg, int x, int y, rect *dst), statRes_Text_Update, 0x4e5460);
 DECL_FUNC(int (__stdcall*setCountdownTimerString)(char *source), setCountdownTimerString, 0x4e5590);
 DECL_FUNC(int(*DisableCountdownTimer)(), DisableCountdownTimer, 0x4e5600);
-DECL_FUNC(void (__fastcall*StatRes_MainProc)(dialog *a1), StatRes_MainProc, 0x4e5640);
+DECL_FUNC(void (__fastcall*StatRes_MainProc)(dialog *, __int16), StatRes_MainProc, 0x4e5640);
 DECL_FUNC(void (__stdcall*sub_4E57D0)(int a1), sub_4E57D0, 0x4e57d0);
 DECL_FUNC(bool (__fastcall*StatRes_CustomCtrl)(dialog *dlg, dlgEvent *evt), StatRes_CustomCtrl, 0x4e5850);
 void StatRes_RegisterCustomProcs(dialog *a1) {
@@ -20428,7 +20432,7 @@ void gluLogin_Listbox_Init_Evt(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*gluLogin_Init)(int), gluLogin_Init, 0x4ed720);
+DECL_FUNC(void (__stdcall*gluLogin_Init)(dialog *a1), gluLogin_Init, 0x4ed720);
 void j_genericListboxDropdown(dialog *a1) {
     int address = 0x4ed760;
     __asm {
@@ -21774,7 +21778,7 @@ __int16(&word_50112C)[] = * ((decltype(&word_50112C)) 0x50112c);
 char(&keyname)[] = * ((decltype(&keyname)) 0x501434);
 bool (__fastcall *(&GenericDlgInteractFxns)[14])(dialog *dlg, struct dlgEvent *evt) = * ((decltype(&GenericDlgInteractFxns)) 0x5014ac);
 void (__fastcall *(&GenericDlgUpdateFxns)[14])(dialog *dlg, int x, int y, rect *dst) = * ((decltype(&GenericDlgUpdateFxns)) 0x501504);
-int(&dword_501544)[] = * ((decltype(&dword_501544)) 0x501544);
+int(&dword_501544)[10] = * ((decltype(&dword_501544)) 0x501544);
 CndSignature(&stru_50156C)[9] = * ((decltype(&stru_50156C)) 0x50156c);
 char(&aReplay)[] = * ((decltype(&aReplay)) 0x501654);
 char(&aSMapsReplaysS_)[] = * ((decltype(&aSMapsReplaysS_)) 0x501660);
@@ -22829,7 +22833,7 @@ char(&aStarcraftSwa_2)[] = * ((decltype(&aStarcraftSwa_2)) 0x5060e4);
 char(&aStarcraftSwa_1)[] = * ((decltype(&aStarcraftSwa_1)) 0x506108);
 __int16& word_50612C = * ((decltype(&word_50612C)) 0x50612c);
 char& byte_50612E = * ((decltype(&byte_50612E)) 0x50612e);
-char(&aStarcraftSwa_0)[] = * ((decltype(&aStarcraftSwa_0)) 0x506130);
+char(&logfilename)[] = * ((decltype(&logfilename)) 0x506130);
 char(&aStarcraftSw_83)[] = * ((decltype(&aStarcraftSw_83)) 0x506154);
 char(&aCouldNotLoadS)[] = * ((decltype(&aCouldNotLoadS)) 0x506174);
 char(&aDraw1)[] = * ((decltype(&aDraw1)) 0x506188);
@@ -23287,7 +23291,7 @@ swishTimer(&commonSwishControllers)[43] = * ((decltype(&commonSwishControllers))
 char *(&off_512A98)[6] = * ((decltype(&off_512A98)) 0x512a98);
 MenuPosition(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
 MusicTrack(&dword_512AC8)[6] = * ((decltype(&dword_512AC8)) 0x512ac8);
-int(&dword_512AE0)[12] = * ((decltype(&dword_512AE0)) 0x512ae0);
+GluAllTblEntry& tbl_entry = * ((decltype(&tbl_entry)) 0x512ae0);
 swishTimer(&gluCmpgnSwishController)[2] = * ((decltype(&gluCmpgnSwishController)) 0x512b10);
 char(&aRegistration_block)[19] = * ((decltype(&aRegistration_block)) 0x512b18);
 __int16& word_512B98 = * ((decltype(&word_512B98)) 0x512b98);
@@ -23334,7 +23338,7 @@ __int16(&word_514A48)[] = * ((decltype(&word_514A48)) 0x514a48);
 __int16(&word_514A4A)[] = * ((decltype(&word_514A4A)) 0x514a4a);
 __int16(&word_514CF8)[] = * ((decltype(&word_514CF8)) 0x514cf8);
 __int16(&word_514CFA)[] = * ((decltype(&word_514CFA)) 0x514cfa);
-__int16(&word_51521C)[] = * ((decltype(&word_51521C)) 0x51521c);
+__int16(&word_51521C)[4] = * ((decltype(&word_51521C)) 0x51521c);
 int& UnitPortraits = * ((decltype(&UnitPortraits)) 0x515224);
 char(&byte_515228)[] = * ((decltype(&byte_515228)) 0x515228);
 char(&wireframeConstants)[] = * ((decltype(&wireframeConstants)) 0x515280);
@@ -23421,7 +23425,7 @@ char(&byte_51A17C)[16] = * ((decltype(&byte_51A17C)) 0x51a17c);
 int& dword_51A18C = * ((decltype(&dword_51A18C)) 0x51a18c);
 int& dword_51A190 = * ((decltype(&dword_51A190)) 0x51a190);
 int& dword_51A194 = * ((decltype(&dword_51A194)) 0x51a194);
-__int16(&word_51A198)[] = * ((decltype(&word_51A198)) 0x51a198);
+__int16(&word_51A198)[4] = * ((decltype(&word_51A198)) 0x51a198);
 __int16& word_51A1A0 = * ((decltype(&word_51A1A0)) 0x51a1a0);
 __int16& word_51A1A2 = * ((decltype(&word_51A1A2)) 0x51a1a2);
 int& dword_51A1F0 = * ((decltype(&dword_51A1F0)) 0x51a1f0);
@@ -23679,11 +23683,11 @@ __int16(&word_51C480)[20] = * ((decltype(&word_51C480)) 0x51c480);
 int& dword_51C4A8 = * ((decltype(&dword_51C4A8)) 0x51c4a8);
 int& dword_51C4AC = * ((decltype(&dword_51C4AC)) 0x51c4ac);
 dialog *& dword_51C4B0 = * ((decltype(&dword_51C4B0)) 0x51c4b0);
-void *& dword_51C4B4 = * ((decltype(&dword_51C4B4)) 0x51c4b4);
+ListNode *& dword_51C4B4 = * ((decltype(&dword_51C4B4)) 0x51c4b4);
 int& dialog_count = * ((decltype(&dialog_count)) 0x51c4b8);
 int& level_cheat_is_bw = * ((decltype(&level_cheat_is_bw)) 0x51c4bc);
 CHAR(&main_directory)[260] = * ((decltype(&main_directory)) 0x51c4c0);
-int(&dword_51C5C8)[16] = * ((decltype(&dword_51C5C8)) 0x51c5c8);
+DlgGrp *(&dword_51C5C8)[16] = * ((decltype(&dword_51C5C8)) 0x51c5c8);
 int& level_cheat_race = * ((decltype(&level_cheat_race)) 0x51c608);
 void *& dword_51C60C = * ((decltype(&dword_51C60C)) 0x51c60c);
 int(&randomCounts)[] = * ((decltype(&randomCounts)) 0x51c610);
@@ -24709,6 +24713,7 @@ dialog *& dlgFatal_Dlg = * ((decltype(&dlgFatal_Dlg)) 0x68ec80);
 void *& dword_68EC84 = * ((decltype(&dword_68EC84)) 0x68ec84);
 void *& dword_68EC88 = * ((decltype(&dword_68EC88)) 0x68ec88);
 BNetGateways& bnet_gateways = * ((decltype(&bnet_gateways)) 0x68ec8c);
+int& dword_68ECAC = * ((decltype(&dword_68ECAC)) 0x68ecac);
 LobbySlot(&lobby_slots)[12] = * ((decltype(&lobby_slots)) 0x68ecb0);
 int& dword_68F4F0 = * ((decltype(&dword_68F4F0)) 0x68f4f0);
 int& dword_68F4F4 = * ((decltype(&dword_68F4F4)) 0x68f4f4);
