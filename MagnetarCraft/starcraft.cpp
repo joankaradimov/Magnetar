@@ -5474,41 +5474,7 @@ void loadMenu_gluMain_()
 {
 	multiPlayerMode = 0;
 
-	HANDLE phFile;
-	if (!SFileOpenFileEx(0, "rez\\gluMain.bin", 0, &phFile))
-	{
-		int v0 = SErrGetLastError();
-		if (v0 == 2 || v0 == 1006)
-		{
-			return;
-		}
-		SysWarn_FileNotFound("rez\\gluMain.bin", v0);
-	}
-	int v2 = SFileGetFileSize(phFile, 0);
-	if (v2 == -1)
-	{
-		FileFatal(phFile, GetLastError());
-		return;
-	}
-	if (!v2)
-	{
-		SFileCloseFile(phFile);
-		return;
-	}
-	dialog* bin_dialog = (dialog*)SMemAlloc(v2, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573, 0);
-	int read;
-	if (!SFileReadFile(phFile, bin_dialog, v2, &read, 0))
-	{
-		DWORD last_error = GetLastError();
-		FileFatal(phFile, last_error == 38 ? 24 : last_error);
-	}
-
-	if (read != v2)
-	{
-		FileFatal(phFile, 24);
-		return;
-	}
-	SFileCloseFile(phFile);
+	dialog* bin_dialog = (dialog*) fastFileRead_(NULL, 0, "rez\\gluMain.bin", 0, 1, "Starcraft\\SWAR\\lang\\gluMain.cpp", 573);
 
 	if (bin_dialog)
 	{
