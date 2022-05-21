@@ -5817,6 +5817,25 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(ConnSel_Interact);
 
+int Begin_BNET_(Char4 network_provider_id)
+{
+	if (network_provider_id.as_number != 'BNET')
+	{
+		return InitializeNetworkProvider(network_provider_id);
+	}
+	sub_4DCEE0();
+	dword_50E064 = -1;
+	sub_4AD140();
+	if (InitializeNetworkProvider(network_provider_id))
+	{
+		return 1;
+	}
+	sub_4ACF20();
+	return 0;
+}
+
+FAIL_STUB_PATCH(Begin_BNET);
+
 void loadMenu_gluConn_()
 {
 	gluConn_Dlg = LoadDialog("rez\\gluConn.bin");
@@ -5828,7 +5847,7 @@ void loadMenu_gluConn_()
 	else if (network_provider_id.as_number == 'BNET')
 	{
 		stopMusic();
-		glGluesMode = Begin_BNET(network_provider_id) ? glGluesRelated_maybe : GLUE_CONNECT;
+		glGluesMode = Begin_BNET_(network_provider_id) ? glGluesRelated_maybe : GLUE_CONNECT;
 	}
 	else
 	{
