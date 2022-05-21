@@ -4993,43 +4993,9 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
 
-dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int read, const char* logfilename, int logline)
+dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int* read, const char* logfilename, int logline)
 {
-	HANDLE phFile;
-
-	if (!SFileOpenFile(filename, &phFile))
-	{
-		int last_error = SErrGetLastError();
-		if (last_error != 2 && last_error != 1006)
-		{
-			SysWarn_FileNotFound(filename, last_error);
-		}
-	}
-
-	LONG file_size = SFileGetFileSize(phFile, 0);
-	if (file_size == -1)
-	{
-		FileFatal(phFile, GetLastError());
-	}
-	if (read)
-	{
-		*(_DWORD*)read = file_size;
-	}
-	if (buffer == NULL)
-	{
-		buffer = (dialog*)SMemAlloc(file_size, logfilename, logline, 0);
-	}
-	if (!SFileReadFile(phFile, buffer, file_size, &read, 0))
-	{
-		DWORD last_error = GetLastError();
-		FileFatal(phFile, last_error == 38 ? 24 : last_error);
-	}
-	if (read != file_size)
-	{
-		FileFatal(phFile, 24);
-	}
-	SFileCloseFile(phFile);
-	return buffer;
+	return (dialog*) fastFileRead_(read, 0, filename, (int)buffer, 1, logfilename, logline);
 }
 
 FAIL_STUB_PATCH(loadFullMenuDLG);
