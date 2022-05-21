@@ -394,14 +394,14 @@ int InitializeArchiveHandles_()
 		patch_rt_mpq = 0;
 	}
 
-    char magnetarDatFilename[MAX_PATH] = { 0 };
-    if (!GetModuleFileNameA(NULL, magnetarDatFilename, MAX_PATH))
+	char magnetarDatFilename[MAX_PATH] = { 0 };
+	if (!GetModuleFileNameA(NULL, magnetarDatFilename, MAX_PATH))
 		*magnetarDatFilename = 0;
-    auto separator = strrchr(magnetarDatFilename, '\\');
-    if (separator)
+	auto separator = strrchr(magnetarDatFilename, '\\');
+	if (separator)
 		*separator = 0;
-    SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
-    !SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &phFile);
+	SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
+	!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &phFile);
 
 	InitializeFontKey_();
 	AppAddExit_(DestroyFontKey);
