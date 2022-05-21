@@ -219,15 +219,17 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 		}
 		SysWarn_FileNotFound(filename, 24);
 	}
-	void* buffer = (void *)defaultValue;
+	void* buffer = (void*)defaultValue;
 	if (!defaultValue)
 		buffer = SMemAlloc(file_size, logfilename, logline, defaultValue);
-	if (!SFileReadFile(phFile, buffer, file_size, &bytes_to_read, 0))
+
+	int read;
+	if (!SFileReadFile(phFile, buffer, file_size, &read, 0))
 	{
 		DWORD last_error = GetLastError();
 		FileFatal(phFile, last_error == 38 ? 24 : last_error);
 	}
-	if (bytes_to_read != file_size)
+	if (read != file_size)
 		FileFatal(phFile, 24);
 	SFileCloseFile(phFile);
 	return buffer;
