@@ -5717,7 +5717,7 @@ bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 		{
 		case USER_CREATE:
 			dlg->fields.list.pDrawItemFcn = sub_4BA3C0;
-			ListBNGateways(dlg);
+			ListBNGateways(dlg); // TODO: Move the gateways to the YML configuration
 			break;
 		case USER_INIT:
 			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
