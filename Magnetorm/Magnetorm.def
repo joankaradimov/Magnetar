@@ -43,7 +43,7 @@ EXPORTS
     SNetGetLeagueName = StormLibNetGetLeagueName @143
     SNetGetPlayerNames = StormLibGetPlayerNames @144
     SNetLeagueLogout@4 = StormLibNetLeagueLogout @145
-    SNetGetLeaguePlayerName = StormLibNetGetLeaguePlayerName @146
+    SNetGetLeaguePlayerName@8 = StormLibNetGetLeaguePlayerName @146
 
     SDlgBeginPaint = StormLibDlgBeginPaint @201
     SDlgBltToWindowI = StormLibDlgBltToWindowI @202

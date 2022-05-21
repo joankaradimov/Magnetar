@@ -1806,7 +1806,7 @@ int sub_4EEFD0_()
 
 FAIL_STUB_PATCH(sub_4EEFD0);
 
-void __fastcall MinimapPreviewProc_(dialog* a1)
+void __fastcall MinimapPreviewProc_(dialog* a1, __int16 _timer_id)
 {
 	if (dword_5993AC != 1 && dword_5994DC && g_LocalNationID < 8u && (!map_download || IsDownloadComplete(map_download)))
 	{
@@ -1819,7 +1819,7 @@ void __fastcall MinimapPreviewProc_(dialog* a1)
 	}
 }
 
-FUNCTION_PATCH(MinimapPreviewProc, MinimapPreviewProc_);
+FAIL_STUB_PATCH(MinimapPreviewProc);
 
 signed int GameInit_()
 {
@@ -5793,6 +5793,201 @@ void loadMenu_gluConn_()
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
 
+void sub_4B9BF0_(dialog* dlg)
+{
+	if (sub_4D4130())
+	{
+		dlg->fields.dlg.pModalFcn = (bool(__fastcall*)(dialog*))sub_4B9B10;
+	}
+	else
+	{
+		getErrorStringPair(STAR_EDIT_NOT_FOUND, 557);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4B9BF0);
+
+bool IsCursorWithin(pt cursor, rect rectangle)
+{
+	return rectangle.left <= cursor.x && cursor.x <= rectangle.right && rectangle.top <= cursor.y && cursor.y <= rectangle.bottom;
+}
+
+void gluChat_HoverMinimapPreview_(dialog* dlg)
+{
+	dword_5999DC = 0;
+	dword_5999D0 = 1;
+	dword_5993AC = 1;
+	load_MinimapPreview();
+	dword_5993AC = 0;
+	SetCallbackTimer(1, dlg, 1000, MinimapPreviewProc_);
+}
+
+FAIL_STUB_PATCH(gluChat_HoverMinimapPreview);
+
+void gluChat_CustomCtrlID_(dialog* dlg)
+{
+	FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		gluChat_Button,
+		Menu_Generic_Button,
+		gluChat_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		gluChat_Textbox_Interact,
+		gluChat_Listbox_Interact,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		gluChat_GameStatsLabel,
+		genericLabelInteract,
+		genericLabelInteract,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+	};
+
+	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	dword_6D5A38 = 0;
+}
+
+FAIL_STUB_PATCH(gluChat_CustomCtrlID);
+
+bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	dialog* minimap_preview_dlg = getControlFromIndex(dlg, 6);
+	dialog* char_history_dlg = getControlFromIndex(dlg, 11);
+	dialog* starting_in_dlg = getControlFromIndex(dlg, 23);
+	dialog* countdown_dlg = getControlFromIndex(dlg, 24);
+
+	switch (evt->wNo)
+	{
+	case EVN_MOUSEMOVE:
+		updateMinimapPreviewDisplayOffOn(IsCursorWithin(evt->cursor, minimap_preview_dlg->rct), dlg, 1);
+		[[fallthrough]];
+	case EVN_CHAR:
+		if (evt->wVirtKey == VK_HELP)
+		{
+			SNetGetLeaguePlayerName((int*)curPlayerID, 0x19u);
+		}
+		break;
+	case EVN_WHEELUP:
+		doUserEvent(EventUser::USER_SCROLLUP, 0, char_history_dlg->fields.list.pScrlBar);
+		return 1;
+	case EVN_WHEELDWN:
+		doUserEvent(EventUser::USER_SCROLLDOWN, 0, char_history_dlg->fields.list.pScrlBar);
+		return 1;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			gluChat_init(dlg);
+			DLG_SwishIn(dlg);
+			genericDlgInteract(dlg, evt);
+			sub_4B9BF0_(dlg);
+			return 1;
+		case EventUser::USER_DESTROY:
+			sub_4B8D70(dlg);
+			sub_4B8D90(dlg);
+			break;
+		case EventUser::USER_ACTIVATE:
+			return gluChat_controlActivation(LastControlID, dlg);
+		case EventUser::USER_INIT:
+			gluChat_CustomCtrlID_(dlg);
+			if (!InReplay
+				&& !gameData.save_timestamp
+				&& (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode))
+			{
+				gluChat_HoverMinimapPreview_(dlg);
+			}
+			else
+			{
+				HideDialog(minimap_preview_dlg);
+			}
+			break;
+		case 0x405:
+			updatePasswordDisplay(dlg);
+			dword_68F520 = 0;
+			dword_68F4F0 = 1;
+			HideDialog(starting_in_dlg);
+			HideDialog(countdown_dlg);
+			dword_5999DC = 1;
+			return 1;
+		}
+		break;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluChat_Main);
+
 void loadMenu_gluChat_()
 {
 	update_lobby_glue = 0;
@@ -5810,7 +6005,7 @@ void loadMenu_gluChat_()
 		}
 		ImmAssociateContext(hWndParent, dword_6D6438);
 	}
-	int v9 = gluLoadBINDlg_(lobby_dlg, gluChat_Main);
+	int v9 = gluLoadBINDlg_(lobby_dlg, gluChat_Main_);
 	if (GetUserDefaultLangID() == 1042)
 	{
 		if (dword_6D6438 == NULL)
