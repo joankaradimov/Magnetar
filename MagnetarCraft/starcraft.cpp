@@ -2270,6 +2270,8 @@ int RestartGame_()
 
 FAIL_STUB_PATCH(RestartGame);
 
+void setup_HUD_();
+
 int LoadGameCore_()
 {
 	memset(PlayerSelection, 0, sizeof(PlayerSelection));
@@ -2280,7 +2282,7 @@ int LoadGameCore_()
 	setAlliance();
 	if (!loadGameFileHandle || loadGameFull())
 	{
-		setup_HUD();
+		setup_HUD_();
 		dword_51CE8C[0] = -GetTickCount();
 		resetLastInputFrameCounts();
 		memcpy(dword_596B7C, playersSelections[g_LocalHumanID], sizeof(dword_596B7C));
