@@ -3776,7 +3776,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	else
 	{
 		DWORD last_error = GetLastError();
-		FileFatal(phFile, last_error == 38 ? 24 : last_error);
+		FileFatal(hFile, last_error == 38 ? 24 : last_error);
 	}
 }
 

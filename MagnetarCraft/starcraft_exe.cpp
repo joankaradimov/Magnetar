@@ -13124,7 +13124,18 @@ int createLeagueFile(char *a1) {
 DECL_FUNC(int (__stdcall*StoreString)(char *source), StoreString, 0x49a040);
 DECL_FUNC(int(*sub_49A060)(), sub_49A060, 0x49a060);
 DECL_FUNC(int(*IsHumanPlayerOnSameTeam)(), IsHumanPlayerOnSameTeam, 0x49a110);
-DECL_FUNC(int (__stdcall*sub_49A170)(int), sub_49A170, 0x49a170);
+int sub_49A170(CUnit *a1, int player) {
+    int address = 0x49a170;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr player
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*nullsub_54)(), nullsub_54, 0x49a260);
 DECL_FUNC(int(*isRgnIdNeighbor)(), isRgnIdNeighbor, 0x49a270);
 DECL_FUNC(int(*isSelectedUnitGroupEnabled)(), isSelectedUnitGroupEnabled, 0x49a2c0);
@@ -22825,7 +22836,7 @@ char(&aDraw1)[] = * ((decltype(&aDraw1)) 0x506188);
 char(&aStarcraftSwarL)[] = * ((decltype(&aStarcraftSwarL)) 0x506190);
 int(&dword_5061B8)[] = * ((decltype(&dword_5061B8)) 0x5061b8);
 int(&dword_5061BC)[] = * ((decltype(&dword_5061BC)) 0x5061bc);
-char(&logfilename)[] = * ((decltype(&logfilename)) 0x506200);
+char(&asc_506200)[] = * ((decltype(&asc_506200)) 0x506200);
 char(&aA)[2] = * ((decltype(&aA)) 0x506228);
 double& dbl_506230 = * ((decltype(&dbl_506230)) 0x506230);
 double& dbl_506238 = * ((decltype(&dbl_506238)) 0x506238);
@@ -24431,9 +24442,11 @@ u8(&Unit_Direction)[228] = * ((decltype(&Unit_Direction)) 0x6605f0);
 u8(&Unit_BroodwarOnly)[228] = * ((decltype(&Unit_BroodwarOnly)) 0x6606d8);
 __int16(&Unit_SubUnit)[228] = * ((decltype(&Unit_SubUnit)) 0x6607c0);
 u8(&Unit_SpaceProvided)[228] = * ((decltype(&Unit_SpaceProvided)) 0x660988);
+u16(&Unit_Requirements)[228] = * ((decltype(&Unit_Requirements)) 0x660a70);
+u16(&Unit_SubUnit2)[228] = * ((decltype(&Unit_SubUnit2)) 0x660c38);
 u16(&Unit_MaxShieldPoints)[228] = * ((decltype(&Unit_MaxShieldPoints)) 0x660e00);
-__int16& word_660E92 = * ((decltype(&word_660E92)) 0x660e92);
-u8(&Unit_ConstructionGraphics)[228] = * ((decltype(&Unit_ConstructionGraphics)) 0x660fc8);
+u8(&Unit_Unknown)[228] = * ((decltype(&Unit_Unknown)) 0x660fc8);
+u32(&Unit_ConstructionAnimation)[228] = * ((decltype(&Unit_ConstructionAnimation)) 0x6610b0);
 u16(&Unit_LastYesSound)[106] = * ((decltype(&Unit_LastYesSound)) 0x661440);
 u16(&Unit_AvailabilityFlags)[228] = * ((decltype(&Unit_AvailabilityFlags)) 0x661518);
 WeaponType(&Unit_AirWeapon)[228] = * ((decltype(&Unit_AirWeapon)) 0x6616e0);
@@ -24445,7 +24458,7 @@ u8(&Unit_SizeType)[228] = * ((decltype(&Unit_SizeType)) 0x662180);
 Order(&Unit_HumanAiIdleOrder)[228] = * ((decltype(&Unit_HumanAiIdleOrder)) 0x662268);
 u32(&Unit_MaxHitPoints)[228] = * ((decltype(&Unit_MaxHitPoints)) 0x662350);
 u16(&Unit_AddonOffset)[192] = * ((decltype(&Unit_AddonOffset)) 0x6626e0);
-u32(&Unit_Placement)[228] = * ((decltype(&Unit_Placement)) 0x662860);
+points(&Unit_Placement)[228] = * ((decltype(&Unit_Placement)) 0x662860);
 u16(&Unit_LastWhatSound)[228] = * ((decltype(&Unit_LastWhatSound)) 0x662bf0);
 u8(&Unit_SeekRange)[228] = * ((decltype(&Unit_SeekRange)) 0x662db8);
 Order(&Unit_ComputerAiIdleOrder)[228] = * ((decltype(&Unit_ComputerAiIdleOrder)) 0x662ea0);
@@ -24496,10 +24509,12 @@ char(&Orders_Unused5)[189] = * ((decltype(&Orders_Unused5)) 0x6657c0);
 WeaponType(&Orders_TargetingWeapon)[189] = * ((decltype(&Orders_TargetingWeapon)) 0x665880);
 char(&Orders_Unused2)[189] = * ((decltype(&Orders_Unused2)) 0x665940);
 char(&Orders_Unused3)[189] = * ((decltype(&Orders_Unused3)) 0x665a00);
-char(&Sprites_IsVisible)[390] = * ((decltype(&Sprites_IsVisible)) 0x665c48);
-char(&byte_665DCE)[] = * ((decltype(&byte_665DCE)) 0x665dce);
-char(&byte_665F56)[] = * ((decltype(&byte_665F56)) 0x665f56);
-unsigned __int16(&Sprites_Image)[] = * ((decltype(&Sprites_Image)) 0x666160);
+char(&Sprites_SelectionCircle)[387] = * ((decltype(&Sprites_SelectionCircle)) 0x665ac0);
+char(&Sprites_IsVisible)[517] = * ((decltype(&Sprites_IsVisible)) 0x665c48);
+char(&Sprites_HealthBarSize)[387] = * ((decltype(&Sprites_HealthBarSize)) 0x665e50);
+char(&Sprites_SelectionCircleVPos)[387] = * ((decltype(&Sprites_SelectionCircleVPos)) 0x665fd8);
+unsigned __int16(&Sprites_Image)[517] = * ((decltype(&Sprites_Image)) 0x666160);
+char(&Sprites_Unknown)[517] = * ((decltype(&Sprites_Unknown)) 0x666570);
 int(&Images_LandingDustLO)[999] = * ((decltype(&Images_LandingDustLO)) 0x666778);
 u8(&Image_DrawIfCloaked)[999] = * ((decltype(&Image_DrawIfCloaked)) 0x667718);
 int(&Images_SpecialOverlayLO)[999] = * ((decltype(&Images_SpecialOverlayLO)) 0x667b00);
@@ -25117,7 +25132,7 @@ int& replayShowEntireMap = * ((decltype(&replayShowEntireMap)) 0x6d0f1c);
 int& scenarioChkSize = * ((decltype(&scenarioChkSize)) 0x6d0f20);
 void *& scenarioChk = * ((decltype(&scenarioChk)) 0x6d0f24);
 dialog *& savegame_Dlg = * ((decltype(&savegame_Dlg)) 0x6d0f28);
-HANDLE& phFile = * ((decltype(&phFile)) 0x6d0f2c);
+HANDLE& dword_6D0F2C = * ((decltype(&dword_6D0F2C)) 0x6d0f2c);
 ReplayHeader& replay_header = * ((decltype(&replay_header)) 0x6d0f30);
 int& dword_6D11AC = * ((decltype(&dword_6D11AC)) 0x6d11ac);
 int& is_replay_paused = * ((decltype(&is_replay_paused)) 0x6d11b0);
