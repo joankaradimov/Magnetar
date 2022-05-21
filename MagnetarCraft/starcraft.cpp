@@ -1768,7 +1768,7 @@ int sub_4EEFD0_()
 	InitializePresetImageArrays();
 	InitializeSpriteArray();
 	InitializeThingyArray();
-	LoadGameData(flingyDat, "arr\\flingy.dat");
+	LoadGameData_(flingyDat, "arr\\flingy.dat");
 	memset(dword_63FEE0, 0, 76u);
 	dword_63FF3C = (CUnit*)dword_63FEE0;
 	dword_63FF38 = (CUnit*)dword_63FEE0;
