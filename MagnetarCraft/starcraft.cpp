@@ -352,44 +352,36 @@ void DetectExpansionInstallation_()
 
 FAIL_STUB_PATCH(DetectExpansionInstallation);
 
+HANDLE magnetar_mpq;
+
 int InitializeArchiveHandles_()
 {
-	CHAR Filename[MAX_PATH];
-	HANDLE phFile;
-
 	dword_51CD44 = 20;
 	dword_51CD48 = aInternalVersio;
 	dword_51CD4C = tstrFilename;
 	dword_51CD50 = broodat_mpq_path;
 	dword_51CD54 = archivename;
 	LoadMainModuleStringInfo_();
+
+	CHAR Filename[MAX_PATH];
 	if (!GetModuleFileNameA(hInst, Filename, MAX_PATH))
 		Filename[0] = 0;
 	char* v0 = strrchr(Filename, '\\');
 	if (v0)
 		*v0 = 0;
 	SStrNCat(Filename, "\\Stardat.mpq", MAX_PATH);
-	if (SFileOpenArchive(Filename, 2000u, 2u, &phFile))
+	if (!SFileOpenArchive(Filename, 2000u, 2u, &stardat_mpq))
 	{
-		stardat_mpq = phFile;
+		SysWarn_FileNotFound("Stardat.mpq", GetLastError());
 	}
-	else
-	{
-		stardat_mpq = 0;
-		int last_error = GetLastError();
-		SysWarn_FileNotFound("Stardat.mpq", last_error);
-	}
+
 	if (!GetModuleFileNameA(hInst, archivename, MAX_PATH))
 		archivename[0] = 0;
 	char* v2 = strrchr(archivename, '\\');
 	if (v2)
 		*v2 = 0;
 	SStrNCat(archivename, "\\patch_rt.mpq", MAX_PATH);
-	if (SFileOpenArchive(archivename, 7000u, 2u, &phFile))
-	{
-		patch_rt_mpq = phFile;
-	}
-	else
+	if (!SFileOpenArchive(archivename, 7000u, 2u, &patch_rt_mpq))
 	{
 		patch_rt_mpq = 0;
 	}
@@ -401,7 +393,7 @@ int InitializeArchiveHandles_()
 	if (separator)
 		*separator = 0;
 	SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
-	!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &phFile);
+	!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &magnetar_mpq);
 
 	InitializeFontKey_();
 	AppAddExit_(DestroyFontKey);
@@ -417,10 +409,8 @@ int InitializeArchiveHandles_()
 		if (v4)
 			*v4 = 0;
 		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
-		if (SFileOpenArchive(archivename_, 2500u, 2u, &phFile))
+		if (SFileOpenArchive(archivename_, 2500u, 2u, &broodat_mpq))
 		{
-			broodat_mpq = phFile;
-
 			SStrCopy(broodat_mpq_path, archivename_, 0x208u);
 			SStrNCat(broodat_mpq_path, ";", 520);
 		}
