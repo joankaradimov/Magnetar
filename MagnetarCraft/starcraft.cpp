@@ -1728,6 +1728,38 @@ void load_gluMinimap_()
 
 FAIL_STUB_PATCH(load_gluMinimap);
 
+void __cdecl InitializeSpriteArray_()
+{
+	LoadGameData_(spritesDat, "arr\\sprites.dat");
+	memset(SpriteTable, 0, sizeof(SpriteTable));
+	memset(SpritesOnTileRow.heads, 0, sizeof(SpritesOnTileRow.heads));
+	memset(&SpritesOnTileRow, 0, 0x400u);
+
+	SpriteTable[0].index = 0;
+	dword_63FE34 = SpriteTable;
+	UnusedSprites = SpriteTable;
+
+	for (int index = 1; index < _countof(SpriteTable); index++)
+	{
+		CSprite* sprite = SpriteTable + index;
+
+		sprite->index = index;
+		if (dword_63FE34 == UnusedSprites)
+		{
+			dword_63FE34 = sprite;
+		}
+		sprite->prev = UnusedSprites;
+		sprite->next = UnusedSprites->next;
+		if (UnusedSprites->next)
+		{
+			UnusedSprites->next->prev = sprite;
+		}
+		UnusedSprites->next = sprite;
+	}
+}
+
+FUNCTION_PATCH(InitializeSpriteArray, InitializeSpriteArray_);
+
 int sub_4EEFD0_()
 {
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
