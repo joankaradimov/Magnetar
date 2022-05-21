@@ -3602,6 +3602,32 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 
 FAIL_STUB_PATCH(unitNotNeutral);
 
+int __fastcall getVisibilityMaskFromPositionAndSize_(int a1, __int16 a2, __int16 a3, __int16 a4, __int16 a5)
+{
+	MegatileFlags result = (MegatileFlags) 0;
+
+	int v5 = a2 + a4 - 1;
+	if (v5 >= a4)
+	{
+		int v7 = a5 + a3 - 1;
+		do
+		{
+			if (v7 >= a3)
+			{
+				MegatileFlags* v8 = &active_tiles[v7 + v5 * map_size.width];
+				for (int i = 0; i < a5; i++)
+				{
+					result |= ~(v8[i] & (MegatileFlags) 0xFF);
+				}
+			}
+			--v5;
+		} while (v5 >= a4);
+	}
+	return result;
+}
+
+FUNCTION_PATCH(getVisibilityMaskFromPositionAndSize, getVisibilityMaskFromPositionAndSize_);
+
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	if (section_size % sizeof(ChunkUnitEntry))
