@@ -5009,6 +5009,28 @@ bool sub_4B2810_(dialog* a1)
 
 FAIL_STUB_PATCH(sub_4B2810);
 
+void gluCmpgn_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		Menu_Generic_Button,
+		gluCmpgn_CampaignButton,
+		genericLightupBtnInteract,
+		gluCmpgn_CampaignButton,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
+}
+
+FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
+
 bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -5025,8 +5047,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			return sub_4B2810_(dlg);
 		case EventUser::USER_INIT:
-			registerMenuFunctions(off_51A93C, dlg, 44, 0);
-			DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
+			gluCmpgn_CustomCtrlID_(dlg);
 			break;
 		}
 	}
@@ -5035,7 +5056,29 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCmpgn_Main);
 
-bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
+void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		Menu_Generic_Button,
+		genericLightupBtnInteract,
+		gluExpCmpgn_CampaignButton,
+		gluExpCmpgn_CampaignButton,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	DlgSwooshin(2, &commonSwishControllers[40], dlg, 0);
+}
+
+FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
+
+bool __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -5049,8 +5092,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			return sub_4B5180_(dlg);
 		case EventUser::USER_INIT:
-			registerMenuFunctions(off_51A818, dlg, 44, 0);
-			DlgSwooshin(2, commonSwishControllers + 40, dlg, 0);
+			gluExpCmpgn_CustomCtrlID_(dlg);
 			break;
 		}
 	}
@@ -5158,7 +5200,7 @@ void loadMenu_gluExpCmpgn_()
 	sub_4B5050();
 	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluExpCmpgn.bin");
 
-	switch (gluLoadBINDlg_(campaign_dialog, gluExpCmpgn_CustomCtrlID_))
+	switch (gluLoadBINDlg_(campaign_dialog, gluExpCmpgn_Main_))
 	{
 	case 8:
 		glGluesMode = GLUE_READY_Z;
@@ -5453,6 +5495,27 @@ signed int loadStareditProcess_(dialog* a1)
 
 FAIL_STUB_PATCH(loadStareditProcess);
 
+void gluMain_CustomCtrlID_(dialog* a1)
+{
+	static FnInteract functions[] = {
+		NULL,
+		genericLightupBtnInteract,
+		genericLightupBtnInteract,
+		genericLightupBtnInteract,
+		genericLightupBtnInteract,
+		NULL,
+		NULL,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		genericLabelInteract,
+		genericLightupBtnInteract,
+	};
+
+	registerMenuFunctions(functions, a1, sizeof(functions), 0);
+}
+
+FAIL_STUB_PATCH(gluMain_CustomCtrlID);
+
 bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -5520,7 +5583,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			IsExpansion = 0;
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
-			registerMenuFunctions(off_51A388, dlg, 44, 0);
+			gluMain_CustomCtrlID_(dlg);
 			break;
 		}
 		break;
@@ -5592,7 +5655,7 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
-bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
+void gluRdyT_CustomCtrlID_(dialog* dlg)
 {
 	static swishTimer timers[] =
 	{
@@ -5605,6 +5668,37 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 		{12, 2},
 	};
 
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		genericLightupBtnInteract,
+		Menu_Generic_Button,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	DlgSwooshin(_countof(timers), timers, dlg, 80);
+	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+}
+
+FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
+
+bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
+{
 	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
@@ -5619,8 +5713,7 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 			return sub_46D160(dlg);
 		case EventUser::USER_INIT:
 			sub_46D3C0(dlg);
-			DlgSwooshin(_countof(timers), timers, dlg, 80);
-			registerMenuFunctions(off_51A750, dlg, 80, 0);
+			gluRdyT_CustomCtrlID_(dlg);
 			break;
 		case 0x405:
 			RdyTFrame(dlg);
