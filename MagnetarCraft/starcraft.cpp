@@ -4232,6 +4232,74 @@ int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 	}
 }
 
+void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size)
+{
+	AnimateVideos(a2);
+	a2->lFlags |= CTRL_USELOCALGRAPHIC;
+	if (functions)
+	{
+		registerUserDialogAction(a2, functions_size, functions);
+	}
+	if (dialog_count++ == 0)
+	{
+		if (!glue_background_palette[0].data || a2 == (dialog*)-12)
+		{
+			char dest[260];
+			SStrCopy(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position], 0x104u);
+			SStrNCat(dest, "\\BackGnd.pcx", 260);
+			AllocBackgroundImage(dest, &a2->srcBits, palette, "Starcraft\\SWAR\\lang\\glues.cpp", 1052);
+			glue_background_palette[0].wid = a2->srcBits.wid;
+			glue_background_palette[0].ht = a2->srcBits.ht;
+			glue_background_palette[0].data = a2->srcBits.data;
+			memcpy(glue_background_palette + 1, palette, sizeof(palette));
+		}
+		else
+		{
+			a2->srcBits.wid = glue_background_palette[0].wid;
+			a2->srcBits.ht = glue_background_palette[0].ht;
+			a2->srcBits.data = glue_background_palette[0].data;
+			memcpy(palette, glue_background_palette + 1, sizeof(palette));
+		}
+		a2->lFlags |= CTRL_UNKOWN1;
+		sub_41E450(sub_4BDB30, palette);
+		sub_4178B0(palette, NULL);
+		MenuPosition v9 = glGluesMode;
+		getBGPalInfo(glGluesMode);
+		MenuPosition v10 = stru_4FFAD0[v9].menu_position;
+		DlgGrp* v11 = dword_51C5C8[v10];
+		memcpy(&stru_6CE000, &dword_51C40C[v10], sizeof(stru_6CE000));
+		sub_419290(v11);
+		int v12 = dword_50E170[326 * v10];
+		if (dword_597394 != v12)
+		{
+			dword_597394 = v12;
+			drawCursor();
+		}
+		SetCallbackTimer(24, a2, 50, sub_4DCEA0);
+		dword_6D5E20 = &a2->srcBits;
+		dword_51C418 = a2;
+		checkLastFileError();
+		memset(is_keycode_used, 0, sizeof(is_keycode_used));
+	}
+	else
+	{
+		if (dword_51C418)
+		{
+			dlgEvent v14;
+			v14.wNo = EVN_USER;
+			v14.dwUser = USER_NEXT;
+			v14.wSelection = 0;
+			v14.wUnk_0x06 = 0;
+			v14.cursor.x = Mouse.x;
+			v14.cursor.y = Mouse.y;
+			dword_51C418->pfcnInteract(dword_51C418, &v14);
+		}
+		a2->lFlags |= CTRL_UNKOWN4;
+	}
+}
+
+// TODO: patch and always use this function
+
 int CreateCampaignGame_(MapData mapData)
 {
 	MapChunks mapChunks;
@@ -5025,7 +5093,7 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 	DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
 }
 
@@ -5072,7 +5140,7 @@ void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 	DlgSwooshin(2, &commonSwishControllers[40], dlg, 0);
 }
 
@@ -5511,7 +5579,7 @@ void gluMain_CustomCtrlID_(dialog* a1)
 		genericLightupBtnInteract,
 	};
 
-	registerMenuFunctions(functions, a1, sizeof(functions), 0);
+	registerMenuFunctions_(functions, a1, sizeof(functions));
 }
 
 FAIL_STUB_PATCH(gluMain_CustomCtrlID);
@@ -5692,7 +5760,7 @@ void gluRdyT_CustomCtrlID_(dialog* dlg)
 	};
 
 	DlgSwooshin(_countof(timers), timers, dlg, 80);
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
@@ -5867,7 +5935,7 @@ void ConnSel_InitChildren_(dialog* a1)
 	};
 
 	DlgSwooshin(5, commonSwishControllers, a1, 0);
-	registerMenuFunctions(v2, a1, sizeof(v2), 0);
+	registerMenuFunctions_(v2, a1, sizeof(v2));
 }
 
 FAIL_STUB_PATCH(ConnSel_InitChildren);
@@ -6072,7 +6140,7 @@ void gluChat_CustomCtrlID_(dialog* dlg)
 		NULL,
 	};
 
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 	dword_6D5A38 = 0;
 }
 
@@ -6326,7 +6394,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 	};
 
 	DlgSwooshin(_countof(timers), timers, dlg, 500);
-	registerMenuFunctions(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions), 0);
+	registerMenuFunctions_(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions));
 }
 
 FAIL_STUB_PATCH(gluScore_CustomCtrlID);
