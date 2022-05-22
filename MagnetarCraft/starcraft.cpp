@@ -2690,6 +2690,72 @@ void __cdecl colorCycleInterval_()
 
 FAIL_STUB_PATCH(colorCycleInterval);
 
+void updateCurrentButtonset_()
+{
+	u16 v0 = word_68C1C8;
+	int v1 = CanUpdateCurrentButtonSet;
+	if (CanUpdateCurrentButtonSet && (word_68C1C8 == 228 || InReplay))
+	{
+		updateButtonSet();
+	}
+	if (word_68C1C8 == 228)
+	{
+		v0 = word_68C1C4;
+		if (word_68C1C4 == 228)
+		{
+			if (ActivePortraitUnit)
+			{
+				v0 = ActivePortraitUnit->currentButtonSet;
+			}
+			else
+			{
+				goto LABEL_14;
+			}
+		}
+	}
+
+	if (word_68C14C != v0)
+	{
+		word_68C14C = v0;
+		CanUpdateCurrentButtonSet = 1;
+	}
+
+LABEL_14:
+	if (v1 || CanUpdateCurrentButtonSet)
+	{
+		sub_4591D0();
+		sub_459770();
+		if (ActivePortraitUnit)
+		{
+			Order v6 = ActivePortraitUnit->orderID;
+			Order v3 = ActivePortraitUnit->subUnit ? ActivePortraitUnit->subUnit->orderID : (Order) -1;
+			sub_458D50();
+			byte_68C1E4 = v6;
+			byte_68C1B8 = v3;
+			sub_458D50();
+		}
+		if (InReplay)
+		{
+			replayStatBtns(current_dialog);
+		}
+		CanUpdateCurrentButtonSet = 0;
+	}
+	else if (ActivePortraitUnit)
+	{
+		Order v7 = ActivePortraitUnit->orderID;
+		Order v5 = ActivePortraitUnit->subUnit ? ActivePortraitUnit->subUnit->orderID : (Order) -1;
+		if (byte_68C1E4 != ActivePortraitUnit->orderID || byte_68C1B8 != v5)
+		{
+			sub_458D50();
+			byte_68C1E4 = v7;
+			byte_68C1B8 = v5;
+			sub_458D50();
+		}
+	}
+}
+
+FUNCTION_PATCH(updateCurrentButtonset, updateCurrentButtonset_);
+
 void sub_4D93B0_()
 {
 	if (dword_51BFA8 && ColorCycle && !IS_GAME_PAUSED)
@@ -2713,7 +2779,7 @@ void updateHUDInformation_()
 		byte_59723C = 0;
 	}
 	updateSelectedUnitPortrait();
-	updateCurrentButtonset();
+	updateCurrentButtonset_();
 	sub_458120();
 	refreshScreen();
 	sub_4D93B0_();
