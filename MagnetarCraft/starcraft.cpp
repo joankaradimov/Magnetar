@@ -5723,6 +5723,48 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+void gluRdyP_CustomCtrlID_(dialog* dlg)
+{
+	static swishTimer timers[] =
+	{
+		{5, 3},
+		{6, 0},
+		{7, 3},
+		{9, 0},
+		{10, 0},
+		{11, 2},
+		{12, 2},
+	};
+
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		genericLightupBtnInteract,
+		Menu_Generic_Button,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	DlgSwooshin(_countof(timers), timers, dlg, 80);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
+}
+
+FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
+
 void gluRdyT_CustomCtrlID_(dialog* dlg)
 {
 	static swishTimer timers[] =
@@ -5765,7 +5807,49 @@ void gluRdyT_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 
-bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
+void gluRdyZ_CustomCtrlID_(dialog* dlg)
+{
+	static swishTimer timers[] =
+	{
+		{5, 3},
+		{6, 0},
+		{7, 3},
+		{9, 0},
+		{10, 0},
+		{11, 2},
+		{12, 2},
+	};
+
+	static FnInteract functions[] = {
+		gluRdyZ_Secret,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		genericLightupBtnInteract,
+		Menu_Generic_Button,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		gluRdy_Portrait,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	DlgSwooshin(_countof(timers), timers, dlg, 80);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
+}
+
+FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
+
+bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -5781,7 +5865,18 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 			return sub_46D160(dlg);
 		case EventUser::USER_INIT:
 			sub_46D3C0(dlg);
-			gluRdyT_CustomCtrlID_(dlg);
+			switch (glGluesMode)
+			{
+			case MenuPosition::GLUE_READY_P:
+				gluRdyP_CustomCtrlID_(dlg);
+				break;
+			case MenuPosition::GLUE_READY_T:
+				gluRdyT_CustomCtrlID_(dlg);
+				break;
+			case MenuPosition::GLUE_READY_Z:
+				gluRdyZ_CustomCtrlID_(dlg);
+				break;
+			}
 			break;
 		case 0x405:
 			RdyTFrame(dlg);
@@ -5791,6 +5886,8 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 }
 
 FAIL_STUB_PATCH(gluRdyT_BINDLG_Loop);
+FAIL_STUB_PATCH(gluRdyZ_BINDLG_Loop);
+FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop);
 
 void DisplayEstablishingShot_();
 int ContinueCampaign_(int a1);
@@ -6670,13 +6767,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdyT_BINDLG_Loop_);
+			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdy_BINDLG_Loop);
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin", gluRdyZ_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin", gluRdy_BINDLG_Loop);
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin", gluRdyP_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin", gluRdy_BINDLG_Loop);
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
