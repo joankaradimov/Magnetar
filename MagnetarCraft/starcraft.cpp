@@ -5793,6 +5793,7 @@ bool __fastcall gluRdyT_BINDLG_Loop_(dialog* dlg, dlgEvent* evt)
 FAIL_STUB_PATCH(gluRdyT_BINDLG_Loop);
 
 void DisplayEstablishingShot_();
+int ContinueCampaign_(int a1);
 
 void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
 {
@@ -5819,7 +5820,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 			DLGMusicFade(MT_TITLE);
 			break;
 		case 19:
-			ContinueCampaign(1);
+			ContinueCampaign_(1);
 			break;
 		case 100:
 			stopMusic();
@@ -6533,7 +6534,7 @@ void loadMenu_gluScore_()
 		{
 			BWFXN_NetSelectReturnMenu();
 		}
-		else if (!ContinueCampaign(dword_59B75C))
+		else if (!ContinueCampaign_(dword_59B75C))
 		{
 			glGluesMode = GLUE_MAIN_MENU;
 		}
@@ -7452,7 +7453,7 @@ int CreateNextCampaignGame_()
 
 FAIL_STUB_PATCH(CreateNextCampaignGame);
 
-int __stdcall ContinueCampaign_(int a1)
+int ContinueCampaign_(int a1)
 {
 	gwGameMode = GAME_GLUES;
 	if (dword_51CA1C)
@@ -7513,7 +7514,7 @@ int __stdcall ContinueCampaign_(int a1)
 	return 1;
 }
 
-FUNCTION_PATCH(ContinueCampaign, ContinueCampaign_);
+FAIL_STUB_PATCH(ContinueCampaign);
 
 Campaign* GetActiveCampaign()
 {
