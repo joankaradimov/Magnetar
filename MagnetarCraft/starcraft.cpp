@@ -4991,7 +4991,7 @@ bool __fastcall gluExpCmpgn_CustomCtrlID_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
+FAIL_STUB_PATCH(gluExpCmpgn_Main);
 
 dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int* read, const char* logfilename, int logline)
 {
