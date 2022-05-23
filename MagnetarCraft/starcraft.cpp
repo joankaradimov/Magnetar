@@ -5491,6 +5491,29 @@ void gluCustm_initSwish_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			gluCustm_typeDropdown(dlg);
+			break;
+		case EventUser::USER_INIT:
+			dlg->lFlags |= CTRL_PLAIN;
+			return genericComboboxInteract(dlg, evt);
+		case EventUser::USER_SELECT:
+			genericListboxInteract(dlg, evt);
+			sub_4ADD90(1, dlg);
+			return 1;
+		}
+	}
+	return genericComboboxInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluCustm_PlayerSlot);
+
 BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -5514,13 +5537,13 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 		gluCustm_SubType,
 		NULL,
 		gluCustm_Player1,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
-		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
+		gluCustm_PlayerSlot_,
 		gluCustm_RaceSlot,
 		gluCustm_RaceSlot,
 		gluCustm_RaceSlot,
