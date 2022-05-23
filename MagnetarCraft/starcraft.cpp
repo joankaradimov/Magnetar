@@ -4599,30 +4599,17 @@ void gluHist_Activate_(dialog* dlg)
 {
 	if (LastControlID == 1)
 	{
-		if (dlg->wCtrlType)
+		dialog * v1 = getControlFromIndex(dlg, 6);
+
+		if (v1 && v1->fields.list.bStrs)
 		{
-			dlg = dlg->fields.ctrl.pDlg;
-		}
-		dialog* v1 = dlg->fields.dlg.pFirstChild;
-		if (v1)
-		{
-			while (v1->wIndex != 6)
+			u8 v2 = v1->fields.list.bCurrStr;
+			if (v2 != 0xFF)
 			{
-				v1 = v1->pNext;
-				if (!v1)
-				{
-					return;
-				}
-			}
-			if (v1->fields.list.bStrs)
-			{
-				u8 v2 = v1->fields.list.bCurrStr;
-				if (v2 != 0xFF)
-				{
-					dword_6D5A48 = (CampaignMenuEntry*) ((ExpandedCampaignMenuEntry*) dword_6D5A4C + v1->fields.list.pdwData[v2]);
-				}
+				dword_6D5A48 = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)dword_6D5A4C + v1->fields.list.pdwData[v2]);
 			}
 		}
+
 	}
 }
 
