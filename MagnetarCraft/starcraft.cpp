@@ -5483,6 +5483,66 @@ void loadMenu_gluJoin_()
 
 FAIL_STUB_PATCH(loadMenu_gluJoin);
 
+BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		gluCustm_GameListboxUpdate,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		genericLabelInteract,
+		genericLabelInteract,
+		gluCreate_GameSpeed_Slider,
+		gluCustm_GameType,
+		gluCustm_SubType,
+		NULL,
+		gluCustm_Player1,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_PlayerSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		gluCustm_RaceSlot,
+		genericLabelInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+	};
+
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
+
+	custom_game_mode = getControlFromIndex(dlg, 17);
+	custom_game_submode = getControlFromIndex(dlg, 18);
+	custom_game_slots = getControlFromIndex(dlg, 19);
+
+	if (multiPlayerMode)
+	{
+		return 0;
+	}
+
+	byte_59BB6C = registry_options.GameSpeed;
+	return registry_options.GameSpeed;
+}
+
+FAIL_STUB_PATCH(gluCustm_CustomCtrl_InitializeChildren);
+
 bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -5501,7 +5561,7 @@ bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 			waitLoopCntd(5, gluCreateOrCustm_bin);
 			return DLG_SwishOut(dlg);
 		case EventUser::USER_INIT:
-			gluCustm_CustomCtrl_InitializeChildren(dlg);
+			gluCustm_CustomCtrl_InitializeChildren_(dlg);
 			break;
 		case 1029:
 			InitGlueMapListBox();
