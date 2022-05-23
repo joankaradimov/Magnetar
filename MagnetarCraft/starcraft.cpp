@@ -3559,6 +3559,67 @@ DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
 // TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
+int max_map_dim = MAX_MAP_DIMENTION;
+
+__declspec(naked) void sub_422A90_patch() {
+	__asm
+	{
+		mov [ebp - 0x18], eax // var_18
+		mov eax, edx
+		mul max_map_dim
+		mov edx, eax
+		add edx, ebx
+		mov ebx, SAIPathing
+		lea eax, [ebx + edx * 2 + 0Ch]
+		mov [ebp - 0x4], eax // var_4
+		ret
+	}
+}
+
+CALL_SITE_PATCH((void*) 0x422B50, sub_422A90_patch);
+NOP_PATCH((void*)0x422B55, 16);
+
+__declspec(naked) void sub_422FA0_patch() {
+	__asm
+	{
+		push eax
+		mov eax, ebx
+		mul max_map_dim
+		mov ebx, eax
+		pop eax
+		add ebx, eax
+		mov edx, SAIPathing
+		xor eax, eax
+		mov ax, [edx + ebx * 2 + 0Ch]
+		ret
+	}
+}
+
+CALL_SITE_PATCH((void*)0x423088, sub_422FA0_patch);
+NOP_PATCH((void*)0x42308D, 7);
+
+__declspec(naked) void SAI_PathCreate_Sub3_4_patch1() {
+	__asm
+	{
+		lea edx, [esi + 0Ch]
+		lea eax, [esi + 2000Ch]
+		ret
+	}
+}
+
+CALL_SITE_PATCH((void*)0x483287, SAI_PathCreate_Sub3_4_patch1);
+NOP_PATCH((void*)0x48328C, 4);
+
+__declspec(naked) void SAI_PathCreate_Sub3_4_patch2() {
+	__asm
+	{
+		mov ecx, 100h
+		ret
+	}
+}
+
+CALL_SITE_PATCH((void*)0x4838BC, SAI_PathCreate_Sub3_4_patch2);
+
 u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
 {
 	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
