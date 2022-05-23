@@ -30,7 +30,7 @@ void BasePatch::apply_pending_patches() {
 	std::sort(patches().begin(), patches().end(), [](auto a, auto b) {return a->destination_address < b->destination_address; });
 	for (BasePatch* patch : patches())
 	{
-		if (previous_patch && patch->destination_address <= previous_patch->destination_address + previous_patch->length())
+		if (previous_patch && patch->destination_address < previous_patch->destination_address + previous_patch->length())
 		{
 			std::ostringstream error_message;
 			error_message << "Two patches overlap and are in conflict:" << std::endl;
