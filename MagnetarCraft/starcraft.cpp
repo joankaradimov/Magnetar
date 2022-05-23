@@ -3635,6 +3635,19 @@ FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
 MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
 
+void SAI_PathCreate_Sub4_(SAI_Paths* a1)
+{
+	a1->contours = (SaiContourHub*)SMemAlloc(56, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 129, 0);
+	memset(a1->contours, 0, sizeof(SaiContourHub));
+	a1->contours->a = 1;
+	a1->contours->b = -1;
+	a1->contours->c = -1;
+	a1->contours->d = 1;
+	SAI_ContoursCreate(a1->contours);
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub4);
+
 bool SAI_PathCreate_(MegatileFlags* a1)
 {
 	AllocateSAI_Paths_();
@@ -3652,7 +3665,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 		return false;
 	}
 
-	SAI_PathCreate_Sub4(SAIPathing);
+	SAI_PathCreate_Sub4_(SAIPathing);
 	for (int i = 0; i < SAIPathing->regionCount; i++)
 	{
 		SaiRegion* sai_region = SAIPathing->regions + i;
