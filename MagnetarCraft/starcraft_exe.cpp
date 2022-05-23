@@ -15615,7 +15615,17 @@ DECL_FUNC(int(*sub_4B7D10)(), sub_4B7D10, 0x4b7d10);
 DECL_FUNC(int (__thiscall*sub_4B7DA0)(dialog *this_), sub_4B7DA0, 0x4b7da0);
 DECL_FUNC(int(*sub_4B7DE0)(), sub_4B7DE0, 0x4b7de0);
 DECL_FUNC(int(*DestroyGameNodes)(), DestroyGameNodes, 0x4b7df0);
-DECL_FUNC(int(*sub_4B7E10)(), sub_4B7E10, 0x4b7e10);
+u32 sub_4B7E10(dialog *a1) {
+    int address = 0x4b7e10;
+    u32 result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 char sub_4B7E60(dialog *a1, int a2) {
     int address = 0x4b7e60;
     char result_;

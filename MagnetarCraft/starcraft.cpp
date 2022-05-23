@@ -5551,6 +5551,78 @@ void loadMenu_gluExpCmpgn_()
 
 FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
 
+void gluJoin_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		gluJoin_Listbox,
+		genericLabelInteract,
+		gluJoin_MapStatsLabel,
+		gluJoin_MapStatsLabel,
+		gluJoin_MapStatsLabel,
+		gluJoin_MapStatsLabel,
+		gluJoin_MapStatsLabel,
+		gluJoin_MapStatsLabel,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+	};
+
+	DlgSwooshin(4, &commonSwishControllers[18], dlg, 0);
+	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+}
+
+FAIL_STUB_PATCH(gluJoin_CustomCtrlID);
+
+bool __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	dialog* v5 = getControlFromIndex(dlg, 13);
+
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B7E10(dlg);
+			DLG_SwishIn(dlg);
+			break;
+		case USER_DESTROY:
+			DestroyGameNodes();
+			break;
+		case USER_ACTIVATE:
+			if (LastControlID == 13)
+			{
+				DisableControl(v5);
+				if (JoinNetworkGame(&stru_5999F0))
+				{
+					EnableControl(v5);
+					return DLG_SwishOut(dlg);
+				}
+			}
+			else if (LastControlID != 15 || !is_spawn)
+			{
+				return DLG_SwishOut(dlg);
+			}
+			else
+			{
+				char* str = *networkTable > 0x67u ? (char*)networkTable + networkTable[104] : "";
+				BWFXN_gluPOK_MBox(str);
+			}
+			return 1;
+		case USER_INIT:
+			gluJoin_CustomCtrlID_(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluJoin_Main);
+
 void loadMenu_gluJoin_()
 {
 	InReplay = 0;
@@ -5558,7 +5630,7 @@ void loadMenu_gluJoin_()
 
 	gluJoin_Dlg = LoadDialog("rez\\gluJoin.bin");
 
-	switch (gluLoadBINDlg_(gluJoin_Dlg, gluJoin_Main))
+	switch (gluLoadBINDlg_(gluJoin_Dlg, gluJoin_Main_))
 	{
 	case 13:
 		glGluesMode = GLUE_CHAT;

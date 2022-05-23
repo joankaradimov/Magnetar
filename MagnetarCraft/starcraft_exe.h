@@ -3941,7 +3941,7 @@ extern int(*sub_4B7D10)();
 extern int (__thiscall*sub_4B7DA0)(dialog *this_);
 extern int(*sub_4B7DE0)();
 extern int(*DestroyGameNodes)();
-extern int(*sub_4B7E10)();
+u32 sub_4B7E10(dialog *a1);
 char sub_4B7E60(dialog *a1, int a2);
 extern bool (__fastcall*gluJoin_MapStatsLabel)(dialog *a1, dlgEvent *a2);
 extern int (__stdcall*GameNode_Destructor_0)(int, int);
