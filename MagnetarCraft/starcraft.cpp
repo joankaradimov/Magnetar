@@ -6460,6 +6460,19 @@ void loadMenu_gluConn_()
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
 
+void gluChat_init_(dialog* dlg)
+{
+	dword_5999D8 = isHost;
+
+	if (!isHost)
+	{
+		HideDialog(getControlFromIndex(dlg, 5));
+		HideDialog(getControlFromIndex(dlg, 7));
+	}
+	sub_4B9480(dlg);
+	DlgSwooshin(5, gluChatSwishController, dlg, 0);
+}
+
 void sub_4B9BF0_(dialog* dlg)
 {
 	if (sub_4D4130())
@@ -6614,7 +6627,7 @@ bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gluChat_init(dlg);
+			gluChat_init_(dlg);
 			DLG_SwishIn(dlg);
 			genericDlgInteract(dlg, evt);
 			sub_4B9BF0_(dlg);
