@@ -5483,6 +5483,14 @@ void loadMenu_gluJoin_()
 
 FAIL_STUB_PATCH(loadMenu_gluJoin);
 
+void gluCustm_initSwish_(dialog* a1)
+{
+	DlgSwooshin(5, gluCustmSwishController, a1, 0);
+	getControlFromIndex(a1, 6)->pfcnUpdate = gluCustm_UpdateCB;
+}
+
+FAIL_STUB_PATCH(gluCustm_initSwish);
+
 BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -5550,7 +5558,7 @@ bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gluCustm_initSwish(dlg);
+			gluCustm_initSwish_(dlg);
 			DLG_SwishIn(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
