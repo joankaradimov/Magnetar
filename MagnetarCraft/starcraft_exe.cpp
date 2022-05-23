@@ -2461,7 +2461,7 @@ DECL_FUNC(int (__stdcall*sub_422600)(int, char), sub_422600, 0x422600);
 DECL_FUNC(int (__stdcall*sub_4228E0)(int), sub_4228E0, 0x4228e0);
 DECL_FUNC(int(*nullsub_9)(), nullsub_9, 0x422a40);
 DECL_FUNC(int(*sub_422A50)(), sub_422A50, 0x422a50);
-signed int sub_422A90(int a1, Position *a2) {
+signed int sub_422A90(struct_a1_1 *a1, Position *a2) {
     int address = 0x422a90;
     signed result_;
     __asm {

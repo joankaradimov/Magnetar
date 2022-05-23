@@ -3979,7 +3979,10 @@ struct SaiContourHub
   u16 contourCount[4];
   u16 contourMax[4];
   s16 searchInner[4];
-  s16 unk_28[4];
+  s16 a;
+  s16 b;
+  s16 c;
+  s16 d;
   s16 searchOuter[4];
 };
 static_assert(sizeof(SaiContourHub) == 56, "Incorrect size for type `SaiContourHub`. Expected: 56");
@@ -4807,10 +4810,8 @@ struct __declspec(align(4)) struct_a1_1
   _BYTE byte155;
   _BYTE byte156;
   _BYTE byte157;
-  _WORD word158;
-  _WORD word15A;
-  _WORD word15C;
-  _WORD word15E;
+  Position word158;
+  Position word15C;
   _WORD region1;
   _WORD region2;
   _WORD word164;

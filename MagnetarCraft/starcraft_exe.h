@@ -592,7 +592,7 @@ extern int (__stdcall*sub_422600)(int, char);
 extern int (__stdcall*sub_4228E0)(int);
 extern int(*nullsub_9)();
 extern int(*sub_422A50)();
-signed int sub_422A90(int a1, Position *a2);
+signed int sub_422A90(struct_a1_1 *a1, Position *a2);
 extern int (__stdcall*sub_422C90)(int);
 extern signed int (__stdcall*sub_422FA0)(struct_a1_1 *a1, int a2);
 extern int(*nullsub_10)();
