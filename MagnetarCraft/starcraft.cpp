@@ -2459,7 +2459,7 @@ FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
 
 void AllocateSAI_Paths_()
 {
-	SAIPathing = (SAI_Paths*)SMemAlloc(sizeof(SAI_Paths), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
+	SAIPathing = (SAI_Paths*)SMemAlloc(sizeof(SAI_Paths) + 2 * map_size.width * map_size.height, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
 	memset(SAIPathing, 0, sizeof(SAI_Paths));
 }
 
@@ -3553,24 +3553,22 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 FAIL_STUB_PATCH(ChkLoader_VCOD);
 FAIL_STUB_PATCH(CopySectionData);
 
-#define MAX_MAP_DIMENTION 256
+#define MAX_MAP_DIMENTION 512
 
 DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
 // TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
-
-int max_map_dim = MAX_MAP_DIMENTION;
 
 __declspec(naked) void sub_422A90_patch() {
 	__asm
 	{
 		mov [ebp - 0x18], eax // var_18
 		mov eax, edx
-		mul max_map_dim
+		mul map_size.width
 		mov edx, eax
 		add edx, ebx
 		mov ebx, SAIPathing
-		lea eax, [ebx + edx * 2 + 0Ch]
+		lea eax, [ebx + edx * 2 + 97A20h]
 		mov [ebp - 0x4], eax // var_4
 		ret
 	}
@@ -3584,13 +3582,13 @@ __declspec(naked) void sub_422FA0_patch() {
 	{
 		push eax
 		mov eax, ebx
-		mul max_map_dim
+		mul map_size.width
 		mov ebx, eax
 		pop eax
 		add ebx, eax
 		mov edx, SAIPathing
 		xor eax, eax
-		mov ax, [edx + ebx * 2 + 0Ch]
+		mov ax, [edx + ebx * 2 + 97A20h]
 		ret
 	}
 }
@@ -3601,7 +3599,7 @@ NOP_PATCH((void*)0x42308D, 7);
 __declspec(naked) void SAI_PathCreate_Sub3_4_patch1() {
 	__asm
 	{
-		lea edx, [esi + 0Ch]
+		lea edx, [esi + 97A20h]
 		lea eax, [esi + 2000Ch]
 		ret
 	}
@@ -3613,19 +3611,39 @@ NOP_PATCH((void*)0x48328C, 4);
 __declspec(naked) void SAI_PathCreate_Sub3_4_patch2() {
 	__asm
 	{
-		mov ecx, 100h
+		mov ecx, edx
 		ret
 	}
 }
 
 CALL_SITE_PATCH((void*)0x4838BC, SAI_PathCreate_Sub3_4_patch2);
 
+MEMORY_PATCH((void*)0x42BC62, 0x400000);
+MEMORY_PATCH((void*)0x42C18F, byte(11));
+MEMORY_PATCH((void*)0x42C1CA, byte(11));
+
+struct SAIPathsEx
+{
+	__int16 regionCount;
+	u16 unknown;
+	void* globalBuffer_ptr;
+	void* splitTiles_end;
+	u16 mapTileRegionId[256][256];
+	SaiSplit splitTiles[25000];
+	SaiRegion regions[5000];
+	u16 globalBuffer[10000];
+	SaiContourHub* contours;
+	u16 mapTileRegionIdEx[];
+};
+
+SAIPathsEx*& SAIPathingEx = *((decltype(&SAIPathingEx))0x6d5bfc);
+
 u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	u16 region_id = SAIPathingEx->mapTileRegionIdEx[(x / 32) * map_size.width + (y / 32)];
 	if (region_id >= 0x2000u)
 	{
-		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+		return SAIPathingEx->splitTiles[region_id - 0x2000].rgn1;
 	}
 	return region_id;
 }
@@ -3643,16 +3661,16 @@ FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
 
 u16 GetRegionIdAtPosEx_(int x, int y)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	u16 region_id = SAIPathingEx->mapTileRegionIdEx[(x / 32) * map_size.width + (y / 32)];
 	if (region_id >= 0x2000u)
 	{
-		if ((1 << (((y / 8) & 3) + 4 * ((x / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
+		if ((1 << (((y / 8) & 3) + 4 * ((x / 8) & 3))) & SAIPathingEx->splitTiles[region_id - 0x2000].minitileMask)
 		{
-			return SAIPathing->splitTiles[region_id - 0x2000].rgn2;
+			return SAIPathingEx->splitTiles[region_id - 0x2000].rgn2;
 		}
 		else
 		{
-			return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+			return SAIPathingEx->splitTiles[region_id - 0x2000].rgn1;
 		}
 	}
 	return region_id;
@@ -3694,7 +3712,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
-MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
+MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths) + 2 * MAX_MAP_DIMENTION * MAX_MAP_DIMENTION);
 
 void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 {
@@ -3707,19 +3725,19 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 			MegatileFlags flags = megatile_flags[i * map_size.width + j];
 			if ((flags & (REAL_CREEP | MORE_THAN_12_WALKABLE)) == 0)
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+				SAIPathingEx->mapTileRegionIdEx[i * map_size.width + j] = SAF_Inaccessible;
 			}
 			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == 0)
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+				SAIPathingEx->mapTileRegionIdEx[i * map_size.width + j] = SAF_Inaccessible;
 			}
 			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == (MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE))
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_HighGround;
+				SAIPathingEx->mapTileRegionIdEx[i * map_size.width + j] = SAF_HighGround;
 			}
 			else
 			{
-				SAIPathing->mapTileRegionId[i][j] = ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) != (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE)) + 8186;
+				SAIPathingEx->mapTileRegionIdEx[i * map_size.width + j] = ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) != (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE)) + 8186;
 			}
 		}
 	}
@@ -4210,10 +4228,10 @@ void initMapData_()
 	word_6556FC = 0;
 	byte_66FF5C = 0;
 	MapTileArray = (TileID *)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
-	CellMap = (__int16*)SMemAlloc(0x20000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
+	CellMap = (__int16*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(__int16), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
 	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
-	active_tiles = (MegatileFlags*)SMemAlloc(0x100000, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
-	memset(active_tiles, 0, 0x40000u);
+	active_tiles = (MegatileFlags*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(MegatileFlags), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
+	memset(active_tiles, 0, MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(MegatileFlags));
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
