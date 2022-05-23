@@ -1806,7 +1806,7 @@ extern int(*sub_458850)();
 extern BOOL (__fastcall*sub_4588C0)(dialog *this_, int a2);
 extern void (__fastcall*statbtn_Btn_Update)(dialog *dlg, int x, int y, rect *dst);
 int statBtn_dlg_CharPress(dlgEvent *a1);
-extern int(*sub_458BB0)();
+int sub_458BB0(dialog *dlg);
 extern void (__cdecl*updateButtonSetEx)();
 extern int(*free_cmdIcons)();
 extern int(*sub_458D50)();

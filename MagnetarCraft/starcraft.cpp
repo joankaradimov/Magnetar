@@ -2998,6 +2998,161 @@ void GameRun_(MenuPosition a1)
 
 FAIL_STUB_PATCH(GameRun);
 
+bool statBtn_dlg_CharPress_(dlgEvent* evt)
+{
+	if (evt->wUnk_0x0A & 0x100)
+	{
+		return 0;
+	}
+	char v3 = tolower(evt->wVirtKey);
+	if (!DLG_IterateChildren(current_dialog->fields.dlg.pFirstChild, (int(__fastcall*)(_DWORD, _DWORD))sub_4588C0, (int)&v3))
+	{
+		return 0;
+	}
+
+	dlgEvent v2;
+	v2.wNo = EVN_USER;
+	v2.dwUser = USER_HOTKEY;
+	v2.wSelection = 0;
+	v2.wUnk_0x06 = 0;
+	v2.cursor.x = Mouse.x;
+	v2.cursor.y = Mouse.y;
+	return interrupting_child->pfcnInteract(interrupting_child, &v2);
+}
+
+FAIL_STUB_PATCH(statBtn_dlg_CharPress);
+
+void sub_458E70_(dialog* a1)
+{
+	a1->wUser = -1;
+	a1->pfcnUpdate = statbtn_Btn_Update;
+	HideDialog(a1);
+}
+
+FAIL_STUB_PATCH(sub_458E70);
+
+void sub_458BB0_(dialog* dlg)
+{
+	ButtonOrder* order = (ButtonOrder*)dlg->lUser;
+	order->action(order->f4, is_keycode_used[VK_SHIFT]);
+}
+
+FAIL_STUB_PATCH(sub_458BB0);
+
+bool __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_MOUSEMOVE:
+		sub_4597C0(dlg, evt);
+		break;
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONDBLCLK:
+		if (dlg->lFlags & CTRL_DISABLED)
+		{
+			return 0;
+		}
+		break;
+	case EVN_LBUTTONUP:
+		GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+		statBtn_dlg_MouseMove(current_dialog, evt);
+		return 1;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_458E70_(dlg);
+			break;
+		case EventUser::USER_ACTIVATE:
+			sub_458BB0_(dlg);
+			return 1;
+		case EventUser::USER_MOUSEMOVE:
+			if (dlg->lFlags & CTRL_DISABLED)
+			{
+				return 1;
+			}
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(statbtn_Btn_Interact);
+
+void statbtn_BIN_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_Btn_Interact_,
+		statbtn_BIN_ReplayProgressbar,
+	};
+
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	BINDLG_BlitSurface(dlg);
+}
+
+FAIL_STUB_PATCH(statbtn_BIN_CustomCtrlID);
+
+bool __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+		return 0;
+	case EVN_MOUSEMOVE:
+		statBtn_dlg_MouseMove(dlg, evt);
+		break;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			statbtn_BIN_CustomCtrlID_(dlg);
+			break;
+		case USER_MOUSEMOVE:
+			return 1;
+		}
+		break;
+	case EVN_CHAR:
+		return statBtn_dlg_CharPress_(evt);
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(statbtn_DLG_Interact);
+
+void load_statbtn_BIN_()
+{
+	char buff[MAX_PATH];
+
+	word_68C14C = 228;
+	word_68C1C8 = 228;
+	word_68C1C4 = 228;
+	word_68C1BC = -1;
+	_snprintf(buff, MAX_PATH, "unit\\cmdbtns\\%ccmdbtns.grp", race_lowercase_char_id[consoleIndex]);
+	dword_68C1C0 = (void*)LoadGraphic(buff, 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1086);
+	cmdicons_grp = (void*)LoadGraphic("unit\\cmdbtns\\cmdicons.grp", 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1089);
+	if (!SBmpLoadImage("unit\\cmdbtns\\ticon.pcx", 0, byte_68C150, 96, 0, 0, 0))
+	{
+		SysWarn_FileNotFound("unit\\cmdbtns\\ticon.pcx", SErrGetLastError());
+	}
+
+	_snprintf(buff, MAX_PATH, "rez\\statbtn%c.bin", InReplay ? 'n' : race_lowercase_char_id[consoleIndex]);
+	current_dialog = LoadDialog(buff);
+	InitializeDialog(current_dialog, statbtn_DLG_Interact_);
+}
+
+FAIL_STUB_PATCH(load_statbtn_BIN);
+
 void setup_HUD_()
 {
 	LoadConsoleImage();
@@ -3012,7 +3167,7 @@ void setup_HUD_()
 	load_StatRes_BIN();
 	load_Statdata_BIN();
 	load_WireframeGRP();
-	load_statbtn_BIN();
+	load_statbtn_BIN_();
 	load_Statf10_BIN();
 	ctextbox_BIN();
 	load_gluMinimap_();

@@ -6457,7 +6457,17 @@ int statBtn_dlg_CharPress(dlgEvent *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_458BB0)(), sub_458BB0, 0x458bb0);
+int sub_458BB0(dialog *dlg) {
+    int address = 0x458bb0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, dlg
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__cdecl*updateButtonSetEx)(), updateButtonSetEx, 0x458bc0);
 DECL_FUNC(int(*free_cmdIcons)(), free_cmdIcons, 0x458cf0);
 DECL_FUNC(int(*sub_458D50)(), sub_458D50, 0x458d50);
