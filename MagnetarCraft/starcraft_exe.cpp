@@ -20591,8 +20591,8 @@ void gluLogin_CustomCtrlID(dialog *dlg) {
         call address
     }
 }
-DECL_FUNC(char (__stdcall*gluLogin_Exit)(dialog *a1), gluLogin_Exit, 0x4ed840);
-DECL_FUNC(char (__stdcall*gluLogin_CharacterCreation)(dialog *a1), gluLogin_CharacterCreation, 0x4ed940);
+DECL_FUNC(char (__stdcall*gluLogin_DeleteCharacter)(dialog *a1), gluLogin_DeleteCharacter, 0x4ed840);
+DECL_FUNC(char (__stdcall*gluLogin_CreateCharacter)(dialog *a1), gluLogin_CreateCharacter, 0x4ed940);
 DECL_FUNC(bool (__fastcall*gluLogin_Main)(dialog *dlg, struct dlgEvent *evt), gluLogin_Main, 0x4edaa0);
 DECL_FUNC(int(*loadMenu_gluLogin)(), loadMenu_gluLogin, 0x4edc30);
 DECL_FUNC(HWND (__stdcall*GetClassWindow)(const char *a1), GetClassWindow, 0x4eddf0);

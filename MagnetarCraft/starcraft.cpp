@@ -5391,10 +5391,10 @@ bool __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 				}
 				break;
 			case 6: // Create character
-				gluLogin_CharacterCreation(dword_5999C0);
+				gluLogin_CreateCharacter(dword_5999C0);
 				break;
 			case 7: // Delete character
-				gluLogin_Exit(dword_5999C0);
+				gluLogin_DeleteCharacter(dword_5999C0);
 				return 1;
 			default: // Cancel
 				return DLG_SwishOut(dlg);
@@ -5406,7 +5406,7 @@ bool __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 				return genericDlgInteract(dlg, evt);
 			}
 			waitLoopCntd(87, dlg);
-			gluLogin_CharacterCreation(dword_5999C0);
+			gluLogin_CreateCharacter(dword_5999C0);
 			return 1;
 		case USER_INIT:
 			gluLogin_CustomCtrlID_(dlg);
