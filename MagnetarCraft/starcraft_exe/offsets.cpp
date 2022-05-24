@@ -2461,7 +2461,7 @@ DECL_FUNC(int (__stdcall*sub_422600)(int, char), sub_422600, 0x422600);
 DECL_FUNC(int (__stdcall*sub_4228E0)(int), sub_4228E0, 0x4228e0);
 DECL_FUNC(int(*nullsub_9)(), nullsub_9, 0x422a40);
 DECL_FUNC(int(*sub_422A50)(), sub_422A50, 0x422a50);
-signed int sub_422A90(struct_a1_1 *a1, Position *a2) {
+signed int sub_422A90(int a1, Position *a2) {
     int address = 0x422a90;
     signed result_;
     __asm {
@@ -2857,10 +2857,27 @@ DECL_FUNC(int(*sub_42B530)(), sub_42B530, 0x42b530);
 DECL_FUNC(int (__stdcall*sub_42B570)(int), sub_42B570, 0x42b570);
 DECL_FUNC(int(*sub_42B5D0)(), sub_42B5D0, 0x42b5d0);
 DECL_FUNC(int(*SAI_PathCreate_Sub1_1)(), SAI_PathCreate_Sub1_1, 0x42b620);
-DECL_FUNC(int (__stdcall*SAI_ContoursCreate_1)(int, int, int), SAI_ContoursCreate_1, 0x42b760);
+DECL_FUNC(signed int (__stdcall*SAI_ContoursCreate_1)(int a1, int *a2, int *a3), SAI_ContoursCreate_1, 0x42b760);
 DECL_FUNC(int (__cdecl*PtFuncCompare)(const void *, const void *), PtFuncCompare, 0x42b850);
-DECL_FUNC(int(*SAI_ContoursRealloc)(), SAI_ContoursRealloc, 0x42b8a0);
-DECL_FUNC(int(*SAI_ContoursCreate_2)(), SAI_ContoursCreate_2, 0x42b9f0);
+void SAI_ContoursRealloc(int a1) {
+    int address = 0x42b8a0;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+    }
+}
+BOOL SAI_ContoursCreate_2(SaiContourHub *a1) {
+    int address = 0x42b9f0;
+    BOOL result_;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 BOOL sai_contoursCreate_Cleanup(SaiContour **a1) {
     int address = 0x42bbd0;
     BOOL result_;
@@ -3969,7 +3986,19 @@ DECL_FUNC(int (__stdcall*AI_GetHighTemplarsForSummon)(int, int, int), AI_GetHigh
 DECL_FUNC(int(*AI_GetHydraliskForMorph)(), AI_GetHydraliskForMorph, 0x437570);
 DECL_FUNC(int(*AI_GetMutaliskForMorph)(), AI_GetMutaliskForMorph, 0x4375f0);
 DECL_FUNC(int(*GetTurretPosition)(), GetTurretPosition, 0x437670);
-DECL_FUNC(int(*GetBunkerPosition)(), GetBunkerPosition, 0x4376f0);
+signed int GetBunkerPosition(int a1, Position *a2) {
+    int address = 0x4376f0;
+    signed result_;
+    __asm {
+        xor ebx, ebx
+        xor esi, esi
+        mov ebx, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*populateAttackRegions)(int, int, int, int, int), populateAttackRegions, 0x437770);
 DECL_FUNC(int (__stdcall*sub_4379B0)(int, int), sub_4379B0, 0x4379b0);
 DECL_FUNC(int (__stdcall*InitRegionCaptains)(int), InitRegionCaptains, 0x437a70);
@@ -10840,16 +10869,13 @@ int SAI_PathCreate_Sub3_1(int a1, SAI_Paths *a2) {
 }
 DECL_FUNC(int(*sub_483BD0)(), sub_483BD0, 0x483bd0);
 DECL_FUNC(__int16 (__thiscall*CreateUIUnreachableRegion)(SAI_Paths *this_), CreateUIUnreachableRegion, 0x483c00);
-int SAI_PathCreate_Sub1(MegatileFlags *a1) {
+void SAI_PathCreate_Sub1(MegatileFlags *a1) {
     int address = 0x483d20;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__cdecl*freeSaiPaths)(), freeSaiPaths, 0x483dd0);
 int SAI_PathCreate_Sub3_0(SAI_Paths *a1, Position a2, MapSize size_) {
@@ -15615,12 +15641,12 @@ DECL_FUNC(int(*sub_4B7D10)(), sub_4B7D10, 0x4b7d10);
 DECL_FUNC(int (__thiscall*sub_4B7DA0)(dialog *this_), sub_4B7DA0, 0x4b7da0);
 DECL_FUNC(int(*sub_4B7DE0)(), sub_4B7DE0, 0x4b7de0);
 DECL_FUNC(int(*DestroyGameNodes)(), DestroyGameNodes, 0x4b7df0);
-u32 sub_4B7E10(dialog *a1) {
+u32 sub_4B7E10(dialog *dlg) {
     int address = 0x4b7e10;
     u32 result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
         mov result_, eax
     }
