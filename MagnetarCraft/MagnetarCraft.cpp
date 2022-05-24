@@ -11,6 +11,7 @@
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 #include "patching/patching.h"
+#include "MPQDraftPlugin.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
@@ -339,6 +340,128 @@ std::string LocateStarCraft()
 
 const char* CONFIG_FILE = "MagnetarCraft.yml";
 
+class Library
+{
+public:
+	Library(const char* plugin_path)
+	{
+		plugin_module = LoadLibraryA(plugin_path);
+	}
+
+	~Library()
+	{
+		if (plugin_module)
+		{
+			FreeLibrary(plugin_module);
+		}
+	}
+
+	template <typename T>
+	T GetProcAddress(const char* proc_name)
+	{
+		if (plugin_module)
+		{
+			return (T)::GetProcAddress(plugin_module, proc_name);
+		}
+
+		return nullptr;
+	}
+
+private:
+	HMODULE plugin_module;
+};
+
+class PluginServer : public IMPQDraftServer
+{
+public:
+	PluginServer();
+	~PluginServer();
+
+	BOOL SetModules(IN MPQDRAFTPLUGINMODULE* pModules, DWORD nModules);
+
+	virtual BOOL WINAPI GetPluginModule(DWORD dwPluginID, DWORD dwModuleID, LPSTR lpszFileName);
+
+private:
+	BOOL m_bReady;
+
+	DWORD m_nModules;
+	MPQDRAFTPLUGINMODULE* m_pModules;
+};
+
+PluginServer::PluginServer()
+{
+	m_bReady = FALSE;
+
+	m_nModules = 0;
+	m_pModules = NULL;
+}
+
+PluginServer::~PluginServer()
+{
+}
+
+BOOL PluginServer::SetModules(MPQDRAFTPLUGINMODULE* pModules, DWORD nModules)
+{
+	m_nModules = nModules;
+	m_pModules = pModules;
+
+	m_bReady = TRUE;
+
+	return TRUE;
+}
+
+BOOL PluginServer::GetPluginModule(IN DWORD dwPluginID, IN DWORD dwModuleID, OUT LPSTR lpszFileName)
+{
+	if (!lpszFileName)
+		return FALSE;
+
+	if (!m_bReady)
+		return FALSE;
+
+	for (DWORD iCurModule = 0; iCurModule < m_nModules; iCurModule++)
+	{
+		if ((m_pModules[iCurModule].dwComponentID == dwPluginID) &&
+			(m_pModules[iCurModule].dwModuleID == dwModuleID))
+		{
+			strcpy(lpszFileName, m_pModules[iCurModule].szModuleFileName);
+
+			return TRUE;
+		}
+	}
+	return FALSE;
+}
+
+PluginServer plugin_server;
+
+void LoadMpqDraftPlugins(YAML::Node& config)
+{
+
+	for (auto mpqdraft_plugin : config["mpqdraft-plugins"])
+	{
+		std::string plugin_path = mpqdraft_plugin.as<std::string>();
+		Library plugin_module = Library(plugin_path.c_str());
+
+		typedef BOOL(WINAPI* plugin_getter_t)(IMPQDraftPlugin** lppMPQDraftPlugin);
+		plugin_getter_t plugin_getter = plugin_module.GetProcAddress<plugin_getter_t>("GetMPQDraftPlugin");
+
+		if (plugin_getter)
+		{
+			IMPQDraftPlugin* plugin;
+			plugin_getter(&plugin);
+
+			if (plugin->ReadyForPatch())
+			{
+				// plugin->GetModules()
+				plugin->InitializePlugin(&plugin_server);
+			}
+		}
+		else
+		{
+			// TODO: warn
+		}
+	}
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
 	bool starcraft_root_manually_selected = false;
@@ -401,6 +524,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
+	LoadMpqDraftPlugins(config);
 
 	ScrSize.right = SCREEN_WIDTH;
 	ScrSize.bottom = SCREEN_HEIGHT;
