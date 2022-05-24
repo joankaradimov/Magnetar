@@ -10,11 +10,9 @@ combines its code and data with MagnetarCraft's own code.
 ## Installation
 
 1. You'll need to have StarCraft 1.16.1 installed.
-
-1. You'll find the lastest release
+1. You'll find the lastest release\
    [here](https://github.com/joankaradimov/MagnetarCraft/releases).
    Download it and extract it to a directory of your choice.
-
 1. TODO: add more instructions once version 0.2 is released
 
 ## Hacking
@@ -31,10 +29,9 @@ git clone --recurse-submodules git@github.com:joankaradimov/MagnetarCraft.git
 Install Visual Studio with support for `C++ CMake tools for Windows`. At the
 time of writing both VS2019 and VS2022 were able to compile the project.
 
-- To open the project in VS:
+- To open the project in VS:\
   In visual Studio hit `File -> Open -> Folder` and select the root folder.
-
-- To run/debug the project:
+- To run/debug the project:\
   Expand the `MagnetarCraft` directory, right click on any `.cpp` file under
   it and select `Set as Startup Item`.
 
@@ -53,38 +50,24 @@ Other limitations, that will prevent the project from building:
 
 ### Directory organization
 
-- [MagnetarCraft](https://github.com/joankaradimov/MagnetarCraft/tree/master/MagnetarCraft)
+Below is an overview of the components of the project. Some of the
+subdirectories have a README of their own. See those for more details.
 
+- [MagnetarCraft](https://github.com/joankaradimov/MagnetarCraft/tree/master/MagnetarCraft)\
   The executable file and entry point for the project.
-
-- [MagnetarDat](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)
-
+- [MagnetarDat](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)\
   Files that are included in the MPQ used by the project.
-
-- [Magnetorm](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)
-
+- [Magnetorm](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)\
   A wrapper (and maybe one day a reimplementation) of `storm.dll`.
-
-- [idb-export](https://github.com/joankaradimov/MagnetarCraft/tree/master/idb-export)
-
+- [idb-export](https://github.com/joankaradimov/MagnetarCraft/tree/master/idb-export)\
   Anything related to IDA Pro goes here.
-
-- [MpqBuilder](https://github.com/joankaradimov/MagnetarCraft/tree/master/MpqBuilder)
-
+- [MpqBuilder](https://github.com/joankaradimov/MagnetarCraft/tree/master/MpqBuilder)\
   A tool that uses StormLib and is used by the project's cmake scripts to
   generate MPQ files
-
-- [yaml-cpp](https://github.com/jbeder/yaml-cpp)
-
+- [yaml-cpp](https://github.com/jbeder/yaml-cpp)\
   A C++ library for parsing and emitting YAML.
-
-- [StormLib](https://github.com/ladislav-zezula/StormLib)
-
+- [StormLib](https://github.com/ladislav-zezula/StormLib)\
   [Ladislav Zezula](https://github.com/ladislav-zezula)'s library for working
   with Blizzard MPQ archives.
-
-- [MemoryModule](https://github.com/fancycode/MemoryModule)
-
+- [MemoryModule](https://github.com/fancycode/MemoryModule)\
   Library for loading DLL files from memory.
-
-Some of the subdirectories have a README of their own. See it for more details.
