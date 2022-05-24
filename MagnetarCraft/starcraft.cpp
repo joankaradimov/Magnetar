@@ -6827,11 +6827,56 @@ void loadMenu_gluChat_()
 
 FAIL_STUB_PATCH(loadMenu_gluChat);
 
+void gluLoad_CustomCtrlID_(dialog* a1)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		gluLoad_List,
+		Menu_Generic_Button,
+	};
+
+	DlgSwooshin(3, &commonSwishControllers[23], a1, 0);
+	registerMenuFunctions_(functions, a1, sizeof(functions));
+}
+
+FAIL_STUB_PATCH(gluLoad_CustomCtrlID);
+
+bool __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			DLG_SwishIn(dlg);
+			break;
+		case USER_ACTIVATE:
+			if (LastControlID == 7)
+			{
+				DeleteSavedGame();
+				return 1;
+			}
+			return DLG_SwishOut(dlg);
+		case USER_INIT:
+			gluLoad_CustomCtrlID_(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluLoad_Main);
+
 void loadMenu_gluLoad_()
 {
 	glu_load_Dlg = loadAndInitFullMenuDLG_("rez\\gluLoad.bin");
 
-	switch (gluLoadBINDlg_(glu_load_Dlg, gluLoad_Main))
+	switch (gluLoadBINDlg_(glu_load_Dlg, gluLoad_Main_))
 	{
 	case 4:
 		CMDRECV_LoadGame(byte_599DA4);
