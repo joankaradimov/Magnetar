@@ -3635,6 +3635,37 @@ FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
 MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
 
+void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
+{
+	SAI_PathCreate_Sub1_0();
+
+	for (int i = 0; i < map_size.height; i++)
+	{
+		for (int j = 0; j < map_size.width; j++)
+		{
+			MegatileFlags flags = megatile_flags[i * map_size.width + j];
+			if ((flags & (REAL_CREEP | MORE_THAN_12_WALKABLE)) == 0)
+			{
+				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+			}
+			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == 0)
+			{
+				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+			}
+			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == (MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE))
+			{
+				SAIPathing->mapTileRegionId[i][j] = SAF_HighGround;
+			}
+			else
+			{
+				SAIPathing->mapTileRegionId[i][j] = ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) != (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE)) + 8186;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
+
 void SAI_PathCreate_Sub4_(SAI_Paths* a1)
 {
 	a1->contours = (SaiContourHub*)SMemAlloc(56, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 129, 0);
@@ -3652,7 +3683,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 {
 	AllocateSAI_Paths_();
 
-	SAI_PathCreate_Sub1(a1);
+	SAI_PathCreate_Sub1_(a1);
 
 	PathCreateRelated v5;
 	v5.position.x = 0;
