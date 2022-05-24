@@ -50,3 +50,41 @@ Other limitations, that will prevent the project from building:
   - There might be small amounts of hand-written MASM assembly too.
   - The `cmake` build scripts only work with the MSVC toolchain.
   - The `MemoryModule` library will need some work to function on Windows.
+
+### Directory organization
+
+- [MagnetarCraft](https://github.com/joankaradimov/MagnetarCraft/tree/master/MagnetarCraft)
+
+  The executable file and entry point for the project.
+
+- [MagnetarDat](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)
+
+  Files that are included in the MPQ used by the project.
+
+- [Magnetorm](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)
+
+  A wrapper (and maybe one day a reimplementation) of `storm.dll`.
+
+- [idb-export](https://github.com/joankaradimov/MagnetarCraft/tree/master/idb-export)
+
+  Anything related to IDA Pro goes here.
+
+- [MpqBuilder](https://github.com/joankaradimov/MagnetarCraft/tree/master/MpqBuilder)
+
+  A tool that uses StormLib and is used by the project's cmake scripts to
+  generate MPQ files
+
+- [yaml-cpp](https://github.com/jbeder/yaml-cpp)
+
+  A C++ library for parsing and emitting YAML.
+
+- [StormLib](https://github.com/ladislav-zezula/StormLib)
+
+  [Ladislav Zezula](https://github.com/ladislav-zezula)'s library for working
+  with Blizzard MPQ archives.
+
+- [MemoryModule](https://github.com/fancycode/MemoryModule)
+
+  Library for loading DLL files from memory.
+
+Some of the subdirectories have a README of their own. See it for more details.
