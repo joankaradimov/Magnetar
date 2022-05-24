@@ -1,6 +1,6 @@
 #pragma once
 
-#include "starcraft_exe_types.h"
+#include "types.h"
 
 extern void (__cdecl*type_info_destructor_dealloc)(void *location);
 extern int(*HiddenCtrl_Destructor)();

@@ -4,7 +4,7 @@
 #include <Windows.h>
 #include <windowsx.h>
 
-#include "starcraft_exe.h"
+#include "starcraft_exe/offsets.h"
 
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;

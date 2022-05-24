@@ -2,7 +2,7 @@
 #include <ddraw.h>
 #include <process.h>
 #include <time.h>
-#include "starcraft.h"
+#include "starcraft_exe/offsets.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
 #include "patching/patching.h"

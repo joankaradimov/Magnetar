@@ -423,11 +423,11 @@ typedef __int8 _TBYTE;
 
 HEADER_TEMPLATE = """#pragma once
 
-#include "starcraft_exe_types.h"
+#include "types.h"
 
 {declarations}"""
 
-CPP_TEMPLATE = """#include "starcraft_exe_types.h"
+CPP_TEMPLATE = """#include "types.h"
 
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
@@ -449,13 +449,13 @@ def export(root_dir):
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
-    with open(root_dir + 'starcraft_exe.cpp', 'wt') as cpp_file:
+    with open(root_dir + 'starcraft_exe/offsets.cpp', 'wt') as cpp_file:
         cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
 
-    with open(root_dir + 'starcraft_exe.h', 'wt') as header_file:
+    with open(root_dir + 'starcraft_exe/offsets.h', 'wt') as header_file:
         header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
 
-    with open(root_dir + 'starcraft_exe_types.h', 'wt') as types_header_file:
+    with open(root_dir + 'starcraft_exe/types.h', 'wt') as types_header_file:
         content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 

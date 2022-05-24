@@ -13,9 +13,9 @@ add_executable(MagnetarCraft WIN32
 	patching/FailStubPatch.cpp
 	patching/FunctionPatch.cpp
 	patching/NopPatch.cpp
+	starcraft_exe/offsets.cpp
 	MagnetarCraft.cpp
 	starcraft.cpp
-	starcraft_exe.cpp
 )
 
 include_directories(${YAML_CPP_INCLUDE_DIRS})

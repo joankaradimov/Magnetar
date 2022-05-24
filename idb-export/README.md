@@ -13,15 +13,15 @@ pointers. This preserves the syntax of the original function/data usage.
 ## Details
 
 The script generates 3 files:
-    - starcraft_exe_types.h
+    - starcraft_exe/types.h
       A header file containing types from the database. This also includes some
       DirectX and Win32 headers and defines some hard-coded macros.
 
-    - starcraft_exe.h
+    - starcraft_exe/offsets.h
       A header file containing the declarations of pointers and references that
       use addresses in Starcraft.exe.
 
-    - starcraft_exe.cpp
+    - starcraft_exe/offsets.cpp
       A source file that initializes the data in starcraft_exe.h
 
 ## Usage
