@@ -3144,7 +3144,7 @@ void load_statbtn_BIN_()
 
 	_snprintf(buff, MAX_PATH, "rez\\statbtn%c.bin", InReplay ? 'n' : race_lowercase_char_id[consoleIndex]);
 	current_dialog = LoadDialog(buff);
-	InitializeDialog(current_dialog, statbtn_DLG_Interact_);
+	InitializeDialog_(current_dialog, statbtn_DLG_Interact_);
 }
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
