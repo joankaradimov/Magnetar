@@ -1636,7 +1636,7 @@ int LoadMap_()
 	return 0;
 }
 
-FUNCTION_PATCH(LoadMap, LoadMap_);
+FAIL_STUB_PATCH(LoadMap);
 
 UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_512778,
@@ -1778,7 +1778,7 @@ int sub_4EEFD0_()
 	ResetDATFiles();
 	resetOrdersUnitsDAT();
 	createUnitBuildingSpriteValidityArray();
-	if (loadGameFileHandle || LoadMap())
+	if (loadGameFileHandle || LoadMap_())
 	{
 		load_gluMinimap_();
 		memcpy(palette, stru_59C6C0, sizeof(palette));
