@@ -3162,8 +3162,7 @@ void setup_HUD_()
 	LoadConsoleImage();
 	if (!SBmpLoadImage("game\\thpbar.pcx", 0, byte_66FBE4, 19, 0, 0, 0))
 	{
-		int v0 = SErrGetLastError();
-		SysWarn_FileNotFound("game\\thpbar.pcx", v0);
+		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
 	}
 	load_statfluf_BIN();
 	loadPortdata_BINDLG();
