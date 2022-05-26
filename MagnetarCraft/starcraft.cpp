@@ -2800,6 +2800,8 @@ void DoGameLoop_(MenuPosition a1)
 
 FAIL_STUB_PATCH(DoGameLoop);
 
+void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
+
 void GameLoop_State_(MenuPosition a2)
 {
 	DWORD v10 = GetTickCount() + 2000;
@@ -2843,7 +2845,7 @@ void GameLoop_State_(MenuPosition a2)
 				GameLoop_(a2);
 			}
 			SetInGameLoop(1);
-			BWFXN_ExecuteGameTriggers(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
+			BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
 			SetInGameLoop(0);
 			if (InReplay)
 			{
@@ -9321,7 +9323,7 @@ void executeGameTrigger_(TriggerList* a1)
 
 FAIL_STUB_PATCH(executeGameTrigger);
 
-void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
+void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 {
 	if (!IS_GAME_PAUSED || byte_6509B4)
 	{
@@ -9360,4 +9362,4 @@ void __stdcall BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 	}
 }
 
-FUNCTION_PATCH(BWFXN_ExecuteGameTriggers, BWFXN_ExecuteGameTriggers_);
+FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers);
