@@ -5244,6 +5244,8 @@ bool sub_4B2810_(dialog* a1)
 
 FAIL_STUB_PATCH(sub_4B2810);
 
+// TODO: reimplement DlgSwooshin -- all of its calls are moved away from StarCraft.exe
+
 void gluCmpgn_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
