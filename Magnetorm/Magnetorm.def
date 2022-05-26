@@ -133,7 +133,7 @@ EXPORTS
     SBmpDecodeImage = StormLibBmpDecodeImage @321
     SBmpLoadImage@28 = StormLibBmpLoadImage @323
     SBmpSaveImage = StormLibBmpSaveImage @324
-    SBmpAllocLoadImage = StormLibBmpAllocLoadImage @325
+    SBmpAllocLoadImage@32 = StormLibBmpAllocLoadImage @325
     SBmpSaveImageEx = StormLibBmpSaveImageEx @326
 
     SCodeCompile = StormLibCodeCompile @331
