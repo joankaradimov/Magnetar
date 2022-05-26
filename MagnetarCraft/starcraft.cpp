@@ -1897,7 +1897,7 @@ signed int GameInit_()
 	return 0;
 }
 
-FUNCTION_PATCH(GameInit, GameInit_);
+FAIL_STUB_PATCH(GameInit);
 FAIL_STUB_PATCH(sub_4CD770);
 FAIL_STUB_PATCH(sub_4A13B0);
 
