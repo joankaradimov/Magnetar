@@ -3190,7 +3190,7 @@ void setup_HUD_()
 	CanUpdateStatDataDialog = 1;
 }
 
-FUNCTION_PATCH(setup_HUD, setup_HUD_);
+FAIL_STUB_PATCH(setup_HUD);
 
 template <int PIXEL_STRIDE>
 void minimapVisionUpdateMegatile(int flags, int x, int y)
