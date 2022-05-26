@@ -1720,7 +1720,7 @@ void load_gluMinimap_()
 
 FAIL_STUB_PATCH(load_gluMinimap);
 
-void __cdecl InitializeSpriteArray_()
+void InitializeSpriteArray_()
 {
 	LoadGameData_(spritesDat, "arr\\sprites.dat");
 	memset(SpriteTable, 0, sizeof(SpriteTable));
@@ -1750,7 +1750,7 @@ void __cdecl InitializeSpriteArray_()
 	}
 }
 
-FUNCTION_PATCH(InitializeSpriteArray, InitializeSpriteArray_);
+FAIL_STUB_PATCH(InitializeSpriteArray);
 
 int sub_4EEFD0_()
 {
@@ -1758,7 +1758,7 @@ int sub_4EEFD0_()
 	sub_49BB90();
 	initMapData_();
 	InitializePresetImageArrays();
-	InitializeSpriteArray();
+	InitializeSpriteArray_();
 	InitializeThingyArray();
 	LoadGameData_(flingyDat, "arr\\flingy.dat");
 	memset(dword_63FEE0, 0, 76u);
@@ -1837,7 +1837,7 @@ signed int GameInit_()
 	dword_59CC90 = 6;
 	initMapData_();
 	InitializePresetImageArrays();
-	InitializeSpriteArray();
+	InitializeSpriteArray_();
 	InitializeThingyArray();
 	LoadGameData_(flingyDat, "arr\\flingy.dat");
 	memset(dword_63FEE0, 0, 76u);
