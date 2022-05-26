@@ -5370,7 +5370,7 @@ void gluLogin_CustomCtrlID_(dialog* dlg)
 		genericLabelInteract,
 	};
 
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 	DlgSwooshin(3, &commonSwishControllers[5], dlg, 0);
 }
 
@@ -5584,7 +5584,7 @@ void gluJoin_CustomCtrlID_(dialog* dlg)
 	};
 
 	DlgSwooshin(4, &commonSwishControllers[18], dlg, 0);
-	registerMenuFunctions(functions, dlg, sizeof(functions), 0);
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
 FAIL_STUB_PATCH(gluJoin_CustomCtrlID);
