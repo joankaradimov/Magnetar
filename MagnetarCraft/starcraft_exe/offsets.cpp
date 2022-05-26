@@ -849,7 +849,7 @@ DECL_FUNC(int (__stdcall*sub_413DB0)(int, int), sub_413DB0, 0x413db0);
 DECL_FUNC(int (__stdcall*sub_413F20)(int), sub_413F20, 0x413f20);
 DECL_FUNC(int(*sub_413F50)(), sub_413F50, 0x413f50);
 DECL_FUNC(int(*sub_413F70)(), sub_413F70, 0x413f70);
-DECL_FUNC(int (__stdcall*setCreepRelationalData)(int a1, int a2, int (__stdcall *a3)(TileID *, _DWORD, _DWORD, TileID *, _DWORD), int a4), setCreepRelationalData, 0x413fa0);
+DECL_FUNC(void (__stdcall*setCreepRelationalData)(int a1, int a2, int (__stdcall *a3)(TileID *, _DWORD, _DWORD, TileID *, _DWORD), int a4), setCreepRelationalData, 0x413fa0);
 DECL_FUNC(signed int (__stdcall*runCreepRandomizer_notePossibleDesync)(TileID *a1, int a2, int a3, TileID *a4, int a5), runCreepRandomizer_notePossibleDesync, 0x4140a0);
 DECL_FUNC(grpHead *(__thiscall*readCreepFile)(char *grpFile), readCreepFile, 0x414100);
 int sub_414180(UnitType a1, int a2, int a3, int a4, int a5, int a6) {
@@ -876,8 +876,6 @@ DECL_FUNC(int (__stdcall*getCreepAtAndSet)(int, int, int, int, int), getCreepAtA
 DECL_FUNC(int (__stdcall*getNumSurroundingCreepTiles)(int, int), getNumSurroundingCreepTiles, 0x414290);
 DECL_FUNC(bool (__stdcall*BWFXN_CreepManagementCB)(int, WORD *, int, int, int *), BWFXN_CreepManagementCB, 0x414440);
 DECL_FUNC(int(*sub_4144C0)(), sub_4144C0, 0x4144c0);
-DECL_FUNC(int(*sub_4144E0)(), sub_4144E0, 0x4144e0);
-DECL_FUNC(int(*sub_414520)(), sub_414520, 0x414520);
 DECL_FUNC(int (__stdcall*sub_414560)(int), sub_414560, 0x414560);
 DECL_FUNC(int(*sub_414680)(), sub_414680, 0x414680);
 DECL_FUNC(int (__stdcall*ApplyCreepAtLocationFromUnitType)(int, int, int), ApplyCreepAtLocationFromUnitType, 0x4148f0);
@@ -2110,7 +2108,19 @@ DECL_FUNC(int(*DoBltUsingMask)(), DoBltUsingMask, 0x41d420);
 DECL_FUNC(int(*BWFXN_UpdateBltMasks)(), BWFXN_UpdateBltMasks, 0x41d470);
 DECL_FUNC(int(*TransDestroy)(), TransDestroy, 0x41d540);
 DECL_FUNC(int(*updateConsoleImage)(), updateConsoleImage, 0x41d5a0);
-DECL_FUNC(int (__stdcall*BltMask_Constructor)(int, int), BltMask_Constructor, 0x41d640);
+BltMask *BltMask_Constructor(Bitmap *a1, char *a2, char *a3) {
+    int address = 0x41d640;
+    BltMask * result_;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*realizePalette)(), realizePalette, 0x41d710);
 DECL_FUNC(int (__stdcall*sub_41D780)(int, int), sub_41D780, 0x41d780);
 DECL_FUNC(int (__stdcall*drawVertLine)(__int16, __int16), drawVertLine, 0x41d7d0);
@@ -6730,7 +6740,7 @@ int isMorphing(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_45CD50)(int, int, int, int, int), sub_45CD50, 0x45cd50);
+DECL_FUNC(int (__stdcall*sub_45CD50)(int a1, int a2, int, int, int), sub_45CD50, 0x45cd50);
 void updateNewUnitVision(UnitType a0, int pos_x, int pos_y) {
     int address = 0x45ce90;
     __asm {
@@ -16545,7 +16555,7 @@ DECL_FUNC(int(*sub_4C3750)(), sub_4C3750, 0x4c3750);
 DECL_FUNC(int(*destroyGameHUD)(), destroyGameHUD, 0x4c3780);
 DECL_FUNC(void (__cdecl*updateSelectedUnitData)(), updateSelectedUnitData, 0x4c38b0);
 DECL_FUNC(void (__cdecl*sub_4C3930)(), sub_4C3930, 0x4c3930);
-DECL_FUNC(int(*LoadConsoleImage)(), LoadConsoleImage, 0x4c3950);
+DECL_FUNC(void (__cdecl*LoadConsoleImage)(), LoadConsoleImage, 0x4c3950);
 DECL_FUNC(int(*load_Stat_txt)(), load_Stat_txt, 0x4c3a20);
 DECL_FUNC(int(*sub_4C3B10)(), sub_4C3B10, 0x4c3b10);
 signed int updateBuildingLandUnitSelection(CUnit *a2) {
@@ -17511,7 +17521,17 @@ DECL_FUNC(int (__fastcall*LogCallStack)(char), LogCallStack, 0x4d0db0);
 DECL_FUNC(LONG (__stdcall*TopLevelExceptionFilter)(struct _EXCEPTION_POINTERS *ExceptionInfo), TopLevelExceptionFilter, 0x4d0f70);
 DECL_FUNC(int (__stdcall*CreateExceptionFilter)(int), CreateExceptionFilter, 0x4d1120);
 DECL_FUNC(int (__thiscall*IsOutsideGameScreen)(int a2), IsOutsideGameScreen, 0x4d1140);
-DECL_FUNC(int(*setHudBeginY)(), setHudBeginY, 0x4d11a0);
+Bitmap *setHudBeginY(Bitmap *result) {
+    int address = 0x4d11a0;
+    Bitmap * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4D1210)(), sub_4D1210, 0x4d1210);
 DECL_FUNC(int(*sub_4D1220)(), sub_4D1220, 0x4d1220);
 DECL_FUNC(int(*sub_4D1230)(), sub_4D1230, 0x4d1230);
@@ -21179,7 +21199,7 @@ DECL_FUNC(bool (__fastcall*wait_BINDLG)(dialog *dlg, dlgEvent *evt), wait_BINDLG
 DECL_FUNC(int(*sub_4F5B70)(), sub_4F5B70, 0x4f5b70);
 DECL_FUNC(int(*load_wait)(), load_wait, 0x4f5c50);
 DECL_FUNC(bool (__fastcall*okcancel_Interact)(dialog *dlg, struct dlgEvent *evt), okcancel_Interact, 0x4f5cb0);
-DECL_FUNC(void (__stdcall*loadOKCancelBIN)(HANDLE phFile), loadOKCancelBIN, 0x4f5d70);
+DECL_FUNC(int (__stdcall*loadOKCancelBIN)(HANDLE phFile), loadOKCancelBIN, 0x4f5d70);
 int loadOKBIN(int a1, const char *a2, HANDLE phFile) {
     int address = 0x4f5ee0;
     int result_;
@@ -21361,7 +21381,17 @@ void gluRdyZ_CustomCtrlID(dialog *dlg) {
         call address
     }
 }
-DECL_FUNC(int(*RdyZFrame)(), RdyZFrame, 0x4f70f0);
+void *RdyZFrame(dialog *a1) {
+    int address = 0x4f70f0;
+    void * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(bool (__fastcall*gluRdyZ_BINDLG_Loop)(dialog *dlg, struct dlgEvent *evt), gluRdyZ_BINDLG_Loop, 0x4f7150);
 DECL_FUNC(void(*loadMenu_gluRdyZ)(void), loadMenu_gluRdyZ, 0x4f71f0);
 void gluRdyT_CustomCtrlID(dialog *a1) {
@@ -21393,7 +21423,17 @@ void gluRdyP_CustomCtrlID(dialog *dlg) {
         call address
     }
 }
-DECL_FUNC(int(*rdyPFrame)(), rdyPFrame, 0x4f77b0);
+void *rdyPFrame(dialog *a1) {
+    int address = 0x4f77b0;
+    void * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(bool (__fastcall*gluRdyP_BINDLG_Loop)(dialog *dlg, dlgEvent *evt), gluRdyP_BINDLG_Loop, 0x4f7810);
 DECL_FUNC(void(*loadMenu_gluRdyP)(void), loadMenu_gluRdyP, 0x4f78b0);
 void PlayMovieWithIntro(Cinematic a1) {
@@ -22315,7 +22355,7 @@ char(&aGameCS)[] = * ((decltype(&aGameCS)) 0x502a70);
 char(&aConsole_pcx)[12] = * ((decltype(&aConsole_pcx)) 0x502a7c);
 char(&aStarcraftSw_64)[] = * ((decltype(&aStarcraftSw_64)) 0x502a88);
 char(&aRezWait_bin)[] = * ((decltype(&aRezWait_bin)) 0x502aa8);
-char(&aRezOkcancel_bi)[] = * ((decltype(&aRezOkcancel_bi)) 0x502ab8);
+char(&a1)[] = * ((decltype(&a1)) 0x502ab8);
 char(&aRezOk_bin)[] = * ((decltype(&aRezOk_bin)) 0x502acc);
 char(&asc_502AD8)[] = * ((decltype(&asc_502AD8)) 0x502ad8);
 char(&aStarcraftSw_63)[] = * ((decltype(&aStarcraftSw_63)) 0x502afc);
@@ -24247,7 +24287,7 @@ int& dword_5971E0 = * ((decltype(&dword_5971E0)) 0x5971e0);
 int(&player_left)[8] = * ((decltype(&player_left)) 0x5971e4);
 int& game_result_reported_maybe = * ((decltype(&game_result_reported_maybe)) 0x597204);
 CUnit *(&ClientSelectionGroup)[12] = * ((decltype(&ClientSelectionGroup)) 0x597208);
-int& MainBltMask = * ((decltype(&MainBltMask)) 0x597238);
+BltMask *& MainBltMask = * ((decltype(&MainBltMask)) 0x597238);
 char& byte_59723C = * ((decltype(&byte_59723C)) 0x59723c);
 char& ClientSelectionCount = * ((decltype(&ClientSelectionCount)) 0x59723d);
 Bitmap& GameScreenConsole = * ((decltype(&GameScreenConsole)) 0x597240);
