@@ -33,7 +33,7 @@ To fix this, `MagnetarCraft.exe` does this:
   - it uses 0x300000 as its base address
   - it allocates a lot of static memory in a separate segment, hoping that
     0x400000 will end up there
-  - it fails if 0x400000 is not in that segment and if there is insufficient
+  - it fails if 0x400000 is not in that segment or if there is insufficient
     space to fit `StarCraft.exe`
   - it calls `LoadLibrary` with `StarCraft.exe`, if all looks good
   - TODO: tell a bit about the role of the `MemoryModule` library
