@@ -3149,9 +3149,32 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void LoadConsoleImage_()
+{
+	char buff[260];
+	char v0 = InReplay ? 'n' : race_lowercase_char_id[consoleIndex];
+	_snprintf(buff, 0x104u, "game\\%c%s", v0, "console.pcx");
+
+	void* buffer;
+	int width;
+	int height;
+	if (!SBmpAllocLoadImage(buff, 0, &buffer, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(buff, SErrGetLastError());
+	}
+
+	GameScreenConsole.ht = height;
+	GameScreenConsole.wid = width;
+	GameScreenConsole.data = (u8*)buffer;
+	setHudBeginY(&GameScreenConsole);
+	MainBltMask = BltMask_Constructor(&GameScreenConsole, 0, 0);
+}
+
+FAIL_STUB_PATCH(LoadConsoleImage);
+
 void setup_HUD_()
 {
-	LoadConsoleImage();
+	LoadConsoleImage_();
 	if (!SBmpLoadImage("game\\thpbar.pcx", 0, byte_66FBE4, 19, 0, 0, 0))
 	{
 		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
