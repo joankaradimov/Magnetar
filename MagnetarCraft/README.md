@@ -10,8 +10,8 @@ mixes its own code with that of Starcraft.
 MagnetarCraft loads `Starcraft.exe` within its own address space and treats it
 like a DLL file. This is possible in part because both DLL and EXE files are
 in the PE format. The obvious problem is that `Starcraft.exe` exposes no
-symbols except its entry point. This is addressed (pun intended) by providing
-the symbols manually via C++ references to memory locations in `Starcraft.exe`.
+symbols except its entry point. This is addressed (pun intended) by faking
+symbols via C++ references to memory locations in `Starcraft.exe`.
 
 ## Symbols
 
