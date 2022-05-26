@@ -4178,64 +4178,27 @@ void initMapData_()
 	ZergCreepArray = location;
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
 	VX4Data = (vx4entry *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
-	HANDLE v4;
-	if (!SFileOpenFileEx(0, filename, 0, &v4))
+	VR4Data = (vr4entry*) fastFileRead_(0, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (!dword_5993AC)
 	{
-		int v11 = SErrGetLastError();
-		SysWarn_FileNotFound(filename, v11);
-		throw "Could not load tileset"; // TODO: better error reporting
+		memcpy(stru_6CEB40, palette, sizeof(PALETTEENTRY[256]));
+		sub_4BCD70(palette);
+		sub_4BDD60();
 	}
-	LONG v5 = SFileGetFileSize(v4, 0);
-	if (v5 == -1)
+	loadColorShiftTilesetImages(TILESET_NAMES[CurrentTileSet]);
+	sub_4BDDD0(TILESET_NAMES[CurrentTileSet]);
+	if (!dword_5993AC)
 	{
-		FileFatal(v4, GetLastError());
+		ScreenLayers[5].buffers = 1;
+		sub_480960();
+		InitializeGameLayer_();
 	}
-	else
-	{
-		int v0 = 0;
-		if (!v5)
-		{
-			v0 = 24;
-			SysWarn_FileNotFound(filename, 24);
-		}
-		vr4entry *v8 = (vr4entry *)SMemAlloc(v5, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, v0);
-		if (!SFileReadFile(v4, v8, v5, &bytes_read, 0))
-		{
-			DWORD last_error = GetLastError();
-			FileFatal(v4, last_error == 38 ? 24 : last_error);
-		}
-		else
-		{
-			if (bytes_read == v5)
-			{
-				SFileCloseFile(v4);
-				VR4Data = v8;
-				if (!dword_5993AC)
-				{
-					memcpy(stru_6CEB40, palette, sizeof(PALETTEENTRY[256]));
-					sub_4BCD70(palette);
-					sub_4BDD60();
-				}
-				loadColorShiftTilesetImages(TILESET_NAMES[CurrentTileSet]);
-				sub_4BDDD0(TILESET_NAMES[CurrentTileSet]);
-				if (!dword_5993AC)
-				{
-					ScreenLayers[5].buffers = 1;
-					sub_480960();
-					InitializeGameLayer_();
-				}
-				byte_658AC0 = 0;
-				dword_658AA4 = 0;
-				loadParallaxStarGfx_("star");
-				sub_47D660();
-			}
-			else
-			{
-				FileFatal(v4, 24);
-			}
-		}
-	}
+	byte_658AC0 = 0;
+	dword_658AA4 = 0;
+	loadParallaxStarGfx_("star");
+	sub_47D660();
 }
 
 FAIL_STUB_PATCH(initMapData);
