@@ -1451,6 +1451,8 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 	}
 }
 
+FAIL_STUB_PATCH(sub_413550);
+
 signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoader* chk_section_loader, void* chk_data, MapChunks* a4)
 {
 	ChunkNode v8;
