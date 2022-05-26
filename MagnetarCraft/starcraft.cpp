@@ -2046,15 +2046,7 @@ int LevelCheatInitGame_()
 	OpheliaEnabled = 0;
 	if (!playerName[0])
 	{
-		const char* v1;
-		if (*networkTable > 0x47u)
-		{
-			v1 = (char*)networkTable + networkTable[72];
-		}
-		else
-		{
-			v1 = empty_string;
-		}
+		const char* v1 = *networkTable > 0x47 ? (char*)networkTable + networkTable[72] : "";
 		SStrCopy(playerName, v1, 25);
 	}
 	if (CampaignIndex == MD_none)
