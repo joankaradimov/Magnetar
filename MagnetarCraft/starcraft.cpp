@@ -6599,12 +6599,20 @@ bool IsCursorWithin(pt cursor, rect rectangle)
 	return rectangle.left <= cursor.x && cursor.x <= rectangle.right && rectangle.top <= cursor.y && cursor.y <= rectangle.bottom;
 }
 
+void load_MinimapPreview_()
+{
+	minimap_Dlg = LoadDialog("rez\\minimappreview.bin");
+	InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract);
+}
+
+FAIL_STUB_PATCH(load_MinimapPreview);
+
 void gluChat_HoverMinimapPreview_(dialog* dlg)
 {
 	dword_5999DC = 0;
 	dword_5999D0 = 1;
 	dword_5993AC = 1;
-	load_MinimapPreview();
+	load_MinimapPreview_();
 	dword_5993AC = 0;
 	SetCallbackTimer(1, dlg, 1000, MinimapPreviewProc_);
 }
