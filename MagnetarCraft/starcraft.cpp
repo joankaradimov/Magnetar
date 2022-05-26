@@ -5077,7 +5077,7 @@ void updateActiveCampaignMission_()
 	}
 }
 
-FUNCTION_PATCH(updateActiveCampaignMission, updateActiveCampaignMission_);
+FAIL_STUB_PATCH(updateActiveCampaignMission);
 
 bool LoadCampaignWithCharacter_(Race race)
 {
@@ -7027,7 +7027,7 @@ void sub_4DBF80_()
 {
 	if (!multiPlayerMode && !dword_51CA1C)
 	{
-		updateActiveCampaignMission();
+		updateActiveCampaignMission_();
 		if (active_campaign_menu_entry && active_campaign_menu_entry->next_mission)
 		{
 			sub_4DBEE0_((ExpandedCampaignMenuEntry*) active_campaign_menu_entry + 1);
