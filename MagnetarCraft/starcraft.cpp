@@ -358,11 +358,11 @@ HANDLE magnetar_mpq;
 
 int InitializeArchiveHandles_()
 {
-	dword_51CD44 = 20;
-	dword_51CD48 = aInternalVersio;
-	dword_51CD4C = tstrFilename;
-	dword_51CD50 = broodat_mpq_path;
-	dword_51CD54 = archivename;
+	snet_version_data.size = sizeof(snet_version_data);
+	snet_version_data.versionstring = aInternalVersio;
+	snet_version_data.executablefile = tstrFilename;
+	snet_version_data.originalarchivefile = archive_files;
+	snet_version_data.patcharchivefile = patch_archive_file;
 	LoadMainModuleStringInfo_();
 
 	CHAR Filename[MAX_PATH];
@@ -377,13 +377,13 @@ int InitializeArchiveHandles_()
 		SysWarn_FileNotFound("Stardat.mpq", GetLastError());
 	}
 
-	if (!GetModuleFileNameA(hInst, archivename, MAX_PATH))
-		archivename[0] = 0;
-	char* v2 = strrchr(archivename, '\\');
+	if (!GetModuleFileNameA(hInst, patch_archive_file, MAX_PATH))
+		patch_archive_file[0] = 0;
+	char* v2 = strrchr(patch_archive_file, '\\');
 	if (v2)
 		*v2 = 0;
-	SStrNCat(archivename, "\\patch_rt.mpq", MAX_PATH);
-	if (!SFileOpenArchive(archivename, 7000u, 2u, &patch_rt_mpq))
+	SStrNCat(patch_archive_file, "\\patch_rt.mpq", MAX_PATH);
+	if (!SFileOpenArchive(patch_archive_file, 7000u, 2u, &patch_rt_mpq))
 	{
 		patch_rt_mpq = 0;
 	}
@@ -401,7 +401,7 @@ int InitializeArchiveHandles_()
 	AppAddExit_(DestroyFontKey);
 	if (!is_spawn)
 		InitializeCDArchives_(0, 1);
-	broodat_mpq_path[0] = 0;
+	archive_files[0] = 0;
 	if (!is_spawn)
 	{
 		CHAR archivename_[MAX_PATH];
@@ -413,8 +413,8 @@ int InitializeArchiveHandles_()
 		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
 		if (SFileOpenArchive(archivename_, 2500u, 2u, &broodat_mpq))
 		{
-			SStrCopy(broodat_mpq_path, archivename_, 0x208u);
-			SStrNCat(broodat_mpq_path, ";", 520);
+			SStrCopy(archive_files, archivename_, 0x208u);
+			SStrNCat(archive_files, ";", 520);
 		}
 		else
 		{
@@ -423,7 +423,7 @@ int InitializeArchiveHandles_()
 	}
 
 	DetectExpansionInstallation_();
-	return SStrNCat(broodat_mpq_path, Filename, 520);
+	return SStrNCat(archive_files, Filename, 520);
 }
 
 FAIL_STUB_PATCH(InitializeArchiveHandles);

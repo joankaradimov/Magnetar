@@ -2035,11 +2035,11 @@ void sub_41C2A0(tagRECT *a1) {
     }
 }
 DECL_FUNC(int(*RefreshCursorRect)(), RefreshCursorRect, 0x41c2c0);
-void updateDialog(dialog *a1) {
+void updateDialog(dialog *dlg) {
     int address = 0x41c400;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -15910,7 +15910,7 @@ unsigned __int8 ListBNGateways(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4BA600)(), sub_4BA600, 0x4ba600);
-DECL_FUNC(int (__stdcall*Provider_Constructor)(int, char *, char *source, int), Provider_Constructor, 0x4ba610);
+DECL_FUNC(int (__stdcall*Provider_Constructor)(int a1, char *a2, char *source, int a4), Provider_Constructor, 0x4ba610);
 DECL_FUNC(bool (__fastcall*GatewayListProc)(dialog *dlg, dlgEvent *evt), GatewayListProc, 0x4ba740);
 void selConn_connectionList_setSelection(dialog *a1) {
     int address = 0x4ba7e0;
@@ -24074,19 +24074,15 @@ unsigned int& initialSeed = * ((decltype(&initialSeed)) 0x51ca10);
 int& LastRandomNumber = * ((decltype(&LastRandomNumber)) 0x51ca14);
 int& randomCountsTotal = * ((decltype(&randomCountsTotal)) 0x51ca18);
 int& dword_51CA1C = * ((decltype(&dword_51CA1C)) 0x51ca1c);
-char(&broodat_mpq_path)[520] = * ((decltype(&broodat_mpq_path)) 0x51ca20);
+char(&archive_files)[520] = * ((decltype(&archive_files)) 0x51ca20);
 HANDLE& patch_rt_mpq = * ((decltype(&patch_rt_mpq)) 0x51cc28);
 HANDLE& broodat_mpq = * ((decltype(&broodat_mpq)) 0x51cc2c);
 void *& dword_51CC30 = * ((decltype(&dword_51CC30)) 0x51cc30);
 HANDLE& cd_archive_mpq = * ((decltype(&cd_archive_mpq)) 0x51cc34);
 HANDLE& stardat_mpq = * ((decltype(&stardat_mpq)) 0x51cc38);
 char(&tstrFilename)[260] = * ((decltype(&tstrFilename)) 0x51cc40);
-int& dword_51CD44 = * ((decltype(&dword_51CD44)) 0x51cd44);
-char *& dword_51CD48 = * ((decltype(&dword_51CD48)) 0x51cd48);
-char *& dword_51CD4C = * ((decltype(&dword_51CD4C)) 0x51cd4c);
-char *& dword_51CD50 = * ((decltype(&dword_51CD50)) 0x51cd50);
-char *& dword_51CD54 = * ((decltype(&dword_51CD54)) 0x51cd54);
-char(&archivename)[260] = * ((decltype(&archivename)) 0x51cd58);
+_SNETVERSIONDATA& snet_version_data = * ((decltype(&snet_version_data)) 0x51cd44);
+char(&patch_archive_file)[260] = * ((decltype(&patch_archive_file)) 0x51cd58);
 int& cdkey_encrypted_len = * ((decltype(&cdkey_encrypted_len)) 0x51ce5c);
 void *& cdkey_encrypted = * ((decltype(&cdkey_encrypted)) 0x51ce60);
 int& cdkeyowner_encrypted_len = * ((decltype(&cdkeyowner_encrypted_len)) 0x51ce64);
