@@ -29,7 +29,7 @@ BOOL __stdcall SNetSendMessage(unsigned int playerID, char* data, unsigned int d
 BOOL __stdcall SNetReceiveMessage(int* senderplayerid, BYTE** data, int* databytes);
 BOOL __stdcall SNetReceiveTurns(int a1, int arraysize, char** arraydata, unsigned int* arraydatabytes, DWORD* arrayplayerstatus);
 BOOL __stdcall SNetSendTurn(char* data, unsigned int databytes);
-BOOL __stdcall SNetEnumProviders(int(__stdcall* callback)(DWORD, DWORD, DWORD));
+BOOL __stdcall SNetEnumProviders(int minicaps, int(__stdcall* callback)(int, char*, char*, int));
 int __stdcall SNetGetLeaguePlayerName(int* curPlayerID, size_t nameSize);
 int __stdcall SNetGetLeagueName(int leagueID);
 BOOL __stdcall SNetInitializeDevice(int a1, int a2, int a3, int a4, int* a5);

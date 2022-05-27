@@ -6583,6 +6583,44 @@ void ConnSel_InitChildren_(dialog* a1)
 
 FAIL_STUB_PATCH(ConnSel_InitChildren);
 
+int getGameList_(dialog* dlg)
+{
+	NetMode.as_number = -1;
+	SNetDestroy();
+	if (hEvent && IsBattleNet)
+	{
+		ResetEvent(hEvent);
+		IsBattleNet = 0;
+	}
+	LOWORD(dword_66FF30) = 0;
+	dialog* v5 = getControlFromIndex(dlg, 6);
+	v5->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+
+	dialog* v8 = getControlFromIndex(dlg, 7);
+	v8->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+
+	dialog* v10 = getControlFromIndex(dlg, 13);
+	v10->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+
+	const char* v11 = get_GluAll_String((GluAllTblEntry) 0xB9);
+	dialog* v14 = getControlFromIndex(gluConn_Dlg, 13);
+	SStrCopy(v14->pszText, v11, 0xFFu);
+	if ((v14->lFlags & CTRL_UPDATE) == 0)
+	{
+		v14->lFlags = v14->lFlags | CTRL_UPDATE;
+		updateDialog(v14);
+	}
+	SNetEnumProviders(0, Provider_Constructor);
+	if (!byte_6D5BBC)
+	{
+		DLGMusicFade(MT_TITLE);
+	}
+	Template_Destructor(stru_51A218.char14 + 60);
+	return LoadGameTemplates(Template_Constructor);
+}
+
+FAIL_STUB_PATCH(getGameList);
+
 bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -6590,7 +6628,7 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			getGameList(dlg);
+			getGameList_(dlg);
 			DLG_SwishIn(dlg);
 			break;
 		case USER_DESTROY:

@@ -3,7 +3,7 @@ EXPORTS
     SNetDestroy@0 = StormLibNetDestroy @102
     SNetEnumDevices = StormLibNetEnumDevices @103
     SNetEnumGames = StormLibNetEnumGames @104
-    SNetEnumProviders = StormLibNetEnumProviders @105
+    SNetEnumProviders@8 = StormLibNetEnumProviders @105
     SNetDropPlayer = StormLibNetDropPlayer @106
     SNetGetGameInfo = StormLibNetGetGameInfo @107
     SNetGetNetworkLatency = StormLibNetGetNetworkLatency @108
