@@ -1132,13 +1132,50 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->lFlags &= ~CTRL_VALIGN_BOTTOM;
 }
 
+void titleInit_(dialog* dlg)
+{
+	void* buffer;
+	int height;
+	int width;
+
+	if (!SBmpAllocLoadImage("glue\\title\\title.pcx", (int*)palette, &buffer, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound("glue\\title\\title.pcx", SErrGetLastError());
+	}
+	dlg->srcBits.wid = width;
+	dlg->srcBits.ht = height;
+	dlg->srcBits.data = (u8*)buffer;
+	memset(&stru_6CE000, 0, sizeof(stru_6CE000));
+
+	if (!SBmpLoadImage("glue\\title\\tFont.pcx", 0, &stru_6CE000, 192, 0, 0, 0))
+	{
+		SysWarn_FileNotFound("glue\\title\\tFont.pcx", SErrGetLastError());
+	}
+	if (!low_memory)
+	{
+		DLGMusicFade(MT_TITLE);
+	}
+
+	if ((dlg->lFlags & CTRL_UPDATE) == 0)
+	{
+		dlg->lFlags |= CTRL_UPDATE;
+		updateDialog(dlg);
+	}
+	RefreshCursor_0();
+	memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
+	TitlePaletteUpdate(3);
+	TitleBlitAndLoop(dlg);
+}
+
+FAIL_STUB_PATCH(titleInit);
+
 bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
 		if (evt->dwUser == EventUser::USER_CREATE)
 		{
-			titleInit(dlg);
+			titleInit_(dlg);
 		}
 		else if (evt->dwUser == EventUser::USER_DESTROY)
 		{
