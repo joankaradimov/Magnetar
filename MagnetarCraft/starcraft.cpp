@@ -3035,6 +3035,51 @@ void sub_458BB0_(dialog* dlg)
 
 FAIL_STUB_PATCH(sub_458BB0);
 
+void load_statlb_()
+{
+	if (!multiPlayerMode
+		|| gameData.got_file_values.victory_conditions == VC_RESOURCES
+		|| gameData.got_file_values.victory_conditions == VC_SLAUGHTER
+		|| gameData.got_file_values.victory_conditions == VC_MAP_DEFAULT && gameData.got_file_values.starting_units == SU_MAP_DEFAULT && !gameData.got_file_values.tournament_mode
+		|| InReplay)
+	{
+		byte_59728C = 0;
+		dword_597288 = 1;
+
+		statlb_Dlg = LoadDialog("rez\\statlb.bin");
+		InitializeDialog_(statlb_Dlg, statlb_Dlg_Interact);
+	}
+}
+
+FAIL_STUB_PATCH(load_statlb);
+
+void load_StatRes_BIN_()
+{
+	dword_68C238 = (void*)LoadGraphic("game\\icons.grp", 0, "Starcraft\\SWAR\\lang\\statres.cpp", 490);
+	dword_68C230 = 0;
+	dword_68C22C = 0;
+
+	statres_Dlg = LoadDialog("rez\\statres.bin");
+	InitializeDialog_(statres_Dlg, StatRes_DialogInteract);
+}
+
+FAIL_STUB_PATCH(load_StatRes_BIN);
+
+void load_Statdata_BIN_()
+{
+	dword_68C1F4 = (void*)LoadGraphic("unit\\wirefram\\tranwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1335);
+	dword_68C1FC = (void*)LoadGraphic("unit\\wirefram\\grpwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1337);
+	CanUpdateStatDataDialog = 1;
+	statusScreenFunc = 0;
+	ctrl_under_mouse = 0;
+	ctrl_under_mouse_val = -1;
+
+	stardata_Dlg = LoadDialog("rez\\statdata.bin");
+	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact);
+}
+
+FAIL_STUB_PATCH(load_Statdata_BIN);
+
 bool __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -3181,9 +3226,9 @@ void setup_HUD_()
 	}
 	load_statfluf_BIN();
 	loadPortdata_BINDLG();
-	load_statlb();
-	load_StatRes_BIN();
-	load_Statdata_BIN();
+	load_statlb_();
+	load_StatRes_BIN_();
+	load_Statdata_BIN_();
 	load_WireframeGRP();
 	load_statbtn_BIN_();
 	load_Statf10_BIN();
