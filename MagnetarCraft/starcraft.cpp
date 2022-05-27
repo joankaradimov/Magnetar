@@ -5673,6 +5673,41 @@ void gluCustm_initSwish_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+void gluCustm_typeDropdown_(dialog* dlg)
+{
+	unsigned __int8 v2 = 0;
+	dlg->lFlags |= CTRL_LBOX_NORECALC;
+	for (int i = 0; i < 2; i++)
+	{
+		char* v4 = (char*)get_GluAll_String(singleTypeSelect[i].tbl_entry);
+		u8 v5 = ListBox_AddEntry(v4, dlg, 0);
+		if (v5 == 0xFF)
+		{
+			break;
+		}
+		dlg->fields.list.pdwData[v5] = singleTypeSelect[i].player_type;
+		v2 = singleTypeSelect[i].player_type == PlayerType::PT_Computer ? v5 : 0;
+	}
+
+	if (dlg->lFlags & CTRL_LBOX_NORECALC)
+	{
+		dlg->lFlags &= ~CTRL_LBOX_NORECALC;
+		List_Update(dlg);
+	}
+	if (v2 < dlg->fields.list.bStrs || v2 == 0xFF)
+	{
+		dlgEvent v7;
+		v7.wNo = EVN_USER;
+		v7.dwUser = USER_SELECT;
+		v7.wSelection = v2;
+		v7.wUnk_0x06 = 0;
+		dlg->pfcnInteract(dlg, &v7);
+		DlgSetSelected_UpdateScrollbar(v2, dlg);
+	}
+}
+
+FAIL_STUB_PATCH(gluCustm_typeDropdown);
+
 bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -5680,7 +5715,7 @@ bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gluCustm_typeDropdown(dlg);
+			gluCustm_typeDropdown_(dlg);
 			break;
 		case EventUser::USER_INIT:
 			dlg->lFlags |= CTRL_PLAIN;
