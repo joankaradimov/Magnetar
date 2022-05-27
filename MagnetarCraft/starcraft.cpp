@@ -6639,6 +6639,8 @@ void gluChat_init_(dialog* dlg)
 	DlgSwooshin(5, gluChatSwishController, dlg, 0);
 }
 
+FAIL_STUB_PATCH(gluChat_init);
+
 void sub_4B9BF0_(dialog* dlg)
 {
 	if (sub_4D4130())
