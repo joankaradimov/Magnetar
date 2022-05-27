@@ -271,7 +271,14 @@ void _list_unlink(ListNode *a1) {
 DECL_FUNC(int(*Device_Destructor)(), Device_Destructor, 0x401a10);
 DECL_FUNC(int(*PhoneNumber_Destructor)(), PhoneNumber_Destructor, 0x401a60);
 DECL_FUNC(int(*DrawText_Destructor)(), DrawText_Destructor, 0x401b20);
-DECL_FUNC(int(*Template_Destructor)(), Template_Destructor, 0x401be0);
+void Template_Destructor(void *a1) {
+    int address = 0x401be0;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+    }
+}
 DECL_FUNC(int(*vector_delete)(), vector_delete, 0x401ca0);
 DECL_FUNC(int (__fastcall*unitIsActiveResourceDepot)(CUnit *a1, CUnit *a2), unitIsActiveResourceDepot, 0x401cf0);
 BOOL unitIsSubunit(CUnit *a1) {
@@ -5468,7 +5475,7 @@ HWND InitBnetMapListBox(LPARAM listbox_handle, HWND hWnd) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_44B240)(int, int, int, int), sub_44B240, 0x44b240);
+DECL_FUNC(unsigned int (__stdcall*sub_44B240)(int a1, int a2, GotFileValues *a3, int a4), sub_44B240, 0x44b240);
 int InitBnetCreateGameScreen(HWND parent_dlg, HWND hWnd) {
     int address = 0x44b2c0;
     int result_;
@@ -5596,7 +5603,7 @@ DECL_FUNC(bool (__fastcall*gluRdy_Portrait)(dialog *dlg, dlgEvent *evt), gluRdy_
 DECL_FUNC(int (__stdcall*LoadBriefingFrameImages)(int), LoadBriefingFrameImages, 0x44f020);
 DECL_FUNC(int(*loadPortdataDAT)(), loadPortdataDAT, 0x44f0f0);
 DECL_FUNC(int(*sub_44F4C0)(), sub_44F4C0, 0x44f4c0);
-DECL_FUNC(int(*getHumansOnTeam)(), getHumansOnTeam, 0x44f4e0);
+DECL_FUNC(int (__thiscall*getHumansOnTeam)(int team), getHumansOnTeam, 0x44f4e0);
 DECL_FUNC(int(*sub_44F590)(), sub_44F590, 0x44f590);
 DECL_FUNC(int (__thiscall*LeagueStats)(char *string2), LeagueStats, 0x44f5a0);
 DECL_FUNC(int(*sub_44F600)(), sub_44F600, 0x44f600);
@@ -5717,7 +5724,7 @@ DECL_FUNC(int(*_swapPlayers)(), _swapPlayers, 0x452350);
 DECL_FUNC(int (__stdcall*sub_452370)(char), sub_452370, 0x452370);
 DECL_FUNC(int(*sub_4523C0)(), sub_4523C0, 0x4523c0);
 DECL_FUNC(int(*sub_452410)(), sub_452410, 0x452410);
-DECL_FUNC(int(*_startGame)(), _startGame, 0x452460);
+DECL_FUNC(int (__cdecl*_startGame)(), _startGame, 0x452460);
 BOOL sub_452530(char *a1) {
     int address = 0x452530;
     BOOL result_;
@@ -14837,7 +14844,7 @@ DECL_FUNC(int(*initializeProviderStruct)(), initializeProviderStruct, 0x4ad190);
 DECL_FUNC(int(*SelectGame)(), SelectGame, 0x4ad230);
 DECL_FUNC(int(*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
 DECL_FUNC(int (__thiscall*sub_4AD390)(dialog *this_), sub_4AD390, 0x4ad390);
-DECL_FUNC(int(*sub_4AD3E0)(), sub_4AD3E0, 0x4ad3e0);
+DECL_FUNC(unsigned __int8 (__thiscall*sub_4AD3E0)(dialog *this_), sub_4AD3E0, 0x4ad3e0);
 DECL_FUNC(int(*sub_4AD400)(), sub_4AD400, 0x4ad400);
 dialog *sub_4AD440(dialog *result) {
     int address = 0x4ad440;
@@ -14923,7 +14930,7 @@ void gluCustm_raceDropdown(dialog *a1) {
 }
 DECL_FUNC(void (__fastcall*gluCustmInitPlayerTypes)(dialog *, __int16), gluCustmInitPlayerTypes, 0x4adfe0);
 DECL_FUNC(int(*sub_4AE1E0)(), sub_4AE1E0, 0x4ae1e0);
-DECL_FUNC(int (__stdcall*sub_4AE1F0)(int, int, int, int), sub_4AE1F0, 0x4ae1f0);
+DECL_FUNC(dialog *(__stdcall*sub_4AE1F0)(int a1, int a2, GotFileValues *a3, int a4), sub_4AE1F0, 0x4ae1f0);
 dialog *sub_4AE250(dialog *result) {
     int address = 0x4ae250;
     dialog * result_;
@@ -15818,14 +15825,14 @@ int getErrorStringPair(GluAllTblEntry a1, int a2) {
     return result_;
 }
 DECL_FUNC(int(*SendLobbyMessage)(), SendLobbyMessage, 0x4b98d0);
-signed int gluChat_controlActivation(signed int a1, dialog *a2) {
+signed int gluChat_controlActivation(signed int last_control_id, dialog *dlg) {
     int address = 0x4b9910;
     signed result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov eax, last_control_id
+        mov ecx, dlg
         call address
         mov result_, eax
     }
@@ -17735,7 +17742,7 @@ int sub_4D37C0(dialog *a1, int (__stdcall *a2)(_DWORD, _DWORD)) {
     return result_;
 }
 DECL_FUNC(int(*sub_4D3810)(), sub_4D3810, 0x4d3810);
-DECL_FUNC(int(*sub_4D3860)(), sub_4D3860, 0x4d3860);
+DECL_FUNC(void (__cdecl*sub_4D3860)(), sub_4D3860, 0x4d3860);
 DECL_FUNC(signed int (__stdcall*CreateLadderGame)(GameData *a1, int a2), CreateLadderGame, 0x4d3910);
 signed int JoinNetworkGame(GameData *a3) {
     int address = 0x4d3b50;
@@ -18823,7 +18830,14 @@ void registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
 DECL_FUNC(dialog *(__fastcall*loadFullMenuDLG)(const char *szFileName, void *buffer, int read, const char *logfilename, int logline), loadFullMenuDLG, 0x4ddbe0);
 DECL_FUNC(int(*loadAndInitFullMenuDLG)(), loadAndInitFullMenuDLG, 0x4ddcf0);
 DECL_FUNC(const char *(__stdcall*get_GluAll_String)(GluAllTblEntry tbl_entry), get_GluAll_String, 0x4ddd30);
-DECL_FUNC(int(*sub_4DDE70)(), sub_4DDE70, 0x4dde70);
+void sub_4DDE70(dialog *a1) {
+    int address = 0x4dde70;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
 DECL_FUNC(void (__cdecl*loadDlgGrp)(), loadDlgGrp, 0x4ddf00);
 DECL_FUNC(void(*loadCursor)(void), loadCursor, 0x4ddf90);
 DECL_FUNC(int (__fastcall*sub_4DE040)(dialog *dlg, struct dlgEvent *evt), sub_4DE040, 0x4de040);
