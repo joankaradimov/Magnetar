@@ -7,8 +7,8 @@ inside an .idb file (a database for Hex-Rays' Interactive Disassembler) to
 C++ source files and headers. These expose pointers and references to the inner
 workings of StarCraft.exe.
 
-Scalar data is exposed as refences, arrays as pointers, functions as function
-pointers. This preserves the syntax of the original function/data usage.
+Data is exposed as refences, functions as function pointers.
+This preserves the original syntax as seen in the decompiler of IDA Pro.
 
 ## Details
 
