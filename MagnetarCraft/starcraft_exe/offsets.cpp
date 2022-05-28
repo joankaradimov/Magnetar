@@ -6317,7 +6317,7 @@ dialog *sub_456A30(dialog *result) {
     }
     return result_;
 }
-DECL_FUNC(signed int (__fastcall*statdata_UnitWireframeInteract)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeInteract, 0x456a50);
+DECL_FUNC(bool (__fastcall*statdata_UnitWireframeInteract)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeInteract, 0x456a50);
 DECL_FUNC(int(*load_WireframeGRP)(), load_WireframeGRP, 0x456a90);
 DECL_FUNC(int(*sub_456AE0)(), sub_456AE0, 0x456ae0);
 DECL_FUNC(int(*ProgressBar_Destroy)(), ProgressBar_Destroy, 0x456b00);
@@ -6346,8 +6346,8 @@ char sub_456D30(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*statdata_LabelUnknownUpdate)(int, int), statdata_LabelUnknownUpdate, 0x456e00);
-DECL_FUNC(void (__fastcall*statdata_Unknown)(dialog *a1, dlgEvent *a2), statdata_Unknown, 0x456ec0);
+DECL_FUNC(void (__thiscall*statdata_LabelUnknownUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_LabelUnknownUpdate, 0x456e00);
+DECL_FUNC(bool (__fastcall*statdata_Unknown)(dialog *a1, dlgEvent *a2), statdata_Unknown, 0x456ec0);
 DECL_FUNC(int(*sub_456EF0)(), sub_456EF0, 0x456ef0);
 DECL_FUNC(char (__thiscall*statdata_UnitWireframeSelectUpdate)(dialog *this_, int a2, int a3), statdata_UnitWireframeSelectUpdate, 0x456f50);
 DECL_FUNC(void (__fastcall*statdata_UnitWireframeTransUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeTransUpdate, 0x4570a0);
@@ -6485,8 +6485,8 @@ void statdata_Destroy(dialog *a1, struct dlgEvent *a2) {
         call address
     }
 }
-DECL_FUNC(signed int (__fastcall*statdata_UnitWireframeTransit)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeTransit, 0x457e90);
-DECL_FUNC(signed int (__fastcall*statdata_buttonInteract)(dialog *a1, dlgEvent *a2), statdata_buttonInteract, 0x457f30);
+DECL_FUNC(bool (__fastcall*statdata_UnitWireframeTransit)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeTransit, 0x457e90);
+DECL_FUNC(bool (__fastcall*statdata_buttonInteract)(dialog *a1, dlgEvent *a2), statdata_buttonInteract, 0x457f30);
 DECL_FUNC(void (__cdecl*sub_457FE0)(), sub_457FE0, 0x457fe0);
 void ProgressBar_Create(dialog *a1) {
     int address = 0x458050;
@@ -6500,16 +6500,13 @@ DECL_FUNC(void(*sub_458120)(), sub_458120, 0x458120);
 DECL_FUNC(bool (__fastcall*statdata_ProgressBarInteract)(dialog *dlg, dlgEvent *evt), statdata_ProgressBarInteract, 0x4581e0);
 DECL_FUNC(int (__fastcall*StatusScreenButton)(dialog *a1, dialog *a2), StatusScreenButton, 0x458220);
 DECL_FUNC(bool (__fastcall*statdata_UnitWireframeSelection)(dialog *dlg, dlgEvent *evt), statdata_UnitWireframeSelection, 0x4583e0);
-int statdata_extendedCtrlID(dialog *a1) {
+void statdata_extendedCtrlID(dialog *a1) {
     int address = 0x4584c0;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*statdata_dlg_Interact)(dialog *dlg, dlgEvent *evt), statdata_dlg_Interact, 0x4584f0);
 DECL_FUNC(int(*load_Statdata_BIN)(), load_Statdata_BIN, 0x458570);
@@ -18857,7 +18854,17 @@ DECL_FUNC(int (__stdcall*sub_4DE740)(int), sub_4DE740, 0x4de740);
 DECL_FUNC(int(*sub_4DE770)(), sub_4DE770, 0x4de770);
 DECL_FUNC(int(*sub_4DE790)(), sub_4DE790, 0x4de790);
 DECL_FUNC(void (__cdecl*freeChkFileMem)(), freeChkFileMem, 0x4de7a0);
-DECL_FUNC(int(*trimTrailingSpaces)(), trimTrailingSpaces, 0x4de7e0);
+signed int trimTrailingSpaces(const char *a2) {
+    int address = 0x4de7e0;
+    signed result_;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4DE840)(), sub_4DE840, 0x4de840);
 DECL_FUNC(int(*sub_4DE860)(), sub_4DE860, 0x4de860);
 DECL_FUNC(int(*sub_4DE880)(), sub_4DE880, 0x4de880);
@@ -18982,7 +18989,7 @@ int LoadReplayFile(char *a1, int *a3) {
     }
     return result_;
 }
-DECL_FUNC(signed int (__fastcall*savegame_Delete)(dialog *a1, dlgEvent *a2), savegame_Delete, 0x4df6d0);
+DECL_FUNC(bool (__fastcall*savegame_Delete)(dialog *a1, dlgEvent *a2), savegame_Delete, 0x4df6d0);
 char sub_4DF740(dialog *a1, struct dlgEvent *evt) {
     int address = 0x4df740;
     char result_;
@@ -19006,7 +19013,25 @@ void createReplayListbox(dialog *a1) {
     }
 }
 DECL_FUNC(bool (__fastcall*savegame_Listbox)(dialog *dlg, dlgEvent *evt), savegame_Listbox, 0x4df9e0);
-DECL_FUNC(int(*saveGame_InitChildren)(), saveGame_InitChildren, 0x4dfa30);
+int saveGame_InitChildren(dialog *dlg) {
+    int address = 0x4dfa30;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, dlg
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+void savegameBIN_CustomCtrlID(dialog *a1) {
+    int address = 0x4dfa90;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+    }
+}
 int SaveReplay(const char *a1, int a3) {
     int address = 0x4dfab0;
     int result_;
@@ -19029,6 +19054,14 @@ int CopyLastReplayTo(char *a1) {
         mov result_, eax
     }
     return result_;
+}
+void saveGame_Create(dialog *dlg) {
+    int address = 0x4dfdd0;
+    __asm {
+        xor eax, eax
+        mov eax, dlg
+        call address
+    }
 }
 DECL_FUNC(bool (__fastcall*savegameBIN_Main)(dialog *dlg, struct dlgEvent *evt), savegameBIN_Main, 0x4dfef0);
 int LoadSaveGameBIN_Main(int a1, Race a2) {
