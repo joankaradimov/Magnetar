@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <filesystem>
 #include <ddraw.h>
 #include <process.h>
 #include <time.h>
@@ -365,25 +366,27 @@ int InitializeArchiveHandles_()
 	snet_version_data.patcharchivefile = patch_archive_file;
 	LoadMainModuleStringInfo_();
 
-	CHAR Filename[MAX_PATH];
-	if (!GetModuleFileNameA(hInst, Filename, MAX_PATH))
-		Filename[0] = 0;
-	char* v0 = strrchr(Filename, '\\');
-	if (v0)
-		*v0 = 0;
-	SStrNCat(Filename, "\\Stardat.mpq", MAX_PATH);
-	if (!SFileOpenArchive(Filename, 2000u, 2u, &stardat_mpq))
+	CHAR starcraft_exe_filename[MAX_PATH];
+	if (!GetModuleFileNameA(hInst, starcraft_exe_filename, MAX_PATH))
+	{
+		starcraft_exe_filename[0] = 0;
+	}
+	std::filesystem::path starcraft_exe_path = starcraft_exe_filename;
+	std::filesystem::path starcraft_path = starcraft_exe_path.parent_path();
+	std::filesystem::path stardat_path = starcraft_path / "Stardat.mpq";
+	std::filesystem::path broodat_path = starcraft_path / "Broodat.mpq";
+	std::filesystem::path patch_rt_path = starcraft_path / "patch_rt.mpq";
+
+	if (!SFileOpenArchive(stardat_path.generic_string().c_str(), 2000u, 2u, &stardat_mpq))
 	{
 		SysWarn_FileNotFound("Stardat.mpq", GetLastError());
 	}
 
-	if (!GetModuleFileNameA(hInst, patch_archive_file, MAX_PATH))
-		patch_archive_file[0] = 0;
-	char* v2 = strrchr(patch_archive_file, '\\');
-	if (v2)
-		*v2 = 0;
-	SStrNCat(patch_archive_file, "\\patch_rt.mpq", MAX_PATH);
-	if (!SFileOpenArchive(patch_archive_file, 7000u, 2u, &patch_rt_mpq))
+	if (SFileOpenArchive(patch_rt_path.generic_string().c_str(), 7000u, 2u, &patch_rt_mpq))
+	{
+		SStrCopy(patch_archive_file, patch_rt_path.generic_string().c_str(), sizeof(patch_archive_file));
+	}
+	else
 	{
 		patch_rt_mpq = 0;
 	}
@@ -401,20 +404,14 @@ int InitializeArchiveHandles_()
 	AppAddExit_(DestroyFontKey);
 	if (!is_spawn)
 		InitializeCDArchives_(0, 1);
+
 	archive_files[0] = 0;
 	if (!is_spawn)
 	{
-		CHAR archivename_[MAX_PATH];
-		if (!GetModuleFileNameA(hInst, archivename_, MAX_PATH))
-			*archivename_ = 0;
-		char* v4 = strrchr(archivename_, '\\');
-		if (v4)
-			*v4 = 0;
-		SStrNCat(archivename_, "\\Broodat.mpq", MAX_PATH);
-		if (SFileOpenArchive(archivename_, 2500u, 2u, &broodat_mpq))
+		if (SFileOpenArchive(broodat_path.generic_string().c_str(), 2500u, 2u, &broodat_mpq))
 		{
-			SStrCopy(archive_files, archivename_, 0x208u);
-			SStrNCat(archive_files, ";", 520);
+			SStrCopy(archive_files, broodat_path.generic_string().c_str(), sizeof(archive_files));
+			SStrNCat(archive_files, ";", sizeof(archive_files));
 		}
 		else
 		{
@@ -423,7 +420,7 @@ int InitializeArchiveHandles_()
 	}
 
 	DetectExpansionInstallation_();
-	return SStrNCat(archive_files, Filename, 520);
+	return SStrNCat(archive_files, stardat_path.generic_string().c_str(), sizeof(archive_files));
 }
 
 FAIL_STUB_PATCH(InitializeArchiveHandles);
