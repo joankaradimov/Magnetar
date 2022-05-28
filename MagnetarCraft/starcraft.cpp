@@ -3093,7 +3093,7 @@ void load_StatRes_BIN_()
 	dword_68C230 = 0;
 	dword_68C22C = 0;
 
-	statres_Dlg = LoadDialog("rez\\statres.bin");
+	statres_Dlg = LoadDialog("rez\\statres.bin"); // The topmost row of in-game UI
 	InitializeDialog_(statres_Dlg, StatRes_DialogInteract);
 }
 
@@ -3188,7 +3188,7 @@ void load_Statdata_BIN_()
 	ctrl_under_mouse = 0;
 	ctrl_under_mouse_val = -1;
 
-	stardata_Dlg = LoadDialog("rez\\statdata.bin"); // The middle arae of the main (bottom-of-the-screen) in-game UI
+	stardata_Dlg = LoadDialog("rez\\statdata.bin"); // The middle area of the main (bottom-of-the-screen) in-game UI
 	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact_);
 }
 
@@ -3310,7 +3310,7 @@ FAIL_STUB_PATCH(load_statbtn_BIN);
 
 void load_Statf10_BIN_()
 {
-	stat_f10_Dlg = LoadDialog("rez\\stat_f10.bin");
+	stat_f10_Dlg = LoadDialog("rez\\stat_f10.bin"); // The menu button in the in-game UI
 	InitializeDialog_(stat_f10_Dlg, Statf10_DialogProc);
 }
 
