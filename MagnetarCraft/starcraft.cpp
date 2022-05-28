@@ -3308,6 +3308,24 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void load_Statf10_BIN_()
+{
+	stat_f10_Dlg = LoadDialog("rez\\stat_f10.bin");
+	InitializeDialog_(stat_f10_Dlg, Statf10_DialogProc);
+}
+
+FAIL_STUB_PATCH(load_Statf10_BIN);
+
+void ctextbox_BIN_()
+{
+	char buff[80];
+	_snprintf(buff, sizeof(buff), "rez\\%ctextbox.bin", race_lowercase_char_id[consoleIndex]);
+	dword_68C140 = LoadDialog(buff);
+	InitializeDialog_(dword_68C140, textbox_DLG_Interact);
+}
+
+FAIL_STUB_PATCH(ctextbox_BIN);
+
 void LoadConsoleImage_()
 {
 	char buff[260];
@@ -3345,8 +3363,8 @@ void setup_HUD_()
 	load_Statdata_BIN_();
 	load_WireframeGRP();
 	load_statbtn_BIN_();
-	load_Statf10_BIN();
-	ctextbox_BIN();
+	load_Statf10_BIN_();
+	ctextbox_BIN_();
 	load_gluMinimap_();
 	if (GameScreenConsole.data != NULL)
 	{
