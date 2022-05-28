@@ -6502,7 +6502,18 @@ bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 			}
 			break;
 		case 0x405:
-			RdyTFrame(dlg);
+			switch (glGluesMode)
+			{
+			case MenuPosition::GLUE_READY_P:
+				rdyPFrame(dlg);
+				break;
+			case MenuPosition::GLUE_READY_T:
+				RdyTFrame(dlg);
+				break;
+			case MenuPosition::GLUE_READY_Z:
+				RdyZFrame(dlg);
+				break;
+			}
 		}
 	}
 	return genericDlgInteract(dlg, evt);
