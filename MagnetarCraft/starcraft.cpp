@@ -3099,6 +3099,86 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN);
 
+void statdata_extendedCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		statdata_UnitWireframeInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_ProgressBarInteract,
+		statdata_Unknown,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_buttonInteract,
+		statdata_ProgressBarInteract,
+		statdata_ProgressBarInteract,
+		statdata_buttonInteract,
+		statdata_ProgressBarInteract,
+		statdata_buttonInteract,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeTransit,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeSelection,
+	};
+
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	BINDLG_BlitSurface(dlg);
+	CanUpdateStatDataDialog = 1;
+}
+
+FAIL_STUB_PATCH(statdata_extendedCtrlID);
+
+bool __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+	case EVN_CHAR:
+		return 0;
+		break;
+	case EVN_MOUSEMOVE:
+		statdata_Destroy(dlg, evt);
+		break;
+	case EVN_USER:
+		if (evt->dwUser == USER_CREATE)
+		{
+			statdata_extendedCtrlID_(dlg);
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(statdata_dlg_Interact);
+
 void load_Statdata_BIN_()
 {
 	dword_68C1F4 = (void*)LoadGraphic("unit\\wirefram\\tranwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1335);
@@ -3108,8 +3188,8 @@ void load_Statdata_BIN_()
 	ctrl_under_mouse = 0;
 	ctrl_under_mouse_val = -1;
 
-	stardata_Dlg = LoadDialog("rez\\statdata.bin");
-	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact);
+	stardata_Dlg = LoadDialog("rez\\statdata.bin"); // The middle arae of the main (bottom-of-the-screen) in-game UI
+	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact_);
 }
 
 FAIL_STUB_PATCH(load_Statdata_BIN);
