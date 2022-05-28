@@ -4771,6 +4771,12 @@ struct __declspec(align(2)) ExpandedCampaignMenuEntry
 
 MEMORY_PATCH(0x4B69CA, (BYTE) sizeof(ExpandedCampaignMenuEntry));
 
+// Switch between building portraits in campaigns (Overmind/Daggoth and Aldaris/Fenix):
+MEMORY_PATCH(0x45E350, (BYTE)EMD_protoss10);
+MEMORY_PATCH(0x45F02A, (BYTE)EMD_protoss10);
+MEMORY_PATCH(0x45E33F, (BYTE)EMD_protoss07);
+MEMORY_PATCH(0x45F019, (BYTE)EMD_protoss07);
+
 void gluHist_Activate_(dialog* dlg)
 {
 	if (LastControlID == 1)
