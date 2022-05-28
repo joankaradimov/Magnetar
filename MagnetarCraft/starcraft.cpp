@@ -4050,22 +4050,12 @@ int __fastcall getVisibilityMaskFromPositionAndSize_(int a1, __int16 a2, __int16
 {
 	MegatileFlags result = (MegatileFlags) 0;
 
-	int v5 = a2 + a4 - 1;
-	if (v5 >= a4)
+	for (int i = 0; i < a2; i++)
 	{
-		int v7 = a5 + a3 - 1;
-		do
+		for (int j = 0; j < a5; j++)
 		{
-			if (v7 >= a3)
-			{
-				MegatileFlags* v8 = &active_tiles[v7 + v5 * map_size.width];
-				for (int i = 0; i < a5; i++)
-				{
-					result |= ~(v8[i] & (MegatileFlags) 0xFF);
-				}
-			}
-			--v5;
-		} while (v5 >= a4);
+			result |= ~(active_tiles[(a4 + i) * map_size.width + a3 + j] & (MegatileFlags)0xFF);
+		}
 	}
 	return result;
 }
