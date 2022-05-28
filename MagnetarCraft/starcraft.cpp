@@ -5879,7 +5879,7 @@ bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 			break;
 		case EventUser::USER_INIT:
 			dlg->lFlags |= CTRL_PLAIN;
-			return genericComboboxInteract(dlg, evt);
+			break;
 		case EventUser::USER_SELECT:
 			genericListboxInteract(dlg, evt);
 			sub_4ADD90(1, dlg);
