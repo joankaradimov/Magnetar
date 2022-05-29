@@ -34,6 +34,37 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+bool sendInputToAllDialogs_(dlgEvent* evt)
+{
+	sub_419F80();
+	dialog* event_dialog = EventDialogs[evt->wNo];
+
+	if (event_dialog)
+	{
+		bool result = event_dialog->pfcnInteract(event_dialog, evt);
+		if (result)
+		{
+			pressGlobalDlgHotkey();
+			return result;
+		}
+	}
+
+	for (dialog* dlg = DialogList; dlg; dlg = dlg->pNext)
+	{
+		int result = dlg->pfcnInteract(dlg, evt);
+		if (result)
+		{
+			pressGlobalDlgHotkey();
+			return result;
+		}
+	}
+
+	pressGlobalDlgHotkey();
+	return 0;
+}
+
+FAIL_STUB_PATCH(sendInputToAllDialogs);
+
 void UpdateDlgMousePosition_(void)
 {
 	drawCursor();
@@ -43,7 +74,7 @@ void UpdateDlgMousePosition_(void)
 	v0.wNo = EVN_MOUSEMOVE;
 	v0.cursor.x = Mouse.x;
 	v0.cursor.y = Mouse.y;
-	if (!sendInputToAllDialogs(&v0) && input_procedures[EVN_MOUSEMOVE])
+	if (!sendInputToAllDialogs_(&v0) && input_procedures[EVN_MOUSEMOVE])
 	{
 		input_procedures[EVN_MOUSEMOVE](&v0);
 	}
@@ -84,7 +115,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 			v3.wNo = EventNo::EVN_IDLE;
 			v3.cursor.x = Mouse.x;
 			v3.cursor.y = Mouse.y;
-			if (!sendInputToAllDialogs(&v3) && input_procedures[EventNo::EVN_IDLE])
+			if (!sendInputToAllDialogs_(&v3) && input_procedures[EventNo::EVN_IDLE])
 			{
 				input_procedures[EventNo::EVN_IDLE](&v3);
 			}
@@ -7923,7 +7954,7 @@ void BWFXN_Game_ButtonDown_(int a1, EventNo a4, LPARAM lParam)
 		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
 		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
-		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
 			input_procedures[a4](&event);
 		}
@@ -7946,7 +7977,7 @@ void BWFXN_Game_ButtonUp_(int a1, EventNo a4, LPARAM lParam)
 		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
 		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
-		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
 			input_procedures[a4](&event);
 		}
@@ -7968,7 +7999,7 @@ void Game_BtnDoubleClick_(int a1, EventNo a4, LPARAM lParam)
 		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
 		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
-		if (!sendInputToAllDialogs(&event) && input_procedures[a4])
+		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
 			input_procedures[a4](&event);
 		}
@@ -7989,7 +8020,7 @@ void Game_MouseWheel_(EventNo wNo, int a2)
 	v3.wNo = wNo;
 	v3.cursor.x = 0;
 	v3.cursor.y = 0;
-	if (!sendInputToAllDialogs(&v3) && input_procedures[wNo])
+	if (!sendInputToAllDialogs_(&v3) && input_procedures[wNo])
 	{
 		input_procedures[wNo](&v3);
 	}
@@ -8054,7 +8085,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			v16.wVirtKey = wParam;
 			v16.wUnk_0x0A = BWFXN_Game_KeyState();
 			v16.wNo = (key_flags & KF_REPEAT) ? EVN_KEYRPT : EVN_KEYFIRST;
-			if (!sendInputToAllDialogs(&v16))
+			if (!sendInputToAllDialogs_(&v16))
 			{
 				InputProcedure v11 = (key_flags & KF_REPEAT) ? input_procedures[EventNo::EVN_KEYRPT] : input_procedures[EventNo::EVN_KEYDOWN];
 				if (v11)
@@ -8083,7 +8114,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			v16.wVirtKey = wParam;
 			v16.wUnk_0x0A = BWFXN_Game_KeyState();
 			v16.wNo = EventNo::EVN_KEYUP;
-			if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_KEYUP])
+			if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_KEYUP])
 			{
 				input_procedures[EventNo::EVN_KEYUP](&v16);
 			}
@@ -8100,7 +8131,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			{
 				HIBYTE(v16.wUnk_0x0A) |= 1u;
 			}
-			if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+			if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_CHAR])
 			{
 				input_procedures[EventNo::EVN_CHAR](&v16);
 			}
@@ -8144,7 +8175,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 				v16.wNo = EventNo::EVN_CHAR;
 				v16.wVirtKey = VK_BACK;
 				v16.wUnk_0x0A = 160;
-				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_CHAR])
 				{
 					input_procedures[EventNo::EVN_CHAR](&v16);
 				}
@@ -8166,7 +8197,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 				v16.wNo = EventNo::EVN_CHAR;
 				v16.wVirtKey = v13[v10];
 				v16.wUnk_0x0A = 160;
-				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_CHAR])
 				{
 					input_procedures[EventNo::EVN_CHAR](&v16);
 				}
@@ -8189,7 +8220,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 				v16.wNo = EventNo::EVN_CHAR;
 				v16.wVirtKey = VK_BACK;
 				v16.wUnk_0x0A = 160;
-				if (!sendInputToAllDialogs(&v16) && input_procedures[EventNo::EVN_CHAR])
+				if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_CHAR])
 				{
 					input_procedures[EventNo::EVN_CHAR](&v16);
 				}
