@@ -34,6 +34,81 @@ signed int AppAddExit_(AppExitHandle a1)
 	return 1;
 }
 
+void UpdateDlgMousePosition_(void)
+{
+	drawCursor();
+	LOBYTE(InputFlags) = InputFlags & 0xFE;
+
+	dlgEvent v0;
+	v0.wNo = EVN_MOUSEMOVE;
+	v0.cursor.x = Mouse.x;
+	v0.cursor.y = Mouse.y;
+	if (!sendInputToAllDialogs(&v0) && input_procedures[EVN_MOUSEMOVE])
+	{
+		input_procedures[EVN_MOUSEMOVE](&v0);
+	}
+	dword_5968EC = 1;
+}
+
+FAIL_STUB_PATCH(UpdateDlgMousePosition);
+
+void __stdcall BWFXN_videoLoop_(int flag)
+{
+	checkLastFileError();
+	if (flag)
+	{
+		MSG Msg;
+		while (hasMessagesWaiting(&Msg, flag & 2))
+		{
+			if (!hAccTable || !hWndParent || !TranslateAcceleratorA(hWndParent, hAccTable, &Msg))
+			{
+				DispatchMessageA(&Msg);
+				if (!dword_6D0530)
+				{
+					TranslateMessage(&Msg);
+				}
+			}
+		}
+		if (CpuThrottle && flag & 2)
+		{
+			Sleep(1u);
+		}
+		if (InputFlags & 1)
+		{
+			UpdateDlgMousePosition_();
+		}
+		DWORD ticks = GetTickCount();
+		if (ticks + message_handling_tick >= 100)
+		{
+			dlgEvent v3;
+			v3.wNo = EventNo::EVN_IDLE;
+			v3.cursor.x = Mouse.x;
+			v3.cursor.y = Mouse.y;
+			if (!sendInputToAllDialogs(&v3) && input_procedures[EventNo::EVN_IDLE])
+			{
+				input_procedures[EventNo::EVN_IDLE](&v3);
+			}
+			message_handling_tick = -ticks;
+			if (ticks + dword_6D637C >= 1000)
+			{
+				PlayBriefingWAVBegin();
+				playNextMusic();
+				dword_6D637C = message_handling_tick;
+			}
+		}
+		if (flag & 1)
+		{
+			iterateTimers();
+		}
+	}
+	else
+	{
+		memset(is_keycode_used, 0, sizeof(is_keycode_used));
+	}
+}
+
+FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_);
+
 void sub_4BD3A0_()
 {
 	if (GameState)
@@ -2978,7 +3053,7 @@ void GameLoop_Top_(MenuPosition a1)
 	bool v2 = false;
 	while (GameState)
 	{
-		BWFXN_videoLoop(3);
+		BWFXN_videoLoop_(3);
 		DWORD v1 = GetTickCount();
 		if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.GameSpeed])
 		{
@@ -3039,7 +3114,7 @@ GamePosition BeginGame_(MenuPosition a1)
 		registry_options.GameSpeed = 4;
 	}
 	newGame(1);
-	BWFXN_videoLoop(0);
+	BWFXN_videoLoop_(0);
 	loseSightSelection();
 	turn_counter = 0;
 	GameKeepAlive();
@@ -4637,7 +4712,7 @@ int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 				v3->fields.dlg.pModalFcn(v3);
 			}
 		}
-		BWFXN_videoLoop(3);
+		BWFXN_videoLoop_(3);
 		BWFXN_RedrawTarget_();
 
 		if (a1 == NULL)
@@ -8592,7 +8667,7 @@ void PlayMovie_(Cinematic cinematic)
 			{
 				break;
 			}
-			BWFXN_videoLoop(3);
+			BWFXN_videoLoop_(3);
 			Sleep(0);
 		}
 		SVidPlayEnd(video);
