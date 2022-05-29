@@ -7028,6 +7028,50 @@ void gluChat_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_CustomCtrlID);
 
+int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
+{
+	switch (last_control_id)
+	{
+	case 7:
+		if (!InReplay && sub_44F7B0() < 2)
+		{
+			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x72));
+		}
+		else if (!InReplay && isGameTypeSpecial() && getHumansOnTeam(1) < 2)
+		{
+			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x0BA));
+		}
+		else if (map_download && !IsDownloadComplete(map_download))
+		{
+			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x73));
+		}
+		else
+		{
+			_startGame();
+			DisableControl(getControlFromIndex(dlg, 7));
+			updateMinimapPreviewDisplayOffOn(0, dlg, 0);
+			dword_5999D0 = 0;
+		}
+		return 1;
+	case 9:
+		SendLobbyMessage();
+		return 1;
+	case 8:
+		DisableControl(getControlFromIndex(dlg, 8));
+		sub_4D3860();
+		[[fallthrough]];
+	case 557:
+		gameState = 1;
+		killTimerFunc();
+		updateMinimapPreviewDisplayOffOn(0, dlg, 1);
+		dword_5999D0 = 0;
+	}
+	lobby_dlg->fields.dlg.pModalFcn = 0;
+	return DLG_SwishOut(dlg);
+}
+
+FAIL_STUB_PATCH(gluChat_controlActivation);
+
 bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	dialog* minimap_preview_dlg = getControlFromIndex(dlg, 6);
@@ -7066,7 +7110,7 @@ bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 			sub_4B8D90(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
-			return gluChat_controlActivation(LastControlID, dlg);
+			return gluChat_controlActivation_(LastControlID, dlg);
 		case EventUser::USER_INIT:
 			gluChat_CustomCtrlID_(dlg);
 			if (!InReplay
