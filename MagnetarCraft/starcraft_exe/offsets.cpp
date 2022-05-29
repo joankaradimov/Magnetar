@@ -424,7 +424,7 @@ void TriggerNode_Destructor(TriggerList *tirgger_list) {
 }
 DECL_FUNC(int (__stdcall*IsTargNotVisibleCB)(int, int), IsTargNotVisibleCB, 0x402380);
 DECL_FUNC(int (__stdcall*isTargVisibleCB)(int, int), isTargVisibleCB, 0x402440);
-DECL_FUNC(int (__stdcall*getVisibilityMaskFromPositionAndSize)(__int16, __int16, __int16), getVisibilityMaskFromPositionAndSize, 0x402500);
+DECL_FUNC(int (__fastcall*getVisibilityMaskFromPositionAndSize)(int a1, __int16 width, __int16 y, __int16 x, __int16 height), getVisibilityMaskFromPositionAndSize, 0x402500);
 DECL_FUNC(int (__stdcall*getVisibilityMaskFromPositionAndSize_0)(__int16, __int16, __int16), getVisibilityMaskFromPositionAndSize_0, 0x402570);
 DECL_FUNC(int(*BNetMessage_Destructor)(), BNetMessage_Destructor, 0x4025e0);
 int setFlagHoldPosition(CUnit *a1) {
@@ -17554,6 +17554,18 @@ void _drawCursor(int a1) {
 DECL_FUNC(int(*getCursorType)(), getCursorType, 0x4d1460);
 DECL_FUNC(int(*BWFXN_NextFrameHelperFunctionTarget)(), BWFXN_NextFrameHelperFunctionTarget, 0x4d14d0);
 DECL_FUNC(int(*LoadCursors)(), LoadCursors, 0x4d1560);
+signed int hasMessagesWaiting(struct tagMSG *a1, int a2) {
+    int address = 0x4d1650;
+    signed result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4D16F0)(int), sub_4D16F0, 0x4d16f0);
 void GameShowCursor(bool show_cursor) {
     int address = 0x4d1750;
@@ -21171,6 +21183,14 @@ DECL_FUNC(int(*nullsub_68)(), nullsub_68, 0x4f4bb0);
 DECL_FUNC(int (__stdcall*sub_4F4BC0)(int, int, int, int), sub_4F4BC0, 0x4f4bc0);
 DECL_FUNC(int (__stdcall*sub_4F4C00)(int, int), sub_4F4C00, 0x4f4c00);
 DECL_FUNC(int(*sub_4F4CF0)(), sub_4F4CF0, 0x4f4cf0);
+void statflufDlgUpdate(dialog *dlg) {
+    int address = 0x4f4d30;
+    __asm {
+        xor eax, eax
+        mov eax, dlg
+        call address
+    }
+}
 DECL_FUNC(bool (__fastcall*statfluf_DLG_Interact)(dialog *dlg, dlgEvent *evt), statfluf_DLG_Interact, 0x4f4d60);
 DECL_FUNC(int(*load_statfluf_BIN)(), load_statfluf_BIN, 0x4f4dc0);
 DECL_FUNC(int(*sub_4F4F50)(), sub_4F4F50, 0x4f4f50);
@@ -23638,7 +23658,11 @@ __int16(&word_51521C)[4] = * ((decltype(&word_51521C)) 0x51521c);
 int& UnitPortraits = * ((decltype(&UnitPortraits)) 0x515224);
 char(&byte_515228)[] = * ((decltype(&byte_515228)) 0x515228);
 char(&wireframeConstants)[] = * ((decltype(&wireframeConstants)) 0x515280);
-void *& off_5153E8 = * ((decltype(&off_5153E8)) 0x5153e8);
+StatFlufDialog(&statfluf_zerg)[7] = * ((decltype(&statfluf_zerg)) 0x5152a8);
+StatFlufDialog(&statfluf_terran)[6] = * ((decltype(&statfluf_terran)) 0x515300);
+StatFlufDialog(&statfluf_protoss)[5] = * ((decltype(&statfluf_protoss)) 0x515348);
+StatFlufDialog(&statfluf_neutral)[8] = * ((decltype(&statfluf_neutral)) 0x515388);
+StatFlufDialog *(&statfluf_dialogs)[4] = * ((decltype(&statfluf_dialogs)) 0x5153e8);
 int& dword_5153F8 = * ((decltype(&dword_5153F8)) 0x5153f8);
 int (__stdcall *(&funcs_455F96)[7])(int, int, int) = * ((decltype(&funcs_455F96)) 0x5153fc);
 int(&dword_515418)[] = * ((decltype(&dword_515418)) 0x515418);
@@ -24215,7 +24239,7 @@ __int16& SendTextFilter = * ((decltype(&SendTextFilter)) 0x57f1da);
 Tileset& CurrentTileSet = * ((decltype(&CurrentTileSet)) 0x57f1dc);
 __int16& currentMusicId = * ((decltype(&currentMusicId)) 0x57f1de);
 char& byte_57F1E1 = * ((decltype(&byte_57F1E1)) 0x57f1e1);
-char& consoleIndex = * ((decltype(&consoleIndex)) 0x57f1e2);
+Race& consoleIndex = * ((decltype(&consoleIndex)) 0x57f1e2);
 char(&customSingleplayer)[9] = * ((decltype(&customSingleplayer)) 0x57f1e3);
 int(&PlayerVision)[12] = * ((decltype(&PlayerVision)) 0x57f1ec);
 int(&factionsColorsOrdering)[8] = * ((decltype(&factionsColorsOrdering)) 0x57f21c);
@@ -25057,7 +25081,7 @@ char(&buffer)[] = * ((decltype(&buffer)) 0x68c208);
 char(&byteShieldStr)[22] = * ((decltype(&byteShieldStr)) 0x68c20a);
 dialog *& dword_68C220 = * ((decltype(&dword_68C220)) 0x68c220);
 dialog *& stat_f10_Dlg = * ((decltype(&stat_f10_Dlg)) 0x68c224);
-char& byte_68C228 = * ((decltype(&byte_68C228)) 0x68c228);
+Race& statfluf_current_race = * ((decltype(&statfluf_current_race)) 0x68c228);
 int& dword_68C22C = * ((decltype(&dword_68C22C)) 0x68c22c);
 int& dword_68C230 = * ((decltype(&dword_68C230)) 0x68c230);
 dialog *& statres_Dlg = * ((decltype(&statres_Dlg)) 0x68c234);
