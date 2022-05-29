@@ -1129,6 +1129,77 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->lFlags &= ~CTRL_VALIGN_BOTTOM;
 }
 
+void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
+{
+	if (!multiPlayerMode)
+	{
+		TickCountSomething(1);
+	}
+	if (GameMenuDlg)
+	{
+		DestroyDialog(GameMenuDlg);
+		GameMenuDlg = 0;
+		if (gwGameMode == GAME_RUN)
+		{
+			hAccTable = DlgAccelerator;
+			input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
+		}
+		byte_6D1214 = 0;
+	}
+	sub_4195E0();
+	if (byte_66FF5C)
+	{
+		BWFXN_RefreshTarget(stru_66FF50.left, stru_66FF50.bottom, stru_66FF50.top, stru_66FF50.right);
+		byte_66FF5C = 0;
+		SetInGameInputProcs();
+	}
+	if (dword_596B70)
+	{
+		dword_596B70 = 0;
+		if (dword_597394 != dword_596B20[0])
+		{
+			dword_597394 = dword_596B20[0];
+			drawCursor();
+		}
+	}
+	if (!multiPlayerMode)
+	{
+		PauseGame_maybe();
+	}
+	if (gwGameMode == GAME_RUN)
+	{
+		if (is_placing_building)
+		{
+			refreshLayer3And4();
+			refreshPlaceBuildingLocation();
+		}
+		if (byte_641694)
+		{
+			CancelTargetOrder();
+		}
+	}
+	byte_6D1214 = 1;
+	if (gwGameMode == GAME_RUN)
+	{
+		DlgAccelerator = hAccTable;
+		AcceleratorTables = input_procedures[EventNo::EVN_SYSCHAR];
+	}
+	hAccTable = dword_5968F8;
+	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
+	refreshSelectionScreen();
+
+	GameMenuDlg = (dialog*)fastFileRead(0, 0, a1, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (GameMenuDlg)
+	{
+		GameMenuDlg->lFlags |= CTRL_ACTIVE;
+		AllocInitDialogData(GameMenuDlg, GameMenuDlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\modeless.cpp", 63);
+	}
+
+	InitializeDialog_(GameMenuDlg, a2);
+}
+
+FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
+
 void titleInit_(dialog* dlg)
 {
 	void* buffer;
