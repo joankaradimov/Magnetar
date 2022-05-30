@@ -2261,7 +2261,6 @@ FAIL_STUB_PATCH(sub_4CCAC0);
 int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 {
 	char* v8;
-	__int16 v12;
 	const char* v13;
 
 	CurrentMapFileName[0] = 0;
@@ -2314,24 +2313,28 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 	strrchr(v8, '\\');
 	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
 	if (!is_campaign)
+	{
 		CampaignIndex = MD_none;
-	v12 = LOWORD(a4->data0);
+	}
+	__int16 v12 = LOWORD(a4->data0);
 	dword_5994DC = 1;
 	if (v12 == 0)
-		goto LABEL_25;
-	if (MapStringTbl.buffer)
 	{
-		if (v12 - 1 < *MapStringTbl.buffer)
-		{
-			v13 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[v12];
-			goto LABEL_26;
-		}
-	LABEL_25:
 		v13 = "";
-		goto LABEL_26;
 	}
-	v13 = 0;
-LABEL_26:
+	else if (MapStringTbl.buffer == 0)
+	{
+		v13 = 0;
+	}
+	else if (v12 - 1 < *MapStringTbl.buffer)
+	{
+		v13 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[v12];
+	}
+	else
+	{
+		v13 = "";
+	}
+
 	SStrCopy(CurrentMapName, v13, 32u);
 	return 1;
 }
