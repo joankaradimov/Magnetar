@@ -723,6 +723,18 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 FUNCTION_PATCH(LoadGameTemplates, LoadGameTemplates_);
 FAIL_STUB_PATCH(sub_4AB970);
 
+void InitializeImage_()
+{
+	memset(ScreenLayers, 0, 0xA0u);
+	memset(RefreshRegions, 0, sizeof(RefreshRegions));
+	GameScreenBuffer.wid = 640;
+	GameScreenBuffer.ht = 480;
+	GameScreenBuffer.data = 0;
+	stru_6D5DF0.data = (u8*)SMemAlloc(2304, "Starcraft\\SWAR\\lang\\gds\\image.cpp", 141, 0);
+}
+
+FAIL_STUB_PATCH(InitializeImage);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -747,7 +759,7 @@ void PreInitData_()
 	AppAddExit_(DestroyAccelerators);
 	LoadMenuFonts();
 	AppAddExit_(DestroyFonts);
-	InitializeImage();
+	InitializeImage_();
 	AppAddExit_(DestroyImage);
 	LoadCursors();
 	InitializeScreenLayer();
