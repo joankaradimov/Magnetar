@@ -3334,6 +3334,68 @@ void sub_458BB0_(dialog* dlg)
 
 FAIL_STUB_PATCH(sub_458BB0);
 
+void statflufDlgUpdate_(dialog* dlg)
+{
+	dlg->lFlags |= CTRL_TRANSPARENT;
+	BINDLG_BlitSurface(dlg);
+	if ((dlg->lFlags & CTRL_UPDATE) == 0)
+	{
+		dlg->lFlags |= CTRL_UPDATE;
+		updateDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(statflufDlgUpdate);
+
+bool __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+	case EVN_MOUSEMOVE:
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONDBLCLK:
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONDBLCLK:
+	case EVN_CHAR:
+		return 0;
+	case EVN_USER:
+		if (evt->dwUser == EventUser::USER_CREATE)
+		{
+			statflufDlgUpdate_(dlg);
+		}
+		else if (evt->dwUser == EventUser::USER_MOUSEMOVE)
+		{
+			return 0;
+		}
+		break;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(statfluf_DLG_Interact);
+
+void load_statfluf_BIN_()
+{
+	statfluf_current_race = InReplay ? Race::RACE_Other : consoleIndex;
+	StatFlufDialog* dlgs = statfluf_dialogs[statfluf_current_race];
+	for (int i = 0; dlgs[i].position.left != -1; i++)
+	{
+		dlgs[i].dialog = LoadDialog("rez\\statfluf.bin"); // The top decoratios of the main (bottom-of-the-screen) in-game UI
+		dlgs[i].dialog->rct.left = dlgs[i].position.left;
+		dlgs[i].dialog->rct.top = dlgs[i].position.top;
+		dlgs[i].dialog->rct.right = dlgs[i].position.right - 1;
+		dlgs[i].dialog->rct.bottom = dlgs[i].position.bottom - 1;
+		dlgs[i].dialog->fields.dlg.dstBits_wid = dlgs[i].position.right;
+		dlgs[i].dialog->fields.dlg.dstBits_ht = dlgs[i].position.bottom;
+		InitializeDialog_(dlgs[i].dialog, statfluf_DLG_Interact_);
+	}
+}
+
+FAIL_STUB_PATCH(load_statfluf_BIN);
+
 void load_statlb_()
 {
 	if (!multiPlayerMode
@@ -3621,7 +3683,7 @@ void setup_HUD_()
 	{
 		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
 	}
-	load_statfluf_BIN();
+	load_statfluf_BIN_();
 	loadPortdata_BINDLG();
 	load_statlb_();
 	load_StatRes_BIN_();
