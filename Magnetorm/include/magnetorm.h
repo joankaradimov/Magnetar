@@ -67,7 +67,7 @@ BOOL __stdcall SFileGetFileArchive(HANDLE hFile, HANDLE archive);
 BOOL __stdcall SFileGetArchiveName(HANDLE hArchive, char* name, int length);
 BOOL __stdcall SFileDdaSetVolume(HANDLE directsound, signed int bigvolume, signed int volume);
 BOOL __stdcall SFileLoadFile(char* filename, void* buffer, int buffersize, int a4, int a5);
-BOOL __stdcall SFileOpenArchive(char* archivename, DWORD dwPriority, DWORD dwFlags, HANDLE handle);
+BOOL __stdcall SFileOpenArchive(const char* archivename, DWORD dwPriority, DWORD dwFlags, HANDLE handle);
 void __stdcall SFileSetLocale(LCID lcLocale);
 BOOL __stdcall SFileOpenFileEx(HANDLE hMpq, const char* szFileName, DWORD dwSearchScope, HANDLE* phFile);
 BOOL __stdcall SFileCloseArchive(HANDLE hArchive);
