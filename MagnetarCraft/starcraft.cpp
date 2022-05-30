@@ -1870,6 +1870,93 @@ MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 void initMapData_();
 void setMapSizeConstants_();
 
+bool __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
+{
+	dialog* v6;
+	dialog* v7;
+
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+		return 0;
+	case EVN_MOUSEMOVE:
+		if (isSinglePaused())
+		{
+			return 0;
+		}
+		minimapPreviewMouseUpdate(dlg, evt);
+		break;
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONDBLCLK:
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONDBLCLK:
+		if (IS_GAME_PAUSED && !multiPlayerMode)
+		{
+			return 0;
+		}
+		v7 = dlgSetMouseOver(dlg, evt);
+		if (!v7)
+		{
+			return 0;
+		}
+		if (v7 != dlg)
+		{
+			v7->pfcnInteract(v7, evt);
+		}
+		return 1;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			updateMinimapPreviewDlg(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			killMinimapPreviewDlg(dlg);
+			break;
+		case EventUser::USER_MOUSEMOVE:
+			return 1;
+		}
+
+		break;
+	case EVN_CHAR:
+		if (isSinglePaused() || dword_5993AC || evt->wVirtKey != VK_TAB)
+		{
+			return 0;
+		}
+		else
+		{
+			if (is_keycode_used[VK_SHIFT])
+			{
+				++byte_6D5BBE;
+				if (byte_6D5BBE > 2)
+				{
+					byte_6D5BBE = 0;
+					dword_6D5E1C = 1;
+				}
+				else if (byte_6D5BBE != 1)
+				{
+					dword_6D5E1C = 1;
+				}
+			}
+			else
+			{
+				byte_6D5BBF = !byte_6D5BBF;
+			}
+			minimapPreviewUpdateState();
+			v6 = getControlFromIndex(dlg, 2);
+			if (SLOBYTE(v6->lFlags) < 0)
+			{
+				drawShowHideTerrainContextHelp(v6);
+			}
+			return 1;
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(MiniMapPreviewInteract);
+
 void load_gluMinimap_()
 {
 	word_59C19C = MoveToTile.y;
@@ -1927,7 +2014,7 @@ void load_gluMinimap_()
 	else
 	{
 		minimap_Dlg = LoadDialog("rez\\minimap.bin");
-		InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract);
+		InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract_);
 	}
 }
 
@@ -7022,7 +7109,7 @@ bool IsCursorWithin(pt cursor, rect rectangle)
 void load_MinimapPreview_()
 {
 	minimap_Dlg = LoadDialog("rez\\minimappreview.bin");
-	InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract);
+	InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract_);
 }
 
 FAIL_STUB_PATCH(load_MinimapPreview);
