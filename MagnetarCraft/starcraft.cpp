@@ -885,7 +885,8 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
-FUNCTION_PATCH(BWFXN_DDrawInitialize, BWFXN_DDrawInitialize_);
+FAIL_STUB_PATCH(sub_41DDD0);
+FAIL_STUB_PATCH(BWFXN_DDrawInitialize);
 
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
