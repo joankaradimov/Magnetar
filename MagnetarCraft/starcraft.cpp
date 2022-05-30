@@ -903,7 +903,7 @@ FAIL_STUB_PATCH(BWFXN_DDrawInitialize);
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
-	if ((ScreenLayers[5].bits & 1) != 0)
+	if (ScreenLayers[5].bits & 1)
 	{
 		maskSomething0();
 		memcpy(dword_6D5C10, dword_6D5C0C, 0x198u);
