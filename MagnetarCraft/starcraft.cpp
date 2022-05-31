@@ -3411,6 +3411,54 @@ void load_statfluf_BIN_()
 
 FAIL_STUB_PATCH(load_statfluf_BIN);
 
+void loadPortdata_BINDLG_()
+{
+	unsigned __int16* v4 = (unsigned short*) fastFileRead_(0, 0, "arr\\portdata.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
+	dword_6D5C9C = v4;
+	for (int i = 0; i < 110; i++)
+	{
+		const char* v9;
+		if (LOWORD(dword_655C58[i]))
+		{
+			v9 = LOWORD(dword_655C58[i]) - 1 < *v4 ? (char*)v4 + v4[LOWORD(dword_655C58[i])] : "";
+		}
+		else
+		{
+			v9 = 0;
+		}
+		dword_655C58[i] = (int)v9;
+
+		if (LOWORD(dword_655E80[i]))
+		{
+			v9 = LOWORD(dword_655E80[i]) - 1 < *v4 ? (char*)v4 + v4[LOWORD(dword_655E80[i])] : "";
+		}
+		else
+		{
+			v9 = 0;
+		}
+		dword_655E80[i] = (int)v9;
+	}
+
+	DatLoad* v28;
+	for (v28 = portdataDat; v28->address != byte_655E10; ++v28);
+
+	dword_57FD34 = MoveToX;
+	dword_57FD38 = MoveToY;
+	dword_68AC50[0] = (BYTE*)v28[0].address;
+	dword_68AC50[1] = (BYTE*)v28[1].address;
+	dword_68AC50[2] = (BYTE*)v28[2].address;
+	dword_68AC50[3] = (BYTE*)v28[3].address;
+	dword_68AC60 = 0;
+	dword_68AC4C = 0;
+	CanUpdateSelectedUnitPortrait = 1;
+
+	starport_Dlg = LoadDialog("rez\\statport.bin");
+	InitializeDialog_(starport_Dlg, statport_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(loadPortdata_BINDLG);
+
 void load_statlb_()
 {
 	if (!multiPlayerMode
@@ -3699,7 +3747,7 @@ void setup_HUD_()
 		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
 	}
 	load_statfluf_BIN_();
-	loadPortdata_BINDLG();
+	loadPortdata_BINDLG_();
 	load_statlb_();
 	load_StatRes_BIN_();
 	load_Statdata_BIN_();
