@@ -762,7 +762,7 @@ void PreInitData_()
 	InitializeImage_();
 	AppAddExit_(DestroyImage);
 	LoadCursors();
-	InitializeScreenLayer();
+	InitializeDialogScreenLayer();
 	dword_6D5E20 = &GameScreenBuffer;
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
@@ -2654,7 +2654,7 @@ signed int LoadGameInit_()
 			replay_header.initial_seed = initialSeed;
 		}
 	}
-	InitializeScreenLayer();
+	InitializeDialogScreenLayer();
 	ButtonPressSound = mouseOver_Loading_CB;
 	LoadGameFonts();
 	memset(randomCounts, 0, 0x400u);

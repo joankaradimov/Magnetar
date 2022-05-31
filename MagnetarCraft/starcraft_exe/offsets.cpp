@@ -1304,14 +1304,14 @@ unsigned int dlgMouseOverGenericLabel(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_418060)(), sub_418060, 0x418060);
-dialog *getControlFromIndex(dialog *a1, __int16 a2) {
+dialog *getControlFromIndex(dialog *dlg, __int16 index) {
     int address = 0x418080;
     dialog * result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, a1
-        mov cx, a2
+        mov eax, dlg
+        mov cx, index
         call address
         mov result_, eax
     }
@@ -1693,18 +1693,18 @@ void DestroyDialog(dialog *a1) {
     }
 }
 DECL_FUNC(int(*sub_419F80)(), sub_419F80, 0x419f80);
-int sendInputToAllDialogs(dlgEvent *a1) {
+int sendInputToAllDialogs(dlgEvent *evt) {
     int address = 0x419fd0;
     int result_;
     __asm {
         xor ebx, ebx
-        mov ebx, a1
+        mov ebx, evt
         call address
         mov result_, eax
     }
     return result_;
 }
-DECL_FUNC(int(*InitializeScreenLayer)(), InitializeScreenLayer, 0x41a030);
+DECL_FUNC(int(*InitializeDialogScreenLayer)(), InitializeDialogScreenLayer, 0x41a030);
 int gluLoadBINDlg(dialog *a1, FnInteract fn_interact) {
     int address = 0x41a080;
     int result_;
@@ -2070,7 +2070,19 @@ int sub_41C5A0(_DWORD a1, rect *a2) {
 DECL_FUNC(int (__stdcall*CtrlNode_Constructor)(int, int), CtrlNode_Constructor, 0x41c5d0);
 DECL_FUNC(int(*updateAllDlgs)(), updateAllDlgs, 0x41c780);
 DECL_FUNC(int(*sub_41C7B0)(), sub_41C7B0, 0x41c7b0);
-DECL_FUNC(int(*sub_41C810)(), sub_41C810, 0x41c810);
+int sub_41C810(int a1, _DWORD a2) {
+    int address = 0x41c810;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*BWFXN_RedrawTarget)(), BWFXN_RedrawTarget, 0x41ca00);
 DECL_FUNC(void (__stdcall*DialogUpdateProc)(Bitmap *, bounds *), DialogUpdateProc, 0x41cb50);
 DECL_FUNC(int(*fixDrawBoundsWithin)(), fixDrawBoundsWithin, 0x41cf60);
@@ -2170,7 +2182,7 @@ DECL_FUNC(int (__stdcall*refreshRect)(int, int, int, int), refreshRect, 0x41de20
 DECL_FUNC(int (__stdcall*BlitBitmap)(int), BlitBitmap, 0x41deb0);
 DECL_FUNC(int (__stdcall*BlitCursorSurface)(int, __int16), BlitCursorSurface, 0x41df40);
 DECL_FUNC(int(*sub_41E000)(), sub_41E000, 0x41e000);
-DECL_FUNC(int(*InitializeImage)(), InitializeImage, 0x41e050);
+DECL_FUNC(void (__cdecl*InitializeImage)(), InitializeImage, 0x41e050);
 DECL_FUNC(void (__thiscall*DestroyImage)(bool exit_code), DestroyImage, 0x41e0a0);
 signed int BWFXN_RefreshTarget(signed int left, signed int bottom, signed int top, signed int right) {
     int address = 0x41e0d0;
@@ -2289,7 +2301,17 @@ DECL_FUNC(int(*sub_41F8D0)(), sub_41F8D0, 0x41f8d0);
 DECL_FUNC(int(*setTextAlignment)(), setTextAlignment, 0x41f920);
 DECL_FUNC(void (__thiscall*BWFXN_SetFont)(Font *this_), BWFXN_SetFont, 0x41fb30);
 DECL_FUNC(int (__stdcall*sub_41FC20)(int), sub_41FC20, 0x41fc20);
-DECL_FUNC(int(*getMessageWidth)(), getMessageWidth, 0x41fc80);
+int getMessageWidth(u8 *a1) {
+    int address = 0x41fc80;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_41FCC0)(), sub_41FCC0, 0x41fcc0);
 Font *LoadFont(char *font_name, Font *(__fastcall *a2)(char *, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD, _DWORD)) {
     int address = 0x41fd10;
@@ -10735,7 +10757,7 @@ DECL_FUNC(int (__stdcall*BitContextHelpSurface)(int), BitContextHelpSurface, 0x4
 DECL_FUNC(int (__stdcall*sub_481260)(int, __int16), sub_481260, 0x481260);
 DECL_FUNC(int(*sub_481310)(), sub_481310, 0x481310);
 DECL_FUNC(int(*sub_481320)(), sub_481320, 0x481320);
-DECL_FUNC(int(*CreateHelpContext)(), CreateHelpContext, 0x481330);
+DECL_FUNC(void (__cdecl*CreateHelpContext)(), CreateHelpContext, 0x481330);
 DECL_FUNC(int(*refreshSelectionScreenEx)(), refreshSelectionScreenEx, 0x4813d0);
 DECL_FUNC(int(*refreshSelectionScreen)(), refreshSelectionScreen, 0x481480);
 int CreateContextHelp(int a1, int a2, char *a3) {
@@ -14400,7 +14422,7 @@ DECL_FUNC(int(*load_gluMinimap)(), load_gluMinimap, 0x4a5a80);
 DECL_FUNC(int(*load_MinimapPreview)(), load_MinimapPreview, 0x4a5d10);
 DECL_FUNC(int(*sub_4A5E30)(), sub_4A5E30, 0x4a5e30);
 DECL_FUNC(int(*getMusicVolume)(), getMusicVolume, 0x4a5ef0);
-DECL_FUNC(int(*stopMusic)(), stopMusic, 0x4a5f50);
+DECL_FUNC(void (__cdecl*stopMusic)(), stopMusic, 0x4a5f50);
 DECL_FUNC(void (__stdcall*FadeMusicProc)(HWND, UINT, UINT, DWORD), FadeMusicProc, 0x4a6030);
 DECL_FUNC(int(*sub_4A60D0)(), sub_4A60D0, 0x4a60d0);
 DECL_FUNC(int(*sub_4A6100)(), sub_4A6100, 0x4a6100);
@@ -20964,13 +20986,13 @@ void onSendText(dialog *a1, dlgEvent *a2, int a3) {
         call address
     }
 }
-DECL_FUNC(int (__fastcall*textbox_CtrlInteract)(dialog *dlg, struct dlgEvent *evt), textbox_CtrlInteract, 0x4f3540);
-signed int textbox_DLG_Init_Evt(dialog *a1) {
+DECL_FUNC(bool (__fastcall*textbox_CtrlInteract)(dialog *dlg, struct dlgEvent *evt), textbox_CtrlInteract, 0x4f3540);
+signed int textbox_DLG_Init_Evt(dialog *dlg) {
     int address = 0x4f35d0;
     signed result_;
     __asm {
         xor edi, edi
-        mov edi, a1
+        mov edi, dlg
         call address
         mov result_, eax
     }
@@ -23828,7 +23850,7 @@ char *(&statusscreen_infobtn)[1] = * ((decltype(&statusscreen_infobtn)) 0x519f40
 __int16(&word_519F54)[] = * ((decltype(&word_519F54)) 0x519f54);
 __int16(&word_519F5C)[] = * ((decltype(&word_519F5C)) 0x519f5c);
 __int16& word_519F64 = * ((decltype(&word_519F64)) 0x519f64);
-RegistryOptions *& off_519F7C = * ((decltype(&off_519F7C)) 0x519f7c);
+RegistryOption(&stru_519F68)[16] = * ((decltype(&stru_519F68)) 0x519f68);
 char& byte_51A0E8 = * ((decltype(&byte_51A0E8)) 0x51a0e8);
 char& byte_51A0E9 = * ((decltype(&byte_51A0E9)) 0x51a0e9);
 int& Gamma = * ((decltype(&Gamma)) 0x51a158);
@@ -24768,7 +24790,7 @@ __int16(&Tech_LabelIndex)[44] = * ((decltype(&Tech_LabelIndex)) 0x6562a0);
 __int16(&Tech_Unknown2)[44] = * ((decltype(&Tech_Unknown2)) 0x6562f8);
 __int16(&Tech_EnergyCost)[44] = * ((decltype(&Tech_EnergyCost)) 0x656380);
 __int16(&Tech_ResearchTime)[44] = * ((decltype(&Tech_ResearchTime)) 0x6563d8);
-__int16(&Tech_Icon)[] = * ((decltype(&Tech_Icon)) 0x656430);
+__int16(&Tech_Icon)[44] = * ((decltype(&Tech_Icon)) 0x656430);
 u8(&Weapon_DamageFactor)[130] = * ((decltype(&Weapon_DamageFactor)) 0x6564e0);
 u16(&Weapon_TargetErrorMessage)[130] = * ((decltype(&Weapon_TargetErrorMessage)) 0x656568);
 WeaponBehavior(&Weapon_Behavior)[130] = * ((decltype(&Weapon_Behavior)) 0x656670);
@@ -25018,10 +25040,7 @@ int(&dword_68A9A8)[] = * ((decltype(&dword_68A9A8)) 0x68a9a8);
 int(&dword_68A9D8)[] = * ((decltype(&dword_68A9D8)) 0x68a9d8);
 char& byte_68AC48 = * ((decltype(&byte_68AC48)) 0x68ac48);
 int& dword_68AC4C = * ((decltype(&dword_68AC4C)) 0x68ac4c);
-int(&dword_68AC50)[] = * ((decltype(&dword_68AC50)) 0x68ac50);
-int& dword_68AC54 = * ((decltype(&dword_68AC54)) 0x68ac54);
-int& dword_68AC58 = * ((decltype(&dword_68AC58)) 0x68ac58);
-int& dword_68AC5C = * ((decltype(&dword_68AC5C)) 0x68ac5c);
+BYTE *(&dword_68AC50)[4] = * ((decltype(&dword_68AC50)) 0x68ac50);
 int& dword_68AC60 = * ((decltype(&dword_68AC60)) 0x68ac60);
 int& dword_68AC64 = * ((decltype(&dword_68AC64)) 0x68ac64);
 int& dword_68AC68 = * ((decltype(&dword_68AC68)) 0x68ac68);
