@@ -1248,6 +1248,8 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->lFlags &= ~CTRL_VALIGN_BOTTOM;
 }
 
+FAIL_STUB_PATCH(InitializeDialog);
+
 void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
 	if (!multiPlayerMode)
