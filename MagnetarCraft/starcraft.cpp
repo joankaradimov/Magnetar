@@ -2991,7 +2991,7 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 
 FAIL_STUB_PATCH(DoCycle);
 
-void __cdecl colorCycleInterval_()
+void colorCycleInterval_()
 {
 	unsigned int v0 = DoCycle_(cycle_colors, 0, 0x80u);
 	if (v0 < 8)
