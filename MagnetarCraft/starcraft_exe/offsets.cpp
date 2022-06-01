@@ -14288,7 +14288,14 @@ void killMinimapPreviewDlg(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void(*minimapGameResetMouseInput)(), minimapGameResetMouseInput, 0x4a3eb0);
+void minimapGameResetMouseInput(dialog *dlg) {
+    int address = 0x4a3eb0;
+    __asm {
+        xor edx, edx
+        mov edx, dlg
+        call address
+    }
+}
 DECL_FUNC(void (__fastcall*MinimapImageUpdate)(dialog *dlg, int x, int y, rect *dst), MinimapImageUpdate, 0x4a3ee0);
 void drawUnitBox(char color, unsigned int x, unsigned int y, unsigned __int8 a4, unsigned __int8 a5, char a6) {
     int address = 0x4a3fd0;
@@ -14329,13 +14336,11 @@ int minimapGameUpdate(dialog *a1) {
     }
     return result_;
 }
-void minimapGameMouseUpdate(dialog *a1, dialog *a2) {
+void minimapGameMouseUpdate(dialog *dlg) {
     int address = 0x4a4d20;
     __asm {
-        xor ecx, ecx
         xor edi, edi
-        mov ecx, a1
-        mov edi, a2
+        mov edi, dlg
         call address
     }
 }
@@ -14355,7 +14360,7 @@ void Minimap_InitVisionButton(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*MinimapGameRightclickEventMoveto)(int), MinimapGameRightclickEventMoveto, 0x4a5310);
+DECL_FUNC(int (__stdcall*MinimapGameRightclickEventMoveto)(dialog *a2), MinimapGameRightclickEventMoveto, 0x4a5310);
 void MinimapGameClickEvent(dlgEvent *a1, dialog *a2) {
     int address = 0x4a53c0;
     __asm {
@@ -14396,7 +14401,7 @@ void minimap_dlg_Activate(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(unsigned int (__fastcall*MinimapButton_EventHandler)(dialog *a1, dlgEvent *a2), MinimapButton_EventHandler, 0x4a5570);
+DECL_FUNC(bool (__fastcall*MinimapButton_EventHandler)(dialog *a1, dlgEvent *a2), MinimapButton_EventHandler, 0x4a5570);
 void MinimapGameTargetOrder(dlgEvent *a1) {
     int address = 0x4a55f0;
     __asm {
@@ -14405,7 +14410,7 @@ void MinimapGameTargetOrder(dlgEvent *a1) {
         call address
     }
 }
-DECL_FUNC(signed int (__fastcall*MinimapImageInteract)(dialog *dlg, dlgEvent *evt), MinimapImageInteract, 0x4a5650);
+DECL_FUNC(bool (__fastcall*MinimapImageInteract)(dialog *dlg, dlgEvent *evt), MinimapImageInteract, 0x4a5650);
 dialog *updateMinimapPreviewDlg(dialog *a1) {
     int address = 0x4a5770;
     dialog * result_;
@@ -17861,7 +17866,17 @@ DECL_FUNC(bool (__fastcall*TitleDlgProc)(dialog *dlg, struct dlgEvent *evt), Tit
 DECL_FUNC(void (__cdecl*LoadTitle)(), LoadTitle, 0x4d49a0);
 DECL_FUNC(int(*initializePlayerValues)(), initializePlayerValues, 0x4d4ac0);
 DECL_FUNC(int(*nullsub_65)(), nullsub_65, 0x4d4b10);
-DECL_FUNC(int(*packColorShifts)(), packColorShifts, 0x4d4b20);
+signed int packColorShifts(void *a1) {
+    int address = 0x4d4b20;
+    signed result_;
+    __asm {
+        xor edx, edx
+        mov edx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4D4B50)(), sub_4D4B50, 0x4d4b50);
 DECL_FUNC(int(*sub_4D4B60)(), sub_4D4B60, 0x4d4b60);
 DECL_FUNC(int(*sub_4D4B80)(), sub_4D4B80, 0x4d4b80);
@@ -18148,22 +18163,17 @@ void compileHealthBar(CImage *a1, CSprite *a2) {
 DECL_FUNC(int (__stdcall*imageRenderFxn14_1)(int, int, char), imageRenderFxn14_1, 0x4d6120);
 DECL_FUNC(int (__stdcall*imageRenderFxn14_0)(int, int, char), imageRenderFxn14_0, 0x4d61a0);
 DECL_FUNC(int (__stdcall*ReadImagesArray)(FILE *), ReadImagesArray, 0x4d6220);
-unsigned int packImageData(unsigned int a1, CImage *a2) {
+void packImageData(CImage *image) {
     int address = 0x4d6330;
-    unsigned result_;
     __asm {
-        xor ecx, ecx
         xor esi, esi
-        mov ecx, a1
-        mov esi, a2
+        mov esi, image
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(CImage *(__fastcall*CreateHealthBar)(int a1, CSprite *a2), CreateHealthBar, 0x4d6420);
-DECL_FUNC(int(*sub_4D64A0)(), sub_4D64A0, 0x4d64a0);
-DECL_FUNC(int (__stdcall*writeImages)(FILE *), writeImages, 0x4d64c0);
+DECL_FUNC(void (__thiscall*sub_4D64A0)(unsigned int this_), sub_4D64A0, 0x4d64a0);
+DECL_FUNC(int(*writeImages)(FILE *a2), writeImages, 0x4d64c0);
 void ISCRIPT_PlaySnd(int a1) {
     int address = 0x4d6610;
     __asm {
