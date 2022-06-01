@@ -30,6 +30,7 @@ extern "C" {
 	int StormLibNetSetBasePlayer;
 	int StormLibNetSetGameMode;
 	int StormLibNetUnregisterEventHandler;
+	int StormLibNetGetOwnerId;
 	int StormLibNetEnumGamesEx;
 	int StormLibNetSendServerChatCommand;
 	int StormLibNetSendDatagram;

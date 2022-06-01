@@ -31,6 +31,7 @@ EXPORTS
     StormLibNetSetBasePlayer @129
     StormLibNetSetGameMode @130
     StormLibNetUnregisterEventHandler @131
+    StormLibNetGetOwnerId @132
     StormLibNetEnumGamesEx @133
     StormLibNetSendServerChatCommand @134
     StormLibNetSendDatagram @135

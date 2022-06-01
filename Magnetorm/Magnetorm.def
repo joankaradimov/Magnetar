@@ -30,6 +30,7 @@ EXPORTS
     SNetSetBasePlayer = StormLibNetSetBasePlayer @129
     SNetSetGameMode = StormLibNetSetGameMode @130
     SNetUnregisterEventHandler = StormLibNetUnregisterEventHandler @131
+    SNetGetOwnerId = StormLibNetGetOwnerId @132
     SNetEnumGamesEx = StormLibNetEnumGamesEx @133
     SNetSendServerChatCommand = StormLibNetSendServerChatCommand @134
     SNetSendDatagram = StormLibNetSendDatagram @135
