@@ -1882,6 +1882,69 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void setMapSizeConstants_();
+
+void updateMinimapPreviewDlg_(dialog* dlg)
+{
+	static FnInteract menu_functions[] = {
+		MinimapImageInteract,
+	};
+
+	static FnInteract ingame_functions[] = {
+		MinimapImageInteract,
+		MinimapButton_EventHandler,
+		MinimapButton_EventHandler,
+		MinimapButton_EventHandler,
+	};
+
+	dlg->pfcnUpdate = MiniMapUpdate;
+	dlg->lFlags = dlg->lFlags | CTRL_USELOCALGRAPHIC;
+	int v1 = dword_5993AC;
+	if (dword_5993AC == 1)
+	{
+		dlg->lFlags = dlg->lFlags | CTRL_USELOCALGRAPHIC | CTRL_TRANSPARENT;
+		registerUserDialogAction(dlg, sizeof(menu_functions), menu_functions);
+	}
+	else if (dword_5993AC == 0)
+	{
+		registerUserDialogAction(dlg, sizeof(ingame_functions), ingame_functions);
+		BINDLG_BlitSurface(dlg);
+		v1 = dword_5993AC;
+	}
+	else
+	{
+		registerUserDialogAction(dlg, sizeof(menu_functions), menu_functions);
+	}
+
+	minimap_dialog = getControlFromIndex(minimap_Dlg, 1);
+	if (v1 == 0)
+	{
+		setMapSizeConstants_();
+		if (dword_5993AC == 0)
+		{
+			SetCallbackTimer(1, dlg, multiPlayerMode != 0 ? 2000 : 1000, Minimap_TimerRefresh);
+			SetCallbackTimer(2, dlg, 200, updateMinimapPositioninfoProc);
+			SetCallbackTimer(3, dlg, 200, updateMinimapSurfaceInfoProc);
+			SetCallbackTimer(6, dlg, 100, updateMinimapSurfaceInfo2Proc);
+			if (multiPlayerMode && (GetActivePlayerCount() > 1 || multiPlayerMode && gameData.got_file_values.template_id == 15) || InReplay)
+			{
+				SetCallbackTimer(5, dlg, 500, playerInfoSomethingTvBProc);
+			}
+			if (dword_5993AC == 0)
+			{
+				showDialog(minimap_dialog);
+			}
+		}
+	}
+	if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
+	{
+		minimap_dialog->lFlags |= CTRL_UPDATE;
+		updateDialog(minimap_dialog);
+	}
+}
+
+FAIL_STUB_PATCH(updateMinimapPreviewDlg);
+
 void initMapData_();
 void setMapSizeConstants_();
 
@@ -1924,7 +1987,7 @@ bool __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			updateMinimapPreviewDlg(dlg);
+			updateMinimapPreviewDlg_(dlg);
 			break;
 		case EventUser::USER_DESTROY:
 			killMinimapPreviewDlg(dlg);
