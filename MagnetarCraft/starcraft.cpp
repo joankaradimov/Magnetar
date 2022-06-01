@@ -720,7 +720,7 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 	return 1;
 }
 
-FUNCTION_PATCH(LoadGameTemplates, LoadGameTemplates_);
+FAIL_STUB_PATCH(LoadGameTemplates);
 FAIL_STUB_PATCH(sub_4AB970);
 
 void InitializeImage_()
@@ -7113,7 +7113,7 @@ int getGameList_(dialog* dlg)
 		DLGMusicFade(MT_TITLE);
 	}
 	Template_Destructor(stru_51A218.char14 + 60);
-	return LoadGameTemplates(Template_Constructor);
+	return LoadGameTemplates_(Template_Constructor);
 }
 
 FAIL_STUB_PATCH(getGameList);
