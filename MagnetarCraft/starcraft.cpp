@@ -3933,7 +3933,7 @@ FAIL_STUB_PATCH(minimapSurfaceUpdate_64);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
 
-void __cdecl setMapSizeConstants_()
+void setMapSizeConstants_()
 {
 	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
 
@@ -3997,7 +3997,7 @@ void __cdecl setMapSizeConstants_()
 	stru_512D00.bottom = minimap_dialog->rct.top + minimap_surface_height + 314;
 }
 
-FUNCTION_PATCH(setMapSizeConstants, setMapSizeConstants_);
+FAIL_STUB_PATCH(setMapSizeConstants);
 
 const char* TILESET_NAMES[] = {
 	"badlands",
