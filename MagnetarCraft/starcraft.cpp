@@ -1303,12 +1303,12 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 		byte_66FF5C = 0;
 		SetInGameInputProcs();
 	}
-	if (dword_596B70)
+	if (last_cursor_type)
 	{
-		dword_596B70 = 0;
-		if (dword_597394 != dword_596B20[0])
+		last_cursor_type = CursorType::CUR_ARROW;
+		if (last_cursor != cursor_graphics[CursorType::CUR_ARROW])
 		{
-			dword_597394 = dword_596B20[0];
+			last_cursor = cursor_graphics[CursorType::CUR_ARROW];
 			drawCursor();
 		}
 	}
@@ -3322,8 +3322,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	TickCountSomething(0);
 	DoGameLoop_(a1);
 	RefreshLayer5();
-	int v1 = getCursorType();
-	_drawCursor(v1);
+	setCursorType(getCursorType());
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
 	{
@@ -5105,10 +5104,10 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		DlgGrp* v11 = dword_51C5C8[v10];
 		memcpy(&stru_6CE000, &dword_51C40C[v10], sizeof(stru_6CE000));
 		sub_419290(v11);
-		int v12 = dword_50E170[326 * v10];
-		if (dword_597394 != v12)
+		grpHead* v12 = (grpHead*) dword_50E170[326 * v10];
+		if (last_cursor != v12)
 		{
-			dword_597394 = v12;
+			last_cursor = v12;
 			drawCursor();
 		}
 		SetCallbackTimer(24, a2, 50, sub_4DCEA0);
@@ -9049,12 +9048,12 @@ void GameMainLoop_()
 			}
 			while (1)
 			{
-				if (dword_596B70 != GAME_CINEMATIC)
+				if (last_cursor_type != CursorType::CUR_TIME)
 				{
-					dword_596B70 = GAME_CINEMATIC;
-					if (dword_597394 != dword_596B48)
+					last_cursor_type = CursorType::CUR_TIME;
+					if (last_cursor != cursor_graphics[CUR_TIME])
 					{
-						dword_597394 = dword_596B48;
+						last_cursor = cursor_graphics[CUR_TIME];
 						drawCursor();
 					}
 				}
