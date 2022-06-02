@@ -3047,6 +3047,31 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
+DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
+DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
+
+void RemoveFoWCheat_()
+{
+	if (multiPlayerMode)
+	{
+		GameCheats &= ~(CHEAT_BlackSheepWall | CHEAT_WarAintWhatItUsedToBe);
+	}
+	if ((ScreenLayers[5].bits & 1) == 0)
+	{
+		ScreenLayers[5].bits |= 2u;
+	}
+	if ((GameCheats & (CHEAT_BlackSheepWall | CHEAT_WarAintWhatItUsedToBe)) == 0)
+	{
+		RefreshLayer5();
+		for (int i = 0; i < map_size.width * map_size.height; i++)
+		{
+			active_tiles[i] |= VISIBLE_PLAYER_8 | VISIBLE_PLAYER_7 | VISIBLE_PLAYER_6 | VISIBLE_PLAYER_5 | VISIBLE_PLAYER_4 | VISIBLE_PLAYER_3 | VISIBLE_PLAYER_2 | VISIBLE_PLAYER_1;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(RemoveFoWCheat);
+
 void GameLoop_(MenuPosition a1)
 {
 	SetInGameLoop(1);
@@ -3060,7 +3085,7 @@ void GameLoop_(MenuPosition a1)
 	if (visionUpdated)
 	{
 		updateActiveTileInfo();
-		RemoveFoWCheat();
+		RemoveFoWCheat_();
 	}
 	UpdateUnits();
 	ImageDrawingBulletDrawing();
@@ -4264,8 +4289,6 @@ FAIL_STUB_PATCH(ChkLoader_VCOD);
 FAIL_STUB_PATCH(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
-
-DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 
 // TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
