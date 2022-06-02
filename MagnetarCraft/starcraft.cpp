@@ -65,18 +65,33 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 
 FAIL_STUB_PATCH(sendInputToAllDialogs);
 
+void RefreshCursorScreen_()
+{
+	if (ScreenLayers[0].buffers)
+	{
+		ScreenLayers[0].bits |= 1u;
+		BWFXN_RefreshTarget(
+			(__int16)ScreenLayers[0].left,
+			(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
+			(__int16)ScreenLayers[0].top,
+			(__int16)ScreenLayers[0].width + (__int16)ScreenLayers[0].left - 1);
+	}
+}
+
+FAIL_STUB_PATCH(RefreshCursorScreen);
+
 void __cdecl drawCursor_()
 {
 	if (last_cursor)
 	{
-		RefreshCursorScreen();
+		RefreshCursorScreen_();
 		RefreshCursorRect();
 		grpFrame* cursor_frame = &last_cursor->frames[dword_597390 % last_cursor->wFrames];
 		ScreenLayers[0].width = cursor_frame->wid;
 		ScreenLayers[0].height = cursor_frame->hgt;
 		ScreenLayers[0].left = cursor_frame->x + Mouse.x - 63;
 		ScreenLayers[0].top = cursor_frame->y + Mouse.y - 63;
-		RefreshCursorScreen();
+		RefreshCursorScreen_();
 		RefreshCursorRect();
 	}
 }
