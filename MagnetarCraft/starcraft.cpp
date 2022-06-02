@@ -65,9 +65,27 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 
 FAIL_STUB_PATCH(sendInputToAllDialogs);
 
+void __cdecl drawCursor_()
+{
+	if (last_cursor)
+	{
+		RefreshCursorScreen();
+		RefreshCursorRect();
+		grpFrame* cursor_frame = &last_cursor->frames[dword_597390 % last_cursor->wFrames];
+		ScreenLayers[0].width = cursor_frame->wid;
+		ScreenLayers[0].height = cursor_frame->hgt;
+		ScreenLayers[0].left = cursor_frame->x + Mouse.x - 63;
+		ScreenLayers[0].top = cursor_frame->y + Mouse.y - 63;
+		RefreshCursorScreen();
+		RefreshCursorRect();
+	}
+}
+
+FUNCTION_PATCH(drawCursor, drawCursor_);
+
 void UpdateDlgMousePosition_(void)
 {
-	drawCursor();
+	drawCursor_();
 	LOBYTE(InputFlags) = InputFlags & 0xFE;
 
 	dlgEvent v0;
@@ -1279,16 +1297,23 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 FAIL_STUB_PATCH(InitializeDialog);
 
+void setCursor_(grpHead* cursor)
+{
+	if (last_cursor != cursor)
+	{
+		last_cursor = cursor;
+		drawCursor_();
+	}
+}
+
+FAIL_STUB_PATCH(setCursor);
+
 void setCursorType_(CursorType cursor_type)
 {
 	if (last_cursor_type != cursor_type)
 	{
 		last_cursor_type = cursor_type;
-		if (last_cursor != cursor_graphics[cursor_type])
-		{
-			last_cursor = cursor_graphics[cursor_type];
-			drawCursor();
-		}
+		setCursor_(cursor_graphics[cursor_type]);
 	}
 }
 
@@ -1318,15 +1343,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 		byte_66FF5C = 0;
 		SetInGameInputProcs();
 	}
-	if (last_cursor_type)
-	{
-		last_cursor_type = CursorType::CUR_ARROW;
-		if (last_cursor != cursor_graphics[CursorType::CUR_ARROW])
-		{
-			last_cursor = cursor_graphics[CursorType::CUR_ARROW];
-			drawCursor();
-		}
-	}
+	setCursorType_(CursorType::CUR_ARROW);
 	if (!multiPlayerMode)
 	{
 		PauseGame_maybe();
@@ -5120,11 +5137,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		memcpy(&stru_6CE000, &dword_51C40C[v10], sizeof(stru_6CE000));
 		sub_419290(v11);
 		grpHead* v12 = (grpHead*) dword_50E170[326 * v10];
-		if (last_cursor != v12)
-		{
-			last_cursor = v12;
-			drawCursor();
-		}
+		setCursor_(v12);
 		SetCallbackTimer(24, a2, 50, sub_4DCEA0);
 		dword_6D5E20 = &a2->srcBits;
 		dword_51C418 = a2;
@@ -9063,15 +9076,7 @@ void GameMainLoop_()
 			}
 			while (1)
 			{
-				if (last_cursor_type != CursorType::CUR_TIME)
-				{
-					last_cursor_type = CursorType::CUR_TIME;
-					if (last_cursor != cursor_graphics[CUR_TIME])
-					{
-						last_cursor = cursor_graphics[CUR_TIME];
-						drawCursor();
-					}
-				}
+				setCursorType_(CursorType::CUR_TIME);
 				BWFXN_RedrawTarget_();
 				if (!is_expansion_installed)
 					IsExpansion = 0;
