@@ -900,6 +900,35 @@ BOOL BWFXN_DDrawInitialize_()
 FAIL_STUB_PATCH(sub_41DDD0);
 FAIL_STUB_PATCH(BWFXN_DDrawInitialize);
 
+void BWFXN_updateImageData_()
+{
+	for (int i = 0; i < map_size.height; ++i)
+	{
+		for (CSprite* sprites = SpritesOnTileRow.heads[i]; sprites; sprites = sprites->next)
+		{
+			for (CImage* image = sprites->pImageHead; image; image = CImage__updateGraphicData(image)->next);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_updateImageData);
+
+void BWFXN_drawAllThingys_()
+{
+	if (wantThingyUpdate)
+	{
+		CThingy* currentThingy = ThingyList_UsedFirst;
+		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = CImage__updateGraphicData(image)->next);
+		drawSprite(currentThingy->sprite);
+		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = image->next)
+		{
+			image->flags |= 1u;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_drawAllThingys);
+
 void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
@@ -907,7 +936,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	{
 		maskSomething0();
 		memcpy(dword_6D5C10, dword_6D5C0C, 0x198u);
-		BWFXN_updateImageData();
+		BWFXN_updateImageData_();
 		maskSomething2();
 		BWFXN_drawMapTiles();
 		BWFXN_blitMapTiles();
@@ -931,7 +960,7 @@ void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
 	updateAllFog();
 	BWFXN_DrawHighTarget();
 	BWFXN_drawDragSelBox();
-	BWFXN_drawAllThingys();
+	BWFXN_drawAllThingys_();
 }
 
 FAIL_STUB_PATCH(DrawGameProc);
