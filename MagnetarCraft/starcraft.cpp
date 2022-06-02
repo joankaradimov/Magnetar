@@ -745,8 +745,8 @@ void InitializeImage_()
 {
 	memset(ScreenLayers, 0, 0xA0u);
 	memset(RefreshRegions, 0, sizeof(RefreshRegions));
-	GameScreenBuffer.wid = 640;
-	GameScreenBuffer.ht = 480;
+	GameScreenBuffer.wid = SCREEN_WIDTH;
+	GameScreenBuffer.ht = SCREEN_HEIGHT;
 	GameScreenBuffer.data = 0;
 	stru_6D5DF0.data = (u8*)SMemAlloc(2304, "Starcraft\\SWAR\\lang\\gds\\image.cpp", 141, 0);
 }
@@ -9513,9 +9513,9 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - (SCREEN_HEIGHT - 80)) / 2;
 			if (v11 >= 0)
 			{
-				if (v11 + 640 >= (unsigned __int16)map_width_pixels)
+				if (v11 + SCREEN_WIDTH >= (unsigned __int16)map_width_pixels)
 				{
-					v11 = (unsigned __int16)map_width_pixels - 641;
+					v11 = (unsigned __int16)map_width_pixels - SCREEN_WIDTH - 1;
 				}
 			}
 			else
@@ -9524,9 +9524,9 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 			}
 			if (v12 >= 0)
 			{
-				if (v12 + 400 >= (unsigned __int16)map_height_pixels)
+				if (v12 + (SCREEN_HEIGHT - 80) >= (unsigned __int16)map_height_pixels)
 				{
-					v12 = (unsigned __int16)map_height_pixels - 401;
+					v12 = (unsigned __int16)map_height_pixels - (SCREEN_HEIGHT - 80) - 1;
 				}
 			}
 			else
