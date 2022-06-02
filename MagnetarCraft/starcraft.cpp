@@ -1279,6 +1279,21 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 FAIL_STUB_PATCH(InitializeDialog);
 
+void setCursorType_(CursorType cursor_type)
+{
+	if (last_cursor_type != cursor_type)
+	{
+		last_cursor_type = cursor_type;
+		if (last_cursor != cursor_graphics[cursor_type])
+		{
+			last_cursor = cursor_graphics[cursor_type];
+			drawCursor();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(setCursorType);
+
 void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
 	if (!multiPlayerMode)
@@ -3322,7 +3337,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	TickCountSomething(0);
 	DoGameLoop_(a1);
 	RefreshLayer5();
-	setCursorType(getCursorType());
+	setCursorType_(getCursorType());
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
 	{
