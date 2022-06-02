@@ -4389,9 +4389,13 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 			{
 				SAIPathing->mapTileRegionId[i][j] = SAF_HighGround;
 			}
+			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE))
+			{
+				SAIPathing->mapTileRegionId[i][j] = 8186;
+			}
 			else
 			{
-				SAIPathing->mapTileRegionId[i][j] = ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) != (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE)) + 8186;
+				SAIPathing->mapTileRegionId[i][j] = SAF_LowGround;
 			}
 		}
 	}
