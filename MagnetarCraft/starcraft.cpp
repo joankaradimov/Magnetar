@@ -1000,13 +1000,13 @@ FAIL_STUB_PATCH(DrawGameProc);
 
 void InitializeGameLayer_()
 {
-	SetRect(&game_screen_pos, 0, 0, SCREEN_WIDTH - 1, SCREEN_HEIGHT - 80 - 1);
+	SetRect(&game_screen_pos, 0, 0, GAME_AREA_WIDTH - 1, GAME_AREA_HEIGHT - 1);
 	ScreenLayers[5].left = 0;
 	ScreenLayers[5].top = 0;
 	ScreenLayers[5].pSurface = 0;
 	ScreenLayers[5].bits = 0;
-	ScreenLayers[5].width = SCREEN_WIDTH;
-	ScreenLayers[5].height = SCREEN_HEIGHT - 80;
+	ScreenLayers[5].width = GAME_AREA_WIDTH;
+	ScreenLayers[5].height = GAME_AREA_HEIGHT;
 	ScreenLayers[5].pUpdate = DrawGameProc_;
 	memset(RefreshRegions, 1u, sizeof(RefreshRegions));
 	for (int i = 3; i <= 5; ++i)
@@ -4309,7 +4309,7 @@ FAIL_STUB_PATCH(CopySectionData);
 
 u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	u16 region_id = SAIPathing->mapTileRegionId[x / TILE_WIDTH][y / TILE_HEIGHT];
 	if (region_id >= 0x2000u)
 	{
 		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
@@ -4330,7 +4330,7 @@ FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
 
 u16 GetRegionIdAtPosEx_(int x, int y)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / 32][y / 32];
+	u16 region_id = SAIPathing->mapTileRegionId[x / TILE_WIDTH][y / TILE_HEIGHT];
 	if (region_id >= 0x2000u)
 	{
 		if ((1 << (((y / 8) & 3) + 4 * ((x / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
@@ -4584,8 +4584,8 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->player == g_LocalNationID;
 	if (v3)
 	{
-		MoveToTile.x = max(a2->position.x - SCREEN_WIDTH / 2, 0) / 32;
-		MoveToTile.y = max(a2->position.y - (SCREEN_HEIGHT - INTERFACE_HEIGHT) / 2, 0) / 32;
+		MoveToTile.x = max(a2->position.x - SCREEN_WIDTH / 2, 0) / TILE_WIDTH;
+		MoveToTile.y = max(a2->position.y - (SCREEN_HEIGHT - INTERFACE_HEIGHT) / 2, 0) / TILE_HEIGHT;
 	}
 	return 1;
 }
@@ -4892,7 +4892,7 @@ void initMapData_()
 	byte_66FF5C = 0;
 	MapTileArray = (TileID *)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
 	CellMap = (__int16*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*CellMap), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
-	GameTerrainCache = (byte *)SMemAlloc(0x49800, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
+	GameTerrainCache = (byte *)SMemAlloc(TILE_CACHE_SIZE, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
 	active_tiles = (MegatileFlags*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
 	memset(active_tiles, 0, MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles));
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
@@ -4948,7 +4948,7 @@ FAIL_STUB_PATCH(initMapData);
 
 unsigned int GetGroundHeightAtPos_(int x, int y)
 {
-	int megatile_index = x / 32 + y / 32 * map_size.width;
+	int megatile_index = x / TILE_WIDTH + y / TILE_HEIGHT * map_size.width;
 	TileID megatile = ZergCreepArray[megatile_index] ? ZergCreepArray[megatile_index] : MapTileArray[megatile_index];
 
 	u16 v1 = TileSetMap[(megatile >> 4) & 0x7FF].megaTileRef[megatile & 0xF];
@@ -5043,13 +5043,13 @@ int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed in
 		SightStruct* v6 = &line_of_sight[sight_range];
 		int v11 = v6->tileSightWidth;
 		int v13 = v6->tileSightHeight;
-		if (x / 32 - v11 / 2 < 0 || x / 32 + v11 / 2 >= map_size.width ||
-			y / 32 - v13 / 2 < 0 || y / 32 + v13 / 2 >= map_size.height)
+		if (x / TILE_WIDTH - v11 / 2 < 0 || x / TILE_WIDTH + v11 / 2 >= map_size.width ||
+			y / TILE_HEIGHT - v13 / 2 < 0 || y / TILE_HEIGHT + v13 / 2 >= map_size.height)
 		{
 			v14 += 2;
 		}
 		unsigned v7 = ~vision_mask & ~(vision_mask << 8);
-		sight_range = (*v14)(x / 32, y / 32, v6, &active_tiles[x / 32 + (y / 32) * map_size.width], v15, v7);
+		sight_range = (*v14)(x / TILE_WIDTH, y / TILE_HEIGHT, v6, &active_tiles[x / TILE_WIDTH + (y / TILE_HEIGHT) * map_size.width], v15, v7);
 	}
 	return sight_range;
 }
@@ -9532,8 +9532,8 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		if (active_trigger_player == g_LocalNationID)
 		{
 			BWFXN_MoveScreen(
-				(LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - SCREEN_WIDTH) / 2,
-				(LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - (SCREEN_HEIGHT - 80)) / 2);
+				(LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - GAME_AREA_WIDTH) / 2,
+				(LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - GAME_AREA_HEIGHT) / 2);
 		}
 		return 1;
 	}
@@ -9551,13 +9551,13 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		}
 		if (active_trigger_player == g_LocalNationID)
 		{
-			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - SCREEN_WIDTH) / 2;
-			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - (SCREEN_HEIGHT - 80)) / 2;
+			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - GAME_AREA_WIDTH) / 2;
+			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - GAME_AREA_HEIGHT) / 2;
 			if (v11 >= 0)
 			{
-				if (v11 + SCREEN_WIDTH >= (unsigned __int16)map_width_pixels)
+				if (v11 >= map_width_pixels - GAME_AREA_WIDTH)
 				{
-					v11 = (unsigned __int16)map_width_pixels - SCREEN_WIDTH - 1;
+					v11 = map_width_pixels - GAME_AREA_WIDTH - 1;
 				}
 			}
 			else
@@ -9566,9 +9566,9 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 			}
 			if (v12 >= 0)
 			{
-				if (v12 + (SCREEN_HEIGHT - 80) >= (unsigned __int16)map_height_pixels)
+				if (v12 >= map_height_pixels - GAME_AREA_HEIGHT)
 				{
-					v12 = (unsigned __int16)map_height_pixels - (SCREEN_HEIGHT - 80) - 1;
+					v12 = map_height_pixels - GAME_AREA_HEIGHT - 1;
 				}
 			}
 			else
