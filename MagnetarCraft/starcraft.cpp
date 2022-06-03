@@ -977,7 +977,7 @@ void BWFXN_drawAllThingys_()
 
 FAIL_STUB_PATCH(BWFXN_drawAllThingys);
 
-void __stdcall DrawGameProc_(Bitmap* a1, bounds* a2)
+void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
 	if (ScreenLayers[5].bits & 1)
