@@ -2476,7 +2476,7 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 		v13 = "";
 	}
 
-	SStrCopy(CurrentMapName, v13, 32u);
+	SStrCopy(CurrentMapName, v13, sizeof(CurrentMapName));
 	return 1;
 }
 
@@ -2544,8 +2544,8 @@ int LevelCheatInitGame_()
 		GameData v6;
 		memset(&v6, 0, 140u);
 		v6.got_file_values.unused3[4] = 0;
-		SStrCopy(v6.player_name, playerName, 24u);
-		SStrCopy(v6.map_name, CurrentMapName, 32u);
+		SStrCopy(v6.player_name, playerName, sizeof(v6.player_name));
+		SStrCopy(v6.map_name, CurrentMapName, sizeof(v6.map_name));
 		v6.active_human_players = 1;
 		v6.max_players = 1;
 		v6.game_speed = registry_options.GameSpeed;
@@ -9896,15 +9896,15 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 	{
 		if (MapStringTbl.buffer == 0 || a1->string == 0)
 		{
-			SStrCopy(next_scenario, 0, 32u);
+			SStrCopy(next_scenario, 0, sizeof(next_scenario));
 		}
 		else if (a1->string - 1 >= *MapStringTbl.buffer)
 		{
-			SStrCopy(next_scenario, empty_string, 32u);
+			SStrCopy(next_scenario, empty_string, sizeof(next_scenario));
 		}
 		else
 		{
-			SStrCopy(next_scenario, (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string], 32u);
+			SStrCopy(next_scenario, (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string], sizeof(next_scenario));
 		}
 	}
 	return 1;
