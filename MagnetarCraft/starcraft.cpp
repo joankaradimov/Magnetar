@@ -768,6 +768,21 @@ void InitializeImage_()
 
 FAIL_STUB_PATCH(InitializeImage);
 
+void InitializeDialogScreenLayer_()
+{
+	AppAddExit(DestroyScreenLayer);
+	ScreenLayers[2].left = 0;
+	ScreenLayers[2].top = 0;
+	ScreenLayers[2].width = SCREEN_WIDTH;
+	ScreenLayers[2].height = SCREEN_HEIGHT;
+	ScreenLayers[2].pSurface = 0;
+	ScreenLayers[2].pUpdate = DialogUpdateProc;
+	ScreenLayers[2].buffers = 1;
+	ScreenLayers[2].bits = 32;
+}
+
+FAIL_STUB_PATCH(InitializeDialogScreenLayer);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -795,7 +810,7 @@ void PreInitData_()
 	InitializeImage_();
 	AppAddExit_(DestroyImage);
 	LoadCursors();
-	InitializeDialogScreenLayer();
+	InitializeDialogScreenLayer_();
 	dword_6D5E20 = &GameScreenBuffer;
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
@@ -2795,7 +2810,7 @@ signed int LoadGameInit_()
 			replay_header.initial_seed = initialSeed;
 		}
 	}
-	InitializeDialogScreenLayer();
+	InitializeDialogScreenLayer_();
 	ButtonPressSound = mouseOver_Loading_CB;
 	LoadGameFonts();
 	memset(randomCounts, 0, 0x400u);
