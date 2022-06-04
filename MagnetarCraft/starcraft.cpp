@@ -1973,6 +1973,36 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+bool __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_MOUSEMOVE:
+		minimap_dlg_MouseMove(dlg, evt);
+		break;
+	case EVN_USER:
+		if (evt->dwUser == USER_CREATE)
+		{
+			Minimap_InitVisionButton(dlg);
+		}
+		else if (evt->dwUser == USER_ACTIVATE)
+		{
+			minimap_dlg_Activate_(dlg);
+			if (dlg->wIndex == -3 || dlg->wIndex == -2)
+			{
+				LastControlID = dlg->wIndex;
+				dlg->fields.ctrl.pDlg->pfcnInteract(dlg->fields.ctrl.pDlg, evt);
+				return 1;
+			}
+		}
+		break;
+	}
+
+	return GenericControlInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(MinimapButton_EventHandler);
+
 void setMapSizeConstants_();
 
 void updateMinimapPreviewDlg_(dialog* dlg)
@@ -1983,9 +2013,9 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 
 	static FnInteract ingame_functions[] = {
 		MinimapImageInteract,
-		MinimapButton_EventHandler,
-		MinimapButton_EventHandler,
-		MinimapButton_EventHandler,
+		MinimapButton_EventHandler_,
+		MinimapButton_EventHandler_,
+		MinimapButton_EventHandler_,
 	};
 
 	dlg->pfcnUpdate = MiniMapUpdate;
