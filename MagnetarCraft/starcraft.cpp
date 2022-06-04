@@ -3906,12 +3906,70 @@ void load_Statf10_BIN_()
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
 
+bool __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+		return isSinglePaused();
+	case EVN_MOUSEMOVE:
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONDBLCLK:
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONDBLCLK:
+		return IS_GAME_PAUSED && !multiPlayerMode;
+	case EVN_USER:
+		if (evt->dwUser == USER_CREATE)
+		{
+			textbox_DLG_Init_Evt(dlg);
+		}
+		else if (evt->dwUser == USER_MOUSEMOVE)
+		{
+			return 0;
+		}
+		break;
+	case EVN_CHAR:
+		if (isSinglePaused())
+		{
+			if (evt->wVirtKey == VK_ESCAPE)
+			{
+				keyPress_Escape();
+			}
+			return 1;
+		}
+		if (evt->wVirtKey == 10 || evt->wVirtKey == VK_RETURN)
+		{
+			onSendText(dlg, evt, 1);
+		}
+		else if (evt->wVirtKey == VK_ESCAPE && byte_68C144)
+		{
+			onSendText(dlg, evt, 0);
+		}
+		else
+		{
+			break;
+		}
+
+		return 1;
+	}
+
+	bool result = genericDlgInteract(dlg, evt);
+	if (IS_GAME_PAUSED && !multiPlayerMode)
+	{
+		return 1;
+	}
+	return result;
+}
+
+FAIL_STUB_PATCH(textbox_DLG_Interact);
+
 void ctextbox_BIN_()
 {
 	char buff[80];
 	_snprintf(buff, sizeof(buff), "rez\\%ctextbox.bin", race_lowercase_char_id[consoleIndex]);
 	dword_68C140 = LoadDialog(buff);
-	InitializeDialog_(dword_68C140, textbox_DLG_Interact);
+	InitializeDialog_(dword_68C140, textbox_DLG_Interact_);
 }
 
 FAIL_STUB_PATCH(ctextbox_BIN);
