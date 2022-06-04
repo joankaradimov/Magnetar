@@ -7869,6 +7869,104 @@ void loadMenu_gluLoad_()
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
 
+void savegameBIN_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		savegame_Listbox,
+		savegame_TextBox,
+		savegame_Delete,
+		NULL
+	};
+
+	registerMenuFunctions_(functions, dlg, sizeof(functions));
+	saveGame_InitChildren(dlg);
+}
+
+FAIL_STUB_PATCH(savegameBIN_CustomCtrlID);
+
+bool __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			saveGame_Create(dlg);
+			break;
+		case USER_DESTROY:
+			saveGame_Destroy(dlg);
+			break;
+		case USER_ACTIVATE:
+			if (dialog* v5 = getControlFromIndex(dlg, 2))
+			{
+				SStrCopy(byte_51BFB8, v5->pszText, 0x7FFFFFFFu);
+				trimTrailingSpaces(byte_51BFB8);
+			}
+			break;
+		case USER_INIT:
+			savegameBIN_CustomCtrlID_(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(savegameBIN_Main);
+
+int LoadSaveGameBIN_Main_(int a1, Race a2)
+{
+	dword_51BFD4 = a1;
+	dword_51BFB4 = a2;
+	byte_51BFD8 = 0;
+	dword_6D0F2C = (&off_50E040[a2])[a1 != 0 ? 3 : 0];
+
+	savegame_Dlg = LoadDialog("rez\\savegame.bin");
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (!dword_6D6438)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		ImmAssociateContext(hWndParent, dword_6D6438);
+	}
+
+	int v12 = gluLoadBINDlg_(savegame_Dlg, savegameBIN_Main_);
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (!dword_6D6438)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		dword_6D6438 = ImmAssociateContext(hWndParent, 0);
+	}
+
+	int v13;
+	switch (v12)
+	{
+	case -2:
+		v13 = CopyLastReplayTo(byte_51BFB8);
+		if (v13 == 1)
+		{
+			dword_6D0F2C = 0;
+			return 1;
+		}
+		else if (v13 == 0)
+		{
+			const char* v14 = *networkTable > 0x64 ? (char*)networkTable + networkTable[101] : "";
+			loadOKBIN(1, v14, dword_6D0F2C);
+		}
+		break;
+	case 3:
+		DeleteFileIfExists();
+		break;
+	}
+	dword_6D0F2C = 0;
+	return 0;
+}
+
+FAIL_STUB_PATCH(LoadSaveGameBIN_Main);
+
 bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -7882,7 +7980,7 @@ bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 			}
 			break;
 		case EventUser::USER_ACTIVATE:
-			if (LoadSaveGameBIN_Main(dword_59B75C, Players[g_LocalNationID].nRace))
+			if (LoadSaveGameBIN_Main_(dword_59B75C, Players[g_LocalNationID].nRace))
 			{
 				dlg->pszText = (char*)get_GluAll_String((GluAllTblEntry)177);
 				if ((dlg->lFlags & CTRL_UPDATE) == 0)
