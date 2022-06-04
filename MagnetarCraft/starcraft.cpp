@@ -3287,6 +3287,26 @@ void DoGameLoop_(MenuPosition a1)
 
 FAIL_STUB_PATCH(DoGameLoop);
 
+void RefreshUnit_(CUnit* unit)
+{
+	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0 && (unit->sprite->flags & 0x20) == 0)
+	{
+		RefreshSprite(unit->sprite, byte_581D6A[unit->playerID]);
+	}
+}
+
+FAIL_STUB_PATCH(RefreshUnit);
+
+void RefreshAllUnits_()
+{
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
+	{
+		RefreshUnit_(unit);
+	}
+}
+
+FAIL_STUB_PATCH(RefreshAllUnits);
+
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 
 void GameLoop_State_(MenuPosition a2)
@@ -3323,7 +3343,7 @@ void GameLoop_State_(MenuPosition a2)
 			ScreenLayers[5].bits |= 2u;
 			if (BWFXN_IsPaused())
 			{
-				RefreshAllUnits();
+				RefreshAllUnits_();
 			}
 			else
 			{
