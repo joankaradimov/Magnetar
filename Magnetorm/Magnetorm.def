@@ -151,13 +151,13 @@ EXPORTS
     SDrawGetObjects = StormLibDrawGetObjects @347
     SDrawGetScreenSize = StormLibDrawGetScreenSize @348
     SDrawGetServiceLevel = StormLibDrawGetServiceLevel @349
-    SDrawLockSurface = StormLibDrawLockSurface @350
+    SDrawLockSurface@20 = StormLibDrawLockSurface @350
     SDrawManualInitialize@32 = StormLibDrawManualInitialize @351
     SDrawMessageBox = StormLibDrawMessageBox @352
     SDrawPostClose = StormLibDrawPostClose @353
     SDrawRealizePalette@0 = StormLibDrawRealizePalette @354
     SDrawSelectGdiSurface = StormLibDrawSelectGdiSurface @355
-    SDrawUnlockSurface = StormLibDrawUnlockSurface @356
+    SDrawUnlockSurface@16 = StormLibDrawUnlockSurface @356
     SDrawUpdatePalette@16 = StormLibDrawUpdatePalette @357
     SDrawUpdateScreen = StormLibDrawUpdateScreen @358
     SDrawWaitForVerticalBlank = StormLibDrawWaitForVerticalBlank @359
@@ -209,11 +209,11 @@ EXPORTS
     SRegDeleteValue = StormLibRegDeleteValue @428
 
     STransBlt = StormLibTransBlt @431
-    STransBltUsingMask = StormLibTransBltUsingMask @432
+    STransBltUsingMask@20 = StormLibTransBltUsingMask @432
     STransCreateI = StormLibTransCreateI @433
-    STransDelete = StormLibTransDelete @434
+    STransDelete@4 = StormLibTransDelete @434
     STransDuplicate = StormLibTransDuplicate @436
-    STransIntersectDirtyArray = StormLibTransIntersectDirtyArray @437
+    STransIntersectDirtyArray@16 = StormLibTransIntersectDirtyArray @437
     STransInvertMask = StormLibTransInvertMask @438
     STransLoadI = StormLibTransLoadI @439
     STransSetDirtyArrayInfo = StormLibTransSetDirtyArrayInfo @440

@@ -219,6 +219,109 @@ bool realizePalette_()
 
 FAIL_STUB_PATCH(realizePalette);
 
+void DoBltUsingMask_()
+{
+	int Pitch;
+	void* lpSurface;
+
+	if (SDrawLockSurface(0, 0, &lpSurface, &Pitch, 0))
+	{
+		STransBltUsingMask((int)lpSurface, (int)GameScreenBuffer.data, Pitch, SCREEN_WIDTH, dword_6D5E18);
+		SDrawUnlockSurface(0, lpSurface, 0, 0);
+	}
+}
+
+FAIL_STUB_PATCH(DoBltUsingMask);
+
+void sub_41E000_()
+{
+	if (handle && dword_6D5E18)
+	{
+		STransDelete(dword_6D5E18);
+		STransIntersectDirtyArray(handle, (int)RefreshRegions, 3u, (int)&dword_6D5E18);
+		DoBltUsingMask_();
+		memset(RefreshRegions, 0, sizeof(RefreshRegions));
+	}
+}
+
+FAIL_STUB_PATCH(sub_41E000);
+
+void DirtyArrayHandling_()
+{
+	u8* v0 = GameScreenBuffer.data;
+	if (!GameScreenBuffer.data)
+	{
+		return;
+	}
+	dword_6CF4A8 = &GameScreenBuffer;
+	if (!byte_51A0E9)
+	{
+		for (layer* v2 = ScreenLayers + 7; v2 >= ScreenLayers; v2--)
+		{
+			if (v2->buffers)
+			{
+				bounds b;
+				b.left = -v2->left;
+				b.top = -v2->top;
+				b.right = -v2->left + SCREEN_WIDTH - 1;
+				b.bottom = -v2->top + SCREEN_HEIGHT - 1;
+				b.width = SCREEN_WIDTH;
+				b.height = SCREEN_HEIGHT;
+				if (v2 == ScreenLayers)
+				{
+					BlitCursorSurface(0, 0, &GameScreenBuffer, 0);
+				}
+				if (v2->bits & 0x21)
+				{
+					goto LABEL_12;
+				}
+				if (refreshRect(
+					(__int16)v2->left,
+					(__int16)v2->top,
+					(__int16)v2->left + (__int16)v2->width,
+					(__int16)v2->top + (__int16)v2->height))
+				{
+					v2->bits |= 4;
+				LABEL_12:
+					v2->pUpdate(0, 0, v2->pSurface, &b);
+					v2->bits &= 0xF8u;
+					continue;
+				}
+				if (v2->bits & 2)
+				{
+					goto LABEL_12;
+				}
+			}
+		}
+	}
+	else
+	{
+		unsigned v1 = GameScreenBuffer.wid * GameScreenBuffer.ht;
+		memset(GameScreenBuffer.data, 0, 4 * (v1 >> 2));
+		memset(&v0[4 * (v1 >> 2)], 0, v1 & 3);
+
+		RECT screen_rect;
+		screen_rect.left = 0;
+		screen_rect.top = 0;
+		screen_rect.right = SCREEN_WIDTH;
+		screen_rect.bottom = SCREEN_HEIGHT;
+		BlitDirtyArray(&screen_rect);
+	}
+
+	sub_41E000_();
+
+	if (!byte_51A0E9)
+	{
+		if (ScreenLayers[0].buffers)
+		{
+			BlitBitmap(&GameScreenBuffer);
+		}
+	}
+	dword_6CF4A8 = 0;
+}
+
+FAIL_STUB_PATCH(DirtyArrayHandling, DirtyArrayHandling_);
+
 void BWFXN_RedrawTarget_()
 {
 	sub_4BD3A0_();
@@ -247,7 +350,7 @@ void BWFXN_RedrawTarget_()
 				}
 			}
 		}
-		DirtyArrayHandling();
+		DirtyArrayHandling_();
 	}
 
 	if (dword_6D5E2C)
