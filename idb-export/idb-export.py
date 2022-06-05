@@ -767,8 +767,8 @@ from collections import defaultdict
 from itertools import takewhile, count
 
 def sort_topologically(local_types):
-    graph = {}
-    levels_by_name = {}
+    graph = collections.OrderedDict()
+    levels_by_name = collections.OrderedDict()
     names_by_level = defaultdict(set)
 
     for local_type in local_types.values():
