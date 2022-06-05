@@ -2090,6 +2090,37 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void minimap_dlg_Activate_(dialog* dlg)
+{
+	switch (dlg->wIndex)
+	{
+	case 2:
+		byte_6D5BBF ^= 1u;
+		dword_59C1A4 = 0;
+		sub_4A4150();
+		drawAllMinimapBoxes();
+		sub_4A3870();
+		if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
+		{
+			minimap_dialog->lFlags |= CTRL_UPDATE;
+			updateDialog(minimap_dialog);
+		}
+		drawShowHideTerrainContextHelp(dlg);
+		break;
+	case 3:
+		refreshSelectionScreen();
+		byte_63FF70 = byte_581D60;
+		BWFXN_OpenGameDialog("rez\\msgfltr.bin", msgfltr_Main);
+		break;
+	case 4:
+		refreshSelectionScreen();
+		MinimapControl_ShowAllianceDialog();
+		break;
+	}
+}
+
+FAIL_STUB_PATCH(minimap_dlg_Activate);
+
 bool __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
