@@ -2090,6 +2090,71 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+bool __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_MOUSEMOVE:
+		minimapGameMouseUpdate(dlg);
+		return 1;
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONDBLCLK:
+		if (IS_GAME_PAUSED)
+		{
+			return 1;
+		}
+		else if (byte_641694)
+		{
+			MinimapGameTargetOrder(evt);
+			return 1;
+		}
+		else
+		{
+			MinimapGameClickEvent(evt, dlg);
+			return 1;
+		}
+	case EVN_LBUTTONUP:
+	case EVN_RBUTTONUP:
+		minimapGameResetMouseInput(dlg);
+		return 1;
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONDBLCLK:
+		if (IS_GAME_PAUSED)
+		{
+			return 1;
+		}
+		else if (is_placing_building || byte_641694)
+		{
+			MinimapGameRightclickEventMoveto(dlg);
+			return 1;
+		}
+		else
+		{
+			CMDACT_RightClick(evt);
+			return 1;
+		}
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			minimapGameUpdate(dlg);
+			break;
+		case USER_DESTROY:
+		case USER_NEXT:
+			minimapGameResetMouseInput(dlg);
+			break;
+		case USER_MOUSEMOVE:
+			return 1;
+		default:
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(MinimapImageInteract);
+
 void minimap_dlg_Activate_(dialog* dlg)
 {
 	switch (dlg->wIndex)
@@ -2156,11 +2221,11 @@ void setMapSizeConstants_();
 void updateMinimapPreviewDlg_(dialog* dlg)
 {
 	static FnInteract menu_functions[] = {
-		MinimapImageInteract,
+		MinimapImageInteract_,
 	};
 
 	static FnInteract ingame_functions[] = {
-		MinimapImageInteract,
+		MinimapImageInteract_,
 		MinimapButton_EventHandler_,
 		MinimapButton_EventHandler_,
 		MinimapButton_EventHandler_,
