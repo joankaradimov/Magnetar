@@ -7449,6 +7449,14 @@ void sub_46D200_(MusicTrack music_track)
 
 FAIL_STUB_PATCH(sub_46D200);
 
+void sub_46D1F0_()
+{
+	stopMusic();
+	DLGMusicFade(MT_TITLE);
+}
+
+FAIL_STUB_PATCH(sub_46D1F0);
+
 void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
 {
 	sub_46D200_(music_track);
@@ -7469,23 +7477,20 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastca
 			{
 				glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 			}
-			stopMusic();
-			DLGMusicFade(MT_TITLE);
+			sub_46D1F0_();
 			break;
 		case 19:
 			ContinueCampaign_(1);
 			break;
 		case 100:
-			stopMusic();
-			DLGMusicFade(MT_TITLE);
+			sub_46D1F0_();
 			break;
 		case 101:
 			gwGameMode = GAME_RUNINIT;
 			break;
 		default:
 			glGluesMode = GLUE_MAIN_MENU;
-			stopMusic();
-			DLGMusicFade(MT_TITLE);
+			sub_46D1F0_();
 			break;
 		}
 		changeMenu();
