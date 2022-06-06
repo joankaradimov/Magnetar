@@ -3663,6 +3663,14 @@ void GameLoop_Top_(MenuPosition a1)
 
 FAIL_STUB_PATCH(GameLoop_Top);
 
+void stopAllSound_(void)
+{
+	stopSounds();
+	stopMusic();
+}
+
+FAIL_STUB_PATCH(stopAllSound);
+
 GamePosition BeginGame_(MenuPosition a1)
 {
 	visionUpdateCount = 1;
@@ -3701,7 +3709,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	}
 	GameLoop_Top_(a1);
 	newGame(0);
-	stopAllSound();
+	stopAllSound_();
 	sub_41E9E0(3);
 	get_tFontGam_PCX_0();
 	RefreshCursor_0();
