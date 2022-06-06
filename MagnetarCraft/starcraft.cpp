@@ -7609,14 +7609,10 @@ int getGameList_(dialog* dlg)
 		IsBattleNet = 0;
 	}
 	LOWORD(dword_66FF30) = 0;
-	dialog* v5 = getControlFromIndex(dlg, 6);
-	v5->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 
-	dialog* v8 = getControlFromIndex(dlg, 7);
-	v8->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
-
-	dialog* v10 = getControlFromIndex(dlg, 13);
-	v10->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex(dlg, 6)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex(dlg, 7)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex(dlg, 13)->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 
 	const char* v11 = get_GluAll_String((GluAllTblEntry) 0xB9);
 	dialog* v14 = getControlFromIndex(gluConn_Dlg, 13);
