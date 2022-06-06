@@ -7433,10 +7433,17 @@ FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop);
 void DisplayEstablishingShot_();
 int ContinueCampaign_(int a1);
 
-void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
+void sub_46D200_(MusicTrack music_track)
 {
 	stopMusic();
 	DLGMusicFade(music_track);
+}
+
+FAIL_STUB_PATCH(sub_46D200);
+
+void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
+{
+	sub_46D200_(music_track);
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
