@@ -4157,6 +4157,57 @@ void load_Statf10_BIN_()
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
 
+void textbox_DLG_Init_Evt_(dialog* dlg)
+{
+	Font* v2;
+
+	int v1 = (LOWORD(dlg->lFlags) | CTRL_TRANSPARENT) & 0x4C00;
+	dlg->lFlags |= CTRL_USELOCALGRAPHIC | CTRL_REVERSE | CTRL_TRANSPARENT;
+	byte_68C144 = 0;
+	switch (v1)
+	{
+	case 0x400:
+		v2 = FontBase[0];
+		break;
+	case 0x800:
+		v2 = FontBase[2];
+		break;
+	case 0x4000:
+		v2 = FontBase[3];
+		break;
+	default:
+		v2 = FontBase[1];
+		break;
+	}
+	BWFXN_SetFont(v2);
+
+	dialog* v3 = dlg->wCtrlType == DialogType::cDLG ? dlg : dlg->fields.ctrl.pDlg;
+	dialog* v4 = getControlFromIndex(dlg, 1);
+	if (v4)
+	{
+		do
+		{
+			if (v4->wIndex > 3)
+			{
+				break;
+			}
+			v4->rct.right = getMessageWidth(v4->pszText) + v4->rct.left;
+			v4 = v4->pNext;
+		} while (v4);
+	}
+
+	BWFXN_SetFont(0);
+	dialog* v6 = getControlFromIndex(dlg, 6);
+	v6->pfcnInteract = textbox_CtrlInteract;
+	if (InReplay)
+	{
+		dlg->rct.top -= 24;
+		dlg->rct.bottom -= 24;
+	}
+}
+
+FAIL_STUB_PATCH(textbox_DLG_Init_Evt);
+
 bool __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -4173,7 +4224,7 @@ bool __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 	case EVN_USER:
 		if (evt->dwUser == USER_CREATE)
 		{
-			textbox_DLG_Init_Evt(dlg);
+			textbox_DLG_Init_Evt_(dlg);
 		}
 		else if (evt->dwUser == USER_MOUSEMOVE)
 		{
