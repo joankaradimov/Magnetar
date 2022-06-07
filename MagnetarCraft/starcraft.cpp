@@ -8,29 +8,30 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
-signed int AppAddExit_(AppExitHandle a1)
+const int app_exit_handles_count = 32;
+
+int AppAddExit_(AppExitHandle handle)
 {
 	if (!app_exit_handles)
 	{
-		app_exit_handles = (AppExitHandle *)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gds\\appaddex.cpp", 42, (int)app_exit_handles);
-		memset(app_exit_handles, 0, 128u);
+		app_exit_handles = (AppExitHandle *)SMemAlloc(app_exit_handles_count * sizeof(AppExitHandle), "Starcraft\\SWAR\\lang\\gds\\appaddex.cpp", 42, (int)app_exit_handles);
+		memset(app_exit_handles, 0, app_exit_handles_count * sizeof(AppExitHandle));
 	}
 	int v2 = -1;
-	int v3 = 0;
-	do
+	for (int i = 0; i < app_exit_handles_count; i++)
 	{
-		AppExitHandle exit_handle = app_exit_handles[v3];
-		if (exit_handle == a1)
+		AppExitHandle exit_handle = app_exit_handles[i];
+		if (exit_handle == handle)
 			return 0;
 		if (v2 == -1 && !exit_handle)
-			v2 = v3;
-		++v3;
-	} while (v3 < 32);
+			v2 = i;
+	}
+
 	if (v2 == -1)
 	{
 		FatalError("APPADDEX:1");
 	}
-	app_exit_handles[v2] = a1;
+	app_exit_handles[v2] = handle;
 	return 1;
 }
 
