@@ -2358,7 +2358,7 @@ DECL_FUNC(int(*sub_41F8D0)(), sub_41F8D0, 0x41f8d0);
 DECL_FUNC(int(*setTextAlignment)(), setTextAlignment, 0x41f920);
 DECL_FUNC(void (__thiscall*BWFXN_SetFont)(Font *this_), BWFXN_SetFont, 0x41fb30);
 DECL_FUNC(int (__stdcall*sub_41FC20)(int), sub_41FC20, 0x41fc20);
-int getMessageWidth(u8 *a1) {
+int getMessageWidth(char *a1) {
     int address = 0x41fc80;
     int result_;
     __asm {
@@ -17607,16 +17607,13 @@ DECL_FUNC(int (__fastcall*LogCallStack)(char), LogCallStack, 0x4d0db0);
 DECL_FUNC(LONG (__stdcall*TopLevelExceptionFilter)(struct _EXCEPTION_POINTERS *ExceptionInfo), TopLevelExceptionFilter, 0x4d0f70);
 DECL_FUNC(int (__stdcall*CreateExceptionFilter)(int), CreateExceptionFilter, 0x4d1120);
 DECL_FUNC(int (__thiscall*IsOutsideGameScreen)(int a2), IsOutsideGameScreen, 0x4d1140);
-Bitmap *setHudBeginY(Bitmap *result) {
+void setHudBeginY(Bitmap *result) {
     int address = 0x4d11a0;
-    Bitmap * result_;
     __asm {
         xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4D1210)(), sub_4D1210, 0x4d1210);
 DECL_FUNC(int(*sub_4D1220)(), sub_4D1220, 0x4d1220);
@@ -21062,16 +21059,13 @@ void onSendText(dialog *a1, dlgEvent *a2, int a3) {
     }
 }
 DECL_FUNC(bool (__fastcall*textbox_CtrlInteract)(dialog *dlg, struct dlgEvent *evt), textbox_CtrlInteract, 0x4f3540);
-signed int textbox_DLG_Init_Evt(dialog *dlg) {
+void textbox_DLG_Init_Evt(dialog *dlg) {
     int address = 0x4f35d0;
-    signed result_;
     __asm {
         xor edi, edi
         mov edi, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*textbox_DLG_Interact)(dialog *dlg, dlgEvent *evt), textbox_DLG_Interact, 0x4f36c0);
 DECL_FUNC(int(*ctextbox_BIN)(), ctextbox_BIN, 0x4f37c0);
