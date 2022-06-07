@@ -35,6 +35,17 @@ int AppAddExit_(AppExitHandle handle)
 	return 1;
 }
 
+int AppAddExit__()
+{
+	AppExitHandle handle;
+
+	__asm mov handle, ebx
+
+	return AppAddExit_(handle);
+}
+
+FUNCTION_PATCH((void*)0x4F6100, AppAddExit__);
+
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
 	sub_419F80();
