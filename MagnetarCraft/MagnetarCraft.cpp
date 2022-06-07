@@ -292,7 +292,7 @@ FAIL_STUB_PATCH(GetClassWindow);
 
 void FastIndexInit_()
 {
-	AppAddExit(destroyFileFindIndexer);
+	AppAddExit_(destroyFileFindIndexer);
 
 	HWND v0 = GetClassWindow_("MOM Parent");
 	if (v0)

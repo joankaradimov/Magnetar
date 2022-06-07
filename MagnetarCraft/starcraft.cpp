@@ -885,7 +885,7 @@ FAIL_STUB_PATCH(InitializeImage);
 
 void InitializeDialogScreenLayer_()
 {
-	AppAddExit(DestroyScreenLayer);
+	AppAddExit_(DestroyScreenLayer);
 	ScreenLayers[2].left = 0;
 	ScreenLayers[2].top = 0;
 	ScreenLayers[2].width = SCREEN_WIDTH;
@@ -1346,7 +1346,7 @@ FAIL_STUB_PATCH(DSoundInit);
 
 void loadColorSettings_()
 {
-	AppAddExit(saveColorSettings);
+	AppAddExit_(saveColorSettings);
 
 	if (SRegLoadValue("Starcraft", "Gamma", 0, &Gamma))
 	{
@@ -4591,7 +4591,7 @@ bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapCh
 	}
 
 	chk_string_section_size = section_size;
-	AppAddExit(freeCHKStringHandle);
+	AppAddExit_(freeCHKStringHandle);
 	if (section_data->start_address + section_data->size > section_data->next_section)
 	{
 		return false;
