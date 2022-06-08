@@ -898,7 +898,27 @@ void InitializeDialogScreenLayer_()
 
 FAIL_STUB_PATCH(InitializeDialogScreenLayer);
 
-void setCursorType_(CursorType cursor_type);
+void setCursor_(grpHead* cursor)
+{
+	if (last_cursor != cursor)
+	{
+		last_cursor = cursor;
+		drawCursor_();
+	}
+}
+
+FAIL_STUB_PATCH(setCursor);
+
+void setCursorType_(CursorType cursor_type)
+{
+	if (last_cursor_type != cursor_type)
+	{
+		last_cursor_type = cursor_type;
+		setCursor_(cursor_graphics[cursor_type]);
+	}
+}
+
+FAIL_STUB_PATCH(setCursorType);
 
 void LoadCursors_()
 {
@@ -1482,28 +1502,6 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 }
 
 FAIL_STUB_PATCH(InitializeDialog);
-
-void setCursor_(grpHead* cursor)
-{
-	if (last_cursor != cursor)
-	{
-		last_cursor = cursor;
-		drawCursor_();
-	}
-}
-
-FAIL_STUB_PATCH(setCursor);
-
-void setCursorType_(CursorType cursor_type)
-{
-	if (last_cursor_type != cursor_type)
-	{
-		last_cursor_type = cursor_type;
-		setCursor_(cursor_graphics[cursor_type]);
-	}
-}
-
-FAIL_STUB_PATCH(setCursorType);
 
 void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
