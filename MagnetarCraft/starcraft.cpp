@@ -898,6 +898,33 @@ void InitializeDialogScreenLayer_()
 
 FAIL_STUB_PATCH(InitializeDialogScreenLayer);
 
+void setCursorType_(CursorType cursor_type);
+
+void LoadCursors_()
+{
+	AppAddExit_(DestroyCursors);
+	for (/*CursorType */int i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
+	{
+		char dest[260];
+		SStrCopy(dest, "cursor\\", 0x104u);
+		SStrNCat(dest, cursor_filenames[i], 260);
+		grpHead* v1 = LoadGraphic(dest, 0, "Starcraft\\SWAR\\lang\\cur.cpp", 212);
+
+		for (int frame_index = (v1->wFrames & 0x7FFF) - 1; frame_index >= 0; frame_index--)
+		{
+			grpFrame* frame = &v1->frames[frame_index];
+			frame->dataOffset = (u32)v1 + (frame->dataOffset & 0x7FFFFFFF);
+		}
+		cursor_graphics[i] = v1;
+	}
+	setCursorType_(CUR_ARROW);
+	ScreenLayers[0].buffers = 0;
+	ScreenLayers[0].pUpdate = cursorUpdateProc;
+	dword_597398 = GetTickCount();
+}
+
+FAIL_STUB_PATCH(LoadCursors);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -924,7 +951,7 @@ void PreInitData_()
 	AppAddExit_(DestroyFonts);
 	InitializeImage_();
 	AppAddExit_(DestroyImage);
-	LoadCursors();
+	LoadCursors_();
 	InitializeDialogScreenLayer_();
 	dword_6D5E20 = &GameScreenBuffer;
 	CreateHelpContext();
