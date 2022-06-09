@@ -3059,6 +3059,42 @@ int LoadGameCore_()
 
 FAIL_STUB_PATCH(LoadGameCore);
 
+GameActionDataBlock* allocateRepGameActionMemory_(GameActionDataBlock* a1)
+{
+	a1->net_record_size = 50000;
+	a1->net_record_buffer = SMemAlloc(a1->net_record_size, "Starcraft\\SWAR\\lang\\net_record.cpp", 334, 0);
+	a1->field4 = 0;
+	a1->field6 = 0;
+	a1->field7 = -1;
+	a1->field1 = 1;
+	a1->field8 = 0;
+	return a1;
+}
+
+FAIL_STUB_PATCH(allocateRepGameActionMemory);
+
+void __fastcall FreeGameActionData_(bool exit_code)
+{
+	if (replayData)
+	{
+		SMemFree(replayData->net_record_buffer, "Starcraft\\SWAR\\lang\\net_record.cpp", 348, 0);
+		SMemFree(replayData, "delete", -1, 0);
+		replayData = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(FreeGameActionData);
+
+void __cdecl createNewGameActionDataBlock_()
+{
+	FreeGameActionData_(false);
+	GameActionDataBlock* v1 = (GameActionDataBlock*)SMemAlloc(32, "new", -1, 0);
+	replayData = v1 ? allocateRepGameActionMemory_(v1) : NULL;
+	AppAddExit_(FreeGameActionData_);
+}
+
+FUNCTION_PATCH(createNewGameActionDataBlock, createNewGameActionDataBlock_);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -3183,7 +3219,7 @@ signed int LoadGameInit_()
 	}
 	else
 	{
-		createNewGameActionDataBlock();
+		createNewGameActionDataBlock_();
 	}
 	return 1;
 }
