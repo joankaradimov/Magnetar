@@ -2127,6 +2127,24 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void minimapGameUpdate_(dialog* a1)
+{
+	a1->pfcnUpdate = MinimapImageUpdate;
+	if (dword_5993AC == 0)
+	{
+		minimapSurfaceUpdate();
+		sub_4A4150();
+		drawAllMinimapBoxes();
+	}
+	if ((a1->lFlags & CTRL_UPDATE) == 0)
+	{
+		a1->lFlags |= CTRL_UPDATE;
+		updateDialog(a1);
+	}
+}
+
+FAIL_STUB_PATCH(minimapGameUpdate);
+
 bool __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -2174,7 +2192,7 @@ bool __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			minimapGameUpdate(dlg);
+			minimapGameUpdate_(dlg);
 			break;
 		case USER_DESTROY:
 		case USER_NEXT:
