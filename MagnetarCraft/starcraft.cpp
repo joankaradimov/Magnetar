@@ -1092,7 +1092,7 @@ BOOL BWFXN_DDrawInitialize_()
 	{
 		memset(&surface_desc, 0, sizeof(surface_desc));
 		surface_desc.dwSize = sizeof(DDSURFACEDESC);
-		surface_desc.dwFlags = 7;
+		surface_desc.dwFlags = DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH;
 		surface_desc.ddsCaps.dwCaps = 2112;
 		surface_desc.dwWidth = SCREEN_WIDTH;
 		surface_desc.dwHeight = SCREEN_HEIGHT;
