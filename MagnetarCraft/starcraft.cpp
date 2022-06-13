@@ -3669,6 +3669,52 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits);
 
+int GameLoopWaitSendTurn_(int* a1)
+{
+	*a1 = 0;
+	if (--FramesUntilNextTurn)
+	{
+		return 1;
+	}
+	else if (gameLoopTurns())
+	{
+		if (byte_51CE9D)
+		{
+			dword_6D6370 = GetTickCount() - dword_6D6370;
+			if ((unsigned int)dword_6D6370 >= 0x64)
+			{
+				dword_51CE94 = ((LatencyFrames[registry_options.GameSpeed] * GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]) >> 1) + GetTickCount();
+			}
+			else
+			{
+				dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed] >> 1;
+			}
+		}
+		byte_51CE9D = 0;
+		FramesUntilNextTurn = LatencyFrames[registry_options.GameSpeed];
+		if (multiPlayerMode)
+		{
+			*a1 = 1;
+			EnableVisibilityHashUpdate();
+			minimapPreviewUpdateState();
+			saveMinimapCounts();
+		}
+		return 1;
+	}
+	else
+	{
+		FramesUntilNextTurn = 1;
+		if (!byte_51CE9D)
+		{
+			byte_51CE9D = 1;
+			dword_6D6370 = GetTickCount();
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(GameLoopWaitSendTurn);
+
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 
 void GameLoop_State_(MenuPosition a2)
@@ -3684,7 +3730,7 @@ void GameLoop_State_(MenuPosition a2)
 		}
 
 		int v5;
-		if (!GameLoopWaitSendTurn(&v5))
+		if (!GameLoopWaitSendTurn_(&v5))
 		{
 			dword_6D11F0 = 1;
 			break;
