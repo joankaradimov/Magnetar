@@ -2362,6 +2362,20 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 
 FAIL_STUB_PATCH(updateMinimapPreviewDlg);
 
+void minimapPreviewUpdateState_()
+{
+	sub_4A4150();
+	drawAllMinimapBoxes();
+	sub_4A3870();
+	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+	{
+		minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(minimap_dialog);
+	}
+}
+
+FAIL_STUB_PATCH(minimapPreviewUpdateState);
+
 void initMapData_();
 void setMapSizeConstants_();
 
@@ -2438,7 +2452,7 @@ bool __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
 			{
 				byte_6D5BBF = !byte_6D5BBF;
 			}
-			minimapPreviewUpdateState();
+			minimapPreviewUpdateState_();
 			v6 = getControlFromIndex(dlg, 2);
 			if (SLOBYTE(v6->lFlags) < 0)
 			{
@@ -3696,7 +3710,7 @@ int GameLoopWaitSendTurn_(int* a1)
 		{
 			*a1 = 1;
 			EnableVisibilityHashUpdate();
-			minimapPreviewUpdateState();
+			minimapPreviewUpdateState_();
 			saveMinimapCounts();
 		}
 		return 1;
