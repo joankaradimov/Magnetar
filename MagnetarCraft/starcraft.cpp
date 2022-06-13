@@ -7761,7 +7761,7 @@ int getGameList_(dialog* dlg)
 	SStrCopy(v14->pszText, v11, 0xFFu);
 	if ((v14->lFlags & CTRL_UPDATE) == 0)
 	{
-		v14->lFlags = v14->lFlags | CTRL_UPDATE;
+		v14->lFlags |= CTRL_UPDATE;
 		updateDialog(v14);
 	}
 	SNetEnumProviders(0, Provider_Constructor);
