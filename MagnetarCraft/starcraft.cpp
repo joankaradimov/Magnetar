@@ -1123,6 +1123,29 @@ void BWFXN_updateImageData_()
 
 FAIL_STUB_PATCH(BWFXN_updateImageData);
 
+void BWFXN_drawDragSelBox_()
+{
+	if (byte_66FF5C)
+	{
+		if (InputFlags)
+		{
+			DrawColor = byte_6CEB32;
+			BWFXN_Draw(
+				stru_66FF50.top,
+				stru_66FF50.left,
+				stru_66FF50.right - stru_66FF50.left + 1,
+				stru_66FF50.bottom - stru_66FF50.top + 1);
+		}
+		else
+		{
+			refreshDragSelectBox();
+			SetInGameInputProcs();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_drawDragSelBox);
+
 void BWFXN_drawAllThingys_()
 {
 	if (wantThingyUpdate)
@@ -1183,7 +1206,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 	}
 	updateAllFog();
 	BWFXN_DrawHighTarget();
-	BWFXN_drawDragSelBox();
+	BWFXN_drawDragSelBox_();
 	BWFXN_drawAllThingys_();
 }
 
