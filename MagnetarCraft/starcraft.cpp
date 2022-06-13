@@ -920,10 +920,15 @@ void setCursorType_(CursorType cursor_type)
 
 FAIL_STUB_PATCH(setCursorType);
 
+CursorType operator++(CursorType& cursor_type)
+{
+	return CursorType(++reinterpret_cast<int&>(cursor_type));
+}
+
 void LoadCursors_()
 {
 	AppAddExit_(DestroyCursors);
-	for (/*CursorType */int i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
+	for (CursorType i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
 	{
 		char dest[260];
 		SStrCopy(dest, "cursor\\", 0x104u);
