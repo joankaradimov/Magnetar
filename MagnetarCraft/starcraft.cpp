@@ -9800,6 +9800,17 @@ unsigned int LocalGetLang_()
 
 FUNCTION_PATCH(LocalGetLang, LocalGetLang_);
 
+void __fastcall FreeLocalDLL_(bool exit_code)
+{
+	if (hModule)
+	{
+		FreeLibrary(hModule);
+		hModule = 0;
+	}
+}
+
+FAIL_STUB_PATCH(FreeLocalDLL);
+
 void localDll_Init_(HINSTANCE a1)
 {
 	char Filename[MAX_PATH];
@@ -9829,7 +9840,7 @@ void localDll_Init_(HINSTANCE a1)
 	}
 	int local_lang = LocalGetLang_();
 	SFileSetLocale(local_lang);
-	AppAddExit_(FreeLocalDLL);
+	AppAddExit_(FreeLocalDLL_);
 }
 
 FAIL_STUB_PATCH(localDll_Init);
