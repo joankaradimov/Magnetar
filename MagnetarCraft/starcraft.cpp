@@ -490,6 +490,35 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 	return buffer;
 }
 
+void __fastcall DestroyGluAllStrings_(bool exit_code)
+{
+	if (gluAllTblDataLoaded && gluAllTblData)
+	{
+		SMemFree(gluAllTblData, "Starcraft\\SWAR\\lang\\glues.cpp", 688, 0);
+	}
+}
+
+FAIL_STUB_PATCH(DestroyGluAllStrings);
+
+char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
+{
+	if (!gluAllTblDataLoaded)
+	{
+		gluAllTblData = fastFileRead_(0, 0, "rez\\gluAll.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+		AppAddExit_(DestroyGluAllStrings_);
+		gluAllTblDataLoaded = 1;
+	}
+
+	if (tbl_entry == STAR_EDIT_NOT_FOUND)
+	{
+		return 0;
+	}
+
+	return tbl_entry - 1 < *(_WORD*)gluAllTblData ? (char*)gluAllTblData + *((unsigned __int16*)gluAllTblData + tbl_entry) : "";
+}
+
+FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
+
 dialog* LoadDialog(const char* bin_path)
 {
 	HANDLE phFile;
@@ -7051,7 +7080,7 @@ void gluCustm_typeDropdown_(dialog* dlg)
 	dlg->lFlags |= CTRL_LBOX_NORECALC;
 	for (int i = 0; i < 2; i++)
 	{
-		char* v4 = (char*)get_GluAll_String(singleTypeSelect[i].tbl_entry);
+		char* v4 = get_GluAll_String_(singleTypeSelect[i].tbl_entry);
 		u8 v5 = ListBox_AddEntry(v4, dlg, 0);
 		if (v5 == 0xFF)
 		{
@@ -7390,7 +7419,7 @@ signed int loadStareditProcess_(dialog* a1)
 	}
 	else
 	{
-		const char* v8 = get_GluAll_String(SPAWNED_BY);
+		const char* v8 = get_GluAll_String_(SPAWNED_BY);
 		BWFXN_gluPOK_MBox(v8);
 		return 0;
 	}
@@ -7911,7 +7940,7 @@ int getGameList_(dialog* dlg)
 	getControlFromIndex(dlg, 7)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 	getControlFromIndex(dlg, 13)->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 
-	const char* v11 = get_GluAll_String((GluAllTblEntry) 0xB9);
+	const char* v11 = get_GluAll_String_((GluAllTblEntry) 0xB9);
 	dialog* v14 = getControlFromIndex(gluConn_Dlg, 13);
 	SStrCopy(v14->pszText, v11, 0xFFu);
 	if ((v14->lFlags & CTRL_UPDATE) == 0)
@@ -8166,15 +8195,15 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 	case 7:
 		if (!InReplay && sub_44F7B0() < 2)
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x72));
+			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x72));
 		}
 		else if (!InReplay && isGameTypeSpecial() && getHumansOnTeam(1) < 2)
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x0BA));
+			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x0BA));
 		}
 		else if (map_download && !IsDownloadComplete(map_download))
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry)0x73));
+			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x73));
 		}
 		else
 		{
@@ -8508,7 +8537,7 @@ bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			if (LoadSaveGameBIN_Main_(dword_59B75C, Players[g_LocalNationID].nRace))
 			{
-				dlg->pszText = (char*)get_GluAll_String((GluAllTblEntry)177);
+				dlg->pszText = get_GluAll_String_((GluAllTblEntry)177);
 				if ((dlg->lFlags & CTRL_UPDATE) == 0)
 				{
 					dlg->lFlags = dlg->lFlags | CTRL_UPDATE;
