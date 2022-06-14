@@ -799,6 +799,14 @@ void CommandLineCheck_()
 
 FAIL_STUB_PATCH(CommandLineCheck);
 
+void LoadNetworkTBL_()
+{
+	AppAddExit_(FreeNetworkTBLHandle);
+	networkTable = (WORD*) fastFileRead_(0, 0, "rez\\network.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+}
+
+FAIL_STUB_PATCH(LoadNetworkTBL);
+
 GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
 	char buff[260];
@@ -969,7 +977,7 @@ void PreInitData_()
 	registry_options.field_18 |= 7u;
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
-	LoadNetworkTBL();
+	LoadNetworkTBL_();
 	LoadAccelerators_();
 	AppAddExit_(DestroyAccelerators);
 	LoadMenuFonts();
