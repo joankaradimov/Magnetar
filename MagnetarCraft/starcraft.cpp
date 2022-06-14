@@ -807,6 +807,65 @@ void LoadNetworkTBL_()
 
 FAIL_STUB_PATCH(LoadNetworkTBL);
 
+HACCEL InitLocaleAccelerators_(int a1)
+{
+	HACCEL result = 0;
+
+	if (hModule != NULL)
+	{
+		result = LoadAcceleratorsA(hModule, MAKEINTRESOURCEA(a1));
+	}
+	if (result == 0)
+	{
+		result = LoadAcceleratorsA(hInst, MAKEINTRESOURCEA(a1));
+	}
+	return result;
+}
+
+FAIL_STUB_PATCH(InitLocaleAccelerators);
+
+void InitAccelerators_()
+{
+	hAccel = 0;
+	HACCEL v1 = InitLocaleAccelerators_(0x65);
+	HACCEL v2 = InitLocaleAccelerators_(0x71);
+	if (v1)
+	{
+		if (v2)
+		{
+			ACCEL AccelDst[256];
+
+			int v3 = CopyAcceleratorTableA(v1, 0, 0);
+			int cAccelEntries = CopyAcceleratorTableA(v2, 0, 0);
+			int cAccel = v3 + cAccelEntries;
+			if (cAccel <= 0x100 && v3 == CopyAcceleratorTableA(v1, AccelDst, v3))
+			{
+				if (cAccelEntries == CopyAcceleratorTableA(v2, &AccelDst[v3], cAccelEntries))
+				{
+					hAccel = CreateAcceleratorTableA(AccelDst, cAccel);
+				}
+			}
+		}
+		DestroyAcceleratorTable(v1);
+	}
+	if (v2)
+	{
+		DestroyAcceleratorTable(v2);
+	}
+	if (!hAccel)
+	{
+		hAccel = InitLocaleAccelerators_(0x65);
+	}
+	dword_5968F4 = InitLocaleAccelerators_(0x66);
+	hAccTable = InitLocaleAccelerators_(0x67);
+	dword_5968F8 = hAccTable;
+	DlgAccelerator = 0;
+	AcceleratorTables = 0;
+	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
+}
+
+FAIL_STUB_PATCH(InitAccelerators);
+
 GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
 	char buff[260];
@@ -978,7 +1037,7 @@ void PreInitData_()
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
 	LoadNetworkTBL_();
-	InitAccelerators();
+	InitAccelerators_();
 	AppAddExit_(DestroyAccelerators);
 	LoadMenuFonts();
 	AppAddExit_(DestroyFonts);
