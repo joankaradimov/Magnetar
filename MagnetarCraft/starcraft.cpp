@@ -46,6 +46,47 @@ int AppAddExit__()
 
 FUNCTION_PATCH((void*)0x4F6100, AppAddExit__);
 
+void __fastcall sub_4C9120_(bool exit_code)
+{
+	if (dword_596CD0)
+	{
+		SMemFree(dword_596CD0, "Starcraft\\SWAR\\lang\\opt_dlgs.cpp", 58, 0);
+		dword_596CD0 = 0;
+		byte_596BC8[0] = 0;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4C9120);
+
+void sub_4C9C40_(const char* a1)
+{
+	if (dword_596CD0)
+	{
+		if (!_stricmp(byte_596BC8, a1))
+		{
+			return;
+		}
+		sub_4C9120_(0);
+	}
+	else
+	{
+		AppAddExit_(sub_4C9120_);
+	}
+	dword_596CD0 = LoadGraphic(a1, 0, "Starcraft\\SWAR\\lang\\opt_dlgs.cpp", 80);
+	strcpy(byte_596BC8, a1);
+}
+
+void sub_4C9C40__()
+{
+	char* a1;
+
+	__asm mov a1, esi
+
+	sub_4C9C40_(a1);
+}
+
+FUNCTION_PATCH((void*)0x4C9C40, sub_4C9C40__);
+
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
 	sub_419F80();
