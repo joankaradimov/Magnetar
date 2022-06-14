@@ -978,7 +978,7 @@ void PreInitData_()
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
 	LoadNetworkTBL_();
-	LoadAccelerators_();
+	InitAccelerators();
 	AppAddExit_(DestroyAccelerators);
 	LoadMenuFonts();
 	AppAddExit_(DestroyFonts);
