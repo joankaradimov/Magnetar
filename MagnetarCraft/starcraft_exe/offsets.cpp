@@ -2368,7 +2368,18 @@ DECL_FUNC(int(*nullsub_8)(), nullsub_8, 0x41f8c0);
 DECL_FUNC(int(*sub_41F8D0)(), sub_41F8D0, 0x41f8d0);
 DECL_FUNC(int(*setTextAlignment)(), setTextAlignment, 0x41f920);
 DECL_FUNC(void (__thiscall*BWFXN_SetFont)(Font *this_), BWFXN_SetFont, 0x41fb30);
-DECL_FUNC(int (__stdcall*sub_41FC20)(int), sub_41FC20, 0x41fc20);
+int sub_41FC20(char *a1, int a2) {
+    int address = 0x41fc20;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int getMessageWidth(char *a1) {
     int address = 0x41fc80;
     int result_;
@@ -19068,7 +19079,7 @@ void SetGameSpeed_maybe(int game_speed, unsigned __int8 a2, unsigned int a3) {
 }
 DECL_FUNC(int (__stdcall*sub_4DECF0)(unsigned __int8 a2), sub_4DECF0, 0x4decf0);
 DECL_FUNC(int(*sub_4DED10)(), sub_4DED10, 0x4ded10);
-DECL_FUNC(signed int (__stdcall*CopyLastreplay)(char *a1), CopyLastreplay, 0x4ded30);
+DECL_FUNC(signed int (__stdcall*CopyLastReplay)(char *a1), CopyLastReplay, 0x4ded30);
 DECL_FUNC(int(*replayFrameComputation)(), replayFrameComputation, 0x4deed0);
 int getDirectoryPath(CHAR *a1, DWORD esi0, const char *a2) {
     int address = 0x4def80;
@@ -19175,6 +19186,18 @@ int SaveReplay(const char *a1, int a3) {
         xor eax, eax
         mov eax, a1
         push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int ConfirmReplayOverwrite(char *filename, __int16 a2) {
+    int address = 0x4dfc80;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, filename
+        push dword ptr a2
         call address
         mov result_, eax
     }
@@ -21394,7 +21417,20 @@ bool sub_4F59E0(dialog *a1, dlgEvent *a2) {
 DECL_FUNC(bool (__fastcall*wait_BINDLG)(dialog *dlg, dlgEvent *evt), wait_BINDLG, 0x4f5a40);
 DECL_FUNC(int(*load_wait)(), load_wait, 0x4f5c50);
 DECL_FUNC(bool (__fastcall*okcancel_Interact)(dialog *dlg, struct dlgEvent *evt), okcancel_Interact, 0x4f5cb0);
-DECL_FUNC(int (__stdcall*loadOKCancelBIN)(HANDLE phFile), loadOKCancelBIN, 0x4f5d70);
+int loadOKCancelBIN(int a1, const char *a2, HANDLE phFile) {
+    int address = 0x4f5d70;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        push dword ptr phFile
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int loadOKBIN(int a1, const char *a2, HANDLE phFile) {
     int address = 0x4f5ee0;
     int result_;
@@ -24208,8 +24244,7 @@ int& dword_51BFA8 = * ((decltype(&dword_51BFA8)) 0x51bfa8);
 HINSTANCE& hInst = * ((decltype(&hInst)) 0x51bfac);
 HWND& hWndParent = * ((decltype(&hWndParent)) 0x51bfb0);
 int& dword_51BFB4 = * ((decltype(&dword_51BFB4)) 0x51bfb4);
-char(&byte_51BFB8)[1] = * ((decltype(&byte_51BFB8)) 0x51bfb8);
-char(&byte_51BFB9)[27] = * ((decltype(&byte_51BFB9)) 0x51bfb9);
+char(&byte_51BFB8)[28] = * ((decltype(&byte_51BFB8)) 0x51bfb8);
 int& dword_51BFD4 = * ((decltype(&dword_51BFD4)) 0x51bfd4);
 char& byte_51BFD8 = * ((decltype(&byte_51BFD8)) 0x51bfd8);
 int& dword_51BFDC = * ((decltype(&dword_51BFDC)) 0x51bfdc);
@@ -25684,7 +25719,7 @@ int& dword_6D11B4 = * ((decltype(&dword_6D11B4)) 0x6d11b4);
 int& dword_6D11B8 = * ((decltype(&dword_6D11B8)) 0x6d11b8);
 MenuPosition& glGluesMode = * ((decltype(&glGluesMode)) 0x6d11bc);
 int& OpheliaEnabled = * ((decltype(&OpheliaEnabled)) 0x6d11c0);
-int& dword_6D11C4 = * ((decltype(&dword_6D11C4)) 0x6d11c4);
+int& gluAllTblDataLoaded = * ((decltype(&gluAllTblDataLoaded)) 0x6d11c4);
 int& IsInGameLoop = * ((decltype(&IsInGameLoop)) 0x6d11c8);
 CampaignMenuEntry *& active_campaign_menu_entry = * ((decltype(&active_campaign_menu_entry)) 0x6d11cc);
 char& byte_6D11D0 = * ((decltype(&byte_6D11D0)) 0x6d11d0);
