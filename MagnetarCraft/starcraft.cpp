@@ -8469,6 +8469,58 @@ bool __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(savegameBIN_Main);
 
+int ConfirmReplayOverwrite_(char* filename, __int16 a2)
+{
+	char* v3 = (char*)malloc(strlen(filename) + 3);
+	BWFXN_SetFont(FontBase[2]);
+	size_t v4 = sub_41FC20(filename, 230);
+	BWFXN_SetFont(0);
+	strncpy(v3, filename, v4);
+	v3[v4] = 0;
+	if (v4 != strlen(filename))
+	{
+		*(_DWORD*)&v3[strlen(v3)] = '...';
+	}
+
+	char buff[256];
+	if (a2 == 0)
+	{
+		_snprintf(buff, 0x100u, 0, v3);
+	}
+	else if (a2 - 1 < *networkTable)
+	{
+		_snprintf(buff, 0x100u, (const char*)networkTable + networkTable[a2], v3);
+	}
+	else
+	{
+		_snprintf(buff, 0x100u, empty_string, v3);
+	}
+
+	free(v3);
+	return loadOKCancelBIN(1, buff, dword_6D0F2C) == -2;
+}
+
+FAIL_STUB_PATCH(ConfirmReplayOverwrite);
+
+int CopyLastReplayTo_(char* a1)
+{
+	CHAR FileName[260];
+	if (!getDirectoryPath(FileName, 0x104u, a1))
+	{
+		return 0;
+	}
+
+	DWORD v2 = GetFileAttributesA(FileName) != -1;
+	if (v2 && !ConfirmReplayOverwrite_(a1, 3))
+	{
+		return -1;
+	}
+
+	return CopyLastReplay(a1);
+}
+
+FAIL_STUB_PATCH(CopyLastReplayTo);
+
 int LoadSaveGameBIN_Main_(int a1, Race a2)
 {
 	dword_51BFD4 = a1;
@@ -8500,7 +8552,7 @@ int LoadSaveGameBIN_Main_(int a1, Race a2)
 	switch (v12)
 	{
 	case -2:
-		v13 = CopyLastReplayTo(byte_51BFB8);
+		v13 = CopyLastReplayTo_(byte_51BFB8);
 		if (v13 == 1)
 		{
 			dword_6D0F2C = 0;
