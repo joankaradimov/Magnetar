@@ -218,7 +218,7 @@ int VerifySystemMemory_()
 		&& !SystemWarning_20MBDiskSpace((unsigned __int64)v0))
 	{
 		SErrSuppressErrors(1);
-		AppExit(1);
+		AppExit_(1);
 		ProcError(1);
 		exit(1);
 	}
@@ -239,7 +239,7 @@ int VerifySystemMemory_()
 		if (!v1)
 		{
 			SErrSuppressErrors(1);
-			AppExit(1);
+			AppExit_(1);
 			ProcError(1);
 			exit(1);
 		}

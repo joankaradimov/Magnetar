@@ -10,6 +10,26 @@
 
 const int app_exit_handles_count = 32;
 
+void AppExit_(bool exit_code)
+{
+	if (app_exit_handles && !byte_6D63F0)
+	{
+		for (byte_6D63F0 = 1; word_519F64 != -1; --word_519F64)
+		{
+			AppExitHandle exit_handle = app_exit_handles[word_519F64];
+			if (exit_handle)
+			{
+				app_exit_handles[word_519F64] = NULL;
+				exit_handle(exit_code);
+			}
+		}
+		SMemFree(app_exit_handles, "Starcraft\\SWAR\\lang\\gds\\appexi.cpp", 50, 0);
+		app_exit_handles = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(AppExit);
+
 int AppAddExit_(AppExitHandle handle)
 {
 	if (!app_exit_handles)
@@ -83,7 +103,7 @@ void __cdecl DLGErrFatal_()
 	if (GetCurrentThreadId() == main_thread_id)
 	{
 		SErrSuppressErrors(1);
-		AppExit(1);
+		AppExit_(1);
 		ProcError(1);
 		exit(1);
 	}
@@ -473,7 +493,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		{
 			FatalError("GdsDialogBoxParam: %d", 107);
 		LABEL_13:
-			AppExit(0);
+			AppExit_(0);
 			ProcError(1);
 			exit(0);
 		}
@@ -10047,7 +10067,7 @@ void GameMainLoop_()
 					BeginEpilog_();
 					break;
 				default:
-					AppExit(0);
+					AppExit_(0);
 					ProcError(1);
 					exit(0);
 					return;
@@ -10116,7 +10136,7 @@ void localDll_Init_(HINSTANCE a1)
 	{
 		DialogBoxParamA(a1, (LPCSTR)106, hWndParent, LocalErrProc, (LPARAM)Filename);
 		SErrSuppressErrors(1);
-		AppExit(1);
+		AppExit_(1);
 		ProcError(1);
 		exit(1);
 	}

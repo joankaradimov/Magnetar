@@ -29,3 +29,4 @@ const int TILE_CACHE_SIZE = RENDER_AREA_TILE_COLUMNS * RENDER_AREA_TILE_ROWS * T
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
 int AppAddExit_(AppExitHandle handle);
+void AppExit_(bool exit_code);
