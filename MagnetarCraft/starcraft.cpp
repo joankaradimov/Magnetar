@@ -3035,7 +3035,7 @@ int LevelCheatInitGame_()
 	if (!playerName[0])
 	{
 		const char* v1 = GetNetworkTblString(72);
-		SStrCopy(playerName, v1, 25);
+		SStrCopy(playerName, v1, sizeof(playerName));
 	}
 	if (CampaignIndex == MD_none)
 	{
@@ -8944,7 +8944,7 @@ int SwitchMenu_()
 		if (!playerName[0])
 		{
 			const char* v3 = GetNetworkTblString(72);
-			SStrCopy(playerName, v3, 25u);
+			SStrCopy(playerName, v3, sizeof(playerName));
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
