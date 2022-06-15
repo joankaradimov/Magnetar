@@ -488,7 +488,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 
 	while (a2)
 	{
-		INT_PTR v4 = DialogBoxParamA(hModule, (LPCSTR)107, hWndParent, DialogFunc, 0);
+		INT_PTR v4 = DialogBoxParamA(local_dll_library, (LPCSTR)107, hWndParent, DialogFunc, 0);
 		if (v4 == -1)
 		{
 			FatalError("GdsDialogBoxParam: %d", 107);
@@ -906,9 +906,9 @@ HACCEL InitLocaleAccelerators_(int a1)
 {
 	HACCEL result = 0;
 
-	if (hModule != NULL)
+	if (local_dll_library != NULL)
 	{
-		result = LoadAcceleratorsA(hModule, MAKEINTRESOURCEA(a1));
+		result = LoadAcceleratorsA(local_dll_library, MAKEINTRESOURCEA(a1));
 	}
 	if (result == 0)
 	{
@@ -1204,7 +1204,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 		BWFXN_DDrawDestroy();
 		BWFXN_DSoundDestroy();
 	}
-	if (DialogBoxParamA(hModule, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
+	if (DialogBoxParamA(local_dll_library, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 		FatalError("GdsDialogBoxParam: %d", resource);
 	DLGErrFatal_();
 }
@@ -8833,7 +8833,7 @@ void loadMenu_gluScore_()
 		++v1;
 	} while (v4);
 
-	DLGMusicFade(dword_512AC8[v0]);
+	DLGMusicFade(music_track[v0]);
 	int v5 = 0;
 	char v6;
 	do
@@ -10094,7 +10094,7 @@ unsigned int LocalGetLang_()
 	CHAR Buffer[16];
 	char *v2;
 
-	if (hModule && LoadStringA(hModule, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
+	if (local_dll_library && LoadStringA(local_dll_library, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
 		return strtoul(Buffer, &v2, 16);
 	else
 		return 1033;
@@ -10104,10 +10104,10 @@ FUNCTION_PATCH(LocalGetLang, LocalGetLang_);
 
 void __fastcall FreeLocalDLL_(bool exit_code)
 {
-	if (hModule)
+	if (local_dll_library)
 	{
-		FreeLibrary(hModule);
-		hModule = 0;
+		FreeLibrary(local_dll_library);
+		local_dll_library = 0;
 	}
 }
 
@@ -10131,8 +10131,8 @@ void localDll_Init_(HINSTANCE a1)
 			break;
 		++i;
 	};
-	hModule = LoadLibraryA(Filename);
-	if (!hModule)
+	local_dll_library = LoadLibraryA(Filename);
+	if (!local_dll_library)
 	{
 		DialogBoxParamA(a1, (LPCSTR)106, hWndParent, LocalErrProc, (LPARAM)Filename);
 		SErrSuppressErrors(1);
