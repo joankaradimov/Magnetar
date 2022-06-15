@@ -78,6 +78,20 @@ void sub_4C9C40__()
 
 FUNCTION_PATCH((void*)0x4C9C40, sub_4C9C40__);
 
+void __cdecl DLGErrFatal_()
+{
+	if (GetCurrentThreadId() == main_thread_id)
+	{
+		SErrSuppressErrors(1);
+		AppExit(1);
+		ProcError(1);
+		exit(1);
+	}
+	ExitProcess(1u);
+}
+
+FUNCTION_PATCH(DLGErrFatal, DLGErrFatal_);
+
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
 	sub_419F80();
@@ -1172,7 +1186,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 	}
 	if (DialogBoxParamA(hModule, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 		FatalError("GdsDialogBoxParam: %d", resource);
-	DLGErrFatal();
+	DLGErrFatal_();
 }
 
 FAIL_STUB_PATCH(ErrorDDrawInit);
