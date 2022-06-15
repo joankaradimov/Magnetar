@@ -9614,10 +9614,10 @@ void CreateMainWindow_()
 		FatalError("RegisterClass");
 	}
 
-	const char* v0 = is_expansion_installed ? "Brood War" : "Starcraft";
-	int v3 = GetSystemMetrics(1);
-	int v1 = GetSystemMetrics(0);
-	hWndParent = CreateWindowExA(0, "SWarClass", v0, 0x90080000, 0, 0, v1, v3, 0, 0, hInst, 0);
+	const char* window_name = is_expansion_installed ? "Brood War" : "Starcraft";
+	int screen_width = GetSystemMetrics(SM_CXSCREEN);
+	int screen_height = GetSystemMetrics(SM_CYSCREEN);
+	hWndParent = CreateWindowExA(0, "SWarClass", window_name, 0x90080000, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
 	if (!hWndParent)
 	{
 		FatalError("CreateWindowEx");
