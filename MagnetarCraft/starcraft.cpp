@@ -35,16 +35,7 @@ int AppAddExit_(AppExitHandle handle)
 	return 1;
 }
 
-int AppAddExit__()
-{
-	AppExitHandle handle;
-
-	__asm mov handle, ebx
-
-	return AppAddExit_(handle);
-}
-
-FUNCTION_PATCH((void*)0x4F6100, AppAddExit__);
+FAIL_STUB_PATCH(AppAddExit);
 
 void __fastcall sub_4C9120_(bool exit_code)
 {
