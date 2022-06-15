@@ -603,34 +603,7 @@ FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
 dialog* LoadDialog(const char* bin_path)
 {
-	HANDLE phFile;
-	if (!SFileOpenFileEx(0, bin_path, 0, &phFile))
-	{
-		SysWarn_FileNotFound(bin_path, SErrGetLastError());
-	}
-	LONG file_size = SFileGetFileSize(phFile, 0);
-	if (file_size == -1)
-	{
-		FileFatal(phFile, GetLastError());
-	}
-	if (file_size == 0)
-	{
-		SysWarn_FileNotFound(bin_path, 24);
-	}
-	dialog* bin_dialog = (dialog*)SMemAlloc(file_size, __FILE__, __LINE__, 0);
-
-	int read;
-	if (!SFileReadFile(phFile, bin_dialog, file_size, &read, 0))
-	{
-		DWORD last_error = GetLastError();
-		FileFatal(phFile, last_error == 38 ? 24 : last_error);
-	}
-
-	if (read != file_size)
-	{
-		FileFatal(phFile, 24);
-	}
-	SFileCloseFile(phFile);
+	dialog* bin_dialog = (dialog*)fastFileRead_(0, 0, bin_path, 0, 0, __FILE__, __LINE__);
 	if (bin_dialog)
 	{
 		bin_dialog->lFlags |= DialogFlags::CTRL_ACTIVE;
