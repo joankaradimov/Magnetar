@@ -3227,6 +3227,29 @@ int RestartGame_()
 
 FAIL_STUB_PATCH(RestartGame);
 
+int SinglePlayerMeleeInitGame_()
+{
+	if (multiPlayerMode)
+	{
+		return 0;
+	}
+	if (customSingleplayer[0] && (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode))
+	{
+		ClearMeleeCompSlots();
+		Players[g_LocalNationID].nRace = selectedSingleplayerRace;
+		for (int i = 0; i < 8; ++i)
+		{
+			if (single_player_opponent_races[i] != RACE_None)
+			{
+				append_melee_computer(single_player_opponent_races[i]);
+			}
+		}
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(SinglePlayerMeleeInitGame);
+
 void setup_HUD_();
 
 int LoadGameCore_()
@@ -3325,7 +3348,7 @@ signed int LoadGameInit_()
 		ElapsedTimeFrames = 0;
 	if (!LOBYTE(multiPlayerMode))
 	{
-		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !RestartGame_() || !SinglePlayerMeleeInitGame())
+		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !RestartGame_() || !SinglePlayerMeleeInitGame_())
 			return 0;
 		if (InReplay)
 		{
