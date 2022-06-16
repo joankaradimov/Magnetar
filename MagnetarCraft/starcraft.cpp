@@ -3458,6 +3458,7 @@ signed int LoadGameInit_()
 	return 1;
 }
 
+FAIL_STUB_PATCH(sub_49CC10);
 FAIL_STUB_PATCH(LoadGameInit);
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
