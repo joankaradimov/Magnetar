@@ -5650,12 +5650,12 @@ void initMapData_()
 
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	megatileCount = bytes_read / 32;
+	megatileCount = bytes_read / sizeof(MiniTileFlagArray);
 
 	GenerateMegatileDefaultFlags_();
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	TileSetMapSize = bytes_read / 52u;
+	TileSetMapSize = bytes_read / sizeof(TileType);
 
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".grp");
 
