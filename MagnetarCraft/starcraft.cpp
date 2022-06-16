@@ -3460,6 +3460,74 @@ signed int LoadGameInit_()
 
 FAIL_STUB_PATCH(LoadGameInit);
 
+int SaveReplay_(const char* a1, int a3)
+{
+	CHAR FileName[260];
+	if (!getDirectoryPath(FileName, 0x104u, a1))
+	{
+		return 0;
+	}
+
+	if (a3 && !DeleteFileA(FileName) && GetFileAttributesA(FileName) != -1)
+	{
+		char buff[256];
+		const char* var = GetNetworkTblString(2);
+		_snprintf(buff, 0x100u, var, &byte_51BFB8);
+		loadOKBIN(1, buff, dword_6D0F2C);
+		return -1;
+	}
+
+	FILE* v4 = fopen(FileName, "wb+");
+	if (v4 == NULL)
+	{
+		return 0;
+	}
+
+	int v5;
+	ReplayHeader a1a;
+	int v10;
+
+	replay_header.campaign_index = CampaignIndex;
+	replay_header.field_46 = 1;
+	replay_header.is_expansion = IsExpansion;
+	memcpy(&a1a, &replay_header, sizeof(ReplayHeader));
+	a3 = 'SRer';
+	v5 = CompressWrite(&a3, 4, v4);
+	if (v5)
+	{
+		v5 = CompressWrite(&a1a, 633, v4);
+		if (v5)
+		{
+			v5 = WriteGameActions(v4, replayData);
+			if (v5)
+			{
+				void* v6 = (void*)getFullMapChunk(CurrentMapFileName, &a3);
+				if (v6)
+				{
+					v5 = CompressWrite(&a3, 4, v4);
+					if (v5)
+					{
+						v5 = CompressWrite(v6, a3, v4);
+					}
+					SMemFree(v6, "Starcraft\\SWAR\\lang\\replay.cpp", 940, 0);
+				}
+				else
+				{
+					v5 = 0;
+				}
+			}
+		}
+	}
+	fclose(v4);
+	if (!v5)
+	{
+		DeleteFileA(FileName);
+	}
+	return v5 != 0;
+}
+
+FAIL_STUB_PATCH(SaveReplay);
+
 void __cdecl freeChkFileMem_()
 {
 	if (scenarioChk)
@@ -3614,7 +3682,7 @@ void DestroyGame_()
 	}
 	else
 	{
-		SaveReplay("LastReplay", 1);
+		SaveReplay_("LastReplay", 1);
 		if (league_maybe)
 		{
 			char a1[260];
