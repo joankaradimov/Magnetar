@@ -752,9 +752,8 @@ signed int drawMinitileImageData(signed int framebuf_pos, int minitile, int a3) 
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_40C4D2)(int, int), sub_40C4D2, 0x40c4d2);
-DECL_FUNC(int(*type_info__szName)(), type_info__szName, 0x40c5bf);
+DECL_FUNC(char *(__thiscall*type_info__szName)(type_info *this_), type_info__szName, 0x40c5bf);
 DECL_FUNC(void(*sub_40CCA6)(), sub_40CCA6, 0x40cca6);
-DECL_FUNC(int (__cdecl*__flushall)(), __flushall, 0x40df5a);
 DECL_FUNC(int(*sub_40FFCB)(), sub_40FFCB, 0x40ffcb);
 DECL_FUNC(int(*scSpecialChars)(), scSpecialChars, 0x410330);
 DECL_FUNC(int(*sub_4103A0)(), sub_4103A0, 0x4103a0);
@@ -774,8 +773,6 @@ DECL_FUNC(int (__cdecl*OutputBits)(int, int, int), OutputBits, 0x411390);
 DECL_FUNC(int (__cdecl*lmemset)(int, char, int), lmemset, 0x411420);
 DECL_FUNC(int (__cdecl*FlushBuf)(int), FlushBuf, 0x411490);
 DECL_FUNC(int (__cdecl*SortBuffer)(int, int, int), SortBuffer, 0x411510);
-DECL_FUNC(int (__cdecl*fread_locked)(void *, size_t, size_t, FILE *), fread_locked, 0x4117de);
-DECL_FUNC(int (__cdecl*fwrite_locked)(void *, size_t, size_t, FILE *), fwrite_locked, 0x411931);
 DECL_FUNC(int(*sub_411E90)(), sub_411E90, 0x411e90);
 DECL_FUNC(int(*AES_Comp)(), AES_Comp, 0x411ec0);
 DECL_FUNC(int (__stdcall*MD5_0)(int, int), MD5_0, 0x4132b0);
@@ -7176,7 +7173,22 @@ DECL_FUNC(int(*sub_4616E0)(), sub_4616E0, 0x4616e0);
 DECL_FUNC(int(*sub_4616F0)(), sub_4616F0, 0x4616f0);
 DECL_FUNC(int(*isSaveGameTimerReady)(), isSaveGameTimerReady, 0x461720);
 DECL_FUNC(int(*sub_461750)(), sub_461750, 0x461750);
-DECL_FUNC(int (__stdcall*sub_461760)(int), sub_461760, 0x461760);
+int PrintfNetworkTblString(__int16 network_tbl_entry, char *buff, size_t size_, int a4) {
+    int address = 0x461760;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor edi, edi
+        xor esi, esi
+        mov ax, network_tbl_entry
+        mov edi, buff
+        mov esi, size_
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*SaveGame_Constructor_0)(int), SaveGame_Constructor_0, 0x461800);
 dialog *sub_4618F0(dialog *result) {
     int address = 0x4618f0;
@@ -10313,7 +10325,7 @@ void *readImageFile(int overlay_index, unsigned __int16 *a2, int image_id, HANDL
     return result_;
 }
 DECL_FUNC(int (__stdcall*loadImagesData_lowMem)(grpHead **a1, int a2, int a3, int a4, void *a5, void *a6), loadImagesData_lowMem, 0x47ae30);
-DECL_FUNC(int (__stdcall*loadImagesData)(int, int, int, int, int, int), loadImagesData, 0x47af30);
+DECL_FUNC(void (__stdcall*loadImagesData)(LO_Overlays *a1, int a2, unsigned __int16 *a3, int a4, char *a5, _DWORD *a6), loadImagesData, 0x47af30);
 DECL_FUNC(int(*unit_isRefineryUnit)(), unit_isRefineryUnit, 0x47afe0);
 DECL_FUNC(int(*sub_47B000)(), sub_47B000, 0x47b000);
 DECL_FUNC(int(*sub_47B030)(), sub_47B030, 0x47b030);
@@ -15510,7 +15522,7 @@ void gluExpCmpgn_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(char (__cdecl*sub_4B5050)(), sub_4B5050, 0x4b5050);
+DECL_FUNC(void (__cdecl*sub_4B5050)(), sub_4B5050, 0x4b5050);
 BOOL sub_4B5110(int race) {
     int address = 0x4b5110;
     BOOL result_;
@@ -16918,7 +16930,17 @@ char sub_4C8F10(unsigned __int16 a1, int a2, dialog *a3, int a4) {
     return result_;
 }
 DECL_FUNC(int(*sub_4C9020)(), sub_4C9020, 0x4c9020);
-DECL_FUNC(int(*sub_4C9030)(), sub_4C9030, 0x4c9030);
+char *sub_4C9030(dialog *a2) {
+    int address = 0x4c9030;
+    char * result_;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4C90C0(dialog *a1) {
     int address = 0x4c90c0;
     int result_;
@@ -20820,10 +20842,20 @@ signed int gluLogin_Activate(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4ED440)(), sub_4ED440, 0x4ed440);
+int sub_4ED440(ID *a1) {
+    int address = 0x4ed440;
+    int result_;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__stdcall*ID_Constructor)(CharacterData *a1), ID_Constructor, 0x4ed490);
 DECL_FUNC(int(*sub_4ED500)(), sub_4ED500, 0x4ed500);
-DECL_FUNC(int(*sub_4ED530)(), sub_4ED530, 0x4ed530);
+DECL_FUNC(void (__fastcall*sub_4ED530)(__int16 a1), sub_4ED530, 0x4ed530);
 u32 gluLogin_SetSelect_Evt(dialog *a1) {
     int address = 0x4ed560;
     u32 result_;
@@ -21182,6 +21214,21 @@ CUnit *orders_Powerup2(CUnit *a1) {
     __asm {
         xor eax, eax
         mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+signed int isBadName(int a1, char *name, size_t name_length) {
+    int address = 0x4f3f20;
+    signed result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov ecx, a1
+        mov edx, name
+        mov eax, name_length
         call address
         mov result_, eax
     }
@@ -22135,7 +22182,7 @@ _SCOPETABLE_ENTRY& stru_4FF680 = * ((decltype(&stru_4FF680)) 0x4ff680);
 _SCOPETABLE_ENTRY& stru_4FF690 = * ((decltype(&stru_4FF690)) 0x4ff690);
 _SCOPETABLE_ENTRY& stru_4FF6A0 = * ((decltype(&stru_4FF6A0)) 0x4ff6a0);
 _SCOPETABLE_ENTRY(&stru_4FF6B0)[2] = * ((decltype(&stru_4FF6B0)) 0x4ff6b0);
-char& byte_4FF6C8 = * ((decltype(&byte_4FF6C8)) 0x4ff6c8);
+char(&byte_4FF6C8)[92] = * ((decltype(&byte_4FF6C8)) 0x4ff6c8);
 wchar_t(&aNull_0)[7] = * ((decltype(&aNull_0)) 0x4ff724);
 char(&aNull)[7] = * ((decltype(&aNull)) 0x4ff734);
 _SCOPETABLE_ENTRY(&stru_4FF740)[3] = * ((decltype(&stru_4FF740)) 0x4ff740);
@@ -23711,6 +23758,12 @@ int& dword_50CEDE = * ((decltype(&dword_50CEDE)) 0x50cede);
 _DWORD(&dword_50CEE2)[3] = * ((decltype(&dword_50CEE2)) 0x50cee2);
 int& dword_50CEF0 = * ((decltype(&dword_50CEF0)) 0x50cef0);
 char(&aAvtypeInfo)[16] = * ((decltype(&aAvtypeInfo)) 0x50cf18);
+int (__cdecl *&off_50D1B8)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD) = *((decltype(&off_50D1B8)) 0x50d1b8);
+void (__noreturn *(&off_50D1BC)[5])() = * ((decltype(&off_50D1BC)) 0x50d1bc);
+void (__noreturn *(&off_50D1C0)[4])() = * ((decltype(&off_50D1C0)) 0x50d1c0);
+void (__noreturn *(&off_50D1C4)[3])() = * ((decltype(&off_50D1C4)) 0x50d1c4);
+void (__noreturn *(&off_50D1C8)[2])() = * ((decltype(&off_50D1C8)) 0x50d1c8);
+void (__noreturn *&off_50D1CC)() = *((decltype(&off_50D1CC)) 0x50d1cc);
 char(&aPkwareDataCompressionLibraryForWin32Copyr_0)[193] = * ((decltype(&aPkwareDataCompressionLibraryForWin32Copyr_0)) 0x50d1e8);
 int(&dword_50D2B0)[256] = * ((decltype(&dword_50D2B0)) 0x50d2b0);
 char(&aPkwareDataCompressionLibraryForWin32Copyr)[194] = * ((decltype(&aPkwareDataCompressionLibraryForWin32Copyr)) 0x50da80);
@@ -24419,7 +24472,7 @@ DWORD& ElapsedTimeFrames = * ((decltype(&ElapsedTimeFrames)) 0x57f23c);
 int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
 char(&next_scenario)[32] = * ((decltype(&next_scenario)) 0x57f246);
-char& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
+Race& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
 Race(&single_player_opponent_races)[8] = * ((decltype(&single_player_opponent_races)) 0x57f267);
 __int16(&word_57F270)[] = * ((decltype(&word_57F270)) 0x57f270);
 __int16(&word_57F272)[5] = * ((decltype(&word_57F272)) 0x57f272);
@@ -24587,10 +24640,10 @@ GameData& stru_5999F0 = * ((decltype(&stru_5999F0)) 0x5999f0);
 dialog *& gluJoin_Dlg = * ((decltype(&gluJoin_Dlg)) 0x599a80);
 int& dword_599A84 = * ((decltype(&dword_599A84)) 0x599a84);
 int& dword_599A88 = * ((decltype(&dword_599A88)) 0x599a88);
-char& byte_599A90 = * ((decltype(&byte_599A90)) 0x599a90);
+char(&byte_599A90)[256] = * ((decltype(&byte_599A90)) 0x599a90);
 Bitmap& p_hist_pcx = * ((decltype(&p_hist_pcx)) 0x599b90);
 char& byte_599B98 = * ((decltype(&byte_599B98)) 0x599b98);
-char(&dest)[256] = * ((decltype(&dest)) 0x599c98);
+char(&byte_599C98)[256] = * ((decltype(&byte_599C98)) 0x599c98);
 int& dword_599D98 = * ((decltype(&dword_599D98)) 0x599d98);
 dialog *& glu_load_Dlg = * ((decltype(&glu_load_Dlg)) 0x599d9c);
 dialog *& dword_599DA0 = * ((decltype(&dword_599DA0)) 0x599da0);
@@ -24604,9 +24657,7 @@ int& dword_599ED4 = * ((decltype(&dword_599ED4)) 0x599ed4);
 char& byte_599ED8 = * ((decltype(&byte_599ED8)) 0x599ed8);
 char(&byte_599FD0)[256] = * ((decltype(&byte_599FD0)) 0x599fd0);
 int& dword_59A0D0 = * ((decltype(&dword_59A0D0)) 0x59a0d0);
-int(&dword_59A0D4)[] = * ((decltype(&dword_59A0D4)) 0x59a0d4);
-int& dword_59A0D8 = * ((decltype(&dword_59A0D8)) 0x59a0d8);
-int& dword_59A0DC = * ((decltype(&dword_59A0DC)) 0x59a0dc);
+int(&dword_59A0D4)[3] = * ((decltype(&dword_59A0D4)) 0x59a0d4);
 int& dword_59A0E0 = * ((decltype(&dword_59A0E0)) 0x59a0e0);
 int(&dword_59A0E4)[] = * ((decltype(&dword_59A0E4)) 0x59a0e4);
 int& dword_59A0E8 = * ((decltype(&dword_59A0E8)) 0x59a0e8);
@@ -24630,9 +24681,7 @@ void *& dword_59B72C = * ((decltype(&dword_59B72C)) 0x59b72c);
 char(&byte_59B730)[12] = * ((decltype(&byte_59B730)) 0x59b730);
 int(&dword_59B73C)[8] = * ((decltype(&dword_59B73C)) 0x59b73c);
 int& dword_59B75C = * ((decltype(&dword_59B75C)) 0x59b75c);
-int(&dword_59B760)[] = * ((decltype(&dword_59B760)) 0x59b760);
-int& dword_59B764 = * ((decltype(&dword_59B764)) 0x59b764);
-int& dword_59B768 = * ((decltype(&dword_59B768)) 0x59b768);
+int(&dword_59B760)[3] = * ((decltype(&dword_59B760)) 0x59b760);
 int& dword_59B76C = * ((decltype(&dword_59B76C)) 0x59b76c);
 char(&byte_59B770)[32] = * ((decltype(&byte_59B770)) 0x59b770);
 GameData& stru_59B790 = * ((decltype(&stru_59B790)) 0x59b790);
