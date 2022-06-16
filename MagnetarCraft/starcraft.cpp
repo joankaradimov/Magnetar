@@ -3460,6 +3460,27 @@ signed int LoadGameInit_()
 
 FAIL_STUB_PATCH(LoadGameInit);
 
+void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
+int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
+
+int loadOKBIN_(int a1, const char* message, HANDLE a3)
+{
+	dword_6D1244 = a1;
+	dword_5128F0 = a1;
+
+	size_t message_size = strlen(message) + 1;
+	okcancel_message = (char*) SMemAlloc(message_size, "Starcraft\\SWAR\\lang\\okcancel.cpp", 163, 0);
+	strcpy_s(okcancel_message, message_size, message);
+
+	dword_6D1248 = a3;
+
+	dialog* okcancel_bin = LoadDialog("ok.bin");
+	registerMenuFunctions_(0, okcancel_bin, 0);
+	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
+}
+
+FAIL_STUB_PATCH(loadOKBIN);
+
 int SaveReplay_(const char* a1, int a3)
 {
 	CHAR FileName[260];
@@ -3473,7 +3494,7 @@ int SaveReplay_(const char* a1, int a3)
 		char buff[256];
 		const char* var = GetNetworkTblString(2);
 		_snprintf(buff, 0x100u, var, &byte_51BFB8);
-		loadOKBIN(1, buff, dword_6D0F2C);
+		loadOKBIN_(1, buff, dword_6D0F2C);
 		return -1;
 	}
 
@@ -8613,6 +8634,24 @@ bool __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(savegameBIN_Main);
 
+int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
+{
+	dword_6D1244 = a1;
+	dword_5128F0 = a1;
+
+	size_t message_size = strlen(message) + 1;
+	okcancel_message = (char*) SMemAlloc(message_size, "Starcraft\\SWAR\\lang\\okcancel.cpp", 174, 0);
+	strcpy_s(okcancel_message, message_size, message);
+
+	dword_6D1248 = a3;
+
+	dialog* okcancel_bin = LoadDialog("rez\\okcancel.bin");
+	registerMenuFunctions_(0, okcancel_bin, 0);
+	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
+}
+
+FAIL_STUB_PATCH(loadOKCancelBIN);
+
 int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 {
 	char* v3 = (char*)malloc(strlen(filename) + 3);
@@ -8630,7 +8669,7 @@ int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 	_snprintf(buff, 0x100u, GetNetworkTblString(a2), v3);
 
 	free(v3);
-	return loadOKCancelBIN(1, buff, dword_6D0F2C) == -2;
+	return loadOKCancelBIN_(1, buff, dword_6D0F2C) == -2;
 }
 
 FAIL_STUB_PATCH(ConfirmReplayOverwrite);
@@ -8694,7 +8733,7 @@ int LoadSaveGameBIN_Main_(int a1, Race a2)
 		else if (v13 == 0)
 		{
 			const char* v14 = GetNetworkTblString(101);
-			loadOKBIN(1, v14, dword_6D0F2C);
+			loadOKBIN_(1, v14, dword_6D0F2C);
 		}
 		break;
 	case 3:

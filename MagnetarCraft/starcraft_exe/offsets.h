@@ -9479,7 +9479,7 @@ extern char& byte_6D1225;
 extern UnknownTilesetRelated1& stru_6D1228;
 extern void (__thiscall *&dword_6D1234)(dialog *);
 extern StringTbl& StatTxtTbl;
-extern void *& dword_6D123C;
+extern char *& okcancel_message;
 extern void *& dword_6D1240;
 extern int& dword_6D1244;
 extern HANDLE& dword_6D1248;
