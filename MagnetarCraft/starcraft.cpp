@@ -6629,8 +6629,7 @@ int sub_4B5110_(Race race)
 {
 	if (dword_59A0D4[race])
 	{
-		int v2 = (race != Race::RACE_Terran) + 142;
-		const char* v3 = ((race != Race::RACE_Terran) != ~142) ? GetNetworkTblString(v2 + 1) : NULL;
+		const char* v3 = GetNetworkTblString(race != Race::RACE_Terran ? 144 : 143);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -6647,8 +6646,7 @@ bool sub_4B27A0_(Race race)
 {
 	if (dword_59B760[race])
 	{
-		int v2 = (race == Race::RACE_Protoss) + 140;
-		const char* v3 = ((race == Race::RACE_Protoss) != -141) ? GetNetworkTblString(v2 + 1) : NULL;
+		const char* v3 = GetNetworkTblString(race == Race::RACE_Protoss ? 142 : 141);
 
 		if (!sub_4B5B20(v3))
 		{
