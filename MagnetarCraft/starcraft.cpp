@@ -10084,6 +10084,10 @@ void GameMainLoop_()
 	goto LABEL_8;
 }
 
+FAIL_STUB_PATCH(sub_4DA790);
+FAIL_STUB_PATCH(sub_481CF0);
+FAIL_STUB_PATCH(GameMainLoop);
+
 unsigned int LocalGetLang_()
 {
 	CHAR Buffer[16];
