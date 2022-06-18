@@ -9788,6 +9788,186 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 
 FAIL_STUB_PATCH(sub_4DBDA0);
 
+int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
+{
+	if (tag_length > 0xE && !_strnicmp(tag, "</BACKGROUND ", 13u))
+	{
+		creditsSetBackgroundImageFromFile(tag + 13, dlg);
+		return 0;
+	}
+	if (tag_length > 0xD && !_strnicmp(tag, "</FONTCOLOR ", 12u))
+	{
+		creditsSetFontColorFromFile(tag + 12);
+		return 0;
+	}
+	if (tag_length > 0xD && !_strnicmp(tag, "</FADESPEED ", 12u))
+	{
+		creditsSetFadeSpeed(tag + 12);
+		return 0;
+	}
+	if (tag_length > 0xF && !_strnicmp(tag, "</DISPLAYTIME ", 14u))
+	{
+		creditsSetDisplayTime(tag + 14);
+		return 0;
+	}
+	else if (!_strnicmp(tag, "</PAGE>", tag_length))
+	{
+		creditsEndPage(dlg);
+		return 1;
+	}
+	else
+	{
+		for (auto& position: establishingShotPositions)
+		{
+			if (!_strnicmp(tag, position.tag, tag_length))
+			{
+				if (dword_51CEB0)
+				{
+					HideDialog(dword_51CEB0);
+				}
+				dword_51CEB0 = getControlFromIndex(dlg, position.index);
+				break;
+			}
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(runCreditsScriptCommands);
+
+int runCredits_(dialog* a1)
+{
+	if (dword_51CEB8)
+	{
+		while (true)
+		{
+			int v3;
+			char* tag;
+
+			int v2 = sub_4D86A0(&tag, &v3);
+			if (!v2)
+			{
+				break;
+			}
+			if (!v3)
+			{
+				sub_4D8840(v2, tag);
+			}
+			else if (runCreditsScriptCommands_(tag, v2, a1))
+			{
+				dword_51CEC4 = dword_51CEB4 + GetTickCount();
+				return 1;
+			}
+		}
+	}
+
+	DestroyDialog(a1);
+	return 0;
+}
+
+FAIL_STUB_PATCH(runCredits);
+
+int credits_keyDwn_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wVirtKey)
+	{
+	case VK_SPACE:
+	case VK_RETURN:
+		return runCredits_(dlg);
+	case VK_ESCAPE:
+		credits_interrupted = 1;
+		DestroyDialog(dlg);
+		return 0;
+	default:
+		return 1;
+	}
+}
+
+FAIL_STUB_PATCH(credits_keyDwn);
+
+int credits_idle_(dialog* dlg)
+{
+	if (gwGameMode == GAME_EXIT)
+	{
+		credits_interrupted = 1;
+		DestroyDialog(dlg);
+		return 0;
+	}
+	else if (is_keycode_used[VK_BACK] || GetTickCount() <= dword_51CEC4)
+	{
+		return 1;
+	}
+	else
+	{
+		return runCredits_(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(credits_idle);
+
+int creditsDlgInit_(dialog* dlg)
+{
+	for (auto& position : establishingShotPositions)
+	{
+		dialog* position_dlg = getControlFromIndex(dlg, position.index);
+		if (position_dlg)
+		{
+			position_dlg->pszText = 0;
+			position_dlg->pfcnUpdate = sub_4D8930;
+		}
+	}
+
+	byte_51CEC8 = 1;
+	dword_51CEB4 = 5000;
+	return runCredits_(dlg);
+}
+
+FAIL_STUB_PATCH(creditsDlgInit);
+
+bool __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+		if (!credits_keyDwn_(dlg, evt))
+		{
+			return false;
+		}
+		break;
+	case EVN_LBUTTONDOWN:
+	case EVN_RBUTTONDOWN:
+		if (!runCredits_(dlg))
+		{
+			return false;
+		}
+		break;
+	case EVN_IDLE:
+		if (!credits_idle_(dlg))
+		{
+			return false;
+		}
+		break;
+	case EVN_USER:
+		if (evt->dwUser == 0)
+		{
+			if (!creditsDlgInit_(dlg))
+			{
+				return false;
+			}
+			break;
+		}
+		else if (evt->dwUser == USER_DESTROY)
+		{
+			creditsDlgDestroy(dlg);
+		}
+		break;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(creditsDlgInteract);
+
 void loadInitCreditsBIN_(const char* a1)
 {
 	char buff[MAX_PATH];
@@ -9799,7 +9979,7 @@ void loadInitCreditsBIN_(const char* a1)
 	credits_interrupted = 0;
 
 	dialog* credits_bin = LoadDialog("rez\\credits.bin");
-	gluLoadBINDlg_(credits_bin, creditsDlgInteract);
+	gluLoadBINDlg_(credits_bin, creditsDlgInteract_);
 	if (dword_51CEA8)
 		SMemFree(dword_51CEA8, "Starcraft\\SWAR\\lang\\credits.cpp", 623, 0);
 	dword_51CEA8 = 0;
