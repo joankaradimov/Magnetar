@@ -1808,6 +1808,31 @@ void LoadTitle_()
 
 FAIL_STUB_PATCH(LoadTitle);
 
+void LoadImageData_()
+{
+	OVERLAPPED a5[999];
+	_DWORD a6[999];
+
+	u16* images_tbl = (u16*) fastFileRead_(0, 0, "arr\\images.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
+	dword_6D1210 = low_memory;
+	loadImagesData_lowMem(ImageGrpGraphics, Images_GrpFile, images_tbl, 999, a5, a6);
+	dword_6D1210 = 0;
+
+	loadImagesData(&lo_files.attackOverlays, Images_AttackOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(&lo_files.damageOverlays, Images_InjuryOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(&lo_files.specialOverlays, Images_SpecialOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(&lo_files.landingDustOverlays, Images_LandingDustLO, images_tbl, 999, a5, a6);
+	loadImagesData(&lo_files.liftoffDustOverlays, Images_LiftOffDustLO, images_tbl, 999, a5, a6);
+	loadImagesData(&ShieldOverlays, Images_ShieldOverlayLO, images_tbl, 999, a5, a6);
+	if (images_tbl)
+	{
+		SMemFree(images_tbl, "Starcraft\\SWAR\\lang\\CImage.cpp", 1389, 0);
+	}
+}
+
+FAIL_STUB_PATCH(LoadImageData);
+
 void LoadInitIscriptBIN_()
 {
 	int iscript_bin_size;
@@ -1817,7 +1842,7 @@ void LoadInitIscriptBIN_()
 	{
 		SysWarn_FileNotFound("game\\tselect.pcx", SErrGetLastError());
 	}
-	LoadImageData();
+	LoadImageData_();
 	InitDamageOverlayCounts();
 }
 
