@@ -6242,36 +6242,7 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
-	HANDLE glu_hist_file;
-	if (!SFileOpenFileEx(0, "rez\\gluHist.tbl", 0, &glu_hist_file))
-	{
-		SysWarn_FileNotFound("rez\\gluHist.tbl", SErrGetLastError());
-	}
-	LONG glu_hist_file_size = SFileGetFileSize(glu_hist_file, 0);
-	if (glu_hist_file_size == -1)
-	{
-		FileFatal(glu_hist_file, GetLastError());
-		return NULL;
-	}
-	if (!glu_hist_file_size)
-	{
-		SysWarn_FileNotFound("rez\\gluHist.tbl", 24);
-	}
-	BYTE* v9 = (BYTE*) SMemAlloc(glu_hist_file_size, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
-	int read;
-	if (!SFileReadFile(glu_hist_file, v9, glu_hist_file_size, &read, 0))
-	{
-		DWORD last_error = GetLastError();
-		FileFatal(glu_hist_file, last_error == 38 ? 24 : last_error);
-		return NULL;
-	}
-	if (read != glu_hist_file_size)
-	{
-		FileFatal(glu_hist_file, 24);
-		return NULL;
-	}
-	SFileCloseFile(glu_hist_file);
-	dword_6D5A44 = v9;
+	dword_6D5A44 = (BYTE*)fastFileRead_(0, 0, "rez\\gluHist.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	AllocBackgroundImage("glue\\campaign\\pHist.pcx", &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 602);
 
 	dword_6D5A3C = LoadDialog("rez\\gluHist.bin");
