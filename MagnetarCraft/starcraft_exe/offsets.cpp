@@ -10288,9 +10288,9 @@ void sub_47AB40(LO_Overlays *a1, signed int a2) {
     }
 }
 DECL_FUNC(int(*sub_47ABB0)(), sub_47ABB0, 0x47abb0);
-void *readImageFile_lowMem(int *grp_file_arr, unsigned __int16 *images_tbl, int image_id, grpHead **a4, int a5, _DWORD *a6) {
+grpHead *readImageFile_lowMem(int *grp_file_arr, unsigned __int16 *images_tbl, int image_id, grpHead **a4, LPOVERLAPPED a3, _DWORD *a6) {
     int address = 0x47abe0;
-    void * result_;
+    grpHead * result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
@@ -10299,14 +10299,14 @@ void *readImageFile_lowMem(int *grp_file_arr, unsigned __int16 *images_tbl, int 
         mov edx, images_tbl
         mov ecx, image_id
         push dword ptr a6
-        push dword ptr a5
+        push dword ptr a3
         push dword ptr a4
         call address
         mov result_, eax
     }
     return result_;
 }
-void *readImageFile(int overlay_index, unsigned __int16 *a2, int image_id, HANDLE hFile, int a5, _DWORD *a6) {
+void *readImageFile(int *overlay_index, unsigned __int16 *a2, int image_id, HANDLE hFile, LPOVERLAPPED a3, _DWORD *a6) {
     int address = 0x47acf0;
     void * result_;
     __asm {
@@ -10317,15 +10317,15 @@ void *readImageFile(int overlay_index, unsigned __int16 *a2, int image_id, HANDL
         mov edx, a2
         mov ecx, image_id
         push dword ptr a6
-        push dword ptr a5
+        push dword ptr a3
         push dword ptr hFile
         call address
         mov result_, eax
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*loadImagesData_lowMem)(grpHead **a1, int a2, int a3, int a4, void *a5, void *a6), loadImagesData_lowMem, 0x47ae30);
-DECL_FUNC(void (__stdcall*loadImagesData)(LO_Overlays *a1, int a2, unsigned __int16 *a3, int a4, char *a5, _DWORD *a6), loadImagesData, 0x47af30);
+DECL_FUNC(void (__stdcall*loadImagesData_lowMem)(grpHead **a1, int *a2, u16 *images_tbl, int a4, LPOVERLAPPED a5, void *a6), loadImagesData_lowMem, 0x47ae30);
+DECL_FUNC(void (__stdcall*loadImagesData)(LO_Overlays *a1, int *a2, unsigned __int16 *images_tbl, int a4, LPOVERLAPPED a5, _DWORD *a6), loadImagesData, 0x47af30);
 DECL_FUNC(int(*unit_isRefineryUnit)(), unit_isRefineryUnit, 0x47afe0);
 DECL_FUNC(int(*sub_47B000)(), sub_47B000, 0x47b000);
 DECL_FUNC(int(*sub_47B030)(), sub_47B030, 0x47b030);
@@ -11202,7 +11202,19 @@ CThingy *sub_487A10(int a1, int a2) {
 DECL_FUNC(int (__fastcall*sub_487A90)(CUnit *a1, __int16 a2), sub_487A90, 0x487a90);
 DECL_FUNC(int (__stdcall*getPlacementRestrictionsFromSpriteID)(int, int, int), getPlacementRestrictionsFromSpriteID, 0x487b00);
 DECL_FUNC(int (__stdcall*sub_487C70)(int, int, int, int), sub_487C70, 0x487c70);
-DECL_FUNC(int(*CThingyIsVisible)(), CThingyIsVisible, 0x487cf0);
+int CThingyIsVisible(int a1, CThingy *a2) {
+    int address = 0x487cf0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_487D90)(), sub_487D90, 0x487d90);
 DECL_FUNC(int (__fastcall*readThingyArray)(int a1, int a2, FILE *a3, CThingy *a4, int a5), readThingyArray, 0x487db0);
 DECL_FUNC(int (__stdcall*writeThingys)(FILE *a1, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
@@ -14403,8 +14415,15 @@ DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_96_128)(), minimapSurfaceUpdate_96_
 DECL_FUNC(void (__cdecl*minimapSurfaceUpdate_64)(), minimapSurfaceUpdate_64, 0x4a42b0);
 DECL_FUNC(void (__cdecl*setMapSizeConstants)(), setMapSizeConstants, 0x4a4400);
 DECL_FUNC(void (__fastcall*drawMinimapUnitBox)(int player_id), drawMinimapUnitBox, 0x4a4650);
-DECL_FUNC(void(*drawMinimapUnitBox2)(), drawMinimapUnitBox2, 0x4a47b0);
-DECL_FUNC(void(*drawAllMinimapUnitBoxes)(), drawAllMinimapUnitBoxes, 0x4a48e0);
+DECL_FUNC(void (__fastcall*drawMinimapUnitBox2)(int player), drawMinimapUnitBox2, 0x4a47b0);
+void drawAllMinimapUnitBoxes(int a1) {
+    int address = 0x4a48e0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
 DECL_FUNC(void (__fastcall*updateMinimapPositioninfoProc)(dialog *, __int16), updateMinimapPositioninfoProc, 0x4a4a70);
 DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
@@ -17817,8 +17836,21 @@ int openGraphicHandle(const char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*waitForImageLoadObjects)(int, int, int), waitForImageLoadObjects, 0x4d29d0);
-DECL_FUNC(int (__fastcall*ReadFile_Overlapped)(void *buffer, DWORD nNumberOfBytesToRead), ReadFile_Overlapped, 0x4d2aa0);
+DECL_FUNC(void (__stdcall*waitForImageLoadObjects)(LPOVERLAPPED a1, int a2, int a3), waitForImageLoadObjects, 0x4d29d0);
+void ReadFile_Overlapped(void *buffer, DWORD nNumberOfBytesToRead, LPOVERLAPPED a3, void *a4) {
+    int address = 0x4d2aa0;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edi, edi
+        xor edx, edx
+        mov ecx, buffer
+        mov edx, nNumberOfBytesToRead
+        mov eax, a3
+        mov edi, a4
+        call address
+    }
+}
 DECL_FUNC(grpHead *(__fastcall*LoadGraphic)(const char *grp_path, int unused_zero, const char *logfilename, int logline), LoadGraphic, 0x4d2b30);
 DECL_FUNC(int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline), sub_4D2BF0, 0x4d2bf0);
 DECL_FUNC(int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline), sub_4D2C70, 0x4d2c70);
@@ -18457,7 +18489,41 @@ void PlayWarpInOverlay(CImage *a1) {
 }
 DECL_FUNC(int (__thiscall*iscriptSomething_Death)(CImage *a1), iscriptSomething_Death, 0x4d8590);
 DECL_FUNC(int(*sub_4D8600)(), sub_4D8600, 0x4d8600);
-DECL_FUNC(int(*sub_4D86A0)(), sub_4D86A0, 0x4d86a0);
+unsigned __int32 creditsSetDisplayTime(const char *a1) {
+    int address = 0x4d8620;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+unsigned __int32 creditsSetFadeSpeed(const char *a1) {
+    int address = 0x4d8660;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int sub_4D86A0(char **a1, _DWORD *a2) {
+    int address = 0x4d86a0;
+    int result_;
+    __asm {
+        xor ebx, ebx
+        xor esi, esi
+        mov ebx, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4D8780)(), sub_4D8780, 0x4d8780);
 void creditsDlgDestroy(dialog *a1) {
     int address = 0x4d8790;
@@ -18467,7 +18533,15 @@ void creditsDlgDestroy(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*sub_4D8840)(char *source), sub_4D8840, 0x4d8840);
+void sub_4D8840(int a1, char *source) {
+    int address = 0x4d8840;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr source
+        call address
+    }
+}
 char creditsEndPage(dialog *a1) {
     int address = 0x4d88d0;
     char result_;
@@ -18493,6 +18567,14 @@ HANDLE creditsSetBackgroundImageFromFile(const char *a1, dialog *a2) {
     }
     return result_;
 }
+void creditsSetFontColorFromFile(const char *a1) {
+    int address = 0x4d8a10;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 int runCreditsScriptCommands(char *tag, unsigned int a2, dialog *a3) {
     int address = 0x4d8a80;
     int result_;
@@ -18507,9 +18589,31 @@ int runCreditsScriptCommands(char *tag, unsigned int a2, dialog *a3) {
     }
     return result_;
 }
+signed int runCredits(dialog *a1) {
+    int address = 0x4d8bd0;
+    signed result_;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int creditsDlgInit(dialog *a1) {
     int address = 0x4d8c60;
     signed result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int credits_idle(dialog *a1) {
+    int address = 0x4d8cd0;
+    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -20853,7 +20957,7 @@ int sub_4ED440(ID *a1) {
     }
     return result_;
 }
-DECL_FUNC(void (__stdcall*ID_Constructor)(CharacterData *a1), ID_Constructor, 0x4ed490);
+DECL_FUNC(int (__stdcall*ID_Constructor)(CharacterData *a1), ID_Constructor, 0x4ed490);
 DECL_FUNC(int(*sub_4ED500)(), sub_4ED500, 0x4ed500);
 DECL_FUNC(void (__fastcall*sub_4ED530)(__int16 a1), sub_4ED530, 0x4ed530);
 u32 gluLogin_SetSelect_Evt(dialog *a1) {
@@ -22243,7 +22347,7 @@ char(&aRezGlucmpgn_bi)[] = * ((decltype(&aRezGlucmpgn_bi)) 0x4ffecc);
 char(&filename)[] = * ((decltype(&filename)) 0x4ffee0);
 const char(&aLastreplay_1)[] = * ((decltype(&aLastreplay_1)) 0x4ffef8);
 char(&aLocal_dll)[10] = * ((decltype(&aLocal_dll)) 0x4fff08);
-EstablishingShotPosition(&establishingShotPositions)[5] = * ((decltype(&establishingShotPositions)) 0x4fff24);
+EstablishingShotPosition(&establishingShotPositions)[6] = * ((decltype(&establishingShotPositions)) 0x4fff24);
 char(&aA_0)[7] = * ((decltype(&aA_0)) 0x4fff54);
 EstablishingShot(&establishing_shots)[65] = * ((decltype(&establishing_shots)) 0x4fff60);
 CHAR(&String2)[] = * ((decltype(&String2)) 0x500194);
