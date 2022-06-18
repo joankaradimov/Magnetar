@@ -1,0 +1,20 @@
+</COMMENT credits for Magnetar: A StarCraft mod>
+</FADESPEED 100>
+
+</COMMENT #############################################################>
+</BACKGROUND glue\palmm\backgnd.pcx>
+</FONTCOLOR glue\palmm\tfont.pcx>
+</SCREENCENTER>
+Magnetar
+Programming
+
+Joan Karadimov
+</PAGE>
+
+
+</COMMENT Add a "Thanks to" section >
+
+
+</SCREENCENTER>
+Credits for Starcraft: Brood War
+</PAGE>

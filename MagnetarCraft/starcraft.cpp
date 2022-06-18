@@ -10036,7 +10036,8 @@ void BeginCredits_()
 
 	DLGMusicFade(MT_TERRAN2);
 	credits_interrupted = 0;
-	if (is_expansion_installed)
+	loadInitCreditsBIN_("crdt_mag");
+	if (credits_interrupted == 0 && is_expansion_installed)
 	{
 		loadInitCreditsBIN_("crdt_exp");
 	}
