@@ -2477,6 +2477,112 @@ FAIL_STUB_PATCH(MinimapButton_EventHandler);
 
 void setMapSizeConstants_();
 
+void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
+{
+	if (HasMegatileUpdate)
+	{
+		minimapSurfaceUpdate();
+	}
+	sub_4A4150();
+	drawAllMinimapBoxes();
+	sub_4A3870();
+
+	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+	{
+		minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(minimap_dialog);
+	}
+	HasMegatileUpdate = 0;
+}
+
+FAIL_STUB_PATCH(Minimap_TimerRefresh);
+
+void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
+{
+	byte_6D5BC0 ^= 1u;
+	if (byte_6D5BC1)
+	{
+		int i = 0;
+		while (stru_59C1B8[i].a0 == 0)
+		{
+			i += 1;
+			if (i >= _countof(stru_59C1B8))
+			{
+				if (HasMegatileUpdate)
+				{
+					minimapSurfaceUpdate();
+				}
+				if (dword_5993AC == 1 || !byte_6D5BBF)
+				{
+					sub_4A3A00();
+					minimapVisionUpdate();
+				}
+				else
+				{
+					memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
+				}
+				drawAllMinimapBoxes();
+				sub_4A3870();
+				if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+				{
+					minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
+					updateDialog(minimap_dialog);
+				}
+				HasMegatileUpdate = 0;
+				return;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(updateMinimapSurfaceInfoProc);
+
+void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
+{
+	int v2 = 0;
+	for (int i = 0; i < _countof(stru_59C1B8); i++)
+	{
+		if (stru_59C1B8[i].a0)
+		{
+			if (stru_59C1B8[i].d == 19)
+			{
+				stru_59C1B8[i].a0 = 0;
+			}
+			else
+			{
+				stru_59C1B8[i].d++;
+			}
+			v2 = 1;
+		}
+	}
+	if (v2)
+	{
+		if (HasMegatileUpdate)
+		{
+			minimapSurfaceUpdate();
+		}
+		if (dword_5993AC == 1 || !byte_6D5BBF)
+		{
+			sub_4A3A00();
+			minimapVisionUpdate();
+		}
+		else
+		{
+			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
+		}
+		drawAllMinimapBoxes();
+		sub_4A3870();
+		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+		{
+			minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(minimap_dialog);
+		}
+		HasMegatileUpdate = 0;
+	}
+}
+
+FAIL_STUB_PATCH(updateMinimapSurfaceInfo2Proc);
+
 void updateMinimapPreviewDlg_(dialog* dlg)
 {
 	static FnInteract menu_functions[] = {
@@ -2515,10 +2621,10 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 		setMapSizeConstants_();
 		if (dword_5993AC == 0)
 		{
-			SetCallbackTimer(1, dlg, multiPlayerMode != 0 ? 2000 : 1000, Minimap_TimerRefresh);
+			SetCallbackTimer(1, dlg, multiPlayerMode != 0 ? 2000 : 1000, Minimap_TimerRefresh_);
 			SetCallbackTimer(2, dlg, 200, updateMinimapPositioninfoProc);
-			SetCallbackTimer(3, dlg, 200, updateMinimapSurfaceInfoProc);
-			SetCallbackTimer(6, dlg, 100, updateMinimapSurfaceInfo2Proc);
+			SetCallbackTimer(3, dlg, 200, updateMinimapSurfaceInfoProc_);
+			SetCallbackTimer(6, dlg, 100, updateMinimapSurfaceInfo2Proc_);
 			if (multiPlayerMode && (GetActivePlayerCount() > 1 || multiPlayerMode && gameData.got_file_values.template_id == 15) || InReplay)
 			{
 				SetCallbackTimer(5, dlg, 500, playerInfoSomethingTvBProc);

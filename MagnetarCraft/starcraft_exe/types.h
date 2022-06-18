@@ -4289,7 +4289,8 @@ struct MinimapSurfaceInfoRelated
   u8 a3;
   int b;
   int c;
-  int d;
+  __int16 d;
+  __int16 e;
 };
 static_assert(sizeof(MinimapSurfaceInfoRelated) == 16, "Incorrect size for type `MinimapSurfaceInfoRelated`. Expected: 16");
 
