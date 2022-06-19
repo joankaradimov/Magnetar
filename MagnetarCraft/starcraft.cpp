@@ -5714,11 +5714,12 @@ FAIL_STUB_PATCH(ChkLoader_COLR);
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
-	dword_6D0E84 = a2;
 	dword_6D0C74 = a1->isCreepCovered;
 	dword_6D0C70 = a1->pfunc0;
-	dword_6D0F08 = a3;
 	dword_6D0C7C = a1->pfuncC;
+	dword_6D0E84 = a2;
+	dword_6D0F08 = a3;
+
 	int v8 = a4;
 	dword_6D0C78 = a1->isTileVisible;
 	dword_6D0C6C = a4;
