@@ -8767,6 +8767,39 @@ void loadMenu_gluLoad_()
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
 
+void saveGame_Create_(dialog* dlg)
+{
+	DLG_SwishIn(dlg);
+	UpdateCancelButton(dlg, 5u, 0x20000000);
+	UpdateOKButton(dlg, 3u, 0x20000000);
+	dialog* v3 = getControlFromIndex(dlg, 3);
+	if (v3)
+	{
+		HideDialog(v3);
+	}
+
+	dialog* v6 = getControlFromIndex(dlg, 1);
+	if (byte_51BFD8 < v6->fields.scroll.bSliderSkip || byte_51BFD8 == -1)
+	{
+		dlgEvent v11;
+		v11.wNo = EVN_USER;
+		v11.dwUser = USER_SELECT;
+		*(_DWORD*)&v11.wSelection = (unsigned __int8)byte_51BFD8;
+		v6->pfcnInteract(v6, &v11);
+		DlgSetSelected_UpdateScrollbar(byte_51BFD8, v6);
+	}
+
+	dialog* v9 = getControlFromIndex(dlg, 4);
+	v9->pszText = (char*)get_GluAll_String((GluAllTblEntry)0xB3);
+	if ((v9->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+	{
+		v9->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(v9);
+	}
+}
+
+FAIL_STUB_PATCH(saveGame_Create);
+
 void savegameBIN_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -8789,7 +8822,7 @@ bool __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			saveGame_Create(dlg);
+			saveGame_Create_(dlg);
 			break;
 		case USER_DESTROY:
 			saveGame_Destroy(dlg);
