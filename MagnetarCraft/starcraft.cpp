@@ -9994,6 +9994,24 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 
 FAIL_STUB_PATCH(sub_4DBDA0);
 
+void creditsEndPage_(dialog* a1)
+{
+	if (byte_51CEAC)
+	{
+		byte_51CEAC = 0;
+		sub_41E9E0(byte_51CEC8);
+		memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
+		if ((a1->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+		{
+			a1->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(a1);
+		}
+		TitlePaletteUpdate(byte_51CEC8);
+	}
+}
+
+FAIL_STUB_PATCH(creditsEndPage);
+
 int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 {
 	if (tag_length > 0xE && !_strnicmp(tag, "</BACKGROUND ", 13u))
@@ -10028,7 +10046,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 	}
 	else if (!_strnicmp(tag, "</PAGE>", tag_length))
 	{
-		creditsEndPage(dlg);
+		creditsEndPage_(dlg);
 		return 1;
 	}
 	else
