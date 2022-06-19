@@ -6952,6 +6952,27 @@ FAIL_STUB_PATCH(sub_4B2810);
 
 // TODO: reimplement DlgSwooshin -- all of its calls are moved away from StarCraft.exe
 
+void DLG_SwishIn_(dialog* a1)
+{
+	ScreenLayers[0].bits |= 1u;
+	ScreenLayers[0].buffers = 1;
+	BWFXN_RefreshTarget(ScreenLayers[0].left, ScreenLayers[0].height + ScreenLayers[0].top - 1, ScreenLayers[0].top, ScreenLayers[0].width + ScreenLayers[0].left - 1);
+	if (dword_50E064 != stru_4FFAD0[glGluesMode].menu_position)
+	{
+		memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
+		if ((a1->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+		{
+			a1->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(a1);
+		}
+		TitlePaletteUpdate(3);
+		dword_50E064 = stru_4FFAD0[glGluesMode].menu_position;
+	}
+	SetCallbackTimer(46, a1, 100, DLGSwishInProc);
+}
+
+FAIL_STUB_PATCH(DLG_SwishIn);
+
 void gluCmpgn_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -6981,7 +7002,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
 			{
 				DLGMusicFade(MT_TITLE);
@@ -7028,7 +7049,7 @@ bool __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
 				DLGMusicFade(MT_TITLE);
 			break;
@@ -7096,7 +7117,7 @@ bool __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case USER_CREATE:
 			gluLogin_Init(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
 			_ID_Destructor(&stru_51A218.dword8);
@@ -7307,7 +7328,7 @@ bool __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case USER_CREATE:
 			sub_4B7E10(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
 			DestroyGameNodes();
@@ -7505,7 +7526,7 @@ bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case EventUser::USER_CREATE:
 			gluCustm_initSwish_(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
 			if (LastControlID == 12 && !gluCustmLoadMapFromList())
@@ -7800,7 +7821,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case USER_CREATE:
 			gluMainCreate(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			genericDlgInteract(dlg, evt);
 			if (byte_6D5BBC)
 			{
@@ -8063,7 +8084,7 @@ bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case EventUser::USER_DESTROY:
 			briefingFramesCleanup(dlg);
@@ -8310,7 +8331,7 @@ bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 		{
 		case USER_CREATE:
 			getGameList_(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
 			DestroyProviderList(dlg);
@@ -8414,7 +8435,7 @@ bool __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case USER_CREATE:
 			sub_4B0AE0(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
 			Sleep(400);
@@ -8712,7 +8733,7 @@ bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case EventUser::USER_CREATE:
 			gluChat_init_(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			genericDlgInteract(dlg, evt);
 			sub_4B9BF0_(dlg);
 			return 1;
@@ -8833,7 +8854,7 @@ bool __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_ACTIVATE:
 			if (LastControlID == 7)
@@ -8877,7 +8898,7 @@ FAIL_STUB_PATCH(loadMenu_gluLoad);
 
 void saveGame_Create_(dialog* dlg)
 {
-	DLG_SwishIn(dlg);
+	DLG_SwishIn_(dlg);
 	UpdateCancelButton(dlg, 5u, 0x20000000);
 	UpdateOKButton(dlg, 3u, 0x20000000);
 	dialog* v3 = getControlFromIndex(dlg, 3);
@@ -9179,7 +9200,7 @@ bool __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 		{
 		case USER_CREATE:
 			sub_4B4600(dlg);
-			DLG_SwishIn(dlg);
+			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
 			Sleep(0x3E8u);
