@@ -10140,6 +10140,29 @@ int creditsDlgInit_(dialog* dlg)
 
 FAIL_STUB_PATCH(creditsDlgInit);
 
+void creditsDlgDestroy_(dialog* dlg)
+{
+	for (auto& position : establishingShotPositions)
+	{
+		dialog* position_dlg = getControlFromIndex(dlg, position.index);
+		if (position_dlg->pszText)
+		{
+			SMemFree(position_dlg->pszText, "Starcraft\\SWAR\\lang\\credits.cpp", 566, 0);
+		}
+	}
+
+	if (!byte_51A0E9)
+	{
+		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		byte_51A0E9 = 1;
+		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		gluDlgFadePalette(byte_51CEC8);
+		BWFXN_RedrawTarget();
+	}
+}
+
+FAIL_STUB_PATCH(creditsDlgDestroy);
+
 bool __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -10174,7 +10197,7 @@ bool __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 		}
 		else if (evt->dwUser == USER_DESTROY)
 		{
-			creditsDlgDestroy(dlg);
+			creditsDlgDestroy_(dlg);
 		}
 		break;
 	}
