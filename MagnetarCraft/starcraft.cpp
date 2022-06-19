@@ -1279,6 +1279,42 @@ void BWFXN_updateImageData_()
 
 FAIL_STUB_PATCH(BWFXN_updateImageData);
 
+void BWFXN_drawMapTiles_()
+{
+	int v2 = MoveToTile.y;
+	if (v2 >= 16 * RENDER_AREA_TILE_ROWS)
+	{
+		v2 -= 16 * RENDER_AREA_TILE_ROWS;
+	}
+	if (v2 >= 8 * RENDER_AREA_TILE_ROWS)
+	{
+		v2 -= 8 * RENDER_AREA_TILE_ROWS;
+	}
+	if (v2 >= 4 * RENDER_AREA_TILE_ROWS)
+	{
+		v2 -= 4 * RENDER_AREA_TILE_ROWS;
+	}
+	if (v2 >= 2 * RENDER_AREA_TILE_ROWS)
+	{
+		v2 -= 2 * RENDER_AREA_TILE_ROWS;
+	}
+	if (v2 >= 1 * RENDER_AREA_TILE_ROWS)
+	{
+		v2 -= 1 * RENDER_AREA_TILE_ROWS;
+	}
+	for (int i = 0; i < RENDER_AREA_TILE_ROWS; i++)
+	{
+		drawScreenRowTiles(
+			&CellMap[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
+			&MapTileArray[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
+			&active_tiles[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
+			MoveToTile.y + i,
+			(MoveToTile.x + ((v2 + i) % RENDER_AREA_TILE_ROWS) * RENDER_AREA_TILE_COLUMNS * TILE_WIDTH) * TILE_HEIGHT);
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_drawMapTiles);
+
 void BWFXN_drawDragSelBox_()
 {
 	if (byte_66FF5C)
@@ -1341,7 +1377,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		memcpy(dword_6D5C10, dword_6D5C0C, 0x198u);
 		BWFXN_updateImageData_();
 		maskSomething2();
-		BWFXN_drawMapTiles();
+		BWFXN_drawMapTiles_();
 		BWFXN_blitMapTiles();
 	}
 	else
@@ -1349,7 +1385,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		maskSomething1();
 		refreshImageRange(dword_5993A4, dword_5993C0);
 		maskSomething2();
-		BWFXN_drawMapTiles();
+		BWFXN_drawMapTiles_();
 		blitTileCacheOnRefresh();
 	}
 	BWFXN_drawAllSprites();
