@@ -8382,6 +8382,114 @@ void loadMenu_gluConn_()
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
 
+void gluModem_CustomCtrlID_(dialog* a1)
+{
+	static FnInteract functions[] = {
+		NULL,
+		NULL,
+		NULL,
+		NULL,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		Menu_Generic_Button,
+		genericLabelInteract,
+		genericListboxInteract,
+		genericLabelInteract,
+		genericLabelInteract,
+	};
+
+	registerMenuFunctions_(functions, a1, sizeof(functions));
+	DlgSwooshin(4, stru_51A99C, a1, 0);
+}
+
+FAIL_STUB_PATCH(gluModem_CustomCtrlID);
+
+bool __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B0AE0(dlg);
+			DLG_SwishIn(dlg);
+			break;
+		case USER_DESTROY:
+			Sleep(400);
+			waitLoopCntd(56, dlg);
+			break;
+			return genericDlgInteract(dlg, evt);
+		case USER_ACTIVATE:
+			switch (LastControlID)
+			{
+			case 5:
+				if (!load_gluModemStatus(dlg))
+				{
+					return 1;
+				}
+				LastControlID = 5;
+				return DLG_SwishOut(dlg);
+			case 6:
+				if (dword_59B82C && !BWFXN_gluPOKCancel_MBox(get_GluAll_String((GluAllTblEntry)82)))
+				{
+					return 1;
+				}
+				LastControlID = 6;
+				return DLG_SwishOut(dlg);
+			case 7:
+				AU_PHONENUMBER(dlg);
+				return 1;
+			case 8:
+				DeleteGluModemEntry(dlg);
+				return 1;
+			case 9:
+				if (is_spawn)
+				{
+					BWFXN_gluPOK_MBox(GetNetworkTblString(104));
+					return 1;
+				}
+				return DLG_SwishOut(dlg);
+			default:
+				return DLG_SwishOut(dlg);
+			}
+			break;
+		case USER_INIT:
+			gluModem_CustomCtrlID_(dlg);
+			return genericDlgInteract(dlg, evt);
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluModem_Main);
+
+void loadMenu_gluModem_()
+{
+	dialog* gluModem_bin = LoadDialog("rez\\gluModem.bin");
+	switch (gluLoadBINDlg_(gluModem_bin, gluModem_Main_))
+	{
+	case 5:
+		glGluesMode = GLUE_CHAT;
+		break;
+	case 6:
+		glGluesMode = GLUE_CONNECT;
+		break;
+	case 9:
+		glGluesMode = GLUE_CREATE;
+		break;
+	default:
+		glGluesMode = GLUE_MAIN_MENU;
+		break;
+	}
+
+	changeMenu();
+}
+
+FAIL_STUB_PATCH(loadMenu_gluModem);
+
 void gluChat_init_(dialog* dlg)
 {
 	dword_5999D8 = isHost;
@@ -9344,7 +9452,7 @@ LABEL_28:
 			loadMenu_gluConn_();
 			break;
 		case GLUE_MODEM:
-			loadMenu_gluModem();
+			loadMenu_gluModem_();
 			break;
 		case GLUE_GAME_SELECT:
 		case GLUE_DIRECT:
