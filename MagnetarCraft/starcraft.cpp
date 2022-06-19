@@ -9962,6 +9962,16 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 		creditsSetBackgroundImageFromFile(tag + 13, dlg);
 		return 0;
 	}
+	if (!_strnicmp(tag, "</PLAYSOUND ", 12u))
+	{
+		char* attribute_begin = tag + 12;
+		char* attribute_end = strchr(attribute_begin, '>');
+		std::string sound_attribute(attribute_begin, attribute_end);
+
+		PlayWavByFilename_maybe(sound_attribute.c_str());
+
+		return 0;
+	}
 	if (tag_length > 0xD && !_strnicmp(tag, "</FONTCOLOR ", 12u))
 	{
 		creditsSetFontColorFromFile(tag + 12);

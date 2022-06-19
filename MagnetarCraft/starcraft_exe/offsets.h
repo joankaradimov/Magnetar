@@ -4049,7 +4049,7 @@ void j_DLGMusicFade(MusicTrack a1);
 void muteBgm(RegistryOptions *a1);
 extern int(*sub_4BC410)();
 extern int(*initVolume)();
-void PlayWavByFilename_maybe(char *a1);
+void PlayWavByFilename_maybe(const char *a1);
 HANDLE sub_4BC5E0(SfxData a1);
 extern unsigned int (__stdcall*DSoundThread)(void *a2);
 IDirectSoundBuffer *LoadSoundProc(char *a1, struct_5 *a3);

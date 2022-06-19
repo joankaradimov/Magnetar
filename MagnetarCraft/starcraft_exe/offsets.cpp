@@ -16281,7 +16281,7 @@ void muteBgm(RegistryOptions *a1) {
 }
 DECL_FUNC(int(*sub_4BC410)(), sub_4BC410, 0x4bc410);
 DECL_FUNC(int(*initVolume)(), initVolume, 0x4bc450);
-void PlayWavByFilename_maybe(char *a1) {
+void PlayWavByFilename_maybe(const char *a1) {
     int address = 0x4bc490;
     __asm {
         xor eax, eax
