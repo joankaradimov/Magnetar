@@ -6221,8 +6221,8 @@ int CreateCampaignGame_(MapData mapData)
 		GameData v4;
 		memset(&v4, 0, 140u);
 		v4.got_file_values.unused3[4] = 0;
-		SStrCopy(v4.player_name, playerName, 24u);
-		SStrCopy(v4.map_name, CurrentMapName, 32u);
+		SStrCopy(v4.player_name, playerName, sizeof(v4.player_name));
+		SStrCopy(v4.map_name, CurrentMapName, sizeof(v4.map_name));
 		v4.game_speed = registry_options.GameSpeed;
 		v4.active_human_players = 1;
 		v4.max_players = 1;
