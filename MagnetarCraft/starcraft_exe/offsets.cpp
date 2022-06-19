@@ -15741,7 +15741,7 @@ int sub_4B6C70(dialog *a1) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*gluPEdit_Main)(dialog *dlg, struct dlgEvent *evt), gluPEdit_Main, 0x4b6cc0);
-DECL_FUNC(bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt), sub_4B6D60, 0x4b6d60);
+DECL_FUNC(bool (__fastcall*Popup_Main)(dialog *dlg, struct dlgEvent *evt), Popup_Main, 0x4b6d60);
 DECL_FUNC(bool (__fastcall*gluHist_Interact)(dialog *dlg, struct dlgEvent *evt), gluHist_Interact, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
 void BWFXN_gluPOK_MBox(const char *a1) {

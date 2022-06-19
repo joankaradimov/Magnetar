@@ -3921,7 +3921,7 @@ __int16 sub_4B6B10(dialog *a1, struct dlgEvent *evt);
 extern bool (__fastcall*sub_4B6C30)(dialog *dlg, dlgEvent *a2);
 int sub_4B6C70(dialog *a1);
 extern bool (__fastcall*gluPEdit_Main)(dialog *dlg, struct dlgEvent *evt);
-extern bool (__fastcall*sub_4B6D60)(dialog *dlg, struct dlgEvent *evt);
+extern bool (__fastcall*Popup_Main)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__fastcall*gluHist_Interact)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted);
 void BWFXN_gluPOK_MBox(const char *a1);

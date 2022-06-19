@@ -6377,7 +6377,7 @@ bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 			gluHist_Activate_(dlg);
 		}
 	}
-	return sub_4B6D60(dlg, evt);
+	return Popup_Main(dlg, evt);
 }
 
 FAIL_STUB_PATCH(gluHist_Interact);
@@ -7667,7 +7667,7 @@ int load_gluGameMode_BINDLG_()
 	p_hist_pcx.data = (u8*)read;
 
 	dword_6D5A3C = LoadDialog("rez\\gluGameMode.bin");
-	return gluLoadBINDlg(dword_6D5A3C, sub_4B6D60);
+	return gluLoadBINDlg(dword_6D5A3C, Popup_Main);
 }
 
 FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
