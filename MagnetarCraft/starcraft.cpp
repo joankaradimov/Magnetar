@@ -7634,10 +7634,48 @@ void loadMenu_gluCustm_(int is_multiplayer)
 
 FAIL_STUB_PATCH(loadMenu_gluCustm);
 
+int load_gluGameMode_BINDLG_()
+{
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	dword_6D5A40 = off_51A6F0;
+	dword_599D98 = 28;
+	SStrCopy(byte_599C98, get_GluAll_String((GluAllTblEntry)0xAA), 0xFFu);
+	byte_599B98 = 0;
+
+	char fileName[260];
+	const char* v14 = &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position];
+	SStrCopy(fileName, v14, 0x104u);
+	strcat_s(fileName, "\\retail_ex.pcx");
+
+	int width;
+	int height;
+	int read;
+	if (!SBmpAllocLoadImage(fileName, (int*)palette, (void**)&read, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(fileName, SErrGetLastError());
+	}
+	p_hist_pcx.wid = width;
+	p_hist_pcx.ht = height;
+	p_hist_pcx.data = (u8*)read;
+
+	dword_6D5A3C = LoadDialog("rez\\gluGameMode.bin");
+	return gluLoadBINDlg(dword_6D5A3C, sub_4B6D60);
+}
+
+FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
+
 int SelGameMode_(int a2)
 {
 	int v4 = LastControlID;
-	switch (load_gluGameMode_BINDLG())
+	switch (load_gluGameMode_BINDLG_())
 	{
 	case 6:
 		if (a2 || cmpgn_WaitForCDRom((GluAllTblEntry)167, "rez\\glucmpgn.bin"))
