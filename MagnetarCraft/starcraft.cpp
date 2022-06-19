@@ -1781,6 +1781,28 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+void TitlePaletteUpdate_(int a1)
+{
+	PALETTEENTRY* v1;
+	PALETTEENTRY a2[256];
+
+	if (byte_51A0E9)
+	{
+		memset(GamePalette, 0, sizeof(GamePalette));
+		byte_51A0E9 = 0;
+		v1 = GamePalette;
+		if (Gamma != 100)
+		{
+			sub_41DC20(GamePalette, a2, 256);
+			v1 = a2;
+		}
+		SDrawUpdatePalette(0, 0x100u, v1, 1);
+		BWFXN_RedrawTarget();
+		memset(stru_6CE720, 0, sizeof(stru_6CE720));
+		gluDlgFadePalette(a1);
+	}
+}
+
 void titleInit_(dialog* dlg)
 {
 	void* buffer;
@@ -1812,7 +1834,7 @@ void titleInit_(dialog* dlg)
 	}
 	RefreshCursor_0();
 	memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
-	TitlePaletteUpdate(3);
+	TitlePaletteUpdate_(3);
 	TitleBlitAndLoop(dlg);
 }
 
@@ -4299,7 +4321,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	SetMapStartStatus();
 	SetCurrentPaletteInfo(palette, 0x100u, 0);
 	get_tFontGam_PCX();
-	TitlePaletteUpdate(3);
+	TitlePaletteUpdate_(3);
 	if (multiPlayerMode)
 	{
 		registry_options.GameSpeed = (unsigned __int8)gameData.game_speed;
@@ -6965,7 +6987,7 @@ void DLG_SwishIn_(dialog* a1)
 			a1->lFlags |= DialogFlags::CTRL_UPDATE;
 			updateDialog(a1);
 		}
-		TitlePaletteUpdate(3);
+		TitlePaletteUpdate_(3);
 		dword_50E064 = stru_4FFAD0[glGluesMode].menu_position;
 	}
 	SetCallbackTimer(46, a1, 100, DLGSwishInProc);
@@ -10168,7 +10190,7 @@ void creditsEndPage_(dialog* a1)
 			a1->lFlags |= DialogFlags::CTRL_UPDATE;
 			updateDialog(a1);
 		}
-		TitlePaletteUpdate(byte_51CEC8);
+		TitlePaletteUpdate_(byte_51CEC8);
 	}
 }
 
