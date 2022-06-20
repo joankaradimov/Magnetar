@@ -7119,12 +7119,26 @@ DECL_FUNC(int (__stdcall*KillRemoveUnits_NeutralPlayers)(int, int, int), KillRem
 DECL_FUNC(int (__stdcall*KillRemoveUnits_Allies)(int, int, int), KillRemoveUnits_Allies, 0x45fa80);
 DECL_FUNC(int (__stdcall*KillRemoveUnits_Foes)(int, int, int), KillRemoveUnits_Foes, 0x45faf0);
 DECL_FUNC(int (__stdcall*KillRemoveUnits_NonAlliedVictoryPlayers)(int, int, int, int), KillRemoveUnits_NonAlliedVictoryPlayers, 0x45fb60);
-DECL_FUNC(int (__stdcall*getForcePlayers)(int, int), getForcePlayers, 0x45fbe0);
-DECL_FUNC(int (__stdcall*GetAllPlayers)(int, int, int), GetAllPlayers, 0x45fc40);
-DECL_FUNC(int (__stdcall*GetNeutralPlayers)(int, int, int), GetNeutralPlayers, 0x45fca0);
-DECL_FUNC(int (__stdcall*GetAllies)(int, int, int), GetAllies, 0x45fd00);
-DECL_FUNC(int (__stdcall*GetFoes)(int, int, int), GetFoes, 0x45fd60);
-DECL_FUNC(int (__stdcall*GetNonAlliedVictoryPlayers)(int, int, int), GetNonAlliedVictoryPlayers, 0x45fdd0);
+int getForcePlayers(int eax0, int (__fastcall *a2)(int, int, struct_a3 *), int a3, struct_a3 *a4) {
+    int address = 0x45fbe0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        mov eax, eax0
+        mov ebx, a2
+        push dword ptr a4
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(int (__stdcall*GetAllPlayers)(int arg0, struct_a3 *a2, int (__fastcall *a3)(int, int, struct_a3 *)), GetAllPlayers, 0x45fc40);
+DECL_FUNC(int (__stdcall*GetNeutralPlayers)(int arg0, struct_a3 *a2, int (__fastcall *a3)(int, int, struct_a3 *)), GetNeutralPlayers, 0x45fca0);
+DECL_FUNC(int (__stdcall*GetAllies)(int arg0, struct_a3 *a2, int (__fastcall *a3)(int, int, struct_a3 *)), GetAllies, 0x45fd00);
+DECL_FUNC(int (__stdcall*GetFoes)(int arg0, struct_a3 *a2, int (__fastcall *a3)(int, int, struct_a3 *)), GetFoes, 0x45fd60);
+DECL_FUNC(int (__stdcall*GetNonAlliedVictoryPlayers)(int a1, struct_a3 *a2, int (__fastcall *a3)(_DWORD, _DWORD, struct_a3 *)), GetNonAlliedVictoryPlayers, 0x45fdd0);
 DECL_FUNC(__int16 (__fastcall*sub_45FE40)(int a1, CUnit *a2), sub_45FE40, 0x45fe40);
 DECL_FUNC(int(*increaseHangerCountsAtLocation)(), increaseHangerCountsAtLocation, 0x45fe80);
 DECL_FUNC(int (__thiscall*isUnitOwnedByPlayerEx)(int player, CUnit *a2), isUnitOwnedByPlayerEx, 0x45fef0);
@@ -16941,7 +16955,7 @@ DECL_FUNC(int (__fastcall*TriggerAction_KillUnit)(Action *), TriggerAction_KillU
 DECL_FUNC(int (__fastcall*TriggerAction_MoveUnit)(Action *), TriggerAction_MoveUnit, 0x4c8970);
 DECL_FUNC(int (__stdcall*ModifyUnitHangerCount)(CUnit *a1, int a2), ModifyUnitHangerCount, 0x4c8a30);
 DECL_FUNC(int (__fastcall*TriggerAction_ModifyUnitHangarCount)(Action *), TriggerAction_ModifyUnitHangarCount, 0x4c8b60);
-DECL_FUNC(int (__fastcall*CreateUnit_maybe)(signed int player_id, int unit_type, int a3), CreateUnit_maybe, 0x4c8c20);
+DECL_FUNC(int (__fastcall*CreateUnit_maybe)(signed int player_id, int unit_type, struct_a3 *a3), CreateUnit_maybe, 0x4c8c20);
 DECL_FUNC(int (__fastcall*TriggerAction_CreateUnitWithProperties)(Action *), TriggerAction_CreateUnitWithProperties, 0x4c8d90);
 DECL_FUNC(int(*sub_4C8E10)(), sub_4C8E10, 0x4c8e10);
 DECL_FUNC(int(*sub_4C8E30)(), sub_4C8E30, 0x4c8e30);
@@ -17180,8 +17194,8 @@ int CHK_UNIT_StartLocationSub(Position *a1, ChunkUnitEntry *a2) {
 }
 DECL_FUNC(int(*sub_4CB220)(), sub_4CB220, 0x4cb220);
 DECL_FUNC(bool (__stdcall*ChkLoader_UPRP)(SectionData *, int, MapChunks *), ChkLoader_UPRP, 0x4cb250);
-DECL_FUNC(bool (__stdcall*ChkLoader_MRGN_)(SectionData *, int, MapChunks *), ChkLoader_MRGN_, 0x4cb2a0);
-DECL_FUNC(bool (__stdcall*ChkLoader_MRGN)(SectionData *, int, MapChunks *), ChkLoader_MRGN, 0x4cb2f0);
+DECL_FUNC(bool (__stdcall*ChkLoader_MRGN)(SectionData *, int, MapChunks *), ChkLoader_MRGN, 0x4cb2a0);
+DECL_FUNC(bool (__stdcall*ChkLoader_MRGN_1_00)(SectionData *, int, MapChunks *), ChkLoader_MRGN_1_00, 0x4cb2f0);
 DECL_FUNC(int(*sub_4CB340)(), sub_4CB340, 0x4cb340);
 DECL_FUNC(void (__fastcall*freeCHKStringHandle)(bool exit_code), freeCHKStringHandle, 0x4cb370);
 DECL_FUNC(bool (__stdcall*ChkLoader_ERA)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_ERA, 0x4cb3a0);
@@ -24721,6 +24735,7 @@ char(&byte_596BC8)[260] = * ((decltype(&byte_596BC8)) 0x596bc8);
 int& has_effects_scode_maybe = * ((decltype(&has_effects_scode_maybe)) 0x596ccc);
 grpHead *& dword_596CD0 = * ((decltype(&dword_596CD0)) 0x596cd0);
 int& dword_596CD4 = * ((decltype(&dword_596CD4)) 0x596cd4);
+UnitProperties(&stru_596CD8)[64] = * ((decltype(&stru_596CD8)) 0x596cd8);
 int& dword_5971D8 = * ((decltype(&dword_5971D8)) 0x5971d8);
 int& dword_5971DC = * ((decltype(&dword_5971DC)) 0x5971dc);
 int& dword_5971E0 = * ((decltype(&dword_5971E0)) 0x5971e0);

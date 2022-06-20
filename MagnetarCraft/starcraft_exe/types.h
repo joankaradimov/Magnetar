@@ -192,6 +192,7 @@ struct Char4_characters;
 struct __declspec(align(4)) CharacterData;
 enum EventUser;
 enum UnitGroupFlags;
+struct __declspec(align(4)) struct_a3;
 struct PMD;
 struct __declspec(align(2)) struct_a1;
 enum CheatFlags;
@@ -223,6 +224,7 @@ struct ID;
 struct EstablishingShot;
 struct __declspec(align(4)) MapChunks;
 struct Box32;
+struct UnitProperties;
 struct LO_Header;
 struct SuppliesPerRace;
 struct fontMemStruct;
@@ -2375,6 +2377,13 @@ enum UnitGroupFlags : unsigned __int16
   INVINCIBLE = 0x10,
 };
 
+struct __declspec(align(4)) struct_a3
+{
+  _DWORD unit_property_index;
+  _DWORD location_index;
+};
+static_assert(sizeof(struct_a3) == 8, "Incorrect size for type `struct_a3`. Expected: 8");
+
 #pragma pack(push, 1)
 struct PMD
 {
@@ -4153,6 +4162,27 @@ struct Box32
 };
 static_assert(sizeof(Box32) == 16, "Incorrect size for type `Box32`. Expected: 16");
 
+struct UnitProperties
+{
+  UnitGroupFlags valid_group_flags;
+  unsigned __int16 can_be_owned : 1;
+  unsigned __int16 has_hp : 1;
+  unsigned __int16 has_shields : 1;
+  unsigned __int16 has_energy : 1;
+  unsigned __int16 has_resource_amount : 1;
+  unsigned __int16 has_hanger : 1;
+  unsigned __int16 unused2 : 10;
+  u8 player;
+  u8 hp_percentage;
+  u8 shield_percentage;
+  u8 energy_percentage;
+  u32 resource_amount;
+  u16 hangar_count;
+  UnitGroupFlags group_flags;
+  u32 unused4;
+};
+static_assert(sizeof(UnitProperties) == 20, "Incorrect size for type `UnitProperties`. Expected: 20");
+
 struct LO_Header
 {
   u32 frameCount;
@@ -4895,22 +4925,7 @@ struct ChunkUnitEntry
   unsigned __int16 is_nydus_link : 1;
   unsigned __int16 is_addon_link : 1;
   unsigned __int16 unknown1 : 5;
-  UnitGroupFlags valid_group_flags;
-  unsigned __int16 can_be_owned : 1;
-  unsigned __int16 has_hp : 1;
-  unsigned __int16 has_shields : 1;
-  unsigned __int16 has_energy : 1;
-  unsigned __int16 has_resource_amount : 1;
-  unsigned __int16 has_hanger : 1;
-  unsigned __int16 unused2 : 10;
-  u8 player;
-  u8 hp_percentage;
-  u8 shield_percentage;
-  u8 energy_percentage;
-  u32 resource_amount;
-  u16 hangar_count;
-  UnitGroupFlags group_flags;
-  u32 unused4;
+  UnitProperties properties;
   u32 linked_unit_id;
 };
 static_assert(sizeof(ChunkUnitEntry) == 36, "Incorrect size for type `ChunkUnitEntry`. Expected: 36");

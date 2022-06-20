@@ -2062,7 +2062,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
-	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_1_00, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 };
 
@@ -2084,7 +2084,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
-	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 };
 
@@ -2101,7 +2101,7 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
 	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
-	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_, 1),
+	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR_, 1),
 };
@@ -5608,9 +5608,9 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	{
 		return 0;
 	}
-	a1[a2->player] = a2->position;
+	a1[a2->properties.player] = a2->position;
 
-	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->player == g_LocalNationID;
+	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->properties.player == g_LocalNationID;
 	if (v3)
 	{
 		MoveToTile.x = max(a2->position.x - SCREEN_WIDTH / 2, 0) / TILE_WIDTH;
@@ -5644,7 +5644,7 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 	}
 	else
 	{
-		return unit_entry->player == 11 && (IsResource(unit_entry->unit_type) || IsCritter(unit_entry->unit_type));
+		return unit_entry->properties.player == 11 && (IsResource(unit_entry->unit_type) || IsCritter(unit_entry->unit_type));
 	}
 }
 
@@ -5688,12 +5688,12 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 		ChunkUnitEntry* unit_entry = unit_entries + i;
 
 		if (!CHK_UNIT_StartLocationSub_(startPositions, unit_entry)
-			&& (unit_entry->player >= 8u || Players[unit_entry->player].nType != PT_NotUsed && (Players[unit_entry->player].nType <= PT_Unknown0 || Players[unit_entry->player].nType == PT_Neutral))
+			&& (unit_entry->properties.player >= 8u || Players[unit_entry->properties.player].nType != PT_NotUsed && (Players[unit_entry->properties.player].nType <= PT_Unknown0 || Players[unit_entry->properties.player].nType == PT_Neutral))
 			&& unitIsNeutral(unit_entry)
 			&& (gameData.got_file_values.victory_conditions
 				|| gameData.got_file_values.starting_units
 				|| gameData.got_file_values.tournament_mode
-				|| !getPlayerForce(unit_entry->player)
+				|| !getPlayerForce(unit_entry->properties.player)
 				|| (Unit_GroupFlags[unit_entry->unit_type] & 0x80u) != 0))
 		{
 			CUnit* v11 = sub_4CD740(unit_entry);
