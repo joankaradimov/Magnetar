@@ -6171,9 +6171,22 @@ int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 	}
 }
 
+void AnimateVideos_(dialog* result)
+{
+	for (dialog* i = result->fields.dlg.pFirstChild; i; i = i->pNext)
+	{
+		if (i->wCtrlType == DialogType::cFLCBTN)
+		{
+			SetCallbackTimer(72, i, 30, PlayVideoFrame);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(AnimateVideos);
+
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size)
 {
-	AnimateVideos(a2);
+	AnimateVideos_(a2);
 	a2->lFlags |= CTRL_USELOCALGRAPHIC;
 	if (functions)
 	{
