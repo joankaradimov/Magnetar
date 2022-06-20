@@ -1905,7 +1905,7 @@ void listboxMouseMove(dialog *a1, dlgEvent *a2) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*listboxEntryUpdate)(int, int, int), listboxEntryUpdate, 0x41af10);
+DECL_FUNC(void (__fastcall*listboxEntryUpdate)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y), listboxEntryUpdate, 0x41af10);
 DECL_FUNC(void (__fastcall*genericComboboxUpdate)(dialog *dlg, int x, int y, rect *dst), genericComboboxUpdate, 0x41b110);
 __int16 listboxInit(dialog *a1) {
     int address = 0x41b140;
@@ -2060,7 +2060,18 @@ BOOL isRectBoundsInside_Assign_32(LPRECT a1, RECT *a2) {
 DECL_FUNC(int(*sub_41C010)(), sub_41C010, 0x41c010);
 DECL_FUNC(int(*sub_41C030)(), sub_41C030, 0x41c030);
 DECL_FUNC(int (__stdcall*sub_41C050)(LPRECT lprc), sub_41C050, 0x41c050);
-DECL_FUNC(int (__stdcall*sub_41C080)(int), sub_41C080, 0x41c080);
+Bitmap *sub_41C080(RECT *a1, dialog *a2) {
+    int address = 0x41c080;
+    Bitmap * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void _RgnUnk(LPRECT a1) {
     int address = 0x41c200;
     __asm {
@@ -2110,7 +2121,7 @@ int sub_41C5A0(_DWORD a1, rect *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*CtrlNode_Constructor)(int, int), CtrlNode_Constructor, 0x41c5d0);
+DECL_FUNC(signed int (__stdcall*CtrlNode_Constructor)(dialog *a1, RECT *a2), CtrlNode_Constructor, 0x41c5d0);
 DECL_FUNC(int(*updateAllDlgs)(), updateAllDlgs, 0x41c780);
 DECL_FUNC(int(*sub_41C7B0)(), sub_41C7B0, 0x41c7b0);
 int sub_41C810(int a1, _DWORD a2) {
@@ -2402,16 +2413,27 @@ Font *LoadFont(char *font_name, Font *(__fastcall *a2)(char *, _DWORD, _DWORD, _
     return result_;
 }
 DECL_FUNC(int (__stdcall*writeFontApplyColour)(int, int), writeFontApplyColour, 0x41fd70);
-DECL_FUNC(int (__stdcall*BWFXN_PrintXY)(int), BWFXN_PrintXY, 0x4200d0);
-int BWFXN_DrawXY(char *a1, signed int a2, signed int a3) {
+u8 *BWFXN_PrintXY(char *a1, int a2) {
+    int address = 0x4200d0;
+    u8 * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+unsigned int BWFXN_DrawXY(char *text, signed int x, signed int y) {
     int address = 0x4202b0;
-    int result_;
+    unsigned result_;
     __asm {
         xor eax, eax
         xor esi, esi
-        mov eax, a1
-        mov esi, a2
-        push dword ptr a3
+        mov eax, text
+        mov esi, x
+        push dword ptr y
         call address
         mov result_, eax
     }
@@ -6449,7 +6471,14 @@ DECL_FUNC(bool (__fastcall*statdata_Unknown)(dialog *a1, dlgEvent *a2), statdata
 DECL_FUNC(int(*sub_456EF0)(), sub_456EF0, 0x456ef0);
 DECL_FUNC(char (__thiscall*statdata_UnitWireframeSelectUpdate)(dialog *this_, int a2, int a3), statdata_UnitWireframeSelectUpdate, 0x456f50);
 DECL_FUNC(void (__fastcall*statdata_UnitWireframeTransUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeTransUpdate, 0x4570a0);
-DECL_FUNC(int(*sub_4571B0)(), sub_4571B0, 0x4571b0);
+void sub_4571B0(dialog *a1) {
+    int address = 0x4571b0;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
 void DLGsetProgressBarValue(dialog *a1, __int16 a2, __int16 a3) {
     int address = 0x457200;
     __asm {
@@ -8645,7 +8674,7 @@ void Unit_ExecPathingState(CUnit *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*sub_46C6E0)(int, int), sub_46C6E0, 0x46c6e0);
+DECL_FUNC(int (__fastcall*sub_46C6E0)(dialog *this_, int x, int y, rect *a3), sub_46C6E0, 0x46c6e0);
 DECL_FUNC(void (__fastcall*waitLoop)(dialog *, __int16), waitLoop, 0x46c750);
 void sub_46C770(int a1) {
     int address = 0x46c770;
@@ -8664,11 +8693,11 @@ DECL_FUNC(int(*HidePortrait)(), HidePortrait, 0x46ca30);
 DECL_FUNC(void (__thiscall*sub_46CA90)(void *this_, dialog *a2), sub_46CA90, 0x46ca90);
 DECL_FUNC(signed int (__stdcall*sub_46CBC0)(dialog *a1), sub_46CBC0, 0x46cbc0);
 DECL_FUNC(int(*updateMissionObjectives)(), updateMissionObjectives, 0x46cd30);
-void BRF_displayText(char *a1, unsigned int a2) {
+void BRF_displayText(char *text, unsigned int a2) {
     int address = 0x46cdd0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, text
         push dword ptr a2
         call address
     }
@@ -18511,14 +18540,14 @@ unsigned __int32 creditsSetFadeSpeed(const char *a1) {
     }
     return result_;
 }
-int sub_4D86A0(char **a1, _DWORD *a2) {
+int sub_4D86A0(char **tag, _DWORD *is_tag) {
     int address = 0x4d86a0;
     int result_;
     __asm {
         xor ebx, ebx
         xor esi, esi
-        mov ebx, a1
-        mov esi, a2
+        mov ebx, tag
+        mov esi, is_tag
         call address
         mov result_, eax
     }
@@ -19086,13 +19115,13 @@ void DlgSwooshin(__int16 a1, swishTimer *a2, dialog *a3, signed __int16 a4) {
 }
 DECL_FUNC(void(*loadTFontPcx)(void), loadTFontPcx, 0x4dd850);
 DECL_FUNC(void(*loadtEffectPcx)(void), loadtEffectPcx, 0x4dd910);
-void registerMenuFunctions(FnInteract *a1, dialog *a2, int a3, int a4) {
+void registerMenuFunctions(FnInteract *functions, dialog *a2, int functions_size_, int a4) {
     int address = 0x4dd9e0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, functions
         push dword ptr a4
-        push dword ptr a3
+        push dword ptr functions_size_
         push dword ptr a2
         call address
     }
@@ -21026,7 +21055,7 @@ DECL_FUNC(int (__thiscall*DrawDialogImage)(rect *this_, Bitmap *a2, int a3, int 
 DECL_FUNC(int(*sub_4EF530)(), sub_4EF530, 0x4ef530);
 DECL_FUNC(void (__fastcall*genericImageUpdate)(dialog *dlg, int x, int y, rect *dst), genericImageUpdate, 0x4ef560);
 DECL_FUNC(void (__fastcall*genericDlgUpdate)(dialog *dlg, int x, int y, rect *dst), genericDlgUpdate, 0x4ef590);
-int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, int a5) {
+int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, DialogFlags a5) {
     int address = 0x4ef600;
     int result_;
     __asm {
@@ -21042,7 +21071,25 @@ int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, int a5) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_4EF6D0)(char), sub_4EF6D0, 0x4ef6d0);
-DECL_FUNC(int (__stdcall*sub_4EF710)(int, int, int, int), sub_4EF710, 0x4ef710);
+int sub_4EF710(rect *a2, unsigned int a1, int a3, int x, __int16 y, int width, DialogFlags a7) {
+    int address = 0x4ef710;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edi, edi
+        mov eax, a2
+        mov ecx, a1
+        mov edi, a3
+        push dword ptr a7
+        push dword ptr width
+        push dword ptr y
+        push dword ptr x
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4EF7E0)(), sub_4EF7E0, 0x4ef7e0);
 DECL_FUNC(int(*sub_4EF7F0)(), sub_4EF7F0, 0x4ef7f0);
 void DlgDrawText(rect *a1, dialog *a2, int a3, int a4) {
@@ -22348,7 +22395,7 @@ char(&filename)[] = * ((decltype(&filename)) 0x4ffee0);
 const char(&aLastreplay_1)[] = * ((decltype(&aLastreplay_1)) 0x4ffef8);
 char(&aLocal_dll)[10] = * ((decltype(&aLocal_dll)) 0x4fff08);
 EstablishingShotPosition(&establishingShotPositions)[6] = * ((decltype(&establishingShotPositions)) 0x4fff24);
-char(&aA_0)[7] = * ((decltype(&aA_0)) 0x4fff54);
+PrintFlags(&establishingShot_PrintXY_flags)[6] = * ((decltype(&establishingShot_PrintXY_flags)) 0x4fff54);
 EstablishingShot(&establishing_shots)[65] = * ((decltype(&establishing_shots)) 0x4fff60);
 CHAR(&String2)[] = * ((decltype(&String2)) 0x500194);
 char(&aStareditScenar)[] = * ((decltype(&aStareditScenar)) 0x5001b4);
@@ -23986,7 +24033,7 @@ __int16(&word_514CF8)[] = * ((decltype(&word_514CF8)) 0x514cf8);
 __int16(&word_514CFA)[] = * ((decltype(&word_514CFA)) 0x514cfa);
 __int16(&word_51521C)[4] = * ((decltype(&word_51521C)) 0x51521c);
 int& UnitPortraits = * ((decltype(&UnitPortraits)) 0x515224);
-char(&byte_515228)[] = * ((decltype(&byte_515228)) 0x515228);
+char(&byte_515228)[88] = * ((decltype(&byte_515228)) 0x515228);
 char(&wireframeConstants)[] = * ((decltype(&wireframeConstants)) 0x515280);
 StatFlufDialog(&statfluf_zerg)[7] = * ((decltype(&statfluf_zerg)) 0x5152a8);
 StatFlufDialog(&statfluf_terran)[6] = * ((decltype(&statfluf_terran)) 0x515300);
@@ -24491,7 +24538,7 @@ int& dword_51CEB8 = * ((decltype(&dword_51CEB8)) 0x51ceb8);
 char *& dword_51CEBC = * ((decltype(&dword_51CEBC)) 0x51cebc);
 int& credits_interrupted = * ((decltype(&credits_interrupted)) 0x51cec0);
 int& dword_51CEC4 = * ((decltype(&dword_51CEC4)) 0x51cec4);
-char& byte_51CEC8 = * ((decltype(&byte_51CEC8)) 0x51cec8);
+u8& byte_51CEC8 = * ((decltype(&byte_51CEC8)) 0x51cec8);
 int(&dword_51CECC)[] = * ((decltype(&dword_51CECC)) 0x51cecc);
 grpHead *(&ImageGrpGraphics)[1] = * ((decltype(&ImageGrpGraphics)) 0x51ced0);
 int& dword_51D218 = * ((decltype(&dword_51D218)) 0x51d218);
@@ -25750,7 +25797,7 @@ Font *(&FontBase)[4] = * ((decltype(&FontBase)) 0x6ce0f4);
 char& text_input_position_char = * ((decltype(&text_input_position_char)) 0x6ce104);
 int& PrintXY_PositionX = * ((decltype(&PrintXY_PositionX)) 0x6ce108);
 int& dword_6CE10C = * ((decltype(&dword_6CE10C)) 0x6ce10c);
-char& PrintXY_Size = * ((decltype(&PrintXY_Size)) 0x6ce110);
+PrintFlags& PrintXY_flags = * ((decltype(&PrintXY_flags)) 0x6ce110);
 char& byte_6CE111 = * ((decltype(&byte_6CE111)) 0x6ce111);
 char(&byte_6CE118)[392] = * ((decltype(&byte_6CE118)) 0x6ce118);
 CycleStruct(&cycle_colors)[8] = * ((decltype(&cycle_colors)) 0x6ce2a0);
@@ -25779,7 +25826,8 @@ u8(&RefreshRegions)[1200] = * ((decltype(&RefreshRegions)) 0x6ceff8);
 Bitmap *& dword_6CF4A8 = * ((decltype(&dword_6CF4A8)) 0x6cf4a8);
 char& DrawColor = * ((decltype(&DrawColor)) 0x6cf4ac);
 int& dword_6CF4B4 = * ((decltype(&dword_6CF4B4)) 0x6cf4b4);
-int& dword_6CF4BC = * ((decltype(&dword_6CF4BC)) 0x6cf4bc);
+dialog *& dword_6CF4BC = * ((decltype(&dword_6CF4BC)) 0x6cf4bc);
+RECT& stru_6CF4C0 = * ((decltype(&stru_6CF4C0)) 0x6cf4c0);
 dialog *& current_dropdown_maybe = * ((decltype(&current_dropdown_maybe)) 0x6d04b0);
 __int16& word_6D04B4 = * ((decltype(&word_6D04B4)) 0x6d04b4);
 __int16& word_6D04B8 = * ((decltype(&word_6D04B8)) 0x6d04b8);
