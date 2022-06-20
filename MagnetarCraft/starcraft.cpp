@@ -6403,13 +6403,14 @@ bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == EventUser::USER_CREATE)
+		switch (evt->dwUser)
 		{
+		case EventUser::USER_CREATE:
 			gluHist_Create(dlg);
-		}
-		else if(evt->dwUser == EventUser::USER_ACTIVATE)
-		{
+			break;
+		case EventUser::USER_ACTIVATE:
 			gluHist_Activate_(dlg);
+			break;
 		}
 	}
 	return Popup_Main(dlg, evt);
