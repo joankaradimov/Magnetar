@@ -12,6 +12,12 @@ Joan Karadimov
 </PAGE>
 
 
+Tileset graphics
+
+ DarkenedFantasies </COMMENT Fixes for Ashworld magma and Iceworld water>
+</PAGE>
+
+
 </COMMENT Add a "Thanks to" section >
 
 
