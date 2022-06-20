@@ -1995,6 +1995,7 @@ bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapC
 bool __stdcall ChkLoader_MTXM_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3);
+bool __stdcall ChkLoader_UPRP_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapChunks* a3);
 
@@ -2061,7 +2062,7 @@ ChkSectionLoader chk_loaders_ums_1_00_[] = {
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
-	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP_, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN_1_00, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 };
@@ -2083,7 +2084,7 @@ ChkSectionLoader chk_loaders_ums_1_04_[] = {
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 0),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 0),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
-	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP_, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 };
@@ -2100,7 +2101,7 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 	CreateChkSectionLoader("PUPx", ChkLoader_PUPx, 1),
 	CreateChkSectionLoader("PTEx", ChkLoader_PTEx, 1),
 	CreateChkSectionLoader("UNIT", ChkLoader_UNIT_, 1),
-	CreateChkSectionLoader("UPRP", ChkLoader_UPRP, 1),
+	CreateChkSectionLoader("UPRP", ChkLoader_UPRP_, 1),
 	CreateChkSectionLoader("MRGN", ChkLoader_MRGN, 1),
 	CreateChkSectionLoader("TRIG", ChkLoader_TRIG, 1),
 	CreateChkSectionLoader("COLR", ChkLoader_COLR_, 1),
@@ -5717,6 +5718,22 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 }
 
 FAIL_STUB_PATCH(ChkLoader_UNIT);
+
+bool __stdcall ChkLoader_UPRP_(SectionData* section_data, int section_size, MapChunks* a3)
+{
+	if (section_size != 1280)
+	{
+		return 0;
+	}
+	if (section_data->start_address + section_data->size > section_data->next_section)
+	{
+		return 0;
+	}
+	memcpy(stru_596CD8, section_data->start_address, section_data->size);
+	return 1;
+}
+
+FAIL_STUB_PATCH(ChkLoader_UPRP);
 
 bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapChunks* a3)
 {
