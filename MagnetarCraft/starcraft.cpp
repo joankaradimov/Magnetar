@@ -10351,6 +10351,24 @@ int credits_idle_(dialog* dlg)
 
 FAIL_STUB_PATCH(credits_idle);
 
+DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
+
+void __fastcall sub_4D8930_(dialog* dlg, int x, int y, rect* dst)
+{
+	if (dlg->wIndex - 1 < _countof(establishingShot_PrintXY_flags))
+	{
+		PrintXY_flags = establishingShot_PrintXY_flags[dlg->wIndex - 1];
+	}
+	else
+	{
+		PrintXY_flags = PF_VALIGN_TOP | PF_HALIGN_LEFT;
+	}
+	dlg->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
+	DlgDrawText(0, dlg, 0, 0);
+}
+
+FAIL_STUB_PATCH(sub_4D8930);
+
 int creditsDlgInit_(dialog* dlg)
 {
 	for (auto& position : establishingShotPositions)
@@ -10359,7 +10377,7 @@ int creditsDlgInit_(dialog* dlg)
 		if (position_dlg)
 		{
 			position_dlg->pszText = 0;
-			position_dlg->pfcnUpdate = sub_4D8930;
+			position_dlg->pfcnUpdate = sub_4D8930_;
 		}
 	}
 
