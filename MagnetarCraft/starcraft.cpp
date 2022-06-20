@@ -10198,6 +10198,32 @@ void creditsEndPage_(dialog* a1)
 
 FAIL_STUB_PATCH(creditsEndPage);
 
+void sub_4D8840_(int element_length, char* element_start)
+{
+	if (dword_51CEB0)
+	{
+		if (dword_51CEB0->pszText)
+		{
+			SMemFree(dword_51CEB0->pszText, "Starcraft\\SWAR\\lang\\credits.cpp", 321, 0);
+			dword_51CEB0->pszText = 0;
+			HideDialog(dword_51CEB0);
+		}
+		if (element_length)
+		{
+			dword_51CEB0->pszText = (char*)SMemAlloc(element_length + 1, "Starcraft\\SWAR\\lang\\credits.cpp", 327, 0);
+			SStrCopy(dword_51CEB0->pszText, element_start, element_length + 1);
+			if ((dword_51CEB0->lFlags & CTRL_UPDATE) == 0)
+			{
+				dword_51CEB0->lFlags |= CTRL_UPDATE;
+				updateDialog(dword_51CEB0);
+			}
+			showDialog(dword_51CEB0);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4D8840);
+
 int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 {
 	if (tag_length > 0xE && !_strnicmp(tag, "</BACKGROUND ", 13u))
@@ -10271,7 +10297,7 @@ int runCredits_(dialog* a1)
 			}
 			if (!is_tag)
 			{
-				sub_4D8840(element_length, element_start);
+				sub_4D8840_(element_length, element_start);
 			}
 			else if (runCreditsScriptCommands_(element_start, element_length, a1))
 			{
