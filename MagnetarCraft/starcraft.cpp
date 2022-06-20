@@ -1797,7 +1797,7 @@ void TitlePaletteUpdate_(int a1)
 			v1 = a2;
 		}
 		SDrawUpdatePalette(0, 0x100u, v1, 1);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 		memset(stru_6CE720, 0, sizeof(stru_6CE720));
 		gluDlgFadePalette(a1);
 	}
@@ -10361,7 +10361,7 @@ void creditsDlgDestroy_(dialog* dlg)
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
 		gluDlgFadePalette(byte_51CEC8);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 }
 
