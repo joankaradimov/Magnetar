@@ -1803,6 +1803,8 @@ void TitlePaletteUpdate_(int a1)
 	}
 }
 
+FAIL_STUB_PATCH(TitlePaletteUpdate);
+
 void titleInit_(dialog* dlg)
 {
 	void* buffer;
