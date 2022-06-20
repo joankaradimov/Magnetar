@@ -6233,7 +6233,18 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 	}
 }
 
-// TODO: patch and always use this function
+void __stdcall registerMenuFunctions__(dialog* a2, int functions_size, int a4)
+{
+	FnInteract* functions;
+
+	__asm mov functions, eax
+
+	registerMenuFunctions_(functions, a2, functions_size);
+}
+
+// TODO: patch the remaining usages:
+// gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID, sub_4B6C70
+FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__);
 
 int CreateCampaignGame_(MapData mapData)
 {
