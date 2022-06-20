@@ -10261,19 +10261,19 @@ int runCredits_(dialog* a1)
 	{
 		while (true)
 		{
-			int v3;
-			char* tag;
+			int is_tag;
+			char* element_start;
 
-			int v2 = sub_4D86A0(&tag, &v3);
-			if (!v2)
+			int element_length = sub_4D86A0(&element_start, &is_tag);
+			if (!element_length)
 			{
 				break;
 			}
-			if (!v3)
+			if (!is_tag)
 			{
-				sub_4D8840(v2, tag);
+				sub_4D8840(element_length, element_start);
 			}
-			else if (runCreditsScriptCommands_(tag, v2, a1))
+			else if (runCreditsScriptCommands_(element_start, element_length, a1))
 			{
 				dword_51CEC4 = dword_51CEB4 + GetTickCount();
 				return 1;
