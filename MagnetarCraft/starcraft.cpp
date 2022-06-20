@@ -10180,6 +10180,27 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 
 FAIL_STUB_PATCH(sub_4DBDA0);
 
+struct EstablishingShotPositionEx
+{
+	int index;
+	const char* tag;
+	PrintFlags alignment;
+};
+
+DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
+
+EstablishingShotPositionEx establishingShotPositions_[] = {
+	{1, "</SCREENLEFT>", PF_VALIGN_CENTER | PF_HALIGN_LEFT},
+	{2, "</SCREENRIGHT>", PF_HALIGN_RIGHT | PF_VALIGN_CENTER},
+	{3, "</SCREENTOP>", PF_HALIGN_CENTER | PF_VALIGN_CENTER},
+	{4, "</SCREENBOTTOM>", PF_HALIGN_CENTER | PF_VALIGN_CENTER},
+	{5, "</SCREENCENTER>", PF_HALIGN_CENTER | PF_VALIGN_CENTER},
+	{6, "</SCREENLOWERLEFT>", PF_HALIGN_LEFT | PF_VALIGN_BOTTOM},
+	{7, "</SCREENUPPERLEFT>", PF_HALIGN_LEFT | PF_VALIGN_TOP},
+	{8, "</SCREENUPPERRIGHT>", PF_HALIGN_RIGHT | PF_VALIGN_TOP},
+	{9, "</SCREENLOWERRIGHT>", PF_HALIGN_RIGHT | PF_VALIGN_BOTTOM},
+};
+
 void creditsEndPage_(dialog* a1)
 {
 	if (byte_51CEAC)
@@ -10263,7 +10284,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 	}
 	else
 	{
-		for (auto& position: establishingShotPositions)
+		for (auto& position: establishingShotPositions_)
 		{
 			if (!_strnicmp(tag, position.tag, tag_length))
 			{
@@ -10351,13 +10372,11 @@ int credits_idle_(dialog* dlg)
 
 FAIL_STUB_PATCH(credits_idle);
 
-DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
-
 void __fastcall sub_4D8930_(dialog* dlg, int x, int y, rect* dst)
 {
-	if (dlg->wIndex - 1 < _countof(establishingShot_PrintXY_flags))
+	if (dlg->wIndex - 1 < _countof(establishingShotPositions_))
 	{
-		PrintXY_flags = establishingShot_PrintXY_flags[dlg->wIndex - 1];
+		PrintXY_flags = establishingShotPositions_[dlg->wIndex - 1].alignment;
 	}
 	else
 	{
@@ -10371,7 +10390,7 @@ FAIL_STUB_PATCH(sub_4D8930);
 
 int creditsDlgInit_(dialog* dlg)
 {
-	for (auto& position : establishingShotPositions)
+	for (auto& position : establishingShotPositions_)
 	{
 		dialog* position_dlg = getControlFromIndex(dlg, position.index);
 		if (position_dlg)
@@ -10390,7 +10409,7 @@ FAIL_STUB_PATCH(creditsDlgInit);
 
 void creditsDlgDestroy_(dialog* dlg)
 {
-	for (auto& position : establishingShotPositions)
+	for (auto& position : establishingShotPositions_)
 	{
 		dialog* position_dlg = getControlFromIndex(dlg, position.index);
 		if (position_dlg->pszText)
