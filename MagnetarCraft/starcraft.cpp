@@ -7466,20 +7466,26 @@ void gluCustm_initSwish_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+TypeDropdownSelect singleTypeSelect_[]
+{
+	{PlayerType::PT_NotUsed, (GluAllTblEntry) 0x86 },
+	{PlayerType::PT_Computer, (GluAllTblEntry) 0x84 },
+};
+
 void gluCustm_typeDropdown_(dialog* dlg)
 {
 	unsigned __int8 v2 = 0;
 	dlg->lFlags |= CTRL_LBOX_NORECALC;
-	for (int i = 0; i < 2; i++)
+	for (const auto& player_type: singleTypeSelect_)
 	{
-		char* v4 = get_GluAll_String_(singleTypeSelect[i].tbl_entry);
+		char* v4 = get_GluAll_String_(player_type.tbl_entry);
 		u8 v5 = ListBox_AddEntry(v4, dlg, 0);
 		if (v5 == 0xFF)
 		{
 			break;
 		}
-		dlg->fields.list.pdwData[v5] = singleTypeSelect[i].player_type;
-		v2 = singleTypeSelect[i].player_type == PlayerType::PT_Computer ? v5 : 0;
+		dlg->fields.list.pdwData[v5] = player_type.player_type;
+		v2 = player_type.player_type == PlayerType::PT_Computer ? v5 : 0;
 	}
 
 	if (dlg->lFlags & CTRL_LBOX_NORECALC)
