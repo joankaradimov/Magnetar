@@ -1315,6 +1315,20 @@ void BWFXN_drawMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_drawMapTiles);
 
+void BWFXN_blitMapTiles_()
+{
+	int i;
+
+	dword_50CEF0 = GAME_AREA_WIDTH;
+	for (i = MoveToX + (GAME_AREA_WIDTH + TILE_WIDTH) * MoveToY; i >= TILE_CACHE_SIZE; i -= TILE_CACHE_SIZE);
+	{
+		;
+	}
+	BlitToBitmap(i, GAME_AREA_HEIGHT, GameScreenBuffer.data, &GameTerrainCache[i]);
+}
+
+FAIL_STUB_PATCH(BWFXN_blitMapTiles);
+
 void BWFXN_drawDragSelBox_()
 {
 	if (byte_66FF5C)
@@ -1378,7 +1392,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		BWFXN_updateImageData_();
 		maskSomething2();
 		BWFXN_drawMapTiles_();
-		BWFXN_blitMapTiles();
+		BWFXN_blitMapTiles_();
 	}
 	else
 	{
