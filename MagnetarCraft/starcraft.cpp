@@ -2392,6 +2392,69 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void drawAllMinimapBoxes_()
+{
+	Bitmap* v0 = dword_6CF4A8;
+	dword_6CF4A8 = &minimap_surface;
+	dword_59C2B8 = 0;
+	dword_59C1A8 = 0;
+
+	for (int player = 11; player >= 0; player--)
+	{
+		if (player >= 8)
+		{
+			drawMinimapUnitBox(player);
+		}
+		else if (g_LocalNationID != player || InReplay)
+		{
+			drawMinimapUnitBox2(player);
+		}
+	}
+
+	if (!InReplay)
+	{
+		drawAllMinimapUnitBoxes(g_LocalNationID);
+	}
+
+	if (dword_654868)
+	{
+		for (CThingy* thingy = dword_654868; thingy; thingy = thingy->next)
+		{
+			if (thingy->hitPoints < 203 || thingy->hitPoints > 213)
+			{
+				if (!InReplay || !CThingyIsVisible(1, thingy))
+				{
+					char v8;
+					CSprite* sprite = thingy->sprite;
+					if (sprite->spriteID == 275 || sprite->spriteID == 279 || sprite->spriteID == 280 || sprite->spriteID == 281)
+					{
+						v8 = byte_6CEB39;
+					}
+					else if (byte_6D5BBE == 0)
+					{
+						v8 = PlayerColors[sprite->playerID];
+					}
+					else if (Alliance[g_LocalNationID].player[sprite->playerID])
+					{
+						v8 = byte_6CEB31;
+					}
+					else
+					{
+						v8 = byte_6CEB34;
+					}
+
+					drawUnitBox(v8, sprite->position.x, sprite->position.y, Unit_Placement[thingy->hitPoints].x, Unit_Placement[thingy->hitPoints].y, 1);
+					--dword_59C2B8;
+				}
+			}
+		}
+	}
+
+	dword_6CF4A8 = v0;
+}
+
+FAIL_STUB_PATCH(drawAllMinimapBoxes);
+
 void minimapGameUpdate_(dialog* a1)
 {
 	a1->pfcnUpdate = MinimapImageUpdate;
@@ -2399,7 +2462,7 @@ void minimapGameUpdate_(dialog* a1)
 	{
 		minimapSurfaceUpdate();
 		sub_4A4150();
-		drawAllMinimapBoxes();
+		drawAllMinimapBoxes_();
 	}
 	if ((a1->lFlags & CTRL_UPDATE) == 0)
 	{
@@ -2483,7 +2546,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 		byte_6D5BBF ^= 1u;
 		dword_59C1A4 = 0;
 		sub_4A4150();
-		drawAllMinimapBoxes();
+		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
 		{
@@ -2545,7 +2608,7 @@ void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
 		minimapSurfaceUpdate();
 	}
 	sub_4A4150();
-	drawAllMinimapBoxes();
+	drawAllMinimapBoxes_();
 	sub_4A3870();
 
 	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
@@ -2582,7 +2645,7 @@ void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 				{
 					memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
 				}
-				drawAllMinimapBoxes();
+				drawAllMinimapBoxes_();
 				sub_4A3870();
 				if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 				{
@@ -2631,7 +2694,7 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 		{
 			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
 		}
-		drawAllMinimapBoxes();
+		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
@@ -2708,7 +2771,7 @@ FAIL_STUB_PATCH(updateMinimapPreviewDlg);
 void minimapPreviewUpdateState_()
 {
 	sub_4A4150();
-	drawAllMinimapBoxes();
+	drawAllMinimapBoxes_();
 	sub_4A3870();
 	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
@@ -2855,7 +2918,7 @@ void load_gluMinimap_()
 		{
 			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
 		}
-		drawAllMinimapBoxes();
+		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
