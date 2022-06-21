@@ -4206,6 +4206,13 @@ void RefreshUnit_(CUnit* unit)
 
 FAIL_STUB_PATCH(RefreshUnit);
 
+int BWFXN_IsPaused_()
+{
+	return IS_GAME_PAUSED;
+}
+
+FAIL_STUB_PATCH(BWFXN_IsPaused);
+
 void RefreshAllUnits_()
 {
 	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
@@ -4296,7 +4303,7 @@ void GameLoop_State_(MenuPosition a2)
 		if (dword_51BFA8 || multiPlayerMode)
 		{
 			ScreenLayers[5].bits |= 2u;
-			if (BWFXN_IsPaused())
+			if (BWFXN_IsPaused_())
 			{
 				RefreshAllUnits_();
 			}
