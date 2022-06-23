@@ -10454,6 +10454,41 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 
 		return 0;
 	}
+	if (!_strnicmp(tag, "</FONTSIZE ", 11u))
+	{
+		char* attribute_begin = tag + 11;
+		char* attribute_end = strchr(attribute_begin, '>');
+		std::string font_size_attribute(attribute_begin, attribute_end);
+
+		DialogFlags font_size;
+		if (font_size_attribute == "10")
+		{
+			font_size = DialogFlags::CTRL_FONT_SMALLEST;
+		}
+		else if (font_size_attribute == "14")
+		{
+			font_size = DialogFlags::CTRL_FONT_SMALL;
+		}
+		else if (font_size_attribute == "16")
+		{
+			font_size = DialogFlags::CTRL_FONT_LARGE;
+		}
+		else // font_size_attribute == "16x"
+		{
+			font_size = DialogFlags::CTRL_FONT_LARGEST;
+		}
+
+		for (int i = 0; i < _countof(establishingShotPositions_); i++)
+		{
+			auto label = getControlFromIndex(dlg, i + 1);
+			label->lFlags &= ~DialogFlags::CTRL_FONT_LARGEST;
+			label->lFlags &= ~DialogFlags::CTRL_FONT_LARGE;
+			label->lFlags &= ~DialogFlags::CTRL_FONT_SMALL;
+			label->lFlags &= ~DialogFlags::CTRL_FONT_SMALLEST;
+			label->lFlags |= font_size;
+		}
+		return 0;
+	}
 	if (tag_length > 0xD && !_strnicmp(tag, "</FONTCOLOR ", 12u))
 	{
 		creditsSetFontColorFromFile(tag + 12);

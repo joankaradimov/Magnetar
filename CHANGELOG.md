@@ -8,6 +8,7 @@
     * `</SCREENUPPERLEFT>`
     * `</SCREENUPPERRIGHT>`
     * `</SCREENLOWERRIGHT>`
+    * `</FONTSIZE xxx>` - where xxx is `10`, `14`, `16` or `16x` (default)
   - Fix wrong colors in magma/water tiles on Ashworld/Ice tilesets (by DarkenedFantasies)
   - Allow mouse scrolling in the campaign history popup
 
