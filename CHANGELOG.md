@@ -9,6 +9,7 @@
     * `</SCREENUPPERRIGHT>`
     * `</SCREENLOWERRIGHT>`
   - Fix wrong colors in magma/water tiles on Ashworld/Ice tilesets (by DarkenedFantasies)
+  - Allow mouse scrolling in the campaign history popup
 
 ## 0.1.0 - Anxious Arbiter
   - Enable establishing shots within custom scenarios

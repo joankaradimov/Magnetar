@@ -6527,6 +6527,34 @@ bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 			break;
 		}
 	}
+	else if (evt->wNo == EventNo::EVN_WHEELUP)
+	{
+		dlgEvent event;
+		event.dwUser = USER_SCROLLUP;
+		event.wSelection = 0;
+		event.wUnk_0x06 = 0;
+		event.wNo = EVN_USER;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+
+		dialog* v4 = getControlFromIndex(dlg, 6)->fields.list.pScrlBar;
+		v4->pfcnInteract(v4, &event);
+		return 1;
+	}
+	else if (evt->wNo == EventNo::EVN_WHEELDWN)
+	{
+		dlgEvent event;
+		event.dwUser = USER_SCROLLDOWN;
+		event.wSelection = 0;
+		event.wUnk_0x06 = 0;
+		event.wNo = EVN_USER;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+
+		dialog* v4 = getControlFromIndex(dlg, 6)->fields.list.pScrlBar;
+		v4->pfcnInteract(v4, &event);
+		return 1;
+	}
 	return Popup_Main(dlg, evt);
 }
 
