@@ -4269,6 +4269,38 @@ int GameLoopWaitSendTurn_(int* a1)
 
 FAIL_STUB_PATCH(GameLoopWaitSendTurn);
 
+void replayFrameComputation_()
+{
+	int v0 = ElapsedTimeFrames * dword_4FF90C[replay_header.field_3A];
+	int v1 = 0;
+	if (v0 / 1000 != dword_50E05C)
+	{
+		dword_50E05C = v0 / 1000;
+		v1 = 1;
+	}
+	int v2 = 0;
+	if (is_replay_paused)
+	{
+		DWORD v3 = GetTickCount();
+		if (v3 - dword_6D11B8 > 600)
+		{
+			dword_6D11B8 = v3;
+			v2 = 1;
+			dword_6D11B4 = dword_6D11B4 == 0;
+		}
+	}
+	if (v1 || v2)
+	{
+		CanUpdateCurrentButtonSet = 1;
+		CanUpdateSelectedUnitPortrait = 1;
+		CanUpdateStatDataDialog = 1;
+		ctrl_under_mouse = 0;
+		ctrl_under_mouse_val = 0;
+	}
+}
+
+FAIL_STUB_PATCH(replayFrameComputation);
+
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 
 void GameLoop_State_(MenuPosition a2)
@@ -4291,7 +4323,7 @@ void GameLoop_State_(MenuPosition a2)
 		}
 		if (InReplay && is_replay_paused)
 		{
-			replayFrameComputation();
+			replayFrameComputation_();
 			dword_6D11F0 = 2;
 			break;
 		}
@@ -4318,7 +4350,7 @@ void GameLoop_State_(MenuPosition a2)
 			SetInGameLoop(0);
 			if (InReplay)
 			{
-				replayFrameComputation();
+				replayFrameComputation_();
 			}
 		}
 		dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed];
