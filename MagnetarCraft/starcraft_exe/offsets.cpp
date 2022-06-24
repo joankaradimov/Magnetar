@@ -3162,7 +3162,17 @@ int sub_42D140(UnitType a1, u8 a2, int a3, int a4) {
 }
 DECL_FUNC(int (__stdcall*sub_42D190)(int), sub_42D190, 0x42d190);
 DECL_FUNC(int (__fastcall*sub_42D240)(int a1, Tech a2, int a3), sub_42D240, 0x42d240);
-DECL_FUNC(int(*refreshImageData)(), refreshImageData, 0x42d280);
+char refreshImageData(RECT *a1) {
+    int address = 0x42d280;
+    char result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_42D330)(), sub_42D330, 0x42d330);
 DECL_FUNC(int(*sub_42D350)(), sub_42D350, 0x42d350);
 DECL_FUNC(int(*sub_42D370)(), sub_42D370, 0x42d370);
@@ -10691,7 +10701,17 @@ DECL_FUNC(int(*sub_47D660)(), sub_47D660, 0x47d660);
 DECL_FUNC(int(*sub_47D730)(), sub_47D730, 0x47d730);
 DECL_FUNC(int (__stdcall*sub_47D770)(CUnit *a1), sub_47D770, 0x47d770);
 DECL_FUNC(int (__stdcall*sub_47D860)(int, int, CUnit *), sub_47D860, 0x47d860);
-DECL_FUNC(int(*sub_47D920)(), sub_47D920, 0x47d920);
+char sub_47D920(RECT *a1) {
+    int address = 0x47d920;
+    char result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(char (__stdcall*RecheckSurrondingCreepDisappearance)(int x, int y), RecheckSurrondingCreepDisappearance, 0x47dc10);
 DECL_FUNC(int (__stdcall*sub_47DD60)(int), sub_47DD60, 0x47dd60);
 signed int sub_47DE40(int a1, int a2, int eax0, UnitType a3) {
@@ -10712,7 +10732,7 @@ signed int sub_47DE40(int a1, int a2, int eax0, UnitType a3) {
 }
 DECL_FUNC(signed int (__stdcall*sub_47DF90)(CUnit *a1), sub_47DF90, 0x47df90);
 DECL_FUNC(int (__stdcall*sub_47E100)(int), sub_47E100, 0x47e100);
-DECL_FUNC(char (__stdcall*sub_47E2D0)(int x, int y, int a3, unsigned __int16 a4, int a5), sub_47E2D0, 0x47e2d0);
+DECL_FUNC(char (__stdcall*sub_47E2D0)(int x, int y, int a3, unsigned __int16 a4, RECT *a5), sub_47E2D0, 0x47e2d0);
 DECL_FUNC(int(*InitializeRandomizerInfo)(), InitializeRandomizerInfo, 0x47e410);
 DECL_FUNC(int (__thiscall*sub_47E440)(dialog *this_), sub_47E440, 0x47e440);
 DECL_FUNC(void (__fastcall*sub_47E480)(dialog *a1, int a2), sub_47E480, 0x47e480);
@@ -10754,7 +10774,17 @@ void loadTips_BINDLG(int a1) {
 }
 DECL_FUNC(int(*sub_47EA50)(), sub_47EA50, 0x47ea50);
 DECL_FUNC(int (__stdcall*sub_47EA60)(int, int), sub_47EA60, 0x47ea60);
-DECL_FUNC(int(*GetScrollSpeed)(), GetScrollSpeed, 0x47eab0);
+int GetScrollSpeed(int *a1) {
+    int address = 0x47eab0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*CenterCursorGameScreen)(), CenterCursorGameScreen, 0x47eb30);
 void assignCenterViewProc(int a1, int a2, int (*a3)(void)) {
     int address = 0x47eb70;
@@ -10771,8 +10801,17 @@ DECL_FUNC(int(*sub_47EBB0)(), sub_47EBB0, 0x47ebb0);
 DECL_FUNC(int(*sub_47EBC0)(), sub_47EBC0, 0x47ebc0);
 DECL_FUNC(int(*refreshStars)(), refreshStars, 0x47ebf0);
 DECL_FUNC(int(*drawStars)(), drawStars, 0x47ee20);
-DECL_FUNC(int(*getScreenMoveState)(), getScreenMoveState, 0x47ef80);
-DECL_FUNC(int(*PollInput)(), PollInput, 0x47f0e0);
+void getScreenMoveState(_DWORD *a1, _DWORD *a2) {
+    int address = 0x47ef80;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+    }
+}
+DECL_FUNC(void (__cdecl*PollInput)(), PollInput, 0x47f0e0);
 DECL_FUNC(int(*loadParallaxStarGfx)(), loadParallaxStarGfx, 0x47f2c0);
 DECL_FUNC(int (__thiscall*getLastWhisperPlayerIDIfStrEqual)(size_t, char *, int), getLastWhisperPlayerIDIfStrEqual, 0x47f440);
 DECL_FUNC(int (__fastcall*verifyChatCommand)(size_t, char *, int, int), verifyChatCommand, 0x47f4d0);
@@ -13607,10 +13646,30 @@ DECL_FUNC(int(*sub_49BF20)(), sub_49BF20, 0x49bf20);
 DECL_FUNC(int(*sub_49BF70)(), sub_49BF70, 0x49bf70);
 DECL_FUNC(int(*sub_49BFA0)(), sub_49BFA0, 0x49bfa0);
 DECL_FUNC(int(*BWFXN_UpdateScreenPosition)(), BWFXN_UpdateScreenPosition, 0x49bfd0);
-DECL_FUNC(int(*moveToXScrIncrease)(), moveToXScrIncrease, 0x49c0c0);
-DECL_FUNC(int(*moveToXScrDecrease)(), moveToXScrDecrease, 0x49c1a0);
-DECL_FUNC(int(*moveToYScrIncrease)(), moveToYScrIncrease, 0x49c280);
-DECL_FUNC(int(*moveToYScrDecrease)(), moveToYScrDecrease, 0x49c360);
+DECL_FUNC(signed int (__fastcall*moveToXScrIncrease)(int a1, int a2), moveToXScrIncrease, 0x49c0c0);
+int moveToXScrDecrease(int a1) {
+    int address = 0x49c1a0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(int (__fastcall*moveToYScrIncrease)(int a1, int a2), moveToYScrIncrease, 0x49c280);
+int moveToYScrDecrease(int a1) {
+    int address = 0x49c360;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 char BWFXN_MoveScreen(unsigned int a1, unsigned int a2) {
     int address = 0x49c440;
     char result_;
@@ -16434,7 +16493,7 @@ unsigned int GetGroundHeightAtPos(signed int x, signed int y) {
     }
     return result_;
 }
-DECL_FUNC(int(*DestroyMapData)(), DestroyMapData, 0x4bd190);
+DECL_FUNC(void (__cdecl*DestroyMapData)(), DestroyMapData, 0x4bd190);
 DECL_FUNC(int(*RefreshLayer5)(), RefreshLayer5, 0x4bd350);
 DECL_FUNC(void (__cdecl*sub_4BD3A0)(), sub_4BD3A0, 0x4bd3a0);
 DECL_FUNC(int(*InitialSetScreenToStartLocation)(), InitialSetScreenToStartLocation, 0x4bd3f0);
@@ -17755,7 +17814,19 @@ DECL_FUNC(int(*sub_4D1220)(), sub_4D1220, 0x4d1220);
 DECL_FUNC(int(*sub_4D1230)(), sub_4D1230, 0x4d1230);
 DECL_FUNC(int(*sub_4D1240)(), sub_4D1240, 0x4d1240);
 DECL_FUNC(void (__fastcall*DestroyCursors)(bool exit_code), DestroyCursors, 0x4d1250);
-DECL_FUNC(int(*getScrollCursorType)(), getScrollCursorType, 0x4d12a0);
+int getScrollCursorType(_DWORD *a1, _DWORD *a2) {
+    int address = 0x4d12a0;
+    int result_;
+    __asm {
+        xor edi, edi
+        xor esi, esi
+        mov edi, a1
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*UnitIsEnemy)(), UnitIsEnemy, 0x4d1380);
 void setCursorType(CursorType cursor_type) {
     int address = 0x4d13b0;
@@ -19249,7 +19320,7 @@ void SetGameSpeed_maybe(int game_speed, unsigned __int8 a2, unsigned int a3) {
 DECL_FUNC(int (__stdcall*sub_4DECF0)(unsigned __int8 a2), sub_4DECF0, 0x4decf0);
 DECL_FUNC(int(*sub_4DED10)(), sub_4DED10, 0x4ded10);
 DECL_FUNC(signed int (__stdcall*CopyLastReplay)(char *a1), CopyLastReplay, 0x4ded30);
-DECL_FUNC(int(*replayFrameComputation)(), replayFrameComputation, 0x4deed0);
+DECL_FUNC(void (__cdecl*replayFrameComputation)(), replayFrameComputation, 0x4deed0);
 int getDirectoryPath(CHAR *a1, DWORD esi0, const char *a2) {
     int address = 0x4def80;
     int result_;
