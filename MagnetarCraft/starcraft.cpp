@@ -4397,6 +4397,8 @@ void GameLoop_State_(MenuPosition a2)
 	IsRunning = v9;
 }
 
+FAIL_STUB_PATCH(GameLoop_State);
+
 void GameLoop_Top_(MenuPosition a1)
 {
 	FramesUntilNextTurn = 1;
