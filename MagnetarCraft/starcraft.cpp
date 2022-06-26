@@ -883,9 +883,20 @@ void CommandLineCheck_()
 
 FAIL_STUB_PATCH(CommandLineCheck);
 
+void __fastcall FreeNetworkTBLHandle_(bool exit_code)
+{
+	if (networkTable)
+	{
+		SMemFree(networkTable, "Starcraft\\SWAR\\lang\\error.cpp", 21, 0);
+	}
+	networkTable = NULL;
+}
+
+FAIL_STUB_PATCH(FreeNetworkTBLHandle);
+
 void LoadNetworkTBL_()
 {
-	AppAddExit_(FreeNetworkTBLHandle);
+	AppAddExit_(FreeNetworkTBLHandle_);
 	networkTable = (WORD*) fastFileRead_(0, 0, "rez\\network.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 }
 
