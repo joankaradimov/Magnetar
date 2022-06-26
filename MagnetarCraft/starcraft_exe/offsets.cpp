@@ -9044,7 +9044,17 @@ DECL_FUNC(int(*sub_472500)(), sub_472500, 0x472500);
 DECL_FUNC(int(*sub_472570)(), sub_472570, 0x472570);
 DECL_FUNC(int(*sub_472720)(), sub_472720, 0x472720);
 DECL_FUNC(int(*sub_472750)(), sub_472750, 0x472750);
-DECL_FUNC(int(*initializeProviderVersion)(), initializeProviderVersion, 0x472770);
+unsigned __int32 initializeProviderVersion(SNETPROGRAMDATA *a1) {
+    int address = 0x472770;
+    unsigned result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*Ban_Constructor)(char *source), Ban_Constructor, 0x472840);
 DECL_FUNC(int(*sub_4728E0)(), sub_4728E0, 0x4728e0);
 DECL_FUNC(int(*sub_4728F0)(), sub_4728F0, 0x4728f0);
@@ -10732,7 +10742,7 @@ signed int sub_47DE40(int a1, int a2, int eax0, UnitType a3) {
 }
 DECL_FUNC(signed int (__stdcall*sub_47DF90)(CUnit *a1), sub_47DF90, 0x47df90);
 DECL_FUNC(int (__stdcall*sub_47E100)(int), sub_47E100, 0x47e100);
-DECL_FUNC(char (__stdcall*sub_47E2D0)(int x, int y, int a3, unsigned __int16 a4, RECT *a5), sub_47E2D0, 0x47e2d0);
+DECL_FUNC(void (__stdcall*sub_47E2D0)(int x, int y, int a3, TileID a4, RECT *a1), sub_47E2D0, 0x47e2d0);
 DECL_FUNC(int(*InitializeRandomizerInfo)(), InitializeRandomizerInfo, 0x47e410);
 DECL_FUNC(int (__thiscall*sub_47E440)(dialog *this_), sub_47E440, 0x47e440);
 DECL_FUNC(void (__fastcall*sub_47E480)(dialog *a1, int a2), sub_47E480, 0x47e480);
@@ -25981,7 +25991,7 @@ __int16& word_6D0C60 = * ((decltype(&word_6D0C60)) 0x6d0c60);
 grpHead *& TerrainGraphics = * ((decltype(&TerrainGraphics)) 0x6d0c64);
 TileID *& location = * ((decltype(&location)) 0x6d0c68);
 int& dword_6D0C6C = * ((decltype(&dword_6D0C6C)) 0x6d0c6c);
-int (__stdcall *&dword_6D0C70)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD) = *((decltype(&dword_6D0C70)) 0x6d0c70);
+void (__stdcall *&dword_6D0C70)(_DWORD, _DWORD, _DWORD, TileID, RECT *) = *((decltype(&dword_6D0C70)) 0x6d0c70);
 int (__stdcall *&dword_6D0C74)(_DWORD, _DWORD) = *((decltype(&dword_6D0C74)) 0x6d0c74);
 int (__stdcall *&dword_6D0C78)(_DWORD, _DWORD) = *((decltype(&dword_6D0C78)) 0x6d0c78);
 int (__stdcall *&dword_6D0C7C)(_DWORD) = *((decltype(&dword_6D0C7C)) 0x6d0c7c);

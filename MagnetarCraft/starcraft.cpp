@@ -6135,7 +6135,7 @@ void initMapData_()
 	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".grp");
 
 	struct_a1 a1;
-	a1.pfunc0 = (int(__stdcall *)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD))sub_47E2D0;
+	a1.pfunc0 = sub_47E2D0;
 	a1.isCreepCovered = isCreepCovered;
 	a1.isTileVisible = isTileVisible;
 	a1.pfuncC = 0;
