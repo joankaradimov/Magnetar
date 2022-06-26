@@ -1486,7 +1486,7 @@ void blitTileCacheOnRefresh_()
 
 	for (int v6 = 0; v6 < GAME_AREA_HEIGHT / 16; v6++)
 	{
-		for (int i = 0; i < 40; ++i)
+		for (int i = 0; i < GAME_AREA_WIDTH / 16; ++i)
 		{
 			if (v1 >= TILE_CACHE_SIZE)
 			{
@@ -1496,7 +1496,7 @@ void blitTileCacheOnRefresh_()
 			{
 				int v3 = i + 1;
 				int v4 = 1;
-				if (i + 1 < 40)
+				if (i + 1 < GAME_AREA_WIDTH / 16)
 				{
 					do
 					{
@@ -1507,7 +1507,7 @@ void blitTileCacheOnRefresh_()
 						++v0;
 						++v4;
 						++v3;
-					} while (v3 < 40);
+					} while (v3 < GAME_AREA_WIDTH / 16);
 				}
 				BlitTerrainCacheToGameBitmap_(16 * v6, 16 * i, 16 * v4, v1);
 				v1 = v1 + 16 * (v4 - 1);
