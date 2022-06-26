@@ -1464,13 +1464,8 @@ FAIL_STUB_PATCH(BWFXN_drawMapTiles);
 
 void BWFXN_blitMapTiles_()
 {
-	int i;
-
 	dword_50CEF0 = GAME_AREA_WIDTH;
-	for (i = MoveToX + (GAME_AREA_WIDTH + TILE_WIDTH) * MoveToY; i >= TILE_CACHE_SIZE; i -= TILE_CACHE_SIZE);
-	{
-		;
-	}
+	int i = (MoveToX + (GAME_AREA_WIDTH + TILE_WIDTH) * MoveToY) % TILE_CACHE_SIZE;
 	BlitToBitmap(i, GAME_AREA_HEIGHT, GameScreenBuffer.data, &GameTerrainCache[i]);
 }
 
