@@ -4219,6 +4219,13 @@ void DoGameLoop_(MenuPosition a1)
 
 FAIL_STUB_PATCH(DoGameLoop);
 
+int BWFXN_IsPaused_()
+{
+	return IS_GAME_PAUSED;
+}
+
+FAIL_STUB_PATCH(BWFXN_IsPaused);
+
 void RefreshUnit_(CUnit* unit)
 {
 	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0 && (unit->sprite->flags & 0x20) == 0)
@@ -4228,13 +4235,6 @@ void RefreshUnit_(CUnit* unit)
 }
 
 FAIL_STUB_PATCH(RefreshUnit);
-
-int BWFXN_IsPaused_()
-{
-	return IS_GAME_PAUSED;
-}
-
-FAIL_STUB_PATCH(BWFXN_IsPaused);
 
 void RefreshAllUnits_()
 {
