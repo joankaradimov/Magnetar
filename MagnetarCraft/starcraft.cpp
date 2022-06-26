@@ -1462,11 +1462,44 @@ void BWFXN_drawMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_drawMapTiles);
 
+void BlitToBitmap_(int a1, int a2, byte* a3)
+{
+	unsigned int v4;
+	unsigned int v7;
+	unsigned int v8;
+
+	byte* a4 = &GameTerrainCache[a1];
+
+	for (int i = 0; i < a2; i++)
+	{
+		v4 = dword_50CEF0;
+		if (dword_50CEF0 + a1 >= TILE_CACHE_SIZE)
+		{
+			if (a1 < TILE_CACHE_SIZE)
+			{
+				v7 = (unsigned int)(TILE_CACHE_SIZE - a1) >> 2;
+				memcpy(a3, a4, 4 * v7);
+				a3 += 4 * v7;
+				a4 += 4 * v7;
+				v4 = dword_50CEF0 - (TILE_CACHE_SIZE - a1);
+			}
+			a1 -= TILE_CACHE_SIZE;
+			a4 -= TILE_CACHE_SIZE;
+		}
+		v8 = v4 >> 2;
+		memcpy(a3, a4, 4 * v8);
+		a1 += RENDER_AREA_WIDTH;
+		a3 += 4 * v8 - dword_50CEF0 + SCREEN_WIDTH;
+		a4 += 4 * v8 - dword_50CEF0 + RENDER_AREA_WIDTH;
+	}
+}
+
+FAIL_STUB_PATCH(BlitToBitmap);
+
 void BWFXN_blitMapTiles_()
 {
 	dword_50CEF0 = GAME_AREA_WIDTH;
-	int i = (MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE;
-	BlitToBitmap(i, GAME_AREA_HEIGHT, GameScreenBuffer.data, &GameTerrainCache[i]);
+	BlitToBitmap_((MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE, GAME_AREA_HEIGHT, GameScreenBuffer.data);
 }
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
@@ -1474,7 +1507,7 @@ FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 void __fastcall BlitTerrainCacheToGameBitmap_(int a0, int a1, int a2, int a3)
 {
 	dword_50CEF0 = a2;
-	BlitToBitmap(a3, 16, &GameScreenBuffer.data[a1 + a0 * GameScreenBuffer.wid], &GameTerrainCache[a3]);
+	BlitToBitmap_(a3, 16, &GameScreenBuffer.data[a1 + a0 * GameScreenBuffer.wid]);
 }
 
 FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap);
