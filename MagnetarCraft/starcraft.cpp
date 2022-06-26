@@ -1620,9 +1620,21 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 
 FAIL_STUB_PATCH(DSoundInit);
 
+void __fastcall saveColorSettings_(bool exit_code)
+{
+	if (!exit_code)
+	{
+		SRegSaveValue("Starcraft", "Gamma", 0, Gamma);
+		SRegSaveValue("Starcraft", "ColorCycle", 0, ColorCycle);
+		SRegSaveValue("Starcraft", "UnitPortraits", 0, UnitPortraits);
+	}
+}
+
+FAIL_STUB_PATCH(saveColorSettings);
+
 void loadColorSettings_()
 {
-	AppAddExit_(saveColorSettings);
+	AppAddExit_(saveColorSettings_);
 
 	if (SRegLoadValue("Starcraft", "Gamma", 0, &Gamma))
 	{

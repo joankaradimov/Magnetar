@@ -204,7 +204,7 @@ EXPORTS
     SRegLoadValue@16 = StormLibRegLoadValue @423
     SRegSaveData = StormLibRegSaveData @424
     SRegSaveString = StormLibRegSaveString @425
-    SRegSaveValue = StormLibRegSaveValue @426
+    SRegSaveValue@16 = StormLibRegSaveValue @426
     SRegGetBaseKey = StormLibRegGetBaseKey @427
     SRegDeleteValue = StormLibRegDeleteValue @428
 
