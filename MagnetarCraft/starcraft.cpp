@@ -1082,6 +1082,23 @@ void setCursorType_(CursorType cursor_type)
 
 FAIL_STUB_PATCH(setCursorType);
 
+void __fastcall DestroyCursors_(bool exit_code)
+{
+	ScreenLayers[0].buffers = 0;
+	last_cursor = NULL;
+
+	for (int i = 0; i < _countof(cursor_graphics); i++)
+	{
+		if (cursor_graphics[i])
+		{
+			SMemFree(cursor_graphics[i], "Starcraft\\SWAR\\lang\\cur.cpp", 205, 0);
+			cursor_graphics[i] = 0;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(DestroyCursors);
+
 CursorType operator++(CursorType& cursor_type)
 {
 	return CursorType(++reinterpret_cast<int&>(cursor_type));
@@ -1089,7 +1106,7 @@ CursorType operator++(CursorType& cursor_type)
 
 void LoadCursors_()
 {
-	AppAddExit_(DestroyCursors);
+	AppAddExit_(DestroyCursors_);
 	for (CursorType i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
 	{
 		char dest[260];
