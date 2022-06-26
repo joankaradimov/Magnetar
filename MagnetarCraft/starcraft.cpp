@@ -1343,7 +1343,7 @@ void drawMinitileImageData_(int framebuf_pos, int minitile)
 		{
 			GameTerrainCache[framebuf_pos + j] = (minitile & 1) ? v4[8 * i + 7 - j] : v4[8 * i + j];
 		}
-		framebuf_pos += (GAME_AREA_WIDTH + TILE_WIDTH);
+		framebuf_pos += RENDER_AREA_WIDTH;
 	}
 }
 
@@ -1355,7 +1355,7 @@ void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			drawMinitileImageData_(framebuf_position + 8 * (GAME_AREA_WIDTH + TILE_WIDTH) * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j]);
+			drawMinitileImageData_(framebuf_position + 8 * RENDER_AREA_WIDTH * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j]);
 		}
 	}
 
@@ -1465,7 +1465,7 @@ FAIL_STUB_PATCH(BWFXN_drawMapTiles);
 void BWFXN_blitMapTiles_()
 {
 	dword_50CEF0 = GAME_AREA_WIDTH;
-	int i = (MoveToX + (GAME_AREA_WIDTH + TILE_WIDTH) * MoveToY) % TILE_CACHE_SIZE;
+	int i = (MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE;
 	BlitToBitmap(i, GAME_AREA_HEIGHT, GameScreenBuffer.data, &GameTerrainCache[i]);
 }
 
@@ -1482,7 +1482,7 @@ FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap);
 void blitTileCacheOnRefresh_()
 {
 	u8* v0 = RefreshRegions;
-	int v1 = (MoveToX + (SCREEN_WIDTH + 32) * MoveToY) % TILE_CACHE_SIZE;
+	int v1 = (MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE;
 
 	for (int v6 = 0; v6 < GAME_AREA_HEIGHT / 16; v6++)
 	{
