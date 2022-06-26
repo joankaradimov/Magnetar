@@ -5894,6 +5894,24 @@ bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapC
 
 FAIL_STUB_PATCH(ChkLoader_COLR);
 
+void __fastcall FreeCreepData_(bool exit_code)
+{
+	if (location)
+	{
+		SMemFree(location, "Starcraft\\SWAR\\MapComn\\creep.cpp", 368, 0);
+	}
+	if (CreepEdgeData)
+	{
+		SMemFree(CreepEdgeData, "Starcraft\\SWAR\\MapComn\\creep.cpp", 369, 0);
+	}
+	if (TerrainGraphics)
+	{
+		SMemFree(TerrainGraphics, "Starcraft\\SWAR\\MapComn\\creep.cpp", 370, 0);
+	}
+}
+
+FAIL_STUB_PATCH(FreeCreepData);
+
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
 	dword_6D0C74 = a1->isCreepCovered;
@@ -5926,7 +5944,7 @@ void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, voi
 		dword_6D6414 = 1;
 		sub_413C50();
 		sub_413C00();
-		AppAddExit_(FreeCreepData);
+		AppAddExit_(FreeCreepData_);
 	}
 }
 
