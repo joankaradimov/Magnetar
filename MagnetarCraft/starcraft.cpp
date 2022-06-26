@@ -10017,6 +10017,24 @@ void Game_MouseWheel_(EventNo wNo, int a2)
 
 FAIL_STUB_PATCH(Game_MouseWheel);
 
+void Game_Capturechanged_()
+{
+	if (InputFlags & 0x2A)
+	{
+		InputFlags &= 0xD5;
+		if (gwGameMode == GAME_RUN)
+		{
+			SetInGameInputProcs();
+		}
+		else
+		{
+			InitializeInputProcs();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(Game_Capturechanged);
+
 LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
 	dlgEvent v16;
@@ -10293,7 +10311,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		}
 		return 1;
 	case WM_CAPTURECHANGED:
-		Game_Capturechanged();
+		Game_Capturechanged_();
 		break;
 	case WM_IME_NOTIFY:
 		GetUserDefaultLangID();
