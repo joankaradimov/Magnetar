@@ -8898,6 +8898,42 @@ void DLG_SwishIn_(dialog* a1)
 
 FAIL_STUB_PATCH(DLG_SwishIn);
 
+bool __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
+		if (dlg->lFlags & CTRL_DISABLED)
+		{
+			return 0;
+		}
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			SetCallbackTimer(CTRL_DISABLED, dlg, 200, gluCmpgnBtn_UpdateTimer);
+			break;
+		case EventUser::USER_DESTROY:
+			waitLoopCntd(CTRL_DISABLED, dlg);
+			break;
+		case EventUser::USER_MOUSEMOVE:
+			return sub_4B24B0(dlg, evt);
+		case EventUser::USER_INIT:
+			genericLightupBtnInteract(dlg, evt);
+			dlg->pfcnUpdate = gluCmpgnBtn_BtnLightupUpdate;
+			SetCallbackTimer(72, dlg, 30, gluCmpgnBtn_InitTimer);
+			return 1;
+		}
+		break;
+	}
+
+	return genericLightupBtnInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluCmpgn_CampaignButton);
+
 void gluCmpgn_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -8906,9 +8942,9 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 		NULL,
 		NULL,
 		Menu_Generic_Button,
-		gluCmpgn_CampaignButton,
+		gluCmpgn_CampaignButton_,
 		genericLightupBtnInteract,
-		gluCmpgn_CampaignButton,
+		gluCmpgn_CampaignButton_,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
@@ -8945,6 +8981,42 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCmpgn_Main);
 
+bool __fastcall gluExpCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
+		if (dlg->lFlags & CTRL_DISABLED)
+		{
+			return 0;
+		}
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			SetCallbackTimer(2, dlg, 200, sub_4B4E70);
+			break;
+		case EventUser::USER_DESTROY:
+			waitLoopCntd(2, dlg);
+			break;
+		case EventUser::USER_MOUSEMOVE:
+			return sub_4B4E20(dlg, evt);
+		case EventUser::USER_INIT:
+			genericLightupBtnInteract(dlg, evt);
+			dlg->pfcnUpdate = sub_4B4F10;
+			SetCallbackTimer(72, dlg, 30, sub_4B4EE0);
+			return 1;
+		}
+		break;
+	}
+
+	return genericLightupBtnInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluExpCmpgn_CampaignButton);
+
 void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -8954,8 +9026,8 @@ void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 		NULL,
 		Menu_Generic_Button,
 		genericLightupBtnInteract,
-		gluExpCmpgn_CampaignButton,
-		gluExpCmpgn_CampaignButton,
+		gluExpCmpgn_CampaignButton_,
+		gluExpCmpgn_CampaignButton_,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
