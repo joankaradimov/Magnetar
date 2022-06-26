@@ -5220,6 +5220,7 @@ void minimapSurfaceUpdate_()
 FAIL_STUB_PATCH(minimapSurfaceUpdate_64);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
+FAIL_STUB_PATCH(sub_4A3D40);
 
 void setMapSizeConstants_()
 {
