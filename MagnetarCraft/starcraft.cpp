@@ -2799,7 +2799,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 		setMapSizeConstants_();
 		if (dword_5993AC == 0)
 		{
-			SetCallbackTimer(1, dlg, multiPlayerMode != 0 ? 2000 : 1000, Minimap_TimerRefresh_);
+			SetCallbackTimer(1, dlg, 200, Minimap_TimerRefresh_);
 			SetCallbackTimer(2, dlg, 200, updateMinimapPositioninfoProc);
 			SetCallbackTimer(3, dlg, 200, updateMinimapSurfaceInfoProc_);
 			SetCallbackTimer(6, dlg, 100, updateMinimapSurfaceInfo2Proc_);
