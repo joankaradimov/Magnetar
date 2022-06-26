@@ -2990,7 +2990,7 @@ DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked_0)(int), BTNSCOND_IsCloaked_0, 0x429
 DECL_FUNC(int (__stdcall*BTNSCOND_CanCloak_0)(int), BTNSCOND_CanCloak_0, 0x4293e0);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanUpgrade)(int), BTNSCOND_CanUpgrade, 0x429450);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasSpidermines)(int), BTNSCOND_HasSpidermines, 0x429470);
-DECL_FUNC(bool (__fastcall*BTNSCOND_HasTech)(Tech a1, int a2, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
+DECL_FUNC(bool (__fastcall*BTNSCOND_HasTech)(Tech a1, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanResearch)(Tech a1, int a2, CUnit *a3), BTNSCOND_CanResearch, 0x429500);
 DECL_FUNC(signed int (__fastcall*BTNSCOND_Rally)(int a1, int a2, CUnit *a3), BTNSCOND_Rally, 0x429520);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeDarkArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeDarkArchonOneSelected, 0x429680);
@@ -11448,7 +11448,7 @@ void newGame(int is_in_game) {
         call address
     }
 }
-DECL_FUNC(int(*BWFXN_QueueCommand)(), BWFXN_QueueCommand, 0x485bd0);
+DECL_FUNC(void (__fastcall*BWFXN_QueueCommand)(const void *a1, unsigned int a2), BWFXN_QueueCommand, 0x485bd0);
 DECL_FUNC(int(*sub_485C70)(), sub_485C70, 0x485c70);
 DECL_FUNC(int(*sub_485CC0)(), sub_485CC0, 0x485cc0);
 DECL_FUNC(int (__stdcall*sub_485CE0)(char), sub_485CE0, 0x485ce0);
@@ -13761,15 +13761,13 @@ DECL_FUNC(int(*nullsub_54)(), nullsub_54, 0x49a260);
 DECL_FUNC(int(*isRgnIdNeighbor)(), isRgnIdNeighbor, 0x49a270);
 DECL_FUNC(int(*isSelectedUnitGroupEnabled)(), isSelectedUnitGroupEnabled, 0x49a2c0);
 DECL_FUNC(int(*sub_49A320)(), sub_49A320, 0x49a320);
-signed int compareUnitRank(int a1, CUnit *a2, CUnit *a3) {
+BOOL compareUnitRank(CUnit *a2, CUnit *a3) {
     int address = 0x49a350;
-    signed result_;
+    BOOL result_;
     __asm {
         xor eax, eax
-        xor ecx, ecx
         xor edi, edi
         xor esi, esi
-        mov ecx, a1
         mov edi, a2
         mov esi, a3
         call address
@@ -17953,7 +17951,7 @@ CUnit *sub_4CD740(ChunkUnitEntry *a1) {
 }
 DECL_FUNC(void (__cdecl*sub_4CD770)(), sub_4CD770, 0x4cd770);
 DECL_FUNC(bool (__stdcall*ChkLoader_UNIT)(SectionData *a1, int section_size_, MapChunks *a3), ChkLoader_UNIT, 0x4cd7a0);
-DECL_FUNC(int (__thiscall*sub_4CD9C0)(dialog *this_), sub_4CD9C0, 0x4cd9c0);
+DECL_FUNC(void (__fastcall*sub_4CD9C0)(dialog *this_), sub_4CD9C0, 0x4cd9c0);
 DECL_FUNC(int (__stdcall*sub_4CDA00)(int), sub_4CDA00, 0x4cda00);
 DECL_FUNC(int(*sub_4CDA20)(), sub_4CDA20, 0x4cda20);
 int UpdateCancelButton(dialog *a1, unsigned __int16 a2, int a3) {
@@ -19724,8 +19722,8 @@ void SetReplayData(GameData *a1, PlayerInfo *a2, int *a3) {
 }
 DECL_FUNC(int(*sub_4DEA90)(), sub_4DEA90, 0x4dea90);
 DECL_FUNC(int (__stdcall*BTNSCOND_ReplayPlayPause)(int), BTNSCOND_ReplayPlayPause, 0x4deac0);
-DECL_FUNC(int (__stdcall*BTNSCOND_ReplaySpeedUp)(int), BTNSCOND_ReplaySpeedUp, 0x4deaf0);
-DECL_FUNC(int (__stdcall*BTNSCOND_ReplaySlowDown)(int), BTNSCOND_ReplaySlowDown, 0x4deb40);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ReplaySpeedUp)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ReplaySpeedUp, 0x4deaf0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ReplaySlowDown)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ReplaySlowDown, 0x4deb40);
 void SetGameSpeed_maybe(int game_speed, unsigned __int8 a2, unsigned int a3) {
     int address = 0x4deb90;
     __asm {
@@ -19771,7 +19769,7 @@ int saveGame_Destroy(dialog *a1) {
 DECL_FUNC(int (__stdcall*GetReplayFileList)(int), GetReplayFileList, 0x4df0b0);
 DECL_FUNC(int(*sub_4DF1E0)(), sub_4DF1E0, 0x4df1e0);
 DECL_FUNC(int(*DeleteFileIfExists)(), DeleteFileIfExists, 0x4df220);
-DECL_FUNC(int(*CMDACT_IncreaseReplaySpeed)(), CMDACT_IncreaseReplaySpeed, 0x4df260);
+DECL_FUNC(void (__fastcall*CMDACT_IncreaseReplaySpeed)(int, bool), CMDACT_IncreaseReplaySpeed, 0x4df260);
 DECL_FUNC(int(*CMDACT_SetReplaySpeed)(), CMDACT_SetReplaySpeed, 0x4df2c0);
 DECL_FUNC(int(*CMDACT_DecreaseReplaySpeed)(), CMDACT_DecreaseReplaySpeed, 0x4df300);
 DECL_FUNC(int(*replay_leaderboard_Hide)(), replay_leaderboard_Hide, 0x4df360);
@@ -24495,7 +24493,7 @@ char& byte_50DBF8 = * ((decltype(&byte_50DBF8)) 0x50dbf8);
 char(&aPkwareDataComp)[193] = * ((decltype(&aPkwareDataComp)) 0x50def8);
 char(&aRegistration_b)[19] = * ((decltype(&aRegistration_b)) 0x50dfc0);
 char *(&off_50E040)[6] = * ((decltype(&off_50E040)) 0x50e040);
-unsigned int& dword_50E058 = * ((decltype(&dword_50E058)) 0x50e058);
+int& dword_50E058 = * ((decltype(&dword_50E058)) 0x50e058);
 int& dword_50E05C = * ((decltype(&dword_50E05C)) 0x50e05c);
 int& dword_50E064 = * ((decltype(&dword_50E064)) 0x50e064);
 const char(&aGluePalmm)[] = * ((decltype(&aGluePalmm)) 0x50e06c);
@@ -24671,8 +24669,8 @@ char(&byte_515B61)[7] = * ((decltype(&byte_515B61)) 0x515b61);
 char(&byte_515B68)[] = * ((decltype(&byte_515B68)) 0x515b68);
 char(&byte_515B69)[31] = * ((decltype(&byte_515B69)) 0x515b69);
 int(&damage_type_multiplier)[5][5] = * ((decltype(&damage_type_multiplier)) 0x515b88);
-ButtonOrder(&stru_515BE8)[3] = * ((decltype(&stru_515BE8)) 0x515be8);
-ButtonOrder(&stru_515C24)[3] = * ((decltype(&stru_515C24)) 0x515c24);
+ButtonOrder(&replay_paused)[3] = * ((decltype(&replay_paused)) 0x515be8);
+ButtonOrder(&replay_playing)[3] = * ((decltype(&replay_playing)) 0x515c24);
 ButtonOrder(&stru_515C60)[1] = * ((decltype(&stru_515C60)) 0x515c60);
 ButtonOrder(&stru_515C74)[1] = * ((decltype(&stru_515C74)) 0x515c74);
 ButtonOrder(&stru_515C88)[1] = * ((decltype(&stru_515C88)) 0x515c88);

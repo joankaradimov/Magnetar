@@ -5733,7 +5733,7 @@ FAIL_STUB_PATCH(sub_458E70);
 void sub_458BB0_(dialog* dlg)
 {
 	ButtonOrder* order = (ButtonOrder*)dlg->lUser;
-	order->action(order->f4, is_keycode_used[VK_SHIFT]);
+	order->action(order->action_variable, is_keycode_used[VK_SHIFT]);
 }
 
 FAIL_STUB_PATCH(sub_458BB0);
