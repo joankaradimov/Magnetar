@@ -1484,8 +1484,7 @@ void blitTileCacheOnRefresh_()
 	u8* v0 = RefreshRegions;
 	int v1 = (MoveToX + (SCREEN_WIDTH + 32) * MoveToY) % TILE_CACHE_SIZE;
 
-	int v6 = 0;
-	do
+	for (int v6 = 0; v6 < GAME_AREA_HEIGHT / 16; v6++)
 	{
 		for (int i = 0; i < 40; ++i)
 		{
@@ -1510,7 +1509,7 @@ void blitTileCacheOnRefresh_()
 						++v3;
 					} while (v3 < 40);
 				}
-				BlitTerrainCacheToGameBitmap_(v6, 16 * i, 16 * v4, v1);
+				BlitTerrainCacheToGameBitmap_(16 * v6, 16 * i, 16 * v4, v1);
 				v1 = v1 + 16 * (v4 - 1);
 				i = i + v4 - 1;
 				if (v1 >= TILE_CACHE_SIZE)
@@ -1526,8 +1525,7 @@ void blitTileCacheOnRefresh_()
 		{
 			v1 -= TILE_CACHE_SIZE;
 		}
-		v6 += 16;
-	} while (v6 < GAME_AREA_HEIGHT);
+	}
 }
 
 FAIL_STUB_PATCH(blitTileCacheOnRefresh);
