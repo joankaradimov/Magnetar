@@ -1674,7 +1674,7 @@ __int16 sub_419290(DlgGrp *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_419450)(), sub_419450, 0x419450);
-void sub_419460(int (__stdcall *result)(_DWORD)) {
+void sub_419460(void (__stdcall *result)(int)) {
     int address = 0x419460;
     __asm {
         xor eax, eax
@@ -6985,7 +6985,17 @@ void AI_StartShareTown(int player_id) {
 }
 DECL_FUNC(int (__stdcall*AIScript_RunScriptOpcodes)(_DWORD a1), AIScript_RunScriptOpcodes, 0x45b850);
 DECL_FUNC(void(*AIScriptLoop)(void), AIScriptLoop, 0x45cbd0);
-DECL_FUNC(int(*isValidMorph)(), isValidMorph, 0x45cc60);
+BOOL isValidMorph(UnitType a1) {
+    int address = 0x45cc60;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov ax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*isRectOutOfScreen_fixup)(), isRectOutOfScreen_fixup, 0x45cc90);
 int isMorphing(CUnit *a1) {
     int address = 0x45cd00;
@@ -16695,8 +16705,15 @@ signed int sub_4BBAF0(struct_5 *a1, int a2, int a3, SfxData sfx_id, UnitType uni
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4BBC00)(), sub_4BBC00, 0x4bbc00);
-DECL_FUNC(int(*sub_4BBCF0)(), sub_4BBCF0, 0x4bbcf0);
+void sub_4BBC00(int a1) {
+    int address = 0x4bbc00;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
+DECL_FUNC(HRESULT(*sub_4BBCF0)(), sub_4BBCF0, 0x4bbcf0);
 DECL_FUNC(int(*parseWaveFile)(), parseWaveFile, 0x4bbd80);
 DECL_FUNC(int(*sub_4BBE40)(), sub_4BBE40, 0x4bbe40);
 DECL_FUNC(void (__cdecl*PlayBriefingWAVBegin)(), PlayBriefingWAVBegin, 0x4bbe50);
@@ -20362,13 +20379,11 @@ char orders_ProbeBuild(CUnit *a1) {
     }
     return result_;
 }
-void orders_bldgUnderConstruction_Protoss(CUnit *a1, __int16 a2) {
+void orders_bldgUnderConstruction_Protoss(CUnit *a1) {
     int address = 0x4e4f40;
     __asm {
         xor eax, eax
-        xor ebx, ebx
         mov eax, a1
-        mov bx, a2
         call address
     }
 }
@@ -20499,7 +20514,7 @@ char getRightClickActionOrder(CUnit *a1) {
 }
 DECL_FUNC(int(*sub_4E5EE0)(), sub_4E5EE0, 0x4e5ee0);
 DECL_FUNC(int(*sub_4E5F00)(), sub_4E5F00, 0x4e5f00);
-DECL_FUNC(void (__stdcall*refreshUnitVision)(CUnit *a1), refreshUnitVision, 0x4e5f30);
+DECL_FUNC(void (__stdcall*refreshUnitVision)(CUnit *unit), refreshUnitVision, 0x4e5f30);
 DECL_FUNC(int(*moveScreenToUnit)(), moveScreenToUnit, 0x4e6020);
 DECL_FUNC(CImage *(__fastcall*sub_4E6060)(CUnit *a1, char a2, char a3, char a4), sub_4E6060, 0x4e6060);
 void UpdateUnitDamageOverlay(CUnit *a1) {
@@ -21407,7 +21422,7 @@ char RefreshSprite(CSprite *a1, unsigned __int8 a2) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*sub_4EBC30)(CUnit *this_), sub_4EBC30, 0x4ebc30);
+DECL_FUNC(void (__thiscall*sub_4EBC30)(CUnit *unit), sub_4EBC30, 0x4ebc30);
 char sub_4EBDB0(CUnit *a1) {
     int address = 0x4ebdb0;
     char result_;
@@ -21493,7 +21508,7 @@ char ordersEntries(CUnit *a1, int ecx0) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*UpdateUnitOrderData)(CUnit *this_), UpdateUnitOrderData, 0x4ecf70);
+DECL_FUNC(void (__fastcall*UpdateUnitOrderData)(CUnit *this_), UpdateUnitOrderData, 0x4ecf70);
 DECL_FUNC(int(*UpdateUnits)(), UpdateUnits, 0x4ed000);
 DECL_FUNC(void (__cdecl*initializeDefaultPlayerNames)(), initializeDefaultPlayerNames, 0x4ed2b0);
 signed int gluLogin_CharacterCreate_CheckDuplicate(char *a1) {
@@ -21583,7 +21598,7 @@ DECL_FUNC(int (__stdcall*sub_4EDEF0)(int), sub_4EDEF0, 0x4edef0);
 DECL_FUNC(int (__stdcall*sub_4EDF20)(int csidl, const char *a2), sub_4EDF20, 0x4edf20);
 DECL_FUNC(void (__fastcall*destroyFileFindIndexer)(bool exit_code), destroyFileFindIndexer, 0x4edfe0);
 DECL_FUNC(void (__cdecl*FastIndexInit)(), FastIndexInit, 0x4ee070);
-DECL_FUNC(int (__stdcall*mouseOver_Loading_CB)(int), mouseOver_Loading_CB, 0x4ee0f0);
+DECL_FUNC(void (__stdcall*mouseOver_Loading_CB)(int a2), mouseOver_Loading_CB, 0x4ee0f0);
 DECL_FUNC(int(*SinglePlayerMeleeInitGame)(), SinglePlayerMeleeInitGame, 0x4ee110);
 DECL_FUNC(void (__cdecl*BWFXN_InitializePlayerConsole)(), BWFXN_InitializePlayerConsole, 0x4ee180);
 DECL_FUNC(int(*sub_4EE210)(), sub_4EE210, 0x4ee210);
@@ -25614,8 +25629,7 @@ int& isInGroundSplashProc = * ((decltype(&isInGroundSplashProc)) 0x64deb8);
 int& bullet_count = * ((decltype(&bullet_count)) 0x64debc);
 int& dword_64DEC0 = * ((decltype(&dword_64DEC0)) 0x64dec0);
 CBullet *& BulletNodeTable_FirstElement = * ((decltype(&BulletNodeTable_FirstElement)) 0x64dec4);
-int(&dword_64DEC8)[] = * ((decltype(&dword_64DEC8)) 0x64dec8);
-int(&dword_64DECC)[] = * ((decltype(&dword_64DECC)) 0x64decc);
+struc_64DEC8(&stru_64DEC8)[32] = * ((decltype(&stru_64DEC8)) 0x64dec8);
 int& dword_64EEC8 = * ((decltype(&dword_64EEC8)) 0x64eec8);
 CUnit *& bulletBounceMissileSource = * ((decltype(&bulletBounceMissileSource)) 0x64eecc);
 CUnit *& bulletBounceMissileTarget = * ((decltype(&bulletBounceMissileTarget)) 0x64eed0);
@@ -26685,7 +26699,7 @@ void (__cdecl *&dword_6D5E38)() = *((decltype(&dword_6D5E38)) 0x6d5e38);
 int& dword_6D5E3C = * ((decltype(&dword_6D5E3C)) 0x6d5e3c);
 dialog *(&EventDialogs)[19] = * ((decltype(&EventDialogs)) 0x6d5e40);
 activation_delays(&stru_6D5E8C)[4] = * ((decltype(&stru_6D5E8C)) 0x6d5e8c);
-int (__stdcall *&ButtonPressSound)(_DWORD) = *((decltype(&ButtonPressSound)) 0x6d5eac);
+void (__stdcall *&ButtonPressSound)(int) = *((decltype(&ButtonPressSound)) 0x6d5eac);
 dialog *& to_be_deleted_maybe = * ((decltype(&to_be_deleted_maybe)) 0x6d5eb0);
 int& dword_6D5EB4 = * ((decltype(&dword_6D5EB4)) 0x6d5eb4);
 int& dword_6D5EB8 = * ((decltype(&dword_6D5EB8)) 0x6d5eb8);
