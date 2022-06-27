@@ -1706,6 +1706,17 @@ void loadColorSettings_()
 
 FAIL_STUB_PATCH(loadColorSettings);
 
+void __fastcall sfxdata_cleanup_(bool exit_code)
+{
+	if (dword_5999B0)
+	{
+		SMemFree(dword_5999B0, "Starcraft\\SWAR\\lang\\snd.cpp", 1719, 0);
+	}
+	dword_5999B0 = 0;
+}
+
+FAIL_STUB_PATCH(sfxdata_cleanup);
+
 void audioVideoInit_()
 {
 	loadColorSettings_();
@@ -1719,7 +1730,7 @@ void audioVideoInit_()
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget_();
 	LoadSfx_();
-	AppAddExit_(sfxdata_cleanup);
+	AppAddExit_(sfxdata_cleanup_);
 	if (!byte_6D11D0)
 	{
 		AudioVideoInitializationError error;
