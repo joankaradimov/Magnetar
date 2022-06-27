@@ -8831,6 +8831,68 @@ void sub_4B9BF0_(dialog* dlg)
 
 FAIL_STUB_PATCH(sub_4B9BF0);
 
+int sub_4EE210_()
+{
+	DestroyMapData();
+	if (dword_6BEE8C)
+	{
+		SMemFree(dword_6BEE8C, "Starcraft\\SWAR\\lang\\Sai_path.cpp", 792, 0);
+		dword_6BEE8C = 0;
+	}
+	freeSaiPaths();
+	uselessIterateUnitsAndOrdersDatLoadTables();
+
+	if (pylon_power_mask)
+	{
+		SMemFree(pylon_power_mask, "Starcraft\\SWAR\\lang\\CUnitProtoss.cpp", 102, 0);
+		pylon_power_mask = NULL;
+	}
+
+	if (minimap_Dlg)
+	{
+		DestroyDialog(minimap_Dlg);
+		minimap_Dlg = NULL;
+	}
+
+	if (dword_59C1AC)
+	{
+		SMemFree(dword_59C1AC, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+		dword_59C1AC = NULL;
+	}
+
+	return 1;
+}
+
+FAIL_STUB_PATCH(sub_4EE210);
+
+void sub_4B8D90_(dialog* dlg)
+{
+	if (dword_5993AC)
+	{
+		if (dword_5999D0 == 1)
+		{
+			updateMinimapPreviewDisplayOffOn(0, dlg, 1);
+			dword_5999D0 = 0;
+		}
+		sub_4EE210_();
+		dword_5993AC = 0;
+		dword_5994DC = 0;
+	}
+	else if (minimap_Dlg)
+	{
+		DestroyDialog(minimap_Dlg);
+		minimap_Dlg = NULL;
+
+		if (dword_59C1AC)
+		{
+			SMemFree(dword_59C1AC, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+			dword_59C1AC = NULL;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4B8D90);
+
 bool IsCursorWithin(pt cursor, rect rectangle)
 {
 	return rectangle.left <= cursor.x && cursor.x <= rectangle.right && rectangle.top <= cursor.y && cursor.y <= rectangle.bottom;
@@ -9030,7 +9092,7 @@ bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 			return 1;
 		case EventUser::USER_DESTROY:
 			sub_4B8D70(dlg);
-			sub_4B8D90(dlg);
+			sub_4B8D90_(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
 			return gluChat_controlActivation_(LastControlID, dlg);
