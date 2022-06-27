@@ -5730,7 +5730,18 @@ void gluRdy_Portrait_InitChildren(dialog *a1) {
     }
 }
 DECL_FUNC(bool (__fastcall*gluRdy_Portrait)(dialog *dlg, dlgEvent *evt), gluRdy_Portrait, 0x44efe0);
-DECL_FUNC(int (__stdcall*LoadBriefingFrameImages)(int), LoadBriefingFrameImages, 0x44f020);
+void *LoadBriefingFrameImages(const char **a1, const char **a2) {
+    int address = 0x44f020;
+    void * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*loadPortdataDAT)(), loadPortdataDAT, 0x44f0f0);
 DECL_FUNC(int(*sub_44F4C0)(), sub_44F4C0, 0x44f4c0);
 DECL_FUNC(int (__thiscall*getHumansOnTeam)(int team), getHumansOnTeam, 0x44f4e0);
@@ -16425,7 +16436,7 @@ IDirectSoundBuffer *LoadSoundProc(char *a1, struct_5 *a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*LoadSfx)(), LoadSfx, 0x4bc9f0);
+DECL_FUNC(void (__cdecl*LoadSfx)(), LoadSfx, 0x4bc9f0);
 IDirectSoundBuffer *sub_4BCA30(SfxData a1, struct_5 *a2) {
     int address = 0x4bca30;
     IDirectSoundBuffer * result_;
@@ -21905,16 +21916,13 @@ void gluRdyZ_CustomCtrlID(dialog *dlg) {
         call address
     }
 }
-void *RdyZFrame(dialog *a1) {
+void RdyZFrame(dialog *a1) {
     int address = 0x4f70f0;
-    void * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*gluRdyZ_BINDLG_Loop)(dialog *dlg, struct dlgEvent *evt), gluRdyZ_BINDLG_Loop, 0x4f7150);
 DECL_FUNC(void(*loadMenu_gluRdyZ)(void), loadMenu_gluRdyZ, 0x4f71f0);
@@ -21926,16 +21934,13 @@ void gluRdyT_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-void *RdyTFrame(dialog *a1) {
+void RdyTFrame(dialog *a1) {
     int address = 0x4f7450;
-    void * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*gluRdyT_BINDLG_Loop)(dialog *dlg, dlgEvent *evt), gluRdyT_BINDLG_Loop, 0x4f74b0);
 DECL_FUNC(void(*loadMenu_gluRdyT)(void), loadMenu_gluRdyT, 0x4f7550);
@@ -21947,16 +21952,13 @@ void gluRdyP_CustomCtrlID(dialog *dlg) {
         call address
     }
 }
-void *rdyPFrame(dialog *a1) {
+void rdyPFrame(dialog *a1) {
     int address = 0x4f77b0;
-    void * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(bool (__fastcall*gluRdyP_BINDLG_Loop)(dialog *dlg, dlgEvent *evt), gluRdyP_BINDLG_Loop, 0x4f7810);
 DECL_FUNC(void(*loadMenu_gluRdyP)(void), loadMenu_gluRdyP, 0x4f78b0);
