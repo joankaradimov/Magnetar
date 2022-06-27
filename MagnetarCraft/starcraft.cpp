@@ -3900,6 +3900,90 @@ void FreeSAI_Paths_()
 
 FAIL_STUB_PATCH(FreeSAI_Paths);
 
+void DestroyMapData_()
+{
+	if (dword_6D5CD8)
+	{
+		SMemFree(dword_6D5CD8, "Starcraft\\SWAR\\lang\\repulse.cpp", 315, 0);
+		dword_6D5CD8 = NULL;
+	}
+	if (VR4Data)
+	{
+		SMemFree(VR4Data, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 470, 0);
+		VR4Data = NULL;
+	}
+	if (VX4Data)
+	{
+		SMemFree(VX4Data, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 471, 0);
+		VX4Data = NULL;
+	}
+	if (TileSetMap)
+	{
+		SMemFree(TileSetMap, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 472, 0);
+		TileSetMap = NULL;
+	}
+	if (MiniTileFlags)
+	{
+		SMemFree(MiniTileFlags, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 473, 0);
+		MiniTileFlags = NULL;
+	}
+	if (active_tiles)
+	{
+		SMemFree(active_tiles, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 475, 0);
+		active_tiles = NULL;
+	}
+	if (dword_5993A0)
+	{
+		SMemFree(dword_5993A0, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 476, 0);
+		dword_5993A0 = NULL;
+	}
+	if (GameTerrainCache)
+	{
+		SMemFree(GameTerrainCache, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 477, 0);
+		GameTerrainCache = NULL;
+	}
+	if (CellMap)
+	{
+		SMemFree(CellMap, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 478, 0);
+		CellMap = NULL;
+	}
+	if (MapTileArray)
+	{
+		SMemFree(MapTileArray, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 479, 0);
+		MapTileArray = NULL;
+	}
+	if (megatile_default_flags)
+	{
+		SMemFree(megatile_default_flags, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 480, 0);
+		megatile_default_flags = NULL;
+	}
+	ZergCreepArray = NULL;
+
+	DestroyFogSightData();
+	if (spkHandle)
+	{
+		SMemFree(spkHandle, "Starcraft\\SWAR\\lang\\scroll.cpp", 550, 0);
+		spkHandle = NULL;
+	}
+	TransDestroy();
+	if (!dword_5993AC && dword_6D125C)
+	{
+		SMemFree(dword_6D125C, "Starcraft\\SWAR\\lang\\light.cpp", 121, 0);
+		dword_6D125C = NULL;
+	}
+
+	for (int i = 1; i < _countof(colorShift); i++)
+	{
+		if (colorShift[i].data)
+		{
+			SMemFree(colorShift[i].data, "Starcraft\\SWAR\\lang\\light.cpp", 167, 0);
+			colorShift[i].data = NULL;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(DestroyMapData);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -3968,7 +4052,7 @@ void DestroyGame_()
 	}
 	SetInGameInputProcs();
 	destroyGameHUD();
-	DestroyMapData();
+	DestroyMapData_();
 	if (dword_6BEE8C)
 	{
 		SMemFree(dword_6BEE8C, "Starcraft\\SWAR\\lang\\Sai_path.cpp", 792, 0);
@@ -8833,7 +8917,7 @@ FAIL_STUB_PATCH(sub_4B9BF0);
 
 int sub_4EE210_()
 {
-	DestroyMapData();
+	DestroyMapData_();
 	if (dword_6BEE8C)
 	{
 		SMemFree(dword_6BEE8C, "Starcraft\\SWAR\\lang\\Sai_path.cpp", 792, 0);
