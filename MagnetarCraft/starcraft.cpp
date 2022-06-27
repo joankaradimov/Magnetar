@@ -736,7 +736,10 @@ int InitializeArchiveHandles_()
 	if (separator)
 		*separator = 0;
 	SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
-	!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &magnetar_mpq);
+	if (!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &magnetar_mpq))
+	{
+		SysWarn_FileNotFound("MagnetarDat.mpq", GetLastError());
+	}
 
 	InitializeFontKey_();
 	AppAddExit_(DestroyFontKey);
