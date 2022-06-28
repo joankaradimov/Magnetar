@@ -4149,26 +4149,26 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
-void UpdateImages_(MenuPosition a1)
+void UpdateImages_()
 {
 	CUnit* next_unit;
 	for (CUnit* unit = dword_63FF34; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		UpdateImage(unit, a1);
+		UpdateImage(unit);
 	}
 }
 
 FAIL_STUB_PATCH(UpdateImages);
 
-void updateThingys_(MenuPosition a1)
+void updateThingys_()
 {
 	CThingy* next_thingy;
 
 	for (CThingy* thingy = first_lone_sprite; thingy; thingy = next_thingy)
 	{
 		next_thingy = thingy->next;
-		sub_488020(thingy, a1);
+		sub_488020(thingy);
 	}
 
 	for (CThingy* thingy = dword_654868; thingy; thingy = next_thingy)
@@ -4180,7 +4180,7 @@ void updateThingys_(MenuPosition a1)
 
 FAIL_STUB_PATCH(updateThingys);
 
-void GameLoop_(MenuPosition a1)
+void GameLoop_()
 {
 	SetInGameLoop(1);
 	InitializeRandomizerInfo();
@@ -4197,8 +4197,8 @@ void GameLoop_(MenuPosition a1)
 	}
 	UpdateUnits();
 	ImageDrawingBulletDrawing();
-	UpdateImages_(a1);
-	updateThingys_(a1);
+	UpdateImages_();
+	updateThingys_();
 	SetInGameLoop(0);
 }
 
@@ -4355,11 +4355,11 @@ void updateHUDInformation_()
 
 FAIL_STUB_PATCH(updateHUDInformation);
 
-void DoGameLoop_(MenuPosition a1)
+void DoGameLoop_()
 {
-	GameLoop_(a1);
+	GameLoop_();
 	updateHUDInformation_();
-	GameLoop_(a1);
+	GameLoop_();
 	updateHUDInformation_();
 }
 
@@ -4472,7 +4472,7 @@ FAIL_STUB_PATCH(replayFrameComputation);
 
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 
-void GameLoop_State_(MenuPosition a2)
+void GameLoop_State_()
 {
 	DWORD v10 = GetTickCount() + 2000;
 	int v9 = 0;
@@ -4512,7 +4512,7 @@ void GameLoop_State_(MenuPosition a2)
 			{
 				++ElapsedTimeFrames;
 				++v9;
-				GameLoop_(a2);
+				GameLoop_();
 			}
 			SetInGameLoop(1);
 			BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
@@ -4563,14 +4563,14 @@ void GameLoop_Top_(MenuPosition a1)
 		if (v1 + dword_51CE8C[0] > 0xA)
 		{
 			dword_51CE8C[0] = -v1;
-			PollInput();
+			PollInput_();
 			v2 = true;
 		}
 		RecvMessage();
 		LeagueChatFilter();
 		if (v1 >= dword_51CE94)
 		{
-			GameLoop_State_(a1);
+			GameLoop_State_();
 			v2 = true;
 		}
 		updateHUDInformation_();
@@ -4600,7 +4600,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	GameState = 1;
 	TickCountSomething(0);
-	DoGameLoop_(a1);
+	DoGameLoop_();
 	RefreshLayer5();
 	setCursorType_(getCursorType());
 	cursorRefresh();

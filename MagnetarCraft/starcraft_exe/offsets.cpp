@@ -2598,7 +2598,7 @@ DECL_FUNC(int (__stdcall*sub_422600)(int, char), sub_422600, 0x422600);
 DECL_FUNC(int (__stdcall*sub_4228E0)(int), sub_4228E0, 0x4228e0);
 DECL_FUNC(int(*nullsub_9)(), nullsub_9, 0x422a40);
 DECL_FUNC(int(*sub_422A50)(), sub_422A50, 0x422a50);
-signed int sub_422A90(int a1, Position *a2) {
+signed int sub_422A90(struct_a1_1 *a1, Position *a2) {
     int address = 0x422a90;
     signed result_;
     __asm {
@@ -5730,17 +5730,14 @@ void gluRdy_Portrait_InitChildren(dialog *a1) {
     }
 }
 DECL_FUNC(bool (__fastcall*gluRdy_Portrait)(dialog *dlg, dlgEvent *evt), gluRdy_Portrait, 0x44efe0);
-void *LoadBriefingFrameImages(const char **a1, const char **a2) {
+void LoadBriefingFrameImages(const char **a1, const char **a2) {
     int address = 0x44f020;
-    void * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*loadPortdataDAT)(), loadPortdataDAT, 0x44f0f0);
 DECL_FUNC(int(*sub_44F4C0)(), sub_44F4C0, 0x44f4c0);
@@ -11322,13 +11319,11 @@ DECL_FUNC(int(*sub_487D90)(), sub_487D90, 0x487d90);
 DECL_FUNC(int (__fastcall*readThingyArray)(int a1, int a2, FILE *a3, CThingy *a4, int a5), readThingyArray, 0x487db0);
 DECL_FUNC(int (__stdcall*writeThingys)(FILE *a1, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
 DECL_FUNC(int (__stdcall*sub_487FD0)(__int16), sub_487FD0, 0x487fd0);
-void sub_488020(CThingy *a1, MenuPosition a2) {
+void sub_488020(CThingy *a1) {
     int address = 0x488020;
     __asm {
-        xor ebx, ebx
         xor edi, edi
         mov edi, a1
-        mov ebx, a2
         call address
     }
 }
@@ -11378,14 +11373,7 @@ CThingy *sub_488350(CThingy *a1) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_488410)(__int16 a1, CSprite *a2), sub_488410, 0x488410);
-void updateThingys(MenuPosition a1) {
-    int address = 0x488510;
-    __asm {
-        xor ebx, ebx
-        mov ebx, a1
-        call address
-    }
-}
+DECL_FUNC(void(*updateThingys)(), updateThingys, 0x488510);
 DECL_FUNC(void (__cdecl*InitializeThingyArray)(), InitializeThingyArray, 0x488550);
 void GroundAttackInit(__int16 a1, __int16 a2) {
     int address = 0x488660;
@@ -12882,24 +12870,15 @@ signed int sub_4961B0(CUnit *a1) {
     }
     return result_;
 }
-void UpdateImage(CUnit *a1, int a2) {
+void UpdateImage(CUnit *a1) {
     int address = 0x4961f0;
     __asm {
-        xor ebx, ebx
         xor edi, edi
         mov edi, a1
-        mov ebx, a2
         call address
     }
 }
-void UpdateImages(int a1) {
-    int address = 0x496330;
-    __asm {
-        xor ebx, ebx
-        mov ebx, a1
-        call address
-    }
-}
+DECL_FUNC(void(*UpdateImages)(), UpdateImages, 0x496330);
 CSprite *sub_496360(int flingyID, __int16 a2, int position_y, CUnit *a4, char a5, char a6) {
     int address = 0x496360;
     CSprite * result_;
@@ -18812,14 +18791,7 @@ int GameLoop(MenuPosition a1) {
     }
     return result_;
 }
-void DoGameLoop(MenuPosition a1) {
-    int address = 0x4d9530;
-    __asm {
-        xor ebx, ebx
-        mov ebx, a1
-        call address
-    }
-}
+DECL_FUNC(void(*DoGameLoop)(), DoGameLoop, 0x4d9530);
 DECL_FUNC(signed int (__thiscall*GameLoopWaitSendTurn)(int *this_), GameLoopWaitSendTurn, 0x4d9550);
 int GameLoop_State(void *a1, MenuPosition a2) {
     int address = 0x4d9670;
@@ -25607,13 +25579,9 @@ int(&dword_68F528)[] = * ((decltype(&dword_68F528)) 0x68f528);
 int& dword_68F52C = * ((decltype(&dword_68F52C)) 0x68f52c);
 int& dword_68F530 = * ((decltype(&dword_68F530)) 0x68f530);
 int& dword_68F534 = * ((decltype(&dword_68F534)) 0x68f534);
-__int16(&word_68F538)[] = * ((decltype(&word_68F538)) 0x68f538);
-__int16(&word_68F53A)[] = * ((decltype(&word_68F53A)) 0x68f53a);
-int(&dword_68F53C)[] = * ((decltype(&dword_68F53C)) 0x68f53c);
+Bitmap(&stru_68F538)[4] = * ((decltype(&stru_68F538)) 0x68f538);
 void *& dword_68F558 = * ((decltype(&dword_68F558)) 0x68f558);
-__int16(&word_68F55C)[] = * ((decltype(&word_68F55C)) 0x68f55c);
-__int16(&word_68F55E)[] = * ((decltype(&word_68F55E)) 0x68f55e);
-int(&dword_68F560)[] = * ((decltype(&dword_68F560)) 0x68f560);
+Bitmap(&stru_68F55C)[4] = * ((decltype(&stru_68F55C)) 0x68f55c);
 CheatHashRelated(&stru_68F580)[6] = * ((decltype(&stru_68F580)) 0x68f580);
 LPARAM& dword_68F6B8 = * ((decltype(&dword_68F6B8)) 0x68f6b8);
 void *& dword_68F6BC = * ((decltype(&dword_68F6BC)) 0x68f6bc);

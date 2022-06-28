@@ -5369,10 +5369,8 @@ struct __declspec(align(4)) struct_a1_1
   _BYTE byte155;
   _BYTE byte156;
   _BYTE byte157;
-  _WORD word158;
-  _WORD word15A;
-  _WORD word15C;
-  _WORD word15E;
+  pt word158;
+  pt word15C;
   _WORD region1;
   _WORD region2;
   _WORD word164;
