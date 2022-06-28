@@ -4874,6 +4874,34 @@ void colorCycleInterval_()
 
 FAIL_STUB_PATCH(colorCycleInterval);
 
+void updateSelectedUnitData_()
+{
+	memcpy(ClientSelectionGroup, PlayerSelection, sizeof(ClientSelectionGroup));
+	ClientSelectionCount = 0;
+	ActivePortraitUnit = NULL;
+
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i])
+		{
+			if (compareUnitRank(ClientSelectionGroup[i], ActivePortraitUnit))
+			{
+				ActivePortraitUnit = ClientSelectionGroup[i];
+			}
+			++ClientSelectionCount;
+		}
+	}
+
+	if (ClientSelectionCount == 1)
+	{
+		ClientSelectionGroup[0] = ActivePortraitUnit;
+		memset(&ClientSelectionGroup[1], 0, 0x2Cu);
+	}
+	updateButtonSet();
+}
+
+FAIL_STUB_PATCH(updateSelectedUnitData);
+
 void updateCurrentButtonset_()
 {
 	u16 v0 = word_68C1C8;
@@ -5261,7 +5289,7 @@ void sub_4C3B10_()
 {
 	if (byte_59723C)
 	{
-		updateSelectedUnitData();
+		updateSelectedUnitData_();
 		byte_59723C = 0;
 	}
 	updateSelectedUnitPortrait();
