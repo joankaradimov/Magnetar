@@ -8483,6 +8483,69 @@ void gluRdyZ_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
 
+void rdyPFrame_()
+{
+	const char* v1[] =
+	{
+		"glue\\ReadyP\\PFrameH1.pcx",
+		"glue\\ReadyP\\PFrameH2.pcx",
+		"glue\\ReadyP\\PFrameH3.pcx",
+		"glue\\ReadyP\\PFrameH4.pcx",
+	};
+	const char* v2[] =
+	{
+		"glue\\ReadyP\\PFrame1.pcx",
+		"glue\\ReadyP\\PFrame2.pcx",
+		"glue\\ReadyP\\PFrame3.pcx",
+		"glue\\ReadyP\\PFrame4.pcx",
+	};
+	LoadBriefingFrameImages(v1, v2);
+}
+
+FAIL_STUB_PATCH(rdyPFrame);
+
+void RdyTFrame_()
+{
+	const char* v1[] =
+	{
+		"glue\\ReadyT\\TFrameH1.pcx",
+		"glue\\ReadyT\\TFrameH2.pcx",
+		"glue\\ReadyT\\TFrameH3.pcx",
+		"glue\\ReadyT\\TFrameH4.pcx",
+	};
+	const char* v2[] =
+	{
+		"glue\\ReadyT\\TFrame1.pcx",
+		"glue\\ReadyT\\TFrame2.pcx",
+		"glue\\ReadyT\\TFrame3.pcx",
+		"glue\\ReadyT\\TFrame4.pcx",
+	};
+	LoadBriefingFrameImages(v1, v2);
+}
+
+FAIL_STUB_PATCH(RdyTFrame);
+
+void RdyZFrame_()
+{
+	const char* v1[] =
+	{
+		"glue\\ReadyZ\\ZFrameH1.pcx",
+		"glue\\ReadyZ\\ZFrameH2.pcx",
+		"glue\\ReadyZ\\ZFrameH3.pcx",
+		"glue\\ReadyZ\\ZFrameH4.pcx",
+	};
+	const char* v2[] =
+	{
+		"glue\\ReadyZ\\ZFrame1.pcx",
+		"glue\\ReadyZ\\ZFrame2.pcx",
+		"glue\\ReadyZ\\ZFrame3.pcx",
+		"glue\\ReadyZ\\ZFrame4.pcx",
+	};
+	LoadBriefingFrameImages(v1, v2);
+}
+
+FAIL_STUB_PATCH(RdyZFrame);
+
 bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -8513,16 +8576,17 @@ bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 			}
 			break;
 		case 0x405:
+			sub_46D220(dlg);
 			switch (glGluesMode)
 			{
 			case MenuPosition::GLUE_READY_P:
-				rdyPFrame(dlg);
+				rdyPFrame_();
 				break;
 			case MenuPosition::GLUE_READY_T:
-				RdyTFrame(dlg);
+				RdyTFrame_();
 				break;
 			case MenuPosition::GLUE_READY_Z:
-				RdyZFrame(dlg);
+				RdyZFrame_();
 				break;
 			}
 		}
