@@ -8002,6 +8002,27 @@ void sub_4CC990_()
 
 FUNCTION_PATCH(sub_4CC990, sub_4CC990_);
 
+void init_gluesounds_()
+{
+	if (!dword_6D6364)
+	{
+		word_6DC2AC[0] = 165;
+		word_6DC2AC[1] = 166;
+		word_6DC2AC[2] = 167;
+		word_6DC2AC[3] = 168;
+		word_6DC2AC[4] = 169;
+		word_6DC2AC[5] = 170;
+		word_6DC2AC[6] = 171;
+		word_6DC2AC[7] = 172;
+		word_6DC2AC[8] = 173;
+		dword_6D6364 = 1;
+	}
+	playsound_init_UI(word_6DC2AC);
+	ButtonPressSound = buttonMouseOver;
+}
+
+FAIL_STUB_PATCH(init_gluesounds);
+
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 {
 	sub_4195E0();
@@ -11508,7 +11529,7 @@ int SwitchMenu_()
 	loadCursor();
 	loadTFontPcx();
 	loadDlgGrp();
-	init_gluesounds();
+	init_gluesounds_();
 	if (gwGameMode == GAME_WIN)
 	{
 		gwGameMode = GAME_GLUES;
