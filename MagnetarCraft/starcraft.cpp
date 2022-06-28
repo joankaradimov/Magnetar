@@ -4149,6 +4149,37 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+void UpdateImages_(MenuPosition a1)
+{
+	CUnit* next_unit;
+	for (CUnit* unit = dword_63FF34; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		UpdateImage(unit, a1);
+	}
+}
+
+FAIL_STUB_PATCH(UpdateImages);
+
+void updateThingys_(MenuPosition a1)
+{
+	CThingy* next_thingy;
+
+	for (CThingy* thingy = first_lone_sprite; thingy; thingy = next_thingy)
+	{
+		next_thingy = thingy->next;
+		sub_488020(thingy, a1);
+	}
+
+	for (CThingy* thingy = dword_654868; thingy; thingy = next_thingy)
+	{
+		next_thingy = thingy->next;
+		sub_488350(thingy);
+	}
+}
+
+FAIL_STUB_PATCH(updateThingys);
+
 void GameLoop_(MenuPosition a1)
 {
 	SetInGameLoop(1);
@@ -4166,8 +4197,8 @@ void GameLoop_(MenuPosition a1)
 	}
 	UpdateUnits();
 	ImageDrawingBulletDrawing();
-	UpdateImages(a1);
-	updateThingys(a1);
+	UpdateImages_(a1);
+	updateThingys_(a1);
 	SetInGameLoop(0);
 }
 
