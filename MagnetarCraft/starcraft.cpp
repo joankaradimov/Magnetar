@@ -5659,7 +5659,7 @@ FAIL_STUB_PATCH(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
 
-// TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
+// TODO: reimplement sub_422A90, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
@@ -5681,6 +5681,46 @@ u16 SAI_GetRegionIdFromPx__(__int16 x)
 }
 
 FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
+
+int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
+{
+	u16 x = std::clamp(a1->unk_posintion3.x, SAIPathing->regions[a2].rgnBox.left, SAIPathing->regions[a2].rgnBox.right) / 32;
+	u16 y = std::clamp(a1->unk_posintion3.y, SAIPathing->regions[a2].rgnBox.top, SAIPathing->regions[a2].rgnBox.bottom) / 32;
+
+	for (int v19 = 1; v19 < 16; v19 += 2)
+	{
+		int v12 = 0;
+		do
+		{
+			for (int v20 = 0; v20 < v19; v20++)
+			{
+				if (x < map_size.width && y < map_size.height && SAI_GetRegionIdFromPx_(32 * y, 32 * x) == (_WORD)a2)
+				{
+					a1->unk_posintion3.x = 32 * x + 16;
+					a1->unk_posintion3.y = 32 * y + 16;
+					a1->byte1F = 1;
+					return 1;
+				}
+				x += word_519F54[v12];
+				y += word_519F5C[v12];
+			}
+
+			x -= word_519F54[v12];
+			y -= word_519F5C[v12];
+			v12++;
+		} while (v12 < 4);
+		--x;
+		--y;
+	}
+
+	a1->unk_posintion3.x = SAIPathing->regions[a2].rgnCenterX >> 8;
+	a1->unk_posintion3.y = SAIPathing->regions[a2].rgnCenterY >> 8;
+	a1->byte1F = 1;
+
+	return 1;
+}
+
+FUNCTION_PATCH(sub_422FA0, sub_422FA0_);
 
 u16 GetRegionIdAtPosEx_(int x, int y)
 {
