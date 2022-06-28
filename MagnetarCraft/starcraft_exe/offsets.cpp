@@ -701,7 +701,7 @@ DECL_FUNC(void (__cdecl*__RTC_Terminate)(), __RTC_Terminate, 0x405967);
 DECL_FUNC(int(*sub_405D74)(), sub_405D74, 0x405d74);
 DECL_FUNC(void(*sub_406504)(), sub_406504, 0x406504);
 DECL_FUNC(int(*sub_40651C)(), sub_40651C, 0x40651c);
-DECL_FUNC(int(*renderTerrainGRPToCache)(), renderTerrainGRPToCache, 0x40aae0);
+DECL_FUNC(int (__fastcall*renderTerrainGRPToCache)(grpFrame *a1, int a2), renderTerrainGRPToCache, 0x40aae0);
 DECL_FUNC(char (__fastcall*imageRenderFxn0_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn0_0, 0x40abbe);
 DECL_FUNC(int (__stdcall*sub_40AD04)(int, int, int), sub_40AD04, 0x40ad04);
 DECL_FUNC(int (__stdcall*sub_40AE63)(grpFrame *, int, int), sub_40AE63, 0x40ae63);
@@ -13622,9 +13622,8 @@ void PlaySoundFromDirect(CUnit *a1, SfxData sfx_id) {
 DECL_FUNC(int(*sub_49B690)(), sub_49B690, 0x49b690);
 DECL_FUNC(int(*setAlliance)(), setAlliance, 0x49b870);
 DECL_FUNC(int (__stdcall*sub_49B8D0)(int, int), sub_49B8D0, 0x49b8d0);
-u8 drawMegatileImageData(int megatile, int framebuf_position, int x, int y) {
+void drawMegatileImageData(int megatile, int framebuf_position, int x, int y) {
     int address = 0x49b9f0;
-    u8 result_;
     __asm {
         xor ebx, ebx
         xor edi, edi
@@ -13633,15 +13632,12 @@ u8 drawMegatileImageData(int megatile, int framebuf_position, int x, int y) {
         push dword ptr y
         push dword ptr x
         call address
-        mov result_, al
+        add esp, 8
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_49BB50)(), sub_49BB50, 0x49bb50);
 DECL_FUNC(int(*sub_49BB90)(), sub_49BB90, 0x49bb90);
 DECL_FUNC(int (__stdcall*sub_49BC20)(int x, int y, int a3, int a4), sub_49BC20, 0x49bc20);
-DECL_FUNC(int (__stdcall*UpdateTileCacheOnXScreenMovement)(int, int), UpdateTileCacheOnXScreenMovement, 0x49bd40);
-DECL_FUNC(int (__stdcall*UpdateTileCacheOnYScreenMovement)(int, int), UpdateTileCacheOnYScreenMovement, 0x49be20);
 DECL_FUNC(int(*sub_49BF20)(), sub_49BF20, 0x49bf20);
 DECL_FUNC(int(*sub_49BF70)(), sub_49BF70, 0x49bf70);
 DECL_FUNC(int(*sub_49BFA0)(), sub_49BFA0, 0x49bfa0);
@@ -13706,13 +13702,13 @@ DECL_FUNC(int(*sub_49C900)(), sub_49C900, 0x49c900);
 DECL_FUNC(int(*sub_49C930)(), sub_49C930, 0x49c930);
 DECL_FUNC(int(*sub_49C950)(), sub_49C950, 0x49c950);
 DECL_FUNC(int(*sub_49C980)(), sub_49C980, 0x49c980);
-u16 SAI_GetRegionIdFromPx(__int16 x, __int16 y) {
+u16 SAI_GetRegionIdFromPx(__int16 y, __int16 x) {
     int address = 0x49c9a0;
     u16 result_;
     __asm {
         xor eax, eax
-        mov ax, x
-        push dword ptr y
+        mov ax, y
+        push dword ptr x
         call address
         mov result_, ax
     }
