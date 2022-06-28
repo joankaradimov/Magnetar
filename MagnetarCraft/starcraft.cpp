@@ -5659,7 +5659,7 @@ FAIL_STUB_PATCH(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
 
-// TODO: reimplement sub_422A90, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
+// TODO: reimplement SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
@@ -5753,6 +5753,82 @@ u16 GetRegionIdAtPosEx__()
 }
 
 FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__);
+
+int sub_422A90_(struct_a1_1* a1, Position* a2)
+{
+	int v18 = 1;
+	while (2)
+	{
+		int v19 = 0;
+		do
+		{
+			int v16 = 0;
+			while (1)
+			{
+				u16 v5 = a2->x + a1->word158.x;
+				u16 v6 = a2->y + a1->word158.y;
+				u16 v7 = a2->y + a1->word15C.y;
+				u16 v8 = a2->x + a1->word15C.x;
+				if (v5 < map_width_pixels && v6 < map_height_pixels && v8 < map_width_pixels && v7 < map_height_pixels)
+				{
+					int v9 = 1;
+					int v10 = v7 / 32 - v6 / 32;
+					int i = 0;
+					while (v10 >= 0)
+					{
+						for (int v11 = v8 / 32 - v5 / 32; v11 >= 0; --v11)
+						{
+							u16 region_id = SAIPathing->mapTileRegionId[v6 / 32 + i][v5 / 32 + v11];
+							if (region_id < 0x2000u && SAIPathing->regions[region_id].accessabilityFlags == SAF_Inaccessible)
+							{
+								v9 = 0;
+								break;
+							}
+						}
+						--v10;
+						i++;
+						if (v9 == 0)
+						{
+							goto LABEL_19;
+						}
+					}
+					return 1;
+				}
+			LABEL_19:
+				++v16;
+				a2->x += 8 * word_519F54[v19];
+				a2->y += 8 * word_519F5C[v19];
+				if (v16 >= v18)
+				{
+					break;
+				}
+			}
+
+			a2->x += -8 * word_519F54[v19];
+			a2->y += -8 * word_519F5C[v19];
+			v19++;
+		} while (v19 < 4);
+
+		a2->x -= 8;
+		a2->y -= 8;
+		v18 += 2;
+		if (v18 >= 10)
+		{
+			return 0;
+		}
+	}
+}
+
+int __stdcall sub_422A90__(Position* a2)
+{
+	struct_a1_1* a1;
+
+	__asm mov a1, eax
+
+	return sub_422A90_(a1, a2);
+}
+
+FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
