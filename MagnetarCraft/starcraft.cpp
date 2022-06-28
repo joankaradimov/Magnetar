@@ -1752,6 +1752,21 @@ void InitializeGameLayer_()
 
 FAIL_STUB_PATCH(InitializeGameLayer);
 
+void __cdecl refreshSelectionScreen_()
+{
+	BWFXN_RefreshTarget(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
+	if (ScreenLayers[1].buffers)
+	{
+		ScreenLayers[1].bits |= 1;
+		BWFXN_RefreshTarget(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
+	}
+	ScreenLayers[1].left = GAME_AREA_WIDTH;
+	ScreenLayers[1].top = GAME_AREA_HEIGHT;
+	dword_655C48 = 0;
+}
+
+FUNCTION_PATCH(refreshSelectionScreen, refreshSelectionScreen_);
+
 int DSoundCreate_(AudioVideoInitializationError* a1)
 {
 	HRESULT v4 = DirectSoundCreate(0, &direct_sound, 0);
@@ -2114,7 +2129,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	}
 	hAccTable = dword_5968F8;
 	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
-	refreshSelectionScreen();
+	refreshSelectionScreen_();
 
 	GameMenuDlg = (dialog*)fastFileRead(0, 0, a1, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (GameMenuDlg)
@@ -2903,12 +2918,12 @@ void minimap_dlg_Activate_(dialog* dlg)
 		drawShowHideTerrainContextHelp(dlg);
 		break;
 	case 3:
-		refreshSelectionScreen();
+		refreshSelectionScreen_();
 		byte_63FF70 = byte_581D60;
 		BWFXN_OpenGameDialog("rez\\msgfltr.bin", msgfltr_Main);
 		break;
 	case 4:
-		refreshSelectionScreen();
+		refreshSelectionScreen_();
 		MinimapControl_ShowAllianceDialog();
 		break;
 	}
@@ -4488,7 +4503,7 @@ void destroyGameHUD_()
 	free_cmdIcons_();
 	clearSelectionPortrait_();
 	sub_4F4CF0();
-	refreshSelectionScreen();
+	refreshSelectionScreen_();
 
 	if (StatTxtTbl.buffer)
 	{
@@ -5902,7 +5917,7 @@ bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 		case EventUser::USER_NEXT:
 			if (dlg == ctrl_under_mouse)
 			{
-				refreshSelectionScreen();
+				refreshSelectionScreen_();
 				ctrl_under_mouse = 0;
 			}
 			break;
@@ -5947,7 +5962,7 @@ bool __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_NEXT:
 			if (dlg == ctrl_under_mouse)
 			{
-				refreshSelectionScreen();
+				refreshSelectionScreen_();
 				ctrl_under_mouse = 0;
 			}
 			break;
