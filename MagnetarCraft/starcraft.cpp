@@ -5625,9 +5625,9 @@ FAIL_STUB_PATCH(CopySectionData);
 
 // TODO: reimplement sub_422A90, sub_422FA0, SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
-u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
+u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / TILE_WIDTH][y / TILE_HEIGHT];
+	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_WIDTH][x / TILE_HEIGHT];
 	if (region_id >= 0x2000u)
 	{
 		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
@@ -5635,13 +5635,13 @@ u16 SAI_GetRegionIdFromPx_(__int16 x, __int16 y)
 	return region_id;
 }
 
-u16 SAI_GetRegionIdFromPx__(__int16 y)
+u16 SAI_GetRegionIdFromPx__(__int16 x)
 {
-	__int16 x;
+	__int16 y;
 
-	__asm mov x, ax
+	__asm mov y, ax
 
-	return SAI_GetRegionIdFromPx_(x, y);
+	return SAI_GetRegionIdFromPx_(y, x);
 }
 
 FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
