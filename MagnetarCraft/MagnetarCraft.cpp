@@ -337,8 +337,6 @@ std::string LocateStarCraft()
 	return path;
 }
 
-const char* CONFIG_FILE = "MagnetarCraft.yml";
-
 // Patch clib functions that use FILE
 FUNCTION_PATCH((void*)0x4116F5, _fread_nolock);
 FUNCTION_PATCH((void*)0x4117DE, fread);
@@ -359,13 +357,27 @@ FUNCTION_PATCH((void*)0x40DE57, fflush);
 FUNCTION_PATCH((void*)0x40DF5A, flushall);
 FUNCTION_PATCH((void*)0x40EBA2, fcloseall);
 
+std::filesystem::path GetExecutablePath()
+{
+	TCHAR buffer[MAX_PATH];
+	GetModuleFileName(NULL, buffer, sizeof(buffer));
+
+	return buffer;
+}
+
+std::filesystem::path GetExecutableFilename()
+{
+	return GetExecutablePath().filename();
+}
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
 {
 	bool starcraft_root_manually_selected = false;
+	std::string config_filename = GetExecutableFilename().replace_extension("yml").generic_string();
 	YAML::Node config;
 	try
 	{
-		config = YAML::LoadFile(CONFIG_FILE);
+		config = YAML::LoadFile(config_filename);
 	}
 	catch (const YAML::BadFile& _exception)
 	{
@@ -417,7 +429,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	}
 
 	config["starcraft-root"] = starcraft_root;
-	std::ofstream(CONFIG_FILE) << config;
+	std::ofstream(config_filename) << config;
 
 	init_stacraftexe_clib();
 	BasePatch::apply_pending_patches();
