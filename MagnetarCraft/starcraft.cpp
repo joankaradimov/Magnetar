@@ -1310,6 +1310,42 @@ void BWFXN_updateImageData_()
 
 FAIL_STUB_PATCH(BWFXN_updateImageData);
 
+void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
+{
+	for (int i = 0; i < 4; i++)
+	{
+		for (int j = 0; j < 4; j++)
+		{
+			drawMinitileImageData(framebuf_position + 8 * 672 * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j], megatile);
+		}
+	}
+
+	if (megatile & 0x8000)
+	{
+		u8 v20 = CreepEdgeData[y * dword_6D0F08 + x];
+		if (v20)
+		{
+			renderTerrainGRPToCache((grpFrame*)((char*)TerrainGraphics + 8 * v20 - 2), framebuf_position);
+		}
+	}
+}
+
+void __stdcall drawMegatileImageData__(int x, int y)
+{
+	int megatile;
+	int framebuf_position;
+
+	__asm
+	{
+		mov megatile, ebx
+		mov framebuf_position, edi
+	}
+
+	drawMegatileImageData_(megatile, framebuf_position, x, y);
+}
+
+FUNCTION_PATCH((void*)0x49B9F0, drawMegatileImageData__);
+
 void BWFXN_drawMapTiles_()
 {
 	int v2 = MoveToTile.y;
