@@ -3887,6 +3887,43 @@ int SinglePlayerMeleeInitGame_()
 
 FAIL_STUB_PATCH(SinglePlayerMeleeInitGame);
 
+void playsound_init_UI_(u16* a1)
+{
+	if (direct_sound == NULL)
+	{
+		return;
+	}
+
+	if (a1)
+	{
+		for (int i = 0; a1[i]; ++i)
+		{
+			SfxData v2 = (SfxData)a1[i];
+
+			if (v2 < SFX_MAX && registry_options.Sfx && (SFXData_Flags2[v2] & 1))
+			{
+				sub_4BCA80(v2);
+			}
+		}
+	}
+	else if (dword_6D6388)
+	{
+		for (int i = 0; dword_6D6388[i]; ++i)
+		{
+			SfxData v2 = (SfxData)dword_6D6388[i];
+
+			if (v2 < SFX_MAX)
+			{
+				sub_4BB8E0(v2);
+			}
+		}
+	}
+
+	dword_6D6388 = a1;
+}
+
+FAIL_STUB_PATCH(playsound_init_UI);
+
 int COMMON_SFX_COUNT = 113;
 int TERRAN_SFX_COUNT = 299;
 int PROTOSS_SFX_COUNT = 282;
@@ -3931,7 +3968,7 @@ void LoadRaceSFX_(char a1)
 		dword_6D5BDC = 1;
 	}
 
-	playsound_init_UI(a1 ? off_513628[consoleIndex] : 0);
+	playsound_init_UI_(a1 ? off_513628[consoleIndex] : 0);
 }
 
 FAIL_STUB_PATCH(LoadRaceSFX);
@@ -8045,7 +8082,7 @@ void init_gluesounds_()
 		word_6DC2AC[8] = 173;
 		dword_6D6364 = 1;
 	}
-	playsound_init_UI(word_6DC2AC);
+	playsound_init_UI_(word_6DC2AC);
 	ButtonPressSound = buttonMouseOver;
 }
 
@@ -11715,7 +11752,7 @@ LABEL_28:
 		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
-	playsound_init_UI(0);
+	playsound_init_UI_(0);
 	if (dword_51C60C)
 		SMemFree(dword_51C60C, "Starcraft\\SWAR\\lang\\glues.cpp", 338, 0);
 	BWFXN_GameEndTarget();
