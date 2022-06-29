@@ -18,7 +18,23 @@ Tileset graphics
 </PAGE>
 
 
-</COMMENT Add a "Thanks to" section >
+</SCREENRIGHT>
+Thanks To
+
+heinermann
+Pr0nogo
+FaRTy1billion
+Veeq7
+</PAGE>
+
+
+</SCREENRIGHT>
+Thanks To
+
+staredit.net
+The No-Frauds Club
+camsys.org
+</PAGE>
 
 
 </SCREENCENTER>
