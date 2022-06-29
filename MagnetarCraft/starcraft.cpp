@@ -3887,6 +3887,39 @@ int SinglePlayerMeleeInitGame_()
 
 FAIL_STUB_PATCH(SinglePlayerMeleeInitGame);
 
+void sub_4BCA80_(SfxData a1)
+{
+	if (direct_sound && registry_options.Sfx && a1 < SFX_MAX)
+	{
+		struct_5* v1 = &stru_6D1270[a1];
+		v1->anonymous_1 = 81 - GetTickCount();
+		if (v1->sound_buffer)
+		{
+			SFXData_Flags2[a1] |= 4;
+		}
+		else
+		{
+			v1->sound_buffer = sub_4BCA30(a1, &stru_6D1270[a1]);
+			if (v1->sound_buffer)
+			{
+				v1->anonymous_2 = sub_4BB890(v1);
+
+				if ((SFXData_Flags2[a1] & 1) == 0)
+				{
+					dword_6D59FC += v1->sound_buffer_bytes;
+				}
+				SFXData_Flags2[a1] |= 4;
+				if (dword_6D59FC > value)
+				{
+					sub_4BBC00(dword_6D59FC - value);
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4BCA80);
+
 void playsound_init_UI_(u16* a1)
 {
 	if (direct_sound == NULL)
@@ -3902,7 +3935,7 @@ void playsound_init_UI_(u16* a1)
 
 			if (v2 < SFX_MAX && registry_options.Sfx && (SFXData_Flags2[v2] & 1))
 			{
-				sub_4BCA80(v2);
+				sub_4BCA80_(v2);
 			}
 		}
 	}
@@ -11544,7 +11577,7 @@ void loadMenu_gluScore_()
 		v13[v14] = *v13;
 		++v13;
 	} while (v15);
-	sub_4BCA80(SFX_glue_scorefill);
+	sub_4BCA80_(SFX_glue_scorefill);
 
 	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
 
