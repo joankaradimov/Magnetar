@@ -5659,7 +5659,7 @@ FAIL_STUB_PATCH(CopySectionData);
 
 #define MAX_MAP_DIMENTION 256
 
-// TODO: reimplement SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
+// TODO: reimplement SAI_PathCreate_Sub3_0 (0x0483EBA) and SAI_PathCreate_Sub3_4 (0x483260) for pathfinding on map sizes > 256x256
 
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
