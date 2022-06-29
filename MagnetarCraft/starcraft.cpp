@@ -5722,12 +5722,12 @@ int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 
 FUNCTION_PATCH(sub_422FA0, sub_422FA0_);
 
-u16 GetRegionIdAtPosEx_(int x, int y)
+u16 GetRegionIdAtPosEx_(int y, int x)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[x / TILE_WIDTH][y / TILE_HEIGHT];
+	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_WIDTH][x / TILE_HEIGHT];
 	if (region_id >= 0x2000u)
 	{
-		if ((1 << (((y / 8) & 3) + 4 * ((x / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
+		if ((1 << (((x / 8) & 3) + 4 * ((y / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
 		{
 			return SAIPathing->splitTiles[region_id - 0x2000].rgn2;
 		}
@@ -5745,11 +5745,11 @@ u16 GetRegionIdAtPosEx__()
 
 	__asm
 	{
-		mov x, ecx
-		mov y, edi
+		mov x, edi
+		mov y, ecx
 	}
 
-	return GetRegionIdAtPosEx_(x, y);
+	return GetRegionIdAtPosEx_(y, x);
 }
 
 FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__);
