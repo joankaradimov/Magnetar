@@ -5830,6 +5830,46 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
+void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
+{
+	a1->globalBuffer_ptr = a1->globalBuffer;
+
+	for (int i = 0; i < a1->regionCount; i++)
+	{
+		SaiRegion* sai_region = &a1->regions[i];
+		if (sai_region->tileCount)
+		{
+			SAI_PathCreate_Sub3_1_1_0(a1, i, sai_region);
+			SAI_PathCreate_Sub3_1_1_1(a1, sai_region);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
+
+void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
+{
+	a2->globalBuffer_ptr = a2->globalBuffer;
+	SAI_PathCreate_Sub3_1_0(a2);
+	SAI_PathCreate_Sub3_1_1_(a2);
+
+	for (int i = a1; i < a2->regionCount; i++)
+	{
+		if (a2->regions[i].rgnCenterX < 256)
+		{
+			a2->regions[i].rgnCenterX = (a2->regions[i].rgnCenterX << 13) + 4096;
+		}
+		if (a2->regions[i].rgnCenterY < 256)
+		{
+			a2->regions[i].rgnCenterY = (a2->regions[i].rgnCenterY << 13) + 4096;
+		}
+	}
+
+	SAI_CreateRegionGroupings(a2);
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
+
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
 	int old_region_count = a2->regionCount;
@@ -5839,10 +5879,10 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 		return 0;
 	}
 
-	SAI_PathCreate_Sub3_1(old_region_count, a2);
+	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	SAI_PathCreate_Sub3_2(a2);
 	SAI_PathCreate_Sub3_3(a2);
-	SAI_PathCreate_Sub3_1(old_region_count, a2);
+	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	a2->splitTiles_end = a2->splitTiles;
 	SAI_PathCreate_Sub3_4();
 	memset(&a2->regions[a2->regionCount], 0, (5000 - a2->regionCount) << 6);
