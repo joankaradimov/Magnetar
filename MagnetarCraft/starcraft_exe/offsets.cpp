@@ -10819,13 +10819,13 @@ DECL_FUNC(int(*sub_47EBB0)(), sub_47EBB0, 0x47ebb0);
 DECL_FUNC(int(*sub_47EBC0)(), sub_47EBC0, 0x47ebc0);
 DECL_FUNC(int(*refreshStars)(), refreshStars, 0x47ebf0);
 DECL_FUNC(int(*drawStars)(), drawStars, 0x47ee20);
-void getScreenMoveState(_DWORD *a1, _DWORD *a2) {
+void getScreenMoveState(_DWORD *vertical_delta, _DWORD *horizontal_delta) {
     int address = 0x47ef80;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov eax, vertical_delta
+        mov ecx, horizontal_delta
         call address
     }
 }
@@ -11008,7 +11008,22 @@ int *CMDACT_GameSpeed(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
 DECL_FUNC(void(*sub_482070)(), sub_482070, 0x482070);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_1_1_0_0)(int), SAI_PathCreate_Sub3_1_1_0_0, 0x482090);
+__int16 *SAI_PathCreate_Sub3_1_1_0_0(__int16 *result, int a2, int a3, SAI_Paths *a4) {
+    int address = 0x482090;
+    __int16 * result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        xor ecx, ecx
+        mov eax, result
+        mov ecx, a2
+        mov ebx, a3
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 char *SAI_PathCreate_Sub3_1_1_1(SAI_Paths *a1, SaiRegion *a2) {
     int address = 0x4821a0;
     char * result_;
@@ -11022,34 +11037,51 @@ char *SAI_PathCreate_Sub3_1_1_1(SAI_Paths *a1, SaiRegion *a2) {
     return result_;
 }
 DECL_FUNC(signed int (__stdcall*SAI_PathCreate_Sub3_1_1_0)(SAI_Paths *a1, int a2, SaiRegion *a3), SAI_PathCreate_Sub3_1_1_0, 0x482290);
-int SAI_PathCreate_Sub3_1_1(SAI_Paths *a1) {
+void SAI_PathCreate_Sub3_1_1(SAI_Paths *a1) {
     int address = 0x482850;
-    int result_;
     __asm {
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__stdcall*sub_482890)(int), sub_482890, 0x482890);
-int SAI_PathCreate_Sub3_1_0(SAI_Paths *a1) {
+void SAI_PathCreate_Sub3_1_0(SAI_Paths *a1) {
     int address = 0x482900;
-    int result_;
     __asm {
         xor edi, edi
         mov edi, a1
+        call address
+    }
+}
+DECL_FUNC(int(*sub_482A80)(), sub_482A80, 0x482a80);
+void SAI_PathCreate_Sub3_0_2(int a2, SAI_Paths *a3, __int16 *a4, __int16 a5) {
+    int address = 0x482ae0;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        call address
+    }
+}
+int SAI_PathCreate_Sub3_0_1(__int16 a1, __int16 *a2, SAI_Paths *a3) {
+    int address = 0x482c60;
+    int result_;
+    __asm {
+        xor ebx, ebx
+        xor esi, esi
+        mov bx, a1
+        mov esi, a2
+        push dword ptr a3
         call address
         mov result_, eax
     }
     return result_;
 }
-DECL_FUNC(int(*sub_482A80)(), sub_482A80, 0x482a80);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_2)(int, int, __int16), SAI_PathCreate_Sub3_0_2, 0x482ae0);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_1)(int), SAI_PathCreate_Sub3_0_1, 0x482c60);
 DECL_FUNC(int(*sub_482CC0)(), sub_482CC0, 0x482cc0);
-DECL_FUNC(int (__fastcall*SAI_PathCreate_Sub3_1_2_0)(SAI_Paths *a1, int a2, int a3), SAI_PathCreate_Sub3_1_2_0, 0x482d30);
+DECL_FUNC(void (__fastcall*SAI_PathCreate_Sub3_1_2_0)(SAI_Paths *a1, SaiRegion *a2, int a3), SAI_PathCreate_Sub3_1_2_0, 0x482d30);
 int SAI_CreateRegionGroupings(SAI_Paths *a1) {
     int address = 0x482da0;
     int result_;
@@ -11077,19 +11109,28 @@ int SAI_PathCreate_Sub5(SaiRegion *a1) {
 DECL_FUNC(void (__cdecl*FreeSAI_Paths)(), FreeSAI_Paths, 0x483200);
 DECL_FUNC(void (__cdecl*AllocateSAI_Paths)(), AllocateSAI_Paths, 0x483230);
 DECL_FUNC(void (__cdecl*SAI_PathCreate_Sub3_4)(), SAI_PathCreate_Sub3_4, 0x483260);
-DECL_FUNC(int (__stdcall*SAI_PathCreate_Sub3_0_0)(int, int, __int16), SAI_PathCreate_Sub3_0_0, 0x483960);
-int SAI_PathCreate_Sub3_1(int a1, SAI_Paths *a2) {
+void SAI_PathCreate_Sub3_0_0(int a1, int a2, SAI_Paths *a3, rect *a4, __int16 a5) {
+    int address = 0x483960;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        call address
+    }
+}
+void SAI_PathCreate_Sub3_1(int a1, SAI_Paths *a2) {
     int address = 0x483b50;
-    int result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, a1
         mov ecx, a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_483BD0)(), sub_483BD0, 0x483bd0);
 DECL_FUNC(__int16 (__thiscall*CreateUIUnreachableRegion)(SAI_Paths *this_), CreateUIUnreachableRegion, 0x483c00);
@@ -13642,7 +13683,17 @@ DECL_FUNC(int(*sub_49BF20)(), sub_49BF20, 0x49bf20);
 DECL_FUNC(int(*sub_49BF70)(), sub_49BF70, 0x49bf70);
 DECL_FUNC(int(*sub_49BFA0)(), sub_49BFA0, 0x49bfa0);
 DECL_FUNC(int(*BWFXN_UpdateScreenPosition)(), BWFXN_UpdateScreenPosition, 0x49bfd0);
-DECL_FUNC(signed int (__fastcall*moveToXScrIncrease)(int a1, int a2), moveToXScrIncrease, 0x49c0c0);
+signed int moveToXScrIncrease(int a1) {
+    int address = 0x49c0c0;
+    signed result_;
+    __asm {
+        xor edx, edx
+        mov edx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int moveToXScrDecrease(int a1) {
     int address = 0x49c1a0;
     int result_;
@@ -13654,7 +13705,17 @@ int moveToXScrDecrease(int a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*moveToYScrIncrease)(int a1, int a2), moveToYScrIncrease, 0x49c280);
+int moveToYScrIncrease(int a1) {
+    int address = 0x49c280;
+    int result_;
+    __asm {
+        xor edx, edx
+        mov edx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int moveToYScrDecrease(int a1) {
     int address = 0x49c360;
     int result_;
@@ -13714,14 +13775,14 @@ u16 SAI_GetRegionIdFromPx(__int16 y, __int16 x) {
     }
     return result_;
 }
-unsigned __int16 GetRegionIdAtPosEx(signed int x, signed int y) {
+unsigned __int16 GetRegionIdAtPosEx(signed int y, signed int x) {
     int address = 0x49c9f0;
     unsigned result_;
     __asm {
         xor ecx, ecx
         xor edi, edi
-        mov ecx, x
-        mov edi, y
+        mov ecx, y
+        mov edi, x
         call address
         mov result_, eax
     }
@@ -23202,7 +23263,7 @@ char(&aStarcraftSw_44)[] = * ((decltype(&aStarcraftSw_44)) 0x5040b8);
 char(&aRezTimeout_bin)[] = * ((decltype(&aRezTimeout_bin)) 0x5040d8);
 char(&aD02d)[] = * ((decltype(&aD02d)) 0x5040e8);
 char(&aStarcraftSw_43)[] = * ((decltype(&aStarcraftSw_43)) 0x5040f0);
-char(&a2)[] = * ((decltype(&a2)) 0x504114);
+char(&aArrUnits_dat)[] = * ((decltype(&aArrUnits_dat)) 0x504114);
 char(&aArrOrders_dat)[] = * ((decltype(&aArrOrders_dat)) 0x504124);
 char(&aGameTminimap_p)[] = * ((decltype(&aGameTminimap_p)) 0x504134);
 char(&aGameTunit_pcx)[] = * ((decltype(&aGameTunit_pcx)) 0x504148);
