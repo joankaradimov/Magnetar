@@ -4401,6 +4401,93 @@ void DoGameLoop_()
 
 FAIL_STUB_PATCH(DoGameLoop);
 
+void PollInput_()
+{
+	if (!dword_51BFA8 || IS_GAME_PAUSED && !multiPlayerMode)
+	{
+		return;
+	}
+	if (byte_658AC0)
+	{
+		DisableDragSelect();
+	}
+	else if (byte_66FF5C || byte_6D1214)
+	{
+		return;
+	}
+
+	int scroll_speed;
+	int a1;
+	int a2;
+	getScreenMoveState(&a1, &a2);
+	if (a2 || a1)
+	{
+		dword_6D5C1C = 1;
+		scroll_speed = multiPlayerMode ? registry_options.MKeyScrollSpeed : registry_options.KeyScrollSpeed;
+	}
+	else
+	{
+		getScrollCursorType(&a2, &a1);
+		scroll_speed = multiPlayerMode ? registry_options.MMouseScrollSpeed : registry_options.MouseScrollSpeed;
+	}
+
+	if (a2 == 0 && a1 == 0)
+	{
+		dword_6D63DC = 0;
+	}
+	else if ((unsigned int)dword_6D63DC < 6)
+	{
+		dword_6D63DC += 1;
+	}
+
+	if (byte_658AC0)
+	{
+		scroll_speed = GetScrollSpeed(&dword_6D63DC);
+	}
+	if (a2 || a1)
+	{
+		dword_6D7574 = a2;
+		dword_6D7570 = a1;
+	}
+
+	if (dword_6D63DC)
+	{
+		int v5 = 0;
+		int v6 = 0;
+
+		if (dword_6D7570 < 0)
+		{
+			v5 = moveToYScrDecrease(scrollSpeeds.scroll[7 * scroll_speed + dword_6D63DC]);
+		}
+		else if (dword_6D7570 > 0)
+		{
+			v5 = moveToYScrIncrease(scrollSpeeds.scroll[7 * scroll_speed + dword_6D63DC]);
+		}
+
+		if (dword_6D7574 < 0)
+		{
+			v6 = moveToXScrDecrease(scrollSpeeds.scroll[7 * scroll_speed + dword_6D63DC]);
+		}
+		else if (dword_6D7574 > 0)
+		{
+			v6 = moveToXScrIncrease(scrollSpeeds.scroll[7 * scroll_speed + dword_6D63DC]);
+		}
+
+		if (v6 || v5)
+		{
+			RefreshLayer5();
+		}
+	}
+
+	if (byte_658AC0 && MoveToX == dword_658ABC && MoveToY == dword_658AA0 && dword_658AA4 != NULL)
+	{
+		dword_658AA4();
+		dword_658AA4 = 0;
+	}
+}
+
+FAIL_STUB_PATCH(PollInput);
+
 int BWFXN_IsPaused_()
 {
 	return IS_GAME_PAUSED;
