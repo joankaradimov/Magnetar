@@ -3798,12 +3798,10 @@ signed int LoadGameInit_()
 	if (InReplay)
 	{
 		copyPlayerStructsToReplayPlayerStructs(Players, &gameData);
-		int* v4 = (int*)replayData;
 		dword_6D5BF0 = 0;
-		int v5 = *((_DWORD *)replayData + 2);
-		*(_DWORD *)replayData = 0;
-		v4[1] = 1;
-		v4[7] = v5;
+		replayData->field1 = 0;
+		replayData->field2 = 1;
+		replayData->field8 = replayData->net_record_buffer;
 		ReplayVision = 255;
 		playerVisions = 255;
 		replayShowEntireMap = 0;
