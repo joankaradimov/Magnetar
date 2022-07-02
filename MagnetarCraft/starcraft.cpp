@@ -5915,6 +5915,60 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
+DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
+
+void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
+{
+	for (int i = 0; i < a1->regionCount; i++)
+	{
+		a1->regions[i].tileCount = 0;
+		a1->regions[i].rgnBox.left = 0x7FFF;
+		a1->regions[i].rgnBox.top = 0x7FFF;
+		a1->regions[i].rgnBox.bottom = -1;
+		a1->regions[i].rgnBox.right = -1;
+	}
+
+	for (int v15 = 0; v15 < map_size.height; v15++)
+	{
+		for (int v5 = 0; v5 < map_size.width; v5++)
+		{
+			WORD v6 = a1->mapTileRegionId[v15][v5];
+			if (v6 < 5000u)
+			{
+				a1->regions[v6].tileCount += 1;
+
+				Box16* box = &a1->regions[v6].rgnBox;
+				if ((__int16)box->top > 32 * v15)
+				{
+					box->top = 32 * v15;
+				}
+				if ((__int16)box->left > 32 * v5)
+				{
+					box->left = 32 * v5;
+				}
+				if ((__int16)box->bottom < 32 * v15 + 32)
+				{
+					box->bottom = 32 * (v15 + 1);
+				}
+				if ((__int16)box->right < 32 * v5 + 32)
+				{
+					box->right = 32 * (v5 + 1);
+				}
+			}
+		}
+	}
+
+	for (int i = 0; i < a1->regionCount; ++i)
+	{
+		if (a1->regions[i].tileCount == 0 && a1->regions[i].accessabilityFlags != (SAF_Inaccessible | SAF_UNK))
+		{
+			a1->regions[i].accessabilityFlags = SAF_Inaccessible | SAF_UNK;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0);
+
 void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
 {
 	a1->globalBuffer_ptr = a1->globalBuffer;
@@ -5935,7 +5989,7 @@ FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
 void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 {
 	a2->globalBuffer_ptr = a2->globalBuffer;
-	SAI_PathCreate_Sub3_1_0(a2);
+	SAI_PathCreate_Sub3_1_0_(a2);
 	SAI_PathCreate_Sub3_1_1_(a2);
 
 	for (int i = a1; i < a2->regionCount; i++)
