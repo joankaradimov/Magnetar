@@ -5970,7 +5970,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	a2->splitTiles_end = a2->splitTiles;
 	SAI_PathCreate_Sub3_4();
-	memset(&a2->regions[a2->regionCount], 0, (5000 - a2->regionCount) << 6);
+	memset(a2->regions + a2->regionCount, 0, (_countof(a2->regions) - a2->regionCount) * sizeof(SaiRegion));
 	return 1;
 }
 
