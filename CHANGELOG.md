@@ -3,6 +3,7 @@
 ## Unreleased
   - Allow arbitrary map sizes below 256x256
   - Draw a higher details minimap for map sizes below 32x32
+  - Put the Precursor campaign on the campaigns menu screen
   - Implement new tags for credits/establishing shots:
     * `</PLAYSOUND xxx>`
     * `</SCREENUPPERLEFT>`

@@ -7585,6 +7585,40 @@ bool LoadCampaignWithCharacter_(Race race)
 
 FAIL_STUB_PATCH(LoadCampaignWithCharacter);
 
+bool LoadPrecursorCampaign()
+{
+	customSingleplayer[0] = 0;
+	dword_51CA1C = 0;
+	CharacterData character_data;
+	if (!LoadCharacterData(&character_data, playerName))
+	{
+		const char* v1 = GetNetworkTblString(72);
+		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
+		{
+			doNetTBLError(0, 0, 0, 88);
+		}
+	}
+
+	ExpandedCampaignMenuEntry* v2 = campaigns[0].entries;
+	int unlocked_mission = 6;
+	active_campaign_menu_entry = (CampaignMenuEntry*) loadmenu_GluHist_(unlocked_mission, v2);
+	if (active_campaign_menu_entry)
+	{
+		if (active_campaign_menu_entry->cinematic)
+		{
+			active_cinematic = active_campaign_menu_entry->cinematic;
+			CampaignIndex = active_campaign_menu_entry->next_mission;
+			next_scenario[0] = 0;
+			gwGameMode = GAME_CINEMATIC;
+		}
+		else
+		{
+			CreateCampaignGame_(active_campaign_menu_entry->next_mission);
+		}
+	}
+	return active_campaign_menu_entry != NULL;
+}
+
 int sub_4B5110_(Race race)
 {
 	if (dword_59A0D4[race])
@@ -7674,6 +7708,13 @@ bool sub_4B2810_(dialog* a1)
 			return true;
 		}
 		LastControlID = 8;
+		break;
+	case 30:
+		if (!LoadPrecursorCampaign())
+		{
+			return true;
+		}
+		LastControlID = 30;
 		break;
 	}
 	return DLG_SwishOut(a1);
@@ -7960,6 +8001,7 @@ void loadMenu_gluCmpgn_()
 	case 6:
 		glGluesMode = GLUE_READY_P;
 		break;
+	case 30:
 	case 7:
 		glGluesMode = GLUE_READY_T;
 		break;
