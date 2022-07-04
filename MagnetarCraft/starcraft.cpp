@@ -6009,6 +6009,48 @@ void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
 
+void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
+{
+	__int16 v16[5000];
+	int v18 = 0;
+	for (int v3 = 0; v3 < a1->regionCount; v3++)
+	{
+		v16[v3] = v18;
+		if (a1->regions[v3].tileCount != 0)
+		{
+			++v18;
+		}
+	}
+
+	SaiRegion* a1a = a1->regions;
+	for (int region_index = 0; region_index < a1->regionCount; region_index++)
+	{
+		SaiRegion* region = &a1->regions[region_index];
+		if (region->tileCount)
+		{
+			for (int v8 = 0; v8 < region->neighborCount; v8++)
+			{
+				u16* v9 = region->neighbors + v8;
+				*v9 = v16[*v9];
+			}
+			memcpy(a1a++, region, sizeof(SaiRegion));
+		}
+	}
+
+	a1->regionCount = v18;
+
+	for (int v11 = 0; v11 < map_size.height; v11++)
+	{
+		for (int v15 = 0; v15 < map_size.width; v15++)
+		{
+			u16* v12 = &a1->mapTileRegionId[v11][v15];
+			*v12 = v16[*v12];
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3);
+
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
 	int old_region_count = a2->regionCount;
@@ -6020,7 +6062,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 
 	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	SAI_PathCreate_Sub3_2(a2);
-	SAI_PathCreate_Sub3_3(a2);
+	SAI_PathCreate_Sub3_3_(a2);
 	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	a2->splitTiles_end = a2->splitTiles;
 	SAI_PathCreate_Sub3_4();
