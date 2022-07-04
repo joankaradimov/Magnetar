@@ -8421,15 +8421,15 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		{
 			gwGameMode = GAME_RUNINIT;
 		}
-		else if (Players[g_LocalNationID].nRace == 0)
+		else if (Players[g_LocalNationID].nRace == Race::RACE_Zerg)
 		{
 			glGluesMode = GLUE_READY_Z;
 		}
-		else if (Players[g_LocalNationID].nRace == 1)
+		else if (Players[g_LocalNationID].nRace == Race::RACE_Terran)
 		{
 			glGluesMode = GLUE_READY_T;
 		}
-		else if (Players[g_LocalNationID].nRace == 2)
+		else if (Players[g_LocalNationID].nRace == Race::RACE_Protoss)
 		{
 			glGluesMode = GLUE_READY_P;
 		}
