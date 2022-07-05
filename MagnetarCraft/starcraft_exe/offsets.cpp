@@ -10854,7 +10854,18 @@ DECL_FUNC(int(*sub_480430)(), sub_480430, 0x480430);
 DECL_FUNC(int(*j_maskSomething2)(), j_maskSomething2, 0x4804c0);
 DECL_FUNC(int(*maskSomething1)(), maskSomething1, 0x4804d0);
 DECL_FUNC(int(*sub_4805D0)(), sub_4805D0, 0x4805d0);
-DECL_FUNC(int (__stdcall*updateFog)(int, int), updateFog, 0x4805f0);
+void updateFog(int result, signed int a2, signed int a3, signed int a4) {
+    int address = 0x4805f0;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, result
+        mov edx, a2
+        push dword ptr a4
+        push dword ptr a3
+        call address
+    }
+}
 int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int x, signed int y, int reveal_from_air) {
     int address = 0x4806f0;
     int result_;
@@ -10873,7 +10884,14 @@ int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int 
 }
 DECL_FUNC(int(*sub_4807F0)(), sub_4807F0, 0x4807f0);
 DECL_FUNC(void (__cdecl*RemoveFoWCheat)(), RemoveFoWCheat, 0x480880);
-DECL_FUNC(int(*updateAllFog)(), updateAllFog, 0x4808e0);
+void updateAllFog(int a1) {
+    int address = 0x4808e0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*sub_480960)(), sub_480960, 0x480960);
 DECL_FUNC(int (__stdcall*GetKeyRandomizerSequence)(int), GetKeyRandomizerSequence, 0x480a40);
 DECL_FUNC(void (__fastcall*saveColorSettings)(bool exit_code), saveColorSettings, 0x480a90);
@@ -11055,7 +11073,7 @@ void SAI_PathCreate_Sub3_1_0(SAI_Paths *a1) {
     }
 }
 DECL_FUNC(int(*sub_482A80)(), sub_482A80, 0x482a80);
-void SAI_PathCreate_Sub3_0_2(int a2, SAI_Paths *a3, __int16 *a4, __int16 a5) {
+void SAI_PathCreate_Sub3_0_2(int a2, SAI_Paths *a3, rect *a4, SaiAccessabilityFlags a5) {
     int address = 0x482ae0;
     __asm {
         xor edx, edx
@@ -11066,9 +11084,8 @@ void SAI_PathCreate_Sub3_0_2(int a2, SAI_Paths *a3, __int16 *a4, __int16 a5) {
         call address
     }
 }
-int SAI_PathCreate_Sub3_0_1(__int16 a1, __int16 *a2, SAI_Paths *a3) {
+void SAI_PathCreate_Sub3_0_1(__int16 a1, rect *a2, SAI_Paths *a3) {
     int address = 0x482c60;
-    int result_;
     __asm {
         xor ebx, ebx
         xor esi, esi
@@ -11076,9 +11093,7 @@ int SAI_PathCreate_Sub3_0_1(__int16 a1, __int16 *a2, SAI_Paths *a3) {
         mov esi, a2
         push dword ptr a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_482CC0)(), sub_482CC0, 0x482cc0);
 DECL_FUNC(void (__fastcall*SAI_PathCreate_Sub3_1_2_0)(SAI_Paths *a1, SaiRegion *a2, int a3), SAI_PathCreate_Sub3_1_2_0, 0x482d30);
@@ -13751,7 +13766,6 @@ void drawScreenRowTiles(__int16 *a1, TileID *a2, MegatileFlags *a3, int a4, int 
         push dword ptr a3
         push dword ptr a2
         call address
-        add esp, 16
     }
 }
 DECL_FUNC(void (__cdecl*BWFXN_drawMapTiles)(), BWFXN_drawMapTiles, 0x49c780);
