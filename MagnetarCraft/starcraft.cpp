@@ -398,7 +398,7 @@ void DirtyArrayHandling_()
 	dword_6CF4A8 = 0;
 }
 
-FAIL_STUB_PATCH(DirtyArrayHandling, DirtyArrayHandling_);
+FAIL_STUB_PATCH(DirtyArrayHandling);
 
 void BWFXN_RedrawTarget_()
 {
