@@ -3864,7 +3864,6 @@ int SaveReplay_(const char* a1, int a3)
 
 	int v5;
 	ReplayHeader a1a;
-	int v10;
 
 	replay_header.campaign_index = CampaignIndex;
 	replay_header.field_46 = 1;
