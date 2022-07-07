@@ -4059,7 +4059,7 @@ void DestroyGame_()
 		ReportGameResult();
 	}
 	leaveGame(0x40000001);
-	if (gwGameMode == GAME_GLUES && glGluesMode == GLUE_MAIN_MENU)
+	if (gwGameMode == GamePosition::GAME_GLUES && glGluesMode == MenuPosition::GLUE_MAIN_MENU)
 	{
 		initializePlayerValues();
 	}
@@ -4072,7 +4072,7 @@ void DestroyGame_()
 	{
 		DestroyDialog(GameMenuDlg);
 		GameMenuDlg = 0;
-		if (gwGameMode == GAME_RUN)
+		if (gwGameMode == GamePosition::GAME_RUN)
 		{
 			hAccTable = DlgAccelerator;
 			input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
