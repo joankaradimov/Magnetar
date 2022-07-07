@@ -1400,19 +1400,19 @@ void updateAllFog_(int a1)
 {
 	if (a1)
 	{
-		updateFog(400, 0, 0, 640);
+		updateFog(GAME_AREA_HEIGHT, 0, 0, GAME_AREA_WIDTH);
 	}
 	else
 	{
 		int region_index = 0;
-		for (int i = 0; i < 400; i += 16)
+		for (int i = 0; i < GAME_AREA_HEIGHT; i += 16)
 		{
-			for (int j = 0; j < 640; j += 16)
+			for (int j = 0; j < GAME_AREA_WIDTH; j += 16)
 			{
 				if (RefreshRegions[region_index++])
 				{
 					int k;
-					for (k = 16; j + k < 640; k += 16)
+					for (k = 16; j + k < GAME_AREA_WIDTH; k += 16)
 					{
 						if (RefreshRegions[region_index] == 0)
 						{
