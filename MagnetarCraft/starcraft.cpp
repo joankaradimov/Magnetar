@@ -1437,11 +1437,7 @@ void BWFXN_drawDragSelBox_()
 		if (InputFlags)
 		{
 			DrawColor = byte_6CEB32;
-			BWFXN_Draw(
-				stru_66FF50.top,
-				stru_66FF50.left,
-				stru_66FF50.right - stru_66FF50.left + 1,
-				stru_66FF50.bottom - stru_66FF50.top + 1);
+			BWFXN_Draw(stru_66FF50.top, stru_66FF50.left, stru_66FF50.right - stru_66FF50.left + 1, stru_66FF50.bottom - stru_66FF50.top + 1);
 		}
 		else
 		{
