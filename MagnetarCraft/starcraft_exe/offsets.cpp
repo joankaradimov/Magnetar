@@ -3177,7 +3177,7 @@ DECL_FUNC(int(*sub_42D330)(), sub_42D330, 0x42d330);
 DECL_FUNC(int(*sub_42D350)(), sub_42D350, 0x42d350);
 DECL_FUNC(int(*sub_42D370)(), sub_42D370, 0x42d370);
 DECL_FUNC(int(*sub_42D400)(), sub_42D400, 0x42d400);
-DECL_FUNC(int(*getFirstSprite)(), getFirstSprite, 0x42d460);
+DECL_FUNC(CSprite *(__cdecl*getFirstSprite)(), getFirstSprite, 0x42d460);
 int sub_42D4C0(CSprite *a1) {
     int address = 0x42d4c0;
     int result_;
@@ -12988,7 +12988,17 @@ DECL_FUNC(int(*sub_496F80)(), sub_496F80, 0x496f80);
 DECL_FUNC(int(*sub_496FB0)(), sub_496FB0, 0x496fb0);
 DECL_FUNC(int (__stdcall*sub_496FC0)(int, int), sub_496FC0, 0x496fc0);
 DECL_FUNC(int(*EnableVisibilityHashUpdate)(), EnableVisibilityHashUpdate, 0x496ff0);
-DECL_FUNC(int(*isImageRefreshable)(), isImageRefreshable, 0x497000);
+int isImageRefreshable(CImage *a1) {
+    int address = 0x497000;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*refreshImage)(), refreshImage, 0x4970a0);
 DECL_FUNC(int (__stdcall*sub_4970F0)(int), sub_4970F0, 0x4970f0);
 DECL_FUNC(void (__cdecl*createUnitBuildingSpriteValidityArray)(), createUnitBuildingSpriteValidityArray, 0x497110);
@@ -13225,7 +13235,15 @@ CSprite *refreshSpriteData(CSprite *result) {
     return result_;
 }
 DECL_FUNC(int(*sub_498450)(), sub_498450, 0x498450);
-DECL_FUNC(int (__stdcall*unknownColorShiftSomething)(char), unknownColorShiftSomething, 0x498470);
+void unknownColorShiftSomething(u8 result, char a2) {
+    int address = 0x498470;
+    __asm {
+        xor eax, eax
+        mov al, result
+        push dword ptr a2
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*ReadSpritesArray)(FILE *), ReadSpritesArray, 0x498570);
 DECL_FUNC(int (__stdcall*writeSprites)(FILE *), writeSprites, 0x498740);
 DECL_FUNC(int(*RemoveAllSelectionCircles)(), RemoveAllSelectionCircles, 0x4989a0);
@@ -13594,7 +13612,17 @@ DECL_FUNC(int(*sub_49B020)(), sub_49B020, 0x49b020);
 DECL_FUNC(int(*sub_49B030)(), sub_49B030, 0x49b030);
 DECL_FUNC(int(*sub_49B050)(), sub_49B050, 0x49b050);
 DECL_FUNC(int(*sub_49B060)(), sub_49B060, 0x49b060);
-DECL_FUNC(int(*getColourID)(), getColourID, 0x49b0e0);
+unsigned int getColourID(unsigned int result) {
+    int address = 0x49b0e0;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int setPlayerColours(int result, char *a2) {
     int address = 0x49b130;
     int result_;
@@ -24784,8 +24812,7 @@ char& byte_581D68 = * ((decltype(&byte_581D68)) 0x581d68);
 char& byte_581D69 = * ((decltype(&byte_581D69)) 0x581d69);
 char(&byte_581D6A)[11] = * ((decltype(&byte_581D6A)) 0x581d6a);
 char& byte_581D75 = * ((decltype(&byte_581D75)) 0x581d75);
-int(&dword_581D76)[] = * ((decltype(&dword_581D76)) 0x581d76);
-int(&dword_581D7A)[15] = * ((decltype(&dword_581D7A)) 0x581d7a);
+struc_581D76(&stru_581D76)[8] = * ((decltype(&stru_581D76)) 0x581d76);
 char(&byte_581DD5)[] = * ((decltype(&byte_581DD5)) 0x581dd5);
 u8(&PlayerColors)[12] = * ((decltype(&PlayerColors)) 0x581dd6);
 AllScoresStruct& AllScores = * ((decltype(&AllScores)) 0x581de4);
@@ -25853,8 +25880,8 @@ rect& stru_6C1080 = * ((decltype(&stru_6C1080)) 0x6c1080);
 __int16& word_6C10A8 = * ((decltype(&word_6C10A8)) 0x6c10a8);
 int& dword_6C2310 = * ((decltype(&dword_6C2310)) 0x6c2310);
 int& dword_6C2314 = * ((decltype(&dword_6C2314)) 0x6c2314);
-int(&dword_6C2318)[2500] = * ((decltype(&dword_6C2318)) 0x6c2318);
-CSprite *& dword_6C4A28 = * ((decltype(&dword_6C4A28)) 0x6c4a28);
+CSprite *(&dword_6C2318)[2500] = * ((decltype(&dword_6C2318)) 0x6c2318);
+int& dword_6C4A28 = * ((decltype(&dword_6C4A28)) 0x6c4a28);
 int& dword_6C4A2C = * ((decltype(&dword_6C4A2C)) 0x6c4a2c);
 int(&dword_6C4A30)[] = * ((decltype(&dword_6C4A30)) 0x6c4a30);
 int(&dword_6C4A34)[] = * ((decltype(&dword_6C4A34)) 0x6c4a34);
