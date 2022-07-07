@@ -1396,6 +1396,40 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void updateAllFog_(int a1)
+{
+	if (a1)
+	{
+		updateFog(400, 0, 0, 640);
+	}
+	else
+	{
+		int region_index = 0;
+		for (int i = 0; i < 400; i += 16)
+		{
+			for (int j = 0; j < 640; j += 16)
+			{
+				if (RefreshRegions[region_index++])
+				{
+					int k;
+					for (k = 16; j + k < 640; k += 16)
+					{
+						if (RefreshRegions[region_index] == 0)
+						{
+							break;
+						}
+						++region_index;
+					}
+					updateFog(i + 16, i, j, k + j);
+					j = k + j - 16;
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(updateAllFog);
+
 void BWFXN_drawDragSelBox_()
 {
 	if (byte_66FF5C)
@@ -1477,7 +1511,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		else
 			refreshStars();
 	}
-	updateAllFog();
+	updateAllFog_(v2);
 	BWFXN_DrawHighTarget();
 	BWFXN_drawDragSelBox_();
 	BWFXN_drawAllThingys_();
