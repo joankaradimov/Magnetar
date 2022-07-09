@@ -736,9 +736,8 @@ DECL_FUNC(int(*BWFXN_blitMapTiles)(), BWFXN_blitMapTiles, 0x40c253);
 DECL_FUNC(void (__fastcall*BlitTerrainCacheToGameBitmap)(void *this_, int edx0, int a2, int a3), BlitTerrainCacheToGameBitmap, 0x40c2bd);
 DECL_FUNC(int (__stdcall*getDistancePrecise)(int, int), getDistancePrecise, 0x40c300);
 DECL_FUNC(int (__stdcall*GetApproxDistance)(int, int), GetApproxDistance, 0x40c360);
-signed int drawMinitileImageData(signed int framebuf_pos, int minitile, int a3) {
+void drawMinitileImageData(signed int framebuf_pos, int minitile, int a3) {
     int address = 0x40c3b0;
-    signed result_;
     __asm {
         xor ebx, ebx
         xor ecx, ecx
@@ -747,9 +746,7 @@ signed int drawMinitileImageData(signed int framebuf_pos, int minitile, int a3) 
         mov ecx, minitile
         mov ebx, a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__stdcall*sub_40C4D2)(int, int), sub_40C4D2, 0x40c4d2);
 DECL_FUNC(char *(__thiscall*type_info__szName)(type_info *this_), type_info__szName, 0x40c5bf);
@@ -847,7 +844,7 @@ DECL_FUNC(int(*getMapCreepDataBeginAndEnd)(), getMapCreepDataBeginAndEnd, 0x4138
 DECL_FUNC(int(*sub_4138E0)(), sub_4138E0, 0x4138e0);
 DECL_FUNC(int(*getMapCreepData2BeginAndEnd)(), getMapCreepData2BeginAndEnd, 0x413900);
 DECL_FUNC(int(*sub_413920)(), sub_413920, 0x413920);
-DECL_FUNC(int (__stdcall*sub_413940)(int, int), sub_413940, 0x413940);
+DECL_FUNC(void (__thiscall*sub_413940)(void *this_, int a2, int a3), sub_413940, 0x413940);
 DECL_FUNC(int(*sub_413980)(), sub_413980, 0x413980);
 DECL_FUNC(int(*sub_4139D0)(), sub_4139D0, 0x4139d0);
 DECL_FUNC(void (__fastcall*FreeCreepData)(bool exit_code), FreeCreepData, 0x413a10);
