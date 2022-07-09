@@ -1310,13 +1310,32 @@ void BWFXN_updateImageData_()
 
 FAIL_STUB_PATCH(BWFXN_updateImageData);
 
+void drawMinitileImageData_(signed int framebuf_pos, int minitile)
+{
+	char* v4 = (char*)VR4Data + 32 * (minitile & 0xFFFE);
+	for (int i = 0; i < 8; i++)
+	{
+		if (framebuf_pos >= TILE_CACHE_SIZE)
+		{
+			framebuf_pos -= TILE_CACHE_SIZE;
+		}
+		for (int j = 0; j < 8; j++)
+		{
+			GameTerrainCache[framebuf_pos + j] = (minitile & 1) ? v4[8 * i + 7 - j] : v4[8 * i + j];
+		}
+		framebuf_pos += (GAME_AREA_WIDTH + TILE_WIDTH);
+	}
+}
+
+FAIL_STUB_PATCH(drawMinitileImageData);
+
 void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 {
 	for (int i = 0; i < 4; i++)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			drawMinitileImageData(framebuf_position + 8 * 672 * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j], megatile);
+			drawMinitileImageData_(framebuf_position + 8 * 672 * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j]);
 		}
 	}
 
