@@ -5167,21 +5167,21 @@ void statdata_extendedCtrlID_(dialog* dlg)
 		statdata_buttonInteract,
 		statdata_ProgressBarInteract,
 		statdata_buttonInteract,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
-		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_, // large unit (1st left to right)
+		statdata_UnitWireframeTransit_, // large unit (2nd left to right)
+		statdata_UnitWireframeTransit_, // large unit (middle; unused?)
+		statdata_UnitWireframeTransit_, // medium unit (1st left to right)
+		statdata_UnitWireframeTransit_, // medium unit (2nd left to right)
+		statdata_UnitWireframeTransit_, // medium unit (3rd left to right)
+		statdata_UnitWireframeTransit_, // medium unit (4th left to right)
+		statdata_UnitWireframeTransit_, // small unit (top row, 1st left to right)
+		statdata_UnitWireframeTransit_, // small unit (bottom row, 1st left to right)
+		statdata_UnitWireframeTransit_, // small unit (top row, 2nd left to right)
+		statdata_UnitWireframeTransit_, // small unit (bottom row, 2nd left to right)
+		statdata_UnitWireframeTransit_, // small unit (top row, 3rd left to right)
+		statdata_UnitWireframeTransit_, // small unit (bottom row, 3rd left to right)
+		statdata_UnitWireframeTransit_, // small unit (top row, 4th left to right)
+		statdata_UnitWireframeTransit_, // small unit (bottom row, 4th left to right)
 		statdata_UnitWireframeSelection_,
 		statdata_UnitWireframeSelection_,
 		statdata_UnitWireframeSelection_,
