@@ -1415,6 +1415,38 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void drawSprite_(CSprite* a1)
+{
+	dword_6D5BD4 = getColourID(a1->playerID);
+	memcpy(byte_50CDC1 + 8, stru_581D76[dword_6D5BD4].colors, sizeof(stru_581D76[dword_6D5BD4].colors));
+
+	if (a1->pImagePrimary)
+	{
+		unknownColorShiftSomething(a1->pImagePrimary->paletteType, a1->playerID);
+	}
+	for (CImage* image = a1->pImageTail; image; image = image->prev)
+	{
+		drawImage(image);
+	}
+}
+
+FAIL_STUB_PATCH(drawSprite);
+
+void BWFXN_drawAllSprites_()
+{
+	for (CSprite* sprite = getFirstSprite(); sprite; sprite = dword_6C2318[dword_6C4A28])
+	{
+		drawSprite_(sprite);
+		if (dword_6C4A28 == 0)
+		{
+			break;
+		}
+		--dword_6C4A28;
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_drawAllSprites);
+
 void updateAllFog_(int a1)
 {
 	if (a1)
@@ -1474,7 +1506,7 @@ void BWFXN_drawAllThingys_()
 	{
 		CThingy* currentThingy = ThingyList_UsedFirst;
 		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = CImage__updateGraphicData(image)->next);
-		drawSprite(currentThingy->sprite);
+		drawSprite_(currentThingy->sprite);
 		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = image->next)
 		{
 			image->flags |= 1u;
@@ -1518,7 +1550,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		BWFXN_drawMapTiles_();
 		blitTileCacheOnRefresh();
 	}
-	BWFXN_drawAllSprites();
+	BWFXN_drawAllSprites_();
 	if (CurrentTileSet == Tileset::Platform)
 	{
 		if (v2)
