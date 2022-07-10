@@ -5079,7 +5079,7 @@ bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 			dlg->lUser = 0;
 			break;
 		case EventUser::USER_ACTIVATE:
-			CMDACT_Unload(dlg->lUser);
+			CMDACT_Unload((CUnit*) dlg->lUser);
 			return 1;
 		case EventUser::USER_MOUSEMOVE:
 			if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)

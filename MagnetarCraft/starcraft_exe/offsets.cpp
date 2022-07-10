@@ -1357,9 +1357,8 @@ dialog *sub_4180D0(dialog *result, int a2) {
     }
     return result_;
 }
-dialog *registerUserDialogAction(dialog *result, unsigned int a2, FnInteract *a3) {
+void registerUserDialogAction(dialog *result, unsigned int a2, FnInteract *a3) {
     int address = 0x418100;
-    dialog * result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
@@ -1368,9 +1367,7 @@ dialog *registerUserDialogAction(dialog *result, unsigned int a2, FnInteract *a3
         mov ecx, a2
         mov edi, a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 unsigned int sub_418150(dialog *a1) {
     int address = 0x418150;
@@ -2693,22 +2690,22 @@ DECL_FUNC(int(*BTNSACT_AttackUnit)(), BTNSACT_AttackUnit, 0x424320);
 DECL_FUNC(int (__fastcall*BTNSACT_AttackMove)(StatusFlags statusFlags), BTNSACT_AttackMove, 0x424380);
 DECL_FUNC(int(*BTNSACT_Move)(), BTNSACT_Move, 0x424440);
 DECL_FUNC(int(*BTNSACT_RallyPoint)(), BTNSACT_RallyPoint, 0x4244a0);
-DECL_FUNC(int(*UnitStatCond_Never)(), UnitStatCond_Never, 0x424500);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Never)(), UnitStatCond_Never, 0x424500);
 DECL_FUNC(int(*sub_424510)(), sub_424510, 0x424510);
-DECL_FUNC(int(*UnitStatCond_Powerup)(), UnitStatCond_Powerup, 0x424520);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Powerup)(), UnitStatCond_Powerup, 0x424520);
 DECL_FUNC(void (__cdecl*storeSelectionGroupHPAndType)(), storeSelectionGroupHPAndType, 0x424540);
 DECL_FUNC(int(*isSelGroupUpdated)(), isSelGroupUpdated, 0x424660);
 DECL_FUNC(int(*sub_4246B0)(), sub_4246B0, 0x4246b0);
 DECL_FUNC(int(*sub_4246D0)(), sub_4246D0, 0x4246d0);
 DECL_FUNC(int(*sub_424780)(), sub_424780, 0x424780);
 DECL_FUNC(int(*sub_4248F0)(), sub_4248F0, 0x4248f0);
-DECL_FUNC(int(*UnitStatCond_Standard)(), UnitStatCond_Standard, 0x424980);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Standard)(), UnitStatCond_Standard, 0x424980);
 DECL_FUNC(int(*sub_4249E0)(), sub_4249E0, 0x4249e0);
 DECL_FUNC(int(*sub_424A10)(), sub_424A10, 0x424a10);
-DECL_FUNC(int(*UnitStatCond_Egg)(), UnitStatCond_Egg, 0x424ac0);
-DECL_FUNC(int(*UnitStatCond_Archon)(), UnitStatCond_Archon, 0x424af0);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Egg)(), UnitStatCond_Egg, 0x424ac0);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Archon)(), UnitStatCond_Archon, 0x424af0);
 DECL_FUNC(int(*sub_424B10)(), sub_424B10, 0x424b10);
-DECL_FUNC(int(*UnitStatCond_CarrierReaver)(), UnitStatCond_CarrierReaver, 0x424b50);
+DECL_FUNC(bool (__cdecl*UnitStatCond_CarrierReaver)(), UnitStatCond_CarrierReaver, 0x424b50);
 void setSpellSpecialBtnGraphic(dialog *a1) {
     int address = 0x424ba0;
     __asm {
@@ -2717,9 +2714,9 @@ void setSpellSpecialBtnGraphic(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int(*UnitStatCond_Dropship)(), UnitStatCond_Dropship, 0x424f10);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Dropship)(), UnitStatCond_Dropship, 0x424f10);
 DECL_FUNC(int(*sub_424FC0)(), sub_424FC0, 0x424fc0);
-DECL_FUNC(int(*UnitStatCond_Building)(), UnitStatCond_Building, 0x425180);
+DECL_FUNC(bool (__cdecl*UnitStatCond_Building)(), UnitStatCond_Building, 0x425180);
 DECL_FUNC(int(*sub_4251F0)(), sub_4251F0, 0x4251f0);
 DECL_FUNC(int(*sub_425230)(), sub_425230, 0x425230);
 void sub_425310(dialog *a1, unsigned __int16 a2) {
@@ -2783,14 +2780,12 @@ void AddTextToDialog(dialog *a1, __int16 a2, char *a3) {
         call address
     }
 }
-DECL_FUNC(int(*UnitStatCond_overlord)(), UnitStatCond_overlord, 0x425900);
-void sub_425960(dialog *a1, int a2) {
+DECL_FUNC(bool (__cdecl*UnitStatCond_overlord)(), UnitStatCond_overlord, 0x425900);
+void sub_425960(dialog *stardata_dlg) {
     int address = 0x425960;
     __asm {
         xor eax, eax
-        xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov eax, stardata_dlg
         call address
     }
 }
@@ -2814,7 +2809,7 @@ void SetKillsStrText(signed int a1, dialog *a2) {
     }
 }
 DECL_FUNC(int (__stdcall*getActivePortraitUnitName)(int), getActivePortraitUnitName, 0x425ec0);
-DECL_FUNC(void (__thiscall*UnitStatAct_Default)(dialog *this_), UnitStatAct_Default, 0x425ee0);
+DECL_FUNC(void (__fastcall*UnitStatAct_Default)(dialog *this_), UnitStatAct_Default, 0x425ee0);
 void sub_425F30(dialog *a1) {
     int address = 0x425f30;
     __asm {
@@ -2856,12 +2851,12 @@ DECL_FUNC(void (__stdcall*sub_426500)(dialog *a1), sub_426500, 0x426500);
 DECL_FUNC(void (__stdcall*sub_4266F0)(dialog *a1), sub_4266F0, 0x4266f0);
 DECL_FUNC(void (__stdcall*sub_4268D0)(dialog *a1), sub_4268D0, 0x4268d0);
 DECL_FUNC(void (__thiscall*sub_426C60)(void *this_, dialog *a1), sub_426C60, 0x426c60);
-DECL_FUNC(void (__thiscall*UnitStatAct_Powerup)(dialog *this_), UnitStatAct_Powerup, 0x426ee0);
-DECL_FUNC(void (__thiscall*UnitStatAct_Standard)(dialog *this_), UnitStatAct_Standard, 0x426f50);
+DECL_FUNC(void (__fastcall*UnitStatAct_Powerup)(dialog *dlg), UnitStatAct_Powerup, 0x426ee0);
+DECL_FUNC(void (__fastcall*UnitStatAct_Standard)(dialog *this_), UnitStatAct_Standard, 0x426f50);
 DECL_FUNC(void (__stdcall*sub_426FF0)(dialog *a1), sub_426FF0, 0x426ff0);
-DECL_FUNC(void (__thiscall*UnitStatAct_Egg)(dialog *this_), UnitStatAct_Egg, 0x427260);
-DECL_FUNC(void (__thiscall*UnitStatAct_Archon)(dialog *this_), UnitStatAct_Archon, 0x4273e0);
-DECL_FUNC(void (__thiscall*UnitStatAct_CarrierReaver)(dialog *this_), UnitStatAct_CarrierReaver, 0x4274a0);
+DECL_FUNC(void (__fastcall*UnitStatAct_Egg)(dialog *dlg), UnitStatAct_Egg, 0x427260);
+DECL_FUNC(void (__fastcall*UnitStatAct_Archon)(dialog *dlg), UnitStatAct_Archon, 0x4273e0);
+DECL_FUNC(void (__fastcall*UnitStatAct_CarrierReaver)(dialog *dlg), UnitStatAct_CarrierReaver, 0x4274a0);
 void sub_427540(dialog *a1) {
     int address = 0x427540;
     __asm {
@@ -2870,7 +2865,7 @@ void sub_427540(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int(*UnitStatAct_Building)(), UnitStatAct_Building, 0x427890);
+DECL_FUNC(void (__fastcall*UnitStatAct_Building)(dialog *dlg), UnitStatAct_Building, 0x427890);
 void replayStatBtns(dialog *a1) {
     int address = 0x427a80;
     __asm {
@@ -2879,8 +2874,8 @@ void replayStatBtns(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__thiscall*UnitStatAct_Dropship)(dialog *this_), UnitStatAct_Dropship, 0x427c90);
-DECL_FUNC(void (__thiscall*UnitStatAct_Overlord)(dialog *this_), UnitStatAct_Overlord, 0x427d30);
+DECL_FUNC(void (__fastcall*UnitStatAct_Dropship)(dialog *dlg), UnitStatAct_Dropship, 0x427c90);
+DECL_FUNC(void (__fastcall*UnitStatAct_Overlord)(dialog *dlg), UnitStatAct_Overlord, 0x427d30);
 DECL_FUNC(int(*BriefingActionsLoop)(), BriefingActionsLoop, 0x427da0);
 DECL_FUNC(int(*sub_427E30)(), sub_427E30, 0x427e30);
 DECL_FUNC(int(*BRFACT_NoAct)(), BRFACT_NoAct, 0x427e40);
@@ -6485,12 +6480,12 @@ signed int sub_456C30(dialog *a1) {
     }
     return result_;
 }
-char sub_456D30(dialog *a1) {
+char sub_456D30(dialog *dlg) {
     int address = 0x456d30;
     char result_;
     __asm {
         xor edi, edi
-        mov edi, a1
+        mov edi, dlg
         call address
         mov result_, al
     }
@@ -6644,7 +6639,7 @@ void ProgressBar_Create(dialog *a1) {
 }
 DECL_FUNC(void(*sub_458120)(), sub_458120, 0x458120);
 DECL_FUNC(bool (__fastcall*statdata_ProgressBarInteract)(dialog *dlg, dlgEvent *evt), statdata_ProgressBarInteract, 0x4581e0);
-DECL_FUNC(int (__fastcall*StatusScreenButton)(dialog *a1, dialog *a2), StatusScreenButton, 0x458220);
+DECL_FUNC(void (__fastcall*StatusScreenButton)(dialog *a1, dialog *a2), StatusScreenButton, 0x458220);
 DECL_FUNC(bool (__fastcall*statdata_UnitWireframeSelection)(dialog *dlg, dlgEvent *evt), statdata_UnitWireframeSelection, 0x4583e0);
 void statdata_extendedCtrlID(dialog *a1) {
     int address = 0x4584c0;
@@ -7213,7 +7208,14 @@ bool spdDlgDestroy(dialog *a1, dlgEvent *a2) {
 DECL_FUNC(void (__thiscall*sub_460C80)(dialog *this_), sub_460C80, 0x460c80);
 DECL_FUNC(bool (__fastcall*snd_SoundCheckbox)(dialog *dlg, dlgEvent *evt), snd_SoundCheckbox, 0x460cb0);
 DECL_FUNC(bool (__fastcall*snd_SoundSlider)(dialog *dlg, dlgEvent *evt), snd_SoundSlider, 0x460d00);
-DECL_FUNC(int(*snd_dlg_UserCTRLID)(), snd_dlg_UserCTRLID, 0x460d40);
+void snd_dlg_UserCTRLID(dialog *a1) {
+    int address = 0x460d40;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(bool (__fastcall*snd_dlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), snd_dlg_BINDLG_Main, 0x460e20);
 DECL_FUNC(void(*sub_460F10)(), sub_460F10, 0x460f10);
 DECL_FUNC(int(*sub_460F20)(), sub_460F20, 0x460f20);
@@ -11018,7 +11020,14 @@ bool destroySpdDlg(dialog *a1, dlgEvent *a2) {
 }
 DECL_FUNC(bool (__fastcall*spd_speedSlider)(dialog *dlg, struct dlgEvent *evt), spd_speedSlider, 0x481d80);
 DECL_FUNC(bool (__fastcall*spd_CPUThrottleCheckbox)(dialog *dlg, dlgEvent *evt), spd_CPUThrottleCheckbox, 0x481de0);
-DECL_FUNC(int(*sub_481E60)(), sub_481E60, 0x481e60);
+void sub_481E60(dialog *a1) {
+    int address = 0x481e60;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 int *CMDACT_GameSpeed(dialog *a1) {
     int address = 0x481ef0;
     int * result_;
@@ -12238,7 +12247,14 @@ void msgfltr_MainBox(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int(*sub_490E70)(), sub_490E70, 0x490e70);
+void sub_490E70(dialog *a1) {
+    int address = 0x490e70;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 void sub_490E90(dialog *a1) {
     int address = 0x490e90;
     __asm {
@@ -16737,16 +16753,13 @@ DECL_FUNC(int(*sub_4BFD30)(), sub_4BFD30, 0x4bfd30);
 DECL_FUNC(int(*sub_4BFD50)(), sub_4BFD50, 0x4bfd50);
 DECL_FUNC(int(*sub_4BFD70)(), sub_4BFD70, 0x4bfd70);
 DECL_FUNC(int(*sub_4BFD90)(), sub_4BFD90, 0x4bfd90);
-char CMDACT_Unload(int a1) {
+void CMDACT_Unload(CUnit *a1) {
     int address = 0x4bfdb0;
-    char result_;
     __asm {
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4BFE10)(), sub_4BFE10, 0x4bfe10);
 DECL_FUNC(int(*sub_4BFE30)(), sub_4BFE30, 0x4bfe30);
@@ -20680,7 +20693,14 @@ bool sub_4E8920(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*network_latencyRadioBtn)(dialog *dlg, dlgEvent *evt), network_latencyRadioBtn, 0x4e8970);
-DECL_FUNC(int(*sub_4E89A0)(), sub_4E89A0, 0x4e89a0);
+void sub_4E89A0(dialog *a1) {
+    int address = 0x4e89a0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 void CMDACT_SetLatency(dialog *a1) {
     int address = 0x4e8a30;
     __asm {
@@ -24396,7 +24416,7 @@ ButtonOrder(&stru_5186D0)[6] = * ((decltype(&stru_5186D0)) 0x5186d0);
 ButtonOrder(&stru_518748)[7] = * ((decltype(&stru_518748)) 0x518748);
 ButtonOrder(&stru_5187D4)[1] = * ((decltype(&stru_5187D4)) 0x5187d4);
 ButtonSet(&button_sets)[250] = * ((decltype(&button_sets)) 0x5187e8);
-struct_3(&stru_5193A0)[228] = * ((decltype(&stru_5193A0)) 0x5193a0);
+UnitStat(&unit_stats)[228] = * ((decltype(&unit_stats)) 0x5193a0);
 BriefingAction(&briefing_actions)[10] = * ((decltype(&briefing_actions)) 0x519e50);
 char *(&statusscreen_infobtn)[1] = * ((decltype(&statusscreen_infobtn)) 0x519f40);
 __int16(&word_519F54)[] = * ((decltype(&word_519F54)) 0x519f54);
@@ -25004,7 +25024,7 @@ int& dword_599ED0 = * ((decltype(&dword_599ED0)) 0x599ed0);
 int& dword_599ED4 = * ((decltype(&dword_599ED4)) 0x599ed4);
 char& byte_599ED8 = * ((decltype(&byte_599ED8)) 0x599ed8);
 char(&byte_599FD0)[256] = * ((decltype(&byte_599FD0)) 0x599fd0);
-int& dword_59A0D0 = * ((decltype(&dword_59A0D0)) 0x59a0d0);
+unsigned int& a2 = * ((decltype(&a2)) 0x59a0d0);
 int(&dword_59A0D4)[3] = * ((decltype(&dword_59A0D4)) 0x59a0d4);
 int& dword_59A0E0 = * ((decltype(&dword_59A0E0)) 0x59a0e0);
 int(&dword_59A0E4)[] = * ((decltype(&dword_59A0E4)) 0x59a0e4);
