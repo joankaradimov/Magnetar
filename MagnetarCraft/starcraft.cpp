@@ -5145,8 +5145,8 @@ FAIL_STUB_PATCH(statdata_dlg_Interact);
 
 void load_Statdata_BIN_()
 {
-	dword_68C1F4 = (void*)LoadGraphic("unit\\wirefram\\tranwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1335);
-	dword_68C1FC = (void*)LoadGraphic("unit\\wirefram\\grpwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1337);
+	dword_68C1F4 = LoadGraphic("unit\\wirefram\\tranwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1335);
+	dword_68C1FC = LoadGraphic("unit\\wirefram\\grpwire.grp", 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 1337);
 	CanUpdateStatDataDialog = 1;
 	statusScreenFunc = 0;
 	ctrl_under_mouse = 0;

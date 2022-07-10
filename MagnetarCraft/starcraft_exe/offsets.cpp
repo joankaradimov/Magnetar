@@ -701,7 +701,7 @@ DECL_FUNC(void (__cdecl*__RTC_Terminate)(), __RTC_Terminate, 0x405967);
 DECL_FUNC(int(*sub_405D74)(), sub_405D74, 0x405d74);
 DECL_FUNC(void(*sub_406504)(), sub_406504, 0x406504);
 DECL_FUNC(int(*sub_40651C)(), sub_40651C, 0x40651c);
-DECL_FUNC(int (__fastcall*renderTerrainGRPToCache)(grpFrame *a1, int a2), renderTerrainGRPToCache, 0x40aae0);
+DECL_FUNC(void (__fastcall*renderTerrainGRPToCache)(grpFrame *a1, int a2), renderTerrainGRPToCache, 0x40aae0);
 DECL_FUNC(char (__fastcall*imageRenderFxn0_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn0_0, 0x40abbe);
 DECL_FUNC(int (__stdcall*sub_40AD04)(int, int, int), sub_40AD04, 0x40ad04);
 DECL_FUNC(int (__stdcall*sub_40AE63)(grpFrame *, int, int), sub_40AE63, 0x40ae63);
@@ -736,15 +736,13 @@ DECL_FUNC(int(*BWFXN_blitMapTiles)(), BWFXN_blitMapTiles, 0x40c253);
 DECL_FUNC(void (__fastcall*BlitTerrainCacheToGameBitmap)(void *this_, int edx0, int a2, int a3), BlitTerrainCacheToGameBitmap, 0x40c2bd);
 DECL_FUNC(int (__stdcall*getDistancePrecise)(int, int), getDistancePrecise, 0x40c300);
 DECL_FUNC(int (__stdcall*GetApproxDistance)(int, int), GetApproxDistance, 0x40c360);
-void drawMinitileImageData(signed int framebuf_pos, int minitile, int a3) {
+void drawMinitileImageData(signed int framebuf_pos, int minitile) {
     int address = 0x40c3b0;
     __asm {
-        xor ebx, ebx
         xor ecx, ecx
         xor edx, edx
         mov edx, framebuf_pos
         mov ecx, minitile
-        mov ebx, a3
         call address
     }
 }
@@ -2188,7 +2186,14 @@ BOOL BlitDirtyArray(RECT *a1) {
 DECL_FUNC(void (__cdecl*DoBltUsingMask)(), DoBltUsingMask, 0x41d420);
 DECL_FUNC(int(*BWFXN_UpdateBltMasks)(), BWFXN_UpdateBltMasks, 0x41d470);
 DECL_FUNC(int(*TransDestroy)(), TransDestroy, 0x41d540);
-DECL_FUNC(int(*updateConsoleImage)(), updateConsoleImage, 0x41d5a0);
+void updateConsoleImage(void **a1) {
+    int address = 0x41d5a0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 BltMask *BltMask_Constructor(Bitmap *a1, char *a2, char *a3) {
     int address = 0x41d640;
     BltMask * result_;
@@ -6426,7 +6431,17 @@ int sub_456490(int a1, __int16 a2, CUnit *a3) {
 DECL_FUNC(void (__thiscall*input_Game_RightMouseClick)(dlgEvent *this_), input_Game_RightMouseClick, 0x4564e0);
 DECL_FUNC(int(*sub_456630)(), sub_456630, 0x456630);
 DECL_FUNC(int(*sub_456680)(), sub_456680, 0x456680);
-DECL_FUNC(char (__fastcall*sub_4566B0)(int a1, CUnit *a2), sub_4566B0, 0x4566b0);
+char sub_4566B0(CUnit *a2) {
+    int address = 0x4566b0;
+    char result_;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int (__thiscall*sub_456730)(CUnit *this_), sub_456730, 0x456730);
 int sub_4567C0(CUnit *a1) {
     int address = 0x4567c0;
@@ -6483,8 +6498,8 @@ char sub_456D30(dialog *a1) {
 }
 DECL_FUNC(void (__thiscall*statdata_LabelUnknownUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_LabelUnknownUpdate, 0x456e00);
 DECL_FUNC(bool (__fastcall*statdata_Unknown)(dialog *a1, dlgEvent *a2), statdata_Unknown, 0x456ec0);
-DECL_FUNC(int(*sub_456EF0)(), sub_456EF0, 0x456ef0);
-DECL_FUNC(char (__thiscall*statdata_UnitWireframeSelectUpdate)(dialog *this_, int a2, int a3), statdata_UnitWireframeSelectUpdate, 0x456f50);
+DECL_FUNC(void (__cdecl*destroyStatdata)(), destroyStatdata, 0x456ef0);
+DECL_FUNC(void (__fastcall*statdata_UnitWireframeSelectUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeSelectUpdate, 0x456f50);
 DECL_FUNC(void (__fastcall*statdata_UnitWireframeTransUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeTransUpdate, 0x4570a0);
 void sub_4571B0(dialog *a1) {
     int address = 0x4571b0;
@@ -6532,17 +6547,15 @@ void sub_457310(dialog *a1) {
         call address
     }
 }
-int CreateContextHelpFromDialog(dialog *a1, char *a2) {
+void CreateContextHelpFromDialog(dialog *a1, char *a2) {
     int address = 0x457350;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a2
         call address
-        mov result_, eax
+        add esp, 4
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_457390)(), sub_457390, 0x457390);
 DECL_FUNC(unsigned int (__stdcall*CMDACT_CancelGeneric)(dialog *a1), CMDACT_CancelGeneric, 0x4573a0);
@@ -6554,39 +6567,30 @@ DECL_FUNC(int(*sub_457560)(), sub_457560, 0x457560);
 DECL_FUNC(int(*sub_457570)(), sub_457570, 0x457570);
 DECL_FUNC(int(*sub_457580)(), sub_457580, 0x457580);
 DECL_FUNC(int(*sub_457590)(), sub_457590, 0x457590);
-int drawCancelUpgradeContextHelp(dialog *a1) {
+void drawCancelUpgradeContextHelp(dialog *a1) {
     int address = 0x4575a0;
-    int result_;
     __asm {
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__stdcall*statdatalUserInteract)(dialog *a1), statdatalUserInteract, 0x4576a0);
-char drawCancelUnitContextHelp(dialog *a1) {
+void drawCancelUnitContextHelp(dialog *a1) {
     int address = 0x457b10;
-    char result_;
     __asm {
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
-int drawUnloadUnitContextHelp(dialog *a1) {
+void drawUnloadUnitContextHelp(dialog *a1) {
     int address = 0x457c20;
-    int result_;
     __asm {
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void *DlgButton_Create(dialog *a1) {
     int address = 0x457ca0;
@@ -6627,7 +6631,7 @@ void statdata_Destroy(dialog *a1, struct dlgEvent *a2) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*statdata_UnitWireframeTransit)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeTransit, 0x457e90);
+DECL_FUNC(bool (__fastcall*statdata_UnitWireframeTransit)(dialog *dlg, dlgEvent *evn), statdata_UnitWireframeTransit, 0x457e90);
 DECL_FUNC(bool (__fastcall*statdata_buttonInteract)(dialog *a1, dlgEvent *a2), statdata_buttonInteract, 0x457f30);
 DECL_FUNC(void (__cdecl*sub_457FE0)(), sub_457FE0, 0x457fe0);
 void ProgressBar_Create(dialog *a1) {
@@ -6679,7 +6683,7 @@ void sub_458BB0(dialog *dlg) {
     }
 }
 DECL_FUNC(void (__cdecl*updateButtonSetEx)(), updateButtonSetEx, 0x458bc0);
-DECL_FUNC(int(*free_cmdIcons)(), free_cmdIcons, 0x458cf0);
+DECL_FUNC(void (__cdecl*free_cmdIcons)(), free_cmdIcons, 0x458cf0);
 DECL_FUNC(int(*sub_458D50)(), sub_458D50, 0x458d50);
 DECL_FUNC(void (__cdecl*updateButtonSet)(), updateButtonSet, 0x458de0);
 void sub_458E70(dialog *a1) {
@@ -6692,10 +6696,10 @@ void sub_458E70(dialog *a1) {
 }
 DECL_FUNC(int (__stdcall*sub_458E90)(int), sub_458E90, 0x458e90);
 DECL_FUNC(int (__stdcall*sub_458EF0)(int), sub_458EF0, 0x458ef0);
-DECL_FUNC(int (__stdcall*CreateTooltip)(char *a1), CreateTooltip, 0x459030);
-DECL_FUNC(int(*CreateUpgradeLevelTooltip)(), CreateUpgradeLevelTooltip, 0x459150);
+DECL_FUNC(void (__stdcall*CreateTooltip)(char *a1), CreateTooltip, 0x459030);
+DECL_FUNC(void (__thiscall*CreateUpgradeLevelTooltip)(char *this_), CreateUpgradeLevelTooltip, 0x459150);
 DECL_FUNC(int(*sub_4591D0)(), sub_4591D0, 0x4591d0);
-DECL_FUNC(int(*resetTooltipInfo)(), resetTooltipInfo, 0x459360);
+DECL_FUNC(void (__cdecl*resetTooltipInfo)(), resetTooltipInfo, 0x459360);
 void getTooltipInfo(dialog *a1, dialog *a2) {
     int address = 0x4593a0;
     __asm {
@@ -7014,7 +7018,7 @@ DECL_FUNC(int(*sub_45E560)(), sub_45E560, 0x45e560);
 DECL_FUNC(int (__stdcall*sub_45E570)(char), sub_45E570, 0x45e570);
 DECL_FUNC(void (__fastcall*GameTalkingPortrait_CB)(dialog *a1, __int16 timer_id), GameTalkingPortrait_CB, 0x45e610);
 DECL_FUNC(int (__stdcall*statPortBtnUpdate)(int, int), statPortBtnUpdate, 0x45e650);
-DECL_FUNC(int(*clearSelectionPortrait)(), clearSelectionPortrait, 0x45e710);
+DECL_FUNC(void (__cdecl*clearSelectionPortrait)(), clearSelectionPortrait, 0x45e710);
 DECL_FUNC(int(*sub_45E770)(), sub_45E770, 0x45e770);
 DECL_FUNC(int (__stdcall*displayIdlePortrait)(__int16), displayIdlePortrait, 0x45e7a0);
 DECL_FUNC(int (__stdcall*displayTalkingPortrait)(__int16), displayTalkingPortrait, 0x45e8a0);
@@ -10962,20 +10966,25 @@ DECL_FUNC(int (__stdcall*sub_481260)(int, __int16), sub_481260, 0x481260);
 DECL_FUNC(int(*sub_481310)(), sub_481310, 0x481310);
 DECL_FUNC(int(*sub_481320)(), sub_481320, 0x481320);
 DECL_FUNC(void (__cdecl*CreateHelpContext)(), CreateHelpContext, 0x481330);
-DECL_FUNC(int(*refreshSelectionScreenEx)(), refreshSelectionScreenEx, 0x4813d0);
-DECL_FUNC(int(*refreshSelectionScreen)(), refreshSelectionScreen, 0x481480);
-int CreateContextHelp(int a1, int a2, char *a3) {
+void refreshSelectionScreenEx(WORD *a1) {
+    int address = 0x4813d0;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
+DECL_FUNC(void (__cdecl*refreshSelectionScreen)(), refreshSelectionScreen, 0x481480);
+void CreateContextHelp(int a1, int a2, char *a3) {
     int address = 0x481510;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a3
         push dword ptr a2
         call address
-        mov result_, eax
+        add esp, 8
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_481690)(), sub_481690, 0x481690);
 DECL_FUNC(int (__stdcall*md5_ctx_init)(int), md5_ctx_init, 0x4816b0);
@@ -14625,7 +14634,7 @@ void drawAllMinimapUnitBoxes(int a1) {
 DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
 DECL_FUNC(void (__fastcall*updateMinimapPositioninfoProc)(dialog *, __int16), updateMinimapPositioninfoProc, 0x4a4a70);
 DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
-DECL_FUNC(int (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
+DECL_FUNC(void (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
 DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
 DECL_FUNC(int(*sub_4A4CB4)(), sub_4A4CB4, 0x4a4cb4);
 void minimapGameUpdate(dialog *dlg) {
@@ -14648,7 +14657,7 @@ DECL_FUNC(void (__fastcall*Minimap_TimerRefresh)(dialog *dlg, __int16 timer_id),
 DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfoProc)(dialog *, __int16), updateMinimapSurfaceInfoProc, 0x4a4e40);
 DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfo2Proc)(dialog *, __int16), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
 DECL_FUNC(void (__fastcall*playerInfoSomethingTvBProc)(dialog *, __int16), playerInfoSomethingTvBProc, 0x4a4fe0);
-DECL_FUNC(char (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
+DECL_FUNC(void (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
 DECL_FUNC(void(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
 DECL_FUNC(int(*nullsub_70)(), nullsub_70, 0x4a51fd);
 DECL_FUNC(int(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
@@ -14681,17 +14690,15 @@ void minimapPreviewMouseUpdate(dialog *a1, struct dlgEvent *a2) {
         call address
     }
 }
-char minimap_dlg_MouseMove(dialog *a1, struct dlgEvent *a2) {
+void minimap_dlg_MouseMove(dialog *a1, struct dlgEvent *a2) {
     int address = 0x4a5490;
-    char result_;
     __asm {
         xor esi, esi
         mov esi, a1
         push dword ptr a2
         call address
-        mov result_, al
+        add esp, 4
     }
-    return result_;
 }
 void minimap_dlg_Activate(dialog *a1) {
     int address = 0x4a54f0;
@@ -16730,7 +16737,17 @@ DECL_FUNC(int(*sub_4BFD30)(), sub_4BFD30, 0x4bfd30);
 DECL_FUNC(int(*sub_4BFD50)(), sub_4BFD50, 0x4bfd50);
 DECL_FUNC(int(*sub_4BFD70)(), sub_4BFD70, 0x4bfd70);
 DECL_FUNC(int(*sub_4BFD90)(), sub_4BFD90, 0x4bfd90);
-DECL_FUNC(int(*CMDACT_Unload)(), CMDACT_Unload, 0x4bfdb0);
+char CMDACT_Unload(int a1) {
+    int address = 0x4bfdb0;
+    char result_;
+    __asm {
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4BFE10)(), sub_4BFE10, 0x4bfe10);
 DECL_FUNC(int(*sub_4BFE30)(), sub_4BFE30, 0x4bfe30);
 DECL_FUNC(int(*sub_4BFE50)(), sub_4BFE50, 0x4bfe50);
@@ -16883,7 +16900,7 @@ DECL_FUNC(int(*RefreshConsole)(), RefreshConsole, 0x4c36c0);
 DECL_FUNC(char *(__fastcall*TblGetString)(__int16 index), TblGetString, 0x4c36f0);
 DECL_FUNC(int(*sub_4C3720)(), sub_4C3720, 0x4c3720);
 DECL_FUNC(int(*sub_4C3750)(), sub_4C3750, 0x4c3750);
-DECL_FUNC(int(*destroyGameHUD)(), destroyGameHUD, 0x4c3780);
+DECL_FUNC(void (__cdecl*destroyGameHUD)(), destroyGameHUD, 0x4c3780);
 DECL_FUNC(void (__cdecl*updateSelectedUnitData)(), updateSelectedUnitData, 0x4c38b0);
 DECL_FUNC(void (__cdecl*sub_4C3930)(), sub_4C3930, 0x4c3930);
 DECL_FUNC(void (__cdecl*LoadConsoleImage)(), LoadConsoleImage, 0x4c3950);
@@ -19980,7 +19997,7 @@ DECL_FUNC(int (__stdcall*sub_4E46A0)(int, int), sub_4E46A0, 0x4e46a0);
 DECL_FUNC(void (__fastcall*sub_4E4750)(dialog *dlg, int x, int y, rect *dst), sub_4E4750, 0x4e4750);
 DECL_FUNC(void (__fastcall*sub_4E4770)(dialog *dlg, int x, int y, rect *dst), sub_4E4770, 0x4e4770);
 DECL_FUNC(int(*j_BWFXN_NextFrameHelperFunctionTarget)(), j_BWFXN_NextFrameHelperFunctionTarget, 0x4e4810);
-DECL_FUNC(char (__fastcall*sub_4E4820)(dialog *a1), sub_4E4820, 0x4e4820);
+DECL_FUNC(void (__fastcall*sub_4E4820)(dialog *a1), sub_4E4820, 0x4e4820);
 DECL_FUNC(bool (__fastcall*dlgfatal_loop)(dialog *dlg, struct dlgEvent *evt), dlgfatal_loop, 0x4e4980);
 DECL_FUNC(int(*load_DLGFatal_BIN)(), load_DLGFatal_BIN, 0x4e4a10);
 int isAttemptingProtossBuild(CUnit *a1) {
@@ -21719,20 +21736,35 @@ void statflufDlgUpdate(dialog *dlg) {
 DECL_FUNC(bool (__fastcall*statfluf_DLG_Interact)(dialog *dlg, dlgEvent *evt), statfluf_DLG_Interact, 0x4f4d60);
 DECL_FUNC(int(*load_statfluf_BIN)(), load_statfluf_BIN, 0x4f4dc0);
 DECL_FUNC(int(*sub_4F4F50)(), sub_4F4F50, 0x4f4f50);
-DECL_FUNC(int(*drawGameMenuContextHelp)(), drawGameMenuContextHelp, 0x4f4f70);
+void drawGameMenuContextHelp(dialog *a2) {
+    int address = 0x4f4f70;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        call address
+    }
+}
 DECL_FUNC(void (__fastcall*statf10_ButtonUpdate)(dialog *dlg, int x, int y, rect *dst), statf10_ButtonUpdate, 0x4f4fb0);
+void Statf10_MouseMoveEvt(dialog *a1, struct dlgEvent *a2) {
+    int address = 0x4f5070;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4F50D0)(), sub_4F50D0, 0x4f50d0);
-char setActiveDlgElement(dialog *a1, struct dlgEvent *a2) {
+void setActiveDlgElement(dialog *a1, struct dlgEvent *a2) {
     int address = 0x4f50f0;
-    char result_;
     __asm {
         xor esi, esi
         mov esi, a1
         push dword ptr a2
         call address
-        mov result_, al
+        add esp, 4
     }
-    return result_;
 }
 void load_gamemenu(dialog *result) {
     int address = 0x4f5150;
@@ -25604,9 +25636,9 @@ char& statusScreenFunc = * ((decltype(&statusScreenFunc)) 0x68c1e5);
 dialog *& ctrl_under_mouse = * ((decltype(&ctrl_under_mouse)) 0x68c1e8);
 int& ctrl_under_mouse_val = * ((decltype(&ctrl_under_mouse_val)) 0x68c1ec);
 dialog *& stardata_Dlg = * ((decltype(&stardata_Dlg)) 0x68c1f0);
-void *& dword_68C1F4 = * ((decltype(&dword_68C1F4)) 0x68c1f4);
+grpHead *& dword_68C1F4 = * ((decltype(&dword_68C1F4)) 0x68c1f4);
 char& CanUpdateStatDataDialog = * ((decltype(&CanUpdateStatDataDialog)) 0x68c1f8);
-void *& dword_68C1FC = * ((decltype(&dword_68C1FC)) 0x68c1fc);
+grpHead *& dword_68C1FC = * ((decltype(&dword_68C1FC)) 0x68c1fc);
 dialog *& dword_68C200 = * ((decltype(&dword_68C200)) 0x68c200);
 void *& dword_68C204 = * ((decltype(&dword_68C204)) 0x68c204);
 char(&buffer)[] = * ((decltype(&buffer)) 0x68c208);
