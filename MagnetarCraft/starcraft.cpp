@@ -5063,6 +5063,90 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN);
 
+bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
+{
+	if (evn->wNo == EventNo::EVN_MOUSEMOVE)
+	{
+		sub_457DE0(dlg, evn);
+	}
+	else if (evn->wNo == EventNo::EVN_USER)
+	{
+		switch (evn->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			dlg->pfcnUpdate = statdata_UnitWireframeTransUpdate;
+			dlg->wUser = 0;
+			dlg->lUser = 0;
+			break;
+		case EventUser::USER_ACTIVATE:
+			CMDACT_Unload(dlg->lUser);
+			return 1;
+		case EventUser::USER_MOUSEMOVE:
+			if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
+			{
+				return 1;
+			}
+			break;
+		case EventUser::USER_NEXT:
+			if (dlg == ctrl_under_mouse)
+			{
+				refreshSelectionScreen();
+				ctrl_under_mouse = 0;
+			}
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evn);
+}
+
+FAIL_STUB_PATCH(statdata_UnitWireframeTransit);
+
+bool __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_MOUSEMOVE)
+	{
+		sub_457DE0(dlg, evt);
+	}
+	else if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			dlg->pfcnUpdate = statdata_UnitWireframeSelectUpdate;
+			dlg->wUser = 0;
+			dlg->lUser = (int)SMemAlloc(8, "Starcraft\\SWAR\\lang\\statdata.cpp", 775, 0);
+			break;
+		case EventUser::USER_DESTROY:
+			if (dlg->lUser)
+			{
+				SMemFree((void*) dlg->lUser, "Starcraft\\SWAR\\lang\\statdata.cpp", 780, 0);
+			}
+			break;
+		case EventUser::USER_ACTIVATE:
+			StatusScreenButton(dlg, dlg);
+			return 1;
+		case EventUser::USER_MOUSEMOVE:
+			if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
+			{
+				return 1;
+			}
+			break;
+		case EventUser::USER_NEXT:
+			if (dlg == ctrl_under_mouse)
+			{
+				refreshSelectionScreen();
+				ctrl_under_mouse = 0;
+			}
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(statdata_UnitWireframeSelection);
+
 void statdata_extendedCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
@@ -5083,33 +5167,33 @@ void statdata_extendedCtrlID_(dialog* dlg)
 		statdata_buttonInteract,
 		statdata_ProgressBarInteract,
 		statdata_buttonInteract,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeTransit,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
-		statdata_UnitWireframeSelection,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeTransit_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
+		statdata_UnitWireframeSelection_,
 	};
 
 	registerUserDialogAction(dlg, sizeof(functions), functions);
