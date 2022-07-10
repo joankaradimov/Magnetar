@@ -4437,6 +4437,53 @@ LABEL_14:
 
 FUNCTION_PATCH(updateCurrentButtonset, updateCurrentButtonset_);
 
+void sub_458120_()
+{
+	if (ActivePortraitUnit)
+	{
+		if (ClientSelectionCount != 1)
+		{
+			if (CanUpdateStatDataDialog || isSelGroupUpdated())
+			{
+				sub_425960(stardata_Dlg);
+				sub_457FE0();
+			}
+		}
+		else if (CanUpdateStatDataDialog || unit_stats[ActivePortraitUnit->unitType].condition())
+		{
+			unit_stats[ActivePortraitUnit->unitType].action(stardata_Dlg);
+			sub_4568B0();
+			sub_457FE0();
+		}
+	}
+	else if (CanUpdateStatDataDialog)
+	{
+		for (dialog* v1 = stardata_Dlg->wCtrlType != DialogType::cDLG ? stardata_Dlg : stardata_Dlg->fields.dlg.pFirstChild; v1; v1 = v1->pNext)
+		{
+			HideDialog(v1);
+		}
+		statusScreenFunc = 0;
+	}
+
+	CanUpdateStatDataDialog = 0;
+}
+
+FAIL_STUB_PATCH(sub_458120);
+
+void sub_4C3B10_()
+{
+	if (byte_59723C)
+	{
+		updateSelectedUnitData();
+		byte_59723C = 0;
+	}
+	updateSelectedUnitPortrait();
+	updateCurrentButtonset_();
+	sub_458120_();
+}
+
+FAIL_STUB_PATCH(sub_4C3B10);
+
 void sub_4D93B0_()
 {
 	if (dword_51BFA8 && ColorCycle && !IS_GAME_PAUSED)
@@ -4454,14 +4501,7 @@ FAIL_STUB_PATCH(sub_4D93B0);
 
 void updateHUDInformation_()
 {
-	if (byte_59723C)
-	{
-		updateSelectedUnitData();
-		byte_59723C = 0;
-	}
-	updateSelectedUnitPortrait();
-	updateCurrentButtonset_();
-	sub_458120();
+	sub_4C3B10_();
 	refreshScreen();
 	sub_4D93B0_();
 	refreshGameTextIfCounterActive();
