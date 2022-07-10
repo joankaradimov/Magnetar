@@ -5560,9 +5560,9 @@ void statdata_extendedCtrlID_(dialog* dlg)
 		statdata_buttonInteract,
 		statdata_ProgressBarInteract,
 		statdata_buttonInteract,
-		statdata_UnitWireframeTransit_, // large unit (1st left to right)
-		statdata_UnitWireframeTransit_, // large unit (2nd left to right)
-		statdata_UnitWireframeTransit_, // large unit (middle; unused?)
+		statdata_UnitWireframeTransit_, // large unit (leftmost)
+		statdata_UnitWireframeTransit_, // large unit (rightmost)
+		statdata_UnitWireframeTransit_, // large unit (middle)
 		statdata_UnitWireframeTransit_, // medium unit (1st left to right)
 		statdata_UnitWireframeTransit_, // medium unit (2nd left to right)
 		statdata_UnitWireframeTransit_, // medium unit (3rd left to right)
