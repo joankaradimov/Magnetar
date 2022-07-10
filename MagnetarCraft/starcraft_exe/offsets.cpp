@@ -2769,7 +2769,7 @@ void sub_425790(dialog *a1, unsigned __int16 a2, WeaponType weapon_type) {
         call address
     }
 }
-void AddTextToDialog(dialog *a1, __int16 a2, char *a3) {
+void AddTextToDialog(dialog *a1, __int16 a2, const char *a3) {
     int address = 0x4258b0;
     __asm {
         xor eax, eax
@@ -2808,7 +2808,7 @@ void SetKillsStrText(signed int a1, dialog *a2) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*getActivePortraitUnitName)(int), getActivePortraitUnitName, 0x425ec0);
+DECL_FUNC(void (__stdcall*getActivePortraitUnitName)(dialog *a1), getActivePortraitUnitName, 0x425ec0);
 DECL_FUNC(void (__fastcall*UnitStatAct_Default)(dialog *this_), UnitStatAct_Default, 0x425ee0);
 void sub_425F30(dialog *a1) {
     int address = 0x425f30;
@@ -10301,7 +10301,7 @@ DECL_FUNC(int (__stdcall*sub_479DD0)(__int16, __int16), sub_479DD0, 0x479dd0);
 DECL_FUNC(int (__stdcall*sub_479E00)(__int16, __int16), sub_479E00, 0x479e00);
 DECL_FUNC(int(*sub_479E30)(), sub_479E30, 0x479e30);
 DECL_FUNC(int(*nullsub_35)(), nullsub_35, 0x479e50);
-DECL_FUNC(int(*minorUnpackSharedSaveData)(), minorUnpackSharedSaveData, 0x479e60);
+DECL_FUNC(bool *(__thiscall*minorUnpackSharedSaveData)(CBullet *bullet), minorUnpackSharedSaveData, 0x479e60);
 int minorPackSharedSaveData(CBullet *a1) {
     int address = 0x479ec0;
     int result_;
@@ -11642,7 +11642,7 @@ DECL_FUNC(int(*nullsub_48)(), nullsub_48, 0x48a680);
 DECL_FUNC(void (__cdecl*InitializeBulletArray)(), InitializeBulletArray, 0x48a690);
 DECL_FUNC(int(*nullsub_49)(), nullsub_49, 0x48a710);
 DECL_FUNC(int(*reorderBulletArrayReferences)(), reorderBulletArrayReferences, 0x48a720);
-DECL_FUNC(int (__stdcall*unpackBulletData)(int), unpackBulletData, 0x48a8d0);
+DECL_FUNC(char *(__thiscall*unpackBulletData)(CBullet *bullet, char *a2), unpackBulletData, 0x48a8d0);
 int packBulletData(CBullet *a1, int a2) {
     int address = 0x48a9a0;
     int result_;
@@ -24120,7 +24120,7 @@ int& dword_50CEC9 = * ((decltype(&dword_50CEC9)) 0x50cec9);
 int& dword_50CECD = * ((decltype(&dword_50CECD)) 0x50cecd);
 int& dword_50CED1 = * ((decltype(&dword_50CED1)) 0x50ced1);
 int& dword_50CED5 = * ((decltype(&dword_50CED5)) 0x50ced5);
-int& dword_50CED9 = * ((decltype(&dword_50CED9)) 0x50ced9);
+byte *& dword_50CED9 = * ((decltype(&dword_50CED9)) 0x50ced9);
 char& byte_50CEDD = * ((decltype(&byte_50CEDD)) 0x50cedd);
 int& dword_50CEDE = * ((decltype(&dword_50CEDE)) 0x50cede);
 _DWORD(&dword_50CEE2)[3] = * ((decltype(&dword_50CEE2)) 0x50cee2);
@@ -25172,6 +25172,7 @@ int(&dword_629284)[] = * ((decltype(&dword_629284)) 0x629284);
 SpriteTileData& SpritesOnTileRow = * ((decltype(&SpritesOnTileRow)) 0x629288);
 char(&byte_629A88)[520] = * ((decltype(&byte_629A88)) 0x629a88);
 char(&byte_629C90)[256] = * ((decltype(&byte_629C90)) 0x629c90);
+int(&dword_629D74)[] = * ((decltype(&dword_629D74)) 0x629d74);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
 int& dword_63FD28 = * ((decltype(&dword_63FD28)) 0x63fd28);
