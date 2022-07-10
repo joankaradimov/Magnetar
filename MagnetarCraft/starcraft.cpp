@@ -4506,6 +4506,58 @@ LABEL_14:
 
 FUNCTION_PATCH(updateCurrentButtonset, updateCurrentButtonset_);
 
+void __fastcall UnitStatAct_Dropship_(dialog* dlg)
+{
+	if ((InReplay || ActivePortraitUnit->playerID == g_LocalNationID)
+		&& (ActivePortraitUnit->statusFlags & IsHallucination) == 0
+		&& (sub_424FC0(), isUnitLoaded(ActivePortraitUnit))
+		&& (InReplay || ActivePortraitUnit->playerID == g_LocalNationID))
+	{
+		if (statusScreenFunc != 11)
+		{
+			sub_457310(dlg);
+			statusScreenFunc = 11;
+		}
+		setSpellSpecialBtnGraphic(dlg);
+		setTextStr(dlg);
+		getActivePortraitUnitName(dlg);
+	}
+	else if (ActivePortraitUnit->statusFlags & 2)
+	{
+		UnitStatAct_Building(dlg);
+	}
+	else
+	{
+		UnitStatAct_Standard(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(UnitStatAct_Dropship);
+
+void __fastcall UnitStatAct_Overlord_(dialog* dlg)
+{
+	if ((InReplay || ActivePortraitUnit->playerID == g_LocalNationID) && (ActivePortraitUnit->statusFlags & IsHallucination) == 0)
+	{
+		if (isUnitLoaded(ActivePortraitUnit))
+		{
+			UnitStatAct_Dropship_(dlg);
+		}
+		else
+		{
+			sub_427540(dlg);
+			setTextStr(dlg);
+			SetUnitStatusStrText(dlg);
+			AddTextToDialog(dlg, -5, UnitGetName(ActivePortraitUnit));
+		}
+	}
+	else
+	{
+		UnitStatAct_Standard(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(UnitStatAct_Overlord);
+
 UnitStat unit_stats_[] =
 {
 	{ 0, UnitStatCond_Standard, UnitStatAct_Standard },
@@ -4519,7 +4571,7 @@ UnitStat unit_stats_[] =
 	{ 8, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 9, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x0A, UnitStatCond_Standard, UnitStatAct_Standard },
-	{ 0x0B, UnitStatCond_Dropship, UnitStatAct_Dropship },
+	{ 0x0B, UnitStatCond_Dropship, UnitStatAct_Dropship_ },
 	{ 0x0C, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x0D, UnitStatCond_Powerup, UnitStatAct_Powerup },
 	{ 0x0E, UnitStatCond_Never, UnitStatAct_Default },
@@ -4550,7 +4602,7 @@ UnitStat unit_stats_[] =
 	{ 0x27, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x28, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x29, UnitStatCond_Standard, UnitStatAct_Standard },
-	{ 0x2A, UnitStatCond_overlord, UnitStatAct_Overlord },
+	{ 0x2A, UnitStatCond_overlord, UnitStatAct_Overlord_ },
 	{ 0x2B, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x2C, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x2D, UnitStatCond_Standard, UnitStatAct_Standard },
@@ -4565,7 +4617,7 @@ UnitStat unit_stats_[] =
 	{ 0x36, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x37, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x38, UnitStatCond_Standard, UnitStatAct_Standard },
-	{ 0x39, UnitStatCond_overlord, UnitStatAct_Overlord },
+	{ 0x39, UnitStatCond_overlord, UnitStatAct_Overlord_ },
 	{ 0x3A, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x3B, UnitStatCond_Egg, UnitStatAct_Egg },
 	{ 0x3C, UnitStatCond_Standard, UnitStatAct_Standard },
@@ -4577,7 +4629,7 @@ UnitStat unit_stats_[] =
 	{ 0x42, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x43, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x44, UnitStatCond_Archon, UnitStatAct_Archon },
-	{ 0x45, UnitStatCond_Dropship, UnitStatAct_Dropship },
+	{ 0x45, UnitStatCond_Dropship, UnitStatAct_Dropship_ },
 	{ 0x46, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x47, UnitStatCond_Standard, UnitStatAct_Standard },
 	{ 0x48, UnitStatCond_CarrierReaver, UnitStatAct_CarrierReaver },
@@ -4633,7 +4685,7 @@ UnitStat unit_stats_[] =
 	{ 0x7A, UnitStatCond_Building, UnitStatAct_Building },
 	{ 0x7B, UnitStatCond_Building, UnitStatAct_Building },
 	{ 0x7C, UnitStatCond_Building, UnitStatAct_Building },
-	{ 0x7D, UnitStatCond_Dropship, UnitStatAct_Dropship },
+	{ 0x7D, UnitStatCond_Dropship, UnitStatAct_Dropship_ },
 	{ 0x7E, UnitStatCond_Building, UnitStatAct_Building },
 	{ 0x7F, UnitStatCond_Building, UnitStatAct_Building },
 	{ 0x80, UnitStatCond_Powerup, UnitStatAct_Powerup },
