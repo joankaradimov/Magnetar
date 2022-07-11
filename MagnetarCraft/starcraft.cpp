@@ -7301,9 +7301,9 @@ FAIL_STUB_PATCH(initMapData);
 unsigned int GetGroundHeightAtPos_(int x, int y)
 {
 	int megatile_index = x / TILE_WIDTH + y / TILE_HEIGHT * map_size.width;
-	TileID megatile = ZergCreepArray[megatile_index] ? ZergCreepArray[megatile_index] : MapTileArray[megatile_index];
+	TileID megatile = *(u16*)&ZergCreepArray[megatile_index] ? ZergCreepArray[megatile_index] : MapTileArray[megatile_index];
 
-	u16 v1 = TileSetMap[(megatile >> 4) & 0x7FF].megaTileRef[megatile & 0xF];
+	u16 v1 = TileSetMap[megatile.group].megaTileRef[megatile.tile];
 	u16 v2 = MiniTileFlags->tile[v1].miniTile[4 * ((y >> 3) & 3) + ((x >> 3) & 3)];
 
 	int ground_height = (v2 & 6) >> 1;

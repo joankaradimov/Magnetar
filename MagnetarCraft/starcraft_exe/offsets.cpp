@@ -850,7 +850,7 @@ DECL_FUNC(signed int (__stdcall*getCreepValue)(TileID *a1, int a2, int a3, TileI
 DECL_FUNC(signed int (__stdcall*cb)(TileID *a1, int a2, int a3, TileID *a4, int a5), cb, 0x413aa0);
 DECL_FUNC(int(*sub_413AE0)(), sub_413AE0, 0x413ae0);
 DECL_FUNC(int(*sub_413B20)(), sub_413B20, 0x413b20);
-unsigned int iterateDirectionalCreepData(int (__stdcall *a1)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD), int a2, int a3, int a4) {
+unsigned int iterateDirectionalCreepData(int (__stdcall *a1)(char, TileID *, int, int, byte *), byte *a2, int a3, int a4) {
     int address = 0x413b30;
     unsigned result_;
     __asm {
@@ -898,9 +898,9 @@ int sub_414180(UnitType a1, int a2, int a3, int a4, int a5, int a6) {
     return result_;
 }
 DECL_FUNC(int(*sub_4141F0)(), sub_4141F0, 0x4141f0);
-DECL_FUNC(int (__stdcall*getCreepAtAndSet)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD), getCreepAtAndSet, 0x414230);
+DECL_FUNC(int (__stdcall*getCreepAtAndSet)(char a1, TileID *a2, int a3, int a4, _BYTE *a5), getCreepAtAndSet, 0x414230);
 DECL_FUNC(int (__stdcall*getNumSurroundingCreepTiles)(int, int), getNumSurroundingCreepTiles, 0x414290);
-DECL_FUNC(bool (__stdcall*BWFXN_CreepManagementCB)(int (__stdcall *a1)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD), WORD *a2, int a3, int a4, int *a5), BWFXN_CreepManagementCB, 0x414440);
+DECL_FUNC(int (__stdcall*BWFXN_CreepManagementCB)(char a1, TileID *a2, int a3, int a4, byte *a5), BWFXN_CreepManagementCB, 0x414440);
 DECL_FUNC(int(*sub_4144C0)(), sub_4144C0, 0x4144c0);
 DECL_FUNC(int (__stdcall*sub_414560)(int), sub_414560, 0x414560);
 DECL_FUNC(int(*sub_414680)(), sub_414680, 0x414680);
@@ -14713,7 +14713,6 @@ void minimap_dlg_MouseMove(dialog *a1, struct dlgEvent *a2) {
         mov esi, a1
         push dword ptr a2
         call address
-        add esp, 4
     }
 }
 void minimap_dlg_Activate(dialog *a1) {
@@ -26113,7 +26112,7 @@ void (__stdcall *&dword_6D0C70)(_DWORD, _DWORD, _DWORD, TileID, RECT *) = *((dec
 int (__stdcall *&dword_6D0C74)(_DWORD, _DWORD) = *((decltype(&dword_6D0C74)) 0x6d0c74);
 int (__stdcall *&dword_6D0C78)(_DWORD, _DWORD) = *((decltype(&dword_6D0C78)) 0x6d0c78);
 int (__stdcall *&dword_6D0C7C)(_DWORD) = *((decltype(&dword_6D0C7C)) 0x6d0c7c);
-char(&byte_6D0C80)[] = * ((decltype(&byte_6D0C80)) 0x6d0c80);
+char(&byte_6D0C80)[512] = * ((decltype(&byte_6D0C80)) 0x6d0c80);
 u8 *& CreepEdgeData = * ((decltype(&CreepEdgeData)) 0x6d0e80);
 TileID *& dword_6D0E84 = * ((decltype(&dword_6D0E84)) 0x6d0e84);
 char(&byte_6D0E88)[128] = * ((decltype(&byte_6D0E88)) 0x6d0e88);
