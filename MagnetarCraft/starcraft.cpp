@@ -4014,6 +4014,75 @@ void FreeSAI_Paths_()
 
 FAIL_STUB_PATCH(FreeSAI_Paths);
 
+void destroyStatdata_()
+{
+	if (stardata_Dlg)
+	{
+		DestroyDialog(stardata_Dlg);
+		stardata_Dlg = NULL;
+	}
+
+	if (dword_68C1FC)
+	{
+		SMemFree(dword_68C1FC, "Starcraft\\SWAR\\lang\\statdata.cpp", 1360, 0);
+		dword_68C1FC = NULL;
+	}
+
+	if (dword_68C1F4)
+	{
+		SMemFree(dword_68C1F4, "Starcraft\\SWAR\\lang\\statdata.cpp", 1362, 0);
+		dword_68C1F4 = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroyStatdata);
+
+void free_cmdIcons_()
+{
+	if (current_dialog)
+	{
+		DestroyDialog(current_dialog);
+		current_dialog = NULL;
+	}
+
+	if (dword_68C1C0)
+	{
+		SMemFree(dword_68C1C0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1107, 0);
+		dword_68C1C0 = NULL;
+	}
+
+	if (cmdicons_grp)
+	{
+		SMemFree(cmdicons_grp, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1109, 0);
+		cmdicons_grp = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(free_cmdIcons);
+
+void clearSelectionPortrait_()
+{
+	if (video)
+	{
+		SVidPlayEnd(video);
+		video = NULL;
+	}
+
+	if (starport_Dlg)
+	{
+		DestroyDialog(starport_Dlg);
+		starport_Dlg = NULL;
+	}
+
+	if (dword_6D5C9C)
+	{
+		SMemFree(dword_6D5C9C, "Starcraft\\SWAR\\lang\\statport.cpp", 882, 0);
+		dword_6D5C9C = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(clearSelectionPortrait);
+
 void destroyGameHUD_()
 {
 	if (minimap_Dlg)
@@ -4046,7 +4115,7 @@ void destroyGameHUD_()
 		dword_68C204 = NULL;
 	}
 
-	destroyStatdata();
+	destroyStatdata_();
 	if (statres_Dlg)
 	{
 		DestroyDialog(statres_Dlg);
@@ -4065,8 +4134,8 @@ void destroyGameHUD_()
 		statlb_Dlg = NULL;
 	}
 
-	free_cmdIcons();
-	clearSelectionPortrait();
+	free_cmdIcons_();
+	clearSelectionPortrait_();
 	sub_4F4CF0();
 	refreshSelectionScreen();
 
