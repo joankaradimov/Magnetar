@@ -1310,7 +1310,7 @@ void BWFXN_updateImageData_()
 
 FAIL_STUB_PATCH(BWFXN_updateImageData);
 
-void drawMinitileImageData_(signed int framebuf_pos, int minitile)
+void drawMinitileImageData_(int framebuf_pos, int minitile)
 {
 	char* v4 = (char*)VR4Data + 32 * (minitile & 0xFFFE);
 	for (int i = 0; i < 8; i++)
