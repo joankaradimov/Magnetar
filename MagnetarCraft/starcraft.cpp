@@ -1335,7 +1335,7 @@ void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 	{
 		for (int j = 0; j < 4; j++)
 		{
-			drawMinitileImageData_(framebuf_position + 8 * 672 * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j]);
+			drawMinitileImageData_(framebuf_position + 8 * (GAME_AREA_WIDTH + TILE_WIDTH) * i + 8 * j, VX4Data[megatile & 0x7FFF].wImageRef[i][j]);
 		}
 	}
 
