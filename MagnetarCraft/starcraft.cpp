@@ -1365,6 +1365,47 @@ void __stdcall drawMegatileImageData__(int x, int y)
 
 FUNCTION_PATCH((void*)0x49B9F0, drawMegatileImageData__);
 
+DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
+
+void drawScreenRowTiles_(__int16* a1, TileID* a2, MegatileFlags* a3, int a4, int a5)
+{
+	if (a4 < map_size.height)
+	{
+		int v8 = 0;
+		int v6 = MoveToTile.x;
+
+		for (int i = 0; i < min(map_size.width - MoveToTile.x, RENDER_AREA_TILE_COLUMNS); i++)
+		{
+			if (InReplay ? (ReplayVision & ~a3[i]) : (playerVisions & a3[i]) == 0)
+			{
+				__int16 megatile_ref = TileSetMap[a2[i].group].megaTileRef[a2[i].tile];
+				if (megatile_ref != (a1[i] & 0x7FFF))
+				{
+					a1[i] = megatile_ref;
+					if (a2[i].group == 1)
+					{
+						a3[i] |= LOCAL_CREEP;
+					}
+					else
+					{
+						a3[i] &= ~LOCAL_CREEP;
+					}
+					iterateDirectionalCreepData(BWFXN_CreepManagementCB, 0, v6 + i, a4);
+					drawMegatileImageData_(a1[i], (a5 + i * TILE_HEIGHT) % (9408 * TILE_HEIGHT), v6 + i, a4);
+					v8 = 1;
+				}
+			}
+		}
+
+		if (v8)
+		{
+			HasMegatileUpdate = 1;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(drawScreenRowTiles);
+
 void BWFXN_drawMapTiles_()
 {
 	int v2 = MoveToTile.y;
@@ -1390,7 +1431,7 @@ void BWFXN_drawMapTiles_()
 	}
 	for (int i = 0; i < RENDER_AREA_TILE_ROWS; i++)
 	{
-		drawScreenRowTiles(
+		drawScreenRowTiles_(
 			&CellMap[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
 			&MapTileArray[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
 			&active_tiles[MoveToTile.x + (MoveToTile.y + i) * map_size.width],
@@ -4376,7 +4417,6 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
-DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
 DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
 
 void RemoveFoWCheat_()
