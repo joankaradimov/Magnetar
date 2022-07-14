@@ -3210,6 +3210,41 @@ void InitializeSpriteArray_()
 
 FAIL_STUB_PATCH(InitializeSpriteArray);
 
+void ResetDATFiles_()
+{
+	LoadGameData(upgradesDat, "arr\\upgrades.dat");
+	LoadGameData(weaponsDat, "arr\\weapons.dat");
+	LoadGameData(techdataDat, "arr\\techdata.dat");
+	LoadGameData(portdataDat, "arr\\portdata.dat");
+
+	if (!loadGameFileHandle)
+	{
+		memset(&UnitAvailability, 1u, sizeof(UnitAvailability));
+		memset(TechAvailableSC, 1u, sizeof(TechAvailableSC));
+		memset(TechAvailableBW, 1u, sizeof(TechAvailableBW));
+		memset(TechResearchSC, 0, sizeof(TechResearchSC));
+		memset(TechResearchBW, 0, sizeof(TechResearchBW));
+		memset(ResearchProgress, 0, sizeof(ResearchProgress));
+
+		for (int i = 0; i < 12; i++)
+		{
+			memcpy(UpgradeMaxSC + i, Upgrade_MaxRepeats, sizeof(UpgradesSC));
+			memcpy(UpgradeMaxBW[i].items, &Upgrade_MaxRepeats[46], sizeof(UpgradeMaxBW[i].items));
+		}
+
+		memset(UpgradeLevelSC, 0, sizeof(UpgradeLevelSC));
+		memset(UpgradeLevelBW, 0, sizeof(UpgradeLevelBW));
+		memset(UpgradeProgress, 0, sizeof(UpgradeProgress));
+		memset(stru_596CD8, 0, sizeof(stru_596CD8));
+		memset(next_scenario, 0, sizeof(next_scenario));
+
+		dword_58F442 = 0;
+		dword_58F446 = 0;
+	}
+}
+
+FAIL_STUB_PATCH(ResetDATFiles);
+
 int sub_4EEFD0_()
 {
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
@@ -3231,7 +3266,7 @@ int sub_4EEFD0_()
 		InitializeUnitCounts();
 	}
 	initializePsiFieldData();
-	ResetDATFiles();
+	ResetDATFiles_();
 	resetOrdersUnitsDAT();
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle || LoadMap_())
@@ -3311,7 +3346,7 @@ signed int GameInit_()
 	if (!loadGameFileHandle)
 		InitializeUnitCounts();
 	initializePsiFieldData();
-	ResetDATFiles();
+	ResetDATFiles_();
 	resetOrdersUnitsDAT();
 	calculateUnitStrengths();
 	createUnitBuildingSpriteValidityArray();
