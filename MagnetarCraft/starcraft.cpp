@@ -1456,6 +1456,23 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void drawImage_(CImage* a1)
+{
+	if ((a1->flags & 0x40) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & 1) != 0 || isImageRefreshable(a1)))
+	{
+		RECT v8;
+		v8.left = a1->grpBounds.left;
+		v8.right = a1->grpBounds.right;
+		v8.top = a1->grpBounds.top;
+		v8.bottom = a1->grpBounds.bottom;
+
+		a1->renderFunction(a1->screenPosition.x, a1->screenPosition.y, &a1->GRPFile->frames[a1->frameIndex], (rect*)&v8, (int)a1->coloringData);
+	}
+	a1->flags &= ~1;
+}
+
+FAIL_STUB_PATCH(drawImage);
+
 void drawSprite_(CSprite* a1)
 {
 	dword_6D5BD4 = getColourID(a1->playerID);
@@ -1467,7 +1484,7 @@ void drawSprite_(CSprite* a1)
 	}
 	for (CImage* image = a1->pImageTail; image; image = image->prev)
 	{
-		drawImage(image);
+		drawImage_(image);
 	}
 }
 
