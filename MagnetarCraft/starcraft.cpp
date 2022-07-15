@@ -6633,6 +6633,187 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
+int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
+{
+	int x;
+	int y;
+	int v23;
+	int v24;
+	int v26;
+	int a1a;
+	int v28;
+	int v29;
+	int v30;
+
+	v26 = a2.x;
+	a1a = a2.y;
+	v23 = a1->regionCount;
+	dword_6D5BF8 = 0;
+	v24 = 0;
+	SaiAccessabilityFlags a5 = (SaiAccessabilityFlags) 0;
+	v28 = 56;
+	while (2)
+	{
+		rect v19 = { 0, 0, 0, 0 };
+		v29 = 0;
+		v30 = 0;
+
+		x = v26;
+		y = a1a;
+		if (v26 >= (__int16)size.width)
+		{
+			x = (__int16)a2.x;
+			y = a1a + 1;
+			if (a1a + 1 >= (__int16)size.height)
+			{
+				y = (__int16)a2.y;
+			}
+		}
+
+		u16* v20 = &a1->mapTileRegionId[y][x];
+		while (1)
+		{
+			if (a1->mapTileRegionId[y][x] >= 5000u)
+			{
+				rect a4;
+				SAI_PathCreate_Sub3_0_0(y, x, a1, &a4, a1->mapTileRegionId[y][x]);
+				++v29;
+				if (v30 < (a4.right - a4.left) * (a4.bottom - a4.top))
+				{
+					v30 = (a4.right - a4.left) * (a4.bottom - a4.top);
+					v19 = a4;
+					a5 = (SaiAccessabilityFlags)a1->mapTileRegionId[y][x];
+				}
+				if (v30 >= v28 || v29 > 25)
+				{
+					a1a = v19.top;
+					v26 = v19.right;
+					break;
+				}
+				x = a4.right;
+			}
+			else
+			{
+				x += 1;
+			}
+
+			if (x >= size.width)
+			{
+				x = (__int16)a2.x;
+				++y;
+				if (y >= (__int16)size.height)
+				{
+					y = (__int16)a2.y;
+				}
+			}
+			if (&a1->mapTileRegionId[y][x] == v20)
+			{
+				break;
+			}
+		}
+
+		if (a1->regionCount >= 5000)
+		{
+			dword_6D5BF8 = 1;
+			if (dword_6CA54C)
+			{
+				SMemFree(dword_6CA54C, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 882, 0);
+				dword_6CA54C = 0;
+			}
+			if (!outOfGame)
+			{
+				leaveGame(3);
+				outOfGame = 1;
+				doNetTBLError(
+					0,
+					"The map could not be loaded because it had too many obstructions. "
+					"Try widening corridors and reducing the number of small nooks and crannies to correct the problem.\n\n",
+					0,
+					97);
+				if (gwGameMode == GAME_RUN)
+				{
+					GameState = 0;
+					gwNextGameMode = GAME_GLUES;
+					if (!InReplay)
+					{
+						replay_header.ReplayFrames = ElapsedTimeFrames;
+					}
+				}
+				if (glGluesMode == GAME_GLUES)
+				{
+					GetWindowThreadProcessId(hWndParent, (LPDWORD)&size);
+					EnumWindows(EnumFunc, *(_DWORD*)&size);
+				}
+				glGluesMode = GLUE_GENERIC;
+			}
+			return 0;
+		}
+		else
+		{
+			v28 = (v19.right - v19.left) * (v19.bottom - v19.top);
+			if (v28)
+			{
+				SAI_PathCreate_Sub3_0_1(a1->regionCount, &v19, a1);
+				a1->regions[a1->regionCount].rgnCenterX = (v19.left + v19.right) / 2;
+				a1->regions[a1->regionCount].rgnCenterY = (v19.top + v19.bottom) / 2;
+				if (v19.left > 0)
+				{
+					--v19.left;
+				}
+				if (v19.right < (int)map_size.width)
+				{
+					++v19.right;
+				}
+				if (v19.top > 0)
+				{
+					--v19.top;
+				}
+				if (v19.bottom < (int)map_size.height)
+				{
+					++v19.bottom;
+				}
+
+				SAI_PathCreate_Sub3_0_2(a1->regionCount, a1, &v19, a5);
+				a1->regions[a1->regionCount].rgnBox.left = v19.left;
+				a1->regions[a1->regionCount].rgnBox.top = v19.top;
+				a1->regions[a1->regionCount].rgnBox.right = v19.right;
+				a1->regions[a1->regionCount].rgnBox.bottom = v19.bottom;
+				a1->regions[a1->regionCount].accessabilityFlags = a5;
+				a1->regionCount++;
+				if (v28 <= 6 && v24 == 0)
+				{
+					v24 = 1;
+					for (int v12 = v23; v12 < a1->regionCount; v12++)
+					{
+						u16* v14 = &a1->regions[v12].rgnBox.top;
+						if ((__int16)a1->regions[v12].rgnBox.left > 0)
+						{
+							a1->regions[v12].rgnBox.left -= 1;
+						}
+						if ((__int16)a1->regions[v12].rgnBox.right < map_size.width)
+						{
+							a1->regions[v12].rgnBox.right += 1;
+						}
+						if ((__int16)a1->regions[v12].rgnBox.top > 0)
+						{
+							a1->regions[v12].rgnBox.top -= 1;
+						}
+						if ((__int16)a1->regions[v12].rgnBox.bottom < map_size.height)
+						{
+							a1->regions[v12].rgnBox.bottom += 1;
+						}
+						SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox - 1, a1->regions[v12].accessabilityFlags);
+					}
+				}
+				continue;
+			}
+			return 1;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
+
 DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
 
 void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
@@ -6773,7 +6954,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
 	int old_region_count = a2->regionCount;
 
-	if (!SAI_PathCreate_Sub3_0(a2, a1->position, a1->map_size))
+	if (!SAI_PathCreate_Sub3_0_(a2, a1->position, a1->map_size))
 	{
 		return 0;
 	}
