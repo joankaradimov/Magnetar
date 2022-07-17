@@ -12962,22 +12962,21 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 		}
 
 		unsigned int v7;
-		if (a1->number2 == 7)
+		switch (a1->number2)
 		{
+		case 7:
 			v7 = a1->number;
-		}
-		else if (a1->number2 == 8)
-		{
+			break;
+		case 8:
 			v7 = a1->time + a1->number;
-		}
-		else if (a1->number2 == 9)
-		{
+			break;
+		case 9:
 			v7 = max(a1->time - a1->number, 0);
-		}
-		else
-		{
+			break;
+		default:
 			v7 = a1->time;
 		}
+
 		a1->flags = a1->flags | 1;
 		dword_650980[active_trigger_player] = multiPlayerMode ? v7 : -1;
 		byte_6509B8[active_trigger_player] = 1;
