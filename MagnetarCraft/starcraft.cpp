@@ -12972,14 +12972,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 		}
 		else if (a1->number2 == 9)
 		{
-			if (a1->time >= a1->number)
-			{
-				v7 = a1->time - a1->number;
-			}
-			else
-			{
-				v7 = 0;
-			}
+			v7 = max(a1->time - a1->number, 0);
 		}
 		else
 		{
