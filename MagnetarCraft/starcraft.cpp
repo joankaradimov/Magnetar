@@ -13275,17 +13275,17 @@ FUNCTION_PATCH(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_);
 
 int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
 {
-	if (a1->number2 == 4)
+	switch (a1->number2)
 	{
+	case 4:
 		dword_58D708 = 1;
-	}
-	else if (a1->number2 == 5)
-	{
+		break;
+	case 5:
 		dword_58D708 = 0;
-	}
-	else if (a1->number2 == 6)
-	{
+		break;
+	case 6:
 		dword_58D708 ^= 1;
+		break;
 	}
 	return 1;
 }
