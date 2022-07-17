@@ -5003,7 +5003,7 @@ void sub_4D93B0_()
 	if (dword_51BFA8 && ColorCycle && !IS_GAME_PAUSED)
 	{
 		DWORD tick_count = GetTickCount();
-		if (tick_count - dword_6D6374 >= 0xA)
+		if (tick_count >= dword_6D6374 + 10)
 		{
 			dword_6D6374 = tick_count;
 			colorCycleInterval_();
