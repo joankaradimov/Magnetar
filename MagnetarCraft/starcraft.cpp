@@ -1038,7 +1038,7 @@ FAIL_STUB_PATCH(sub_4AB970);
 
 void InitializeImage_()
 {
-	memset(ScreenLayers, 0, 0xA0u);
+	memset(ScreenLayers, 0, sizeof(layer) * 8);
 	memset(RefreshRegions, 0, sizeof(RefreshRegions));
 	GameScreenBuffer.wid = SCREEN_WIDTH;
 	GameScreenBuffer.ht = SCREEN_HEIGHT;
