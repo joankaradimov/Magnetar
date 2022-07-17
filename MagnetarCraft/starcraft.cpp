@@ -13090,7 +13090,6 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		if (active_trigger_player == g_LocalNationID)
 		{
 			int v11 = (LocationTable[a1->location - 1].dimensions.left + LocationTable[a1->location - 1].dimensions.right - GAME_AREA_WIDTH) / 2;
-			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - GAME_AREA_HEIGHT) / 2;
 			if (v11 >= 0)
 			{
 				if (v11 >= map_width_pixels - GAME_AREA_WIDTH)
@@ -13102,6 +13101,8 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 			{
 				v11 = 0;
 			}
+
+			int v12 = (LocationTable[a1->location - 1].dimensions.top + LocationTable[a1->location - 1].dimensions.bottom - GAME_AREA_HEIGHT) / 2;
 			if (v12 >= 0)
 			{
 				if (v12 >= map_height_pixels - GAME_AREA_HEIGHT)
@@ -13113,6 +13114,7 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 			{
 				v12 = 0;
 			}
+
 			assignCenterViewProc(v12, v11, defCenterViewProc);
 		}
 		a1->flags |= 1u;
