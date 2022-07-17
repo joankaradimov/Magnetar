@@ -582,6 +582,26 @@ const char* GetNetworkTblString(__int16 network_tbl_entry)
 	}
 }
 
+const char* GetMapTblString(__int16 map_tbl_entry)
+{
+	if (map_tbl_entry == 0)
+	{
+		return "";
+	}
+	else if (MapStringTbl.buffer == 0)
+	{
+		return NULL;
+	}
+	else if (map_tbl_entry < *MapStringTbl.buffer + 1)
+	{
+		return (char*)MapStringTbl.buffer + MapStringTbl.buffer[map_tbl_entry];
+	}
+	else
+	{
+		return "";
+	}
+}
+
 char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 {
 	if (!gluAllTblDataLoaded)
@@ -3498,22 +3518,7 @@ int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
 	}
 	__int16 v12 = LOWORD(a4->data0);
 	dword_5994DC = 1;
-	if (v12 == 0)
-	{
-		v13 = "";
-	}
-	else if (MapStringTbl.buffer == 0)
-	{
-		v13 = 0;
-	}
-	else if (v12 - 1 < *MapStringTbl.buffer)
-	{
-		v13 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[v12];
-	}
-	else
-	{
-		v13 = "";
-	}
+	v13 = GetMapTblString(v12);
 
 	SStrCopy(CurrentMapName, v13, sizeof(CurrentMapName));
 	return 1;
@@ -13021,21 +13026,7 @@ int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 
 	if (active_trigger_player == g_LocalNationID && ((registry_options.field_18 & 0x400) || (a1->flags & 4)) && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
-		if (MapStringTbl.buffer && a1->string)
-		{
-			if (a1->string - 1 < *MapStringTbl.buffer)
-			{
-				text_message = (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string];
-			}
-			else
-			{
-				text_message = "";
-			}
-		}
-		else
-		{
-			text_message = 0;
-		}
+		text_message = GetMapTblString(a1->string);
 
 		if (text_message)
 		{
@@ -13433,18 +13424,7 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 {
 	if (a1->string)
 	{
-		if (MapStringTbl.buffer == 0 || a1->string == 0)
-		{
-			SStrCopy(next_scenario, 0, sizeof(next_scenario));
-		}
-		else if (a1->string - 1 >= *MapStringTbl.buffer)
-		{
-			SStrCopy(next_scenario, empty_string, sizeof(next_scenario));
-		}
-		else
-		{
-			SStrCopy(next_scenario, (char*)MapStringTbl.buffer + MapStringTbl.buffer[a1->string], sizeof(next_scenario));
-		}
+		SStrCopy(next_scenario, GetMapTblString(a1->string), sizeof(next_scenario));
 	}
 	return 1;
 }
