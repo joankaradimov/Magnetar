@@ -7,3 +7,6 @@
 [submodule "StormLib"]
 	path = StormLib
 	url = git@github.com:ladislav-zezula/StormLib.git
+[submodule "LuaJIT"]
+	path = LuaJIT
+	url = git@github.com:WohlSoft/LuaJIT.git

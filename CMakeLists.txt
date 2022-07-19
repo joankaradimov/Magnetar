@@ -25,6 +25,7 @@ if (MSVC)
     set(CMAKE_DISABLE_FIND_PACKAGE_ZLIB TRUE)
 endif ()
 add_subdirectory("StormLib")
+add_subdirectory("LuaJIT")
 
 set(YAML_CPP_BUILD_TOOLS OFF CACHE INTERNAL "")
 add_subdirectory("yaml-cpp")

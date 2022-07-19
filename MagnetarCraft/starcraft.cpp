@@ -13542,6 +13542,38 @@ int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 
 FAIL_STUB_PATCH(TriggerAction_EnableDebugMode);
 
+extern "C"
+{
+#include <lua.h>
+#include <lualib.h>
+#include <lauxlib.h>
+}
+
+int lua_print(lua_State* L)
+{
+	const char* message = lua_tostring(L, -1);
+
+	if (message)
+	{
+		int display_time = getTextDisplayTime_(message);
+		PrintText(message, 2u, display_time + GetTickCount(), 1);
+	}
+
+	return 1;
+}
+
+int __fastcall TriggerAction_ExecuteLua(Action* a1)
+{
+	const char* script = GetMapTblString(a1->string);
+
+	lua_State* lua = luaL_newstate();
+	lua_register(lua, "print", lua_print);
+	luaL_dostring(lua, script);
+	lua_close(lua);
+
+	return 1;
+}
+
 ActionPointer ActionTable_[] = {
 	TriggerAction_NoAction_,
 	TriggerAction_Victory_,
@@ -13603,6 +13635,7 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_SetAllianceStatus_,
 	TriggerAction_DisableDebugMode_,
 	TriggerAction_EnableDebugMode_,
+	TriggerAction_ExecuteLua,
 };
 
 void ExecuteTriggerActions_(TriggerListEntry* a1)

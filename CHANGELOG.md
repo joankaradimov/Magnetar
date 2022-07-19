@@ -13,6 +13,7 @@
   - Fix wrong colors in magma/water tiles on Ashworld/Ice tilesets (by DarkenedFantasies)
   - Allow mouse scrolling in the campaign history popup
   - Increase the frequency of minimap rerendering
+  - Add a new trigger action: "Execute Lua"
 
 ## 0.1.0 - Anxious Arbiter
   - Enable establishing shots within custom scenarios
