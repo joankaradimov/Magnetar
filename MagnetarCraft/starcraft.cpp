@@ -13588,11 +13588,11 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_SetCountdownTimer_,
 	TriggerAction_RunAiScript_,
 	TriggerAction_RunAiScriptAtLocation_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_, // Control / Text, TUnit
+	TriggerAction_LeaderBoard_, // Control At Location / Text, TUnit, Loc
+	TriggerAction_LeaderBoard_, // Resources / Text, ResType
+	TriggerAction_LeaderBoard_, // Kills / Text, TUnit
+	TriggerAction_LeaderBoard_, // Points / Text, Score
 	TriggerAction_KillUnit_,
 	TriggerAction_KillUnitAtLocation_,
 	TriggerAction_RemoveUnit_,
@@ -13604,11 +13604,11 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_MuteUnitSpeech_,
 	TriggerAction_UnmuteUnitSpeech_,
 	TriggerAction_LeaderBoardComputerPlayers_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
-	TriggerAction_LeaderBoard_,
+	TriggerAction_LeaderBoard_, // Control / Text, TUnit, Number
+	TriggerAction_LeaderBoard_, // Control At Location / Text, TUnit, Number, Loc
+	TriggerAction_LeaderBoard_, // Resources / Text, TUnit, Number, ResType
+	TriggerAction_LeaderBoard_, // Kills / Text, TUnit, Number
+	TriggerAction_LeaderBoard_, // Points / Text, Number, Score
 	TriggerAction_MoveLocation,
 	TriggerAction_MoveUnit,
 	TriggerAction_LeaderBoard_,
@@ -13618,7 +13618,7 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_CreateUnitWithProperties,
 	TriggerAction_SetDeaths_,
 	TriggerAction_Order,
-	TriggerAction_NoAction_,
+	TriggerAction_NoAction_, // Comment
 	TriggerAction_GiveUnitsToPlayer,
 	TriggerAction_ModifyUnitHitPoints,
 	TriggerAction_ModifyUnitEnergy,
