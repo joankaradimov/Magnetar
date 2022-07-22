@@ -10,3 +10,6 @@
 [submodule "LuaJIT"]
 	path = LuaJIT
 	url = git@github.com:WohlSoft/LuaJIT.git
+[submodule "sol2"]
+	path = sol2
+	url = git@github.com:ThePhD/sol2.git

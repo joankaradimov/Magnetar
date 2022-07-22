@@ -13521,34 +13521,27 @@ int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 
 FAIL_STUB_PATCH(TriggerAction_EnableDebugMode);
 
-extern "C"
-{
-#include <lua.h>
-#include <lualib.h>
-#include <lauxlib.h>
-}
+#include <sol/sol.hpp>
 
-int lua_print(lua_State* L)
+void lua_print(const char* message)
 {
-	const char* message = lua_tostring(L, -1);
-
-	if (message)
+	if (active_trigger_player == g_LocalNationID)
 	{
-		int display_time = getTextDisplayTime_(message);
-		PrintText(message, 2u, display_time + GetTickCount(), 1);
+		if (message)
+		{
+			int display_time = getTextDisplayTime_(message);
+			PrintText(message, 2u, display_time + GetTickCount(), 1);
+		}
 	}
-
-	return 1;
 }
 
 int __fastcall TriggerAction_ExecuteLua(Action* a1)
 {
 	const char* script = GetMapTblString(a1->string);
 
-	lua_State* lua = luaL_newstate();
-	lua_register(lua, "print", lua_print);
-	luaL_dostring(lua, script);
-	lua_close(lua);
+	sol::state lua;
+	lua.set_function("print", lua_print);
+	lua.script(script);
 
 	return 1;
 }

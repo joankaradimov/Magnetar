@@ -21,6 +21,7 @@ add_executable(MagnetarCraft WIN32
 include_directories(${YAML_CPP_INCLUDE_DIRS})
 include_directories(${MAGNETORM_INCLUDE_DIRS})
 include_directories(${luajit_SOURCE_DIR}/src)
+include_directories(${sol2_SOURCE_DIR}/include)
 
 target_link_libraries(MagnetarCraft PRIVATE MemoryModule)
 target_link_libraries(MagnetarCraft PRIVATE magnetorm)
