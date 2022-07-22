@@ -13081,25 +13081,8 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 		{
 			Box32* dimensions = &LocationTable[a1->location - 1].dimensions;
 
-			int v11 = (dimensions->left + dimensions->right - GAME_AREA_WIDTH) / 2;
-			if (v11 < 0)
-			{
-				v11 = 0;
-			}
-			else if (v11 >= map_width_pixels - GAME_AREA_WIDTH)
-			{
-				v11 = map_width_pixels - GAME_AREA_WIDTH - 1;
-			}
-
-			int v12 = (dimensions->top + dimensions->bottom - GAME_AREA_HEIGHT) / 2;
-			if (v12 < 0)
-			{
-				v12 = 0;
-			}
-			else if (v12 >= map_height_pixels - GAME_AREA_HEIGHT)
-			{
-				v12 = map_height_pixels - GAME_AREA_HEIGHT - 1;
-			}
+			int v11 = std::clamp((dimensions->left + dimensions->right - GAME_AREA_WIDTH) / 2, 0, map_width_pixels - GAME_AREA_WIDTH - 1);
+			int v12 = std::clamp((dimensions->top + dimensions->bottom - GAME_AREA_HEIGHT) / 2, 0, map_height_pixels - GAME_AREA_HEIGHT - 1);
 
 			assignCenterViewProc(v12, v11, defCenterViewProc);
 		}
