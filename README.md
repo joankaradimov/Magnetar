@@ -46,7 +46,7 @@ Other limitations, that will prevent the project from building:
   - There's a ton of auto-generated MASM assembly that will not compile on clang/gcc.
   - There might be small amounts of hand-written MASM assembly too.
   - The `cmake` build scripts only work with the MSVC toolchain.
-  - The `MemoryModule` library will need some work to function on Windows.
+  - The `MemoryModule` library will need some work to function on Linux.
 
 ### Directory organization
 
