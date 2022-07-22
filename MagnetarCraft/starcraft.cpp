@@ -986,10 +986,10 @@ FAIL_STUB_PATCH(InitAccelerators);
 
 GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
-	char buff[260];
+	char buff[MAX_PATH];
 	int got_file_size;
 
-	_snprintf(buff, 0x104u, "%s%s%s", "Templates\\", template_name, ".got");
+	_snprintf(buff, sizeof(buff), "%s%s%s", "Templates\\", template_name, ".got");
 	GotFile* got_file_data = (GotFile*)fastFileRead_(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!got_file_data)
 	{
@@ -1017,11 +1017,11 @@ FAIL_STUB_PATCH(readTemplate);
 
 int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 {
-	char buff[260];
-	char v7[260];
+	char buff[MAX_PATH];
+	char v7[MAX_PATH];
 	int v10;
 
-	_snprintf(buff, 0x104u, "%s%s", "Templates\\", "templates.lst");
+	_snprintf(buff, sizeof(buff), "%s%s", "Templates\\", "templates.lst");
 	BYTE* v1 = (BYTE*)fastFileRead(&v10, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
 	if (v1 == nullptr)
@@ -1029,7 +1029,7 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 		FatalError("Unable to read game templates.");
 	}
 	BYTE* v11 = v1;
-	while (sub_4AAE20(v7, (unsigned int*)&v10, (_BYTE**) &v11, 0x104u))
+	while (sub_4AAE20(v7, (unsigned int*)&v10, (_BYTE**) &v11, sizeof(v7)))
 	{
 		char* v2 = strrchr(v7, '.');
 		if (v2)
@@ -3550,8 +3550,8 @@ int LevelCheatInitGame_()
 	}
 	if (CampaignIndex == MD_none)
 	{
-		char dest[260];
-		SStrCopy(dest, CurrentMapFileName, 260u);
+		char dest[MAX_PATH];
+		SStrCopy(dest, CurrentMapFileName, sizeof(dest));
 		if (!ReadMapData_(dest, &map_chunks, 0))
 		{
 			if (!outOfGame)
