@@ -1476,6 +1476,59 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void blitTileCacheOnRefresh_()
+{
+	u8* v0 = RefreshRegions;
+	int v1 = (MoveToX + (SCREEN_WIDTH + 32) * MoveToY) % TILE_CACHE_SIZE;
+
+	int v6 = 0;
+	do
+	{
+		for (int i = 0; i < 40; ++i)
+		{
+			if (v1 >= TILE_CACHE_SIZE)
+			{
+				v1 -= TILE_CACHE_SIZE;
+			}
+			if (*v0 == 1)
+			{
+				int v3 = i + 1;
+				int v4 = 1;
+				if (i + 1 < 40)
+				{
+					do
+					{
+						if (*v0 == 0)
+						{
+							break;
+						}
+						++v0;
+						++v4;
+						++v3;
+					} while (v3 < 40);
+				}
+				BlitTerrainCacheToGameBitmap((void*)v6, 16 * i, 16 * v4, v1);
+				v1 = v1 + 16 * (v4 - 1);
+				i = i + v4 - 1;
+				if (v1 >= TILE_CACHE_SIZE)
+				{
+					v1 -= TILE_CACHE_SIZE;
+				}
+			}
+			v1 += 16;
+			++v0;
+		}
+		v1 += 632 * 16;
+		if (v1 >= TILE_CACHE_SIZE)
+		{
+			v1 -= TILE_CACHE_SIZE;
+		}
+		v6 += 16;
+	} while (v6 < GAME_AREA_HEIGHT);
+}
+
+FAIL_STUB_PATCH(blitTileCacheOnRefresh);
+
 void drawImage_(CImage* a1)
 {
 	if ((a1->flags & 0x40) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & 1) != 0 || isImageRefreshable(a1)))
@@ -1626,7 +1679,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		refreshImageRange(dword_5993A4, dword_5993C0);
 		maskSomething2();
 		BWFXN_drawMapTiles_();
-		blitTileCacheOnRefresh();
+		blitTileCacheOnRefresh_();
 	}
 	BWFXN_drawAllSprites_();
 	if (CurrentTileSet == Tileset::Platform)
