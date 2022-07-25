@@ -8248,8 +8248,9 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 	if (dword_6D5A44)
 	{
 		SMemFree(dword_6D5A44, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 609, 0);
+		dword_6D5A44 = NULL;
 	}
-	dword_6D5A44 = 0;
+
 	return (ExpandedCampaignMenuEntry*) dword_6D5A48;
 }
 
