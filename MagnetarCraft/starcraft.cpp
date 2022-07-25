@@ -147,7 +147,7 @@ void RefreshCursorScreen_()
 {
 	if (ScreenLayers[0].buffers)
 	{
-		ScreenLayers[0].bits |= 1u;
+		ScreenLayers[0].bits |= 1;
 		BWFXN_RefreshTarget(
 			(__int16)ScreenLayers[0].left,
 			(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
@@ -1168,7 +1168,7 @@ void PreInitData_()
 	{
 		DataVersionCheck("rez\\CDversion.txt");
 	}
-	registry_options.field_18 |= 7u;
+	registry_options.field_18 |= 7;
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
 	LoadNetworkTBL_();
@@ -1648,7 +1648,7 @@ void BWFXN_drawAllThingys_()
 		drawSprite_(currentThingy->sprite);
 		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = image->next)
 		{
-			image->flags |= 1u;
+			image->flags |= 1;
 		}
 	}
 }
@@ -1718,7 +1718,7 @@ void InitializeGameLayer_()
 	memset(RefreshRegions, 1u, sizeof(RefreshRegions));
 	for (int i = 3; i <= 5; ++i)
 	{
-		ScreenLayers[i].bits |= 1u;
+		ScreenLayers[i].bits |= 1;
 		int left = ScreenLayers[i].left;
 		int top = ScreenLayers[i].top;
 		int bottom = top + ScreenLayers[i].height - 1;
@@ -2867,7 +2867,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 	switch (dlg->wIndex)
 	{
 	case 2:
-		byte_6D5BBF ^= 1u;
+		byte_6D5BBF ^= 1;
 		dword_59C1A4 = 0;
 		sub_4A4150();
 		drawAllMinimapBoxes_();
@@ -2947,7 +2947,7 @@ FAIL_STUB_PATCH(Minimap_TimerRefresh);
 
 void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 {
-	byte_6D5BC0 ^= 1u;
+	byte_6D5BC0 ^= 1;
 	if (byte_6D5BC1)
 	{
 		int i = 0;
@@ -4714,7 +4714,7 @@ void RemoveFoWCheat_()
 	}
 	if ((ScreenLayers[5].bits & 1) == 0)
 	{
-		ScreenLayers[5].bits |= 2u;
+		ScreenLayers[5].bits |= 2;
 	}
 	if ((GameCheats & (CHEAT_BlackSheepWall | CHEAT_WarAintWhatItUsedToBe)) == 0)
 	{
@@ -5493,7 +5493,7 @@ void GameLoop_State_()
 		}
 		if (dword_51BFA8 || multiPlayerMode)
 		{
-			ScreenLayers[5].bits |= 2u;
+			ScreenLayers[5].bits |= 2;
 			if (BWFXN_IsPaused_())
 			{
 				RefreshAllUnits_();
@@ -8825,7 +8825,7 @@ FAIL_STUB_PATCH(sub_4B2810);
 
 void DLG_SwishIn_(dialog* a1)
 {
-	ScreenLayers[0].bits |= 1u;
+	ScreenLayers[0].bits |= 1;
 	ScreenLayers[0].buffers = 1;
 	BWFXN_RefreshTarget(ScreenLayers[0].left, ScreenLayers[0].height + ScreenLayers[0].top - 1, ScreenLayers[0].top, ScreenLayers[0].width + ScreenLayers[0].left - 1);
 	if (dword_50E064 != stru_4FFAD0[glGluesMode].menu_position)
@@ -11863,7 +11863,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			dlg = 0;
 			if (lParam & 0x40000000)
 			{
-				HIBYTE(v16.wUnk_0x0A) |= 1u;
+				HIBYTE(v16.wUnk_0x0A) |= 1;
 			}
 			if (!sendInputToAllDialogs_(&v16) && input_procedures[EventNo::EVN_CHAR])
 			{
@@ -13032,7 +13032,7 @@ FAIL_STUB_PATCH(TriggerAction_Defeat);
 
 int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
 {
-	dword_6509AC->container.dwExecutionFlags |= 4u;
+	dword_6509AC->container.dwExecutionFlags |= 4;
 	return 1;
 }
 
@@ -13053,7 +13053,7 @@ int __fastcall TriggerAction_Wait_(Action* a1)
 	{
 		dword_650980[active_trigger_player] = a1->time;
 		byte_6509B8[active_trigger_player] = 1;
-		a1->flags |= 1u;
+		a1->flags |= 1;
 		return 0;
 	}
 	return 1;
@@ -13239,7 +13239,7 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 
 			assignCenterViewProc(v12, v11, defCenterViewProc);
 		}
-		a1->flags |= 1u;
+		a1->flags |= 1;
 		byte_6509B8[active_trigger_player] = 1;
 		dword_650980[active_trigger_player] = -1;
 	}
@@ -13660,7 +13660,7 @@ FAIL_STUB_PATCH(TriggerAction_SetAllianceStatus);
 
 int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
 {
-	dword_6509AC->container.dwExecutionFlags |= 0x40u;
+	dword_6509AC->container.dwExecutionFlags |= 0x40;
 	return 1;
 }
 
@@ -13668,7 +13668,7 @@ FAIL_STUB_PATCH(TriggerAction_DisableDebugMode);
 
 int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 {
-	dword_6509AC->container.dwExecutionFlags &= ~0x40u;
+	dword_6509AC->container.dwExecutionFlags &= ~0x40;
 	return 1;
 }
 
@@ -13799,7 +13799,7 @@ void ExecuteTriggerActions_(TriggerListEntry* a1)
 		}
 		if (a1->container.dwExecutionFlags & 4)
 		{
-			a1->container.dwExecutionFlags = a1->container.dwExecutionFlags & ~0x51u;
+			a1->container.dwExecutionFlags = a1->container.dwExecutionFlags & ~0x51;
 			a1->container.bCurrentActionIndex = 0;
 		}
 		else
