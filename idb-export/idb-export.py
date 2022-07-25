@@ -176,6 +176,10 @@ class Function:
                 print(self.arguments)
                 raise Exception('Argument `%s` of function `%s` used unknown register `%s`' % (arg_name, self.signature, register))
 
+        if has_return_value:
+            # TODO: do not hard-code EAX; take the register that contains the result from the signatire
+            touched_registers.add('eax')
+
         for touched_register in sorted(touched_registers):
             result += '        xor ' + touched_register + ', ' + touched_register + '\n'
 
