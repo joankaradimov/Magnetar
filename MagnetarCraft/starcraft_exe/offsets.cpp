@@ -1687,7 +1687,21 @@ void removeDlgFromTimerTracking(dialog *a1) {
 DECL_FUNC(int(*assignNextActiveDlgElement)(), assignNextActiveDlgElement, 0x4196a0);
 DECL_FUNC(void (__fastcall*SetActivationDelay_maybe)(dialog *a1, dialog *a2), SetActivationDelay_maybe, 0x4196f0);
 DECL_FUNC(void (__cdecl*pressGlobalDlgHotkey)(), pressGlobalDlgHotkey, 0x419740);
-DECL_FUNC(int (__stdcall*DlgGrp_Constructor)(int, int), DlgGrp_Constructor, 0x4197b0);
+DlgGrp *DlgGrp_Constructor(int a1, char *a2, char *grp_path, grpHead *(__fastcall *a4)(const char *, int, const char *, int)) {
+    int address = 0x4197b0;
+    DlgGrp * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        push dword ptr a4
+        push dword ptr grp_path
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__fastcall*DestroyScreenLayer)(bool exit_code), DestroyScreenLayer, 0x419cb0);
 void InitializeDialog(dialog *a1, FnInteract a2) {
     int address = 0x419d20;
@@ -15653,7 +15667,7 @@ BOOL sub_4B27A0(int race) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4B2810)(int), sub_4B2810, 0x4b2810);
+DECL_FUNC(signed int (__stdcall*sub_4B2810)(dialog *a1), sub_4B2810, 0x4b2810);
 DECL_FUNC(bool (__fastcall*gluCmpgn_Main)(dialog *dlg, dlgEvent *evt), gluCmpgn_Main, 0x4b28b0);
 DECL_FUNC(int(*loadMenu_gluCmpgn)(), loadMenu_gluCmpgn, 0x4b2930);
 DECL_FUNC(int(*sub_4B2A50)(), sub_4B2A50, 0x4b2a50);
@@ -16567,7 +16581,7 @@ signed int DSoundInit(AudioVideoInitializationError *a1, HWND a2) {
     }
     return result_;
 }
-void playsound_init_UI(int a1) {
+void playsound_init_UI(u16 *a1) {
     int address = 0x4bccf0;
     __asm {
         xor eax, eax
@@ -16584,7 +16598,7 @@ void sub_4BCD70(PALETTEENTRY *a1) {
     }
 }
 DECL_FUNC(void (__cdecl*blitTileCacheOnRefresh)(), blitTileCacheOnRefresh, 0x4bcdc0);
-DECL_FUNC(int(*sub_4BCEA0)(), sub_4BCEA0, 0x4bcea0);
+DECL_FUNC(void (__cdecl*sub_4BCEA0)(), sub_4BCEA0, 0x4bcea0);
 DECL_FUNC(int(*GenerateMegatileDefaultFlags)(), GenerateMegatileDefaultFlags, 0x4bcf50);
 DECL_FUNC(int(*nullsub_55)(), nullsub_55, 0x4bd0b0);
 const char *get_chk_String(__int16 a2) {
@@ -24210,7 +24224,7 @@ RECT& stru_512D00 = * ((decltype(&stru_512D00)) 0x512d00);
 int(&dword_512D20)[] = * ((decltype(&dword_512D20)) 0x512d20);
 POINT& AngleDistance = * ((decltype(&AngleDistance)) 0x512d28);
 int(&tangent_table)[64] = * ((decltype(&tangent_table)) 0x513528);
-int& off_513628 = * ((decltype(&off_513628)) 0x513628);
+u16 *(&off_513628)[3] = * ((decltype(&off_513628)) 0x513628);
 __int16(&word_513634)[14] = * ((decltype(&word_513634)) 0x513634);
 POINT& bullet_random_offsets = * ((decltype(&bullet_random_offsets)) 0x513650);
 int& nextReplayCommandFrame = * ((decltype(&nextReplayCommandFrame)) 0x5136c8);
@@ -25216,10 +25230,10 @@ int& dword_63FF68 = * ((decltype(&dword_63FF68)) 0x63ff68);
 int& dword_63FF6C = * ((decltype(&dword_63FF6C)) 0x63ff6c);
 char& byte_63FF70 = * ((decltype(&byte_63FF70)) 0x63ff70);
 __int16& word_63FF74 = * ((decltype(&word_63FF74)) 0x63ff74);
-__int16(&word_63FF78)[416] = * ((decltype(&word_63FF78)) 0x63ff78);
-__int16(&word_6402B8)[328] = * ((decltype(&word_6402B8)) 0x6402b8);
+__int16(&terran_sfx_related)[413] = * ((decltype(&terran_sfx_related)) 0x63ff78);
+__int16(&zerg_sfx_related)[327] = * ((decltype(&zerg_sfx_related)) 0x6402b8);
 int& selectionSoundCounter = * ((decltype(&selectionSoundCounter)) 0x640548);
-__int16(&word_640550)[398] = * ((decltype(&word_640550)) 0x640550);
+__int16(&protoss_sfx_related)[396] = * ((decltype(&protoss_sfx_related)) 0x640550);
 int& dword_64086C = * ((decltype(&dword_64086C)) 0x64086c);
 int& dword_640870 = * ((decltype(&dword_640870)) 0x640870);
 int& dword_640874 = * ((decltype(&dword_640874)) 0x640874);
@@ -26627,7 +26641,7 @@ int& dword_6D6378 = * ((decltype(&dword_6D6378)) 0x6d6378);
 int& dword_6D637C = * ((decltype(&dword_6D637C)) 0x6d637c);
 int& message_handling_tick = * ((decltype(&message_handling_tick)) 0x6d6380);
 HCURSOR& cursor = * ((decltype(&cursor)) 0x6d6384);
-int& dword_6D6388 = * ((decltype(&dword_6D6388)) 0x6d6388);
+u16 *& dword_6D6388 = * ((decltype(&dword_6D6388)) 0x6d6388);
 char& byte_6D638C = * ((decltype(&byte_6D638C)) 0x6d638c);
 SfxData& dword_6D6390 = * ((decltype(&dword_6D6390)) 0x6d6390);
 char& src = * ((decltype(&src)) 0x6d6394);
@@ -26696,15 +26710,7 @@ char& byte_6DBE60 = * ((decltype(&byte_6DBE60)) 0x6dbe60);
 char& a3 = * ((decltype(&a3)) 0x6dc260);
 char(&byte_6DC280)[36] = * ((decltype(&byte_6DC280)) 0x6dc280);
 Bitmap& stru_6DC2A4 = * ((decltype(&stru_6DC2A4)) 0x6dc2a4);
-__int16& word_6DC2AC = * ((decltype(&word_6DC2AC)) 0x6dc2ac);
-__int16& word_6DC2AE = * ((decltype(&word_6DC2AE)) 0x6dc2ae);
-__int16& word_6DC2B0 = * ((decltype(&word_6DC2B0)) 0x6dc2b0);
-__int16& word_6DC2B2 = * ((decltype(&word_6DC2B2)) 0x6dc2b2);
-__int16& word_6DC2B4 = * ((decltype(&word_6DC2B4)) 0x6dc2b4);
-__int16& word_6DC2B6 = * ((decltype(&word_6DC2B6)) 0x6dc2b6);
-__int16& word_6DC2B8 = * ((decltype(&word_6DC2B8)) 0x6dc2b8);
-__int16& word_6DC2BA = * ((decltype(&word_6DC2BA)) 0x6dc2ba);
-__int16& word_6DC2BC = * ((decltype(&word_6DC2BC)) 0x6dc2bc);
+u16(&word_6DC2AC)[9] = * ((decltype(&word_6DC2AC)) 0x6dc2ac);
 char& base = * ((decltype(&base)) 0x6dc2c0);
 int& dword_6DC2E0 = * ((decltype(&dword_6DC2E0)) 0x6dc2e0);
 int& dword_6DC2E4 = * ((decltype(&dword_6DC2E4)) 0x6dc2e4);
