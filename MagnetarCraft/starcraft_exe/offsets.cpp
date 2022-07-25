@@ -15991,7 +15991,7 @@ DECL_FUNC(int(*loadMenu_gluScore)(), loadMenu_gluScore, 0x4b4af0);
 DECL_FUNC(bool (__fastcall*sub_4B4E20)(dialog *dlg, struct dlgEvent *evt), sub_4B4E20, 0x4b4e20);
 DECL_FUNC(void (__fastcall*sub_4B4E70)(dialog *, __int16), sub_4B4E70, 0x4b4e70);
 DECL_FUNC(void (__fastcall*sub_4B4EE0)(dialog *, __int16), sub_4B4EE0, 0x4b4ee0);
-DECL_FUNC(int (__thiscall*sub_4B4F10)(dialog *dlg, int y, rect *dst), sub_4B4F10, 0x4b4f10);
+DECL_FUNC(void (__fastcall*sub_4B4F10)(dialog *dlg, int x, int y, rect *dst), sub_4B4F10, 0x4b4f10);
 DECL_FUNC(bool (__fastcall*gluExpCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt), gluExpCmpgn_CampaignButton, 0x4b4f50);
 void gluExpCmpgn_CustomCtrlID(dialog *a1) {
     int address = 0x4b5020;

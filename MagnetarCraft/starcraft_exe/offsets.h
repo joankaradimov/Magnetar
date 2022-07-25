@@ -3868,7 +3868,7 @@ extern int(*loadMenu_gluScore)();
 extern bool (__fastcall*sub_4B4E20)(dialog *dlg, struct dlgEvent *evt);
 extern void (__fastcall*sub_4B4E70)(dialog *, __int16);
 extern void (__fastcall*sub_4B4EE0)(dialog *, __int16);
-extern int (__thiscall*sub_4B4F10)(dialog *dlg, int y, rect *dst);
+extern void (__fastcall*sub_4B4F10)(dialog *dlg, int x, int y, rect *dst);
 extern bool (__fastcall*gluExpCmpgn_CampaignButton)(dialog *dlg, dlgEvent *evt);
 void gluExpCmpgn_CustomCtrlID(dialog *a1);
 extern void (__cdecl*sub_4B5050)();
