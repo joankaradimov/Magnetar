@@ -1476,6 +1476,14 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void __fastcall BlitTerrainCacheToGameBitmap_(int a0, int a1, int a2, int a3)
+{
+	dword_50CEF0 = a2;
+	BlitToBitmap(a3, 16, &GameScreenBuffer.data[a1 + a0 * GameScreenBuffer.wid], &GameTerrainCache[a3]);
+}
+
+FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap);
+
 void blitTileCacheOnRefresh_()
 {
 	u8* v0 = RefreshRegions;
@@ -1507,7 +1515,7 @@ void blitTileCacheOnRefresh_()
 						++v3;
 					} while (v3 < 40);
 				}
-				BlitTerrainCacheToGameBitmap((void*)v6, 16 * i, 16 * v4, v1);
+				BlitTerrainCacheToGameBitmap_(v6, 16 * i, 16 * v4, v1);
 				v1 = v1 + 16 * (v4 - 1);
 				i = i + v4 - 1;
 				if (v1 >= TILE_CACHE_SIZE)
