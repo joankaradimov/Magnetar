@@ -8164,6 +8164,34 @@ void gluHist_Activate_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluHist_Activate);
 
+bool __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B6810(dlg);
+			break;
+		case USER_DESTROY:
+			DestroyChildren(dlg);
+			dword_6D5A3C = 0;
+			dword_6D5A54 = 0;
+			break;
+		case USER_UNK_7:
+			sub_4CD9C0(dlg);
+			break;
+		case USER_INIT:
+			sub_4B6C70(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(Popup_Main, Popup_Main_);
+
 bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -8206,7 +8234,7 @@ bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 		v4->pfcnInteract(v4, &event);
 		return 1;
 	}
-	return Popup_Main(dlg, evt);
+	return Popup_Main_(dlg, evt);
 }
 
 FAIL_STUB_PATCH(gluHist_Interact);
@@ -9566,7 +9594,7 @@ int load_gluGameMode_BINDLG_()
 	p_hist_pcx.data = (u8*)read;
 
 	dword_6D5A3C = LoadDialog("rez\\gluGameMode.bin");
-	return gluLoadBINDlg(dword_6D5A3C, Popup_Main);
+	return gluLoadBINDlg(dword_6D5A3C, Popup_Main_);
 }
 
 FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
