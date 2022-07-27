@@ -1464,10 +1464,8 @@ FAIL_STUB_PATCH(BWFXN_drawMapTiles);
 
 void BlitToBitmap_(int a1, int a2, byte* a3)
 {
-	unsigned int v4;
 	unsigned int v7;
-	unsigned int v8;
-
+	unsigned int v4;
 	byte* a4 = &GameTerrainCache[a1];
 
 	for (int i = 0; i < a2; i++)
@@ -1477,20 +1475,19 @@ void BlitToBitmap_(int a1, int a2, byte* a3)
 		{
 			if (a1 < TILE_CACHE_SIZE)
 			{
-				v7 = (unsigned int)(TILE_CACHE_SIZE - a1) >> 2;
-				memcpy(a3, a4, 4 * v7);
-				a3 += 4 * v7;
-				a4 += 4 * v7;
+				v7 = (unsigned int)(TILE_CACHE_SIZE - a1);
+				memcpy(a3, a4, v7);
+				a3 += v7;
+				a4 += v7;
 				v4 = dword_50CEF0 - (TILE_CACHE_SIZE - a1);
 			}
 			a1 -= TILE_CACHE_SIZE;
 			a4 -= TILE_CACHE_SIZE;
 		}
-		v8 = v4 >> 2;
-		memcpy(a3, a4, 4 * v8);
+		memcpy(a3, a4, v4);
 		a1 += RENDER_AREA_WIDTH;
-		a3 += 4 * v8 - dword_50CEF0 + SCREEN_WIDTH;
-		a4 += 4 * v8 - dword_50CEF0 + RENDER_AREA_WIDTH;
+		a3 += v4 - dword_50CEF0 + SCREEN_WIDTH;
+		a4 += v4 - dword_50CEF0 + RENDER_AREA_WIDTH;
 	}
 }
 
