@@ -6264,6 +6264,45 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN);
 
+void ProgressBar_Create_(dialog* a1)
+{
+	char buff[MAX_PATH];
+
+	a1->pfcnUpdate = (FnUpdate)statdata_ProgressBarUpdate;
+	a1->wUser = 0;
+	if (!progress_bar_empty_pcx.data)
+	{
+		_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrempt.pcx");
+		AllocBackgroundImage(buff, &progress_bar_empty_pcx, 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 222);
+	}
+	if (!progress_bar_full_pcx.data)
+	{
+		_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrfull.pcx");
+		AllocBackgroundImage(buff, &progress_bar_full_pcx, 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 226);
+	}
+}
+
+FAIL_STUB_PATCH(ProgressBar_Create);
+
+bool __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			ProgressBar_Create_(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			ProgressBar_Destroy();
+			break;
+		}
+	}
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(statdata_ProgressBarInteract);
+
 bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 {
 	if (evn->wNo == EventNo::EVN_MOUSEMOVE)
@@ -6357,16 +6396,16 @@ void statdata_extendedCtrlID_(dialog* dlg)
 		statdata_buttonInteract,
 		statdata_buttonInteract,
 		statdata_buttonInteract,
-		statdata_ProgressBarInteract,
+		statdata_ProgressBarInteract_,
 		statdata_Unknown,
 		statdata_buttonInteract,
 		statdata_buttonInteract,
 		statdata_buttonInteract,
 		statdata_buttonInteract,
-		statdata_ProgressBarInteract,
-		statdata_ProgressBarInteract,
+		statdata_ProgressBarInteract_,
+		statdata_ProgressBarInteract_,
 		statdata_buttonInteract,
-		statdata_ProgressBarInteract,
+		statdata_ProgressBarInteract_,
 		statdata_buttonInteract,
 		statdata_UnitWireframeTransit_, // large unit (leftmost)
 		statdata_UnitWireframeTransit_, // large unit (rightmost)
