@@ -4949,6 +4949,48 @@ FAIL_STUB_PATCH(DestroyGame);
 
 DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
 
+void updateActiveTileInfo_()
+{
+	int v7 = 0;
+
+	for (int y = 0; y < map_size.height; y++)
+	{
+		for (int x = 0; x < map_size.width; x++)
+		{
+			int i = y * map_size.width + x;
+
+			if (InReplay ? (ReplayVision & ~active_tiles[i]) : (playerVisions & active_tiles[i]) == 0)
+			{
+				if (x - (unsigned int)MoveToTile.x >= 0x15 || y - (unsigned int)MoveToTile.y >= 0xE)
+				{
+					u16 v4 = TileSetMap[MapTileArray[i].group].megaTileRef[MapTileArray[i].tile];
+					if (v4 != (CellMap[i] & 0x7FFF))
+					{
+						CellMap[i] = v4;
+						if (MapTileArray[i].group == 1)
+						{
+							active_tiles[i] |= LOCAL_CREEP;
+						}
+						else
+						{
+							active_tiles[i] &= ~LOCAL_CREEP;
+						}
+						iterateDirectionalCreepData(BWFXN_CreepManagementCB, 0, x, y);
+						v7 = 1;
+					}
+				}
+			}
+		}
+	}
+
+	if (v7)
+	{
+		HasMegatileUpdate = 1;
+	}
+}
+
+FAIL_STUB_PATCH(updateActiveTileInfo);
+
 void RemoveFoWCheat_()
 {
 	if (multiPlayerMode)
@@ -5014,7 +5056,7 @@ void GameLoop_()
 	visionUpdated = visionUpdateCount-- == 1;
 	if (visionUpdated)
 	{
-		updateActiveTileInfo();
+		updateActiveTileInfo_();
 		RemoveFoWCheat_();
 	}
 	UpdateUnits();
