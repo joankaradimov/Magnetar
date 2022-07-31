@@ -9770,6 +9770,41 @@ bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCustm_PlayerSlot);
 
+void gluCustm_raceDropdown_(dialog* a1)
+{
+	a1->lFlags |= CTRL_LBOX_NORECALC;
+
+	for (int i = 0; i < _countof(singleRaceSelect); i++)
+	{
+		RaceDropdownSelect* v2 = singleRaceSelect + i;
+		const char* race_name = GetNetworkTblString(v2->f2);
+		u8 v5 = ListBox_AddEntry(race_name, a1, 0);
+		if (v5 == 0xFF)
+		{
+			break;
+		}
+		a1->fields.list.pdwData[v5] = v2->race;
+	}
+
+	if (a1->lFlags & CTRL_LBOX_NORECALC)
+	{
+		a1->lFlags &= ~CTRL_LBOX_NORECALC;
+		List_Update(a1);
+	}
+
+	if (a1->fields.scroll.bSliderSkip > 3u)
+	{
+		dlgEvent v8;
+		v8.wNo = EVN_USER;
+		v8.dwUser = USER_SELECT;
+		*(_DWORD*)&v8.wSelection = 3;
+		a1->pfcnInteract(a1, &v8);
+		DlgSetSelected_UpdateScrollbar(3u, a1);
+	}
+}
+
+FAIL_STUB_PATCH(gluCustm_raceDropdown);
+
 bool __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -9777,7 +9812,7 @@ bool __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gluCustm_raceDropdown(dlg);
+			gluCustm_raceDropdown_(dlg);
 			break;
 		case EventUser::USER_INIT:
 			dlg->lFlags |= DialogFlags::CTRL_PLAIN;
