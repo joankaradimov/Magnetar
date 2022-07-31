@@ -860,9 +860,18 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
 }
 
+DatLoad sfxdataDat_[] = {
+	DatLoad { SFXData_SoundFile, 4, 1144 },
+	DatLoad { SFXData_Flags1, 1, 1144 },
+	DatLoad { SFXData_Flags2, 1, 1144 },
+	DatLoad { SFXData_Race, 2, 1144 },
+	DatLoad { SFXData_MuteVolume, 1, 1144 },
+};
+
 void LoadSfx_()
 {
-	LoadGameData_(sfxdataDat, "arr\\sfxdata.dat");
+	// TODO: dynamically allocate sfxdataDat memory
+	LoadGameData_(sfxdataDat_, "arr\\sfxdata.dat");
 	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 }
 
@@ -1152,6 +1161,23 @@ void LoadCursors_()
 
 FAIL_STUB_PATCH(LoadCursors);
 
+void __fastcall FreeMapdataTable_(bool exit_code)
+{
+	if (dword_51CC30)
+	{
+		SMemFree(dword_51CC30, "Starcraft\\SWAR\\lang\\init.cpp", 1302, 0);
+		dword_51CC30 = NULL;
+	}
+
+	// TODO: dynamically clean mapdataDat memory
+	// TODO: dynamically clean upgradesDat memory
+	// TODO: dynamically clean weaponsDat memory
+	// TODO: dynamically clean techdataDat memory
+	// TODO: dynamically clean portdataDat memory
+}
+
+FAIL_STUB_PATCH(FreeMapdataTable);
+
 void PreInitData_()
 {
 	SFileSetIoErrorMode(1, FileIOErrProc_);
@@ -1185,7 +1211,7 @@ void PreInitData_()
 	AppAddExit_(DestroyHelpContext);
 	LoadGameData_(mapdataDat, "arr\\mapdata.dat"); // TODO: is this call needed?
 	dword_51CC30 = loadTBL_(1577, _countof(MapdataFilenames_), "Starcraft\\SWAR\\lang\\init.cpp", "arr\\mapdata.tbl", MapdataFilenames_);
-	AppAddExit_(FreeMapdataTable);
+	AppAddExit_(FreeMapdataTable_);
 	LoadGameTemplates_(Template_Constructor);
 	AppAddExit_(DestroyGameTemplates);
 }
@@ -2002,6 +2028,7 @@ FAIL_STUB_PATCH(loadColorSettings);
 
 void __fastcall sfxdata_cleanup_(bool exit_code)
 {
+	// TODO: dynamically clean sfxdataDat memory
 	if (dword_5999B0)
 	{
 		SMemFree(dword_5999B0, "Starcraft\\SWAR\\lang\\snd.cpp", 1719, 0);
@@ -2255,11 +2282,30 @@ void LoadImageData_()
 
 FAIL_STUB_PATCH(LoadImageData);
 
+DatLoad imagesDat_[] = {
+	DatLoad { Images_GrpFile, 4, 999 },
+	DatLoad { Images_IsTurnable, 1, 999 },
+	DatLoad { Images_IsClickable, 1, 999 },
+	DatLoad { Images_UseFullIscript, 1, 999 },
+	DatLoad { Image_DrawIfCloaked, 1, 999 },
+	DatLoad { Image_DrawFunction, 1, 999 },
+	DatLoad { Images_Remapping, 1, 999 },
+	DatLoad { Images_IscriptEntry, 4, 999 },
+	DatLoad { Images_ShieldOverlayLO, 4, 999 },
+	DatLoad { Images_AttackOverlayLO, 4, 999 },
+	DatLoad { Images_InjuryOverlayLO, 4, 999 },
+	DatLoad { Images_SpecialOverlayLO, 4, 999 },
+	DatLoad { Images_LandingDustLO, 4, 999 },
+	DatLoad { Images_LiftOffDustLO, 4, 999 },
+};
+
 void LoadInitIscriptBIN_()
 {
 	int iscript_bin_size;
 	iscript_data = fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-	LoadGameData_(imagesDat, "arr\\images.dat");
+
+	// TODO: dynamically allocate imagesDat memory
+	LoadGameData_(imagesDat_, "arr\\images.dat");
 	if (!SBmpLoadImage("game\\tselect.pcx", 0, dword_5240B8, 24, 0, 0, 0))
 	{
 		SysWarn_FileNotFound("game\\tselect.pcx", SErrGetLastError());
@@ -2269,6 +2315,27 @@ void LoadInitIscriptBIN_()
 }
 
 FAIL_STUB_PATCH(LoadInitIscriptBIN);
+
+void __fastcall CleanupIscriptBINHandle_(bool exit_code)
+{
+	if (iscript_data)
+	{
+		SMemFree(iscript_data, "Starcraft\\SWAR\\lang\\CImage.cpp", 1626, 0);
+		iscript_data = NULL;
+	}
+
+	sub_47AB40((LO_Overlays*)ImageGrpGraphics, 999);
+	sub_47AB40(&lo_files.attackOverlays, 999);
+	sub_47AB40(&lo_files.damageOverlays, 999);
+	sub_47AB40(&lo_files.specialOverlays, 999);
+	sub_47AB40(&lo_files.landingDustOverlays, 999);
+	sub_47AB40(&lo_files.liftoffDustOverlays, 999);
+	sub_47AB40(&ShieldOverlays, 999);
+
+	// TODO: dynamically clean imagesDat memory
+}
+
+FAIL_STUB_PATCH(CleanupIscriptBINHandle);
 
 UnitType GetWorkerType(Race race)
 {
@@ -3297,9 +3364,18 @@ void load_gluMinimap_()
 
 FAIL_STUB_PATCH(load_gluMinimap);
 
+DatLoad spritesDat_[] = {
+	DatLoad { Sprites_Image, 2, 517 },
+	DatLoad { Sprites_HealthBarSize, 1, 387 },
+	DatLoad { Sprites_Unknown, 1, 517 },
+	DatLoad { Sprites_IsVisible, 1, 517 },
+	DatLoad { Sprites_SelectionCircle, 1, 387 },
+	DatLoad { Sprites_SelectionCircleVPos, 1, 387 },
+};
+
 void InitializeSpriteArray_()
 {
-	LoadGameData_(spritesDat, "arr\\sprites.dat");
+	LoadGameData_(spritesDat_, "arr\\sprites.dat"); // TODO: dynamically allocate spritesDat memory
 	memset(SpriteTable, 0, sizeof(SpriteTable));
 	memset(SpritesOnTileRow.heads, 0, sizeof(SpritesOnTileRow.heads));
 	memset(&SpritesOnTileRow, 0, 0x400u);
@@ -3329,10 +3405,60 @@ void InitializeSpriteArray_()
 
 FAIL_STUB_PATCH(InitializeSpriteArray);
 
+DatLoad flingyDat_[] = {
+	DatLoad { Flingy_SpriteID, 2, 209 },
+	DatLoad { Flingy_TopSpeed, 4, 209 },
+	DatLoad { Flingy_Acceleration, 2, 209 },
+	DatLoad { Flingy_HaltDistance, 4, 209 },
+	DatLoad { Flingy_TurnSpeed, 1, 209 },
+	DatLoad { Flingy_Unused, 1, 209 },
+	DatLoad { Flingy_MovementControl, 1, 209 },
+};
+
+void InitializeFlingyDat_()
+{
+	// TODO: dynamically allocate flingyDat memory
+	LoadGameData_(flingyDat_, "arr\\flingy.dat");
+	memset(dword_63FEE0, 0, 76u);
+	dword_63FF3C = (CUnit*)dword_63FEE0;
+	dword_63FF38 = (CUnit*)dword_63FEE0;
+	dword_63FEC8 = 0;
+	dword_63FF34 = 0;
+}
+
+FAIL_STUB_PATCH(InitializeFlingyDat);
+
+DatLoad weaponsDat_[] = {
+	DatLoad { Weapon_Label, 2, 130 },
+	DatLoad { Weapon_Graphic, 4, 130 },
+	DatLoad { Weapon_TechHint, 1, 130 },
+	DatLoad { Weapon_TargetFlags, 2, 130 },
+	DatLoad { Weapon_MinRange, 4, 130 },
+	DatLoad { Weapon_MaxRange, 4, 130 },
+	DatLoad { Weapon_Upgrade, 1, 130 },
+	DatLoad { Weapon_DamageType, 1, 130 },
+	DatLoad { Weapon_Behavior, 1, 130 },
+	DatLoad { Weapon_RemoveAfter, 1, 130 },
+	DatLoad { Weapon_ExplosionType, 1, 130 },
+	DatLoad { Weapon_InnerSplashRadius, 2, 130 },
+	DatLoad { Weapon_MedianSplashRadius, 2, 130 },
+	DatLoad { Weapon_OuterSplashRadius, 2, 130 },
+	DatLoad { Weapon_DamageAmount, 2, 130 },
+	DatLoad { Weapon_DamageBonus, 2, 130 },
+	DatLoad { Weapon_DamageCooldown, 1, 130 },
+	DatLoad { Weapon_DamageFactor, 1, 130 },
+	DatLoad { Weapon_AttackDirection, 1, 130 },
+	DatLoad { Weapon_LaunchSpin, 1, 130 },
+	DatLoad { Weapon_XOffset, 1, 130 },
+	DatLoad { Weapon_YOffset, 1, 130 },
+	DatLoad { Weapon_TargetErrorMessage, 2, 130 },
+	DatLoad { Weapon_Icon, 2, 130 },
+};
+
 void ResetDATFiles_()
 {
 	LoadGameData(upgradesDat, "arr\\upgrades.dat");
-	LoadGameData(weaponsDat, "arr\\weapons.dat");
+	LoadGameData(weaponsDat_, "arr\\weapons.dat"); // TODO: dynamically allocate weaponsDat memory
 	LoadGameData(techdataDat, "arr\\techdata.dat");
 	LoadGameData(portdataDat, "arr\\portdata.dat");
 
@@ -3372,12 +3498,7 @@ int sub_4EEFD0_()
 	InitializePresetImageArrays();
 	InitializeSpriteArray_();
 	InitializeThingyArray();
-	LoadGameData_(flingyDat, "arr\\flingy.dat");
-	memset(dword_63FEE0, 0, 76u);
-	dword_63FF3C = (CUnit*)dword_63FEE0;
-	dword_63FF38 = (CUnit*)dword_63FEE0;
-	dword_63FEC8 = 0;
-	dword_63FF34 = 0;
+	InitializeFlingyDat_();
 	InitializeBulletArray();
 	InitializeOrderArray();
 	if (!loadGameFileHandle)
@@ -3451,12 +3572,7 @@ signed int GameInit_()
 	InitializePresetImageArrays();
 	InitializeSpriteArray_();
 	InitializeThingyArray();
-	LoadGameData_(flingyDat, "arr\\flingy.dat");
-	memset(dword_63FEE0, 0, 76u);
-	dword_63FF3C = (CUnit *)dword_63FEE0;
-	dword_63FF38 = (CUnit *)dword_63FEE0;
-	dword_63FEC8 = 0;
-	dword_63FF34 = 0;
+	InitializeFlingyDat_();
 	InitializeBulletArray();
 	InitializeOrderArray();
 	sub_4CB5B0(TILESET_PALETTE_RELATED[CurrentTileSet]->y);
@@ -4672,6 +4788,20 @@ void DestroyMapData_()
 
 FAIL_STUB_PATCH(DestroyMapData);
 
+void CleanupFlingyDat_()
+{
+	// TODO: dynamically clean flingyDat memory
+}
+
+FAIL_STUB_PATCH(CleanupFlingyDat);
+
+void CleanupSpritesDat_()
+{
+	// TODO: dynamically clean spritesDat memory
+}
+
+FAIL_STUB_PATCH(CleanupSpritesDat);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -4768,6 +4898,11 @@ void DestroyGame_()
 		dword_68C108 = 0;
 	}
 	freeAICaptains();
+
+	// TODO: dynamically clean unitsDat memory
+	// TODO: dynamically clean ordersDat memory
+	CleanupFlingyDat_();
+	CleanupSpritesDat_();
 
 	stopSounds();
 	stopMusic();
@@ -10750,6 +10885,9 @@ int sub_4EE210_()
 	freeSaiPaths();
 	uselessIterateUnitsAndOrdersDatLoadTables();
 
+	CleanupFlingyDat_();
+	CleanupSpritesDat_();
+
 	if (pylon_power_mask)
 	{
 		SMemFree(pylon_power_mask, "Starcraft\\SWAR\\lang\\CUnitProtoss.cpp", 102, 0);
@@ -13055,7 +13193,7 @@ void GameMainLoop_()
 		LABEL_8:
 			LoadTitle_();
 			LoadInitIscriptBIN_();
-			AppAddExit_(CleanupIscriptBINHandle);
+			AppAddExit_(CleanupIscriptBINHandle_);
 			if (gwGameMode != GAME_GLUES && load_screen)
 			{
 				DestroyDialog(load_screen);
