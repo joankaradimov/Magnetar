@@ -3554,6 +3554,62 @@ void __fastcall MinimapPreviewProc_(dialog* a1, __int16 _timer_id)
 
 FAIL_STUB_PATCH(MinimapPreviewProc);
 
+void CreateInitialTeamMeleeUnits_()
+{
+	int team_count = gameData.got_file_values.template_id != 15 ? gameData.got_file_values.team_mode : 2;
+
+	for (int team_index = 0; team_index < team_count; team_index++)
+	{
+		for (int player_index = 7; player_index >= 0; player_index--)
+		{
+			if (Players[player_index].nTeam == team_index + 1 && Players[player_index].nType == PlayerType::PT_Human)
+			{
+				goto LABEL_15;
+			}
+		}
+		for (int player_index = 7; player_index >= 0; player_index--)
+		{
+			if (Players[player_index].nTeam == team_index + 1 && (Players[player_index].nType == PlayerType::PT_Computer || Players[player_index].nType == PlayerType::PT_ComputerSlot))
+			{
+				goto LABEL_15;
+			}
+		}
+		continue;
+
+	LABEL_15:
+		u8 a1 = byte_57F1CB[team_index + 1];
+		u8 v6 = team_index * illegalTeamCheck();
+		if (gameData.got_file_values.starting_units == StartingUnits::SU_WORKER_AND_CENTER)
+		{
+			CreateInitialMeleeBuildings(byte_57F1C0[v6], a1);
+			if (byte_57F1C0[v6] == RACE_Zerg)
+			{
+				CreateInitialOverlord(a1);
+			}
+		}
+		for (int j = 0; j < 4; ++j)
+		{
+			int v9 = j % illegalTeamCheck();
+			Race v10 = v6 + v9 < 8 ? byte_57F1C0[v6 + v9] : byte_57F1C0[v6 + 1];
+
+			if (gameData.got_file_values.starting_units && gameData.got_file_values.starting_units <= StartingUnits::SU_WORKER_AND_CENTER)
+			{
+				CUnit* worker_unit = CreateUnit(GetWorkerType(v10), startPositions[a1].x, startPositions[a1].y, a1);
+				if (worker_unit)
+				{
+					updateUnitStatsFinishBuilding(worker_unit);
+					if (sub_49EC30(worker_unit))
+					{
+						updateUnitStrengthAndApplyDefaultOrders(worker_unit);
+					}
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(CreateInitialTeamMeleeUnits);
+
 signed int GameInit_()
 {
 	memset(Chat_GameText, 0, 2832u);
@@ -3592,7 +3648,7 @@ signed int GameInit_()
 		if (!loadGameFileHandle)
 		{
 			if (LOBYTE(multiPlayerMode) && gameData.got_file_values.team_mode)
-				CreateInitialTeamMeleeUnits();
+				CreateInitialTeamMeleeUnits_();
 			else
 				CreateInitialMeleeUnits_();
 			InitialSetScreenToStartLocation();
