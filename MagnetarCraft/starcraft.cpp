@@ -3459,7 +3459,7 @@ signed int GameInit_()
 	dword_63FF34 = 0;
 	InitializeBulletArray();
 	InitializeOrderArray();
-	sub_4CB5B0(0, TILESET_PALETTE_RELATED[CurrentTileSet]->y);
+	sub_4CB5B0(TILESET_PALETTE_RELATED[CurrentTileSet]->y);
 	sub_41E450(sub_4BDB30, palette);
 	sub_4C99C0();
 	if (!loadGameFileHandle)
@@ -10729,7 +10729,7 @@ void sub_4B9BF0_(dialog* dlg)
 {
 	if (sub_4D4130())
 	{
-		dlg->fields.dlg.pModalFcn = (bool(__fastcall*)(dialog*))sub_4B9B10;
+		dlg->fields.dlg.pModalFcn = sub_4B9B10;
 	}
 	else
 	{
