@@ -6157,6 +6157,35 @@ void load_statfluf_BIN_()
 
 FAIL_STUB_PATCH(load_statfluf_BIN);
 
+bool __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+	case EVN_MOUSEMOVE:
+		return 0;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			statport_Buttonpress(dlg);
+			break;
+		case USER_DESTROY:
+			statport_alloc();
+			break;
+		case USER_MOUSEMOVE:
+			return 1;
+		}
+		break;
+	case EVN_CHAR:
+		return sub_45E9F0(evt);
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(statport_Dlg_Interact);
+
 void loadPortdata_BINDLG_()
 {
 	unsigned __int16* v4 = (unsigned short*) fastFileRead_(0, 0, "arr\\portdata.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
@@ -6200,7 +6229,7 @@ void loadPortdata_BINDLG_()
 	CanUpdateSelectedUnitPortrait = 1;
 
 	starport_Dlg = LoadDialog("rez\\statport.bin");
-	InitializeDialog_(starport_Dlg, statport_Dlg_Interact);
+	InitializeDialog_(starport_Dlg, statport_Dlg_Interact_);
 }
 
 FAIL_STUB_PATCH(loadPortdata_BINDLG);
