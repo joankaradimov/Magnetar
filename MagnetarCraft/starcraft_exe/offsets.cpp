@@ -6593,7 +6593,7 @@ DECL_FUNC(bool (__fastcall*statdata_UnitWireframeInteract)(dialog *a1, dlgEvent 
 DECL_FUNC(int(*load_WireframeGRP)(), load_WireframeGRP, 0x456a90);
 DECL_FUNC(int(*sub_456AE0)(), sub_456AE0, 0x456ae0);
 DECL_FUNC(int(*ProgressBar_Destroy)(), ProgressBar_Destroy, 0x456b00);
-DECL_FUNC(bool (__fastcall*statdata_ProgressBarUpdate)(dialog *dlg, struct dlgEvent *evt), statdata_ProgressBarUpdate, 0x456b40);
+DECL_FUNC(void (__fastcall*statdata_ProgressBarUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_ProgressBarUpdate, 0x456b40);
 DECL_FUNC(int(*sub_456C10)(), sub_456C10, 0x456c10);
 DECL_FUNC(int(*sub_456C20)(), sub_456C20, 0x456c20);
 signed int sub_456C30(dialog *a1) {
@@ -26008,7 +26008,7 @@ void *& dword_68AC7C = * ((decltype(&dword_68AC7C)) 0x68ac7c);
 int& dword_68AC80 = * ((decltype(&dword_68AC80)) 0x68ac80);
 void *& arg4 = * ((decltype(&arg4)) 0x68ac84);
 int& dword_68AC88 = * ((decltype(&dword_68AC88)) 0x68ac88);
-dialog *& starport_Dlg = * ((decltype(&starport_Dlg)) 0x68ac8c);
+dialog *& statport_Dlg = * ((decltype(&statport_Dlg)) 0x68ac8c);
 int& dword_68AC90 = * ((decltype(&dword_68AC90)) 0x68ac90);
 int& dword_68AC94 = * ((decltype(&dword_68AC94)) 0x68ac94);
 dialog *& dword_68AC98 = * ((decltype(&dword_68AC98)) 0x68ac98);

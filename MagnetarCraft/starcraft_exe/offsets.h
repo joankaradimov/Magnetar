@@ -1750,7 +1750,7 @@ extern bool (__fastcall*statdata_UnitWireframeInteract)(dialog *a1, dlgEvent *a2
 extern int(*load_WireframeGRP)();
 extern int(*sub_456AE0)();
 extern int(*ProgressBar_Destroy)();
-extern bool (__fastcall*statdata_ProgressBarUpdate)(dialog *dlg, struct dlgEvent *evt);
+extern void (__fastcall*statdata_ProgressBarUpdate)(dialog *dlg, int x, int y, rect *dst);
 extern int(*sub_456C10)();
 extern int(*sub_456C20)();
 signed int sub_456C30(dialog *a1);
@@ -8936,7 +8936,7 @@ extern void *& dword_68AC7C;
 extern int& dword_68AC80;
 extern void *& arg4;
 extern int& dword_68AC88;
-extern dialog *& starport_Dlg;
+extern dialog *& statport_Dlg;
 extern int& dword_68AC90;
 extern int& dword_68AC94;
 extern dialog *& dword_68AC98;

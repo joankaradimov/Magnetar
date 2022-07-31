@@ -4676,10 +4676,10 @@ void clearSelectionPortrait_()
 		video = NULL;
 	}
 
-	if (starport_Dlg)
+	if (statport_Dlg)
 	{
-		DestroyDialog(starport_Dlg);
-		starport_Dlg = NULL;
+		DestroyDialog(statport_Dlg);
+		statport_Dlg = NULL;
 	}
 
 	if (dword_6D5C9C)
@@ -6228,8 +6228,8 @@ void loadPortdata_BINDLG_()
 	dword_68AC4C = 0;
 	CanUpdateSelectedUnitPortrait = 1;
 
-	starport_Dlg = LoadDialog("rez\\statport.bin");
-	InitializeDialog_(starport_Dlg, statport_Dlg_Interact_);
+	statport_Dlg = LoadDialog("rez\\statport.bin");
+	InitializeDialog_(statport_Dlg, statport_Dlg_Interact_);
 }
 
 FAIL_STUB_PATCH(loadPortdata_BINDLG);
@@ -6268,7 +6268,7 @@ void ProgressBar_Create_(dialog* a1)
 {
 	char buff[MAX_PATH];
 
-	a1->pfcnUpdate = (FnUpdate)statdata_ProgressBarUpdate;
+	a1->pfcnUpdate = statdata_ProgressBarUpdate;
 	a1->wUser = 0;
 	if (!progress_bar_empty_pcx.data)
 	{
