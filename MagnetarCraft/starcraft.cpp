@@ -4691,6 +4691,20 @@ void clearSelectionPortrait_()
 
 FAIL_STUB_PATCH(clearSelectionPortrait);
 
+void sub_4F4CF0_()
+{
+	for (StatFlufDialog* i = statfluf_dialogs[statfluf_current_race % 4]; i->position.left != -1; ++i)
+	{
+		if (i->dialog)
+		{
+			DestroyDialog(i->dialog);
+			i->dialog = NULL;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4F4CF0);
+
 void destroyGameHUD_()
 {
 	if (minimap_Dlg)
@@ -4744,7 +4758,7 @@ void destroyGameHUD_()
 
 	free_cmdIcons_();
 	clearSelectionPortrait_();
-	sub_4F4CF0();
+	sub_4F4CF0_();
 	refreshSelectionScreen_();
 
 	if (StatTxtTbl.buffer)
