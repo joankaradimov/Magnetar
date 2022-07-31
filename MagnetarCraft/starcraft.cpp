@@ -10942,6 +10942,80 @@ void loadMenu_gluModem_()
 
 FAIL_STUB_PATCH(loadMenu_gluModem);
 
+void CreateRaceDropdown_(dialog* dlg, Race race)
+{
+	HIBYTE(dlg->wUser) |= 1u;
+	if (!dword_68F520)
+	{
+		showDialog(dlg);
+	}
+	EnableControl(dlg);
+	if ((dlg->lFlags & CTRL_UPDATE) == 0)
+	{
+		dlg->lFlags |= CTRL_UPDATE;
+		updateDialog(dlg);
+	}
+
+	dlgEvent v11;
+	v11.cursor.y = Mouse.y;
+	v11.wNo = EVN_USER;
+	v11.dwUser = USER_NEXT;
+	*(_DWORD*)&v11.wSelection = 0;
+	v11.cursor.x = Mouse.x;
+	dlg->pfcnInteract(dlg, &v11);
+	dlg->lFlags |= CTRL_LBOX_NORECALC;
+	dlg->pfcnInteract = genericComboboxInteract;
+	ClearListBox(dlg);
+
+	u8 v5 = 0;
+	u8 v12 = 0;
+
+	for (int i = 0; i < _countof(multiRaceSelect); i++)
+	{
+		RaceDropdownSelect* v6 = multiRaceSelect + i;
+
+		const char* race_name = GetNetworkTblString(v6->f2);
+		u8 v9 = ListBox_AddEntry(race_name, dlg, 0);
+		if (v9 == 0xFF)
+		{
+			break;
+		}
+		dlg->fields.list.pdwData[v9] = v6->race;
+		if (v6->race == race)
+		{
+			v12 = v9;
+		}
+		v5 = v12;
+	}
+
+	if (dlg->lFlags & CTRL_LBOX_NORECALC)
+	{
+		dlg->lFlags &= ~CTRL_LBOX_NORECALC;
+		List_Update(dlg);
+	}
+	if (v5 < dlg->fields.scroll.bSliderSkip || v5 == 0xFF)
+	{
+		*(_DWORD*)&v11.wSelection = v5;
+		v11.wNo = EVN_USER;
+		v11.dwUser = USER_SELECT;
+		dlg->pfcnInteract(dlg, &v11);
+		DlgSetSelected_UpdateScrollbar(v5, dlg);
+	}
+	dlg->pfcnInteract = sub_450A60;
+	strcpy(byte_596BC8, a1);
+}
+
+void __stdcall CreateRaceDropdown__(Race race)
+{
+	dialog* dlg;
+
+	__asm mov dlg, eax
+
+	CreateRaceDropdown_(dlg, race);
+}
+
+FUNCTION_PATCH((void*)0x450AB0, CreateRaceDropdown__);
+
 void gluChat_init_(dialog* dlg)
 {
 	dword_5999D8 = isHost;
