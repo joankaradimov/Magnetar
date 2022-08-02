@@ -9965,26 +9965,33 @@ bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCustm_PlayerSlot);
 
-RaceDropdownSelect raceSelect[] = {
-	{ Race::RACE_Zerg, 7 },
-	{ Race::RACE_Terran, 8 },
-	{ Race::RACE_Protoss, 9 },
-	{ Race::RACE_Random, 10 },
+const char* __stdcall getRaceString(Race race)
+{
+	static TblFile tbl_file("rez\\races.tbl");
+
+	return tbl_file[race];
+}
+
+Race SELECTABLE_RACES[] = {
+	Race::RACE_Zerg,
+	Race::RACE_Terran,
+	Race::RACE_Protoss,
+	Race::RACE_Random,
 };
 
 void gluCustm_raceDropdown_(dialog* a1)
 {
 	a1->lFlags |= CTRL_LBOX_NORECALC;
 
-	for (int i = 0; i < _countof(raceSelect); i++)
+	for (int i = 0; i < _countof(SELECTABLE_RACES); i++)
 	{
-		const char* race_name = GetNetworkTblString(raceSelect[i].f2);
+		const char* race_name = getRaceString(SELECTABLE_RACES[i]);
 		u8 v5 = ListBox_AddEntry(race_name, a1, 0);
 		if (v5 == 0xFF)
 		{
 			break;
 		}
-		a1->fields.list.pdwData[v5] = raceSelect[i].race;
+		a1->fields.list.pdwData[v5] = SELECTABLE_RACES[i];
 	}
 
 	if (a1->lFlags & CTRL_LBOX_NORECALC)
@@ -11078,16 +11085,16 @@ void CreateRaceDropdown_(dialog* dlg, Race race)
 	u8 v5 = 0;
 	u8 v12 = 0;
 
-	for (int i = 0; i < _countof(raceSelect); i++)
+	for (int i = 0; i < _countof(SELECTABLE_RACES); i++)
 	{
-		const char* race_name = GetNetworkTblString(raceSelect[i].f2);
+		const char* race_name = getRaceString(SELECTABLE_RACES[i]);
 		u8 v9 = ListBox_AddEntry(race_name, dlg, 0);
 		if (v9 == 0xFF)
 		{
 			break;
 		}
-		dlg->fields.list.pdwData[v9] = raceSelect[i].race;
-		if (raceSelect[i].race == race)
+		dlg->fields.list.pdwData[v9] = SELECTABLE_RACES[i];
+		if (SELECTABLE_RACES[i] == race)
 		{
 			v12 = v9;
 		}
