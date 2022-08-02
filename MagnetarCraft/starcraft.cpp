@@ -1958,6 +1958,63 @@ void LoadBtnSfxFile_()
 
 FAIL_STUB_PATCH(LoadBtnSfxFile);
 
+void muteBgm_(RegistryOptions* a1)
+{
+	if (direct_sound)
+	{
+		dword_6D5E3C = volume[99 * a1->Sfx / 100] - dword_6D5A0C;
+		if (a1->Music)
+		{
+			int v2 = dword_5008EC[a1->Music] - dword_6D5A0C;
+			bigvolume = v2;
+			if (directsound)
+			{
+				if (byte_6D5BBD)
+				{
+					v2 -= 750;
+					if (v2 < -10000)
+					{
+						v2 = -10000;
+					}
+				}
+				SFileDdaSetVolume(directsound, v2, 0);
+			}
+			if (!byte_6D638C)
+			{
+				byte_6D638C = 1;
+				DLGMusicFade(current_music);
+			}
+		}
+		else
+		{
+			bigvolume = -10000;
+			if (directsound)
+			{
+				SFileDdaSetVolume(directsound, -10000, 0);
+				if (directsound)
+				{
+					SFileDdaEnd(directsound);
+					SFileCloseFile(directsound);
+					directsound = 0;
+				}
+			}
+			byte_6D5BBC = 0;
+			byte_6D638C = 0;
+		}
+	}
+}
+
+void muteBgm__()
+{
+	RegistryOptions* a1;
+
+	__asm mov a1, esi
+
+	muteBgm_(a1);
+}
+
+FUNCTION_PATCH((void*)0x4BC320, muteBgm__);
+
 void initVolume_()
 {
 	dword_5998E8 = 50;
@@ -1970,7 +2027,7 @@ void initVolume_()
 	{
 		registry_options.Music = 25;
 	}
-	muteBgm(&registry_options);
+	muteBgm_(&registry_options);
 }
 
 FAIL_STUB_PATCH(initVolume);
