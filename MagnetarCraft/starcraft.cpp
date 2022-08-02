@@ -12030,62 +12030,25 @@ void loadMenu_gluScore_()
 	char v25[260];
 
 	ApplyGameVictoryStatus(dword_59B73C, &dword_59B3D0);
-	int v0 = 1;
+
 	dword_59B75C = dword_59B3D0 == 1;
-	if (!dword_6D5A60)
-	{
-		v0 = (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
-	}
-	char* v1 = score_screens[v0];
-	char** v2 = &score_screens[v0];
+	int v0 = dword_6D5A60 ? 1 : (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
+
 	glGluesMode = dword_512AB0[v0];
-	int v3 = byte_59B628 - v1;
-
-	char v4;
-	do
-	{
-		v4 = *v1;
-		v1[v3] = *v1;
-		++v1;
-	} while (v4);
-
+	strcpy(byte_59B628, score_screens[v0]);
 	DLGMusicFade(music_track[v0]);
-	int v5 = 0;
-	char v6;
-	do
-	{
-		v6 = byte_59B628[v5];
-		v25[v5++] = v6;
-	} while (v6);
 
-	char* v7 = v25 - 1;
-	while (*++v7);
-	strcpy(v7, "iScore.grp");
+	strcpy(v25, score_screens[v0]);
+	strcat(v25, "iScore.grp");
 	dword_59B72C = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
 
-	int v9 = 0;
-	char v10;
-	do
-	{
-		v10 = byte_59B628[v9];
-		v25[v9++] = v10;
-	} while (v10);
-	char* v11 = v25 - 1;
-	while (*++v11);
-	strcpy(v11, "tminimap.pcx");
+	strcpy(v25, score_screens[v0]);
+	strcat(v25, "tminimap.pcx");
 	if (!SBmpLoadImage(v25, 0, byte_59B730, 12, 0, 0, 0))
 	{
 		SysWarn_FileNotFound(v25, SErrGetLastError());
 	}
-	char* v13 = *v2;
-	int v14 = byte_59B628 - *v2;
-	char v15;
-	do
-	{
-		v15 = *v13;
-		v13[v14] = *v13;
-		++v13;
-	} while (v15);
+	strcpy(byte_59B628, score_screens[v0]);
 	sub_4BCA80_(SFX_glue_scorefill);
 
 	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
