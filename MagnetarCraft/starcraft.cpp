@@ -6761,6 +6761,33 @@ void load_Statf10_BIN_()
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
 
+bool __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+		if (VK_PRIOR <= evt->wVirtKey && evt->wVirtKey <= VK_DOWN)
+		{
+			return 0;
+		}
+		break;
+	case EventNo::EVN_USER:
+		if (evt->dwUser == USER_NEXT && byte_68C144)
+		{
+			onSendText(dlg->fields.ctrl.pDlg, evt, 0);
+		}
+		break;
+	case EventNo::EVN_CHAR:
+		textBox_ctrl_charEvent(dlg, evt);
+		return 1;
+	}
+
+	return genericEditInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(textbox_CtrlInteract);
+
 void textbox_DLG_Init_Evt_(dialog* dlg)
 {
 	Font* v2;
@@ -6802,7 +6829,7 @@ void textbox_DLG_Init_Evt_(dialog* dlg)
 
 	BWFXN_SetFont(0);
 	dialog* v6 = getControlFromIndex(dlg, 6);
-	v6->pfcnInteract = textbox_CtrlInteract;
+	v6->pfcnInteract = textbox_CtrlInteract_;
 	if (InReplay)
 	{
 		dlg->rct.top -= 24;
