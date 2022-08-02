@@ -9908,20 +9908,26 @@ bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCustm_PlayerSlot);
 
+RaceDropdownSelect raceSelect[] = {
+	{ Race::RACE_Zerg, 7 },
+	{ Race::RACE_Terran, 8 },
+	{ Race::RACE_Protoss, 9 },
+	{ Race::RACE_Random, 10 },
+};
+
 void gluCustm_raceDropdown_(dialog* a1)
 {
 	a1->lFlags |= CTRL_LBOX_NORECALC;
 
-	for (int i = 0; i < _countof(singleRaceSelect); i++)
+	for (int i = 0; i < _countof(raceSelect); i++)
 	{
-		RaceDropdownSelect* v2 = singleRaceSelect + i;
-		const char* race_name = GetNetworkTblString(v2->f2);
+		const char* race_name = GetNetworkTblString(raceSelect[i].f2);
 		u8 v5 = ListBox_AddEntry(race_name, a1, 0);
 		if (v5 == 0xFF)
 		{
 			break;
 		}
-		a1->fields.list.pdwData[v5] = v2->race;
+		a1->fields.list.pdwData[v5] = raceSelect[i].race;
 	}
 
 	if (a1->lFlags & CTRL_LBOX_NORECALC)
@@ -11108,18 +11114,16 @@ void CreateRaceDropdown_(dialog* dlg, Race race)
 	u8 v5 = 0;
 	u8 v12 = 0;
 
-	for (int i = 0; i < _countof(multiRaceSelect); i++)
+	for (int i = 0; i < _countof(raceSelect); i++)
 	{
-		RaceDropdownSelect* v6 = multiRaceSelect + i;
-
-		const char* race_name = GetNetworkTblString(v6->f2);
+		const char* race_name = GetNetworkTblString(raceSelect[i].f2);
 		u8 v9 = ListBox_AddEntry(race_name, dlg, 0);
 		if (v9 == 0xFF)
 		{
 			break;
 		}
-		dlg->fields.list.pdwData[v9] = v6->race;
-		if (v6->race == race)
+		dlg->fields.list.pdwData[v9] = raceSelect[i].race;
+		if (raceSelect[i].race == race)
 		{
 			v12 = v9;
 		}
