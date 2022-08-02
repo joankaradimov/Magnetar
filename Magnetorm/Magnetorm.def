@@ -95,7 +95,7 @@ EXPORTS
     SFileGetBasePath = StormLibFileGetBasePath @273
     SFileSetIoErrorMode@8 = StormLibFileSetIoErrorMode @274
     SFileGetArchiveName = StormLibFileGetArchiveName @275
-    SFileGetFileName = StormLibFileGetFileName @276
+    SFileGetFileName@12 = StormLibFileGetFileName @276
     SFileGetArchiveInfo = StormLibFileGetArchiveInfo @277
     SFileSetPlatform = StormLibFileSetPlatform @278
     SFileLoadFile = StormLibFileLoadFile @279

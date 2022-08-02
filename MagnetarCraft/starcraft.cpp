@@ -8,6 +8,63 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+void SysWarn_FileNotFound_(const char* a1, int last_error)
+{
+	char dwInitParam[512];
+	char Buffer[256];
+
+	char* v2 = GetErrorString(Buffer, 0x100u, last_error);
+	_snprintf(dwInitParam, 0x200u, "%s\n%s", a1, v2);
+	SErrSuppressErrors(1);
+	SNetLeaveGame(3);
+	SNetDestroy();
+	if (GetCurrentThreadId() == main_thread_id)
+	{
+		BWFXN_DDrawDestroy();
+		BWFXN_DSoundDestroy();
+	}
+	if (DialogBoxParamA(local_dll_library, (LPCSTR)0x6A, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
+	{
+		FatalError("GdsDialogBoxParam: %d", 106);
+	}
+	DLGErrFatal();
+}
+
+void __stdcall SysWarn_FileNotFound__(const char* a1)
+{
+	int last_error;
+
+	__asm mov last_error, ebx
+
+	SysWarn_FileNotFound_(a1, last_error);
+}
+
+FUNCTION_PATCH((void*)0x4212C0, SysWarn_FileNotFound__);
+
+void FileFatal_(HANDLE a1, int a2)
+{
+	char buffer[260];
+
+	if (!SFileGetFileName(a1, buffer, 260))
+	{
+		SStrCopy(buffer, "*unknown*", 0x104u);
+	}
+	SysWarn_FileNotFound(buffer, a2);
+}
+
+void FileFatal__()
+{
+	HANDLE a1;
+	int a2;
+
+	__asm mov a1, ecx
+	__asm mov a2, ebx
+
+	FileFatal_(a1, a2);
+}
+
+FUNCTION_PATCH((void*)0x4D2880, FileFatal__);
+
 const int app_exit_handles_count = 32;
 
 void AppExit_(bool exit_code)
