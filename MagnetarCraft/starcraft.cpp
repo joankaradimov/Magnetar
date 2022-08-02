@@ -1958,6 +1958,32 @@ void LoadBtnSfxFile_()
 
 FAIL_STUB_PATCH(LoadBtnSfxFile);
 
+void DLGMusicFade_(MusicTrack music_track)
+{
+	if (!directsound || !byte_6D5BBC)
+	{
+		if (music_tracks[music_track].fade_in_maybe)
+		{
+			int old_bigvolume = bigvolume;
+			bigvolume = -10000;
+			PlayMusic(music_track);
+			bigvolume = old_bigvolume;
+			if (registry_options.Music)
+			{
+				dword_6D5BB8 = -3396;
+				KillTimer(hWndParent, 3u);
+				SetTimer(hWndParent, 3u, 0x14u, FadeMusicProc);
+			}
+		}
+		else
+		{
+			PlayMusic(music_track);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(DLGMusicFade);
+
 void muteBgm_(RegistryOptions* a1)
 {
 	if (direct_sound)
@@ -1982,7 +2008,7 @@ void muteBgm_(RegistryOptions* a1)
 			if (!byte_6D638C)
 			{
 				byte_6D638C = 1;
-				DLGMusicFade(current_music);
+				DLGMusicFade_(current_music);
 			}
 		}
 		else
@@ -2329,7 +2355,7 @@ void titleInit_(dialog* dlg)
 	}
 	if (!low_memory)
 	{
-		DLGMusicFade(MT_TITLE);
+		DLGMusicFade_(MT_TITLE);
 	}
 
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
@@ -6083,7 +6109,7 @@ FAIL_STUB_PATCH(stopAllSound);
 GamePosition BeginGame_(MenuPosition a1)
 {
 	visionUpdateCount = 1;
-	DLGMusicFade((MusicTrack) currentMusicId);
+	DLGMusicFade_((MusicTrack) currentMusicId);
 	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	GameState = 1;
 	TickCountSomething(0);
@@ -9526,7 +9552,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
 			{
-				DLGMusicFade(MT_TITLE);
+				DLGMusicFade_(MT_TITLE);
 			}
 			break;
 		case EventUser::USER_ACTIVATE:
@@ -9608,7 +9634,7 @@ bool __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 		case EventUser::USER_CREATE:
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
-				DLGMusicFade(MT_TITLE);
+				DLGMusicFade_(MT_TITLE);
 			break;
 		case EventUser::USER_ACTIVATE:
 			return sub_4B5180_(dlg);
@@ -10459,7 +10485,7 @@ bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			{
 				return true;
 			}
-			DLGMusicFade(MT_TITLE);
+			DLGMusicFade_(MT_TITLE);
 			return true;
 		case USER_DESTROY:
 			gluMainDestroy(dlg);
@@ -10757,7 +10783,7 @@ int ContinueCampaign_(int a1);
 void sub_46D200_(MusicTrack music_track)
 {
 	stopMusic();
-	DLGMusicFade(music_track);
+	DLGMusicFade_(music_track);
 }
 
 FAIL_STUB_PATCH(sub_46D200);
@@ -10765,7 +10791,7 @@ FAIL_STUB_PATCH(sub_46D200);
 void sub_46D1F0_()
 {
 	stopMusic();
-	DLGMusicFade(MT_TITLE);
+	DLGMusicFade_(MT_TITLE);
 }
 
 FAIL_STUB_PATCH(sub_46D1F0);
@@ -10938,7 +10964,7 @@ int getGameList_(dialog* dlg)
 	SNetEnumProviders(0, Provider_Constructor);
 	if (!byte_6D5BBC)
 	{
-		DLGMusicFade(MT_TITLE);
+		DLGMusicFade_(MT_TITLE);
 	}
 	Template_Destructor(stru_51A218.char14 + 60);
 	return LoadGameTemplates_(Template_Constructor);
@@ -12093,7 +12119,7 @@ void loadMenu_gluScore_()
 
 	glGluesMode = dword_512AB0[v0];
 	strcpy(byte_59B628, score_screens_[v0]);
-	DLGMusicFade(music_track[v0]);
+	DLGMusicFade_(music_track[v0]);
 
 	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "iScore.grp");
@@ -13476,7 +13502,7 @@ void BeginEpilog_()
 
 	if (active_campaign)
 	{
-		DLGMusicFade(active_campaign->epilog_music_track);
+		DLGMusicFade_(active_campaign->epilog_music_track);
 		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
 		glGluesMode = active_campaign->post_epilog_menu;
 	}
@@ -13510,7 +13536,7 @@ void BeginCredits_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade(MT_TERRAN2);
+	DLGMusicFade_(MT_TERRAN2);
 	credits_interrupted = 0;
 	loadInitCreditsBIN_("crdt_mag");
 	if (credits_interrupted == 0 && is_expansion_installed)
