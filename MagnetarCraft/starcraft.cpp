@@ -12016,6 +12016,15 @@ void sub_4DBF80_()
 
 FAIL_STUB_PATCH(sub_4DBF80);
 
+char* score_screens_[] = {
+	"glue\\scoreZd\\",
+	"glue\\scoreZv\\",
+	"glue\\scoreTd\\",
+	"glue\\scoreTv\\",
+	"glue\\scorePd\\",
+	"glue\\scorePv\\",
+};
+
 void loadMenu_gluScore_()
 {
 	char v25[260];
@@ -12026,20 +12035,20 @@ void loadMenu_gluScore_()
 	int v0 = dword_6D5A60 ? 1 : (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
 
 	glGluesMode = dword_512AB0[v0];
-	strcpy(byte_59B628, score_screens[v0]);
+	strcpy(byte_59B628, score_screens_[v0]);
 	DLGMusicFade(music_track[v0]);
 
-	strcpy(v25, score_screens[v0]);
+	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "iScore.grp");
 	dword_59B72C = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
 
-	strcpy(v25, score_screens[v0]);
+	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "tminimap.pcx");
 	if (!SBmpLoadImage(v25, 0, byte_59B730, 12, 0, 0, 0))
 	{
 		SysWarn_FileNotFound(v25, SErrGetLastError());
 	}
-	strcpy(byte_59B628, score_screens[v0]);
+	strcpy(byte_59B628, score_screens_[v0]);
 	sub_4BCA80_(SFX_glue_scorefill);
 
 	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
