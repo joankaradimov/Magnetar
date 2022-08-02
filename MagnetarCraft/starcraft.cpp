@@ -6409,6 +6409,103 @@ void load_statlb_()
 
 FAIL_STUB_PATCH(load_statlb);
 
+void __stdcall hideLeftmostResource_(int a1)
+{
+	if (statres_Dlg)
+	{
+		dialog* v3 = getControlFromIndex(statres_Dlg, 6);
+		if (a1)
+		{
+			showDialog(v3);
+		}
+		else
+		{
+			HideDialog(v3);
+		}
+		v3->lUser = 0;
+	}
+}
+
+FAIL_STUB_PATCH(hideLeftmostResource);
+
+bool __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			dlg->lUser = 0;
+			dlg->pfcnUpdate = statRes_Text_Update;
+			dlg->pfcnInteract = statRes_Text_Interact;
+			dlg->wUser = dlg->wIndex == 6 ? 10 : 0;
+			[[fallthrough]];
+		case USER_NEXT:
+		case USER_UNK_8:
+		case USER_INIT:
+		case USER_SHOW:
+		case USER_HIDE:
+			return genericCommonInteract(evt, dlg);
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(StatRes_CustomCtrl);
+
+void StatRes_RegisterCustomProcs_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		StatRes_CustomCtrl_,
+		StatRes_CustomCtrl_,
+		StatRes_CustomCtrl_,
+		StatRes_CustomCtrl_,
+		StatRes_CustomCtrl_,
+		StatRes_CustomCtrl_,
+	};
+
+	dlg->lFlags |= CTRL_USELOCALGRAPHIC | CTRL_REVERSE | CTRL_TRANSPARENT;
+
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	SetCallbackTimer(1, dlg, 20, StatRes_MainProc);
+	hideLeftmostResource_(0);
+}
+
+FAIL_STUB_PATCH(StatRes_RegisterCustomProcs);
+
+bool __fastcall StatRes_DialogInteract_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		return 0;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			StatRes_RegisterCustomProcs_(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			waitLoopCntd(1, dlg);
+			break;
+		case EventUser::USER_MOUSEMOVE:
+			return 0;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(StatRes_DialogInteract);
+
 void load_StatRes_BIN_()
 {
 	dword_68C238 = (void*)LoadGraphic("game\\icons.grp", 0, "Starcraft\\SWAR\\lang\\statres.cpp", 490);
@@ -6416,7 +6513,7 @@ void load_StatRes_BIN_()
 	dword_68C22C = 0;
 
 	statres_Dlg = LoadDialog("rez\\statres.bin"); // The topmost row of in-game UI
-	InitializeDialog_(statres_Dlg, StatRes_DialogInteract);
+	InitializeDialog_(statres_Dlg, StatRes_DialogInteract_);
 }
 
 FAIL_STUB_PATCH(load_StatRes_BIN);
