@@ -10526,6 +10526,26 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+bool __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_INIT:
+			ButtonVideo(dlg);
+			return genericCommonInteract(evt, dlg);
+		case EventUser::USER_DESTROY:
+			genericLightupBtnUserDestroyEventHandler(dlg);
+			return genericCommonInteract(evt, dlg);
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(gluRdyZ_Secret);
+
 void gluRdy_CustomCtrlID_(dialog* dlg)
 {
 	static swishTimer timers[] =
@@ -10540,7 +10560,7 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 	};
 
 	static FnInteract functions[] = {
-		gluRdyZ_Secret,
+		gluRdyZ_Secret_,
 		NULL,
 		NULL,
 		NULL,
