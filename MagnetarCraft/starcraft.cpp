@@ -10519,91 +10519,7 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
-void gluRdyP_CustomCtrlID_(dialog* dlg)
-{
-	static swishTimer timers[] =
-	{
-		{5, 3},
-		{6, 0},
-		{7, 3},
-		{9, 0},
-		{10, 0},
-		{11, 2},
-		{12, 2},
-	};
-
-	static FnInteract functions[] = {
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		genericLightupBtnInteract,
-		Menu_Generic_Button,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-	};
-
-	DlgSwooshin(_countof(timers), timers, dlg, 80);
-	registerMenuFunctions_(functions, dlg, sizeof(functions));
-}
-
-FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
-
-void gluRdyT_CustomCtrlID_(dialog* dlg)
-{
-	static swishTimer timers[] =
-	{
-		{5, 3},
-		{6, 0},
-		{7, 3},
-		{9, 0},
-		{10, 0},
-		{11, 2},
-		{12, 2},
-	};
-
-	static FnInteract functions[] = {
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		genericLightupBtnInteract,
-		Menu_Generic_Button,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		gluRdy_Portrait,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-	};
-
-	DlgSwooshin(_countof(timers), timers, dlg, 80);
-	registerMenuFunctions_(functions, dlg, sizeof(functions));
-}
-
-FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
-
-void gluRdyZ_CustomCtrlID_(dialog* dlg)
+void gluRdy_CustomCtrlID_(dialog* dlg)
 {
 	static swishTimer timers[] =
 	{
@@ -10643,6 +10559,8 @@ void gluRdyZ_CustomCtrlID_(dialog* dlg)
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
+FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
+FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
 
 void rdyPFrame_()
@@ -10724,18 +10642,7 @@ bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 			return sub_46D160(dlg);
 		case EventUser::USER_INIT:
 			sub_46D3C0(dlg);
-			switch (glGluesMode)
-			{
-			case MenuPosition::GLUE_READY_P:
-				gluRdyP_CustomCtrlID_(dlg);
-				break;
-			case MenuPosition::GLUE_READY_T:
-				gluRdyT_CustomCtrlID_(dlg);
-				break;
-			case MenuPosition::GLUE_READY_Z:
-				gluRdyZ_CustomCtrlID_(dlg);
-				break;
-			}
+			gluRdy_CustomCtrlID_(dlg);
 			break;
 		case 0x405:
 			sub_46D220(dlg);
