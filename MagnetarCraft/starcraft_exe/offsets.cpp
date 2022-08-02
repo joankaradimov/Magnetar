@@ -5937,7 +5937,7 @@ signed int playerOwnerDropdownCommands(dialog *a1, unsigned __int8 a2) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*playerOwnerDropdownLoop)(dialog *dlg, dlgEvent *evt), playerOwnerDropdownLoop, 0x450d40);
-DECL_FUNC(int (__stdcall*playerOwnerDropdownCreate)(dialog *a1, int, int, int, char, int), playerOwnerDropdownCreate, 0x450d90);
+DECL_FUNC(int (__stdcall*CreatePlayerOwnerDropdown)(dialog *a1, int, int, int, char, int), CreatePlayerOwnerDropdown, 0x450d90);
 DECL_FUNC(int(*sub_451370)(), sub_451370, 0x451370);
 DECL_FUNC(int(*sub_4513A0)(), sub_4513A0, 0x4513a0);
 DECL_FUNC(void **(__stdcall*playerOwnerDropdownCreate2)(dialog *a1), playerOwnerDropdownCreate2, 0x4513f0);
@@ -18414,7 +18414,7 @@ void ReadFile_Overlapped(void *buffer, DWORD nNumberOfBytesToRead, LPOVERLAPPED 
 }
 DECL_FUNC(grpHead *(__fastcall*LoadGraphic)(const char *grp_path, int unused_zero, const char *logfilename, int logline), LoadGraphic, 0x4d2b30);
 DECL_FUNC(int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline), sub_4D2BF0, 0x4d2bf0);
-DECL_FUNC(int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline), sub_4D2C70, 0x4d2c70);
+DECL_FUNC(int (__stdcall*sub_4D2C70)(char *filename, int last_error, LPOVERLAPPED a3, char *logfilename, int logline), sub_4D2C70, 0x4d2c70);
 int fastFileRead(int *bytes_read, int searchScope, const char *filename, int defaultValue, int bytes_to_read, const char *logfilename, int logline) {
     int address = 0x4d2d10;
     int result_;
@@ -20444,7 +20444,7 @@ DECL_FUNC(void (__fastcall*statRes_Text_Update)(dialog *dlg, int x, int y, rect 
 DECL_FUNC(int (__stdcall*setCountdownTimerString)(char *source), setCountdownTimerString, 0x4e5590);
 DECL_FUNC(int(*DisableCountdownTimer)(), DisableCountdownTimer, 0x4e5600);
 DECL_FUNC(void (__fastcall*StatRes_MainProc)(dialog *, __int16), StatRes_MainProc, 0x4e5640);
-DECL_FUNC(void (__stdcall*sub_4E57D0)(int a1), sub_4E57D0, 0x4e57d0);
+DECL_FUNC(void (__stdcall*hideLeftmostResource)(int a1), hideLeftmostResource, 0x4e57d0);
 DECL_FUNC(bool (__fastcall*StatRes_CustomCtrl)(dialog *dlg, dlgEvent *evt), StatRes_CustomCtrl, 0x4e5850);
 void StatRes_RegisterCustomProcs(dialog *a1) {
     int address = 0x4e58d0;

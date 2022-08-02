@@ -11978,8 +11978,8 @@ void loadMenu_gluScore_()
 	{
 		v0 = (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
 	}
-	char* v1 = off_512A98[v0];
-	char** v2 = &off_512A98[v0];
+	char* v1 = score_screens[v0];
+	char** v2 = &score_screens[v0];
 	glGluesMode = dword_512AB0[v0];
 	int v3 = byte_59B628 - v1;
 

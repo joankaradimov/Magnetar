@@ -1615,7 +1615,7 @@ void CreateRaceDropdown(dialog *dlg, Race race);
 extern int(*sub_450C00)();
 signed int playerOwnerDropdownCommands(dialog *a1, unsigned __int8 a2);
 extern bool (__fastcall*playerOwnerDropdownLoop)(dialog *dlg, dlgEvent *evt);
-extern int (__stdcall*playerOwnerDropdownCreate)(dialog *a1, int, int, int, char, int);
+extern int (__stdcall*CreatePlayerOwnerDropdown)(dialog *a1, int, int, int, char, int);
 extern int(*sub_451370)();
 extern int(*sub_4513A0)();
 extern void **(__stdcall*playerOwnerDropdownCreate2)(dialog *a1);
@@ -4608,7 +4608,7 @@ extern void (__stdcall*waitForImageLoadObjects)(LPOVERLAPPED a1, int a2, int a3)
 void ReadFile_Overlapped(void *buffer, DWORD nNumberOfBytesToRead, LPOVERLAPPED a3, void *a4);
 extern grpHead *(__fastcall*LoadGraphic)(const char *grp_path, int unused_zero, const char *logfilename, int logline);
 extern int (__stdcall*sub_4D2BF0)(char *a1, int, int, char *logfilename, int logline);
-extern int (__stdcall*sub_4D2C70)(char *filename, int last_error, int, char *logfilename, int logline);
+extern int (__stdcall*sub_4D2C70)(char *filename, int last_error, LPOVERLAPPED a3, char *logfilename, int logline);
 int fastFileRead(int *bytes_read, int searchScope, const char *filename, int defaultValue, int bytes_to_read, const char *logfilename, int logline);
 extern void *(__fastcall*_fastFileRead)(const char *filename, int default_value, int *bytes_read, const char *a4, int a5);
 extern int(*sub_4D2E60)();
@@ -5068,7 +5068,7 @@ extern void (__fastcall*statRes_Text_Update)(dialog *dlg, int x, int y, rect *ds
 extern int (__stdcall*setCountdownTimerString)(char *source);
 extern int(*DisableCountdownTimer)();
 extern void (__fastcall*StatRes_MainProc)(dialog *, __int16);
-extern void (__stdcall*sub_4E57D0)(int a1);
+extern void (__stdcall*hideLeftmostResource)(int a1);
 extern bool (__fastcall*StatRes_CustomCtrl)(dialog *dlg, dlgEvent *evt);
 void StatRes_RegisterCustomProcs(dialog *a1);
 extern bool (__fastcall*StatRes_DialogInteract)(dialog *dlg, dlgEvent *evt);
