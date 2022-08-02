@@ -11704,6 +11704,64 @@ int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
 
 FAIL_STUB_PATCH(loadOKCancelBIN);
 
+
+bool __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_DESTROY:
+			if (dword_6D63BC)
+			{
+				if (stru_6DC2A4.data)
+				{
+					SMemFree(stru_6DC2A4.data, "Starcraft\\SWAR\\lang\\gluScore.cpp", 574, 0);
+					stru_6DC2A4.data = 0;
+				}
+			}
+			dlg->srcBits.data = 0;
+			dword_6D63BC = 0;
+			break;
+		case USER_ACTIVATE:
+			sub_4B4520(dlg);
+			return 1;
+		case USER_INIT:
+			if (!dword_6D63BC)
+			{
+				char v13[MAX_PATH];
+				strcpy(v13, byte_59B628);
+				strcat(v13, "untab.pcx");
+				AllocBackgroundImage(v13, &stru_6DC2A4, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 548);
+				dword_6D63BC = 1;
+			}
+			dlg->pfcnUpdate = (FnUpdate)sub_4B3820;
+			dlg->srcBits.wid = stru_6DC2A4.wid;
+			dlg->srcBits.ht = stru_6DC2A4.ht;
+			dlg->lFlags |= CTRL_UNKOWN1;
+			dlg->srcBits.data = stru_6DC2A4.data;
+			UpdateDlgOnFlag(dlg);
+			break;
+		case USER_SELECT:
+			if (*(_DWORD*)&evt->wSelection)
+			{
+				sub_4B4520(dlg);
+			}
+			return 1;
+		case USER_SHOW:
+			if (dlg == getControlFromIndex(dlg, 3))
+			{
+				sub_4B4520(dlg);
+			}
+			break;
+		}
+	}
+
+	return genericOptionInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluScore_Tab);
+
 int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 {
 	char* v3 = (char*)malloc(strlen(filename) + 3);
@@ -11837,10 +11895,10 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 	static FnInteract gluScore_menu_functions[] = {
 		genericImageInteract,
 		genericLabelInteract,
-		gluScore_Tab,
-		gluScore_Tab,
-		gluScore_Tab,
-		gluScore_Tab,
+		gluScore_Tab_,
+		gluScore_Tab_,
+		gluScore_Tab_,
+		gluScore_Tab_,
 		Menu_Generic_Button,
 		genericLabelInteract,
 		genericLabelInteract,
