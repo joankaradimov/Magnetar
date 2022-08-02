@@ -251,6 +251,23 @@ void UpdateDlgMousePosition_(void)
 
 FAIL_STUB_PATCH(UpdateDlgMousePosition);
 
+void playNextMusic_()
+{
+	unsigned a2;
+	unsigned a3;
+
+	if (byte_6D5BBC && music_tracks[current_music].track_type == IN_GAME_MUSIC)
+	{
+		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
+		if (a2 >= a3)
+		{
+			PlayMusic((MusicTrack)music_tracks[current_music].in_game_music_index);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(playNextMusic);
+
 void __stdcall BWFXN_videoLoop_(int flag)
 {
 	checkLastFileError();
@@ -291,7 +308,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 			if (ticks + dword_6D637C >= 1000)
 			{
 				PlayBriefingWAVBegin();
-				playNextMusic();
+				playNextMusic_();
 				dword_6D637C = message_handling_tick;
 			}
 		}

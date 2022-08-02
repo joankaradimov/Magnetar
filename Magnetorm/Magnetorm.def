@@ -77,7 +77,7 @@ EXPORTS
     SFileDdaBeginEx = StormLibFileDdaBeginEx @255
     SFileDdaDestroy = StormLibFileDdaDestroy @256
     SFileDdaEnd@4 = StormLibFileDdaEnd @257
-    SFileDdaGetPos = StormLibFileDdaGetPos @258
+    SFileDdaGetPos@12 = StormLibFileDdaGetPos @258
     SFileDdaGetVolume = StormLibFileDdaGetVolume @259
     SFileDdaInitialize@4 = StormLibFileDdaInitialize @260
     SFileDdaSetVolume@12 = StormLibFileDdaSetVolume @261
