@@ -4291,6 +4291,12 @@ int TERRAN_SFX_COUNT = 299;
 int PROTOSS_SFX_COUNT = 282;
 int ZERG_SFX_COUNT = 213;
 
+u16* off_513628_[] = {
+	zerg_sfx_related,
+	terran_sfx_related,
+	protoss_sfx_related,
+};
+
 void LoadRaceSFX_(char a1)
 {
 	dword_64086C = 0;
@@ -4330,7 +4336,7 @@ void LoadRaceSFX_(char a1)
 		dword_6D5BDC = 1;
 	}
 
-	playsound_init_UI_(a1 ? off_513628[consoleIndex] : 0);
+	playsound_init_UI_(a1 ? off_513628_[consoleIndex] : 0);
 }
 
 FAIL_STUB_PATCH(LoadRaceSFX);
