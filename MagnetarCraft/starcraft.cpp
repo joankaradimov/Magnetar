@@ -12367,6 +12367,15 @@ char* score_screens_[] = {
 	"glue\\scorePv\\",
 };
 
+MusicTrack score_music_track_[] = {
+	MT_ZERG_DEFEAT,
+	MT_ZERG_VICTORY,
+	MT_TERRAN_DEFEAT,
+	MT_TERRAN_VICTORY,
+	MT_PROTOSS_DEFEAT,
+	MT_PROTOSS_VICTORY,
+};
+
 void loadMenu_gluScore_()
 {
 	char v25[260];
@@ -12378,7 +12387,7 @@ void loadMenu_gluScore_()
 
 	glGluesMode = dword_512AB0[v0];
 	strcpy(byte_59B628, score_screens_[v0]);
-	DLGMusicFade_(music_track[v0]);
+	DLGMusicFade_(score_music_track_[v0]);
 
 	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "iScore.grp");
