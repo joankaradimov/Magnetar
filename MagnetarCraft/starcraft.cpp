@@ -6871,6 +6871,111 @@ void load_Statf10_BIN_()
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
 
+void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
+{
+	if (byte_68C144)
+	{
+		// this is an inlined sub_4D16F0(0)
+		if (GetUserDefaultLangID() == 1042)
+		{
+			if (!dword_6D6438)
+			{
+				dword_6D6438 = ImmGetContext(hWndParent);
+			}
+			dword_6D6438 = ImmAssociateContext(hWndParent, 0);
+		}
+
+		dialog* v4 = getControlFromIndex(a1, 6);
+		if ((_BYTE)a3)
+		{
+			char dest[256];
+			SStrCopy(dest, v4->pszText, 0x7FFFFFFFu);
+			a3 = GameCheats;
+			if (CommandLineCheatCompare(&a3, dest))
+			{
+				if (a3 != GameCheats)
+				{
+					CMDACT_UseCheat(a3);
+				}
+			}
+			else if ((!InReplay || !replayCommand(dest)) && multiPlayerMode)
+			{
+				sendChatMessage();
+			}
+		}
+		SStrCopy(v4->pszText, empty_string, 0x100u);
+		v4->fields.edit.bCursorPos = 0;
+		v4->fields.optn.bEnabled |= CTRL_UPDATE;
+		if ((v4->lFlags & CTRL_VISIBLE) != 0 && (v4->lFlags & CTRL_UPDATE) == 0)
+		{
+			v4->lFlags |= CTRL_UPDATE;
+			updateDialog(v4);
+		}
+		hAccTable = hAccel;
+		input_procedures[16] = CMDACT_Hotkey;
+		byte_68C144 = 0;
+	}
+	else
+	{
+		// this is an inlined sub_4D16F0(1)
+		if (GetUserDefaultLangID() == 1042)
+		{
+			HIMC v8 = dword_6D6438;
+			if (!dword_6D6438)
+			{
+				v8 = ImmGetContext(hWndParent);
+				dword_6D6438 = v8;
+			}
+			ImmAssociateContext(hWndParent, v8);
+		}
+
+		SNetGetLeaguePlayerName((int*)curPlayerID, 0x19u);
+		hAccTable = dword_5968F4;
+		input_procedures[16] = CMDACT_Hotkey;
+
+		if (!multiPlayerMode)
+		{
+			byte_68C144 = 1;
+		}
+		else if (a2->wUnk_0x0A & 3)
+		{
+			byte_68C144 = 2;
+		}
+		else if (sub_4AABB0() && (a2->wUnk_0x0A & 4))
+		{
+			byte_68C144 = 3;
+		}
+		else if (byte_581D60 == 8)
+		{
+			byte_68C144 = 2;
+		}
+		else if (!sub_4AABB0())
+		{
+			byte_68C144 = 4;
+		}
+		else if (a2->wUnk_0x0A != 9)
+		{
+			byte_68C144 = 4;
+		}
+		else
+		{
+			byte_68C144 = 3;
+		}
+	}
+	sub_4F3040(a1);
+	dialog* v13 = getControlFromIndex(a1, 5);
+	if (byte_68C144 || v13->pszText == NULL)
+	{
+		HideDialog(v13);
+	}
+	else
+	{
+		showDialog(v13);
+	}
+}
+
+FAIL_STUB_PATCH(onSendText);
+
 bool __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -6885,7 +6990,7 @@ bool __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 	case EventNo::EVN_USER:
 		if (evt->dwUser == USER_NEXT && byte_68C144)
 		{
-			onSendText(dlg->fields.ctrl.pDlg, evt, 0);
+			onSendText_(dlg->fields.ctrl.pDlg, evt, (CheatFlags) 0);
 		}
 		break;
 	case EventNo::EVN_CHAR:
@@ -6983,11 +7088,11 @@ bool __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 		}
 		if (evt->wVirtKey == 10 || evt->wVirtKey == VK_RETURN)
 		{
-			onSendText(dlg, evt, 1);
+			onSendText_(dlg, evt, (CheatFlags) 1);
 		}
 		else if (evt->wVirtKey == VK_ESCAPE && byte_68C144)
 		{
-			onSendText(dlg, evt, 0);
+			onSendText_(dlg, evt, (CheatFlags) 0);
 		}
 		else
 		{
