@@ -15973,7 +15973,17 @@ DECL_FUNC(void (__fastcall*sub_4B3B80)(dialog *dlg, int x, int y, rect *dst), su
 DECL_FUNC(void (__stdcall*sub_4B3BC0)(dialog *a1), sub_4B3BC0, 0x4b3bc0);
 DECL_FUNC(bool (__fastcall*gluScore_PlayerRaceIcon)(dialog *dlg, dlgEvent *evt), gluScore_PlayerRaceIcon, 0x4b3fd0);
 DECL_FUNC(bool (__fastcall*gluScore_PlayerScoreTotal)(dialog *dlg, dlgEvent *evt), gluScore_PlayerScoreTotal, 0x4b4160);
-DECL_FUNC(int(*sub_4B42D0)(), sub_4B42D0, 0x4b42d0);
+int sub_4B42D0(dialog *a1) {
+    int address = 0x4b42d0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void DLG_GlueScoreFill(dialog *a1) {
     int address = 0x4b43f0;
     __asm {
@@ -17082,7 +17092,14 @@ DECL_FUNC(int(*sub_4C02A0)(), sub_4C02A0, 0x4c02a0);
 DECL_FUNC(int(*sub_4C02C0)(), sub_4C02C0, 0x4c02c0);
 DECL_FUNC(int (__stdcall*CMDACT_TargetOrder)(__int16, __int16, __int16, char), CMDACT_TargetOrder, 0x4c0300);
 DECL_FUNC(int (__stdcall*CMDACT_RightClickOrder)(__int16, __int16, __int16, char), CMDACT_RightClickOrder, 0x4c0380);
-DECL_FUNC(int(*CMDACT_UseCheat)(), CMDACT_UseCheat, 0x4c0400);
+void CMDACT_UseCheat(CheatFlags a1) {
+    int address = 0x4c0400;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(int(*CMDACT_ResumeGame)(), CMDACT_ResumeGame, 0x4c0420);
 DECL_FUNC(int(*CMDACT_PauseGame)(), CMDACT_PauseGame, 0x4c0450);
 DECL_FUNC(int (__stdcall*CMDACT_ChangeGameSpeed)(char), CMDACT_ChangeGameSpeed, 0x4c0480);
@@ -17539,7 +17556,7 @@ void sub_4C94F0(dialog *a1) {
 DECL_FUNC(int (__thiscall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
 DECL_FUNC(int (__thiscall*BWFXN_QuitMission)(dialog *a1), BWFXN_QuitMission, 0x4c95a0);
 DECL_FUNC(int (__thiscall*quit_lastBINDLG)(dialog *a1), quit_lastBINDLG, 0x4c96d0);
-DECL_FUNC(int (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
+DECL_FUNC(void (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
 bool options_Cancel(dialog *a1, dlgEvent *a2) {
     int address = 0x4c9800;
     bool result_;
@@ -19700,6 +19717,17 @@ void DLG_SwishIn(dialog *a1) {
     }
 }
 DECL_FUNC(int(*SwitchMenu)(), SwitchMenu, 0x4de200);
+signed int replayCommand(const char *a1) {
+    int address = 0x4de6a0;
+    signed result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4DE740)(int), sub_4DE740, 0x4de740);
 DECL_FUNC(int(*sub_4DE770)(), sub_4DE770, 0x4de770);
 DECL_FUNC(int(*sub_4DE790)(), sub_4DE790, 0x4de790);
@@ -19816,7 +19844,7 @@ DECL_FUNC(int(*sub_4DF1E0)(), sub_4DF1E0, 0x4df1e0);
 DECL_FUNC(int(*DeleteFileIfExists)(), DeleteFileIfExists, 0x4df220);
 DECL_FUNC(void (__fastcall*CMDACT_IncreaseReplaySpeed)(int, bool), CMDACT_IncreaseReplaySpeed, 0x4df260);
 DECL_FUNC(int(*CMDACT_SetReplaySpeed)(), CMDACT_SetReplaySpeed, 0x4df2c0);
-DECL_FUNC(int(*CMDACT_DecreaseReplaySpeed)(), CMDACT_DecreaseReplaySpeed, 0x4df300);
+DECL_FUNC(void (__fastcall*CMDACT_DecreaseReplaySpeed)(int a1, bool a2), CMDACT_DecreaseReplaySpeed, 0x4df300);
 DECL_FUNC(int(*replay_leaderboard_Hide)(), replay_leaderboard_Hide, 0x4df360);
 DECL_FUNC(int(*replay_leaderboard_Show)(), replay_leaderboard_Show, 0x4df3b0);
 void sub_4DF4A0(dialog *a1) {
@@ -21883,7 +21911,7 @@ void SetTargetDlgText(int a2) {
 }
 DECL_FUNC(bool (__fastcall*textBox_ctrl_charEvent)(dialog *a1, dlgEvent *a2), textBox_ctrl_charEvent, 0x4f3240);
 DECL_FUNC(int(*sendChatMessage)(), sendChatMessage, 0x4f3280);
-void onSendText(dialog *a1, dlgEvent *a2, int a3) {
+void onSendText(dialog *a1, dlgEvent *a2, CheatFlags a3) {
     int address = 0x4f32d0;
     __asm {
         xor edi, edi
@@ -24590,7 +24618,7 @@ char(&aLbcse)[6] = * ((decltype(&aLbcse)) 0x5129dc);
 swishTimer(&commonSwishControllers)[43] = * ((decltype(&commonSwishControllers)) 0x5129ec);
 char *(&score_screens)[6] = * ((decltype(&score_screens)) 0x512a98);
 MenuPosition(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
-MusicTrack(&music_track)[6] = * ((decltype(&music_track)) 0x512ac8);
+MusicTrack(&score_music_track)[6] = * ((decltype(&score_music_track)) 0x512ac8);
 GluAllTblEntry& tbl_entry = * ((decltype(&tbl_entry)) 0x512ae0);
 swishTimer(&gluCmpgnSwishController)[2] = * ((decltype(&gluCmpgnSwishController)) 0x512b10);
 char(&aRegistration_block)[19] = * ((decltype(&aRegistration_block)) 0x512b18);
