@@ -4848,9 +4848,16 @@ void clearSelectionPortrait_()
 
 FAIL_STUB_PATCH(clearSelectionPortrait);
 
+StatFlufDialog* statfluf_dialogs_[] = {
+	statfluf_zerg,
+	statfluf_terran,
+	statfluf_protoss,
+	statfluf_neutral,
+};
+
 void sub_4F4CF0_()
 {
-	for (StatFlufDialog* i = statfluf_dialogs[statfluf_current_race % 4]; i->position.left != -1; ++i)
+	for (StatFlufDialog* i = statfluf_dialogs_[statfluf_current_race]; i->position.left != -1; ++i)
 	{
 		if (i->dialog)
 		{
@@ -6298,7 +6305,7 @@ FAIL_STUB_PATCH(statfluf_DLG_Interact);
 void load_statfluf_BIN_()
 {
 	statfluf_current_race = InReplay ? Race::RACE_Other : consoleIndex;
-	StatFlufDialog* dlgs = statfluf_dialogs[statfluf_current_race];
+	StatFlufDialog* dlgs = statfluf_dialogs_[statfluf_current_race];
 	for (int i = 0; dlgs[i].position.left != -1; i++)
 	{
 		dlgs[i].dialog = LoadDialog("rez\\statfluf.bin"); // The top decoratios of the main (bottom-of-the-screen) in-game UI
