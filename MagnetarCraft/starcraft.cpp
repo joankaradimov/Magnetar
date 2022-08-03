@@ -2494,6 +2494,59 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 
 FAIL_STUB_PATCH(CleanupIscriptBINHandle);
 
+UnitType GetBaseBuilding(Race race)
+{
+	switch (race)
+	{
+	case Race::RACE_Zerg:
+		return UnitType::Zerg_Hatchery;
+	case Race::RACE_Terran:
+		return UnitType::Terran_Command_Center;
+	case Race::RACE_Protoss:
+		return UnitType::Protoss_Nexus;
+	default:
+		return (UnitType)228;
+	}
+}
+
+void CreateInitialMeleeBuildings_(Race race, u8 player_index)
+{
+	UnitType base_building = GetBaseBuilding(race);
+
+	// TODO: test this piece of code against the one in StarCraft.exe:
+	int v5 = Unit_Placement[base_building].x;
+	int v6 = Unit_Placement[base_building].y;
+	int v7 = (v5 - HIWORD(v5)) / 2;
+	int v8 = (v6 - HIWORD(v6)) / 2;
+	int v9 = v7 + ((startPositions[player_index].x - v7) & 0xFFE0);
+	int v10 = v8 + ((startPositions[player_index].y - v8) & 0xFFE0);
+
+	Box16 v14;
+	v14.left = v9 - v7;
+	v14.top = v10 - v6 / 2;
+	v14.bottom = v6 / 2 + v10 - 1;
+	v14.right = v7 + v9 - 1;
+	ModifyUnit_maybe(&v14, 0, (int(__fastcall*)(CUnit*, void*))SelfDestructCB);
+
+	CUnit* v12 = CreateUnit(base_building, v9, v10, player_index);
+	if (v12)
+	{
+		updateUnitStatsFinishBuilding(v12);
+		if (sub_49EC30(v12))
+		{
+			updateUnitStrengthAndApplyDefaultOrders(v12);
+		}
+		if (spreadsCreep(v12->unitType, 1) || (Unit_PrototypeFlags[v12->unitType] & CreepBuilding) != 0)
+		{
+			ApplyCreepAtLocationFromUnitType(v12->unitType, v12->sprite->position.x, v12->sprite->position.y);
+			sub_49D660(v12);
+			sub_49D660(v12);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(CreateInitialMeleeBuildings);
+
 UnitType GetWorkerType(Race race)
 {
 	switch (race)
@@ -2504,6 +2557,8 @@ UnitType GetWorkerType(Race race)
 		return UnitType::Terran_SCV;
 	case Race::RACE_Protoss:
 		return UnitType::Protoss_Probe;
+	case 4:
+		return UnitType::Zerg_Infested_Terran;
 	default:
 		return (UnitType)228;
 	}
@@ -2550,7 +2605,7 @@ void CreateInitialMeleeUnits_()
 			switch (starting_units)
 			{
 			case StartingUnits::SU_WORKER_AND_CENTER:
-				CreateInitialMeleeBuildings(player->nRace, player_index);
+				CreateInitialMeleeBuildings_(player->nRace, player_index);
 				if (player->nRace == Race::RACE_Zerg)
 					CreateInitialOverlord(player_index);
 				[[fallthrough]];
@@ -3738,7 +3793,7 @@ void CreateInitialTeamMeleeUnits_()
 		u8 v6 = team_index * illegalTeamCheck();
 		if (gameData.got_file_values.starting_units == StartingUnits::SU_WORKER_AND_CENTER)
 		{
-			CreateInitialMeleeBuildings(byte_57F1C0[v6], a1);
+			CreateInitialMeleeBuildings_(byte_57F1C0[v6], a1);
 			if (byte_57F1C0[v6] == RACE_Zerg)
 			{
 				CreateInitialOverlord(a1);
