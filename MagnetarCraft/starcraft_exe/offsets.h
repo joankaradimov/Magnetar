@@ -3817,7 +3817,7 @@ signed int verifyCheatCode(const void *a1, CheatFlags *game_cheats);
 signed int campaignTypeCheatStrings(const char *a2);
 int makeCheatHash(const char *cheat, __int64 *a2);
 int cheatActivation(int result, int a2);
-signed int _radioFreeZergCheat(const void *a2, CheatFlags *cheat_flags);
+signed int radioFreeZergCheat(const void *a2, CheatFlags *cheat_flags);
 signed int CommandLineCheatCompare(CheatFlags *game_cheats, const char *a2);
 extern unsigned int (__fastcall*sub_4B24B0)(dialog *a1, dlgEvent *a2);
 extern void (__fastcall*gluCmpgnBtn_UpdateTimer)(dialog *, __int16);

@@ -15868,7 +15868,7 @@ int cheatActivation(int result, int a2) {
     }
     return result_;
 }
-signed int _radioFreeZergCheat(const void *a2, CheatFlags *cheat_flags) {
+signed int radioFreeZergCheat(const void *a2, CheatFlags *cheat_flags) {
     int address = 0x4b2350;
     signed result_;
     __asm {
