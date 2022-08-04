@@ -7865,14 +7865,12 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 	int y;
 	int v23;
 	int v24;
-	int v26;
-	int a1a;
 	int v28;
 	int v29;
 	int v30;
 
-	v26 = a2.x;
-	a1a = a2.y;
+	x = a2.x;
+	y = a2.y;
 	v23 = a1->regionCount;
 	dword_6D5BF8 = 0;
 	v24 = 0;
@@ -7884,13 +7882,11 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 		v29 = 0;
 		v30 = 0;
 
-		x = v26;
-		y = a1a;
-		if (v26 >= (__int16)size.width)
+		if (x >= (__int16)size.width)
 		{
 			x = (__int16)a2.x;
-			y = a1a + 1;
-			if (a1a + 1 >= (__int16)size.height)
+			y += 1;
+			if (y >= (__int16)size.height)
 			{
 				y = (__int16)a2.y;
 			}
@@ -7912,8 +7908,8 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 				}
 				if (v30 >= v28 || v29 > 25)
 				{
-					a1a = v19.top;
-					v26 = v19.right;
+					x = v19.right;
+					y = v19.top;
 					break;
 				}
 				x = a4.right;
@@ -7974,66 +7970,64 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			}
 			return 0;
 		}
-		else
-		{
-			v28 = (v19.right - v19.left) * (v19.bottom - v19.top);
-			if (v28)
-			{
-				SAI_PathCreate_Sub3_0_1(a1->regionCount, &v19, a1);
-				a1->regions[a1->regionCount].rgnCenterX = (v19.left + v19.right) / 2;
-				a1->regions[a1->regionCount].rgnCenterY = (v19.top + v19.bottom) / 2;
-				if (v19.left > 0)
-				{
-					--v19.left;
-				}
-				if (v19.right < (int)map_size.width)
-				{
-					++v19.right;
-				}
-				if (v19.top > 0)
-				{
-					--v19.top;
-				}
-				if (v19.bottom < (int)map_size.height)
-				{
-					++v19.bottom;
-				}
 
-				SAI_PathCreate_Sub3_0_2(a1->regionCount, a1, &v19, a5);
-				a1->regions[a1->regionCount].rgnBox.left = v19.left;
-				a1->regions[a1->regionCount].rgnBox.top = v19.top;
-				a1->regions[a1->regionCount].rgnBox.right = v19.right;
-				a1->regions[a1->regionCount].rgnBox.bottom = v19.bottom;
-				a1->regions[a1->regionCount].accessabilityFlags = a5;
-				a1->regionCount++;
-				if (v28 <= 6 && v24 == 0)
-				{
-					v24 = 1;
-					for (int v12 = v23; v12 < a1->regionCount; v12++)
-					{
-						u16* v14 = &a1->regions[v12].rgnBox.top;
-						if ((__int16)a1->regions[v12].rgnBox.left > 0)
-						{
-							a1->regions[v12].rgnBox.left -= 1;
-						}
-						if ((__int16)a1->regions[v12].rgnBox.right < map_size.width)
-						{
-							a1->regions[v12].rgnBox.right += 1;
-						}
-						if ((__int16)a1->regions[v12].rgnBox.top > 0)
-						{
-							a1->regions[v12].rgnBox.top -= 1;
-						}
-						if ((__int16)a1->regions[v12].rgnBox.bottom < map_size.height)
-						{
-							a1->regions[v12].rgnBox.bottom += 1;
-						}
-						SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox - 1, a1->regions[v12].accessabilityFlags);
-					}
-				}
-				continue;
-			}
+		v28 = (v19.right - v19.left) * (v19.bottom - v19.top);
+		if (v28 == 0)
+		{
 			return 1;
+		}
+
+		SAI_PathCreate_Sub3_0_1(a1->regionCount, &v19, a1);
+		a1->regions[a1->regionCount].rgnCenterX = (v19.left + v19.right) / 2;
+		a1->regions[a1->regionCount].rgnCenterY = (v19.top + v19.bottom) / 2;
+		if (v19.left > 0)
+		{
+			--v19.left;
+		}
+		if (v19.right < (int)map_size.width)
+		{
+			++v19.right;
+		}
+		if (v19.top > 0)
+		{
+			--v19.top;
+		}
+		if (v19.bottom < (int)map_size.height)
+		{
+			++v19.bottom;
+		}
+
+		SAI_PathCreate_Sub3_0_2(a1->regionCount, a1, &v19, a5);
+		a1->regions[a1->regionCount].rgnBox.left = v19.left;
+		a1->regions[a1->regionCount].rgnBox.top = v19.top;
+		a1->regions[a1->regionCount].rgnBox.right = v19.right;
+		a1->regions[a1->regionCount].rgnBox.bottom = v19.bottom;
+		a1->regions[a1->regionCount].accessabilityFlags = a5;
+		a1->regionCount++;
+		if (v28 <= 6 && v24 == 0)
+		{
+			v24 = 1;
+			for (int v12 = v23; v12 < a1->regionCount; v12++)
+			{
+				u16* v14 = &a1->regions[v12].rgnBox.top;
+				if ((__int16)a1->regions[v12].rgnBox.left > 0)
+				{
+					a1->regions[v12].rgnBox.left -= 1;
+				}
+				if ((__int16)a1->regions[v12].rgnBox.right < map_size.width)
+				{
+					a1->regions[v12].rgnBox.right += 1;
+				}
+				if ((__int16)a1->regions[v12].rgnBox.top > 0)
+				{
+					a1->regions[v12].rgnBox.top -= 1;
+				}
+				if ((__int16)a1->regions[v12].rgnBox.bottom < map_size.height)
+				{
+					a1->regions[v12].rgnBox.bottom += 1;
+				}
+				SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox - 1, a1->regions[v12].accessabilityFlags);
+			}
 		}
 	}
 }
