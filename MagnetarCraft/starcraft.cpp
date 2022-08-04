@@ -958,6 +958,94 @@ MEMORY_PATCH(0x4A7DC9, MapdataFilenames_);
 MEMORY_PATCH(0x512BA0, MapdataFilenames_);
 MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
 
+void playRadioFreeZerg_()
+{
+	MusicTrack v0;
+	const char* v1;
+
+	if (current_music == MT_RADIO_FREE_ZERG)
+	{
+		v0 = MT_ZERG1;
+		v1 = GetNetworkTblString(66);
+	}
+	else
+	{
+		v0 = MT_RADIO_FREE_ZERG;
+		v1 = GetNetworkTblString(65);
+	}
+
+	if (v1)
+	{
+		setUnitStatTxtErrorMsg((char*) v1);
+	}
+	PlayMusic(v0);
+}
+
+FAIL_STUB_PATCH(playRadioFreeZerg);
+
+DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
+
+bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
+{
+	if (gwGameMode == GAME_RUN && gameData.got_file_values.cheats != 1)
+	{
+		return false;
+	}
+
+	if (!memcmp(a2, &cheat_hash_no_glues, 8))
+	{
+		*cheat_flags ^= CHEAT_NoGlues;
+		return true;
+	}
+
+	if (!memcmp(a2, &cheat_hash_radio_free_zerg, 8))
+	{
+		if (gwGameMode == GAME_RUN && is_expansion_installed && consoleIndex == Race::RACE_Zerg)
+		{
+			playRadioFreeZerg_();
+		}
+		return true;
+	}
+
+	return false;
+}
+
+FAIL_STUB_PATCH(radioFreeZergCheat);
+
+BOOL CommandLineCheatCompare_(CheatFlags* game_cheats, const char* a2)
+{
+	CheatHashMaybe v7;
+	CheatHashMaybe a2a;
+
+	if (multiPlayerMode)
+	{
+		return 0;
+	}
+
+	srand(0x75u);
+	for (int i = 0; i < 4; ++i)
+	{
+		v7.parts[i] = rand();
+	}
+	srand(time(0));
+	a2a = v7;
+	sub_44E420((CheatHashMaybe*)stru_68F580, &a2a);
+	memset(a2a.parts, 0, sizeof(a2a.parts));
+	makeCheatHash(a2, (__int64*)&a2a.parts[2]);
+	memset(stru_68F580, 0, sizeof(stru_68F580));
+
+	if (verifyCheatCode(&a2a.parts[2], game_cheats) || radioFreeZergCheat_(&a2a.parts[2], game_cheats))
+	{
+		return 1;
+	}
+	else
+	{
+		return campaignTypeCheatStrings(a2) != 0;
+	}
+}
+
+FAIL_STUB_PATCH(CommandLineCheatCompare);
+
 void CommandLineCheck_()
 {
 	const char* command_line = GetCommandLineA();
@@ -967,7 +1055,7 @@ void CommandLineCheck_()
 		CheatFlags game_cheats = GameCheats;
 		for (char* argument = strTokenize(0); argument; argument = strTokenize(0))
 		{
-			if (CommandLineCheatCompare(&game_cheats, argument))
+			if (CommandLineCheatCompare_(&game_cheats, argument))
 			{
 				cheatActivation(game_cheats, 0);
 			}
@@ -5242,8 +5330,6 @@ void DestroyGame_()
 
 FAIL_STUB_PATCH(DestroyGame);
 
-DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
-
 void updateActiveTileInfo_()
 {
 	int v7 = 0;
@@ -6946,7 +7032,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 			char dest[256];
 			SStrCopy(dest, v4->pszText, 0x7FFFFFFFu);
 			a3 = GameCheats;
-			if (CommandLineCheatCompare(&a3, dest))
+			if (CommandLineCheatCompare_(&a3, dest))
 			{
 				if (a3 != GameCheats)
 				{
