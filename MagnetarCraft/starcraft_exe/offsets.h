@@ -3576,6 +3576,7 @@ extern bool (__fastcall*MiniMapPreviewInteract)(dialog *dlg, dlgEvent *evt);
 extern int(*load_gluMinimap)();
 extern int(*load_MinimapPreview)();
 extern int(*sub_4A5E30)();
+BOOL getArchiveName(HANDLE a1);
 extern int(*getMusicVolume)();
 extern void (__cdecl*stopMusic)();
 extern void (__stdcall*FadeMusicProc)(HWND, UINT, UINT, DWORD);

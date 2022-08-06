@@ -251,6 +251,63 @@ void UpdateDlgMousePosition_(void)
 
 FAIL_STUB_PATCH(UpdateDlgMousePosition);
 
+const char* GetNetworkTblString(__int16 network_tbl_entry);
+
+void PlayMusic_(MusicTrack a1)
+{
+	if (directsound == NULL || a1 != current_music)
+	{
+		current_music = a1;
+		if (directsound)
+		{
+			SFileDdaEnd(directsound);
+			SFileCloseFile(directsound);
+			directsound = 0;
+			byte_6D5BBC = 0;
+		}
+		if (a1 == NULL)
+		{
+			return;
+		}
+
+		SFileOpenFile(music_tracks[a1].wav_filename, &directsound);
+	}
+
+	if (directsound)
+	{
+		if (getArchiveName(directsound))
+		{
+			if (gwGameMode == GAME_RUN)
+			{
+				BWFXN_PrintText(8, (char*) GetNetworkTblString(140), 0);
+			}
+		}
+		else
+		{
+			byte_6D5BBD = 0;
+			if (registry_options.Music)
+			{
+				if (SFileDdaBeginEx(directsound, 0x40000u, music_tracks[a1].track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
+				{
+					byte_6D5BBC = 1;
+				}
+				else
+				{
+					if (directsound)
+					{
+						SFileDdaEnd(directsound);
+						SFileCloseFile(directsound);
+						directsound = 0;
+					}
+					byte_6D5BBC = 0;
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(PlayMusic);
+
 void playNextMusic_()
 {
 	unsigned a2;
@@ -261,7 +318,7 @@ void playNextMusic_()
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			PlayMusic((MusicTrack)music_tracks[current_music].in_game_music_index);
+			PlayMusic_((MusicTrack)music_tracks[current_music].in_game_music_index);
 		}
 	}
 }
@@ -978,7 +1035,7 @@ void playRadioFreeZerg_()
 	{
 		setUnitStatTxtErrorMsg((char*) v1);
 	}
-	PlayMusic(v0);
+	PlayMusic_(v0);
 }
 
 FAIL_STUB_PATCH(playRadioFreeZerg);
@@ -2071,7 +2128,7 @@ void DLGMusicFade_(MusicTrack music_track)
 		{
 			int old_bigvolume = bigvolume;
 			bigvolume = -10000;
-			PlayMusic(music_track);
+			PlayMusic_(music_track);
 			bigvolume = old_bigvolume;
 			if (registry_options.Music)
 			{
@@ -2082,7 +2139,7 @@ void DLGMusicFade_(MusicTrack music_track)
 		}
 		else
 		{
-			PlayMusic(music_track);
+			PlayMusic_(music_track);
 		}
 	}
 }

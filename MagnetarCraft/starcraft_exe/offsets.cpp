@@ -14999,6 +14999,18 @@ DECL_FUNC(bool (__fastcall*MiniMapPreviewInteract)(dialog *dlg, dlgEvent *evt), 
 DECL_FUNC(int(*load_gluMinimap)(), load_gluMinimap, 0x4a5a80);
 DECL_FUNC(int(*load_MinimapPreview)(), load_MinimapPreview, 0x4a5d10);
 DECL_FUNC(int(*sub_4A5E30)(), sub_4A5E30, 0x4a5e30);
+BOOL getArchiveName(HANDLE a1) {
+    int address = 0x4a5e70;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*getMusicVolume)(), getMusicVolume, 0x4a5ef0);
 DECL_FUNC(void (__cdecl*stopMusic)(), stopMusic, 0x4a5f50);
 DECL_FUNC(void (__stdcall*FadeMusicProc)(HWND, UINT, UINT, DWORD), FadeMusicProc, 0x4a6030);
