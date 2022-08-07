@@ -1958,7 +1958,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		blitTileCacheOnRefresh_();
 	}
 	BWFXN_drawAllSprites_();
-	if (CurrentTileSet == Tileset::Platform)
+	if (CurrentTileSet == Tileset::Platform || CurrentTileSet == 8)
 	{
 		if (v2)
 			drawStars();
@@ -3169,6 +3169,7 @@ UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_51279C,
 	&stru_51279C,
 	&stru_51279C,
+	&stru_5127B8,
 };
 
 MEMORY_PATCH(0x4BDD8A, TILESET_PALETTE_RELATED);
@@ -7753,6 +7754,7 @@ const char* TILESET_NAMES[] = {
 	"Desert",
 	"Ice",
 	"Twilight",
+	"spacerock"
 };
 
 MEMORY_PATCH(0x4D6D41, TILESET_NAMES);
