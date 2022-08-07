@@ -251,7 +251,72 @@ void UpdateDlgMousePosition_(void)
 
 FAIL_STUB_PATCH(UpdateDlgMousePosition);
 
-const char* GetNetworkTblString(__int16 network_tbl_entry);
+void __fastcall DestroyGluAllStrings_(bool exit_code)
+{
+	if (gluAllTblDataLoaded && gluAllTblData)
+	{
+		SMemFree(gluAllTblData, "Starcraft\\SWAR\\lang\\glues.cpp", 688, 0);
+	}
+}
+
+FAIL_STUB_PATCH(DestroyGluAllStrings);
+
+const char* GetNetworkTblString(__int16 network_tbl_entry)
+{
+	if (network_tbl_entry == 0)
+	{
+		return NULL;
+	}
+	else if (network_tbl_entry < *networkTable + 1)
+	{
+		return (const char*)networkTable + networkTable[network_tbl_entry];
+	}
+	else
+	{
+		return "";
+	}
+}
+
+const char* GetMapTblString(__int16 map_tbl_entry)
+{
+	if (map_tbl_entry == 0)
+	{
+		return "";
+	}
+	else if (MapStringTbl.buffer == 0)
+	{
+		return NULL;
+	}
+	else if (map_tbl_entry < *MapStringTbl.buffer + 1)
+	{
+		return (char*)MapStringTbl.buffer + MapStringTbl.buffer[map_tbl_entry];
+	}
+	else
+	{
+		return "";
+	}
+}
+
+void* fastFileRead_(int* bytes_read, int searchScope, const char* filename, int defaultValue, int bytes_to_read, const char* logfilename, int logline);
+
+char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
+{
+	if (!gluAllTblDataLoaded)
+	{
+		gluAllTblData = fastFileRead_(0, 0, "rez\\gluAll.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+		AppAddExit_(DestroyGluAllStrings_);
+		gluAllTblDataLoaded = 1;
+	}
+
+	if (tbl_entry == STAR_EDIT_NOT_FOUND)
+	{
+		return 0;
+	}
+
+	return tbl_entry - 1 < *(_WORD*)gluAllTblData ? (char*)gluAllTblData + *((unsigned __int16*)gluAllTblData + tbl_entry) : "";
+}
+
+FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
 void PlayMusic_(MusicTrack a1)
 {
@@ -686,71 +751,6 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 	SFileCloseFile(phFile);
 	return buffer;
 }
-
-void __fastcall DestroyGluAllStrings_(bool exit_code)
-{
-	if (gluAllTblDataLoaded && gluAllTblData)
-	{
-		SMemFree(gluAllTblData, "Starcraft\\SWAR\\lang\\glues.cpp", 688, 0);
-	}
-}
-
-FAIL_STUB_PATCH(DestroyGluAllStrings);
-
-const char* GetNetworkTblString(__int16 network_tbl_entry)
-{
-	if (network_tbl_entry == 0)
-	{
-		return NULL;
-	}
-	else if (network_tbl_entry < *networkTable + 1)
-	{
-		return (const char*)networkTable + networkTable[network_tbl_entry];
-	}
-	else
-	{
-		return "";
-	}
-}
-
-const char* GetMapTblString(__int16 map_tbl_entry)
-{
-	if (map_tbl_entry == 0)
-	{
-		return "";
-	}
-	else if (MapStringTbl.buffer == 0)
-	{
-		return NULL;
-	}
-	else if (map_tbl_entry < *MapStringTbl.buffer + 1)
-	{
-		return (char*)MapStringTbl.buffer + MapStringTbl.buffer[map_tbl_entry];
-	}
-	else
-	{
-		return "";
-	}
-}
-
-char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
-{
-	if (!gluAllTblDataLoaded)
-	{
-		gluAllTblData = fastFileRead_(0, 0, "rez\\gluAll.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-		AppAddExit_(DestroyGluAllStrings_);
-		gluAllTblDataLoaded = 1;
-	}
-
-	if (tbl_entry == STAR_EDIT_NOT_FOUND)
-	{
-		return 0;
-	}
-
-	return tbl_entry - 1 < *(_WORD*)gluAllTblData ? (char*)gluAllTblData + *((unsigned __int16*)gluAllTblData + tbl_entry) : "";
-}
-
-FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
 dialog* LoadDialog(const char* bin_path)
 {
