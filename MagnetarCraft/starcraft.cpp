@@ -2220,6 +2220,104 @@ void initVolume_()
 
 FAIL_STUB_PATCH(initVolume);
 
+unsigned __stdcall DSoundThread_(void* a2)
+{
+	void* location = NULL;
+	WaitForSingleObject(dword_6D5A00, 0xFFFFFFFF);
+
+	while (dword_6D5A08)
+	{
+		LPVOID v20;
+		DWORD v21;
+		int bytes_read;
+		int v22 = 0;
+
+		for (int i = 0; i < _countof(stru_5998F0); i++)
+		{
+			if (stru_5998F0[i].sfxdata_flags_2 & 8)
+			{
+				struct_5* v3 = &stru_6D1270[stru_5998F0[i].sfx_id];
+				SfxData sfx_id = stru_5998F0[i].sfx_id;
+				v3->anonymous_1 = 81 - GetTickCount();
+				if (!SFXData_SoundFile[sfx_id])
+				{
+					goto LABEL_16;
+				}
+				char buff[MAX_PATH];
+				_snprintf(buff, sizeof(buff), "sound\\%s", SFXData_SoundFile[sfx_id]);
+				location = (void*)fastFileRead(&bytes_read, 1, buff, 0, 1, "Starcraft\\SWAR\\lang\\snd.cpp", 737);
+				if (location)
+				{
+					if (bytes_read)
+					{
+						WAVEFORMATEX wave_format;
+						void* v4 = parseWaveFile((_DWORD*)location, (unsigned int*)&bytes_read, &wave_format);
+						if (v4)
+						{
+							v3->sound_buffer_bytes = bytes_read;
+							DSBUFFERDESC v18;
+							v18.dwReserved = 0;
+							v18.lpwfxFormat = &wave_format;
+							v18.dwSize = 20;
+							v18.dwFlags = 194;
+							v18.dwBufferBytes = bytes_read;
+							if (direct_sound->CreateSoundBuffer(&v18, &v3->sound_buffer, 0))
+							{
+								v3->sound_buffer = 0;
+							}
+							else if (v3->sound_buffer->Lock(0, bytes_read, &v20, &v21, 0, 0, 0))
+							{
+								v3->sound_buffer->Release();
+								v3->sound_buffer = 0;
+							}
+							else
+							{
+								memcpy(v20, v4, v21);
+								v3->sound_buffer->Unlock(v20, v21, 0, 0);
+								if ((SFXData_Flags2[sfx_id] & 1) == 0)
+								{
+									v22 += bytes_read;
+								}
+								v3->anonymous_2 = sub_4BB890(v3);
+								if (stru_5998F0[i].sfxdata_flags_2 & 8)
+								{
+									v3->sound_buffer->SetVolume(stru_5998F0[i].field_10 - dword_6D5A0C);
+									v3->sound_buffer->SetPan(stru_5998F0[i].volume_related_maybe);
+									v3->sound_buffer->Play(0, 0, 0);
+									stru_5998F0[i].sound_buffer = v3->sound_buffer;
+									stru_5998F0[i].sfxdata_flags_2 = SFXData_Flags2[sfx_id];
+									stru_5998F0[i].sfxdata_flags_1 = SFXData_Flags1[sfx_id];
+									stru_5998F0[i].field_8 = 0;
+								}
+							}
+						}
+					}
+
+				LABEL_16:
+					if (location)
+					{
+						SMemFree(location, "Starcraft\\SWAR\\lang\\snd.cpp", 823, 0);
+						location = NULL;
+					}
+				}
+				SFXData_Flags2[sfx_id] &= 0xF7u;
+				stru_5998F0[i].sfxdata_flags_2 &= 0xF7u;
+			}
+		}
+		if (v22)
+		{
+			EnterCriticalSection(&stru_6D5F4C);
+			dword_6D59FC += v22;
+			LeaveCriticalSection(&stru_6D5F4C);
+		}
+		WaitForSingleObject(dword_6D5A00, 0xFFFFFFFF);
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(DSoundThread);
+
 BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 {
 	if (direct_sound)
@@ -2261,7 +2359,7 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 		return 0;
 	}
 	dword_6D5A08 = 1;
-	sound_thread_handle = (HANDLE) _beginthreadex(0, 0, DSoundThread, 0, 0, &ThreadId);
+	sound_thread_handle = (HANDLE) _beginthreadex(0, 0, DSoundThread_, 0, 0, &ThreadId);
 	if (sound_thread_handle == NULL)
 	{
 		BWFXN_DSoundDestroy();
