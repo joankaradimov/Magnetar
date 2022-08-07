@@ -1451,7 +1451,7 @@ char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 		_snprintf(lpBuffer, a2, "MMSYS error 0x%x", a3);
 		break;
 	default:
-		if (!SErrGetErrorStr(a3, lpBuffer, a2) && !FormatMessageA(0x1000u, 0, a3, 0x400u, lpBuffer, a2, 0))
+		if (!SErrGetErrorStr(a3, lpBuffer, a2) && !FormatMessageA(0x1000, 0, a3, 0x400, lpBuffer, a2, 0))
 			_snprintf(lpBuffer, a2, "unknown error 0x%08x", a3);
 		break;
 	}
