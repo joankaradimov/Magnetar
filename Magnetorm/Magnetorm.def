@@ -26,7 +26,7 @@ EXPORTS
     SNetSelectGame = StormLibNetSelectGame @125
     SNetSelectProvider = StormLibNetSelectProvider @126
     SNetSendMessage = StormLibNetSendMessage @127
-    SNetSendTurn = StormLibNetSendTurn @128
+    SNetSendTurn@8 = StormLibNetSendTurn @128
     SNetSetBasePlayer = StormLibNetSetBasePlayer @129
     SNetSetGameMode = StormLibNetSetGameMode @130
     SNetUnregisterEventHandler = StormLibNetUnregisterEventHandler @131

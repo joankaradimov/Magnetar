@@ -15481,6 +15481,26 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 
 FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers);
 
+void BWFXN_sendTurn_()
+{
+	if (sgdwBytesInCmdQueue == 0)
+	{
+		TurnBuffer[0] = 5;
+		sgdwBytesInCmdQueue = 1;
+	}
+	if (!SNetSendTurn(TurnBuffer, sgdwBytesInCmdQueue) && !outOfGame)
+	{
+		packetErrHandle(SErrGetLastError(), 91, 0, 0, 1);
+	}
+	sgdwBytesInCmdQueue = 0;
+	if (InGame)
+	{
+		CMDACT_GameHash();
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_sendTurn);
+
 void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size)
 {
 	if (buffer_size + sgdwBytesInCmdQueue > MaxTurnSize)
@@ -15497,7 +15517,7 @@ void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size
 			{
 				return;
 			}
-			BWFXN_sendTurn();
+			BWFXN_sendTurn_();
 		}
 		else
 		{
