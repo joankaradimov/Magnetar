@@ -8366,7 +8366,7 @@ extern int& dword_59B61C;
 extern dialog *& gluScore_Dlg;
 extern int& dword_59B624;
 extern char(&byte_59B628)[260];
-extern void *& dword_59B72C;
+extern void *& iscore_grp;
 extern char(&byte_59B730)[12];
 extern int(&dword_59B73C)[8];
 extern int& dword_59B75C;
