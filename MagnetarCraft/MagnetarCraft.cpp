@@ -439,6 +439,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ScrLimit.right = SCREEN_WIDTH - 1;
 	ScrLimit.bottom = SCREEN_HEIGHT - 1;
 
+	race_lowercase_char_id[4] = 't';
+
 	hInst = starcraft_exe->GetModule();
 	main_thread_id = GetCurrentThreadId();
 	CheckForOtherInstances("SWarClass");

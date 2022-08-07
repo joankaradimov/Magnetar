@@ -2649,6 +2649,8 @@ UnitType GetBaseBuilding(Race race)
 		return UnitType::Terran_Command_Center;
 	case Race::RACE_Protoss:
 		return UnitType::Protoss_Nexus;
+	case 4:
+		return UnitType::Zerg_Infested_Command_Center;
 	default:
 		return (UnitType)228;
 	}
@@ -4495,6 +4497,8 @@ u16* off_513628_[] = {
 	zerg_sfx_related,
 	terran_sfx_related,
 	protoss_sfx_related,
+	terran_sfx_related,
+	terran_sfx_related,
 };
 
 void LoadRaceSFX_(char a1)
@@ -4636,6 +4640,11 @@ void LoadRaceUI_()
 	{
 		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
 		currentMusicId = MT_PROTOSS1;
+	}
+	else if (consoleIndex == 4)
+	{
+		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
+		currentMusicId = MT_TERRAN1;
 	}
 
 	if (CampaignIndex)
@@ -5059,6 +5068,7 @@ StatFlufDialog* statfluf_dialogs_[] = {
 	statfluf_terran,
 	statfluf_protoss,
 	statfluf_neutral,
+	statfluf_zerg,
 };
 
 void sub_4F4CF0_()
@@ -10510,6 +10520,7 @@ Race SELECTABLE_RACES[] = {
 	Race::RACE_Zerg,
 	Race::RACE_Terran,
 	Race::RACE_Protoss,
+	(Race) 4,
 	Race::RACE_Random,
 };
 
@@ -12557,6 +12568,10 @@ char* score_screens_[] = {
 	"glue\\scoreTv\\",
 	"glue\\scorePd\\",
 	"glue\\scorePv\\",
+	NULL,
+	NULL,
+	"glue\\scoreZd\\",
+	"glue\\scoreZv\\",
 };
 
 MusicTrack score_music_track_[] = {
@@ -12566,6 +12581,10 @@ MusicTrack score_music_track_[] = {
 	MT_TERRAN_VICTORY,
 	MT_PROTOSS_DEFEAT,
 	MT_PROTOSS_VICTORY,
+	MT_NONE,
+	MT_NONE,
+	MT_ZERG_DEFEAT,
+	MT_ZERG_VICTORY,
 };
 
 void loadMenu_gluScore_()
