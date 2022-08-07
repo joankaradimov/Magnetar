@@ -5458,6 +5458,144 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+void UpdateUnits_()
+{
+	CUnit* next_unit;
+
+	dword_6957D0 = 0;
+	if (isSelectedUnitGroupEnabled())
+	{
+		if (is_placing_building)
+		{
+			refreshLayer3And4();
+			refreshPlaceBuildingLocation();
+		}
+		if (byte_641694)
+		{
+			CancelTargetOrder();
+		}
+	}
+
+	if (!--dword_59CCA4)
+	{
+		int v1 = 0;
+		for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
+		{
+			unit->orderQueueTimer = v1 % 8;
+			v1 += 1;
+		}
+		dword_59CCA4 = 150;
+	}
+	if (!--dword_6283E8)
+	{
+		u8 i = 0;
+		for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
+		{
+			unit->secondaryOrderTimer = i % 30;
+			i += 1;
+		}
+		dword_6283E8 = 300;
+	}
+	sub_4EB2F0();
+
+	for (CUnit* unit = UnitNodeList_HiddenUnit_Last; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		dword_6D11F4 = unit;
+		dword_6D11FC = unit;
+		sub_4EB5E0(unit);
+		if (unit->sprite)
+		{
+			if (visionUpdated && Players[unit->playerID].nType == PT_Human)
+			{
+				revealSightAtLocation(1, PlayerVision[unit->playerID], unit->sprite->position.x, unit->sprite->position.y, unit->statusFlags & 4);
+			}
+			UpdateUnitSpriteInfo(unit);
+		}
+	}
+
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		dword_6D11F4 = unit;
+		dword_6D11FC = unit;
+		sub_4EBC30(unit);
+	}
+
+	if (visionUpdated)
+	{
+		for (CUnit* unit = UnitNodeList_ScannerSweep_First; unit; unit = next_unit)
+		{
+			next_unit = unit->next;
+			dword_6D11F4 = unit;
+			dword_6D11FC = unit;
+			refreshUnitVision(unit);
+		}
+	}
+
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		UpdateUnitSpriteInfo(unit);
+		if (unit->statusFlags & (Cloaked | RequiresDetection))
+		{
+			unit->isCloaked = 0;
+			if (unit->secondaryOrderTimer)
+			{
+				unit->secondaryOrderTimer -= 1;
+			}
+			else
+			{
+				CheckUnitVisibility(unit);
+				unit->secondaryOrderTimer = 30;
+			}
+		}
+	}
+
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		dword_6D11F4 = unit;
+		dword_6D11FC = unit;
+		UpdateUnitOrderData(unit);
+	}
+
+	for (CUnit* unit = UnitNodeList_HiddenUnit_First; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		if (unit->statusFlags & (Cloaked | RequiresDetection))
+		{
+			unit->isCloaked = 0;
+		}
+		dword_6D11F4 = unit;
+		dword_6D11FC = unit;
+		unitUpdate(unit);
+	}
+
+	updateBurrowingCloakingUnits();
+	updateUnitPower();
+	int v14 = ++dword_64EEC8;
+	if (dword_64EEC8 == 32)
+	{
+		v14 = 0;
+		dword_64EEC8 = 0;
+	}
+	memset(&stru_64DEC8[v14], 0, sizeof(struc_64DEC8));
+
+	dword_64DEA8 = 0;
+	for (CUnit* unit = UnitNodeList_ScannerSweep_First; unit; unit = next_unit)
+	{
+		next_unit = unit->next;
+		dword_6D11F4 = unit;
+		dword_6D11FC = unit;
+		UpdateUnitOrderData(unit);
+	}
+	dword_6D11F4 = 0;
+	dword_6D11FC = 0;
+}
+
+FAIL_STUB_PATCH(UpdateUnits);
+
 void UpdateImages_()
 {
 	CUnit* next_unit;
@@ -5504,7 +5642,7 @@ void GameLoop_()
 		updateActiveTileInfo_();
 		RemoveFoWCheat_();
 	}
-	UpdateUnits();
+	UpdateUnits_();
 	ImageDrawingBulletDrawing();
 	UpdateImages_();
 	updateThingys_();
