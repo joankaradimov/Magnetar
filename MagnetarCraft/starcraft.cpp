@@ -3847,6 +3847,66 @@ void ResetDATFiles_()
 
 FAIL_STUB_PATCH(ResetDATFiles);
 
+void resetOrdersUnitsDAT_()
+{
+	sub_4531A0();
+	dword_59CCA4 = 10;
+	dword_6283E8 = 150;
+	LoadGameData(ordersDat, "arr\\orders.dat");
+	LoadGameData(unitsDat, "arr\\units.dat");
+	ReassignTargetAcquisitionRange();
+	memset(UnitNodeTable, 0, sizeof(UnitNodeTable));
+	memset(UnitNodeList_PlayerFirstUnit, 0, sizeof(UnitNodeList_PlayerFirstUnit));
+
+	CUnit* v0 = 0;
+	UnitNodeTable_UsedNodeCount = 0;
+	UnitNodeList_VisibleUnit_Last = 0;
+	UnitNodeList_VisibleUnit_First = 0;
+	UnitNodeList_ScannerSweep_Last = 0;
+	UnitNodeList_ScannerSweep_First = 0;
+	dword_59CC98 = 0;
+	UnitNodeList_HiddenUnit_Last = 0;
+	dword_628428 = 0;
+	UnitNodeList_HiddenUnit_First = 0;
+	UnitNodeList_UnusedUnit_Last_maybe = 0;
+	UnitNodeList_UnusedUnit_First_maybe = 0;
+
+	for (int i = 0; i < _countof(UnitNodeTable); i++)
+	{
+		CUnit* unit = &UnitNodeTable[i];
+		if (v0)
+		{
+			if (UnitNodeList_UnusedUnit_Last_maybe == v0)
+			{
+				UnitNodeList_UnusedUnit_Last_maybe = unit;
+			}
+			unit->prev = v0;
+			CUnit* v3 = v0->next;
+			CUnit** v4 = &v0->next;
+			unit->next = v3;
+			if (*v4)
+			{
+				(*v4)->prev = unit;
+			}
+			*v4 = unit;
+			v0 = UnitNodeList_UnusedUnit_First_maybe;
+		}
+		else
+		{
+			v0 = unit;
+			UnitNodeList_UnusedUnit_Last_maybe = unit;
+			UnitNodeList_UnusedUnit_First_maybe = unit;
+		}
+	}
+	memset(UnitOrderingX, 0xFFu, sizeof(UnitOrderingX));
+	UnitOrderingCount[0] = 0;
+	memset(UnitOrderingY, 0xFFu, sizeof(UnitOrderingY));
+	resetUnitBoundsLists_GetMaxUnitTypeSize();
+	LOWORD(error_message[0]) = 0;
+}
+
+FAIL_STUB_PATCH(resetOrdersUnitsDAT);
+
 int sub_4EEFD0_()
 {
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
@@ -3864,7 +3924,7 @@ int sub_4EEFD0_()
 	}
 	initializePsiFieldData();
 	ResetDATFiles_();
-	resetOrdersUnitsDAT();
+	resetOrdersUnitsDAT_();
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle || LoadMap_())
 	{
@@ -3995,7 +4055,7 @@ signed int GameInit_()
 		InitializeUnitCounts();
 	initializePsiFieldData();
 	ResetDATFiles_();
-	resetOrdersUnitsDAT();
+	resetOrdersUnitsDAT_();
 	calculateUnitStrengths();
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle)
