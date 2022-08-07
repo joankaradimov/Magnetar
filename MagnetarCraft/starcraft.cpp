@@ -15480,3 +15480,37 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 }
 
 FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers);
+
+void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size)
+{
+	if (buffer_size + sgdwBytesInCmdQueue > MaxTurnSize)
+	{
+		if (gwGameMode == GAME_GLUES)
+		{
+			return;
+		}
+
+		int turns;
+		if (SNetGetTurnsInTransit(&turns))
+		{
+			if (turns + LatencyCalls >= 16)
+			{
+				return;
+			}
+			BWFXN_sendTurn();
+		}
+		else
+		{
+			if (!outOfGame)
+			{
+				packetErrHandle(SErrGetLastError(), 81, "Starcraft\\SWAR\\lang\\net_mgr.cpp", 225, 1);
+			}
+			return;
+		}
+	}
+
+	memcpy(&TurnBuffer[sgdwBytesInCmdQueue], buffer, buffer_size);
+	sgdwBytesInCmdQueue += buffer_size;
+}
+
+FUNCTION_PATCH(BWFXN_QueueCommand, BWFXN_QueueCommand_);

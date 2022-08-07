@@ -13,7 +13,7 @@ EXPORTS
     SNetGetPlayerCaps = StormLibNetGetPlayerCaps @112
     SNetGetPlayerName = StormLibNetGetPlayerName @113
     SNetGetProviderCaps = StormLibNetGetProviderCaps @114
-    SNetGetTurnsInTransit = StormLibNetGetTurnsInTransit @115
+    SNetGetTurnsInTransit@4 = StormLibNetGetTurnsInTransit @115
     SNetInitializeDevice = StormLibNetInitializeDevice @116
     SNetInitializeProvider = StormLibNetInitializeProvider @117
     SNetJoinGame = StormLibNetJoinGame @118
