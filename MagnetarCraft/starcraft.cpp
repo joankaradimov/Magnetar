@@ -12911,7 +12911,7 @@ void loadMenu_gluScore_()
 
 	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "iScore.grp");
-	dword_59B72C = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
+	iscore_grp = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
 
 	strcpy(v25, score_screens_[v0]);
 	strcat(v25, "tminimap.pcx");
@@ -12943,9 +12943,9 @@ void loadMenu_gluScore_()
 
 	changeMenu();
 	stopMusic();
-	if (dword_59B72C)
+	if (iscore_grp)
 	{
-		SMemFree(dword_59B72C, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1409, 0);
+		SMemFree(iscore_grp, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1409, 0);
 	}
 	dword_59B618 = 0;
 }
