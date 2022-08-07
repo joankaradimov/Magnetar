@@ -12133,6 +12133,73 @@ void loadMenu_gluLoad_()
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
 
+int sub_4B4600_(dialog* a1)
+{
+	const char* v3;
+	switch (dword_59B3D0)
+	{
+	case 0:
+	case 3:
+		v3 = get_GluAll_String(DISCONNECTED);
+		break;
+	case 1:
+		v3 = get_GluAll_String((GluAllTblEntry)18);
+		break;
+	case 2:
+		v3 = get_GluAll_String((GluAllTblEntry)17);
+		break;
+	case 4:
+		v3 = get_GluAll_String(UNDECIDED);
+		break;
+	default:
+		v3 = NULL;
+		break;
+	}
+
+	if (dword_6D5A60)
+	{
+		v3 = get_GluAll_String((GluAllTblEntry)0xB2);
+	}
+	else if (v3)
+	{
+		dialog* v2 = getControlFromIndex(a1, 2);
+		v2->pszText = (char*)v3;
+		if ((v2->lFlags & CTRL_UPDATE) == 0)
+		{
+			v2->lFlags |= CTRL_UPDATE;
+			updateDialog(v2);
+		}
+		v2->lFlags |= CTRL_DLG_ACTIVE;
+	}
+
+	getControlFromIndex(a1, 8)->lFlags |= CTRL_DLG_ACTIVE;
+
+	char fileName[260];
+	strcpy(fileName, byte_59B628);
+	strcat(fileName, "pMain.pcx");
+
+	int height;
+	int width;
+	void* buffer;
+	while (!SBmpAllocLoadImage(fileName, 0, &buffer, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(fileName, SErrGetLastError());
+	}
+
+	dialog* v13 = getControlFromIndex(a1, 1);
+	v13->srcBits.ht = height;
+	v13->srcBits.wid = width;
+	v13->srcBits.data = (u8*)buffer;
+	if ((v13->lFlags & CTRL_UPDATE) == 0)
+	{
+		v13->lFlags |= CTRL_UPDATE;
+		updateDialog(v13);
+	}
+	return sub_4B42D0(a1);
+}
+
+FAIL_STUB_PATCH(sub_4B4600);
+
 void saveGame_Create_(dialog* dlg)
 {
 	DLG_SwishIn_(dlg);
@@ -12494,7 +12561,7 @@ bool __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			sub_4B4600(dlg);
+			sub_4B4600_(dlg);
 			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
