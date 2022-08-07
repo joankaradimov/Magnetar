@@ -6719,7 +6719,7 @@ FAIL_STUB_PATCH(StatRes_DialogInteract);
 
 void load_StatRes_BIN_()
 {
-	dword_68C238 = (void*)LoadGraphic("game\\icons.grp", 0, "Starcraft\\SWAR\\lang\\statres.cpp", 490);
+	game_icons_grp = (void*)LoadGraphic("game\\icons.grp", 0, "Starcraft\\SWAR\\lang\\statres.cpp", 490);
 	dword_68C230 = 0;
 	dword_68C22C = 0;
 

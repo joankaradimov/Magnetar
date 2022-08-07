@@ -11244,35 +11244,29 @@ int *CMDACT_GameSpeed(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
 DECL_FUNC(void(*sub_482070)(), sub_482070, 0x482070);
-__int16 *SAI_PathCreate_Sub3_1_1_0_0(__int16 *result, int a2, int a3, SAI_Paths *a4) {
+void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a4, int x, int y, __int16 *result) {
     int address = 0x482090;
-    __int16 * result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
         xor ecx, ecx
+        mov ebx, x
+        mov ecx, y
         mov eax, result
-        mov ecx, a2
-        mov ebx, a3
         push dword ptr a4
         call address
-        mov result_, eax
     }
-    return result_;
 }
-char *SAI_PathCreate_Sub3_1_1_1(SAI_Paths *a1, SaiRegion *a2) {
+void SAI_PathCreate_Sub3_1_1_1(SAI_Paths *a1, SaiRegion *a2) {
     int address = 0x4821a0;
-    char * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(signed int (__stdcall*SAI_PathCreate_Sub3_1_1_0)(SAI_Paths *a1, int a2, SaiRegion *a3), SAI_PathCreate_Sub3_1_1_0, 0x482290);
+DECL_FUNC(void (__stdcall*SAI_PathCreate_Sub3_1_1_0)(SAI_Paths *sai_paths, int a2, SaiRegion *a3), SAI_PathCreate_Sub3_1_1_0, 0x482290);
 void SAI_PathCreate_Sub3_1_1(SAI_Paths *a1) {
     int address = 0x482850;
     __asm {
@@ -11479,7 +11473,7 @@ void newGame(int is_in_game) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*BWFXN_QueueCommand)(const void *a1, unsigned int a2), BWFXN_QueueCommand, 0x485bd0);
+DECL_FUNC(void (__fastcall*BWFXN_QueueCommand)(const void *buffer, unsigned int buffer_size_), BWFXN_QueueCommand, 0x485bd0);
 DECL_FUNC(int(*sub_485C70)(), sub_485C70, 0x485c70);
 DECL_FUNC(int(*sub_485CC0)(), sub_485CC0, 0x485cc0);
 DECL_FUNC(int (__stdcall*sub_485CE0)(char), sub_485CE0, 0x485ce0);
@@ -15458,7 +15452,7 @@ DECL_FUNC(int(*sub_4AD110)(), sub_4AD110, 0x4ad110);
 DECL_FUNC(int(*sub_4AD140)(), sub_4AD140, 0x4ad140);
 DECL_FUNC(int(*initializeProviderStruct)(), initializeProviderStruct, 0x4ad190);
 DECL_FUNC(int(*SelectGame)(), SelectGame, 0x4ad230);
-DECL_FUNC(int(*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
+DECL_FUNC(void (__cdecl*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
 DECL_FUNC(int (__thiscall*sub_4AD390)(dialog *this_), sub_4AD390, 0x4ad390);
 DECL_FUNC(unsigned __int8 (__thiscall*sub_4AD3E0)(dialog *this_), sub_4AD3E0, 0x4ad3e0);
 DECL_FUNC(int(*sub_4AD400)(), sub_4AD400, 0x4ad400);
@@ -16757,7 +16751,22 @@ void sub_4BBC00(int a1) {
     }
 }
 DECL_FUNC(HRESULT(*sub_4BBCF0)(), sub_4BBCF0, 0x4bbcf0);
-DECL_FUNC(int(*parseWaveFile)(), parseWaveFile, 0x4bbd80);
+void *parseWaveFile(_DWORD *a1, unsigned int *a2, WAVEFORMATEX *a3) {
+    int address = 0x4bbd80;
+    void * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edi, edi
+        xor esi, esi
+        mov ecx, a1
+        mov edi, a2
+        mov esi, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4BBE40)(), sub_4BBE40, 0x4bbe40);
 DECL_FUNC(void (__cdecl*PlayBriefingWAVBegin)(), PlayBriefingWAVBegin, 0x4bbe50);
 signed int sub_4BBEB0(SfxData a1, int a2, int a3, UnitType a4) {
@@ -20456,7 +20465,7 @@ void orders_bldgUnderConstruction_Protoss(CUnit *a1) {
     }
 }
 DECL_FUNC(void (__stdcall*sub_4E51C0)(dialog *dlg, __int16 a2, unsigned __int16 a3), sub_4E51C0, 0x4e51c0);
-DECL_FUNC(int(*sub_4E5290)(), sub_4E5290, 0x4e5290);
+DECL_FUNC(void (__cdecl*destroyStatsesBin)(), destroyStatsesBin, 0x4e5290);
 void printStatresInfo(dialog *a1, __int16 a2, int a3, int a4, int a5) {
     int address = 0x4e52e0;
     __asm {
@@ -25461,10 +25470,10 @@ int& dword_59A0E0 = * ((decltype(&dword_59A0E0)) 0x59a0e0);
 int(&dword_59A0E4)[] = * ((decltype(&dword_59A0E4)) 0x59a0e4);
 int& dword_59A0E8 = * ((decltype(&dword_59A0E8)) 0x59a0e8);
 int& dword_59A0EC = * ((decltype(&dword_59A0EC)) 0x59a0ec);
-int& dword_59A28C = * ((decltype(&dword_59A28C)) 0x59a28c);
-int& dword_59A290 = * ((decltype(&dword_59A290)) 0x59a290);
-int& dword_59A294 = * ((decltype(&dword_59A294)) 0x59a294);
-int& dword_59A33C = * ((decltype(&dword_59A33C)) 0x59a33c);
+int(&dword_59A28C)[] = * ((decltype(&dword_59A28C)) 0x59a28c);
+int(&dword_59A290)[] = * ((decltype(&dword_59A290)) 0x59a290);
+int(&dword_59A294)[] = * ((decltype(&dword_59A294)) 0x59a294);
+int(&dword_59A33C)[] = * ((decltype(&dword_59A33C)) 0x59a33c);
 _DWORD& dword_59B3D0 = * ((decltype(&dword_59B3D0)) 0x59b3d0);
 char(&byte_59B3D8)[56] = * ((decltype(&byte_59B3D8)) 0x59b3d8);
 int(&dword_59B410)[] = * ((decltype(&dword_59B410)) 0x59b410);
@@ -26100,7 +26109,7 @@ Race& statfluf_current_race = * ((decltype(&statfluf_current_race)) 0x68c228);
 int& dword_68C22C = * ((decltype(&dword_68C22C)) 0x68c22c);
 int& dword_68C230 = * ((decltype(&dword_68C230)) 0x68c230);
 dialog *& statres_Dlg = * ((decltype(&statres_Dlg)) 0x68c234);
-void *& dword_68C238 = * ((decltype(&dword_68C238)) 0x68c238);
+void *& game_icons_grp = * ((decltype(&game_icons_grp)) 0x68c238);
 char(&byte_68C23C)[4] = * ((decltype(&byte_68C23C)) 0x68c23c);
 char(&byte_68C240)[192] = * ((decltype(&byte_68C240)) 0x68c240);
 char& byte_68C300 = * ((decltype(&byte_68C300)) 0x68c300);
@@ -26120,14 +26129,14 @@ int& dword_68C338 = * ((decltype(&dword_68C338)) 0x68c338);
 int& dword_68C33C = * ((decltype(&dword_68C33C)) 0x68c33c);
 int& dword_68C340 = * ((decltype(&dword_68C340)) 0x68c340);
 int& dword_68C344 = * ((decltype(&dword_68C344)) 0x68c344);
-char(&byte_68C348)[] = * ((decltype(&byte_68C348)) 0x68c348);
-char(&byte_68C368)[] = * ((decltype(&byte_68C368)) 0x68c368);
-char(&byte_68C388)[] = * ((decltype(&byte_68C388)) 0x68c388);
-char(&byte_68C3A8)[] = * ((decltype(&byte_68C3A8)) 0x68c3a8);
-char(&byte_68C3C8)[] = * ((decltype(&byte_68C3C8)) 0x68c3c8);
-char(&byte_68C3E8)[] = * ((decltype(&byte_68C3E8)) 0x68c3e8);
-char(&byte_68C408)[] = * ((decltype(&byte_68C408)) 0x68c408);
-char(&byte_68C428)[] = * ((decltype(&byte_68C428)) 0x68c428);
+char(&byte_68C348)[32] = * ((decltype(&byte_68C348)) 0x68c348);
+char(&byte_68C368)[32] = * ((decltype(&byte_68C368)) 0x68c368);
+char(&byte_68C388)[32] = * ((decltype(&byte_68C388)) 0x68c388);
+char(&byte_68C3A8)[32] = * ((decltype(&byte_68C3A8)) 0x68c3a8);
+char(&byte_68C3C8)[32] = * ((decltype(&byte_68C3C8)) 0x68c3c8);
+char(&byte_68C3E8)[32] = * ((decltype(&byte_68C3E8)) 0x68c3e8);
+char(&byte_68C408)[32] = * ((decltype(&byte_68C408)) 0x68c408);
+char(&byte_68C428)[32] = * ((decltype(&byte_68C428)) 0x68c428);
 char(&SFXData_MuteVolume)[1144] = * ((decltype(&SFXData_MuteVolume)) 0x68c448);
 char(&SFXData_Flags2)[1144] = * ((decltype(&SFXData_Flags2)) 0x68c8c0);
 __int16(&SFXData_Race)[1144] = * ((decltype(&SFXData_Race)) 0x68cd38);
@@ -27124,7 +27133,7 @@ char& byte_6DBD18 = * ((decltype(&byte_6DBD18)) 0x6dbd18);
 char(&byte_6DBD38)[40] = * ((decltype(&byte_6DBD38)) 0x6dbd38);
 char(&byte_6DBD60)[256] = * ((decltype(&byte_6DBD60)) 0x6dbd60);
 char& byte_6DBE60 = * ((decltype(&byte_6DBE60)) 0x6dbe60);
-char& a3 = * ((decltype(&a3)) 0x6dc260);
+char& byte_6DC260 = * ((decltype(&byte_6DC260)) 0x6dc260);
 char(&byte_6DC280)[36] = * ((decltype(&byte_6DC280)) 0x6dc280);
 Bitmap& stru_6DC2A4 = * ((decltype(&stru_6DC2A4)) 0x6dc2a4);
 u16(&word_6DC2AC)[9] = * ((decltype(&word_6DC2AC)) 0x6dc2ac);
