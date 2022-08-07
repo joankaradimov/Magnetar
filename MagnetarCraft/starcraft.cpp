@@ -5008,6 +5008,23 @@ void destroyStatdata_()
 
 FAIL_STUB_PATCH(destroyStatdata);
 
+void destroyStatsesBin_()
+{
+	if (statres_Dlg)
+	{
+		DestroyDialog(statres_Dlg);
+		statres_Dlg = NULL;
+	}
+
+	if (game_icons_grp)
+	{
+		SMemFree(game_icons_grp, "Starcraft\\SWAR\\lang\\statres.cpp", 507, 0);
+		game_icons_grp = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroyStatsesBin);
+
 void free_cmdIcons_()
 {
 	if (current_dialog)
@@ -5108,17 +5125,7 @@ void destroyGameHUD_()
 	}
 
 	destroyStatdata_();
-	if (statres_Dlg)
-	{
-		DestroyDialog(statres_Dlg);
-		statres_Dlg = NULL;
-	}
-
-	if (dword_68C238)
-	{
-		SMemFree(dword_68C238, "Starcraft\\SWAR\\lang\\statres.cpp", 507, 0);
-		dword_68C238 = NULL;
-	}
+	destroyStatsesBin_();
 
 	if (statlb_Dlg)
 	{
