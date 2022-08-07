@@ -20456,7 +20456,7 @@ void orders_bldgUnderConstruction_Protoss(CUnit *a1) {
     }
 }
 DECL_FUNC(void (__stdcall*sub_4E51C0)(dialog *dlg, __int16 a2, unsigned __int16 a3), sub_4E51C0, 0x4e51c0);
-DECL_FUNC(int(*sub_4E5290)(), sub_4E5290, 0x4e5290);
+DECL_FUNC(void (__cdecl*destroyStatsesBin)(), destroyStatsesBin, 0x4e5290);
 void printStatresInfo(dialog *a1, __int16 a2, int a3, int a4, int a5) {
     int address = 0x4e52e0;
     __asm {
@@ -26100,7 +26100,7 @@ Race& statfluf_current_race = * ((decltype(&statfluf_current_race)) 0x68c228);
 int& dword_68C22C = * ((decltype(&dword_68C22C)) 0x68c22c);
 int& dword_68C230 = * ((decltype(&dword_68C230)) 0x68c230);
 dialog *& statres_Dlg = * ((decltype(&statres_Dlg)) 0x68c234);
-void *& dword_68C238 = * ((decltype(&dword_68C238)) 0x68c238);
+void *& game_icons_grp = * ((decltype(&game_icons_grp)) 0x68c238);
 char(&byte_68C23C)[4] = * ((decltype(&byte_68C23C)) 0x68c23c);
 char(&byte_68C240)[192] = * ((decltype(&byte_68C240)) 0x68c240);
 char& byte_68C300 = * ((decltype(&byte_68C300)) 0x68c300);
