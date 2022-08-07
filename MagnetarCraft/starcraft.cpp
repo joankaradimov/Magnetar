@@ -12361,6 +12361,62 @@ bool __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluScore_Tab);
 
+bool __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_DESTROY:
+			if (dword_6D63C0 && stru_6DB284.data)
+			{
+				SMemFree(stru_6DB284.data, "Starcraft\\SWAR\\lang\\gluScore.cpp", 473, 0);
+				stru_6DB284.data = 0;
+				dlg->srcBits.data = 0;
+			}
+			dword_6D63C0 = 0;
+			break;
+		case EventUser::USER_INIT:
+			if (!dword_6D63C0)
+			{
+				char v12[260];
+				strcpy(v12, byte_59B628);
+				strcat(v12, "pInset.pcx");
+				AllocBackgroundImage(v12, &stru_6DB284, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 455);
+				dword_6D63C0 = 1;
+			}
+			dlg->srcBits = stru_6DB284;
+			dlg->lFlags |= DialogFlags::CTRL_UNKOWN1;
+			if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+			{
+				dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+				updateDialog(dlg);
+			}
+			return genericCommonInteract(evt, dlg);
+		case EventUser::USER_SHOW:
+			if (dlg->lUser)
+			{
+				int v4 = dlg->lUser;
+				if (*(_DWORD*)(v4 + 20))
+				{
+					return genericCommonInteract(evt, dlg);
+				}
+			}
+
+			return 1;
+		case EventUser::USER_CREATE:
+		case EventUser::USER_NEXT:
+		case EventUser::USER_UNK_8:
+		case EventUser::USER_HIDE:
+			return genericCommonInteract(evt, dlg);
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(gluScore_PlayerRaceIcon);
+
 int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 {
 	char* v3 = (char*)malloc(strlen(filename) + 3);
@@ -12504,49 +12560,49 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 		genericLabelInteract,
 		genericLabelInteract,
 		genericLabelInteract,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		gluScore_PlayerScoreTotal,
-		gluScore_PlayerRaceIcon,
+		gluScore_PlayerRaceIcon_,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
 		statRes_Text_Interact,
