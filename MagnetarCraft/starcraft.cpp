@@ -12952,6 +12952,23 @@ void loadMenu_gluScore_()
 
 FAIL_STUB_PATCH(loadMenu_gluScore);
 
+void loadMenu_gluBNRes_()
+{
+	if (!dword_59BD8C)
+	{
+		sub_449390();
+		BNProfileImageCreate();
+		LoadBNIcons();
+		dword_59BD9C = (void*)fastFileRead(&dword_59BDA0, 0, "rez\\gluBNRes.res", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+		dword_59BD8C = 1;
+	}
+	SelectGame();
+	sub_4ACF20();
+	dword_50E064 = -1;
+}
+
+FAIL_STUB_PATCH(loadMenu_gluBNRes);
+
 int SwitchMenu_()
 {
 	if (!GetModuleFileNameA(NULL, main_directory, MAX_PATH))
@@ -13106,7 +13123,7 @@ LABEL_28:
 		case GLUE_BATTLE:
 			dword_51C414 = 1;
 			dword_50E064 = -1;
-			loadMenu_gluBNRes();
+			loadMenu_gluBNRes_();
 			break;
 		default:
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
