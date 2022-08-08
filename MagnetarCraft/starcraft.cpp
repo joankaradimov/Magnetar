@@ -5634,6 +5634,33 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+void RefreshUnit_(CUnit* unit);
+
+void UpdateUnitOrderData_(CUnit* unit)
+{
+	RefreshUnit_(unit);
+	updateUnitTimers(unit);
+	ordersEntries(unit);
+	performSecondaryOrders(unit);
+	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
+	{
+		dword_6D11FC = unit->subUnit;
+		UpdateUnitOrderData_(unit->subUnit);
+		dword_6D11FC = unit;
+	}
+
+	if (unit->sprite)
+	{
+		spriteToIscriptLoop(unit->sprite);
+		if (!unit->sprite->pImageHead)
+		{
+			unit->sprite = 0;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(UpdateUnitOrderData);
+
 void UpdateUnits_()
 {
 	CUnit* next_unit;
@@ -5733,7 +5760,7 @@ void UpdateUnits_()
 		next_unit = unit->next;
 		dword_6D11F4 = unit;
 		dword_6D11FC = unit;
-		UpdateUnitOrderData(unit);
+		UpdateUnitOrderData_(unit);
 	}
 
 	for (CUnit* unit = UnitNodeList_HiddenUnit_First; unit; unit = next_unit)
@@ -5764,7 +5791,7 @@ void UpdateUnits_()
 		next_unit = unit->next;
 		dword_6D11F4 = unit;
 		dword_6D11FC = unit;
-		UpdateUnitOrderData(unit);
+		UpdateUnitOrderData_(unit);
 	}
 	dword_6D11F4 = 0;
 	dword_6D11FC = 0;
