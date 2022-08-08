@@ -15421,13 +15421,10 @@ FAIL_STUB_PATCH(TriggerAction_EnableDebugMode);
 
 void lua_print(const char* message)
 {
-	if (active_trigger_player == g_LocalNationID)
+	if (active_trigger_player == g_LocalNationID && message)
 	{
-		if (message)
-		{
-			int display_time = getTextDisplayTime_(message);
-			PrintText(message, 2u, display_time + GetTickCount(), 1);
-		}
+		int display_time = getTextDisplayTime_(message);
+		PrintText(message, 2, display_time + GetTickCount(), 1);
 	}
 }
 
