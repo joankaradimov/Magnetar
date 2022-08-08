@@ -5634,7 +5634,15 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
-void RefreshUnit_(CUnit* unit);
+void RefreshUnit_(CUnit* unit)
+{
+	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0 && (unit->sprite->flags & 0x20) == 0)
+	{
+		RefreshSprite(unit->sprite, byte_581D6A[unit->playerID]);
+	}
+}
+
+FAIL_STUB_PATCH(RefreshUnit);
 
 void UpdateUnitOrderData_(CUnit* unit)
 {
@@ -6460,16 +6468,6 @@ int BWFXN_IsPaused_()
 }
 
 FAIL_STUB_PATCH(BWFXN_IsPaused);
-
-void RefreshUnit_(CUnit* unit)
-{
-	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0 && (unit->sprite->flags & 0x20) == 0)
-	{
-		RefreshSprite(unit->sprite, byte_581D6A[unit->playerID]);
-	}
-}
-
-FAIL_STUB_PATCH(RefreshUnit);
 
 void RefreshAllUnits_()
 {
