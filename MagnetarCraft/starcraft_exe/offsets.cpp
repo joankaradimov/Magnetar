@@ -21567,20 +21567,15 @@ char updateUnitTimers(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(void (__thiscall*unitUpdate)(CUnit *this_), unitUpdate, 0x4ec420);
-char ordersEntries(CUnit *a1, int ecx0) {
+void ordersEntries(CUnit *unit) {
     int address = 0x4ec4d0;
-    char result_;
     __asm {
         xor eax, eax
-        xor ecx, ecx
-        mov eax, a1
-        mov ecx, ecx0
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-DECL_FUNC(void (__fastcall*UpdateUnitOrderData)(CUnit *this_), UpdateUnitOrderData, 0x4ecf70);
+DECL_FUNC(void (__fastcall*UpdateUnitOrderData)(CUnit *unit), UpdateUnitOrderData, 0x4ecf70);
 DECL_FUNC(int(*UpdateUnits)(), UpdateUnits, 0x4ed000);
 DECL_FUNC(void (__cdecl*initializeDefaultPlayerNames)(), initializeDefaultPlayerNames, 0x4ed2b0);
 signed int gluLogin_CharacterCreate_CheckDuplicate(char *a1) {
