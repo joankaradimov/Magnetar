@@ -2951,9 +2951,9 @@ DECL_FUNC(int(*sub_428210)(), sub_428210, 0x428210);
 DECL_FUNC(int(*isResearchInProgress)(), isResearchInProgress, 0x428240);
 DECL_FUNC(int(*sub_428270)(), sub_428270, 0x428270);
 DECL_FUNC(int(*sub_4282A0)(), sub_4282A0, 0x4282a0);
-DECL_FUNC(int (__stdcall*BTNSCOND_Always)(int), BTNSCOND_Always, 0x4282d0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Always)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Always, 0x4282d0);
 DECL_FUNC(int(*sub_4282E0)(), sub_4282E0, 0x4282e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_SCVisBuilding)(int), BTNSCOND_SCVisBuilding, 0x428310);
+DECL_FUNC(int (__stdcall*BTNSCOND_ScvIsBuilding)(int), BTNSCOND_ScvIsBuilding, 0x428310);
 DECL_FUNC(int (__stdcall*BTNSCOND_NoNydusExit)(int), BTNSCOND_NoNydusExit, 0x428340);
 DECL_FUNC(int (__stdcall*BTNSCOND_LurkerStop)(int), BTNSCOND_LurkerStop, 0x428360);
 DECL_FUNC(int (__stdcall*BTNSCOND_Movement)(int), BTNSCOND_Movement, 0x4283c0);
@@ -2962,9 +2962,9 @@ DECL_FUNC(int (__stdcall*BTNSCOND_IsLiftedCanMove)(int), BTNSCOND_IsLiftedCanMov
 DECL_FUNC(int (__stdcall*BTNSCOND_CanRechargeShields)(int), BTNSCOND_CanRechargeShields, 0x428440);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasCargo)(int), BTNSCOND_HasCargo, 0x428480);
 DECL_FUNC(int (__stdcall*BTNSCOND_NoCargo)(int), BTNSCOND_NoCargo, 0x4284b0);
-DECL_FUNC(int (__stdcall*BTNSCOND_IsConstructing)(int), BTNSCOND_IsConstructing, 0x4284e0);
-DECL_FUNC(BOOL (__stdcall*BTNSCOND_HatcheryLairHive)(CUnit *a1), BTNSCOND_HatcheryLairHive, 0x428500);
-DECL_FUNC(int (__stdcall*BTNSCOND_IsTraining)(int), BTNSCOND_IsTraining, 0x428530);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsConstructing)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsConstructing, 0x4284e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHive)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHive, 0x428500);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsTraining)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsTraining, 0x428530);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasCargoTerran)(int), BTNSCOND_HasCargoTerran, 0x428560);
 DECL_FUNC(int (__stdcall*BTNSCOND_NoCargoTerran)(int), BTNSCOND_NoCargoTerran, 0x4285a0);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanRepair)(int), BTNSCOND_CanRepair, 0x4285e0);
@@ -2981,7 +2981,7 @@ DECL_FUNC(int (__stdcall*BTNSCOND_TankMove)(int), BTNSCOND_TankMove, 0x428860);
 DECL_FUNC(int(*sub_4288A0)(), sub_4288A0, 0x4288a0);
 DECL_FUNC(int(*sub_4288C0)(), sub_4288C0, 0x4288c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsResearching)(int), BTNSCOND_IsResearching, 0x4288e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_isUpgrading)(int), BTNSCOND_isUpgrading, 0x428900);
+DECL_FUNC(int (__stdcall*BTNSCOND_IsUpgrading)(int), BTNSCOND_IsUpgrading, 0x428900);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsBuildingAddon)(int), BTNSCOND_IsBuildingAddon, 0x428920);
 DECL_FUNC(int (__fastcall*BTNSCOND_SiloHasNoNuke)(UnitType a1, int player_id, CUnit *a2), BTNSCOND_SiloHasNoNuke, 0x428960);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanMoveSpecialCase)(int), BTNSCOND_CanMoveSpecialCase, 0x428d40);
@@ -3003,10 +3003,10 @@ DECL_FUNC(int (__stdcall*BTNSCOND_CanUpgrade)(int), BTNSCOND_CanUpgrade, 0x42945
 DECL_FUNC(int (__stdcall*BTNSCOND_HasSpidermines)(int), BTNSCOND_HasSpidermines, 0x429470);
 DECL_FUNC(bool (__fastcall*BTNSCOND_HasTech)(Tech a1, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanResearch)(Tech a1, int a2, CUnit *a3), BTNSCOND_CanResearch, 0x429500);
-DECL_FUNC(signed int (__fastcall*BTNSCOND_Rally)(int a1, int a2, CUnit *a3), BTNSCOND_Rally, 0x429520);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Rally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Rally, 0x429520);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeDarkArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeDarkArchonOneSelected, 0x429680);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeArchonOneSelected, 0x4296f0);
-DECL_FUNC(signed int (__fastcall*BTNSCOND_HatcheryLairHiveRally)(int a1, int a2, CUnit *a3), BTNSCOND_HatcheryLairHiveRally, 0x429740);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHiveRally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHiveRally, 0x429740);
 DECL_FUNC(int(*BTNSACT_TargetOrderCancel)(), BTNSACT_TargetOrderCancel, 0x429770);
 DECL_FUNC(int(*BTNSACT_CancelPlacement)(), BTNSACT_CancelPlacement, 0x429780);
 DECL_FUNC(int(*nullsub_11)(), nullsub_11, 0x4297a0);
@@ -5788,7 +5788,7 @@ DECL_FUNC(int(*sub_44E970)(), sub_44E970, 0x44e970);
 DECL_FUNC(int(*sub_44E9B0)(), sub_44E9B0, 0x44e9b0);
 DECL_FUNC(bool (__fastcall*gluPortrait_Update)(dialog *dlg, struct dlgEvent *evt), gluPortrait_Update, 0x44e9e0);
 DECL_FUNC(int(*sub_44EA80)(), sub_44EA80, 0x44ea80);
-DECL_FUNC(int(*sub_44EAA0)(), sub_44EAA0, 0x44eaa0);
+DECL_FUNC(void (__cdecl*sub_44EAA0)(), sub_44EAA0, 0x44eaa0);
 int gluRdy_Portrait_Destroy(dialog *a1, dialog *a2) {
     int address = 0x44eb20;
     int result_;
@@ -8979,15 +8979,13 @@ DECL_FUNC(int(*parseOrdersDatReqs)(), parseOrdersDatReqs, 0x46d450);
 DECL_FUNC(void (__cdecl*parseTechUseData)(), parseTechUseData, 0x46d4c0);
 DECL_FUNC(int(*parseTechResearchData)(), parseTechResearchData, 0x46d530);
 DECL_FUNC(int(*parseUpgradeData)(), parseUpgradeData, 0x46d5a0);
-signed int parseRequirementOpcodes(int a1, int a2, CUnit *a3, Tech2 a4, int a5, int a6) {
+signed int parseRequirementOpcodes(__int16 a1, CUnit *a3, Tech2 a4, int a5, int a6) {
     int address = 0x46d610;
     signed result_;
     __asm {
         xor eax, eax
-        xor edx, edx
         xor esi, esi
-        mov eax, a1
-        mov edx, a2
+        mov ax, a1
         mov esi, a3
         push dword ptr a6
         push dword ptr a5
@@ -11244,7 +11242,7 @@ int *CMDACT_GameSpeed(dialog *a1) {
 }
 DECL_FUNC(bool (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
 DECL_FUNC(void(*sub_482070)(), sub_482070, 0x482070);
-void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a4, int x, int y, __int16 *result) {
+void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a1, int x, int y, __int16 *result) {
     int address = 0x482090;
     __asm {
         xor eax, eax
@@ -11253,7 +11251,7 @@ void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a4, int x, int y, __int16 *result) {
         mov ebx, x
         mov ecx, y
         mov eax, result
-        push dword ptr a4
+        push dword ptr a1
         call address
     }
 }
@@ -19815,7 +19813,7 @@ void SetReplayData(GameData *a1, PlayerInfo *a2, int *a3) {
     }
 }
 DECL_FUNC(int(*sub_4DEA90)(), sub_4DEA90, 0x4dea90);
-DECL_FUNC(int (__stdcall*BTNSCOND_ReplayPlayPause)(int), BTNSCOND_ReplayPlayPause, 0x4deac0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ReplayPlayPause)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ReplayPlayPause, 0x4deac0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ReplaySpeedUp)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ReplaySpeedUp, 0x4deaf0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ReplaySlowDown)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ReplaySlowDown, 0x4deb40);
 void SetGameSpeed_maybe(int game_speed, unsigned __int8 a2, unsigned int a3) {
@@ -24827,7 +24825,7 @@ ButtonOrder(&stru_51770C)[3] = * ((decltype(&stru_51770C)) 0x51770c);
 ButtonOrder(&stru_517748)[7] = * ((decltype(&stru_517748)) 0x517748);
 ButtonOrder(&stru_5177D8)[6] = * ((decltype(&stru_5177D8)) 0x5177d8);
 ButtonOrder(&stru_517850)[7] = * ((decltype(&stru_517850)) 0x517850);
-ButtonOrder(&stru_5178E0)[9] = * ((decltype(&stru_5178E0)) 0x5178e0);
+ButtonOrder(&scv_orders)[9] = * ((decltype(&scv_orders)) 0x5178e0);
 ButtonOrder(&stru_517998)[9] = * ((decltype(&stru_517998)) 0x517998);
 ButtonOrder(&stru_517A50)[5] = * ((decltype(&stru_517A50)) 0x517a50);
 ButtonOrder(&stru_517AB8)[9] = * ((decltype(&stru_517AB8)) 0x517ab8);
@@ -26162,12 +26160,9 @@ int& dword_68F518 = * ((decltype(&dword_68F518)) 0x68f518);
 int& dword_68F51C = * ((decltype(&dword_68F51C)) 0x68f51c);
 int& dword_68F520 = * ((decltype(&dword_68F520)) 0x68f520);
 void *& dword_68F524 = * ((decltype(&dword_68F524)) 0x68f524);
-int(&dword_68F528)[] = * ((decltype(&dword_68F528)) 0x68f528);
-int& dword_68F52C = * ((decltype(&dword_68F52C)) 0x68f52c);
-int& dword_68F530 = * ((decltype(&dword_68F530)) 0x68f530);
-int& dword_68F534 = * ((decltype(&dword_68F534)) 0x68f534);
+int(&dword_68F528)[4] = * ((decltype(&dword_68F528)) 0x68f528);
 Bitmap(&stru_68F538)[4] = * ((decltype(&stru_68F538)) 0x68f538);
-void *& dword_68F558 = * ((decltype(&dword_68F558)) 0x68f558);
+WORD *& portdata_tbl = * ((decltype(&portdata_tbl)) 0x68f558);
 Bitmap(&stru_68F55C)[4] = * ((decltype(&stru_68F55C)) 0x68f55c);
 CheatHashRelated(&stru_68F580)[6] = * ((decltype(&stru_68F580)) 0x68f580);
 LPARAM& dword_68F6B8 = * ((decltype(&dword_68F6B8)) 0x68f6b8);
