@@ -4576,6 +4576,22 @@ int SinglePlayerMeleeInitGame_()
 
 FAIL_STUB_PATCH(SinglePlayerMeleeInitGame);
 
+IDirectSoundBuffer* sub_4BCA30_(SfxData sfx_id, struct_5* a2)
+{
+	if (SFXData_SoundFile[sfx_id])
+	{
+		char buff[260];
+		_snprintf(buff, 0x104u, "sound\\%s", SFXData_SoundFile[sfx_id]);
+		return LoadSoundProc(buff, a2);
+	}
+	else
+	{
+		return NULL;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4BCA30);
+
 void sub_4BCA80_(SfxData a1)
 {
 	if (direct_sound && registry_options.Sfx && a1 < SFX_MAX)
@@ -4588,7 +4604,7 @@ void sub_4BCA80_(SfxData a1)
 		}
 		else
 		{
-			v1->sound_buffer = sub_4BCA30(a1, &stru_6D1270[a1]);
+			v1->sound_buffer = sub_4BCA30_(a1, &stru_6D1270[a1]);
 			if (v1->sound_buffer)
 			{
 				v1->anonymous_2 = sub_4BB890(v1);
