@@ -991,6 +991,8 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
 }
 
+FAIL_STUB_PATCH(LoadGameData);
+
 DatLoad sfxdataDat_[] = {
 	DatLoad { SFXData_SoundFile, 4, 1144 },
 	DatLoad { SFXData_Flags1, 1, 1144 },
@@ -3912,10 +3914,10 @@ DatLoad weaponsDat_[] = {
 
 void ResetDATFiles_()
 {
-	LoadGameData(upgradesDat, "arr\\upgrades.dat");
-	LoadGameData(weaponsDat_, "arr\\weapons.dat"); // TODO: dynamically allocate weaponsDat memory
-	LoadGameData(techdataDat, "arr\\techdata.dat");
-	LoadGameData(portdataDat, "arr\\portdata.dat");
+	LoadGameData_(upgradesDat, "arr\\upgrades.dat");
+	LoadGameData_(weaponsDat_, "arr\\weapons.dat"); // TODO: dynamically allocate weaponsDat memory
+	LoadGameData_(techdataDat, "arr\\techdata.dat");
+	LoadGameData_(portdataDat, "arr\\portdata.dat");
 
 	if (!loadGameFileHandle)
 	{
@@ -3950,8 +3952,8 @@ void resetOrdersUnitsDAT_()
 	sub_4531A0();
 	dword_59CCA4 = 10;
 	dword_6283E8 = 150;
-	LoadGameData(ordersDat, "arr\\orders.dat");
-	LoadGameData(unitsDat, "arr\\units.dat");
+	LoadGameData_(ordersDat, "arr\\orders.dat");
+	LoadGameData_(unitsDat, "arr\\units.dat");
 	ReassignTargetAcquisitionRange();
 	memset(UnitNodeTable, 0, sizeof(UnitNodeTable));
 	memset(UnitNodeList_PlayerFirstUnit, 0, sizeof(UnitNodeList_PlayerFirstUnit));
