@@ -13145,7 +13145,7 @@ int SwitchMenu_()
 	if (lastDirectorySeparator)
 		*lastDirectorySeparator = 0;
 
-	for (int i = 0; i < 256; ++i)
+	for (int i = 0; i < _countof(byte_50CDC1); ++i)
 	{
 		byte_50CDC1[i] = i;
 	}
