@@ -11425,11 +11425,50 @@ FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
 
+const char* GetTblString(WORD* table, __int16 tbl_entry)
+{
+	if (tbl_entry == 0)
+	{
+		return NULL;
+	}
+	else if (tbl_entry < *table + 1)
+	{
+		return (const char*)table + table[tbl_entry];
+	}
+	else
+	{
+		return "";
+	}
+}
+
+void loadPortdataDAT_()
+{
+	LoadGameData_(unitsDat, "arr\\units.dat");
+	LoadGameData_(portdataDat, "arr\\portdata.dat");
+
+	portdata_tbl = (WORD*)fastFileRead_(NULL, 0, "arr\\portdata.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
+	for (int i = 0; i < 110; i++)
+	{
+		dword_655C58[i] = (int)GetTblString(portdata_tbl, LOWORD(dword_655C58[i]));
+		dword_655E80[i] = (int)GetTblString(portdata_tbl, LOWORD(dword_655E80[i]));
+	}
+
+	// TODO: dynamically allocate portdataDat memory
+
+	dword_68F528[0] = (int)portdataDat[0].address;
+	dword_68F528[1] = (int)portdataDat[1].address;
+	dword_68F528[2] = (int)portdataDat[2].address;
+	dword_68F528[3] = (int)portdataDat[3].address;
+}
+
+FAIL_STUB_PATCH(loadPortdataDAT);
+
 void sub_46D220_(dialog* a1)
 {
 	dword_66FF6C = a1;
 	sub_4CC990_();
-	loadPortdataDAT();
+	loadPortdataDAT_();
 	dialog* v3 = getControlFromIndex(a1, -10);
 	v3->pfcnUpdate = (FnUpdate)sub_46C6E0;
 	stru_66FF64.wid = v3->rct.right - v3->rct.left + 1;
