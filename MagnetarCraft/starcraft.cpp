@@ -9305,7 +9305,7 @@ void sub_4CC990_()
 	}
 }
 
-FUNCTION_PATCH(sub_4CC990, sub_4CC990_);
+FAIL_STUB_PATCH(sub_4CC990);
 
 void init_gluesounds_()
 {
@@ -11425,6 +11425,36 @@ FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
 
+void sub_46D220_(dialog* a1)
+{
+	dword_66FF6C = a1;
+	sub_4CC990_();
+	loadPortdataDAT();
+	dialog* v3 = getControlFromIndex(a1, -10);
+	v3->pfcnUpdate = (FnUpdate)sub_46C6E0;
+	stru_66FF64.wid = v3->rct.right - v3->rct.left + 1;
+	stru_66FF64.ht = 20 * (v3->rct.bottom - v3->rct.top + 1);
+	stru_66FF64.data = (u8*)SMemAlloc((__int16)(v3->rct.right - v3->rct.left + 1) * (__int16)stru_66FF64.ht, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 228, 0);
+	SetCallbackTimer(10, a1, 100, MissionBriefingLoop);
+	sub_46CBC0(a1);
+	if (!a1->lUser)
+	{
+		dialog* v6 = getControlFromIndex(a1, -14);
+		showDialog(v6);
+		if (multiPlayerMode)
+		{
+			BriefingStart(a1, 0);
+		}
+		else
+		{
+			dialog* v7 = getControlFromIndex(a1, 20);
+			DisableControl(v7);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_46D220);
+
 void rdyPFrame_()
 {
 	const char* v1[] =
@@ -11507,7 +11537,7 @@ bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 			gluRdy_CustomCtrlID_(dlg);
 			break;
 		case 0x405:
-			sub_46D220(dlg);
+			sub_46D220_(dlg);
 			switch (glGluesMode)
 			{
 			case MenuPosition::GLUE_READY_P:
