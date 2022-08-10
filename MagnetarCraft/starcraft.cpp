@@ -4077,6 +4077,21 @@ void __fastcall MinimapPreviewProc_(dialog* a1, __int16 _timer_id)
 
 FAIL_STUB_PATCH(MinimapPreviewProc);
 
+void GameInitAI_()
+{
+	dword_6D5BD0 = 0;
+	initAIControllerData();
+	initDetailFinder();
+	InitRegionCaptains(0);
+	load_AIScript_BIN();
+	initAITownMgr();
+	dword_59CC94 = 60;
+	dword_59CC8C = 15;
+	dword_59CC90 = 6;
+}
+
+FAIL_STUB_PATCH(GameInitAI);
+
 void CreateInitialTeamMeleeUnits_()
 {
 	int team_count = gameData.got_file_values.template_id != 15 ? gameData.got_file_values.team_mode : 2;
@@ -4138,15 +4153,7 @@ signed int GameInit_()
 	memset(Chat_GameText, 0, 2832u);
 	*(_WORD *)&Chat_GameText[12].chars[216] = 0;
 	resetTextAndLineData();
-	dword_6D5BD0 = 0;
-	initAIControllerData();
-	initDetailFinder();
-	InitRegionCaptains(0);
-	load_AIScript_BIN();
-	initAITownMgr();
-	dword_59CC94 = 60;
-	dword_59CC8C = 15;
-	dword_59CC90 = 6;
+	GameInitAI_();
 	initMapData_();
 	InitializePresetImageArrays();
 	InitializeSpriteArray_();
