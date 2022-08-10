@@ -261,20 +261,26 @@ void __fastcall DestroyGluAllStrings_(bool exit_code)
 
 FAIL_STUB_PATCH(DestroyGluAllStrings);
 
-const char* GetNetworkTblString(__int16 network_tbl_entry)
+
+const char* GetTblString(WORD* table, __int16 tbl_entry)
 {
-	if (network_tbl_entry == 0)
+	if (tbl_entry == 0)
 	{
 		return NULL;
 	}
-	else if (network_tbl_entry < *networkTable + 1)
+	else if (tbl_entry < *table + 1)
 	{
-		return (const char*)networkTable + networkTable[network_tbl_entry];
+		return (const char*)table + table[tbl_entry];
 	}
 	else
 	{
 		return "";
 	}
+}
+
+const char* GetNetworkTblString(__int16 network_tbl_entry)
+{
+	return GetTblString(networkTable, network_tbl_entry);
 }
 
 const char* GetMapTblString(__int16 map_tbl_entry)
@@ -11467,22 +11473,6 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
-
-const char* GetTblString(WORD* table, __int16 tbl_entry)
-{
-	if (tbl_entry == 0)
-	{
-		return NULL;
-	}
-	else if (tbl_entry < *table + 1)
-	{
-		return (const char*)table + table[tbl_entry];
-	}
-	else
-	{
-		return "";
-	}
-}
 
 void loadPortdataDAT_()
 {
