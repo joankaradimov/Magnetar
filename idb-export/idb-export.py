@@ -492,20 +492,22 @@ def is_blacklisted(text):
     return False
 
 def export_functions(declarations, definitions):
-    text_segment = idaapi.get_segm_by_name('.text')
-    for function_ea in Functions(text_segment.start_ea, text_segment.end_ea):
-        function = Function(function_ea)
-        if function.skip:
-            continue
+    for n in range(idaapi.get_segm_qty()):
+        segment = idaapi.getnseg(n)
+        if idaapi.get_segm_name(segment).startswith('.text'):
+            for function_ea in Functions(segment.start_ea, segment.end_ea):
+                function = Function(function_ea)
+                if function.skip:
+                    continue
 
-        declaration = function.build_export_declaration()
-        definition = function.build_export_definition()
+                declaration = function.build_export_declaration()
+                definition = function.build_export_definition()
 
-        if is_blacklisted(declaration):
-            continue
+                if is_blacklisted(declaration):
+                    continue
 
-        declarations.append(declaration)
-        definitions.append(definition)
+                declarations.append(declaration)
+                definitions.append(definition)
 
 def export_data(segment, declarations, definitions):
     data_segment = idaapi.get_segm_by_name(segment)
