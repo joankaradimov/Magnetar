@@ -480,6 +480,10 @@ def is_blacklisted(text):
         'RtlUnwind',
         '__int128',
         '__IMPORT_DESCRIPTOR',
+        'FlsAlloc',
+        'FlsGetValue',
+        'FlsSetValue',
+        'FlsFree',
     ]
 
     for identifier in blacklisted_identifiers:
