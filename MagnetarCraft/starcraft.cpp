@@ -5475,9 +5475,9 @@ void DestroyGame_()
 		++v0;
 	} while ((int)v0 <= (int)&ScreenLayers[5]);
 	Streamed_SFX_FullDestructor(&soundFXList);
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < _countof(stru_51A280); i++)
 	{
-		TriggerNode_Destructor(stru_51A218.triggers + i);
+		TriggerNode_Destructor(stru_51A280 + i);
 	}
 	struct_0* v2 = placement_boxes;
 	do
@@ -10504,7 +10504,7 @@ bool __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
-			_ID_Destructor(&stru_51A218.dword8);
+			_ID_Destructor(&stru_51A220);
 			break;
 		case USER_ACTIVATE:
 			switch (LastControlID)
@@ -10924,7 +10924,7 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 		NULL,
 		NULL,
 		NULL,
-		gluCustm_GameListboxUpdate,
+		gluCustm_FileListbox_Main,
 		genericLabelInteract,
 		genericLabelInteract,
 		genericLabelInteract,
@@ -11820,7 +11820,7 @@ int getGameList_(dialog* dlg)
 	{
 		DLGMusicFade_(MT_TITLE);
 	}
-	Template_Destructor(stru_51A218.char14 + 60);
+	Template_Destructor(&stru_51A268);
 	return LoadGameTemplates_(Template_Constructor);
 }
 
@@ -15675,10 +15675,9 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 					break;
 				}
 
-				TriggerList* trigger_list = stru_51A218.triggers + active_trigger_player;
-				if (trigger_list->begin > 0)
+				if ((int)stru_51A280[active_trigger_player].begin > 0)
 				{
-					executeGameTrigger_(trigger_list);
+					executeGameTrigger_(stru_51A280 + active_trigger_player);
 					trigger_has_executed = true;
 				}
 			}
