@@ -10792,6 +10792,41 @@ void gluCustm_initSwish_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+bool __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			SingleMakeCreateGameDialog(dlg);
+			break;
+		case USER_DESTROY:
+			ClearListBox(map_listbox);
+			cleanupBNListboxData();
+			break;
+		case USER_INIT:
+			map_listbox = dlg;
+			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
+			break;
+		case USER_SELECT:
+			genericListboxInteract(dlg, evt);
+			if (dlg->fields.list.bStrs)
+			{
+				sub_4A7FC0(dlg->fields.list.pdwData[dlg->fields.list.bCurrStr]);
+			}
+
+			dword_59B848 = 1;
+			gluCustmInitPlayerTypes(dlg->fields.ctrl.pDlg, 5);
+			return 1;
+		}
+	}
+
+	return genericListboxInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(gluCustm_FileListbox_Main);
+
 TypeDropdownSelect singleTypeSelect_[]
 {
 	{PlayerType::PT_NotUsed, (GluAllTblEntry) 0x86 },
@@ -10931,7 +10966,7 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 		NULL,
 		NULL,
 		NULL,
-		gluCustm_FileListbox_Main,
+		gluCustm_FileListbox_Main_,
 		genericLabelInteract,
 		genericLabelInteract,
 		genericLabelInteract,
