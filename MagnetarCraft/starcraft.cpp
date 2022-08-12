@@ -10916,10 +10916,10 @@ void loadMenu_gluJoin_()
 
 FAIL_STUB_PATCH(loadMenu_gluJoin);
 
-void gluCustm_initSwish_(dialog* a1)
+void gluCustm_initSwish_(dialog* dlg)
 {
-	DlgSwooshin(5, gluCustmSwishController, a1, 0);
-	getControlFromIndex(a1, 6)->pfcnUpdate = gluCustm_UpdateCB;
+	DlgSwooshin(5, gluCustmSwishController, dlg, 0);
+	getControlFromIndex(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
