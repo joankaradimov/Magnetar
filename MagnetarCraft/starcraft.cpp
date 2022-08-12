@@ -4364,6 +4364,33 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
 
+void cleanBufferCounts_()
+{
+	for (int i = 0; i < _countof(arraydatabytes); i++)
+	{
+		arraydatabytes[i] = 0;
+	}
+	for (int i = 0; i < _countof(player_left); i++)
+	{
+		player_left[i] = 0;
+	}
+
+	Latency = 0;
+	byte_6554B0 = 0;
+	InGame = 0;
+	turn_counter = 0;
+	sgdwBytesInCmdQueue = 0;
+	gameState = 1;
+
+	if (gameData.save_timestamp == 0)
+	{
+		dword_58D700 = 0;
+		dword_58D704 = 0;
+	}
+}
+
+FAIL_STUB_PATCH(cleanBufferCounts);
+
 int CreateGame_(GameData* a1)
 {
 	if (!is_spawn)
@@ -4388,7 +4415,7 @@ int CreateGame_(GameData* a1)
 				memcpy(&gameData, a1, 141u);
 				isHost = 1;
 				initializeSlots(playerid);
-				cleanBufferCounts();
+				cleanBufferCounts_();
 				return 1;
 			}
 			if (!outOfGame)
@@ -12408,7 +12435,7 @@ signed int sub_4D4130_()
 	unignored_player_flags = -1;
 	countdown_finished_maybe = 0;
 	dword_6D5C28 = 0;
-	cleanBufferCounts();
+	cleanBufferCounts_();
 	if (userHasMap())
 	{
 		download_percentage = -1;
