@@ -13424,7 +13424,7 @@ LABEL_28:
 		memset(stru_6CEB40, 0, sizeof(PALETTEENTRY[256]));
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
-		gluDlgFadePalette(3u);
+		gluDlgFadePalette(3);
 		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
@@ -13513,7 +13513,7 @@ LABEL_28:
 		memset(stru_6CEB40, 0, sizeof(PALETTEENTRY[256]));
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(PALETTEENTRY[256]));
-		gluDlgFadePalette(3u);
+		gluDlgFadePalette(3);
 		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
