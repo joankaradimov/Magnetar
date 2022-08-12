@@ -9644,6 +9644,41 @@ MEMORY_PATCH(0x45F02A, (BYTE)EMD_protoss10);
 MEMORY_PATCH(0x45E33F, (BYTE)EMD_protoss07);
 MEMORY_PATCH(0x45F019, (BYTE)EMD_protoss07);
 
+void gluHist_Create_(dialog* dlg)
+{
+	dialog* mission_list_dlg = getControlFromIndex(dlg, 6);
+	ExpandedCampaignMenuEntry* mission_entries = (ExpandedCampaignMenuEntry*) dword_6D5A4C;
+
+	mission_list_dlg->lFlags |= CTRL_LBOX_NORECALC | CTRL_PLAIN;
+
+	for (int i = 0; mission_entries[i].next_mission; i++)
+	{
+		if (mission_entries[i].next_mission <= (unsigned int)dword_6D5A50 && mission_entries[i].glu_hist_tbl_index)
+		{
+			const char* v6 = GetTblString(dword_6D5A44, mission_entries[i].glu_hist_tbl_index);
+			mission_list_dlg->fields.list.pdwData[ListBox_AddEntry(v6, mission_list_dlg, 0)] = i;
+		}
+	}
+
+	if (mission_list_dlg->lFlags & CTRL_LBOX_NORECALC)
+	{
+		mission_list_dlg->lFlags &= ~CTRL_LBOX_NORECALC;
+		List_Update(mission_list_dlg);
+	}
+
+	if (mission_list_dlg->fields.list.bStrs)
+	{
+		dlgEvent evt;
+		evt.wNo = EVN_USER;
+		evt.dwUser = USER_SELECT;
+		*(_DWORD*)&evt.wSelection = 0;
+		mission_list_dlg->pfcnInteract(mission_list_dlg, &evt);
+		DlgSetSelected_UpdateScrollbar(0, mission_list_dlg);
+	}
+}
+
+FAIL_STUB_PATCH(gluHist_Create);
+
 void gluHist_Activate_(dialog* dlg)
 {
 	if (LastControlID == 1)
@@ -9699,7 +9734,7 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gluHist_Create(dlg);
+			gluHist_Create_(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
 			gluHist_Activate_(dlg);
