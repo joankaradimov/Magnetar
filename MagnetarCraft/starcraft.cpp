@@ -4972,6 +4972,49 @@ void LoadRaceUI_()
 
 FAIL_STUB_PATCH(LoadRaceUI);
 
+void hotkeyRemapping_()
+{
+	sub_49BB90();
+	MoveToTile.y = -1;
+	MoveToTile.x = -1;
+	LOWORD(unknown_y_tile) = -1;
+	LOWORD(unknown_x_tile) = -1;
+	ScreenY = -1;
+	ScreenX = -1;
+	if (!loadGameFileHandle)
+	{
+		sub_4AABF0();
+		memset(dword_57FE60, 0, 0x1B00u);
+		memset(word_63FE40, 0, 0x80u);
+		byte_597280 = -1;
+		sub_4C3ED0();
+		for (int i = 0; i < _countof(byte_58D718); i++)
+		{
+			byte_58D718[i] = 0x3;
+		}
+	}
+	byte_641694 = 0;
+	sub_48D700();
+	if (is_placing_building)
+	{
+		refreshPlaceBuildingLocation();
+		if (byte_641694)
+		{
+			CancelTargetOrder();
+		}
+	}
+	SetInGameInputProcs();
+	initializeTriggerInfo();
+	memset(stru_64DEC8, 0, sizeof(stru_64DEC8));
+	byte_6D1224 = 0;
+	word_63FF5C = 0;
+	dword_64EEC8 = 0;
+	dword_64DEA8 = 0;
+	load_Stat_txt();
+}
+
+FAIL_STUB_PATCH(hotkeyRemapping);
+
 void setup_HUD_();
 
 int LoadGameCore_()
@@ -5111,7 +5154,7 @@ signed int LoadGameInit_()
 	LastRandomNumber = initialSeed;
 	srand(initialSeed);
 	LoadRaceUI_();
-	hotkeyRemapping();
+	hotkeyRemapping_();
 	if (!GameInit_())
 		return 0;
 	if (InReplay)
