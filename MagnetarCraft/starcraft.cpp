@@ -4334,6 +4334,71 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
 
+int CreateGame_(GameData* a1)
+{
+	if (!is_spawn)
+	{
+		NetMode.as_number = 0xFFFFFFFF;
+		SNetDestroy();
+		if (hEvent && IsBattleNet)
+		{
+			ResetEvent(hEvent);
+			IsBattleNet = 0;
+		}
+		LOWORD(dword_66FF30) = 0;
+		Char4 zero;
+		zero.as_number = 0;
+		if (InitializeNetworkProvider(zero))
+		{
+			if (SNetCreateGame(a1->player_name, "", "", 0, 0, 0, a1->max_players, Players[g_LocalNationID].szName, "", &playerid))
+			{
+				dword_57EEC0[playerid] = g_LocalNationID;
+				dword_57EE7C[playerid] = g_LocalHumanID;
+				Players[g_LocalNationID].dwStormId = playerid;
+				memcpy(&gameData, a1, 141u);
+				isHost = 1;
+				initializeSlots(playerid);
+				cleanBufferCounts();
+				return 1;
+			}
+			if (!outOfGame)
+			{
+				packetErrHandle(SErrGetLastError(), 92, "Starcraft\\SWAR\\lang\\net_glue.cpp", 577, 1);
+			}
+		}
+		return 0;
+	}
+	if (outOfGame)
+	{
+		return 0;
+	}
+	leaveGame(3);
+	outOfGame = 1;
+	doNetTBLError(0, 0, 0, 103);
+	if (gwGameMode == GAME_RUN)
+	{
+		GameState = 0;
+		gwNextGameMode = GAME_GLUES;
+		if (!InReplay)
+		{
+			replay_header.ReplayFrames = ElapsedTimeFrames;
+		}
+	}
+	nextLeaveGameMenu();
+	return 0;
+}
+
+int CreateGame__()
+{
+	GameData* a1;
+
+	__asm mov a1, eax
+
+	return CreateGame_(a1);
+}
+
+FUNCTION_PATCH((void*)0x4D3FC0, CreateGame__);
+
 int LevelCheatInitGame_()
 {
 	if (!OpheliaEnabled)
@@ -4402,7 +4467,7 @@ int LevelCheatInitGame_()
 			if (sub_4DBE50())
 			{
 				isHost = 0;
-				return CreateGame(&v6);
+				return CreateGame_(&v6);
 			}
 			else
 			{
@@ -4476,7 +4541,7 @@ signed int LoadGameCreate_()
 	if (sub_4CF5F0() && sub_4DBE50())
 	{
 		isHost = 0;
-		return CreateGame(&gameData);
+		return CreateGame_(&gameData);
 	}
 	else
 	{
@@ -4519,7 +4584,7 @@ int RestartGame_()
 		{
 			Players[g_LocalNationID].nRace = v1;
 			isHost = 0;
-			return CreateGame(&gameData);
+			return CreateGame_(&gameData);
 		}
 		else
 		{
@@ -9534,7 +9599,7 @@ int CreateCampaignGame_(MapData mapData)
 			if (sub_4DBE50())
 			{
 				isHost = 0;
-				return CreateGame(&v4) != 0;
+				return CreateGame_(&v4) != 0;
 			}
 		}
 	}

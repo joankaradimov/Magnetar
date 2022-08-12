@@ -1,5 +1,5 @@
 EXPORTS
-    SNetCreateGame = StormLibNetCreateGame @101
+    SNetCreateGame@40 = StormLibNetCreateGame @101
     SNetDestroy@0 = StormLibNetDestroy @102
     SNetEnumDevices = StormLibNetEnumDevices @103
     SNetEnumGames = StormLibNetEnumGames @104
