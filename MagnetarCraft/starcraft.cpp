@@ -999,17 +999,18 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 
 FAIL_STUB_PATCH(LoadGameData);
 
-DatLoad sfxdataDat_[] = {
-	DatLoad { SFXData_SoundFile, 4, 1144 },
-	DatLoad { SFXData_Flags1, 1, 1144 },
-	DatLoad { SFXData_Flags2, 1, 1144 },
-	DatLoad { SFXData_Race, 2, 1144 },
-	DatLoad { SFXData_MuteVolume, 1, 1144 },
-};
+DatLoad* sfxdataDat_;
 
 void LoadSfx_()
 {
 	// TODO: dynamically allocate sfxdataDat memory
+	sfxdataDat_ = new DatLoad[] {
+		DatLoad { SFXData_SoundFile, 4, 1144 },
+		DatLoad { SFXData_Flags1, 1, 1144 },
+		DatLoad { SFXData_Flags2, 1, 1144 },
+		DatLoad { SFXData_Race, 2, 1144 },
+		DatLoad { SFXData_MuteVolume, 1, 1144 },
+	};
 	LoadGameData_(sfxdataDat_, "arr\\sfxdata.dat");
 	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 }
@@ -1388,6 +1389,8 @@ void LoadCursors_()
 
 FAIL_STUB_PATCH(LoadCursors);
 
+DatLoad* weaponsDat_;
+
 void __fastcall FreeMapdataTable_(bool exit_code)
 {
 	if (dword_51CC30)
@@ -1399,6 +1402,7 @@ void __fastcall FreeMapdataTable_(bool exit_code)
 	// TODO: dynamically clean mapdataDat memory
 	// TODO: dynamically clean upgradesDat memory
 	// TODO: dynamically clean weaponsDat memory
+	delete[] weaponsDat_;
 	// TODO: dynamically clean techdataDat memory
 	// TODO: dynamically clean portdataDat memory
 }
@@ -2437,6 +2441,8 @@ FAIL_STUB_PATCH(loadColorSettings);
 void __fastcall sfxdata_cleanup_(bool exit_code)
 {
 	// TODO: dynamically clean sfxdataDat memory
+	delete[] sfxdataDat_;
+
 	if (dword_5999B0)
 	{
 		SMemFree(dword_5999B0, "Starcraft\\SWAR\\lang\\snd.cpp", 1719, 0);
@@ -2705,22 +2711,7 @@ void LoadImageData_()
 
 FAIL_STUB_PATCH(LoadImageData);
 
-DatLoad imagesDat_[] = {
-	DatLoad { Images_GrpFile, 4, 999 },
-	DatLoad { Images_IsTurnable, 1, 999 },
-	DatLoad { Images_IsClickable, 1, 999 },
-	DatLoad { Images_UseFullIscript, 1, 999 },
-	DatLoad { Image_DrawIfCloaked, 1, 999 },
-	DatLoad { Image_DrawFunction, 1, 999 },
-	DatLoad { Images_Remapping, 1, 999 },
-	DatLoad { Images_IscriptEntry, 4, 999 },
-	DatLoad { Images_ShieldOverlayLO, 4, 999 },
-	DatLoad { Images_AttackOverlayLO, 4, 999 },
-	DatLoad { Images_InjuryOverlayLO, 4, 999 },
-	DatLoad { Images_SpecialOverlayLO, 4, 999 },
-	DatLoad { Images_LandingDustLO, 4, 999 },
-	DatLoad { Images_LiftOffDustLO, 4, 999 },
-};
+DatLoad* imagesDat_;
 
 void LoadInitIscriptBIN_()
 {
@@ -2728,6 +2719,22 @@ void LoadInitIscriptBIN_()
 	iscript_data = fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
 	// TODO: dynamically allocate imagesDat memory
+	imagesDat_ = new DatLoad[] {
+		DatLoad { Images_GrpFile, 4, 999 },
+		DatLoad { Images_IsTurnable, 1, 999 },
+		DatLoad { Images_IsClickable, 1, 999 },
+		DatLoad { Images_UseFullIscript, 1, 999 },
+		DatLoad { Image_DrawIfCloaked, 1, 999 },
+		DatLoad { Image_DrawFunction, 1, 999 },
+		DatLoad { Images_Remapping, 1, 999 },
+		DatLoad { Images_IscriptEntry, 4, 999 },
+		DatLoad { Images_ShieldOverlayLO, 4, 999 },
+		DatLoad { Images_AttackOverlayLO, 4, 999 },
+		DatLoad { Images_InjuryOverlayLO, 4, 999 },
+		DatLoad { Images_SpecialOverlayLO, 4, 999 },
+		DatLoad { Images_LandingDustLO, 4, 999 },
+		DatLoad { Images_LiftOffDustLO, 4, 999 },
+	};
 	LoadGameData_(imagesDat_, "arr\\images.dat");
 	if (!SBmpLoadImage("game\\tselect.pcx", 0, dword_5240B8, 24, 0, 0, 0))
 	{
@@ -2756,6 +2763,7 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 	sub_47AB40(&ShieldOverlays, 999);
 
 	// TODO: dynamically clean imagesDat memory
+	delete[] imagesDat_;
 }
 
 FAIL_STUB_PATCH(CleanupIscriptBINHandle);
@@ -3842,18 +3850,21 @@ void load_gluMinimap_()
 
 FAIL_STUB_PATCH(load_gluMinimap);
 
-DatLoad spritesDat_[] = {
-	DatLoad { Sprites_Image, 2, 517 },
-	DatLoad { Sprites_HealthBarSize, 1, 387 },
-	DatLoad { Sprites_Unknown, 1, 517 },
-	DatLoad { Sprites_IsVisible, 1, 517 },
-	DatLoad { Sprites_SelectionCircle, 1, 387 },
-	DatLoad { Sprites_SelectionCircleVPos, 1, 387 },
-};
+DatLoad* spritesDat_;
 
 void InitializeSpriteArray_()
 {
-	LoadGameData_(spritesDat_, "arr\\sprites.dat"); // TODO: dynamically allocate spritesDat memory
+	// TODO: dynamically allocate spritesDat memory
+	spritesDat_ = new DatLoad[] {
+		DatLoad { Sprites_Image, 2, 517 },
+		DatLoad { Sprites_HealthBarSize, 1, 387 },
+		DatLoad { Sprites_Unknown, 1, 517 },
+		DatLoad { Sprites_IsVisible, 1, 517 },
+		DatLoad { Sprites_SelectionCircle, 1, 387 },
+		DatLoad { Sprites_SelectionCircleVPos, 1, 387 },
+	};
+
+	LoadGameData_(spritesDat_, "arr\\sprites.dat");
 	memset(SpriteTable, 0, sizeof(SpriteTable));
 	memset(SpritesOnTileRow.heads, 0, sizeof(SpritesOnTileRow.heads));
 	memset(&SpritesOnTileRow, 0, 0x400u);
@@ -3883,19 +3894,20 @@ void InitializeSpriteArray_()
 
 FAIL_STUB_PATCH(InitializeSpriteArray);
 
-DatLoad flingyDat_[] = {
-	DatLoad { Flingy_SpriteID, 2, 209 },
-	DatLoad { Flingy_TopSpeed, 4, 209 },
-	DatLoad { Flingy_Acceleration, 2, 209 },
-	DatLoad { Flingy_HaltDistance, 4, 209 },
-	DatLoad { Flingy_TurnSpeed, 1, 209 },
-	DatLoad { Flingy_Unused, 1, 209 },
-	DatLoad { Flingy_MovementControl, 1, 209 },
-};
+DatLoad* flingyDat_;
 
 void InitializeFlingyDat_()
 {
 	// TODO: dynamically allocate flingyDat memory
+	flingyDat_ = new DatLoad[] {
+		DatLoad { Flingy_SpriteID, 2, 209 },
+		DatLoad { Flingy_TopSpeed, 4, 209 },
+		DatLoad { Flingy_Acceleration, 2, 209 },
+		DatLoad { Flingy_HaltDistance, 4, 209 },
+		DatLoad { Flingy_TurnSpeed, 1, 209 },
+		DatLoad { Flingy_Unused, 1, 209 },
+		DatLoad { Flingy_MovementControl, 1, 209 },
+	};
 	LoadGameData_(flingyDat_, "arr\\flingy.dat");
 	memset(dword_63FEE0, 0, 76u);
 	dword_63FF3C = (CUnit*)dword_63FEE0;
@@ -3906,38 +3918,41 @@ void InitializeFlingyDat_()
 
 FAIL_STUB_PATCH(InitializeFlingyDat);
 
-DatLoad weaponsDat_[] = {
-	DatLoad { Weapon_Label, 2, 130 },
-	DatLoad { Weapon_Graphic, 4, 130 },
-	DatLoad { Weapon_TechHint, 1, 130 },
-	DatLoad { Weapon_TargetFlags, 2, 130 },
-	DatLoad { Weapon_MinRange, 4, 130 },
-	DatLoad { Weapon_MaxRange, 4, 130 },
-	DatLoad { Weapon_Upgrade, 1, 130 },
-	DatLoad { Weapon_DamageType, 1, 130 },
-	DatLoad { Weapon_Behavior, 1, 130 },
-	DatLoad { Weapon_RemoveAfter, 1, 130 },
-	DatLoad { Weapon_ExplosionType, 1, 130 },
-	DatLoad { Weapon_InnerSplashRadius, 2, 130 },
-	DatLoad { Weapon_MedianSplashRadius, 2, 130 },
-	DatLoad { Weapon_OuterSplashRadius, 2, 130 },
-	DatLoad { Weapon_DamageAmount, 2, 130 },
-	DatLoad { Weapon_DamageBonus, 2, 130 },
-	DatLoad { Weapon_DamageCooldown, 1, 130 },
-	DatLoad { Weapon_DamageFactor, 1, 130 },
-	DatLoad { Weapon_AttackDirection, 1, 130 },
-	DatLoad { Weapon_LaunchSpin, 1, 130 },
-	DatLoad { Weapon_XOffset, 1, 130 },
-	DatLoad { Weapon_YOffset, 1, 130 },
-	DatLoad { Weapon_TargetErrorMessage, 2, 130 },
-	DatLoad { Weapon_Icon, 2, 130 },
-};
-
 void ResetDATFiles_()
 {
 	LoadGameData_(upgradesDat, "arr\\upgrades.dat");
-	LoadGameData_(weaponsDat_, "arr\\weapons.dat"); // TODO: dynamically allocate weaponsDat memory
+
+	// TODO: dynamically allocate weaponsDat memory
+	weaponsDat_ = new DatLoad[] {
+		DatLoad { Weapon_Label, 2, 130 },
+		DatLoad { Weapon_Graphic, 4, 130 },
+		DatLoad { Weapon_TechHint, 1, 130 },
+		DatLoad { Weapon_TargetFlags, 2, 130 },
+		DatLoad { Weapon_MinRange, 4, 130 },
+		DatLoad { Weapon_MaxRange, 4, 130 },
+		DatLoad { Weapon_Upgrade, 1, 130 },
+		DatLoad { Weapon_DamageType, 1, 130 },
+		DatLoad { Weapon_Behavior, 1, 130 },
+		DatLoad { Weapon_RemoveAfter, 1, 130 },
+		DatLoad { Weapon_ExplosionType, 1, 130 },
+		DatLoad { Weapon_InnerSplashRadius, 2, 130 },
+		DatLoad { Weapon_MedianSplashRadius, 2, 130 },
+		DatLoad { Weapon_OuterSplashRadius, 2, 130 },
+		DatLoad { Weapon_DamageAmount, 2, 130 },
+		DatLoad { Weapon_DamageBonus, 2, 130 },
+		DatLoad { Weapon_DamageCooldown, 1, 130 },
+		DatLoad { Weapon_DamageFactor, 1, 130 },
+		DatLoad { Weapon_AttackDirection, 1, 130 },
+		DatLoad { Weapon_LaunchSpin, 1, 130 },
+		DatLoad { Weapon_XOffset, 1, 130 },
+		DatLoad { Weapon_YOffset, 1, 130 },
+		DatLoad { Weapon_TargetErrorMessage, 2, 130 },
+		DatLoad { Weapon_Icon, 2, 130 },
+	};
+	LoadGameData_(weaponsDat_, "arr\\weapons.dat");
+
 	LoadGameData_(techdataDat, "arr\\techdata.dat");
+
 	LoadGameData_(portdataDat, "arr\\portdata.dat");
 
 	if (!loadGameFileHandle)
@@ -5507,6 +5522,7 @@ FAIL_STUB_PATCH(DestroyMapData);
 void CleanupFlingyDat_()
 {
 	// TODO: dynamically clean flingyDat memory
+	delete[] flingyDat_;
 }
 
 FAIL_STUB_PATCH(CleanupFlingyDat);
@@ -5514,6 +5530,7 @@ FAIL_STUB_PATCH(CleanupFlingyDat);
 void CleanupSpritesDat_()
 {
 	// TODO: dynamically clean spritesDat memory
+	delete[] spritesDat_;
 }
 
 FAIL_STUB_PATCH(CleanupSpritesDat);
