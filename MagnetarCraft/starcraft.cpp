@@ -6794,7 +6794,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	TitlePaletteUpdate_(3);
 	if (multiPlayerMode)
 	{
-		registry_options.GameSpeed = (unsigned __int8)gameData.game_speed;
+		registry_options.GameSpeed = gameData.game_speed;
 	}
 	else if (CampaignIndex == MD_none)
 	{
