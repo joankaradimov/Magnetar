@@ -10924,6 +10924,79 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+int gluCustmLoadMapFromList_()
+{
+	if (map_listbox->fields.list.bStrs)
+	{
+		u8 v0 = map_listbox->fields.list.bCurrStr;
+		if (v0 != 0xFF)
+		{
+			GluAllTblEntry error_tbl_entry;
+			MapDirEntry* directory_entry = (MapDirEntry*)map_listbox->fields.list.pdwData[v0];
+			auto flags = (unsigned __int8)selectedGameType[0] | ((((unsigned __int16)selectedGameTypeParam << 8) | (unsigned __int8)selectedGameType[1]) << 8);
+			int error_code = sub_4A8050(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
+
+			switch (error_code)
+			{
+			case 0:
+				if (!dword_59B844)
+				{
+					char v16[260];
+					sub_4DCB00(v16, "");
+					strcpy(menuMapRelativePath, CurrentMapFolder + strlen(v16));
+					strcpy(menuMapFileName, map_listbox->fields.list.ppStrs[v0]);
+				}
+				return multiPlayerMode ? 1 : gluCustmSinglePlayerInit();
+			case 0x80000001:
+				error_tbl_entry = INVALID_SCENARIO;
+				break;
+			case 0x80000002:
+				error_tbl_entry = EXPANSION_ONLY;
+				break;
+			case 0x80000005:
+				error_tbl_entry = GAME_NETWORK_INITIALIZATION_ERROR;
+				break;
+			case 0x80000007:
+				error_tbl_entry = ERROR_CREATING_GAME;
+				break;
+			case 0x80000008:
+				error_tbl_entry = TOO_MANY_GAMES_ON_NETWORK;
+				break;
+			case 0x8000000B:
+				gluCustm_UpdateMapFolderDisplay(CurrentMapFolder);
+				byte_59BA68[0] = 0;
+				InitGlueMapListBox();
+				return 0;
+			case 0x8000000C:
+				error_tbl_entry = UMS_ONLY;
+				break;
+			case 0x8000000D:
+				error_tbl_entry = HUMAN_PLAYER_REQUIRED;
+				break;
+			default:
+				if (SErrGetLastError() != 1222)
+				{
+					error_tbl_entry = NETWORK_GAME_EXISTS;
+				}
+				else if (NetMode.as_number == 'MODM')
+				{
+					error_tbl_entry = (GluAllTblEntry)74;
+				}
+				else
+				{
+					error_tbl_entry = OPPONENT_PLAYER_REQUIRED;
+				}
+			}
+
+			BWFXN_gluPOK_MBox(get_GluAll_String(error_tbl_entry));
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(gluCustmLoadMapFromList);
+
 int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -11162,7 +11235,7 @@ int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
-			if (LastControlID == 12 && !gluCustmLoadMapFromList())
+			if (LastControlID == 12 && !gluCustmLoadMapFromList_())
 			{
 				return 1;
 			}
