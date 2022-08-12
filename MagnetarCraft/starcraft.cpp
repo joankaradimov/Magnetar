@@ -9752,7 +9752,7 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
-	dword_6D5A44 = (BYTE*)fastFileRead_(0, 0, "rez\\gluHist.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	dword_6D5A44 = (WORD*)fastFileRead_(0, 0, "rez\\gluHist.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210); // TODO: rename
 	AllocBackgroundImage("glue\\campaign\\pHist.pcx", &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 602);
 
 	dword_6D5A3C = LoadDialog("rez\\gluHist.bin");

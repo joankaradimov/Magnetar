@@ -9257,7 +9257,7 @@ void RECV_GameSlotMod(int a1, int a2) {
     }
 }
 DECL_FUNC(int (__stdcall*RECV_SlotChange)(int), RECV_SlotChange, 0x471570);
-DECL_FUNC(int (__stdcall*RECV_ForceChangeUMS)(unsigned __int8 a2, int), RECV_ForceChangeUMS, 0x471670);
+DECL_FUNC(int (__stdcall*RECV_ForceChangeUMS)(int a2, int), RECV_ForceChangeUMS, 0x471670);
 DECL_FUNC(int (__stdcall*RECV_ForceChangeMelee)(int), RECV_ForceChangeMelee, 0x471750);
 DECL_FUNC(int(*sub_471840)(), sub_471840, 0x471840);
 DECL_FUNC(int (__stdcall*RECV_SwapPlayers)(int), RECV_SwapPlayers, 0x471860);
@@ -9523,7 +9523,7 @@ signed int sub_4746D0(CUnit *a1, char a2, UnitType a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(void(*_orderSelfSpecial)(), _orderSelfSpecial, 0x474760);
+DECL_FUNC(int(*_orderSelfSpecial)(), _orderSelfSpecial, 0x474760);
 DECL_FUNC(void (__stdcall*sub_474790)(__int16, __int16), sub_474790, 0x474790);
 DECL_FUNC(void (__stdcall*sub_4747C0)(Position a5, CUnit *a6), sub_4747C0, 0x4747c0);
 char *sub_4747E0(CUnit *a1, Order a2, COrder *a3, CUnit *a4) {
@@ -9565,7 +9565,7 @@ Order order(int a1, CUnit *a2, Order a3, Position a4, CUnit *a5, u16 a6) {
 DECL_FUNC(void (__stdcall*sub_4748E0)(__int16, __int16), sub_4748E0, 0x4748e0);
 DECL_FUNC(void (__stdcall*sub_474910)(u16 dx0, __int16, __int16), sub_474910, 0x474910);
 DECL_FUNC(void (__stdcall*sub_474980)(Position a4, CUnit *a5), sub_474980, 0x474980);
-DECL_FUNC(void(*QueueOrder)(), QueueOrder, 0x4749a0);
+DECL_FUNC(int(*QueueOrder)(), QueueOrder, 0x4749a0);
 char *sub_4749D0(Order a1, CUnit *a2) {
     int address = 0x4749d0;
     char * result_;
@@ -15136,7 +15136,7 @@ MapDirEntry *save_Recent_Map_Data(MapDirEntry *result) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*getMapListEntryCount)(int, int, char *), getMapListEntryCount, 0x4a73c0);
-DECL_FUNC(int (__stdcall*sub_4A7540)(MapDirEntry *a1), sub_4A7540, 0x4a7540);
+DECL_FUNC(void (__stdcall*sub_4A7540)(MapDirEntry *a1), sub_4A7540, 0x4a7540);
 int FullyLoadMapDirEntry(MapDirEntry *a1) {
     int address = 0x4a7740;
     int result_;
@@ -15156,16 +15156,13 @@ void sub_4A79D0(MapDirEntry *a1) {
         call address
     }
 }
-int LoadReplayMapDirEntry(MapDirEntry *replay) {
+void LoadReplayMapDirEntry(MapDirEntry *replay) {
     int address = 0x4a7c30;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, replay
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__stdcall*sub_4A7F50)(HWND, UINT, UINT, DWORD), sub_4A7F50, 0x4a7f50);
 void sub_4A7FC0(int a1) {
@@ -15504,7 +15501,18 @@ DECL_FUNC(int (__stdcall*BattlePlaySound)(int, int, int), BattlePlaySound, 0x4ad
 DECL_FUNC(int (__stdcall*sub_4AD0E0)(LPCSTR lpText, LPCSTR lpCaption), sub_4AD0E0, 0x4ad0e0);
 DECL_FUNC(int(*sub_4AD110)(), sub_4AD110, 0x4ad110);
 DECL_FUNC(int(*sub_4AD140)(), sub_4AD140, 0x4ad140);
-DECL_FUNC(int(*initializeProviderStruct)(), initializeProviderStruct, 0x4ad190);
+char *initializeProviderStruct(SNETUIDATA *a1) {
+    int address = 0x4ad190;
+    char * result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*SelectGame)(), SelectGame, 0x4ad230);
 DECL_FUNC(void (__cdecl*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
 DECL_FUNC(int (__thiscall*sub_4AD390)(dialog *this_), sub_4AD390, 0x4ad390);
@@ -15563,6 +15571,14 @@ void gluCustmSinglePlayerInitRaces(dialog *a1) {
 }
 DECL_FUNC(int (__stdcall*HideShowDlgCallback)(int, dialog *a1, int), HideShowDlgCallback, 0x4ad950);
 DECL_FUNC(void (__fastcall*gluCustm_UpdateCB)(dialog *dlg, int x, int y, rect *dst), gluCustm_UpdateCB, 0x4ad980);
+void gluCustm_UpdateMapFolderDisplay(const char *a1) {
+    int address = 0x4ada80;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 void gluCustm_initSwish(dialog *a1) {
     int address = 0x4adac0;
     __asm {
@@ -15638,12 +15654,12 @@ void sub_4AE790(dialog *a1) {
 }
 DECL_FUNC(int (__stdcall*sub_4AE830)(int), sub_4AE830, 0x4ae830);
 DECL_FUNC(int (__fastcall*gluCreate_GameSpeed_Slider)(dialog *dlg, dlgEvent *evt), gluCreate_GameSpeed_Slider, 0x4ae860);
-void *SingleMakeCreateGameDialog(dialog *a1) {
+_DWORD *SingleMakeCreateGameDialog(dialog *dlg) {
     int address = 0x4ae920;
-    void * result_;
+    _DWORD * result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
         mov result_, eax
     }
@@ -15847,7 +15863,7 @@ void sub_4B0AE0(dialog *a1) {
 DECL_FUNC(int(*load_gluATZoneList)(), load_gluATZoneList, 0x4b0c60);
 DECL_FUNC(int(*load_gluModemList)(), load_gluModemList, 0x4b0dc0);
 DECL_FUNC(bool (__fastcall*gluModemEntry_loop)(dialog *dlg, dlgEvent *evt), gluModemEntry_loop, 0x4b0f20);
-int InitializeModem(int a1, int a2, Char4 a3) {
+int InitializeModem(int a1, int a2, int eax0, Char4 a3) {
     int address = 0x4b0fb0;
     int result_;
     __asm {
@@ -15856,6 +15872,7 @@ int InitializeModem(int a1, int a2, Char4 a3) {
         xor esi, esi
         mov edi, a1
         mov esi, a2
+        mov eax, eax0
         push dword ptr a3
         call address
         mov result_, eax
@@ -16256,16 +16273,13 @@ void sub_4B68C0(dialog *a1) {
         call address
     }
 }
-unsigned __int8 gluHist_Create(dialog *a1) {
+void gluHist_Create(dialog *dlg) {
     int address = 0x4b6930;
-    unsigned result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_4B6A20(dialog *a1) {
     int address = 0x4b6a20;
@@ -18572,7 +18586,7 @@ DECL_FUNC(int(*nullsub_63)(), nullsub_63, 0x4d3440);
 DECL_FUNC(int(*nullsub_64)(), nullsub_64, 0x4d3450);
 DECL_FUNC(int(*get_netmode)(), get_netmode, 0x4d3460);
 DECL_FUNC(int(*sub_4D3470)(), sub_4D3470, 0x4d3470);
-DECL_FUNC(int (__stdcall*GameUpgrade)(int), GameUpgrade, 0x4d34a0);
+DECL_FUNC(int(*GameUpgrade)(_DWORD *a3), GameUpgrade, 0x4d34a0);
 DECL_FUNC(int(*ResetLeagueEvent)(), ResetLeagueEvent, 0x4d3510);
 DECL_FUNC(int(*sub_4D3540)(), sub_4D3540, 0x4d3540);
 DECL_FUNC(int(*sub_4D3570)(), sub_4D3570, 0x4d3570);
@@ -19695,7 +19709,16 @@ DECL_FUNC(void (__cdecl*sub_4DC8D0)(), sub_4DC8D0, 0x4dc8d0);
 DECL_FUNC(int(*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
 DECL_FUNC(int(*sub_4DC940)(), sub_4DC940, 0x4dc940);
 DECL_FUNC(int (__thiscall*cleanUpFileNameString)(char *), cleanUpFileNameString, 0x4dca20);
-DECL_FUNC(int (__thiscall*sub_4DCB00)(void *), sub_4DCB00, 0x4dcb00);
+void sub_4DCB00(void *a1, char *a2) {
+    int address = 0x4dcb00;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov ecx, a1
+        mov eax, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4DCBD0)(), sub_4DCBD0, 0x4dcbd0);
 int DestroyChildren(dialog *a1) {
     int address = 0x4dcc00;
@@ -24717,19 +24740,20 @@ char& byte_5140C4 = * ((decltype(&byte_5140C4)) 0x5140c4);
 char& byte_5140D8 = * ((decltype(&byte_5140D8)) 0x5140d8);
 unsigned __int8(&byte_5140E0)[8] = * ((decltype(&byte_5140E0)) 0x5140e0);
 char& byte_5140E8 = * ((decltype(&byte_5140E8)) 0x5140e8);
-char(&byte_514108)[] = * ((decltype(&byte_514108)) 0x514108);
-char(&byte_51410C)[] = * ((decltype(&byte_51410C)) 0x51410c);
+unsigned __int8(&byte_514100)[8] = * ((decltype(&byte_514100)) 0x514100);
+char(&byte_514108)[4] = * ((decltype(&byte_514108)) 0x514108);
+char(&byte_51410C)[4] = * ((decltype(&byte_51410C)) 0x51410c);
 char *(&ReservedDosFilenames)[25] = * ((decltype(&ReservedDosFilenames)) 0x514110);
 __int16(&word_514178)[] = * ((decltype(&word_514178)) 0x514178);
 __int16(&word_51417A)[547] = * ((decltype(&word_51417A)) 0x51417a);
 __int16(&word_5145C0)[] = * ((decltype(&word_5145C0)) 0x5145c0);
-__int16(&word_5145C2)[] = * ((decltype(&word_5145C2)) 0x5145c2);
+__int16(&word_5145C2)[419] = * ((decltype(&word_5145C2)) 0x5145c2);
 __int16(&word_514908)[] = * ((decltype(&word_514908)) 0x514908);
-__int16(&word_51490A)[] = * ((decltype(&word_51490A)) 0x51490a);
+__int16(&word_51490A)[159] = * ((decltype(&word_51490A)) 0x51490a);
 __int16(&word_514A48)[] = * ((decltype(&word_514A48)) 0x514a48);
-__int16(&word_514A4A)[] = * ((decltype(&word_514A4A)) 0x514a4a);
+__int16(&word_514A4A)[343] = * ((decltype(&word_514A4A)) 0x514a4a);
 __int16(&word_514CF8)[] = * ((decltype(&word_514CF8)) 0x514cf8);
-__int16(&word_514CFA)[] = * ((decltype(&word_514CFA)) 0x514cfa);
+__int16(&word_514CFA)[657] = * ((decltype(&word_514CFA)) 0x514cfa);
 __int16(&word_51521C)[4] = * ((decltype(&word_51521C)) 0x51521c);
 int& UnitPortraits = * ((decltype(&UnitPortraits)) 0x515224);
 char(&byte_515228)[88] = * ((decltype(&byte_515228)) 0x515228);
@@ -24744,7 +24768,7 @@ StatFlufDialog *(&statfluf_dialogs)[4] = * ((decltype(&statfluf_dialogs)) 0x5153
 int& dword_5153F8 = * ((decltype(&dword_5153F8)) 0x5153f8);
 int (__stdcall *(&funcs_455F96)[7])(int, int, int) = * ((decltype(&funcs_455F96)) 0x5153fc);
 int(&dword_515418)[] = * ((decltype(&dword_515418)) 0x515418);
-int(&dword_51541C)[] = * ((decltype(&dword_51541C)) 0x51541c);
+int(&dword_51541C)[31] = * ((decltype(&dword_51541C)) 0x51541c);
 DatLoad(&sfxdataDat)[5] = * ((decltype(&sfxdataDat)) 0x515498);
 char(&aProfileSex_0)[12] = * ((decltype(&aProfileSex_0)) 0x515688);
 char(&aProfileAge_0)[12] = * ((decltype(&aProfileAge_0)) 0x515694);
@@ -25663,11 +25687,17 @@ char(&byte_629C90)[256] = * ((decltype(&byte_629C90)) 0x629c90);
 int(&dword_629D74)[] = * ((decltype(&dword_629D74)) 0x629d74);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
+int& dword_63FD28 = * ((decltype(&dword_63FD28)) 0x63fd28);
 CSprite *& UnusedSprites = * ((decltype(&UnusedSprites)) 0x63fe30);
 CSprite *& dword_63FE34 = * ((decltype(&dword_63FE34)) 0x63fe34);
+char& byte_63FE38 = * ((decltype(&byte_63FE38)) 0x63fe38);
 __int16(&word_63FE40)[] = * ((decltype(&word_63FE40)) 0x63fe40);
+char& byte_63FEC0 = * ((decltype(&byte_63FEC0)) 0x63fec0);
+char& byte_63FEC2 = * ((decltype(&byte_63FEC2)) 0x63fec2);
+__int16& word_63FEC4 = * ((decltype(&word_63FEC4)) 0x63fec4);
 CUnit *& dword_63FEC8 = * ((decltype(&dword_63FEC8)) 0x63fec8);
 int& dword_63FECC = * ((decltype(&dword_63FECC)) 0x63fecc);
+__int16& word_63FED0 = * ((decltype(&word_63FED0)) 0x63fed0);
 int& dword_63FED4 = * ((decltype(&dword_63FED4)) 0x63fed4);
 int& dword_63FED8 = * ((decltype(&dword_63FED8)) 0x63fed8);
 int(&dword_63FEE0)[] = * ((decltype(&dword_63FEE0)) 0x63fee0);
@@ -25760,6 +25790,8 @@ char& byte_6509B4 = * ((decltype(&byte_6509B4)) 0x6509b4);
 _BYTE(&byte_6509B8)[4] = * ((decltype(&byte_6509B8)) 0x6509b8);
 _DWORD(&dword_6509BC)[2] = * ((decltype(&dword_6509BC)) 0x6509bc);
 int& IS_GAME_PAUSED = * ((decltype(&IS_GAME_PAUSED)) 0x6509c4);
+__int16& word_6509CC = * ((decltype(&word_6509CC)) 0x6509cc);
+__int16& word_6509CE = * ((decltype(&word_6509CE)) 0x6509ce);
 CThingy *& dword_6509D0 = * ((decltype(&dword_6509D0)) 0x6509d0);
 CThingy(&stru_6509D8)[500] = * ((decltype(&stru_6509D8)) 0x6509d8);
 CThingy *& ThingyList_UsedFirst = * ((decltype(&ThingyList_UsedFirst)) 0x652918);
@@ -25789,6 +25821,7 @@ char& byte_6554B0 = * ((decltype(&byte_6554B0)) 0x6554b0);
 int(&arraydata)[9] = * ((decltype(&arraydata)) 0x6554b4);
 char(&byte_6554D8)[512] = * ((decltype(&byte_6554D8)) 0x6554d8);
 int& dword_6556D8 = * ((decltype(&dword_6556D8)) 0x6556d8);
+int& dword_6556DC = * ((decltype(&dword_6556DC)) 0x6556dc);
 int& InGame = * ((decltype(&InGame)) 0x6556e0);
 int& Latency = * ((decltype(&Latency)) 0x6556e4);
 int& dword_6556E8 = * ((decltype(&dword_6556E8)) 0x6556e8);
@@ -25932,7 +25965,10 @@ u8(&Unit_Elevation)[228] = * ((decltype(&Unit_Elevation)) 0x663150);
 u8(&Unit_SightRange)[228] = * ((decltype(&Unit_SightRange)) 0x663238);
 Order(&Unit_AttackUnitOrder)[228] = * ((decltype(&Unit_AttackUnitOrder)) 0x663320);
 char& byte_663325 = * ((decltype(&byte_663325)) 0x663325);
+char& byte_66333E = * ((decltype(&byte_66333E)) 0x66333e);
 Order& order_id = * ((decltype(&order_id)) 0x66333f);
+char& byte_663369 = * ((decltype(&byte_663369)) 0x663369);
+char& byte_663375 = * ((decltype(&byte_663375)) 0x663375);
 u16(&Unit_BuildScore)[228] = * ((decltype(&Unit_BuildScore)) 0x663408);
 u8(&Unit_ArmorUpgrade)[228] = * ((decltype(&Unit_ArmorUpgrade)) 0x6635d0);
 WeaponType(&Unit_GroundWeapon)[228] = * ((decltype(&Unit_GroundWeapon)) 0x6636b8);
@@ -25992,6 +26028,7 @@ int(&Images_LiftOffDustLO)[999] = * ((decltype(&Images_LiftOffDustLO)) 0x66d8c0)
 u8(&Images_IsTurnable)[999] = * ((decltype(&Images_IsTurnable)) 0x66e860);
 int(&Images_IscriptEntry)[999] = * ((decltype(&Images_IscriptEntry)) 0x66ec48);
 char(&byte_66FBE4)[18] = * ((decltype(&byte_66FBE4)) 0x66fbe4);
+char& byte_66FBF6 = * ((decltype(&byte_66FBF6)) 0x66fbf6);
 char& countdown_seconds = * ((decltype(&countdown_seconds)) 0x66fbf7);
 char& countdown_finished_maybe = * ((decltype(&countdown_finished_maybe)) 0x66fbf8);
 char& download_percentage = * ((decltype(&download_percentage)) 0x66fbf9);
@@ -26024,6 +26061,7 @@ char& byte_66FF5C = * ((decltype(&byte_66FF5C)) 0x66ff5c);
 int& dword_66FF60 = * ((decltype(&dword_66FF60)) 0x66ff60);
 Bitmap& stru_66FF64 = * ((decltype(&stru_66FF64)) 0x66ff64);
 dialog *& dword_66FF6C = * ((decltype(&dword_66FF6C)) 0x66ff6c);
+int& dword_66FF70 = * ((decltype(&dword_66FF70)) 0x66ff70);
 int(&UnitOrderingCount)[] = * ((decltype(&UnitOrderingCount)) 0x66ff74);
 UnitFinderData(&UnitOrderingX)[3400] = * ((decltype(&UnitOrderingX)) 0x66ff78);
 UnitFinderData(&UnitOrderingY)[3400] = * ((decltype(&UnitOrderingY)) 0x6769b8);
@@ -26055,8 +26093,15 @@ int& dword_685178 = * ((decltype(&dword_685178)) 0x685178);
 int& dword_68517C = * ((decltype(&dword_68517C)) 0x68517c);
 char& byte_685180 = * ((decltype(&byte_685180)) 0x685180);
 int(&dword_685188)[] = * ((decltype(&dword_685188)) 0x685188);
+int(&dword_685428)[] = * ((decltype(&dword_685428)) 0x685428);
 int(&dword_687C48)[] = * ((decltype(&dword_687C48)) 0x687c48);
 int(&dword_68A708)[] = * ((decltype(&dword_68A708)) 0x68a708);
+int(&dword_68A738)[] = * ((decltype(&dword_68A738)) 0x68a738);
+int(&dword_68A858)[] = * ((decltype(&dword_68A858)) 0x68a858);
+int(&dword_68A888)[] = * ((decltype(&dword_68A888)) 0x68a888);
+int(&dword_68A9A8)[] = * ((decltype(&dword_68A9A8)) 0x68a9a8);
+int(&dword_68A9D8)[] = * ((decltype(&dword_68A9D8)) 0x68a9d8);
+char& byte_68AC48 = * ((decltype(&byte_68AC48)) 0x68ac48);
 int& dword_68AC4C = * ((decltype(&dword_68AC4C)) 0x68ac4c);
 BYTE *(&dword_68AC50)[4] = * ((decltype(&dword_68AC50)) 0x68ac50);
 int& dword_68AC60 = * ((decltype(&dword_68AC60)) 0x68ac60);
@@ -26163,8 +26208,16 @@ int& dword_68F4F0 = * ((decltype(&dword_68F4F0)) 0x68f4f0);
 int& dword_68F4F4 = * ((decltype(&dword_68F4F4)) 0x68f4f4);
 int& dword_68F4F8 = * ((decltype(&dword_68F4F8)) 0x68f4f8);
 int(&PlayerDownloadStatus)[8] = * ((decltype(&PlayerDownloadStatus)) 0x68f4fc);
+int& dword_68F500 = * ((decltype(&dword_68F500)) 0x68f500);
+int& dword_68F504 = * ((decltype(&dword_68F504)) 0x68f504);
+int& dword_68F508 = * ((decltype(&dword_68F508)) 0x68f508);
+int& dword_68F50C = * ((decltype(&dword_68F50C)) 0x68f50c);
+int& dword_68F510 = * ((decltype(&dword_68F510)) 0x68f510);
+int& dword_68F514 = * ((decltype(&dword_68F514)) 0x68f514);
+int& dword_68F518 = * ((decltype(&dword_68F518)) 0x68f518);
 int& dword_68F51C = * ((decltype(&dword_68F51C)) 0x68f51c);
 int& dword_68F520 = * ((decltype(&dword_68F520)) 0x68f520);
+void *& dword_68F524 = * ((decltype(&dword_68F524)) 0x68f524);
 int(&dword_68F528)[4] = * ((decltype(&dword_68F528)) 0x68f528);
 Bitmap(&stru_68F538)[4] = * ((decltype(&stru_68F538)) 0x68f538);
 WORD *& portdata_tbl = * ((decltype(&portdata_tbl)) 0x68f558);
@@ -26172,6 +26225,7 @@ Bitmap(&stru_68F55C)[4] = * ((decltype(&stru_68F55C)) 0x68f55c);
 CheatHashRelated(&stru_68F580)[6] = * ((decltype(&stru_68F580)) 0x68f580);
 LPARAM& dword_68F6B8 = * ((decltype(&dword_68F6B8)) 0x68f6b8);
 void *& dword_68F6BC = * ((decltype(&dword_68F6BC)) 0x68f6bc);
+void *& dword_68F6C0 = * ((decltype(&dword_68F6C0)) 0x68f6c0);
 int& dword_68F6C4 = * ((decltype(&dword_68F6C4)) 0x68f6c4);
 HGDIOBJ& dword_68F6C8 = * ((decltype(&dword_68F6C8)) 0x68f6c8);
 int& dword_68F6CC = * ((decltype(&dword_68F6CC)) 0x68f6cc);
@@ -26207,6 +26261,7 @@ MapDirEntry *& bnet_selected_map_maybe = * ((decltype(&bnet_selected_map_maybe))
 char(&byte_68F948)[] = * ((decltype(&byte_68F948)) 0x68f948);
 int& dword_68FA48 = * ((decltype(&dword_68FA48)) 0x68fa48);
 int& bnet_browse_icons_dimensions = * ((decltype(&bnet_browse_icons_dimensions)) 0x68fa4c);
+int(&dword_68FA50)[3] = * ((decltype(&dword_68FA50)) 0x68fa50);
 HWND& bnet_recent_maps_box = * ((decltype(&bnet_recent_maps_box)) 0x68fa5c);
 HWND& dword_68FA60 = * ((decltype(&dword_68FA60)) 0x68fa60);
 HWND& dword_68FA64 = * ((decltype(&dword_68FA64)) 0x68fa64);
@@ -26229,7 +26284,9 @@ void *& dword_68FEA8 = * ((decltype(&dword_68FEA8)) 0x68fea8);
 int& dword_68FEAC = * ((decltype(&dword_68FEAC)) 0x68feac);
 int& dword_68FEB0 = * ((decltype(&dword_68FEB0)) 0x68feb0);
 int& dword_68FEB4 = * ((decltype(&dword_68FEB4)) 0x68feb4);
-int& a8 = * ((decltype(&a8)) 0x68feb8);
+int& dword_68FEB8 = * ((decltype(&dword_68FEB8)) 0x68feb8);
+int& dword_68FEBC = * ((decltype(&dword_68FEBC)) 0x68febc);
+int& dword_68FEC0 = * ((decltype(&dword_68FEC0)) 0x68fec0);
 void *& dword_68FEC4 = * ((decltype(&dword_68FEC4)) 0x68fec4);
 WPARAM& wParam = * ((decltype(&wParam)) 0x68fed0);
 int& dword_68FED4 = * ((decltype(&dword_68FED4)) 0x68fed4);
@@ -26239,8 +26296,13 @@ int& dword_68FEE0 = * ((decltype(&dword_68FEE0)) 0x68fee0);
 int& dword_68FEE4 = * ((decltype(&dword_68FEE4)) 0x68fee4);
 AI_Main(&AIScriptController)[8] = * ((decltype(&AIScriptController)) 0x68fee8);
 int& dword_692628 = * ((decltype(&dword_692628)) 0x692628);
+unsigned __int16(&word_69262C)[24] = * ((decltype(&word_69262C)) 0x69262c);
+int& dword_69265C = * ((decltype(&dword_69265C)) 0x69265c);
+int(&dword_692660)[] = * ((decltype(&dword_692660)) 0x692660);
+int& dword_692684 = * ((decltype(&dword_692684)) 0x692684);
 baseLocation(&Bases)[250] = * ((decltype(&Bases)) 0x692688);
 int& dword_695568 = * ((decltype(&dword_695568)) 0x695568);
+int& dword_69556C = * ((decltype(&dword_69556C)) 0x69556c);
 int(&dword_695570)[] = * ((decltype(&dword_695570)) 0x695570);
 int& dword_695574 = * ((decltype(&dword_695574)) 0x695574);
 int& dword_695578 = * ((decltype(&dword_695578)) 0x695578);
@@ -26259,12 +26321,30 @@ int& dword_6955A8 = * ((decltype(&dword_6955A8)) 0x6955a8);
 int& dword_6955AC = * ((decltype(&dword_6955AC)) 0x6955ac);
 int& dword_6955B0 = * ((decltype(&dword_6955B0)) 0x6955b0);
 int& dword_6955B4 = * ((decltype(&dword_6955B4)) 0x6955b4);
+int(&dword_6955B8)[] = * ((decltype(&dword_6955B8)) 0x6955b8);
+int& dword_6955DC = * ((decltype(&dword_6955DC)) 0x6955dc);
+__int16& word_6955E0 = * ((decltype(&word_6955E0)) 0x6955e0);
+__int16& word_6955E2 = * ((decltype(&word_6955E2)) 0x6955e2);
+CUnit *& dword_6955E4 = * ((decltype(&dword_6955E4)) 0x6955e4);
 int& dword_6955E8 = * ((decltype(&dword_6955E8)) 0x6955e8);
+int(&dword_6955EC)[] = * ((decltype(&dword_6955EC)) 0x6955ec);
+int& dword_6955F0 = * ((decltype(&dword_6955F0)) 0x6955f0);
+int& dword_6955F4 = * ((decltype(&dword_6955F4)) 0x6955f4);
+int& dword_6955F8 = * ((decltype(&dword_6955F8)) 0x6955f8);
+int& dword_6955FC = * ((decltype(&dword_6955FC)) 0x6955fc);
+int& dword_695600 = * ((decltype(&dword_695600)) 0x695600);
 WeaponType& tempWeapon = * ((decltype(&tempWeapon)) 0x695604);
 int& dword_695608 = * ((decltype(&dword_695608)) 0x695608);
+int& dword_69560C = * ((decltype(&dword_69560C)) 0x69560c);
 int(&dword_695610)[] = * ((decltype(&dword_695610)) 0x695610);
+int& dword_695790 = * ((decltype(&dword_695790)) 0x695790);
+int& dword_695794 = * ((decltype(&dword_695794)) 0x695794);
 int& tempHPShields = * ((decltype(&tempHPShields)) 0x695798);
 Position& stru_69579C = * ((decltype(&stru_69579C)) 0x69579c);
+int& dword_6957A0 = * ((decltype(&dword_6957A0)) 0x6957a0);
+int& dword_6957A4 = * ((decltype(&dword_6957A4)) 0x6957a4);
+int& dword_6957A8 = * ((decltype(&dword_6957A8)) 0x6957a8);
+int& dword_6957AC = * ((decltype(&dword_6957AC)) 0x6957ac);
 int(&dword_6957B0)[8] = * ((decltype(&dword_6957B0)) 0x6957b0);
 int& dword_6957D0 = * ((decltype(&dword_6957D0)) 0x6957d0);
 int& dword_6957D4 = * ((decltype(&dword_6957D4)) 0x6957d4);
@@ -26525,7 +26605,7 @@ char(&byte_6D0E88)[128] = * ((decltype(&byte_6D0E88)) 0x6d0e88);
 int& dword_6D0F08 = * ((decltype(&dword_6D0F08)) 0x6d0f08);
 int& next_campaign_mission = * ((decltype(&next_campaign_mission)) 0x6d0f0c);
 int& low_memory = * ((decltype(&low_memory)) 0x6d0f10);
-dlgEvent *& InReplay = * ((decltype(&InReplay)) 0x6d0f14);
+int& InReplay = * ((decltype(&InReplay)) 0x6d0f14);
 int& ReplayVision = * ((decltype(&ReplayVision)) 0x6d0f18);
 int& replayShowEntireMap = * ((decltype(&replayShowEntireMap)) 0x6d0f1c);
 int& scenarioChkSize = * ((decltype(&scenarioChkSize)) 0x6d0f20);
@@ -26597,7 +26677,7 @@ dialog *& lobby_dlg = * ((decltype(&lobby_dlg)) 0x6d5a30);
 int& dword_6D5A38 = * ((decltype(&dword_6D5A38)) 0x6d5a38);
 dialog *& dword_6D5A3C = * ((decltype(&dword_6D5A3C)) 0x6d5a3c);
 FnInteract *& dword_6D5A40 = * ((decltype(&dword_6D5A40)) 0x6d5a40);
-BYTE *& dword_6D5A44 = * ((decltype(&dword_6D5A44)) 0x6d5a44);
+WORD *& dword_6D5A44 = * ((decltype(&dword_6D5A44)) 0x6d5a44);
 CampaignMenuEntry *& dword_6D5A48 = * ((decltype(&dword_6D5A48)) 0x6d5a48);
 CampaignMenuEntry *& dword_6D5A4C = * ((decltype(&dword_6D5A4C)) 0x6d5a4c);
 int& dword_6D5A50 = * ((decltype(&dword_6D5A50)) 0x6d5a50);
@@ -26672,6 +26752,7 @@ void *& dword_6D5C88 = * ((decltype(&dword_6D5C88)) 0x6d5c88);
 void *& dword_6D5C8C = * ((decltype(&dword_6D5C8C)) 0x6d5c8c);
 void *& dword_6D5C90 = * ((decltype(&dword_6D5C90)) 0x6d5c90);
 void *& defaultValue = * ((decltype(&defaultValue)) 0x6d5c94);
+int& dword_6D5C98 = * ((decltype(&dword_6D5C98)) 0x6d5c98);
 void *& dword_6D5C9C = * ((decltype(&dword_6D5C9C)) 0x6d5c9c);
 char& byte_6D5CA0 = * ((decltype(&byte_6D5CA0)) 0x6d5ca0);
 HANDLE& video = * ((decltype(&video)) 0x6d5ca4);
@@ -26743,7 +26824,12 @@ TileType *& TileSetMap = * ((decltype(&TileSetMap)) 0x6d5ec8);
 HANDLE& hEvent = * ((decltype(&hEvent)) 0x6d5ecc);
 int& IsBattleNet = * ((decltype(&IsBattleNet)) 0x6d5ed0);
 struct _RTL_CRITICAL_SECTION& stru_6D5EDC = * ((decltype(&stru_6D5EDC)) 0x6d5edc);
+int& dword_6D5F20 = * ((decltype(&dword_6D5F20)) 0x6d5f20);
+int& dword_6D5F34 = * ((decltype(&dword_6D5F34)) 0x6d5f34);
+int& dword_6D5F48 = * ((decltype(&dword_6D5F48)) 0x6d5f48);
 struct _RTL_CRITICAL_SECTION& stru_6D5F4C = * ((decltype(&stru_6D5F4C)) 0x6d5f4c);
+int& dword_6D5F80 = * ((decltype(&dword_6D5F80)) 0x6d5f80);
+int& dword_6D5FAC = * ((decltype(&dword_6D5FAC)) 0x6d5fac);
 int& dword_6D5FD4 = * ((decltype(&dword_6D5FD4)) 0x6d5fd4);
 int& dword_6D5FD8 = * ((decltype(&dword_6D5FD8)) 0x6d5fd8);
 int& dword_6D5FDC = * ((decltype(&dword_6D5FDC)) 0x6d5fdc);
