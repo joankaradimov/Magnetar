@@ -2639,6 +2639,21 @@ void titleInit_(dialog* dlg)
 
 FAIL_STUB_PATCH(titleInit);
 
+void DrawBINDialog_(dialog* dlg)
+{
+	sub_4D45A0(dlg);
+	if (!byte_51A0E9)
+	{
+		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		byte_51A0E9 = 1;
+		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		gluDlgFadePalette(3);
+		BWFXN_RedrawTarget();
+	}
+}
+
+FAIL_STUB_PATCH(DrawBINDialog);
+
 int __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -2649,7 +2664,7 @@ int __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 		}
 		else if (evt->dwUser == EventUser::USER_DESTROY)
 		{
-			DrawBINDialog(dlg);
+			DrawBINDialog_(dlg);
 		}
 	}
 	return genericDlgInteract(dlg, evt);
