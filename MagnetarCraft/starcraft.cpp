@@ -12348,9 +12348,98 @@ void gluChat_init_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_init);
 
+signed int sub_4D4130_()
+{
+	game_starting_maybe = 0;
+	if (!playerid && !isHost)
+	{
+		bootReason(4);
+		return 0;
+	}
+	dword_596BB0 = 0;
+	for (int i = 0; i < 8; i++)
+	{
+		byte_66FF34[i] = 8;
+	}
+
+	if (gameData.save_timestamp)
+	{
+		char buff[28];
+		if (!(sub_4CFE40(gameData.save_timestamp, buff, 0x1Cu) && CMDRECV_LoadGame(buff) && sub_4CF5F0()))
+		{
+			sub_4D3860();
+			if (!outOfGame)
+			{
+				doNetTBLError(0, 0, 0, 95);
+			}
+			return 0;
+		}
+
+		if (isHost)
+		{
+			sub_4AA620();
+		}
+	}
+
+	memset(Players, 0, sizeof(Players));
+	initializeSlots(-1);
+	memset(stru_66FE20, 0, sizeof(stru_66FE20));
+	game_result_reported_maybe = 0;
+	sub_4728E0();
+	if (isHost)
+	{
+		if (!loadGameFileHandle)
+		{
+			if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode)
+			{
+				setAllValidPlayerOwnersToOpen();
+			}
+			updatePlayerOwnerInternal();
+			sub_4AA4B0();
+		}
+		if (isHost)
+		{
+			sub_4A91E0();
+		}
+	}
+	g_LocalHumanID = -1;
+	g_LocalNationID = -1;
+	byte_596894 = 0;
+	unignored_player_flags = -1;
+	countdown_finished_maybe = 0;
+	dword_6D5C28 = 0;
+	cleanBufferCounts();
+	if (userHasMap())
+	{
+		download_percentage = -1;
+		dword_66FF48 = GetTickCount();
+		GameKeepAlive();
+		countdownTimerInterval = 0;
+		gameState = 2;
+		if (isHost)
+		{
+			gameState = 3;
+			u8 save_player_unique_id = loadGameFileHandle == 0 ? 0 : dword_596BAC;
+			createVersionBuffer(dword_66FF30, 1, 5, save_player_unique_id, loadGameFileHandle == 0 ? 0 : dword_57F1B0, dword_596BB4, 1);
+		}
+		return 1;
+	}
+	else
+	{
+		sub_4D3860();
+		if (!outOfGame)
+		{
+			doNetTBLError(0, 0, 0, 100);
+		}
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4D4130);
+
 void sub_4B9BF0_(dialog* dlg)
 {
-	if (sub_4D4130())
+	if (sub_4D4130_())
 	{
 		dlg->fields.dlg.pModalFcn = sub_4B9B10;
 	}
