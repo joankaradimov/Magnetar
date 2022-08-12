@@ -2639,7 +2639,7 @@ void titleInit_(dialog* dlg)
 
 FAIL_STUB_PATCH(titleInit);
 
-bool __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall TitleDlgProc_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -3365,7 +3365,7 @@ void minimapGameUpdate_(dialog* a1)
 
 FAIL_STUB_PATCH(minimapGameUpdate);
 
-bool __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
+int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -3461,7 +3461,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 
 FAIL_STUB_PATCH(minimap_dlg_Activate);
 
-bool __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
+int __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -3677,7 +3677,7 @@ FAIL_STUB_PATCH(minimapPreviewUpdateState);
 void initMapData_();
 void setMapSizeConstants_();
 
-bool __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
+int __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
 {
 	dialog* v6;
 	dialog* v7;
@@ -6835,7 +6835,7 @@ void statflufDlgUpdate_(dialog* dlg)
 
 FAIL_STUB_PATCH(statflufDlgUpdate);
 
-bool __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -6884,7 +6884,7 @@ void load_statfluf_BIN_()
 
 FAIL_STUB_PATCH(load_statfluf_BIN);
 
-bool __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -6998,7 +6998,7 @@ void __stdcall hideLeftmostResource_(int a1)
 
 FAIL_STUB_PATCH(hideLeftmostResource);
 
-bool __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
+int __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -7044,7 +7044,7 @@ void StatRes_RegisterCustomProcs_(dialog* dlg)
 
 FAIL_STUB_PATCH(StatRes_RegisterCustomProcs);
 
-bool __fastcall StatRes_DialogInteract_(dialog* dlg, dlgEvent* evt)
+int __fastcall StatRes_DialogInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -7108,7 +7108,7 @@ void ProgressBar_Create_(dialog* a1)
 
 FAIL_STUB_PATCH(ProgressBar_Create);
 
-bool __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
+int __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -7127,7 +7127,7 @@ bool __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(statdata_ProgressBarInteract);
 
-bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
+int __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 {
 	if (evn->wNo == EventNo::EVN_MOUSEMOVE)
 	{
@@ -7166,7 +7166,7 @@ bool __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 
 FAIL_STUB_PATCH(statdata_UnitWireframeTransit);
 
-bool __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
+int __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_MOUSEMOVE)
 	{
@@ -7267,7 +7267,7 @@ void statdata_extendedCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(statdata_extendedCtrlID);
 
-bool __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -7306,7 +7306,7 @@ void load_Statdata_BIN_()
 
 FAIL_STUB_PATCH(load_Statdata_BIN);
 
-bool __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -7368,7 +7368,7 @@ void statbtn_BIN_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(statbtn_BIN_CustomCtrlID);
 
-bool __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -7533,7 +7533,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 
 FAIL_STUB_PATCH(onSendText);
 
-bool __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -7611,7 +7611,7 @@ void textbox_DLG_Init_Evt_(dialog* dlg)
 
 FAIL_STUB_PATCH(textbox_DLG_Init_Evt);
 
-bool __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -9584,7 +9584,7 @@ void gluHist_Activate_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluHist_Activate);
 
-bool __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
+int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -9612,7 +9612,7 @@ bool __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 
 FUNCTION_PATCH(Popup_Main, Popup_Main_);
 
-bool __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -10292,7 +10292,7 @@ void DLG_SwishIn_(dialog* a1)
 
 FAIL_STUB_PATCH(DLG_SwishIn);
 
-bool __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -10350,7 +10350,7 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
 
-bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -10375,7 +10375,7 @@ bool __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCmpgn_Main);
 
-bool __fastcall gluExpCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluExpCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -10433,7 +10433,7 @@ void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
 
-bool __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -10496,7 +10496,7 @@ void gluLogin_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluLogin_CustomCtrlID);
 
-bool __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	dialog* v4;
 	dlgEvent v6;
@@ -10710,7 +10710,7 @@ void gluJoin_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluJoin_CustomCtrlID);
 
-bool __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	dialog* v5 = getControlFromIndex(dlg, 13);
 
@@ -10792,7 +10792,7 @@ void gluCustm_initSwish_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
-bool __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -10868,7 +10868,7 @@ void gluCustm_typeDropdown_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_typeDropdown);
 
-bool __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -10939,7 +10939,7 @@ void gluCustm_raceDropdown_(dialog* a1)
 
 FAIL_STUB_PATCH(gluCustm_raceDropdown);
 
-bool __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11019,7 +11019,7 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_CustomCtrl_InitializeChildren);
 
-bool __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11313,7 +11313,7 @@ void gluMain_CustomCtrlID_(dialog* a1)
 
 FAIL_STUB_PATCH(gluMain_CustomCtrlID);
 
-bool __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
@@ -11452,7 +11452,7 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
-bool __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11632,7 +11632,7 @@ void RdyZFrame_()
 
 FAIL_STUB_PATCH(RdyZFrame);
 
-bool __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
+int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11692,7 +11692,7 @@ void sub_46D1F0_()
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, bool __fastcall BINDLG_Loop(dialog* dlg, struct dlgEvent* evt))
+void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, FnInteract BINDLG_Loop)
 {
 	sub_46D200_(music_track);
 	DisplayEstablishingShot_();
@@ -11759,7 +11759,7 @@ void selConn_connectionList_Create_(dialog* a1)
 
 FAIL_STUB_PATCH(selConn_connectionList_Create);
 
-bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11782,7 +11782,7 @@ bool __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(selConn_ConnectionList_Interact);
 
-bool __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
+int __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11868,7 +11868,7 @@ int getGameList_(dialog* dlg)
 
 FAIL_STUB_PATCH(getGameList);
 
-bool __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
+int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -11972,7 +11972,7 @@ void gluModem_CustomCtrlID_(dialog* a1)
 
 FAIL_STUB_PATCH(gluModem_CustomCtrlID);
 
-bool __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -12386,7 +12386,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_controlActivation);
 
-bool __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	dialog* minimap_preview_dlg = getControlFromIndex(dlg, 6);
 	dialog* char_history_dlg = getControlFromIndex(dlg, 11);
@@ -12529,7 +12529,7 @@ void gluLoad_CustomCtrlID_(dialog* a1)
 
 FAIL_STUB_PATCH(gluLoad_CustomCtrlID);
 
-bool __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -12693,7 +12693,7 @@ void savegameBIN_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(savegameBIN_CustomCtrlID);
 
-bool __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -12742,7 +12742,7 @@ int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
 FAIL_STUB_PATCH(loadOKCancelBIN);
 
 
-bool __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
 	{
@@ -12799,7 +12799,7 @@ bool __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluScore_Tab);
 
-bool __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -12949,7 +12949,7 @@ int LoadSaveGameBIN_Main_(int a1, Race a2)
 
 FAIL_STUB_PATCH(LoadSaveGameBIN_Main);
 
-bool __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
+int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -13055,7 +13055,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluScore_CustomCtrlID);
 
-bool __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
@@ -14320,7 +14320,7 @@ void creditsDlgDestroy_(dialog* dlg)
 
 FAIL_STUB_PATCH(creditsDlgDestroy);
 
-bool __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
+int __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
