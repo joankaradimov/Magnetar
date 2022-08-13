@@ -4138,15 +4138,14 @@ void resetOrdersUnitsDAT_()
 			{
 				UnitNodeList_UnusedUnit_Last_maybe = unit;
 			}
+			// insert `unit` after `v0` in a doubly linked list
 			unit->prev = v0;
-			CUnit* v3 = v0->next;
-			CUnit** v4 = &v0->next;
-			unit->next = v3;
-			if (*v4)
+			unit->next = v0->next;
+			if (v0->next)
 			{
-				(*v4)->prev = unit;
+				v0->next->prev = unit;
 			}
-			*v4 = unit;
+			v0->next = unit;
 			v0 = UnitNodeList_UnusedUnit_First_maybe;
 		}
 		else
