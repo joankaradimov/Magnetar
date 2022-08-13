@@ -11910,6 +11910,24 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+void sub_46D3C0_(dialog* dlg)
+{
+	if (multiPlayerMode)
+	{
+		dialog* v2 = getControlFromIndex(dlg, 5);
+		HideDialog(v2);
+		dialog* v4 = getControlFromIndex(dlg, 20);
+		HideDialog(v4);
+	}
+	dword_6556D8 = 0;
+	byte_6554B0 = 1;
+	dword_6556DC = 0;
+	GameKeepAlive();
+	dlg->fields.dlg.pModalFcn = sub_46D340;
+}
+
+FAIL_STUB_PATCH(sub_46D3C0);
+
 int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -12105,7 +12123,7 @@ int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			return sub_46D160(dlg);
 		case EventUser::USER_INIT:
-			sub_46D3C0(dlg);
+			sub_46D3C0_(dlg);
 			gluRdy_CustomCtrlID_(dlg);
 			break;
 		case 0x405:
