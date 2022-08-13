@@ -5128,7 +5128,7 @@ void hotkeyRemapping_()
 	initializeTriggerInfo();
 	memset(stru_64DEC8, 0, sizeof(stru_64DEC8));
 	byte_6D1224 = 0;
-	word_63FF5C = 0;
+	dword_63FF5C = 0;
 	dword_64EEC8 = 0;
 	dword_64DEA8 = 0;
 	load_Stat_txt();
@@ -5393,7 +5393,7 @@ int SaveReplay_(const char* a1, int a3)
 	ReplayHeader a1a;
 
 	replay_header.campaign_index = CampaignIndex;
-	replay_header.field_46 = 1;
+	replay_header.game_data.is_replay = 1;
 	replay_header.is_expansion = IsExpansion;
 	memcpy(&a1a, &replay_header, sizeof(ReplayHeader));
 	a3 = 'SRer';
@@ -6828,7 +6828,7 @@ FAIL_STUB_PATCH(GameLoopWaitSendTurn);
 
 void replayFrameComputation_()
 {
-	int v0 = ElapsedTimeFrames * dword_4FF90C[replay_header.field_3A];
+	int v0 = ElapsedTimeFrames * dword_4FF90C[replay_header.game_data.game_speed];
 	int v1 = 0;
 	if (v0 / 1000 != dword_50E05C)
 	{
@@ -12258,7 +12258,7 @@ int getGameList_(dialog* dlg)
 	{
 		DLGMusicFade_(MT_TITLE);
 	}
-	Template_Destructor(&stru_51A268);
+	Template_Destructor(&templates_list);
 	return LoadGameTemplates_(Template_Constructor);
 }
 
