@@ -8,6 +8,128 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char player_id, CSprite* sprite)
+{
+	if (x >= map_width_pixels || y >= map_height_pixels)
+	{
+		return 0;
+	}
+	sprite->playerID = player_id;
+	sprite->spriteID = sprite_id;
+	sprite->flags = 0;
+	sprite->position.x = x;
+	sprite->position.y = y;
+	sprite->visibilityFlags = -1;
+	sprite->elevationLevel = 4;
+	sprite->selectionTimer = 0;
+	if (!Sprites_IsVisible[sprite_id])
+	{
+		sprite->flags = 32;
+		refreshAllVisibleImagesAtScreenPosition(sprite, 0);
+	}
+	if (!CreateImageOverlay(sprite, Sprites_Image[sprite_id], 0, 0, 0))
+	{
+		return 0;
+	}
+	CImage* image = sprite->pImagePrimary;
+
+	sprite->unkflags_12 = image->GRPFile->width <= 0xFFu ? image->GRPFile->width : -1;
+	sprite->unkflags_13 = (unsigned __int16)image->GRPFile->height <= 0xFFu ? image->GRPFile->height : -1;
+
+
+	return 1;
+}
+
+FAIL_STUB_PATCH(initSpriteData);
+
+CSprite* createSprite_(int sprite_id, int position_x, unsigned __int16 position_y, char player_id)
+{
+	CSprite* v4 = UnusedSprites;
+	if (!UnusedSprites)
+	{
+		return 0;
+	}
+	CSprite** v6 = &UnusedSprites->next;
+	UnusedSprites = UnusedSprites->next;
+	if (dword_63FE34 == v4)
+	{
+		dword_63FE34 = v4->prev;
+	}
+	if (v4->prev)
+	{
+		v4->prev->next = *v6;
+	}
+	if (*v6)
+	{
+		(*v6)->prev = v4->prev;
+	}
+	v4->prev = 0;
+	*v6 = 0;
+	if (initSpriteData_(position_x, position_y, sprite_id, player_id, v4))
+	{
+		int v10 = std::clamp(v4->position.y / 32, 0, map_size.height - 1);
+
+		CSprite* v11 = SpritesOnTileRow.heads[v10];
+		if (v11)
+		{
+			if (SpritesOnTileRow.tails[v10] == v11)
+			{
+				SpritesOnTileRow.tails[v10] = v4;
+			}
+			v4->prev = v11;
+			*v6 = v11->next;
+			CSprite* v12 = v11->next;
+			if (v12)
+			{
+				v12->prev = v4;
+			}
+			v11->next = v4;
+		}
+		else
+		{
+			SpritesOnTileRow.tails[v10] = v4;
+			SpritesOnTileRow.heads[v10] = v4;
+		}
+		return v4;
+	}
+	else
+	{
+		CSprite* v7 = UnusedSprites;
+		if (UnusedSprites)
+		{
+			if (dword_63FE34 == UnusedSprites)
+			{
+				dword_63FE34 = v4;
+			}
+			v4->prev = UnusedSprites;
+			*v6 = v7->next;
+			CSprite* v8 = v7->next;
+			if (v8)
+			{
+				v8->prev = v4;
+			}
+			v7->next = v4;
+		}
+		else
+		{
+			dword_63FE34 = v4;
+			UnusedSprites = v4;
+		}
+		return NULL;
+	}
+}
+
+CSprite* __stdcall createSprite__(int sprite_id, int position_x, char player_id)
+{
+	unsigned __int16 position_y;
+
+	__asm mov position_y, di
+
+	return createSprite_(sprite_id, position_x, position_y, player_id);
+}
+
+FUNCTION_PATCH((void*)0x4990F0, createSprite__);
+
 void SysWarn_FileNotFound_(const char* a1, int last_error)
 {
 	char dwInitParam[512];
