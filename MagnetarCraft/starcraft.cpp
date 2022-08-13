@@ -4016,6 +4016,68 @@ void InitializeSpriteArray_()
 
 FAIL_STUB_PATCH(InitializeSpriteArray);
 
+void InitializeThingyArray_()
+{
+	memset(stru_6509D8, 0, sizeof(stru_6509D8));
+	dword_65487C = stru_6509D8;
+	dword_654878 = stru_6509D8;
+	dword_65291C = 0;
+	first_lone_sprite = 0;
+	CThingy* v1 = &stru_6509D8[1];
+	int v2 = 499;
+	do
+	{
+		CThingy* v0 = dword_654878;
+		if (dword_65487C == v0)
+		{
+			dword_65487C = v1;
+		}
+		// insert `v1` after `v0` in a doubly linked list
+		v1->prev = v0;
+		v1->next = v0->next;
+		if (v0->next)
+		{
+			v0->next->prev = v1;
+		}
+		v0->next = v1;
+		v1++;
+		--v2;
+	} while (v2);
+
+	memset(stru_652928, 0, sizeof(stru_652928));
+	dword_654870 = stru_652928;
+	dword_6509D0 = stru_652928;
+	dword_65486C = 0;
+	dword_654868 = 0;
+	CThingy* v5 = &stru_652928[1];
+	int v6 = 499;
+	do
+	{
+		CThingy* v7 = dword_6509D0;
+		if (dword_654870 == dword_6509D0)
+		{
+			dword_654870 = v5;
+		}
+		// insert `v5` after `v7` in a doubly linked list
+		v5->prev = v7;
+		v5->next = v7->next;
+		if (v7->next)
+		{
+			v7->next->prev = v5;
+		}
+		v7->next = v5;
+		v5++;
+		--v6;
+	} while (v6);
+
+	ThingyList_UsedFirst = CreateThingy(318, 0, 0, 0);
+	wantThingyUpdate = 0;
+	ThingyList_UsedFirst->sprite->flags |= 0x20;
+	refreshAllVisibleImagesAtScreenPosition(ThingyList_UsedFirst->sprite, 0);
+}
+
+FAIL_STUB_PATCH(InitializeThingyArray);
+
 DatLoad* flingyDat_;
 
 void InitializeFlingyDat_()
@@ -4171,7 +4233,7 @@ int sub_4EEFD0_()
 	initMapData_();
 	InitializePresetImageArrays();
 	InitializeSpriteArray_();
-	InitializeThingyArray();
+	InitializeThingyArray_();
 	InitializeFlingyDat_();
 	InitializeBulletArray();
 	InitializeOrderArray();
@@ -4308,7 +4370,7 @@ signed int GameInit_()
 	initMapData_();
 	InitializePresetImageArrays();
 	InitializeSpriteArray_();
-	InitializeThingyArray();
+	InitializeThingyArray_();
 	InitializeFlingyDat_();
 	InitializeBulletArray();
 	InitializeOrderArray();
