@@ -1,17 +1,17 @@
-# MagnetarCraft
+# Magnetar
 
-A magnetar is a type of neutron star with an extremely powerful magnetic field.
+A type of neutron star with an extremely powerful magnetic field.
 
 ## Overview
 
-MagnetarCraft is a StarCraft engine mod. It loads Starcraft.exe to memory and
-combines its code and data with MagnetarCraft's own code.
+Magnetar is a StarCraft mod/reimplementation. It loads Starcraft.exe to memory and
+combines its code and assets with Magnetar's own.
 
 ## Installation
 
 1. You'll need to have StarCraft 1.16.1 installed.
 1. You'll find the lastest release\
-   [here](https://github.com/joankaradimov/MagnetarCraft/releases).
+   [here](https://github.com/joankaradimov/Magnetar/releases).
    Download it and extract it to a directory of your choice.
 1. TODO: add more instructions once version 0.2 is released
 
@@ -21,7 +21,7 @@ The repo uses submodules for 3rd party dependencies. So when cloning, you might
 want to recursively clone the submodules:
 
 ```bash
-git clone --recurse-submodules git@github.com:joankaradimov/MagnetarCraft.git
+git clone --recurse-submodules git@github.com:joankaradimov/Magnetar.git
 ```
 
 ### Hacking on Windows
@@ -53,15 +53,15 @@ Other limitations, that will prevent the project from building:
 Below is an overview of the components of the project. Some of the
 subdirectories have a README of their own. See those for more details.
 
-- [MagnetarCraft](https://github.com/joankaradimov/MagnetarCraft/tree/master/MagnetarCraft)\
+- [MagnetarCraft](https://github.com/joankaradimov/Magnetar/tree/master/MagnetarCraft)\
   The executable file and entry point for the project.
-- [MagnetarDat](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)\
+- [MagnetarDat](https://github.com/joankaradimov/Magnetar/tree/master/Magnetorm)\
   Files that are included in the MPQ used by the project.
-- [Magnetorm](https://github.com/joankaradimov/MagnetarCraft/tree/master/Magnetorm)\
+- [Magnetorm](https://github.com/joankaradimov/Magnetar/tree/master/Magnetorm)\
   A wrapper (and maybe one day a reimplementation) of `storm.dll`.
-- [idb-export](https://github.com/joankaradimov/MagnetarCraft/tree/master/idb-export)\
+- [idb-export](https://github.com/joankaradimov/Magnetar/tree/master/idb-export)\
   Anything related to IDA Pro goes here.
-- [MpqBuilder](https://github.com/joankaradimov/MagnetarCraft/tree/master/MpqBuilder)\
+- [MpqBuilder](https://github.com/joankaradimov/Magnetar/tree/master/MpqBuilder)\
   A tool that uses StormLib and is used by the project's cmake scripts to
   generate MPQ files
 - [yaml-cpp](https://github.com/jbeder/yaml-cpp)\
