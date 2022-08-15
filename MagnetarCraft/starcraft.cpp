@@ -1636,9 +1636,7 @@ BOOL BWFXN_DDrawInitialize_()
 	DDSURFACEDESC surface_desc;
 
 	ShowWindow(hWndParent, 1);
-	GUID* v4 = 0;
-	if (byte_6D5DFC)
-		v4 = (GUID *) 2;
+	GUID* v4 = byte_6D5DFC ? (GUID*)DDCREATE_EMULATIONONLY : NULL;
 	HRESULT v5 = DirectDrawCreate(v4, &DDInterface, 0);
 	if (v5 == DDERR_NODIRECTDRAWSUPPORT)
 		ErrorDDrawInit_("Starcraft\\SWAR\\lang\\gds\\vidinimo_PC.cpp", "DirectDrawCreate", 0x887600DE, 0x6Eu, 124);
