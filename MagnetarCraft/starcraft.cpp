@@ -8794,7 +8794,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
 
 DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
 
@@ -8848,7 +8848,7 @@ void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0);
 
 void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
 {
@@ -8865,7 +8865,7 @@ void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
 
 void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 {
@@ -8888,7 +8888,7 @@ void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 	SAI_CreateRegionGroupings(a2);
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
 
 void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 {
@@ -8930,7 +8930,7 @@ void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3);
 
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
@@ -8951,7 +8951,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 	return 1;
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
 MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
 
@@ -8988,7 +8988,7 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
 
 void SAI_PathCreate_Sub4_(SAI_Paths* a1)
 {
@@ -9001,13 +9001,13 @@ void SAI_PathCreate_Sub4_(SAI_Paths* a1)
 	SAI_ContoursCreate(a1->contours);
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub4);
+// FAIL_STUB_PATCH(SAI_PathCreate_Sub4);
 
 bool SAI_PathCreate_(MegatileFlags* a1)
 {
 	AllocateSAI_Paths_();
 
-	SAI_PathCreate_Sub1_(a1);
+	SAI_PathCreate_Sub1(a1);
 
 	PathCreateRelated v5;
 	v5.position.x = 0;
@@ -9015,12 +9015,12 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	v5.map_size = map_size;
 	CreateUIUnreachableRegion(SAIPathing);
 
-	if (!SAI_PathCreate_Sub3_(&v5, SAIPathing))
+	if (!SAI_PathCreate_Sub3(&v5, SAIPathing))
 	{
 		return false;
 	}
 
-	SAI_PathCreate_Sub4_(SAIPathing);
+	SAI_PathCreate_Sub4(SAIPathing);
 	for (int i = 0; i < SAIPathing->regionCount; i++)
 	{
 		SaiRegion* sai_region = SAIPathing->regions + i;
