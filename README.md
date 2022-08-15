@@ -71,7 +71,7 @@ subdirectories have a README of their own. See those for more details.
   with Blizzard MPQ archives.
 - [MemoryModule](https://github.com/fancycode/MemoryModule)\
   Library for loading DLL files from memory.
-- [LuaJIT]
+- [LuaJIT](https://github.com/WohlSoft/LuaJIT)
   Just-In-Time Compiler for the Lua programming language (fork with cmake support)
-- [sol2]
+- [sol2](https://github.com/ThePhD/sol2)
   A Lua API wrapper
