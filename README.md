@@ -10,10 +10,11 @@ combines its code and assets with Magnetar's own.
 ## Installation
 
 1. You'll need to have StarCraft 1.16.1 installed.
-1. You'll find the lastest release\
-   [here](https://github.com/joankaradimov/Magnetar/releases).
+1. You'll find the lastest release at (https://github.com/joankaradimov/Magnetar/releases).
    Download it and extract it to a directory of your choice.
-1. TODO: add more instructions once version 0.2 is released
+1. (Optionally) copy some maps over to the "maps" directory
+1. (Optionally) copy some characters over to the "characters" directory
+1. If prompted select a StarCraft 1.16.1 installation directory
 
 ## Hacking
 
