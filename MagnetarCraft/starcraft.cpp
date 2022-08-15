@@ -16177,7 +16177,7 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_SetAllianceStatus_,
 	TriggerAction_DisableDebugMode_,
 	TriggerAction_EnableDebugMode_,
-	TriggerAction_ExecuteLua,
+	// TriggerAction_ExecuteLua,
 };
 
 void ExecuteTriggerActions_(TriggerListEntry* a1)
