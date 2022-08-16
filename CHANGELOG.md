@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+  - Add a new trigger action: "Execute Lua"
+
+## 0.2.0 - Busy Barracks
+  - Reimplement ~10% of the functions in StarCraft 1.16.1
   - Allow arbitrary map sizes below 256x256
   - Draw a higher details minimap for map sizes below 32x32
   - Put the Precursor campaign on the campaigns menu screen
@@ -13,7 +17,6 @@
   - Fix wrong colors in magma/water tiles on Ashworld/Ice tilesets (by DarkenedFantasies)
   - Allow mouse scrolling in the campaign history popup
   - Increase the frequency of minimap rerendering
-  - Add a new trigger action: "Execute Lua"
 
 ## 0.1.0 - Anxious Arbiter
   - Enable establishing shots within custom scenarios
