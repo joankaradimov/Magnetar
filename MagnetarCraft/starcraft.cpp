@@ -503,11 +503,10 @@ FAIL_STUB_PATCH(PlayMusic);
 
 void playNextMusic_()
 {
-	unsigned a2;
-	unsigned a3;
-
 	if (byte_6D5BBC && music_tracks[current_music].track_type == IN_GAME_MUSIC)
 	{
+		unsigned a2;
+		unsigned a3;
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
