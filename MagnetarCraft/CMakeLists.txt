@@ -1,3 +1,5 @@
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
+
 add_definitions(-DUNICODE)
 add_definitions(-D_UNICODE)
 

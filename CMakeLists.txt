@@ -4,7 +4,6 @@ project ("Magnetar")
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
 
 if (MSVC)
     # This is needed for errors to be clickable in the VisualStudio UI
