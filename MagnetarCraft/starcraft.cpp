@@ -12165,7 +12165,7 @@ void sub_46D1F0_()
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, FnInteract BINDLG_Loop)
+void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path)
 {
 	sub_46D200_(music_track);
 	DisplayEstablishingShot_();
@@ -12174,7 +12174,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path, FnInteract BI
 		dword_50E064 = -1;
 		dialog* bin_dialog = LoadDialog(bin_path);
 
-		switch (gluLoadBINDlg_(bin_dialog, BINDLG_Loop))
+		switch (gluLoadBINDlg_(bin_dialog, gluRdy_BINDLG_Loop))
 		{
 		case 14:
 			if (multiPlayerMode)
@@ -13881,13 +13881,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin", gluRdy_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin");
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin", gluRdy_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin");
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin", gluRdy_BINDLG_Loop);
+			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin");
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
