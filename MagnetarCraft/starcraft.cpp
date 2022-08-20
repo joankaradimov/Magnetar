@@ -2544,14 +2544,11 @@ void loadColorSettings_()
 		UnitPortraits = 2;
 	}
 
-	if (dword_68AC98)
+	if (dword_68AC98 && ActivePortraitUnit)
 	{
-		if (ActivePortraitUnit)
-		{
-			UnitType v2 = getLastQueueSlotType(ActivePortraitUnit);
-			WORD v3 = setBuildingSelPortrait(v2);
-			displayUpdatePortrait(v3, ActivePortraitUnit, 1);
-		}
+		UnitType v2 = getLastQueueSlotType(ActivePortraitUnit);
+		WORD v3 = setBuildingSelPortrait(v2);
+		displayUpdatePortrait(v3, ActivePortraitUnit, 1);
 	}
 }
 
