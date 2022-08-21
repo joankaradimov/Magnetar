@@ -5,7 +5,7 @@ EXPORTS
     SNetEnumGames = StormLibNetEnumGames @104
     SNetEnumProviders@8 = StormLibNetEnumProviders @105
     SNetDropPlayer = StormLibNetDropPlayer @106
-    SNetGetGameInfo = StormLibNetGetGameInfo @107
+    SNetGetGameInfo@16 = StormLibNetGetGameInfo @107
     SNetGetNetworkLatency = StormLibNetGetNetworkLatency @108
     SNetGetNumPlayers = StormLibNetGetNumPlayers @109
     SNetGetOwnerTurnsWaiting = StormLibNetGetOwnerTurnsWaiting @110

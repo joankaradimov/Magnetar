@@ -12702,11 +12702,89 @@ signed int sub_4D4130_()
 
 FAIL_STUB_PATCH(sub_4D4130);
 
+int LobbyLoopCnt_()
+{
+	LeagueChatFilter();
+
+	if (!LobbyLoopTurns())
+	{
+		return LobbyRecv();
+	}
+	if (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode || loadGameFileHandle || InReplay)
+	{
+		gwGameMode = GAME_RUNINIT;
+	}
+	else if (Players[g_LocalNationID].nRace == Race::RACE_Zerg)
+	{
+		glGluesMode = GLUE_READY_Z;
+	}
+	else if (Players[g_LocalNationID].nRace == Race::RACE_Protoss)
+	{
+		glGluesMode = GLUE_READY_P;
+	}
+	else if (Players[g_LocalNationID].nRace == Race::RACE_Terran)
+	{
+		glGluesMode = GLUE_READY_T;
+	}
+	else
+	{
+		throw "Unknown race"; // TODO: handle this
+	}
+
+	clearGameNextMenu();
+	return 83;
+}
+
+FAIL_STUB_PATCH(LobbyLoopCnt);
+
+bool __fastcall sub_4B9B10_(dialog* lobby_dlg)
+{
+	int v2 = LobbyLoopCnt_();
+
+	if (v2 == 75)
+	{
+		bool result = sub_452250(lobby_dlg);
+		update_lobby_glue = 0;
+		return result;
+	}
+	else if (v2 == 83)
+	{
+		return getErrorStringPair(STAR_EDIT_NOT_FOUND, 556);
+	}
+	else if (dword_5999E8)
+	{
+		sub_4D3860();
+		updateMinimapPreviewDisplayOffOn(0, lobby_dlg, 1);
+		dword_5999D0 = 0;
+		return getErrorStringPair(dword_5999E0, 557);
+	}
+
+	bool result = dword_5999E8;
+	if (update_lobby_glue)
+	{
+		result = sub_452250(lobby_dlg);
+		update_lobby_glue = 0;
+	}
+	if (dword_5999CC)
+	{
+		char game_password[24] = "";
+		result = SNetGetGameInfo(SNET_INFO_GAMEPASSWORD, game_password, sizeof(game_password), 0);
+		if (!game_password[0])
+		{
+			updatePasswordDisplay(lobby_dlg);
+			dword_5999CC = 0;
+		}
+	}
+	return result;
+}
+
+FAIL_STUB_PATCH(sub_4B9B10);
+
 void sub_4B9BF0_(dialog* dlg)
 {
 	if (sub_4D4130_())
 	{
-		dlg->fields.dlg.pModalFcn = sub_4B9B10;
+		dlg->fields.dlg.pModalFcn = sub_4B9B10_;
 	}
 	else
 	{
