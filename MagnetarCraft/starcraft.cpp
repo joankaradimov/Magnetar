@@ -5294,12 +5294,12 @@ signed int LoadGameInit_()
 			return 0;
 		if (InReplay)
 		{
-			initialSeed = replay_header.initial_seed;
+			initialSeed = replay_header.seed_related.initial_seed;
 		}
 		else
 		{
 			initialSeed = time(0);
-			replay_header.initial_seed = initialSeed;
+			replay_header.seed_related.initial_seed = initialSeed;
 		}
 	}
 	InitializeDialogScreenLayer_();

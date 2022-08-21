@@ -9294,7 +9294,16 @@ DECL_FUNC(int(*sub_471CD0)(), sub_471CD0, 0x471cd0);
 DECL_FUNC(int (__stdcall*versionCheck)(int, int playerid, int), versionCheck, 0x471d00);
 DECL_FUNC(BOOL (__stdcall*createVersionBuffer)(__int16 net_player_flags, __int16 net_player_x4, __int16 protocol_version, char save_player_unique_id, char save_player_id, int save_hash, BOOL create), createVersionBuffer, 0x471fb0);
 DECL_FUNC(int (__stdcall*RECV_StartGame)(int), RECV_StartGame, 0x472060);
-DECL_FUNC(int(*RECV_SetRandomSeed)(), RECV_SetRandomSeed, 0x472110);
+void RECV_SetRandomSeed(signed int a1, struct_v2 *a2) {
+    int address = 0x472110;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4721E0)(), sub_4721E0, 0x4721e0);
 DECL_FUNC(int(*replaceNewlines)(), replaceNewlines, 0x472210);
 DECL_FUNC(int(*hex_to_int)(), hex_to_int, 0x472260);
@@ -10591,7 +10600,21 @@ CSprite *sub_47A010(char a1, __int16 a2, char player_id, CUnit *unit, FlingyID f
     return result_;
 }
 DECL_FUNC(int(*nullsub_36)(), nullsub_36, 0x47a060);
-DECL_FUNC(int(*image_Insert)(), image_Insert, 0x47a070);
+_DWORD *image_Insert(_DWORD *result, _DWORD *a2, CImage *a3) {
+    int address = 0x47a070;
+    _DWORD * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, result
+        mov edx, a2
+        mov ecx, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_47A090)(), sub_47A090, 0x47a090);
 DECL_FUNC(int(*sub_47A0B0)(), sub_47A0B0, 0x47a0b0);
 DECL_FUNC(int(*sub_47A0F0)(), sub_47A0F0, 0x47a0f0);
@@ -12297,6 +12320,17 @@ DECL_FUNC(int(*resetAllUnitAttackNotifyTimersInRange)(), resetAllUnitAttackNotif
 DECL_FUNC(int(*unitCanPlaySFX)(), unitCanPlaySFX, 0x48eb30);
 DECL_FUNC(int(*sub_48EB90)(), sub_48EB90, 0x48eb90);
 DECL_FUNC(int(*MuteUnitSpeech_maybe)(), MuteUnitSpeech_maybe, 0x48ebc0);
+void playUnitSFX(SfxData a1, points a2, int a3, int a4) {
+    int address = 0x48ec10;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+    }
+}
 int PlaySound(SfxData sfxId, CUnit *sourceUnit, int a3, signed int a4) {
     int address = 0x48ed50;
     int result_;
@@ -18997,7 +19031,19 @@ CImage *CopyImagePaletteType(CImage *result, CImage *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*ISCRIPT_PlayFrame)(), ISCRIPT_PlayFrame, 0x4d5e70);
+CImage *ISCRIPT_PlayFrame(CImage *result, int a2) {
+    int address = 0x4d5e70;
+    CImage * result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, result
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 CImage *updateImageDirection(CImage *result, unsigned int a2, unsigned __int8 a3) {
     int address = 0x4d5ea0;
     CImage * result_;
@@ -19060,10 +19106,12 @@ void packImageData(CImage *image) {
 DECL_FUNC(CImage *(__fastcall*CreateHealthBar)(int a1, CSprite *a2), CreateHealthBar, 0x4d6420);
 DECL_FUNC(void (__thiscall*sub_4D64A0)(unsigned int this_), sub_4D64A0, 0x4d64a0);
 DECL_FUNC(int(*writeImages)(FILE *a2), writeImages, 0x4d64c0);
-void ISCRIPT_PlaySnd(int a1) {
+void ISCRIPT_PlaySnd(SfxData sfx, CImage *a1) {
     int address = 0x4d6610;
     __asm {
         xor eax, eax
+        xor ebx, ebx
+        mov ebx, sfx
         mov eax, a1
         call address
     }
@@ -19187,19 +19235,7 @@ CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 a2, int a3, int a4, c
 }
 DECL_FUNC(int(*LoadImageData)(), LoadImageData, 0x4d7180);
 DECL_FUNC(int(*LoadInitIscriptBIN)(), LoadInitIscriptBIN, 0x4d7390);
-void BWFXN_PlayIscript(CImage *a1, StatusFlags a2, int a3, int a4, int a5) {
-    int address = 0x4d74c0;
-    __asm {
-        xor ecx, ecx
-        xor edx, edx
-        mov ecx, a1
-        mov edx, a2
-        push dword ptr a5
-        push dword ptr a4
-        push dword ptr a3
-        call address
-    }
-}
+DECL_FUNC(void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgram *program_state, int noop, int *distance_moved), BWFXN_PlayIscript, 0x4d74c0);
 void PlayIscriptAnim(CImage *this_, Anims anim) {
     int address = 0x4d8470;
     __asm {
@@ -19218,7 +19254,17 @@ void PlayWarpInOverlay(CImage *a1) {
     }
 }
 DECL_FUNC(int (__thiscall*iscriptSomething_Death)(CImage *a1), iscriptSomething_Death, 0x4d8590);
-DECL_FUNC(int(*sub_4D8600)(), sub_4D8600, 0x4d8600);
+BOOL sub_4D8600(_BYTE a1) {
+    int address = 0x4d8600;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov al, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 unsigned __int32 creditsSetDisplayTime(const char *a1) {
     int address = 0x4d8620;
     unsigned result_;
@@ -19897,13 +19943,33 @@ DECL_FUNC(int(*sub_4DE840)(), sub_4DE840, 0x4de840);
 DECL_FUNC(int(*sub_4DE860)(), sub_4DE860, 0x4de860);
 DECL_FUNC(int(*sub_4DE880)(), sub_4DE880, 0x4de880);
 DECL_FUNC(int(*sub_4DE890)(), sub_4DE890, 0x4de890);
-DECL_FUNC(int(*sub_4DE8A0)(), sub_4DE8A0, 0x4de8a0);
-DECL_FUNC(int(*sub_4DE8B0)(), sub_4DE8B0, 0x4de8b0);
+DECL_FUNC(int(*get_replay_seed)(), get_replay_seed, 0x4de8a0);
+DECL_FUNC(int(*set_replay_seed)(), set_replay_seed, 0x4de8b0);
 DECL_FUNC(int(*sub_4DE8C0)(), sub_4DE8C0, 0x4de8c0);
 DECL_FUNC(int(*sub_4DE8D0)(), sub_4DE8D0, 0x4de8d0);
 DECL_FUNC(int(*sub_4DE8E0)(), sub_4DE8E0, 0x4de8e0);
-DECL_FUNC(int(*sub_4DE8F0)(), sub_4DE8F0, 0x4de8f0);
-DECL_FUNC(int(*sub_4DE920)(), sub_4DE920, 0x4de920);
+struct_v2 *sub_4DE8F0(struct_v2 *result) {
+    int address = 0x4de8f0;
+    struct_v2 * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+struct_v2 *sub_4DE920(struct_v2 *result) {
+    int address = 0x4de920;
+    struct_v2 * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void getReplPlayerColors(int *result) {
     int address = 0x4de950;
     __asm {
@@ -22140,7 +22206,7 @@ signed int isBadName(int a1, char *name, size_t name_length) {
     }
     return result_;
 }
-DECL_FUNC(int(*ProgressDownload_maybe)(), ProgressDownload_maybe, 0x4f4080);
+DECL_FUNC(void (__fastcall*ProgressDownload_maybe)(), ProgressDownload_maybe, 0x4f4080);
 DECL_FUNC(int(*sub_4F40C0)(), sub_4F40C0, 0x4f40c0);
 DECL_FUNC(int(*sub_4F40D0)(), sub_4F40D0, 0x4f40d0);
 DECL_FUNC(int(*LobbyLoopTurns)(), LobbyLoopTurns, 0x4f40f0);
@@ -23314,7 +23380,7 @@ CHAR(&Operation)[] = * ((decltype(&Operation)) 0x501b78);
 const char(&empty_string)[3] = * ((decltype(&empty_string)) 0x501b7d);
 char(&aRezEpilogx_txt)[] = * ((decltype(&aRezEpilogx_txt)) 0x501b80);
 char(&aSS_ccd)[] = * ((decltype(&aSS_ccd)) 0x501b90);
-const char(&aSgubon)[] = * ((decltype(&aSgubon)) 0x501b9c);
+const char(&a2)[] = * ((decltype(&a2)) 0x501b9c);
 char(&aSS_clh)[] = * ((decltype(&aSS_clh)) 0x501ba4);
 char(&aSS_gid)[] = * ((decltype(&aSS_gid)) 0x501bb0);
 char(&aFont)[5] = * ((decltype(&aFont)) 0x501bbc);
@@ -25557,7 +25623,7 @@ int& dword_5999D0 = * ((decltype(&dword_5999D0)) 0x5999d0);
 int& update_lobby_glue = * ((decltype(&update_lobby_glue)) 0x5999d4);
 int& dword_5999D8 = * ((decltype(&dword_5999D8)) 0x5999d8);
 int& dword_5999DC = * ((decltype(&dword_5999DC)) 0x5999dc);
-int& dword_5999E0 = * ((decltype(&dword_5999E0)) 0x5999e0);
+GluAllTblEntry& dword_5999E0 = * ((decltype(&dword_5999E0)) 0x5999e0);
 dialog *& dword_5999E4 = * ((decltype(&dword_5999E4)) 0x5999e4);
 int& dword_5999E8 = * ((decltype(&dword_5999E8)) 0x5999e8);
 dialog *& dword_5999EC = * ((decltype(&dword_5999EC)) 0x5999ec);
@@ -26170,7 +26236,7 @@ int& dword_68AC94 = * ((decltype(&dword_68AC94)) 0x68ac94);
 dialog *& dword_68AC98 = * ((decltype(&dword_68AC98)) 0x68ac98);
 char& byte_68AC9C = * ((decltype(&byte_68AC9C)) 0x68ac9c);
 int& dword_68ACA0 = * ((decltype(&dword_68ACA0)) 0x68aca0);
-_DWORD& dword_68ACA8 = * ((decltype(&dword_68ACA8)) 0x68aca8);
+_DWORD& seg_68ACA8 = * ((decltype(&seg_68ACA8)) 0x68aca8);
 int& dword_68C0FC = * ((decltype(&dword_68C0FC)) 0x68c0fc);
 int& dword_68C100 = * ((decltype(&dword_68C100)) 0x68c100);
 void *& aiscript_bin_data = * ((decltype(&aiscript_bin_data)) 0x68c104);
@@ -26472,8 +26538,7 @@ int& dword_6C1078 = * ((decltype(&dword_6C1078)) 0x6c1078);
 CUnit *& dword_6C107C = * ((decltype(&dword_6C107C)) 0x6c107c);
 rect& stru_6C1080 = * ((decltype(&stru_6C1080)) 0x6c1080);
 __int16& word_6C10A8 = * ((decltype(&word_6C10A8)) 0x6c10a8);
-int& dword_6C2310 = * ((decltype(&dword_6C2310)) 0x6c2310);
-int& dword_6C2314 = * ((decltype(&dword_6C2314)) 0x6c2314);
+IScriptProgram& program_state = * ((decltype(&program_state)) 0x6c2310);
 CSprite *(&dword_6C2318)[2500] = * ((decltype(&dword_6C2318)) 0x6c2318);
 int& dword_6C4A28 = * ((decltype(&dword_6C4A28)) 0x6c4a28);
 int& dword_6C4A2C = * ((decltype(&dword_6C4A2C)) 0x6c4a2c);
@@ -26813,7 +26878,7 @@ void *& dword_6D5C80 = * ((decltype(&dword_6D5C80)) 0x6d5c80);
 void *& dword_6D5C84 = * ((decltype(&dword_6D5C84)) 0x6d5c84);
 void *& dword_6D5C88 = * ((decltype(&dword_6D5C88)) 0x6d5c88);
 void *& dword_6D5C8C = * ((decltype(&dword_6D5C8C)) 0x6d5c8c);
-void *& dword_6D5C90 = * ((decltype(&dword_6D5C90)) 0x6d5c90);
+struct_v2 *& dword_6D5C90 = * ((decltype(&dword_6D5C90)) 0x6d5c90);
 void *& defaultValue = * ((decltype(&defaultValue)) 0x6d5c94);
 int& dword_6D5C98 = * ((decltype(&dword_6D5C98)) 0x6d5c98);
 void *& dword_6D5C9C = * ((decltype(&dword_6D5C9C)) 0x6d5c9c);
