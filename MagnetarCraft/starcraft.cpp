@@ -12179,7 +12179,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path)
 			}
 			else
 			{
-				glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+				glGluesMode = IsExpansion ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 			}
 			sub_46D1F0_();
 			break;
