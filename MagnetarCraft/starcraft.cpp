@@ -36,7 +36,6 @@ int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char 
 	sprite->unkflags_12 = image->GRPFile->width <= 0xFFu ? image->GRPFile->width : -1;
 	sprite->unkflags_13 = (unsigned __int16)image->GRPFile->height <= 0xFFu ? image->GRPFile->height : -1;
 
-
 	return 1;
 }
 
@@ -15298,6 +15297,7 @@ void GameMainLoop_()
 				DestroyDialog(load_screen);
 				load_screen = NULL;
 			}
+
 			while (1)
 			{
 				setCursorType_(CursorType::CUR_TIME);
