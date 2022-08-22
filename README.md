@@ -18,4 +18,4 @@ combines its code and assets with Magnetar's own.
 
 ## Hacking
 
-See HACKING.md for details
+See [HACKING.md](HACKING.md) for details
