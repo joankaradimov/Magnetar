@@ -12207,16 +12207,7 @@ FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
 void selConn_connectionList_Create_(dialog* a1)
 {
-	dialog* v1 = gluConn_Dlg;
-	if (gluConn_Dlg->wCtrlType)
-	{
-		v1 = gluConn_Dlg->fields.ctrl.pDlg;
-	}
-	dialog* v2 = v1->fields.dlg.pFirstChild;
-	while (v2 && v2->wIndex != 9)
-	{
-		v2 = v2->pNext;
-	}
+	dialog* v2 = getControlFromIndex(gluConn_Dlg, 9);
 	v2->lFlags |= CTRL_DISABLED;
 	InitNetProviders(a1);
 	if ((v2->lFlags & CTRL_UPDATE) == 0)
