@@ -15027,6 +15027,76 @@ void DisplayMissionEpilog_()
 FAIL_STUB_PATCH(DisplayMissionEpilog);
 FAIL_STUB_PATCH(sub_4D8F90);
 
+unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 game_speed)
+{
+	if (!a1 || !a3)
+	{
+		return 0x80000006;
+	}
+
+	MapChunks a4;
+	a4.data0 = 0;
+	for (int i = 0; i < _countof(a4.player_force); i++)
+	{
+		a4.player_force[i] = 0;
+	}
+	for (int i = 0; i < _countof(a4.tbl_index_force_name); i++)
+	{
+		a4.tbl_index_force_name[i] = 0;
+	}
+	for (int i = 0; i < _countof(a4.force_flags); i++)
+	{
+		a4.force_flags[i] = (ForceFlags) 0;
+	}
+	a4.version = 0;
+	a4.data7 = 0;
+
+	if (!ReadMapData_(a1, &a4, 0))
+	{
+		return LOWORD(a4.version) > 59u ? 0x80000001 : 0x80000006;
+	}
+
+	GameData game_data;
+	memset(&game_data, 0, sizeof(game_data));
+	SStrCopy(game_data.player_name, a3, 0x20u);
+	const char* v6 = LOWORD(a4.data0) ? get_chk_String(a4.data0) : "";
+	SStrCopy(game_data.map_name, v6, sizeof(game_data.map_name));
+	game_data.active_human_players = 1;
+	game_data.max_players = getTotalValidSlotCount();
+	game_data.width = map_size.width;
+	game_data.height = map_size.height;
+	game_data.tileset = CurrentTileSet;
+	*(_DWORD*)&game_data.game_type = a2;
+	game_data.approval_status = a4.data7;
+
+	if (int result = sub_4A68D0(&game_data, game_speed))
+	{
+		return result;
+	}
+
+	isHost = 0;
+	dword_51CA1C = 1;
+	customSingleplayer[0] = 1;
+	if (sub_4DBE50() == 0)
+	{
+		return 0x80000007;
+	}
+	else if (CreateGame_(&game_data))
+	{
+		return 0;
+	}
+	else if (SErrGetLastError() == 183)
+	{
+		return 0x80000004;
+	}
+	else
+	{
+		return 0x80000006;
+	}
+}
+
+FAIL_STUB_PATCH(LoadScenarioSingle);
+
 int CreateNextCampaignGame_()
 {
 	if (!next_scenario[0])
@@ -15049,7 +15119,7 @@ int CreateNextCampaignGame_()
 			v3[1] = 0;
 			SStrNCat(dest, next_scenario, 260);
 
-			if (!LoadScenarioSingle(dest, v2, playerName, registry_options.GameSpeed))
+			if (!LoadScenarioSingle_(dest, v2, playerName, registry_options.GameSpeed))
 			{
 				switch (Players[g_LocalNationID].nRace)
 				{
