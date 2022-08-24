@@ -13854,6 +13854,7 @@ int SwitchMenu_()
 	loadTFontPcx();
 	loadDlgGrp();
 	init_gluesounds_();
+
 	if (gwGameMode == GAME_WIN)
 	{
 		gwGameMode = GAME_GLUES;
@@ -13926,6 +13927,7 @@ LABEL_28:
 	if (glue_background_palette[0].data)
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
+
 	while (gwGameMode == GAME_GLUES)
 	{
 		switch (glGluesMode)
