@@ -9860,8 +9860,7 @@ int CreateCampaignGame_(MapData mapData)
 	if (ReadCampaignMapData_(&mapChunks))
 	{
 		GameData v4;
-		memset(&v4, 0, 140u);
-		v4.got_file_values.unused3[4] = 0;
+		memset(&v4, 0, sizeof(v4));
 		SStrCopy(v4.player_name, playerName, sizeof(v4.player_name));
 		SStrCopy(v4.map_name, CurrentMapName, sizeof(v4.map_name));
 		v4.game_speed = registry_options.GameSpeed;
