@@ -13907,7 +13907,7 @@ int SwitchMenu_()
 			gwGameMode = GAME_RUNINIT;
 	}
 LABEL_28:
-	Sleep(1500u);
+	Sleep(1500); // TODO: should I get rid of this?
 	if (load_screen)
 	{
 		DestroyDialog(load_screen);
