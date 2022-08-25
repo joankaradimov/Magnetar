@@ -8,6 +8,30 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+dialog* getControlFromIndex_(dialog* dlg, __int16 index)
+{
+	dialog* v1 = dlg->wCtrlType ? dlg->fields.ctrl.pDlg : dlg;
+	dialog* v2 = v1->fields.dlg.pFirstChild;
+	while (v2 && v2->wIndex != index)
+	{
+		v2 = v2->pNext;
+	}
+	return v2;
+}
+
+dialog* __cdecl getControlFromIndex__()
+{
+	dialog* dlg;
+	__int16 index;
+
+	__asm mov dlg, eax
+	__asm mov index, cx
+
+	return getControlFromIndex_(dlg, index);
+}
+
+FUNCTION_PATCH((void*)0x418080, getControlFromIndex__);
+
 int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char player_id, CSprite* sprite)
 {
 	if (x >= map_width_pixels || y >= map_height_pixels)
@@ -3769,7 +3793,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 		registerUserDialogAction(dlg, sizeof(menu_functions), menu_functions);
 	}
 
-	minimap_dialog = getControlFromIndex(minimap_Dlg, 1);
+	minimap_dialog = getControlFromIndex_(minimap_Dlg, 1);
 	if (v1 == 0)
 	{
 		setMapSizeConstants_();
@@ -3889,7 +3913,7 @@ int __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
 				byte_6D5BBF = !byte_6D5BBF;
 			}
 			minimapPreviewUpdateState_();
-			v6 = getControlFromIndex(dlg, 2);
+			v6 = getControlFromIndex_(dlg, 2);
 			if (SLOBYTE(v6->lFlags) < 0)
 			{
 				drawShowHideTerrainContextHelp(v6);
@@ -7326,7 +7350,7 @@ void __stdcall hideLeftmostResource_(int a1)
 {
 	if (statres_Dlg)
 	{
-		dialog* v3 = getControlFromIndex(statres_Dlg, 6);
+		dialog* v3 = getControlFromIndex_(statres_Dlg, 6);
 		if (a1)
 		{
 			showDialog(v3);
@@ -7785,7 +7809,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 			dword_6D6438 = ImmAssociateContext(hWndParent, 0);
 		}
 
-		dialog* v4 = getControlFromIndex(a1, 6);
+		dialog* v4 = getControlFromIndex_(a1, 6);
 		if ((_BYTE)a3)
 		{
 			char dest[256];
@@ -7863,7 +7887,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 		}
 	}
 	sub_4F3040(a1);
-	dialog* v13 = getControlFromIndex(a1, 5);
+	dialog* v13 = getControlFromIndex_(a1, 5);
 	if (byte_68C144 || v13->pszText == NULL)
 	{
 		HideDialog(v13);
@@ -7928,7 +7952,7 @@ void textbox_DLG_Init_Evt_(dialog* dlg)
 	BWFXN_SetFont(v2);
 
 	dialog* v3 = dlg->wCtrlType == DialogType::cDLG ? dlg : dlg->fields.ctrl.pDlg;
-	dialog* v4 = getControlFromIndex(dlg, 1);
+	dialog* v4 = getControlFromIndex_(dlg, 1);
 	if (v4)
 	{
 		do
@@ -7943,7 +7967,7 @@ void textbox_DLG_Init_Evt_(dialog* dlg)
 	}
 
 	BWFXN_SetFont(0);
-	dialog* v6 = getControlFromIndex(dlg, 6);
+	dialog* v6 = getControlFromIndex_(dlg, 6);
 	v6->pfcnInteract = textbox_CtrlInteract_;
 	if (InReplay)
 	{
@@ -9908,7 +9932,7 @@ MEMORY_PATCH(0x45F019, (BYTE)EMD_protoss07);
 
 void gluHist_Create_(dialog* dlg)
 {
-	dialog* mission_list_dlg = getControlFromIndex(dlg, 6);
+	dialog* mission_list_dlg = getControlFromIndex_(dlg, 6);
 	ExpandedCampaignMenuEntry* mission_entries = (ExpandedCampaignMenuEntry*) dword_6D5A4C;
 
 	mission_list_dlg->lFlags |= CTRL_LBOX_NORECALC | CTRL_PLAIN;
@@ -9945,7 +9969,7 @@ void gluHist_Activate_(dialog* dlg)
 {
 	if (LastControlID == 1)
 	{
-		dialog * v1 = getControlFromIndex(dlg, 6);
+		dialog * v1 = getControlFromIndex_(dlg, 6);
 
 		if (v1 && v1->fields.list.bStrs)
 		{
@@ -10013,7 +10037,7 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 
-		dialog* v4 = getControlFromIndex(dlg, 6)->fields.list.pScrlBar;
+		dialog* v4 = getControlFromIndex_(dlg, 6)->fields.list.pScrlBar;
 		v4->pfcnInteract(v4, &event);
 		return 1;
 	}
@@ -10027,7 +10051,7 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 
-		dialog* v4 = getControlFromIndex(dlg, 6)->fields.list.pScrlBar;
+		dialog* v4 = getControlFromIndex_(dlg, 6)->fields.list.pScrlBar;
 		v4->pfcnInteract(v4, &event);
 		return 1;
 	}
@@ -11089,7 +11113,7 @@ FAIL_STUB_PATCH(gluJoin_CustomCtrlID);
 
 int __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	dialog* v5 = getControlFromIndex(dlg, 13);
+	dialog* v5 = getControlFromIndex_(dlg, 13);
 
 	if (evt->wNo == EVN_USER)
 	{
@@ -11164,7 +11188,7 @@ FAIL_STUB_PATCH(loadMenu_gluJoin);
 void gluCustm_initSwish_(dialog* dlg)
 {
 	DlgSwooshin(5, gluCustmSwishController, dlg, 0);
-	getControlFromIndex(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
+	getControlFromIndex_(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
@@ -11454,9 +11478,9 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 
-	custom_game_mode = getControlFromIndex(dlg, 17);
-	custom_game_submode = getControlFromIndex(dlg, 18);
-	custom_game_slots = getControlFromIndex(dlg, 19);
+	custom_game_mode = getControlFromIndex_(dlg, 17);
+	custom_game_submode = getControlFromIndex_(dlg, 18);
+	custom_game_slots = getControlFromIndex_(dlg, 19);
 
 	if (multiPlayerMode)
 	{
@@ -11906,9 +11930,9 @@ void sub_46D3C0_(dialog* dlg)
 {
 	if (multiPlayerMode)
 	{
-		dialog* v2 = getControlFromIndex(dlg, 5);
+		dialog* v2 = getControlFromIndex_(dlg, 5);
 		HideDialog(v2);
-		dialog* v4 = getControlFromIndex(dlg, 20);
+		dialog* v4 = getControlFromIndex_(dlg, 20);
 		HideDialog(v4);
 	}
 	dword_6556D8 = 0;
@@ -12012,7 +12036,7 @@ void sub_46D220_(dialog* a1)
 	dword_66FF6C = a1;
 	sub_4CC990_();
 	loadPortdataDAT_();
-	dialog* v3 = getControlFromIndex(a1, -10);
+	dialog* v3 = getControlFromIndex_(a1, -10);
 	v3->pfcnUpdate = (FnUpdate)sub_46C6E0;
 	stru_66FF64.wid = v3->rct.right - v3->rct.left + 1;
 	stru_66FF64.ht = 20 * (v3->rct.bottom - v3->rct.top + 1);
@@ -12021,7 +12045,7 @@ void sub_46D220_(dialog* a1)
 	sub_46CBC0(a1);
 	if (!a1->lUser)
 	{
-		dialog* v6 = getControlFromIndex(a1, -14);
+		dialog* v6 = getControlFromIndex_(a1, -14);
 		showDialog(v6);
 		if (multiPlayerMode)
 		{
@@ -12029,7 +12053,7 @@ void sub_46D220_(dialog* a1)
 		}
 		else
 		{
-			dialog* v7 = getControlFromIndex(a1, 20);
+			dialog* v7 = getControlFromIndex_(a1, 20);
 			DisableControl(v7);
 		}
 	}
@@ -12206,7 +12230,7 @@ FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
 void selConn_connectionList_Create_(dialog* a1)
 {
-	dialog* v2 = getControlFromIndex(gluConn_Dlg, 9);
+	dialog* v2 = getControlFromIndex_(gluConn_Dlg, 9);
 	v2->lFlags |= CTRL_DISABLED;
 	InitNetProviders(a1);
 	if ((v2->lFlags & CTRL_UPDATE) == 0)
@@ -12304,12 +12328,12 @@ int getGameList_(dialog* dlg)
 	}
 	LOWORD(dword_66FF30) = 0;
 
-	getControlFromIndex(dlg, 6)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
-	getControlFromIndex(dlg, 7)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
-	getControlFromIndex(dlg, 13)->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex_(dlg, 6)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex_(dlg, 7)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
+	getControlFromIndex_(dlg, 13)->pszText = (char*)SMemAlloc(255, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 
 	const char* v11 = get_GluAll_String_((GluAllTblEntry) 0xB9);
-	dialog* v14 = getControlFromIndex(gluConn_Dlg, 13);
+	dialog* v14 = getControlFromIndex_(gluConn_Dlg, 13);
 	SStrCopy(v14->pszText, v11, 0xFFu);
 	if ((v14->lFlags & CTRL_UPDATE) == 0)
 	{
@@ -12354,9 +12378,9 @@ int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 			ConnSel_InitChildren_(dlg);
 			break;
 		case 0x405:
-			showDialog(getControlFromIndex(gluConn_Dlg, 12));
-			showDialog(getControlFromIndex(gluConn_Dlg, 13));
-			showDialog(getControlFromIndex(gluConn_Dlg, 14));
+			showDialog(getControlFromIndex_(gluConn_Dlg, 12));
+			showDialog(getControlFromIndex_(gluConn_Dlg, 13));
+			showDialog(getControlFromIndex_(gluConn_Dlg, 14));
 			break;
 		}
 	}
@@ -12593,8 +12617,8 @@ void gluChat_init_(dialog* dlg)
 
 	if (!isHost)
 	{
-		HideDialog(getControlFromIndex(dlg, 5));
-		HideDialog(getControlFromIndex(dlg, 7));
+		HideDialog(getControlFromIndex_(dlg, 5));
+		HideDialog(getControlFromIndex_(dlg, 7));
 	}
 	sub_4B9480(dlg);
 	DlgSwooshin(5, gluChatSwishController, dlg, 0);
@@ -12988,7 +13012,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		else
 		{
 			_startGame();
-			DisableControl(getControlFromIndex(dlg, 7));
+			DisableControl(getControlFromIndex_(dlg, 7));
 			updateMinimapPreviewDisplayOffOn(0, dlg, 0);
 			dword_5999D0 = 0;
 		}
@@ -12997,7 +13021,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		SendLobbyMessage();
 		return 1;
 	case 8:
-		DisableControl(getControlFromIndex(dlg, 8));
+		DisableControl(getControlFromIndex_(dlg, 8));
 		sub_4D3860();
 		[[fallthrough]];
 	case 557:
@@ -13014,10 +13038,10 @@ FAIL_STUB_PATCH(gluChat_controlActivation);
 
 int __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	dialog* minimap_preview_dlg = getControlFromIndex(dlg, 6);
-	dialog* char_history_dlg = getControlFromIndex(dlg, 11);
-	dialog* starting_in_dlg = getControlFromIndex(dlg, 23);
-	dialog* countdown_dlg = getControlFromIndex(dlg, 24);
+	dialog* minimap_preview_dlg = getControlFromIndex_(dlg, 6);
+	dialog* char_history_dlg = getControlFromIndex_(dlg, 11);
+	dialog* starting_in_dlg = getControlFromIndex_(dlg, 23);
+	dialog* countdown_dlg = getControlFromIndex_(dlg, 24);
 
 	switch (evt->wNo)
 	{
@@ -13233,7 +13257,7 @@ int sub_4B4600_(dialog* a1)
 	}
 	else if (v3)
 	{
-		dialog* v2 = getControlFromIndex(a1, 2);
+		dialog* v2 = getControlFromIndex_(a1, 2);
 		v2->pszText = (char*)v3;
 		if ((v2->lFlags & CTRL_UPDATE) == 0)
 		{
@@ -13243,7 +13267,7 @@ int sub_4B4600_(dialog* a1)
 		v2->lFlags |= CTRL_DLG_ACTIVE;
 	}
 
-	getControlFromIndex(a1, 8)->lFlags |= CTRL_DLG_ACTIVE;
+	getControlFromIndex_(a1, 8)->lFlags |= CTRL_DLG_ACTIVE;
 
 	char fileName[260];
 	strcpy(fileName, byte_59B628);
@@ -13257,7 +13281,7 @@ int sub_4B4600_(dialog* a1)
 		SysWarn_FileNotFound(fileName, SErrGetLastError());
 	}
 
-	dialog* v13 = getControlFromIndex(a1, 1);
+	dialog* v13 = getControlFromIndex_(a1, 1);
 	v13->srcBits.ht = height;
 	v13->srcBits.wid = width;
 	v13->srcBits.data = (u8*)buffer;
@@ -13276,13 +13300,13 @@ void saveGame_Create_(dialog* dlg)
 	DLG_SwishIn_(dlg);
 	UpdateCancelButton(dlg, 5u, 0x20000000);
 	UpdateOKButton(dlg, 3u, 0x20000000);
-	dialog* v3 = getControlFromIndex(dlg, 3);
+	dialog* v3 = getControlFromIndex_(dlg, 3);
 	if (v3)
 	{
 		HideDialog(v3);
 	}
 
-	dialog* v6 = getControlFromIndex(dlg, 1);
+	dialog* v6 = getControlFromIndex_(dlg, 1);
 	if (byte_51BFD8 < v6->fields.scroll.bSliderSkip || byte_51BFD8 == -1)
 	{
 		dlgEvent v11;
@@ -13293,7 +13317,7 @@ void saveGame_Create_(dialog* dlg)
 		DlgSetSelected_UpdateScrollbar(byte_51BFD8, v6);
 	}
 
-	dialog* v9 = getControlFromIndex(dlg, 4);
+	dialog* v9 = getControlFromIndex_(dlg, 4);
 	v9->pszText = (char*)get_GluAll_String((GluAllTblEntry)0xB3);
 	if ((v9->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
@@ -13332,7 +13356,7 @@ int __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 			saveGame_Destroy(dlg);
 			break;
 		case USER_ACTIVATE:
-			if (dialog* v5 = getControlFromIndex(dlg, 2))
+			if (dialog* v5 = getControlFromIndex_(dlg, 2))
 			{
 				SStrCopy(byte_51BFB8, v5->pszText, 0x7FFFFFFFu);
 				trimTrailingSpaces(byte_51BFB8);
@@ -13412,7 +13436,7 @@ int __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 			}
 			return 1;
 		case USER_SHOW:
-			if (dlg == getControlFromIndex(dlg, 3))
+			if (dlg == getControlFromIndex_(dlg, 3))
 			{
 				sub_4B4520(dlg);
 			}
@@ -14771,7 +14795,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 
 		for (int i = 0; i < _countof(establishingShotPositions_); i++)
 		{
-			auto label = getControlFromIndex(dlg, i + 1);
+			auto label = getControlFromIndex_(dlg, i + 1);
 			label->lFlags &= ~DialogFlags::CTRL_FONT_LARGEST;
 			label->lFlags &= ~DialogFlags::CTRL_FONT_LARGE;
 			label->lFlags &= ~DialogFlags::CTRL_FONT_SMALL;
@@ -14810,7 +14834,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 				{
 					HideDialog(dword_51CEB0);
 				}
-				dword_51CEB0 = getControlFromIndex(dlg, position.index);
+				dword_51CEB0 = getControlFromIndex_(dlg, position.index);
 				break;
 			}
 		}
@@ -14910,7 +14934,7 @@ int creditsDlgInit_(dialog* dlg)
 {
 	for (auto& position : establishingShotPositions_)
 	{
-		dialog* position_dlg = getControlFromIndex(dlg, position.index);
+		dialog* position_dlg = getControlFromIndex_(dlg, position.index);
 		if (position_dlg)
 		{
 			position_dlg->pszText = 0;
@@ -14929,7 +14953,7 @@ void creditsDlgDestroy_(dialog* dlg)
 {
 	for (auto& position : establishingShotPositions_)
 	{
-		dialog* position_dlg = getControlFromIndex(dlg, position.index);
+		dialog* position_dlg = getControlFromIndex_(dlg, position.index);
 		if (position_dlg->pszText)
 		{
 			SMemFree(position_dlg->pszText, "Starcraft\\SWAR\\lang\\credits.cpp", 566, 0);
