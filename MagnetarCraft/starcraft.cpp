@@ -4591,18 +4591,25 @@ void cleanBufferCounts_()
 
 FAIL_STUB_PATCH(cleanBufferCounts);
 
+void sub_4D35A0_()
+{
+	NetMode.as_number = -1;
+	SNetDestroy();
+	if (hEvent && IsBattleNet)
+	{
+		ResetEvent(hEvent);
+		IsBattleNet = 0;
+	}
+	LOWORD(dword_66FF30) = 0;
+}
+
+FAIL_STUB_PATCH(sub_4D35A0);
+
 int CreateGame_(GameData* a1)
 {
 	if (!is_spawn)
 	{
-		NetMode.as_number = 0xFFFFFFFF;
-		SNetDestroy();
-		if (hEvent && IsBattleNet)
-		{
-			ResetEvent(hEvent);
-			IsBattleNet = 0;
-		}
-		LOWORD(dword_66FF30) = 0;
+		sub_4D35A0_();
 		Char4 zero;
 		zero.as_number = 0;
 		if (InitializeNetworkProvider(zero))
@@ -12303,14 +12310,7 @@ FAIL_STUB_PATCH(ConnSel_InitChildren);
 
 int getGameList_(dialog* dlg)
 {
-	NetMode.as_number = -1;
-	SNetDestroy();
-	if (hEvent && IsBattleNet)
-	{
-		ResetEvent(hEvent);
-		IsBattleNet = 0;
-	}
-	LOWORD(dword_66FF30) = 0;
+	sub_4D35A0_();
 
 	getControlFromIndex_(dlg, 6)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
 	getControlFromIndex_(dlg, 7)->pszText = (char*)SMemAlloc(128, "Starcraft\\SWAR\\lang\\gluConn.cpp", 511, 0);
