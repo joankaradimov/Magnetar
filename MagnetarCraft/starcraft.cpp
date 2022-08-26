@@ -11731,23 +11731,7 @@ signed int loadStareditProcess_(dialog* a1)
 	{
 		HWND v3 = GetDesktopWindow();
 		SetForegroundWindow(v3);
-		dialog* v4 = a1;
-		if (a1->wCtrlType)
-		{
-			v4 = a1->fields.ctrl.pDlg;
-		}
-		dialog* v5 = v4->fields.dlg.pFirstChild;
-		if (v5)
-		{
-			while (v5->wIndex != 5)
-			{
-				v5 = v5->pNext;
-				if (v5 == NULL)
-				{
-					break;
-				}
-			}
-		}
+		dialog* v5 = getControlFromIndex_(a1, 5);
 
 		DisableControl(v5);
 		WaitForInputIdle(ProcessInformation.hProcess, -1u);
