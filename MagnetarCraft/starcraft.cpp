@@ -15344,14 +15344,21 @@ FAIL_STUB_PATCH(BeginCredits);
 FAIL_STUB_PATCH(sub_4A60D0);
 FAIL_STUB_PATCH(sub_48EB90);
 
-void PlayMovie_(Cinematic cinematic)
+void sub_4D4440_()
 {
-	RefreshCursor_0();
 	InitializeInputProcs();
 	input_procedures[EventNo::EVN_CHAR] = endVideoProc;
 	input_procedures[EventNo::EVN_LBUTTONUP] = endVideoProc;
 	input_procedures[EventNo::EVN_RBUTTONUP] = endVideoProc;
 	dword_5967F0 = 0;
+}
+
+FAIL_STUB_PATCH(sub_4D4440);
+
+void PlayMovie_(Cinematic cinematic)
+{
+	RefreshCursor_0();
+	sub_4D4440_();
 
 	HANDLE video;
 	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, cinematic < 0x19 ? 0x10280808 : 0x10A80808, &video);
