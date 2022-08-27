@@ -32,19 +32,15 @@ int hideImage(CImage *a1) {
     return result_;
 }
 DECL_FUNC(__int16 (__thiscall*showImage)(CImage *this_), showImage, 0x401120);
-CUnit *setAllOverlayDirectionsGeneric(CUnit *result, unsigned int a2, unsigned __int8 a3) {
+void setAllOverlayDirectionsGeneric(CUnit *result, unsigned __int8 a3) {
     int address = 0x401140;
-    CUnit * result_;
     __asm {
         xor eax, eax
-        xor edx, edx
         mov eax, result
-        mov edx, a2
         push dword ptr a3
         call address
-        mov result_, eax
+        add esp, 4
     }
-    return result_;
 }
 DECL_FUNC(BOOL (__stdcall*unitIsOwnerByCurrentPlayer)(CUnit *a1), unitIsOwnerByCurrentPlayer, 0x401170);
 int unitSetRetreatPoint(unsigned __int8 a1, CUnit *a2) {
@@ -947,21 +943,42 @@ void InitTerrainGraphicsAndCreep(struct_a1 *a1, TileID *a2, int a3, int a4, void
         call address
     }
 }
-DECL_FUNC(int(*sub_414B50)(), sub_414B50, 0x414b50);
-DECL_FUNC(int(*sub_414B70)(), sub_414B70, 0x414b70);
-DECL_FUNC(int(*sub_414B90)(), sub_414B90, 0x414b90);
-DECL_FUNC(int(*sub_414BB0)(), sub_414BB0, 0x414bb0);
-DECL_FUNC(int (__stdcall*sub_414BC0)(int), sub_414BC0, 0x414bc0);
-dialog *scrollerInit(dialog *result) {
-    int address = 0x414c00;
-    dialog * result_;
+_DWORD *sub_414B50(dialog *a1, int (__thiscall *a2)(_DWORD *)) {
+    int address = 0x414b50;
+    _DWORD * result_;
     __asm {
         xor eax, eax
-        mov eax, result
+        xor edi, edi
+        mov eax, a1
+        mov edi, a2
         call address
         mov result_, eax
     }
     return result_;
+}
+int sub_414B70(dialog *a1, dialog *a2) {
+    int address = 0x414b70;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+DECL_FUNC(int(*sub_414B90)(), sub_414B90, 0x414b90);
+DECL_FUNC(int(*sub_414BB0)(), sub_414BB0, 0x414bb0);
+DECL_FUNC(int (__stdcall*sub_414BC0)(int), sub_414BC0, 0x414bc0);
+void scrollerInit(dialog *result) {
+    int address = 0x414c00;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+    }
 }
 DECL_FUNC(int (__stdcall*sub_414C90)(int, int, int), sub_414C90, 0x414c90);
 DECL_FUNC(int (__thiscall*sub_414D30)(dialog *this_), sub_414D30, 0x414d30);
@@ -1005,7 +1022,7 @@ signed int ScrollerKeyPress(dlgEvent *a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_414F10)(), sub_414F10, 0x414f10);
+DECL_FUNC(int (__fastcall*sub_414F10)(dialog *a1, dlgEvent *a2), sub_414F10, 0x414f10);
 void sub_415090(dialog *a1) {
     int address = 0x415090;
     __asm {
@@ -1205,7 +1222,18 @@ signed int koreanTextLeadByteCheck(int byte_position, const char *text) {
     }
     return result_;
 }
-DECL_FUNC(int(*DlgDrawEditCharacters)(), DlgDrawEditCharacters, 0x416240);
+char DlgDrawEditCharacters(dialog *a1) {
+    int address = 0x416240;
+    char result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 _BYTE *setFontSizeFromFlags(dialog *a1) {
     int address = 0x416450;
     _BYTE * result_;
@@ -5662,7 +5690,7 @@ int sub_447A70(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_447AF0)(), sub_447AF0, 0x447af0);
+DECL_FUNC(CUnit **(__thiscall*sub_447AF0)(CUnit *this_), sub_447AF0, 0x447af0);
 char AIGetMultiCost(int a1, int a2, int a3, int a4, char a5, int arg_4) {
     int address = 0x447b30;
     char result_;
@@ -11479,9 +11507,9 @@ DECL_FUNC(int (__stdcall*SAI_PathCreate)(MegatileFlags *a1), SAI_PathCreate, 0x4
 DECL_FUNC(void (__thiscall*nullsub_3)(dlgEvent *), nullsub_3, 0x484350);
 DECL_FUNC(int(*saveScreenLocation)(), saveScreenLocation, 0x484360);
 DECL_FUNC(void (__thiscall*input_Game_LeftMouseBtnDwn)(dlgEvent *), input_Game_LeftMouseBtnDwn, 0x484380);
-DECL_FUNC(void (__thiscall*_input_Game_Idle)(dlgEvent *), _input_Game_Idle, 0x484390);
+DECL_FUNC(void (__thiscall*_input_Game_Idle)(dlgEvent *this_), _input_Game_Idle, 0x484390);
 DECL_FUNC(void (__thiscall*input_Game_MiddleMouseBtnUp)(dlgEvent *), input_Game_MiddleMouseBtnUp, 0x4843a0);
-DECL_FUNC(int (__stdcall*resetGameInputProcs)(__int16), resetGameInputProcs, 0x4843f0);
+DECL_FUNC(void(*resetGameInputProcs)(CursorType a1), resetGameInputProcs, 0x4843f0);
 DECL_FUNC(void (__thiscall*input_MiddleBtnScreenMove_MouseMove)(dlgEvent *), input_MiddleBtnScreenMove_MouseMove, 0x484460);
 DECL_FUNC(int(*recallScreenLocation)(), recallScreenLocation, 0x484500);
 DECL_FUNC(void (__thiscall*input_Game_MiddleMouseBtnDwn)(dlgEvent *), input_Game_MiddleMouseBtnDwn, 0x484520);
@@ -12294,7 +12322,7 @@ int rndGetSfxBetween(SfxData a1, SfxData a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*input_Game_Idle)(), input_Game_Idle, 0x48e980);
+DECL_FUNC(void (__thiscall*input_Game_Idle)(dlgEvent *this_), input_Game_Idle, 0x48e980);
 DECL_FUNC(int (__fastcall*resetUnitAttackNotifyTimer)(CUnit *, CUnit *), resetUnitAttackNotifyTimer, 0x48e9f0);
 DECL_FUNC(unsigned int (__fastcall*sub_48EA00)(SfxData a1), sub_48EA00, 0x48ea00);
 SfxData getUnitPissSfxOrBldgWhatSfx(UnitType unit_type, int a2) {
@@ -13219,18 +13247,15 @@ int sub_495EE0(CUnit *a1) {
     }
     return result_;
 }
-CUnit *turnUnit(CUnit *result, char a2) {
+void turnUnit(CUnit *result, char a2) {
     int address = 0x495f20;
-    CUnit * result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
         mov eax, result
         mov bl, a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_495F90(CUnit *a1) {
     int address = 0x495f90;
@@ -13242,7 +13267,16 @@ void sub_495F90(CUnit *a1) {
 }
 DECL_FUNC(signed int (__stdcall*sub_496030)(CUnit *a1), sub_496030, 0x496030);
 DECL_FUNC(int(*sub_496140)(), sub_496140, 0x496140);
-DECL_FUNC(int(*_turnGraphic)(), _turnGraphic, 0x496170);
+void _turnGraphic(CUnit *a1, char a2) {
+    int address = 0x496170;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov cl, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_496190)(), sub_496190, 0x496190);
 signed int sub_4961B0(CUnit *a1) {
     int address = 0x4961b0;
@@ -13596,17 +13630,15 @@ void UpdateSpriteImagesForCloak(CSprite *a1) {
         call address
     }
 }
-CSprite *sub_498B20(CSprite *result, char a2) {
+void sub_498B20(CSprite *result, char a2) {
     int address = 0x498b20;
-    CSprite * result_;
     __asm {
         xor eax, eax
         mov eax, result
         push dword ptr a2
         call address
-        mov result_, eax
+        add esp, 4
     }
-    return result_;
 }
 void sub_498B50(CSprite *a1, unsigned __int8 a2) {
     int address = 0x498b50;
@@ -15506,7 +15538,22 @@ int sub_4AAE20(char *a1, unsigned int *a2, _BYTE **a3, unsigned int a4) {
 }
 DECL_FUNC(void (__stdcall*eventSetGameType)(s_evt *evt), eventSetGameType, 0x4aaea0);
 DECL_FUNC(int(*sub_4AAF30)(), sub_4AAF30, 0x4aaf30);
-DECL_FUNC(int(*sub_4AAF50)(), sub_4AAF50, 0x4aaf50);
+int sub_4AAF50(char a1, __int16 a2, GameType template_id) {
+    int address = 0x4aaf50;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        xor ecx, ecx
+        xor edx, edx
+        mov dl, a1
+        mov cx, a2
+        mov bl, template_id
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4AAFA0)(), sub_4AAFA0, 0x4aafa0);
 DECL_FUNC(int(*sub_4AAFF0)(), sub_4AAFF0, 0x4aaff0);
 DECL_FUNC(int(*sub_4AB050)(), sub_4AB050, 0x4ab050);
@@ -15931,7 +15978,7 @@ void sub_4B0AE0(dialog *a1) {
 DECL_FUNC(int(*load_gluATZoneList)(), load_gluATZoneList, 0x4b0c60);
 DECL_FUNC(int(*load_gluModemList)(), load_gluModemList, 0x4b0dc0);
 DECL_FUNC(bool (__fastcall*gluModemEntry_loop)(dialog *dlg, dlgEvent *evt), gluModemEntry_loop, 0x4b0f20);
-int InitializeModem(int a1, int a2, int eax0, Char4 a3) {
+int InitializeModem(SNETPLAYERDATA *a1, SNETUIDATA *a2, SNETPROGRAMDATA *eax0, Char4 a3) {
     int address = 0x4b0fb0;
     int result_;
     __asm {
@@ -16737,20 +16784,17 @@ DECL_FUNC(int (__cdecl*BeginBNET)(), BeginBNET, 0x4bade0);
 DECL_FUNC(int (__fastcall*ConnSel_Interact)(dialog *dlg, struct dlgEvent *evt), ConnSel_Interact, 0x4bae20);
 DECL_FUNC(int(*loadMenu_gluConn)(), loadMenu_gluConn, 0x4baf30);
 DECL_FUNC(int(*sub_4BB0A0)(), sub_4BB0A0, 0x4bb0a0);
-char packetErrHandle(DWORD a1, int a2, char *a3, int a4, int a5) {
+void packetErrHandle(DWORD last_error, int a2, char *a3, int a4, int a5) {
     int address = 0x4bb0b0;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, last_error
         push dword ptr a5
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4BB110)(), sub_4BB110, 0x4bb110);
 DECL_FUNC(int (__fastcall*sub_4BB170)(int a4, char *a3, int a2, int a5), sub_4BB170, 0x4bb170);
@@ -18669,7 +18713,7 @@ DECL_FUNC(int(*ResetLeagueEvent)(), ResetLeagueEvent, 0x4d3510);
 DECL_FUNC(int(*sub_4D3540)(), sub_4D3540, 0x4d3540);
 DECL_FUNC(int(*sub_4D3570)(), sub_4D3570, 0x4d3570);
 DECL_FUNC(int(*sub_4D3580)(), sub_4D3580, 0x4d3580);
-DECL_FUNC(int(*sub_4D35A0)(), sub_4D35A0, 0x4d35a0);
+DECL_FUNC(void (__cdecl*sub_4D35A0)(), sub_4D35A0, 0x4d35a0);
 DECL_FUNC(int (__fastcall*Game_Hdr_Node_Constructor)(DWORD, DWORD, DWORD), Game_Hdr_Node_Constructor, 0x4d35e0);
 int sub_4D37C0(dialog *a1, int (__stdcall *a2)(_DWORD, _DWORD)) {
     int address = 0x4d37c0;
@@ -18908,9 +18952,8 @@ int sub_4D5740(int result, _DWORD a2, int a3) {
     }
     return result_;
 }
-int ISCRIPT_UseLOFile(int result, CImage *a2, unsigned __int8 a3, int a4) {
+void ISCRIPT_UseLOFile(int result, CImage *a2, unsigned __int8 a3, int a4) {
     int address = 0x4d5770;
-    int result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
@@ -18921,9 +18964,7 @@ int ISCRIPT_UseLOFile(int result, CImage *a2, unsigned __int8 a3, int a4) {
         mov cl, a3
         mov edi, a4
         call address
-        mov result_, eax
     }
-    return result_;
 }
 CImage *CImage__updateGraphicData(CImage *result) {
     int address = 0x4d57b0;
@@ -18949,7 +18990,18 @@ CImage *setImagePaletteType(CImage *result, unsigned __int8 a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*ISCRIPT_setPosition)(), ISCRIPT_setPosition, 0x4d5900);
+void ISCRIPT_setPosition(CImage *result, char a2, char a3) {
+    int address = 0x4d5900;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, result
+        mov dl, a2
+        mov cl, a3
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4D5920)(), sub_4D5920, 0x4d5920);
 DECL_FUNC(int(*sub_4D5930)(), sub_4D5930, 0x4d5930);
 DECL_FUNC(int(*updateImageFrameIndex)(), updateImageFrameIndex, 0x4d5940);
@@ -19039,19 +19091,15 @@ CImage *ISCRIPT_PlayFrame(CImage *result, int a2) {
     }
     return result_;
 }
-CImage *updateImageDirection(CImage *result, unsigned int a2, unsigned __int8 a3) {
+void updateImageDirection(CImage *result, unsigned __int8 a3) {
     int address = 0x4d5ea0;
-    CImage * result_;
     __asm {
         xor eax, eax
-        xor edx, edx
         mov eax, result
-        mov edx, a2
         push dword ptr a3
         call address
-        mov result_, eax
+        add esp, 4
     }
-    return result_;
 }
 void flipImage(CImage *result, char a2) {
     int address = 0x4d5f30;
@@ -21574,6 +21622,19 @@ int sub_4EB5E0(CUnit *a1) {
         mov ebx, a1
         call address
         mov result_, eax
+    }
+    return result_;
+}
+char ProgressSubunitDirection(CUnit *a1, char a2) {
+    int address = 0x4eb660;
+    char result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        push dword ptr a2
+        call address
+        mov result_, al
     }
     return result_;
 }
@@ -25945,7 +26006,7 @@ int& dword_6556DC = * ((decltype(&dword_6556DC)) 0x6556dc);
 int& InGame = * ((decltype(&InGame)) 0x6556e0);
 int& Latency = * ((decltype(&Latency)) 0x6556e4);
 int& dword_6556E8 = * ((decltype(&dword_6556E8)) 0x6556e8);
-void (__thiscall *&dword_6556EC)(dlgEvent *) = *((decltype(&dword_6556EC)) 0x6556ec);
+void (__thiscall *&GameScreenLClickEvent)(dlgEvent *) = *((decltype(&GameScreenLClickEvent)) 0x6556ec);
 void (__thiscall *&GameScreenRClickEvent)(dlgEvent *) = *((decltype(&GameScreenRClickEvent)) 0x6556f0);
 int& dword_6556F4 = * ((decltype(&dword_6556F4)) 0x6556f4);
 int& dword_6556F8 = * ((decltype(&dword_6556F8)) 0x6556f8);
