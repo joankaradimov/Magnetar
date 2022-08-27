@@ -8,6 +8,44 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+void SetInGameInputProcs_()
+{
+	InitializeInputProcs();
+	hAccTable = hAccel;
+
+	input_procedures[EventNo::EVN_KEYFIRST] = nullsub_3;
+	input_procedures[EventNo::EVN_MOUSEMOVE] = nullptr;
+	input_procedures[EventNo::EVN_LBUTTONDOWN] = input_Game_LeftMouseBtnDwn;
+	input_procedures[EventNo::EVN_LBUTTONDBLCLK] = input_Game_LeftMouseBtnDwn;
+	input_procedures[EventNo::EVN_RBUTTONDOWN] = input_Game_RightMouseBtnDwn;
+	input_procedures[EventNo::EVN_RBUTTONDBLCLK] = input_Game_RightMouseBtnDwn;
+	input_procedures[EventNo::EVN_MBUTTONDOWN] = input_Game_MiddleMouseBtnDwn;
+	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp;
+	input_procedures[EventNo::EVN_IDLE] = input_Game_Idle;
+	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress;
+	input_procedures[EventNo::EVN_SYSCHAR] = CMDACT_Hotkey;
+	input_procedures[EventNo::EVN_WHEELUP] = nullptr;
+	input_procedures[EventNo::EVN_WHEELDWN] = nullptr;
+
+	if (is_placing_building)
+	{
+		GameScreenLClickEvent = input_placeBuilding_LeftMouseClick;
+		GameScreenRClickEvent = input_placeBuilding_RightMouseClick;
+	}
+	else if (byte_641694)
+	{
+		GameScreenLClickEvent = input_targetOrder_LeftMouseClick;
+		GameScreenRClickEvent = input_targetOrder_RightMouseClick;
+	}
+	else
+	{
+		GameScreenLClickEvent = input_Game_LeftMouseClick;
+		GameScreenRClickEvent = input_Game_RightMouseClick;
+	}
+}
+
+FUNCTION_PATCH(SetInGameInputProcs, SetInGameInputProcs_);
+
 dialog* getControlFromIndex_(dialog* dlg, __int16 index)
 {
 	dialog* v1 = dlg->wCtrlType ? dlg->fields.ctrl.pDlg : dlg;
@@ -2054,7 +2092,7 @@ void BWFXN_drawDragSelBox_()
 		else
 		{
 			refreshDragSelectBox();
-			SetInGameInputProcs();
+			SetInGameInputProcs_();
 		}
 	}
 }
@@ -2682,7 +2720,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	{
 		BWFXN_RefreshTarget(stru_66FF50.left, stru_66FF50.bottom, stru_66FF50.top, stru_66FF50.right);
 		byte_66FF5C = 0;
-		SetInGameInputProcs();
+		SetInGameInputProcs_();
 	}
 	setCursorType_(CursorType::CUR_ARROW);
 	if (!multiPlayerMode)
@@ -5210,7 +5248,7 @@ void hotkeyRemapping_()
 			CancelTargetOrder();
 		}
 	}
-	SetInGameInputProcs();
+	SetInGameInputProcs_();
 	initializeTriggerInfo();
 	memset(stru_64DEC8, 0, sizeof(stru_64DEC8));
 	byte_6D1224 = 0;
@@ -5878,7 +5916,7 @@ void DestroyGame_()
 	{
 		CancelTargetOrder();
 	}
-	SetInGameInputProcs();
+	SetInGameInputProcs_();
 	destroyGameHUD_();
 	DestroyMapData_();
 	if (dword_6BEE8C)
@@ -14244,7 +14282,7 @@ void Game_Capturechanged_()
 		InputFlags &= 0xD5;
 		if (gwGameMode == GAME_RUN)
 		{
-			SetInGameInputProcs();
+			SetInGameInputProcs_();
 		}
 		else
 		{
