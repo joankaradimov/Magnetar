@@ -10040,10 +10040,9 @@ void gluHist_Activate_(dialog* dlg)
 
 		if (v1 && v1->fields.list.bStrs)
 		{
-			u8 v2 = v1->fields.list.bCurrStr;
-			if (v2 != 0xFF)
+			if (v1->fields.list.bCurrStr != 0xFF)
 			{
-				dword_6D5A48 = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)dword_6D5A4C + v1->fields.list.pdwData[v2]);
+				dword_6D5A48 = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)dword_6D5A4C + v1->fields.list.pdwData[v1->fields.list.bCurrStr]);
 			}
 		}
 
