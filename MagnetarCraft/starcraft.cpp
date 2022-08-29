@@ -8,9 +8,31 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+void InitializeInputProcs_()
+{
+	if (dword_6D1208)
+	{
+		dword_6D1208();
+		dword_6D1208 = 0;
+	}
+
+	memset(input_procedures, 0, sizeof(input_procedures));
+	SetCursorClipBounds();
+
+	dword_6D5DD4 = 0;
+	if (dword_6D5DD0)
+	{
+		ClipCursor(&screen);
+	}
+	hAccTable = dword_5968F8;
+	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
+}
+
+FAIL_STUB_PATCH(InitializeInputProcs);
+
 void SetInGameInputProcs_()
 {
-	InitializeInputProcs();
+	InitializeInputProcs_();
 	hAccTable = hAccel;
 
 	input_procedures[EventNo::EVN_KEYFIRST] = nullsub_3;
@@ -5956,7 +5978,7 @@ void DestroyGame_()
 	stopMusic();
 	stopSounds();
 	LoadRaceSFX_(0);
-	InitializeInputProcs();
+	InitializeInputProcs_();
 	if (pylon_power_mask)
 	{
 		SMemFree(pylon_power_mask, "Starcraft\\SWAR\\lang\\CUnitProtoss.cpp", 102, 0);
@@ -14286,7 +14308,7 @@ void Game_Capturechanged_()
 		}
 		else
 		{
-			InitializeInputProcs();
+			InitializeInputProcs_();
 		}
 	}
 }
@@ -15346,7 +15368,7 @@ FAIL_STUB_PATCH(sub_48EB90);
 
 void sub_4D4440_()
 {
-	InitializeInputProcs();
+	InitializeInputProcs_();
 	input_procedures[EventNo::EVN_CHAR] = endVideoProc;
 	input_procedures[EventNo::EVN_LBUTTONUP] = endVideoProc;
 	input_procedures[EventNo::EVN_RBUTTONUP] = endVideoProc;
@@ -15389,7 +15411,7 @@ void GameMainLoop_()
 
 	gwGameMode = GAME_GLUES;
 	PreInitData_();
-	InitializeInputProcs();
+	InitializeInputProcs_();
 	CreateMainWindow_();
 	audioVideoInit_();
 	AppAddExit_(SaveCPUThrottleOption);
