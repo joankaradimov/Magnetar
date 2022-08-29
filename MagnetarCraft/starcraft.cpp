@@ -444,12 +444,12 @@ void UpdateDlgMousePosition_(void)
 	LOBYTE(InputFlags) = InputFlags & 0xFE;
 
 	dlgEvent v0;
-	v0.wNo = EVN_MOUSEMOVE;
+	v0.wNo = EventNo::EVN_MOUSEMOVE;
 	v0.cursor.x = Mouse.x;
 	v0.cursor.y = Mouse.y;
-	if (!sendInputToAllDialogs_(&v0) && input_procedures[EVN_MOUSEMOVE])
+	if (!sendInputToAllDialogs_(&v0) && input_procedures[EventNo::EVN_MOUSEMOVE])
 	{
-		input_procedures[EVN_MOUSEMOVE](&v0);
+		input_procedures[EventNo::EVN_MOUSEMOVE](&v0);
 	}
 	dword_5968EC = 1;
 }
