@@ -8,6 +8,22 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+void SetCursorClipBounds_()
+{
+	POINT top_left;
+	POINT bottom_right;
+
+	top_left.x = 0;
+	top_left.y = 0;
+	bottom_right.x = SCREEN_WIDTH;
+	bottom_right.y = SCREEN_HEIGHT;
+	ClientToScreen(hWndParent, &top_left);
+	ClientToScreen(hWndParent, &bottom_right);
+	SetRect(&screen, top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+}
+
+FUNCTION_PATCH(SetCursorClipBounds, SetCursorClipBounds_);
+
 void InitializeInputProcs_()
 {
 	if (dword_6D1208)
@@ -17,7 +33,7 @@ void InitializeInputProcs_()
 	}
 
 	memset(input_procedures, 0, sizeof(input_procedures));
-	SetCursorClipBounds();
+	SetCursorClipBounds_();
 
 	dword_6D5DD4 = 0;
 	if (dword_6D5DD0)
@@ -14149,7 +14165,7 @@ void doCursorClip_(int a1)
 		dword_6D5DD0 = a1;
 		if (a1 && !dword_6D5DD4)
 		{
-			SetCursorClipBounds();
+			SetCursorClipBounds_();
 		}
 		ClipCursor(dword_6D5DD0 ? &screen : NULL);
 	}
