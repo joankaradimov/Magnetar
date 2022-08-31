@@ -3,7 +3,7 @@
 #include <ddraw.h>
 #include <process.h>
 #include <time.h>
-#include "starcraft_exe/offsets.h"
+#include "starcraft.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
 #include "patching/patching.h"
@@ -685,8 +685,6 @@ void sub_4BD3A0_()
 
 FAIL_STUB_PATCH(sub_4BD3A0);
 
-DEFINE_ENUM_FLAG_OPERATORS(DialogFlags);
-
 void updateAllDlgs_()
 {
 	for (dialog* dlg = DialogList; dlg; dlg = dlg->pNext)
@@ -1268,8 +1266,6 @@ void playRadioFreeZerg_()
 }
 
 FAIL_STUB_PATCH(playRadioFreeZerg);
-
-DEFINE_ENUM_FLAG_OPERATORS(CheatFlags);
 
 bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
 {
@@ -1860,8 +1856,6 @@ void __stdcall drawMegatileImageData__(int x, int y)
 
 FUNCTION_PATCH((void*)0x49B9F0, drawMegatileImageData__);
 
-DEFINE_ENUM_FLAG_OPERATORS(MegatileFlags);
-
 void drawScreenRowTiles_(__int16* a1, TileID* a2, MegatileFlags* a3, int a4, int a5)
 {
 	if (a4 < map_size.height)
@@ -2034,8 +2028,6 @@ void blitTileCacheOnRefresh_()
 }
 
 FAIL_STUB_PATCH(blitTileCacheOnRefresh);
-
-DEFINE_ENUM_FLAG_OPERATORS(ImageFlags);
 
 void drawImage_(CImage* a1)
 {
@@ -8900,8 +8892,6 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 
 // FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
 
-DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
-
 void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
 {
 	for (int i = 0; i < a1->regionCount; i++)
@@ -14754,8 +14744,6 @@ struct EstablishingShotPositionEx
 	const char* tag;
 	PrintFlags alignment;
 };
-
-DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
 
 EstablishingShotPositionEx establishingShotPositions_[] = {
 	{1, "</SCREENLEFT>", PF_VALIGN_CENTER | PF_HALIGN_LEFT},
