@@ -74,6 +74,7 @@ class Function:
             signature = signature.replace('this@', 'this_@')
             signature = signature.replace('this)', 'this_)')
             signature = signature.replace(' __noreturn', '')
+            signature = re.sub(r' __spoils\<[^\>]*\>', '', signature)
 
             if self.calling_convention in {'usercall', 'userpurge'}:
                 signature = re.sub(r'@<[^>]*>', '', signature)
