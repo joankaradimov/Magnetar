@@ -70,7 +70,7 @@ void SetInGameInputProcs_()
 		GameScreenLClickEvent = input_placeBuilding_LeftMouseClick;
 		GameScreenRClickEvent = input_placeBuilding_RightMouseClick;
 	}
-	else if (byte_641694)
+	else if (is_placing_order)
 	{
 		GameScreenLClickEvent = input_targetOrder_LeftMouseClick;
 		GameScreenRClickEvent = input_targetOrder_RightMouseClick;
@@ -2035,6 +2035,8 @@ void blitTileCacheOnRefresh_()
 
 FAIL_STUB_PATCH(blitTileCacheOnRefresh);
 
+DEFINE_ENUM_FLAG_OPERATORS(ImageFlags);
+
 void drawImage_(CImage* a1)
 {
 	if ((a1->flags & 0x40) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & 1) != 0 || isImageRefreshable(a1)))
@@ -2047,7 +2049,7 @@ void drawImage_(CImage* a1)
 
 		a1->renderFunction(a1->screenPosition.x, a1->screenPosition.y, &a1->GRPFile->frames[a1->frameIndex], (rect*)&v8, (int)a1->coloringData);
 	}
-	a1->flags &= ~1;
+	a1->flags &= ~ImageFlags::IF_REDRAW;
 }
 
 FAIL_STUB_PATCH(drawImage);
@@ -2146,7 +2148,7 @@ void BWFXN_drawAllThingys_()
 		drawSprite_(currentThingy->sprite);
 		for (CImage* image = ThingyList_UsedFirst->sprite->pImageHead; image; image = image->next)
 		{
-			image->flags |= 1;
+			image->flags |= ImageFlags::IF_REDRAW;
 		}
 	}
 }
@@ -2772,7 +2774,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 			refreshLayer3And4();
 			refreshPlaceBuildingLocation();
 		}
-		if (byte_641694)
+		if (is_placing_order)
 		{
 			CancelTargetOrder();
 		}
@@ -3616,7 +3618,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		{
 			return 1;
 		}
-		else if (byte_641694)
+		else if (is_placing_order)
 		{
 			MinimapGameTargetOrder(evt);
 			return 1;
@@ -3636,7 +3638,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		{
 			return 1;
 		}
-		else if (is_placing_building || byte_641694)
+		else if (is_placing_building || is_placing_order)
 		{
 			MinimapGameRightclickEventMoveto(dlg);
 			return 1;
@@ -5276,12 +5278,12 @@ void hotkeyRemapping_()
 			byte_58D718[i] = 0x3;
 		}
 	}
-	byte_641694 = 0;
+	is_placing_order = 0;
 	sub_48D700();
 	if (is_placing_building)
 	{
 		refreshPlaceBuildingLocation();
-		if (byte_641694)
+		if (is_placing_order)
 		{
 			CancelTargetOrder();
 		}
@@ -5950,7 +5952,7 @@ void DestroyGame_()
 	{
 		refreshPlaceBuildingLocation();
 	}
-	if (byte_641694)
+	if (is_placing_order)
 	{
 		CancelTargetOrder();
 	}
@@ -6115,9 +6117,9 @@ void UpdateUnitOrderData_(CUnit* unit)
 	performSecondaryOrders(unit);
 	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
 	{
-		dword_6D11FC = unit->subUnit;
+		iscript_unit = unit->subUnit;
 		UpdateUnitOrderData_(unit->subUnit);
-		dword_6D11FC = unit;
+		iscript_unit = unit;
 	}
 
 	if (unit->sprite)
@@ -6144,7 +6146,7 @@ void UpdateUnits_()
 			refreshLayer3And4();
 			refreshPlaceBuildingLocation();
 		}
-		if (byte_641694)
+		if (is_placing_order)
 		{
 			CancelTargetOrder();
 		}
@@ -6175,8 +6177,8 @@ void UpdateUnits_()
 	for (CUnit* unit = UnitNodeList_HiddenUnit_Last; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		dword_6D11F4 = unit;
-		dword_6D11FC = unit;
+		iscript_flingy = unit;
+		iscript_unit = unit;
 		sub_4EB5E0(unit);
 		if (unit->sprite)
 		{
@@ -6191,8 +6193,8 @@ void UpdateUnits_()
 	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		dword_6D11F4 = unit;
-		dword_6D11FC = unit;
+		iscript_flingy = unit;
+		iscript_unit = unit;
 		sub_4EBC30(unit);
 	}
 
@@ -6201,8 +6203,8 @@ void UpdateUnits_()
 		for (CUnit* unit = UnitNodeList_ScannerSweep_First; unit; unit = next_unit)
 		{
 			next_unit = unit->next;
-			dword_6D11F4 = unit;
-			dword_6D11FC = unit;
+			iscript_flingy = unit;
+			iscript_unit = unit;
 			refreshUnitVision(unit);
 		}
 	}
@@ -6229,8 +6231,8 @@ void UpdateUnits_()
 	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		dword_6D11F4 = unit;
-		dword_6D11FC = unit;
+		iscript_flingy = unit;
+		iscript_unit = unit;
 		UpdateUnitOrderData_(unit);
 	}
 
@@ -6241,8 +6243,8 @@ void UpdateUnits_()
 		{
 			unit->isCloaked = 0;
 		}
-		dword_6D11F4 = unit;
-		dword_6D11FC = unit;
+		iscript_flingy = unit;
+		iscript_unit = unit;
 		unitUpdate(unit);
 	}
 
@@ -6260,12 +6262,12 @@ void UpdateUnits_()
 	for (CUnit* unit = UnitNodeList_ScannerSweep_First; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		dword_6D11F4 = unit;
-		dword_6D11FC = unit;
+		iscript_flingy = unit;
+		iscript_unit = unit;
 		UpdateUnitOrderData_(unit);
 	}
-	dword_6D11F4 = 0;
-	dword_6D11FC = 0;
+	iscript_flingy = 0;
+	iscript_unit = 0;
 }
 
 FAIL_STUB_PATCH(UpdateUnits);
