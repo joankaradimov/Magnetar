@@ -5379,7 +5379,9 @@ signed int LoadGameInit_()
 	if (InReplay)
 	{
 		if (!scenarioChk)
+		{
 			LoadReplayFile(CurrentMapFileName, NULL);
+		}
 		if (InReplay)
 		{
 			for (int i = 0; i < 8; i++)
@@ -5389,11 +5391,15 @@ signed int LoadGameInit_()
 		}
 	}
 	if (!loadGameFileHandle)
+	{
 		ElapsedTimeFrames = 0;
+	}
 	if (!LOBYTE(multiPlayerMode))
 	{
 		if (!LevelCheatInitGame_() || !LoadGameCreate_() || !RestartGame_() || !SinglePlayerMeleeInitGame_())
+		{
 			return 0;
+		}
 		if (InReplay)
 		{
 			initialSeed = replay_header.seed_related.initial_seed;
