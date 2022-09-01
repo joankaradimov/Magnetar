@@ -3682,7 +3682,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 	case 3:
 		refreshSelectionScreen_();
 		byte_63FF70 = byte_581D60;
-		BWFXN_OpenGameDialog("rez\\msgfltr.bin", msgfltr_Main);
+		BWFXN_OpenGameDialog_("rez\\msgfltr.bin", msgfltr_Main);
 		break;
 	case 4:
 		refreshSelectionScreen_();
