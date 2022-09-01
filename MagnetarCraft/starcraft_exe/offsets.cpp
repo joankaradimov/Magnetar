@@ -7470,7 +7470,7 @@ DECL_FUNC(bool (__fastcall*snd_dlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), snd
 DECL_FUNC(void(*sub_460F10)(), sub_460F10, 0x460f10);
 DECL_FUNC(int(*sub_460F20)(), sub_460F20, 0x460f20);
 DECL_FUNC(int(*lmissionDlgActivate)(), lmissionDlgActivate, 0x460f30);
-DECL_FUNC(int(*sub_460F70)(), sub_460F70, 0x460f70);
+DECL_FUNC(void (__cdecl*sub_460F70)(), sub_460F70, 0x460f70);
 DECL_FUNC(void (__cdecl*sub_460FA0)(), sub_460FA0, 0x460fa0);
 void lmissionDlgCreate(dialog *a1) {
     int address = 0x461020;
@@ -7480,8 +7480,16 @@ void lmissionDlgCreate(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*lmission_DLG_Interact)(dialog *dlg, dlgEvent *evt), lmission_DLG_Interact, 0x461430);
-DECL_FUNC(bool (__fastcall*wmission_BINDLG_Main)(dialog *dlg, dlgEvent *evt), wmission_BINDLG_Main, 0x461510);
+void sub_461160(dialog *a1) {
+    int address = 0x461160;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
+DECL_FUNC(int (__fastcall*lmission_DLG_Interact)(dialog *dlg, dlgEvent *evt), lmission_DLG_Interact, 0x461430);
+DECL_FUNC(int (__fastcall*wmission_BINDLG_Main)(dialog *dlg, dlgEvent *evt), wmission_BINDLG_Main, 0x461510);
 DECL_FUNC(int(*nullsub_25)(), nullsub_25, 0x4616d0);
 DECL_FUNC(int(*sub_4616E0)(), sub_4616E0, 0x4616e0);
 DECL_FUNC(int(*sub_4616F0)(), sub_4616F0, 0x4616f0);
@@ -11513,21 +11521,21 @@ int SAI_PathCreate_Sub3(PathCreateRelated *a1, SAI_Paths *a2) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*SAI_PathCreate)(MegatileFlags *a1), SAI_PathCreate, 0x484290);
-DECL_FUNC(void (__thiscall*nullsub_3)(dlgEvent *), nullsub_3, 0x484350);
+DECL_FUNC(void (__fastcall*nullsub_3)(dlgEvent *), nullsub_3, 0x484350);
 DECL_FUNC(int(*saveScreenLocation)(), saveScreenLocation, 0x484360);
-DECL_FUNC(void (__thiscall*input_Game_LeftMouseBtnDwn)(dlgEvent *), input_Game_LeftMouseBtnDwn, 0x484380);
+DECL_FUNC(void (__fastcall*input_Game_LeftMouseBtnDwn)(dlgEvent *), input_Game_LeftMouseBtnDwn, 0x484380);
 DECL_FUNC(void (__thiscall*_input_Game_Idle)(dlgEvent *this_), _input_Game_Idle, 0x484390);
-DECL_FUNC(void (__thiscall*input_Game_MiddleMouseBtnUp)(dlgEvent *), input_Game_MiddleMouseBtnUp, 0x4843a0);
+DECL_FUNC(void (__fastcall*input_Game_MiddleMouseBtnUp)(dlgEvent *), input_Game_MiddleMouseBtnUp, 0x4843a0);
 DECL_FUNC(void(*resetGameInputProcs)(CursorType a1), resetGameInputProcs, 0x4843f0);
 DECL_FUNC(void (__thiscall*input_MiddleBtnScreenMove_MouseMove)(dlgEvent *), input_MiddleBtnScreenMove_MouseMove, 0x484460);
 DECL_FUNC(int(*recallScreenLocation)(), recallScreenLocation, 0x484500);
-DECL_FUNC(void (__thiscall*input_Game_MiddleMouseBtnDwn)(dlgEvent *), input_Game_MiddleMouseBtnDwn, 0x484520);
-DECL_FUNC(void (__thiscall*input_standardSysHotkeys)(dlgEvent *this_), input_standardSysHotkeys, 0x484590);
+DECL_FUNC(void (__fastcall*input_Game_MiddleMouseBtnDwn)(dlgEvent *), input_Game_MiddleMouseBtnDwn, 0x484520);
+DECL_FUNC(void (__fastcall*input_standardSysHotkeys)(dlgEvent *this_), input_standardSysHotkeys, 0x484590);
 DECL_FUNC(void (__thiscall*input_targetOrder_RightMouseClick)(dlgEvent *), input_targetOrder_RightMouseClick, 0x4845f0);
 DECL_FUNC(void (__thiscall*input_placeBuilding_RightMouseClick)(dlgEvent *), input_placeBuilding_RightMouseClick, 0x484600);
-DECL_FUNC(void (__thiscall*input_Game_RightMouseBtnDwn)(dlgEvent *), input_Game_RightMouseBtnDwn, 0x484620);
-DECL_FUNC(void (__thiscall*input_Game_UserKeyPress)(dlgEvent *), input_Game_UserKeyPress, 0x4846b0);
-DECL_FUNC(void (__thiscall*CMDACT_Hotkey)(dlgEvent *), CMDACT_Hotkey, 0x4846e0);
+DECL_FUNC(void (__fastcall*input_Game_RightMouseBtnDwn)(dlgEvent *), input_Game_RightMouseBtnDwn, 0x484620);
+DECL_FUNC(void (__fastcall*input_Game_UserKeyPress)(dlgEvent *), input_Game_UserKeyPress, 0x4846b0);
+DECL_FUNC(void (__fastcall*CMDACT_Hotkey)(dlgEvent *), CMDACT_Hotkey, 0x4846e0);
 DECL_FUNC(void(*SetInGameInputProcs)(), SetInGameInputProcs, 0x484cc0);
 DECL_FUNC(int(*sub_484D90)(), sub_484D90, 0x484d90);
 DECL_FUNC(int(*getPlayerCountInForce)(), getPlayerCountInForce, 0x484dc0);
@@ -11605,9 +11613,19 @@ DECL_FUNC(int (__stdcall*SendTextMessagePublic)(int), SendTextMessagePublic, 0x4
 DECL_FUNC(void (__cdecl*RecvMessage)(), RecvMessage, 0x485f70);
 DECL_FUNC(int(*Cls2RecvFrom)(), Cls2RecvFrom, 0x486530);
 DECL_FUNC(int(*RecvSaveTurns)(), RecvSaveTurns, 0x486580);
+void Game_RECV(int a1, int a2, int a3) {
+    int address = 0x4865d0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a3
+        push dword ptr a2
+        call address
+    }
+}
 DECL_FUNC(int(*ParseGameRecvInfo)(), ParseGameRecvInfo, 0x486f50);
 DECL_FUNC(int(*gameLoopTurns)(), gameLoopTurns, 0x487070);
-DECL_FUNC(int(*replayLoop)(), replayLoop, 0x487100);
+DECL_FUNC(void (__cdecl*replayLoop)(), replayLoop, 0x487100);
 DECL_FUNC(int(*BriefingLoopTurns)(), BriefingLoopTurns, 0x487250);
 DECL_FUNC(int(*nullsub_44)(), nullsub_44, 0x4872a0);
 DECL_FUNC(int(*sub_4872B0)(), sub_4872B0, 0x4872b0);
@@ -12331,7 +12349,7 @@ int rndGetSfxBetween(SfxData a1, SfxData a2) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*input_Game_Idle)(dlgEvent *this_), input_Game_Idle, 0x48e980);
+DECL_FUNC(void (__fastcall*input_Game_Idle)(dlgEvent *this_), input_Game_Idle, 0x48e980);
 DECL_FUNC(int (__fastcall*resetUnitAttackNotifyTimer)(CUnit *, CUnit *), resetUnitAttackNotifyTimer, 0x48e9f0);
 DECL_FUNC(unsigned int (__fastcall*sub_48EA00)(SfxData a1), sub_48EA00, 0x48ea00);
 SfxData getUnitPissSfxOrBldgWhatSfx(UnitType unit_type, int a2) {
@@ -17762,8 +17780,8 @@ int sub_4C90C0(dialog *a1) {
     return result_;
 }
 DECL_FUNC(void (__fastcall*sub_4C9120)(bool exit_code), sub_4C9120, 0x4c9120);
-DECL_FUNC(void (__fastcall*a4)(dialog *dlg, __int16 a2), a4, 0x4c9150);
-DECL_FUNC(int (__thiscall*BWFXN_QuitReplay_maybe)(dialog *a1), BWFXN_QuitReplay_maybe, 0x4c9280);
+DECL_FUNC(void (__fastcall*sub_4C9150)(dialog *dlg, __int16 a2), sub_4C9150, 0x4c9150);
+DECL_FUNC(void (__fastcall*BWFXN_QuitReplay_maybe)(dialog *this_), BWFXN_QuitReplay_maybe, 0x4c9280);
 DECL_FUNC(int(*options_OK)(), options_OK, 0x4c9360);
 int sub_4C93A0(dialog *a1) {
     int address = 0x4c93a0;
@@ -17802,7 +17820,7 @@ void sub_4C94F0(dialog *a1) {
     }
 }
 DECL_FUNC(int (__thiscall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
-DECL_FUNC(int (__thiscall*BWFXN_QuitMission)(dialog *a1), BWFXN_QuitMission, 0x4c95a0);
+DECL_FUNC(void (__fastcall*BWFXN_QuitMission)(dialog *this_), BWFXN_QuitMission, 0x4c95a0);
 DECL_FUNC(int (__thiscall*quit_lastBINDLG)(dialog *a1), quit_lastBINDLG, 0x4c96d0);
 DECL_FUNC(void (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
 bool options_Cancel(dialog *a1, dlgEvent *a2) {
@@ -17877,7 +17895,7 @@ char gamemenu_CustomCtrlID(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(bool (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt), gamemenu_Dlg_Interact, 0x4ca240);
+DECL_FUNC(int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt), gamemenu_Dlg_Interact, 0x4ca240);
 DECL_FUNC(void(*sub_4CA2D0)(), sub_4CA2D0, 0x4ca2d0);
 DECL_FUNC(void (__cdecl*QuitMissionMenu)(), QuitMissionMenu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*ExitGameMenu)(), ExitGameMenu, 0x4ca330);
@@ -18331,7 +18349,7 @@ GameActionDataBlock *allocateRepGameActionMemory(GameActionDataBlock *a1) {
 DECL_FUNC(int(*sub_4CDFA0)(), sub_4CDFA0, 0x4cdfa0);
 DECL_FUNC(int(*sub_4CDFC0)(), sub_4CDFC0, 0x4cdfc0);
 DECL_FUNC(int(*sub_4CDFD0)(), sub_4CDFD0, 0x4cdfd0);
-int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, int a3, char *dest, int a5) {
+int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, char *a3, char *dest, int *a5) {
     int address = 0x4cdff0;
     int result_;
     __asm {
@@ -18811,7 +18829,7 @@ int CreateGame(GameData *a1) {
 DECL_FUNC(signed int(*sub_4D4130)(), sub_4D4130, 0x4d4130);
 DECL_FUNC(int (__stdcall*LobbyLoopCnt)(int), LobbyLoopCnt, 0x4d4340);
 DECL_FUNC(int(*sub_4D4400)(), sub_4D4400, 0x4d4400);
-DECL_FUNC(void (__thiscall*endVideoProc)(dlgEvent *), endVideoProc, 0x4d4410);
+DECL_FUNC(void (__fastcall*endVideoProc)(dlgEvent *), endVideoProc, 0x4d4410);
 DECL_FUNC(void (__cdecl*sub_4D4440)(), sub_4D4440, 0x4d4440);
 void PlayMovie(unsigned int a1) {
     int address = 0x4d4470;
@@ -24910,8 +24928,8 @@ UpdateFunction(&update_functions)[18] = * ((decltype(&update_functions)) 0x51251
 RenderFunction(&render_functions)[18] = * ((decltype(&render_functions)) 0x5125a0);
 int& g_ActiveNationID = * ((decltype(&g_ActiveNationID)) 0x512678);
 int& dword_51267C = * ((decltype(&dword_51267C)) 0x51267c);
-char(&dword_512680)[] = * ((decltype(&dword_512680)) 0x512680);
-unsigned __int8& g_LocalNationID = * ((decltype(&g_LocalNationID)) 0x512684);
+int& dword_512680 = * ((decltype(&dword_512680)) 0x512680);
+unsigned int& g_LocalNationID = * ((decltype(&g_LocalNationID)) 0x512684);
 int& g_LocalHumanID = * ((decltype(&g_LocalHumanID)) 0x512688);
 int& playerid = * ((decltype(&playerid)) 0x51268c);
 char *(&cinematics)[28] = * ((decltype(&cinematics)) 0x512690);
@@ -25623,8 +25641,7 @@ int(&MissionObjectives)[12] = * ((decltype(&MissionObjectives)) 0x58d6c4);
 int& CountdownTimer = * ((decltype(&CountdownTimer)) 0x58d6f4);
 int& ElapsedTimeSeconds = * ((decltype(&ElapsedTimeSeconds)) 0x58d6f8);
 int& dword_58D6FC = * ((decltype(&dword_58D6FC)) 0x58d6fc);
-int& dword_58D700 = * ((decltype(&dword_58D700)) 0x58d700);
-int& dword_58D704 = * ((decltype(&dword_58D704)) 0x58d704);
+char(&byte_58D700)[8] = * ((decltype(&byte_58D700)) 0x58d700);
 int& dword_58D708 = * ((decltype(&dword_58D708)) 0x58d708);
 char& byte_58D70C = * ((decltype(&byte_58D70C)) 0x58d70c);
 char& byte_58D70D = * ((decltype(&byte_58D70D)) 0x58d70d);
@@ -26888,7 +26905,7 @@ WORD *& networkTable = * ((decltype(&networkTable)) 0x6d1220);
 char& byte_6D1224 = * ((decltype(&byte_6D1224)) 0x6d1224);
 char& byte_6D1225 = * ((decltype(&byte_6D1225)) 0x6d1225);
 UnknownTilesetRelated1& stru_6D1228 = * ((decltype(&stru_6D1228)) 0x6d1228);
-void (__thiscall *&dword_6D1234)(dialog *) = *((decltype(&dword_6D1234)) 0x6d1234);
+void (__fastcall *&dword_6D1234)(dialog *) = *((decltype(&dword_6D1234)) 0x6d1234);
 StringTbl& StatTxtTbl = * ((decltype(&StatTxtTbl)) 0x6d1238);
 char *& okcancel_message = * ((decltype(&okcancel_message)) 0x6d123c);
 void *& dword_6D1240 = * ((decltype(&dword_6D1240)) 0x6d1240);

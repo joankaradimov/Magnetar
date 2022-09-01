@@ -4654,8 +4654,10 @@ void cleanBufferCounts_()
 
 	if (gameData.save_timestamp == 0)
 	{
-		dword_58D700 = 0;
-		dword_58D704 = 0;
+		for (int i = 0; i < 8; i++)
+		{
+			byte_58D700[i] = 0;
+		}
 	}
 }
 
