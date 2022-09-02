@@ -6978,6 +6978,54 @@ void PollInput_()
 
 FAIL_STUB_PATCH(PollInput);
 
+void replayLoop_()
+{
+	if (!InGame)
+	{
+		return;
+	}
+	if ((int)ElapsedTimeFrames >= replay_header.ReplayFrames)
+	{
+		SetGameSpeed_maybe(registry_options.GameSpeed, 1, replay_speed_multiplier);
+		open_win_mission_dialog();
+	}
+	else if ((int)ElapsedTimeFrames >= nextReplayCommandFrame)
+	{
+		if ((int)ElapsedTimeFrames <= nextReplayCommandFrame || (nextReplayCommandFrame = sub_4CDFF0(replayData, &dword_6D5BF0, byte_6554D8, dest, dword_654AA8), nextReplayCommandFrame != -1) && (int)ElapsedTimeFrames >= nextReplayCommandFrame)
+		{
+			if (dword_6D5BF0)
+			{
+				byte_6D5BEC = 1;
+				IsInGameLoop = 1;
+				int v3 = 0;
+				for (int v4 = 0; v4 < dword_6D5BF0; v4++)
+				{
+					for (int v5 = 0; v5 < 8; v5++)
+					{
+						if (Players[v5].dwStormId == (u8)byte_6554D8[v4])
+						{
+							dword_51267C = Players[v5].dwPlayerID;
+							g_ActiveNationID = dword_51267C;
+							break;
+						}
+					}
+					dword_6556E8 = 0;
+					Game_RECV(&dest[v3], dword_654AA8[v4], 1);
+					v3 += dword_654AA8[v4];
+				}
+				dword_6D5BF0 = 0;
+				g_ActiveNationID = g_LocalNationID;
+				dword_51267C = g_LocalHumanID;
+				dword_512680 = playerid;
+				byte_6D5BEC = 0;
+				IsInGameLoop = 0;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(replayLoop);
+
 int BWFXN_IsPaused_()
 {
 	return IS_GAME_PAUSED;
@@ -7084,7 +7132,7 @@ void GameLoop_State_()
 	{
 		if (InReplay)
 		{
-			replayLoop();
+			replayLoop_();
 		}
 
 		int v5;
