@@ -5890,6 +5890,65 @@ void CleanupSpritesDat_()
 
 FAIL_STUB_PATCH(CleanupSpritesDat);
 
+void sub_460F70_()
+{
+	if (multiPlayerMode && NetMode.as_number == 'BNET' && !dword_685174)
+	{
+		dword_685174 = 1;
+		ReportGameResult();
+	}
+}
+
+FAIL_STUB_PATCH(sub_460F70);
+
+void sub_484D90_()
+{
+	if (is_placing_building)
+	{
+		refreshPlaceBuildingLocation();
+	}
+	if (is_placing_order)
+	{
+		CancelTargetOrder();
+	}
+	SetInGameInputProcs_();
+}
+
+FAIL_STUB_PATCH(sub_484D90);
+
+void open_lose_mission_dialog_()
+{
+	if (!dword_685178 && !dword_68517C)
+	{
+		sub_460F70_();
+		dword_685178 = 1;
+		sub_484D90_();
+
+		LastControlID = 0;
+		BWFXN_OpenGameDialog_("rez\\lmission.bin", lmission_DLG_Interact);
+	}
+}
+
+FAIL_STUB_PATCH(open_lose_mission_dialog);
+
+void load_endmission_()
+{
+	if (!InReplay && word_650970-- == 0)
+	{
+		word_650970 = 45;
+		if (byte_58D700[g_LocalNationID] == 2)
+		{
+			open_lose_mission_dialog_();
+		}
+		else if (byte_58D700[g_LocalNationID] == 3 || byte_58D700[g_LocalNationID] == 5)
+		{
+			open_win_mission_dialog();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(load_endmission);
+
 void DestroyGame_()
 {
 	if (isInGame)
@@ -5948,15 +6007,7 @@ void DestroyGame_()
 		}
 		++v2;
 	} while ((int)v2 < (int)playerReplayWatchers);
-	if (is_placing_building)
-	{
-		refreshPlaceBuildingLocation();
-	}
-	if (is_placing_order)
-	{
-		CancelTargetOrder();
-	}
-	SetInGameInputProcs_();
+	sub_484D90_();
 	destroyGameHUD_();
 	DestroyMapData_();
 	if (dword_6BEE8C)
@@ -16485,7 +16536,7 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 {
 	if (!IS_GAME_PAUSED || byte_6509B4)
 	{
-		load_endmission();
+		load_endmission_();
 		countdownTimersExecute(dwMillisecondsPerFrame);
 		if (word_6509A0-- == 0)
 		{
