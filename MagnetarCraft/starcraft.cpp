@@ -13357,8 +13357,8 @@ FAIL_STUB_PATCH(sub_4B4600);
 void saveGame_Create_(dialog* dlg)
 {
 	DLG_SwishIn_(dlg);
-	UpdateCancelButton(dlg, 5u, 0x20000000);
-	UpdateOKButton(dlg, 3u, 0x20000000);
+	UpdateCancelButton(dlg, 5, DialogFlags::CTRL_USELOCALGRAPHIC);
+	UpdateOKButton(dlg, 3, DialogFlags::CTRL_USELOCALGRAPHIC);
 	dialog* v3 = getControlFromIndex_(dlg, 3);
 	if (v3)
 	{
