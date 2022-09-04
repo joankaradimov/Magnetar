@@ -8,6 +8,66 @@
 #include "tbl_file.h"
 #include "patching/patching.h"
 
+void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
+{
+	registry_options.GameSpeed = game_speed;
+	replay_speed_multiplier = speed_multiplier;
+	is_replay_paused = a2;
+
+	if (game_speed)
+	{
+		dword_51BFDC[0] = 0xA7 / speed_multiplier;
+		dword_51BFDC[1] = 0x6F / speed_multiplier;
+		dword_51BFDC[2] = 0x53 / speed_multiplier;
+		dword_51BFDC[3] = 0x43 / speed_multiplier;
+		dword_51BFDC[4] = 0x38 / speed_multiplier;
+		dword_51BFDC[5] = 0x30 / speed_multiplier;
+		dword_51BFDC[6] = 0x2A / speed_multiplier;
+		FrameSkip = speed_multiplier < 8 ? 1 : 10;
+	}
+	else
+	{
+		dword_51BFDC[0] = 167 * speed_multiplier;
+		dword_51BFDC[1] = 111 * speed_multiplier;
+		dword_51BFDC[2] = 83 * speed_multiplier;
+		dword_51BFDC[3] = 67 * speed_multiplier;
+		dword_51BFDC[4] = 56 * speed_multiplier;
+		dword_51BFDC[5] = 48 * speed_multiplier;
+		dword_51BFDC[6] = 42 * speed_multiplier;
+		FrameSkip = 1;
+	}
+
+	GameSpeedModifiers.gameSpeedModifiers[0] = dword_51BFDC[0];
+	GameSpeedModifiers.gameSpeedModifiers[1] = dword_51BFDC[1];
+	GameSpeedModifiers.gameSpeedModifiers[2] = dword_51BFDC[2];
+	GameSpeedModifiers.gameSpeedModifiers[3] = dword_51BFDC[3];
+	GameSpeedModifiers.gameSpeedModifiers[4] = dword_51BFDC[4];
+	GameSpeedModifiers.gameSpeedModifiers[5] = dword_51BFDC[5];
+	GameSpeedModifiers.gameSpeedModifiers[6] = dword_51BFDC[6];
+
+	resetLastInputFrameCounts();
+	CanUpdateCurrentButtonSet = 1;
+	CanUpdateSelectedUnitPortrait = 1;
+	CanUpdateStatDataDialog = 1;
+	ctrl_under_mouse = 0;
+	ctrl_under_mouse_val = 0;
+}
+
+void __cdecl SetGameSpeed_maybe__()
+{
+	int game_speed;
+	unsigned __int8 a2;
+	unsigned int speed_multiplier;
+
+	__asm mov game_speed, eax
+	__asm mov a2, dl
+	__asm mov speed_multiplier, ecx
+
+	SetGameSpeed_maybe_(game_speed, a2, speed_multiplier);
+}
+
+FUNCTION_PATCH((void*)0x4DEB90, SetGameSpeed_maybe__);
+
 void SetCursorClipBounds_()
 {
 	POINT top_left;
