@@ -15933,6 +15933,58 @@ int __fastcall TriggerAction_Wait_(Action* a1)
 
 FAIL_STUB_PATCH(TriggerAction_Wait);
 
+int __fastcall TriggerAction_PauseGame_(Action* a1)
+{
+	if (!multiPlayerMode && !byte_6509B4)
+	{
+		PlayerType player_type = Players[active_trigger_player].nType;
+		if (player_type != PT_Computer && player_type != PT_Rescuable && player_type != PT_Unknown0 && player_type != PT_Neutral && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+		{
+			DlgAccelerator = hAccTable;
+			AcceleratorTables = input_procedures[16];
+			hAccTable = dword_5968F8;
+			input_procedures[16] = input_standardSysHotkeys;
+			RefreshCursor_0();
+			PauseGame_maybe();
+			dword_6509AC->container.dwExecutionFlags |= 0x20u;
+			byte_6509B4 = 1;
+		}
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(TriggerAction_PauseGame);
+
+int __fastcall TriggerAction_UnpauseGame_(Action* a1)
+{
+	if (!multiPlayerMode && byte_6509B4)
+	{
+		PlayerType player_type = Players[active_trigger_player].nType;
+		if (player_type != PT_Computer && player_type != PT_Rescuable && player_type != PT_Unknown0 && player_type != PT_Neutral)
+		{
+			dword_6509AC->container.dwExecutionFlags &= ~0x20u;
+			byte_6509B4 = 0;
+			if (IS_GAME_PAUSED)
+			{
+				IS_GAME_PAUSED = 0;
+				if (InReplay && !dword_6D5BE8)
+				{
+					SetGameSpeed_maybe(registry_options.GameSpeed, 0, replay_speed_multiplier);
+				}
+			}
+			cursorRefresh();
+			SetCursorPos(GAME_AREA_WIDTH / 2, GAME_AREA_HEIGHT / 2);
+			Mouse.x = GAME_AREA_WIDTH / 2;
+			Mouse.y = GAME_AREA_HEIGHT / 2;
+			hAccTable = DlgAccelerator;
+			input_procedures[EVN_SYSCHAR] = AcceleratorTables;
+		}
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(TriggerAction_UnpauseGame);
+
 unsigned int getTextDisplayTime_(const char* text)
 {
 	if (text == NULL)
@@ -16574,8 +16626,8 @@ ActionPointer ActionTable_[] = {
 	TriggerAction_Defeat_,
 	TriggerAction_PreserveTrigger_,
 	TriggerAction_Wait_,
-	TriggerAction_PauseGame,
-	TriggerAction_UnpauseGame,
+	TriggerAction_PauseGame_,
+	TriggerAction_UnpauseGame_,
 	TriggerAction_Transmission_,
 	TriggerAction_PlayWav_,
 	TriggerAction_DisplayTextMessage_,
