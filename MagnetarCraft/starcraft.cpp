@@ -2853,6 +2853,22 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+void QuitMissionMenu_()
+{
+	if (InReplay)
+	{
+		dword_6D1234 = BWFXN_QuitReplay_maybe;
+		BWFXN_OpenGameDialog_("rez\\quitrepl.bin", gamemenu_Dlg_Interact);
+	}
+	else
+	{
+		dword_6D1234 = BWFXN_QuitMission;
+		BWFXN_OpenGameDialog_("rez\\quit2mnu.bin", gamemenu_Dlg_Interact);
+	}
+}
+
+FUNCTION_PATCH(QuitMissionMenu, QuitMissionMenu_);
+
 void TitlePaletteUpdate_(int a1)
 {
 	PALETTEENTRY* v1;
