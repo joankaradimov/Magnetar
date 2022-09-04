@@ -5916,6 +5916,66 @@ void sub_484D90_()
 
 FAIL_STUB_PATCH(sub_484D90);
 
+void lmissionDlgActivate_()
+{
+	dword_68517C = 1;
+
+	if (LastControlID == -2)
+	{
+		lmissionInitSelf(GamePosition::GAME_LOSE);
+	}
+}
+
+FAIL_STUB_PATCH(lmissionDlgActivate);
+
+int __fastcall lmission_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+	case EVN_MOUSEMOVE:
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONUP:
+	case EVN_LBUTTONDBLCLK:
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONUP:
+	case EVN_RBUTTONDBLCLK:
+	case EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			lmissionDlgCreate(dlg);
+			break;
+		case USER_DESTROY:
+			waitLoopCntd(0, dlg);
+			msgfltr_Cancel(0);
+			genericPopupDlgInteract(dlg, evt);
+			dword_685178 = 0;
+			return 1;
+		case USER_ACTIVATE:
+			lmissionDlgActivate_();
+			break;
+		case USER_UNK_8:
+			if (*(_DWORD*)&evt->wSelection == 0)
+			{
+				lmissionInitSelf(GamePosition::GAME_LOSE);
+				DestroyDialog(dlg);
+				return 1;
+			}
+			break;
+		}
+	}
+
+LABEL_4:
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(lmission_DLG_Interact);
+
 void open_lose_mission_dialog_()
 {
 	if (!dword_685178 && !dword_68517C)
@@ -5925,11 +5985,65 @@ void open_lose_mission_dialog_()
 		sub_484D90_();
 
 		LastControlID = 0;
-		BWFXN_OpenGameDialog_("rez\\lmission.bin", lmission_DLG_Interact);
+		BWFXN_OpenGameDialog_("rez\\lmission.bin", lmission_DLG_Interact_);
 	}
 }
 
 FAIL_STUB_PATCH(open_lose_mission_dialog);
+
+void wmissionDlgActivate_()
+{
+	dword_68517C = 1;
+
+	if (LastControlID == -2)
+	{
+		lmissionInitSelf(GamePosition::GAME_WIN);
+	}
+	else if (LastControlID == 1)
+	{
+		InfoMessage(0, GetNetworkTblString(16));
+	}
+}
+
+FAIL_STUB_PATCH(wmissionDlgActivate);
+
+int __fastcall wmission_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_461160(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			msgfltr_Cancel(0);
+			genericPopupDlgInteract(dlg, evt);
+			dword_685178 = 0;
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			wmissionDlgActivate_();
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(wmission_BINDLG_Main);
 
 void open_win_mission_dialog_()
 {
@@ -5940,7 +6054,7 @@ void open_win_mission_dialog_()
 		sub_484D90_();
 
 		LastControlID = 0;
-		BWFXN_OpenGameDialog_("rez\\wmission.bin", wmission_BINDLG_Main);
+		BWFXN_OpenGameDialog_("rez\\wmission.bin", wmission_BINDLG_Main_);
 	}
 }
 
