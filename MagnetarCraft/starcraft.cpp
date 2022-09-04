@@ -5931,6 +5931,21 @@ void open_lose_mission_dialog_()
 
 FAIL_STUB_PATCH(open_lose_mission_dialog);
 
+void open_win_mission_dialog_()
+{
+	if (!dword_685178 && !dword_68517C)
+	{
+		sub_460F70_();
+		dword_685178 = 1;
+		sub_484D90_();
+
+		LastControlID = 0;
+		BWFXN_OpenGameDialog_("rez\\wmission.bin", wmission_BINDLG_Main);
+	}
+}
+
+FAIL_STUB_PATCH(open_win_mission_dialog);
+
 void load_endmission_()
 {
 	if (!InReplay && word_650970-- == 0)
@@ -5942,7 +5957,7 @@ void load_endmission_()
 		}
 		else if (byte_58D700[g_LocalNationID] == 3 || byte_58D700[g_LocalNationID] == 5)
 		{
-			open_win_mission_dialog();
+			open_win_mission_dialog_();
 		}
 	}
 }
@@ -6987,7 +7002,7 @@ void replayLoop_()
 	if ((int)ElapsedTimeFrames >= replay_header.ReplayFrames)
 	{
 		SetGameSpeed_maybe(registry_options.GameSpeed, 1, replay_speed_multiplier);
-		open_win_mission_dialog();
+		open_win_mission_dialog_();
 	}
 	else if ((int)ElapsedTimeFrames >= nextReplayCommandFrame)
 	{
