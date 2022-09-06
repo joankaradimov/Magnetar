@@ -2971,6 +2971,51 @@ void LoadTitle_()
 
 FAIL_STUB_PATCH(LoadTitle);
 
+void setImageDirection_(CImage* image, unsigned __int8 direction)
+{
+	if (image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET)
+	{
+		updateImagePositionOffset(image);
+	}
+
+	if (image->flags & ImageFlags::IF_HAS_DIRECTIONAL_FRAMES)
+	{
+		int new_direction = (direction + 4) / 8;
+		ImageFlags new_flip_flag = (ImageFlags)0;
+
+		if (new_direction > 16)
+		{
+			new_flip_flag = ImageFlags::IF_HORIZONTALLY_FLIPPED;
+			new_direction = 32 - new_direction;
+		}
+
+		if (image->direction != new_direction || (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) != new_flip_flag)
+		{
+			image->direction = new_direction;
+			image->flags &= ~IF_HORIZONTALLY_FLIPPED;
+			image->flags |= new_flip_flag;
+			setImagePaletteType(image, image->paletteType);
+
+			if (image->frameIndex != image->frameSet + image->direction)
+			{
+				image->flags |= IF_REDRAW;
+				image->frameIndex = image->frameSet + image->direction;
+			}
+		}
+	}
+}
+
+void __stdcall setImageDirection__(u8 direction)
+{
+	CImage* image;
+
+	__asm mov image, esi
+
+	setImageDirection_(image, direction);
+}
+
+FUNCTION_PATCH((void*)0x4D5F80, setImageDirection__);
+
 void InitializeImageData_(CImage* image, CSprite* sprite, int image_id, __int8 horizontal_offset, __int8 vertical_offset)
 {
 	image->imageID = image_id;
