@@ -3002,6 +3002,8 @@ void LoadTitle_()
 
 FAIL_STUB_PATCH(LoadTitle);
 
+const ImageFlags IF_HAS_ALL_ROTATION_DIRECTIONS = ImageFlags(0x100);
+
 void updateImageDirection_(CImage* image, u8 direction)
 {
 	if (image->flags & ImageFlags::IF_HAS_DIRECTIONAL_FRAMES)
@@ -3009,7 +3011,7 @@ void updateImageDirection_(CImage* image, u8 direction)
 		ImageFlags new_flip_flag = (ImageFlags)0;
 		int new_direction = direction;
 
-		if (new_direction > 16)
+		if (new_direction > 16 && !(image->flags & IF_HAS_ALL_ROTATION_DIRECTIONS))
 		{
 			new_direction = 32 - new_direction;
 			new_flip_flag = ImageFlags::IF_HORIZONTALLY_FLIPPED;
@@ -3059,7 +3061,7 @@ void setImageDirection_(CImage* image, unsigned __int8 direction)
 		int new_direction = (direction + 4) / 8;
 		ImageFlags new_flip_flag = (ImageFlags)0;
 
-		if (new_direction > 16)
+		if (new_direction > 16 && !(image->flags & IF_HAS_ALL_ROTATION_DIRECTIONS))
 		{
 			new_flip_flag = ImageFlags::IF_HORIZONTALLY_FLIPPED;
 			new_direction = 32 - new_direction;
@@ -3100,6 +3102,10 @@ void InitializeImageData_(CImage* image, CSprite* sprite, int image_id, __int8 h
 	if (Images_IsTurnable[image_id] & 1)
 	{
 		image->flags |= ImageFlags::IF_HAS_DIRECTIONAL_FRAMES;
+	}
+	if (Images_IsTurnable[image_id] & 2)
+	{
+		image->flags |= IF_HAS_ALL_ROTATION_DIRECTIONS;
 	}
 	if (Images_IsClickable[image_id] & 1)
 	{
