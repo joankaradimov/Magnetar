@@ -16930,3 +16930,150 @@ void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size
 }
 
 FUNCTION_PATCH(BWFXN_QueueCommand, BWFXN_QueueCommand_);
+
+ButtonState __fastcall BTNSCOND_ReplayPlayPause_(u16 variable, int player_id, CUnit* unit)
+{
+	if (InReplay && getActivePlayerId() == playerid)
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+	else
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_ReplayPlayPause, BTNSCOND_ReplayPlayPause_);
+
+void CMDACT_SetReplaySpeed_()
+{
+	ReplaySpeedCommand command;
+	command.game_speed = registry_options.GameSpeed;
+	command.replay_speed_multiplier = replay_speed_multiplier;
+	command.command_id_maybe = 86;
+	command.is_paused = !is_replay_paused;
+
+	BWFXN_QueueCommand(&command, sizeof(command));
+}
+
+FUNCTION_PATCH(CMDACT_SetReplaySpeed, CMDACT_SetReplaySpeed_);
+
+const int MAX_REPLAY_SPEED = 1 << 16;
+
+ButtonState __fastcall BTNSCOND_ReplaySlowDown_(u16 variable, int player_id, CUnit* unit)
+{
+	if (!InReplay || getActivePlayerId() != playerid)
+	{
+		return BTNST_HIDDEN;
+	}
+	else if (!registry_options.GameSpeed && replay_speed_multiplier >= 1 || is_replay_paused)
+	{
+		return BTNST_DISABLED;
+	}
+	else
+	{
+		return BTNST_ENABLED;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_ReplaySlowDown, BTNSCOND_ReplaySlowDown_);
+
+void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
+{
+	if (is_replay_paused)
+	{
+		return;
+	}
+
+	ReplaySpeedCommand command;
+	command.command_id_maybe = 86;
+	command.is_paused = 0;
+	command.game_speed = registry_options.GameSpeed;
+	command.replay_speed_multiplier = replay_speed_multiplier;
+
+	if (registry_options.GameSpeed == 6)
+	{
+		if (replay_speed_multiplier > 1)
+		{
+			command.replay_speed_multiplier /= 2;
+		}
+		else
+		{
+			command.game_speed -= 1;
+		}
+	}
+	else
+	{
+		if (registry_options.GameSpeed)
+		{
+			command.game_speed -= 1;
+		}
+		else if (replay_speed_multiplier < 1)
+		{
+			command.replay_speed_multiplier *= 2;
+		}
+	}
+
+	BWFXN_QueueCommand_(&command, sizeof(command));
+}
+
+FUNCTION_PATCH(CMDACT_DecreaseReplaySpeed, CMDACT_DecreaseReplaySpeed_);
+
+ButtonState __fastcall BTNSCOND_ReplaySpeedUp_(u16 variable, int player_id, CUnit* unit)
+{
+	if (!InReplay || getActivePlayerId() != playerid)
+	{
+		return BTNST_HIDDEN;
+	}
+	else if (registry_options.GameSpeed == 6 && replay_speed_multiplier >= MAX_REPLAY_SPEED || is_replay_paused)
+	{
+		return BTNST_DISABLED;
+	}
+	else
+	{
+		return BTNST_ENABLED;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_ReplaySpeedUp, BTNSCOND_ReplaySpeedUp_);
+
+void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
+{
+	if (is_replay_paused)
+	{
+		return;
+	}
+
+	ReplaySpeedCommand command;
+	command.command_id_maybe = 86;
+	command.is_paused = 0;
+	command.game_speed = registry_options.GameSpeed;
+	command.replay_speed_multiplier = replay_speed_multiplier;
+
+	if (registry_options.GameSpeed)
+	{
+		if (registry_options.GameSpeed < 6)
+		{
+			command.game_speed += 1;
+		}
+		else if (replay_speed_multiplier < MAX_REPLAY_SPEED)
+		{
+			command.replay_speed_multiplier *= 2;
+		}
+	}
+	else
+	{
+		if (replay_speed_multiplier > 1)
+		{
+			command.replay_speed_multiplier /= 2;
+		}
+		else
+		{
+			command.game_speed += 1;
+		}
+	}
+
+	BWFXN_QueueCommand_(&command, sizeof(command));
+}
+
+FUNCTION_PATCH(CMDACT_IncreaseReplaySpeed, CMDACT_IncreaseReplaySpeed_);
