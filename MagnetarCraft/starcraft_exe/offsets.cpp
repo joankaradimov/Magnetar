@@ -6471,28 +6471,21 @@ void RemoveMatrixFrom(CUnit *a1, signed int damage) {
         call address
     }
 }
-char CreateDefensiveMatrix(CUnit *a1) {
+void CreateDefensiveMatrix(CUnit *a1) {
     int address = 0x454f90;
-    char result_;
     __asm {
-        xor eax, eax
         xor edi, edi
         mov edi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
-u8 ApplyDefensiveMatrix(CUnit *a1) {
+void ApplyDefensiveMatrix(CUnit *a1) {
     int address = 0x455010;
-    u8 result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(char (__stdcall*orders_DefensiveMatrix)(CUnit *a1), orders_DefensiveMatrix, 0x4550a0);
 void OpticalFlareHit(CUnit *a1, char attacking_player) {
@@ -7656,7 +7649,17 @@ void sub_463040(CUnit *unit) {
 }
 DECL_FUNC(int (__stdcall*sub_4630C0)(int), sub_4630C0, 0x4630c0);
 DECL_FUNC(int(*sub_4632F0)(), sub_4632F0, 0x4632f0);
-DECL_FUNC(int(*getSiegeModeUnitType)(), getSiegeModeUnitType, 0x463310);
+UnitType getSiegeModeUnitType(UnitType result) {
+    int address = 0x463310;
+    UnitType result_;
+    __asm {
+        xor eax, eax
+        mov ax, result
+        call address
+        mov result_, ax
+    }
+    return result_;
+}
 DECL_FUNC(int(*findAddonOwner)(), findAddonOwner, 0x463330);
 CUnit *GetLoadedSilo(CUnit *ghost, int a2, CUnit *ghost_) {
     int address = 0x463360;
@@ -10513,9 +10516,8 @@ void DamageUnitHp(s32 a1, CUnit *a2, CUnit *a3, int player_id, int a5) {
         call address
     }
 }
-unsigned int DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_type, unsigned int a4, char a5, CUnit *a6, int a7) {
+void DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_type, unsigned int a4, char a5, CUnit *a6, int a7) {
     int address = 0x479930;
-    unsigned result_;
     __asm {
         xor eax, eax
         xor edi, edi
@@ -10527,9 +10529,7 @@ unsigned int DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_ty
         push dword ptr a4
         push dword ptr weapon_type
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
     int address = 0x479ae0;
@@ -12867,16 +12867,13 @@ int FreezeUnit(CUnit *a1) {
     }
     return result_;
 }
-u8 ApplyUnitEffects(CUnit *a1) {
+void ApplyUnitEffects(CUnit *a1) {
     int address = 0x492da0;
-    u8 result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*updateBurrowingCloakingUnits)(), updateBurrowingCloakingUnits, 0x492eb0);
 char updateUnitStatusTimers(CUnit *a1, int a2) {
@@ -13316,7 +13313,7 @@ void sub_495F90(CUnit *a1) {
     }
 }
 DECL_FUNC(signed int (__stdcall*sub_496030)(CUnit *a1), sub_496030, 0x496030);
-DECL_FUNC(int(*sub_496140)(), sub_496140, 0x496140);
+DECL_FUNC(char (__thiscall*sub_496140)(CUnit *this_), sub_496140, 0x496140);
 void turn_unit_left(CUnit *unit, char a2) {
     int address = 0x496170;
     __asm {
@@ -13708,6 +13705,16 @@ void sub_498B50(CSprite *a1, unsigned __int8 a2) {
         call address
     }
 }
+void SetAllSpriteImageOverlaysDirection(int a1, unsigned __int8 a2) {
+    int address = 0x498c30;
+    __asm {
+        xor eax, eax
+        xor edi, edi
+        mov eax, a1
+        mov di, word ptr a2
+        call address
+    }
+}
 void drawSprite(CSprite *a1) {
     int address = 0x498c50;
     __asm {
@@ -13728,19 +13735,19 @@ void refreshImageRange(int result, unsigned int a2) {
 }
 DECL_FUNC(int(*BWFXN_updateImageData)(), BWFXN_updateImageData, 0x498cf0);
 DECL_FUNC(void (__cdecl*BWFXN_drawAllSprites)(), BWFXN_drawAllSprites, 0x498d40);
-CImage *sub_498D70(CSprite *a1, char a2, char a3, char a4) {
+void sub_498D70(CSprite *a1, int esi0, char a2, char a3, int a4) {
     int address = 0x498d70;
-    CImage * result_;
     __asm {
         xor eax, eax
+        xor esi, esi
         mov eax, a1
+        mov esi, esi0
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
         call address
-        mov result_, eax
+        add esp, 12
     }
-    return result_;
 }
 CImage *CreateImageOverlay(CSprite *a1, int esi0, char a2, char a3, int a4) {
     int address = 0x498e00;
@@ -13758,19 +13765,19 @@ CImage *CreateImageOverlay(CSprite *a1, int esi0, char a2, char a3, int a4) {
     }
     return result_;
 }
-CImage *CreateOverlay(CSprite *a1, char a2, char a3, char a4) {
+void CreateOverlay(CSprite *a1, int esi0, char a2, char a3, int a4) {
     int address = 0x498ea0;
-    CImage * result_;
     __asm {
         xor eax, eax
+        xor esi, esi
         mov eax, a1
+        mov esi, esi0
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
         call address
-        mov result_, eax
+        add esp, 12
     }
-    return result_;
 }
 CImage *sub_498F40(CSprite *a1, int a2, char a3, char a4, unsigned int a5) {
     int address = 0x498f40;
@@ -13834,7 +13841,7 @@ CImage *sub_499380(CSprite *a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(CImage *(__stdcall*CreateDamageOverlay)(CSprite *a1), CreateDamageOverlay, 0x4993c0);
+DECL_FUNC(void (__stdcall*CreateDamageOverlay)(CSprite *a1), CreateDamageOverlay, 0x4993c0);
 DECL_FUNC(unsigned __int16 (__stdcall*CreateBuildingFlames)(CSprite *a1), CreateBuildingFlames, 0x499580);
 int CreateSpriteEx(int result, CSprite *a2, unsigned __int8 a3, int a4, int a5, char a6) {
     int address = 0x499660;
@@ -13913,18 +13920,16 @@ char sub_499860(CImage *a1, CSprite *a2) {
 }
 DECL_FUNC(void (__cdecl*InitializeSpriteArray)(), InitializeSpriteArray, 0x499900);
 DECL_FUNC(void (__cdecl*CreateAllSelectionCircles)(), CreateAllSelectionCircles, 0x499a60);
-char ReplaceSpriteOverlayImage(CSprite *a1, int a2, char a3) {
+void ReplaceSpriteOverlayImage(CSprite *a1, int a2, char a3) {
     int address = 0x499bb0;
-    char result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a3
         push dword ptr a2
         call address
-        mov result_, al
+        add esp, 8
     }
-    return result_;
 }
 DECL_FUNC(void (__thiscall*playSpriteIscript)(CSprite *this_, Anims a2, int a3), playSpriteIscript, 0x499d00);
 DECL_FUNC(int(*sub_499D40)(), sub_499D40, 0x499d40);
@@ -14693,16 +14698,13 @@ int sub_49F860(CUnit *a1, UnitType a2) {
     }
     return result_;
 }
-int updateUnitStrengthAndApplyDefaultOrders(CUnit *a1) {
+void updateUnitStrengthAndApplyDefaultOrders(CUnit *a1) {
     int address = 0x49fa40;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_49FD00(CUnit *result, CSprite *a2, int a3) {
     int address = 0x49fd00;
@@ -14728,17 +14730,15 @@ __int16 killAllLoadedUnits(CUnit *a1) {
     }
     return result_;
 }
-u8 replaceUnitWithType(CUnit *a1, UnitType a2) {
+void replaceUnitWithType(CUnit *a1, UnitType a2) {
     int address = 0x49fed0;
-    u8 result_;
     __asm {
         xor eax, eax
         mov eax, a1
         push dword ptr a2
         call address
-        mov result_, al
+        add esp, 4
     }
-    return result_;
 }
 signed int sub_4A0080(CUnit *a1) {
     int address = 0x4a0080;
@@ -18364,7 +18364,22 @@ int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, char *a3, u8 *dest, int *a5)
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*sub_4CE110)(char *dest, int a3, _DWORD *a2), sub_4CE110, 0x4ce110);
+int sub_4CE110(int *a1, char *a2, u8 *a3, _DWORD *a4) {
+    int address = 0x4ce110;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        mov ecx, a3
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__fastcall*FreeGameActionData)(bool exit_code), FreeGameActionData, 0x4ce130);
 int WriteGameActions(FILE *a2, GameActionDataBlock *a3) {
     int address = 0x4ce1c0;
@@ -19077,22 +19092,19 @@ CImage *sub_4D5960(CImage *result) {
 }
 DECL_FUNC(int(*sub_4D59C0)(), sub_4D59C0, 0x4d59c0);
 DECL_FUNC(__int64 (__thiscall*updateImagePositionOffset)(CImage *this_), updateImagePositionOffset, 0x4d5a00);
-int InitializeImageData(CImage *a1, CSprite *a2, int a3, char a4, char a5) {
+void InitializeImageData(CImage *image, CSprite *sprite, int image_id, __int8 horizontal_offset, __int8 vertical_offset) {
     int address = 0x4d5a50;
-    int result_;
     __asm {
         xor eax, eax
         xor edi, edi
         xor esi, esi
-        mov eax, a1
-        mov edi, a2
-        mov esi, a3
-        push dword ptr a5
-        push dword ptr a4
+        mov eax, image
+        mov edi, sprite
+        mov esi, image_id
+        push dword ptr vertical_offset
+        push dword ptr horizontal_offset
         call address
-        mov result_, eax
     }
-    return result_;
 }
 CImage *sub_4D5B00(CImage *result, int a2) {
     int address = 0x4d5b00;
@@ -19170,20 +19182,15 @@ void flipImage(CImage *result, char a2) {
         call address
     }
 }
-char setImageDirection(unsigned int a1, CImage *a2, unsigned __int8 a3) {
+void setImageDirection(CImage *image, unsigned __int8 direction) {
     int address = 0x4d5f80;
-    char result_;
     __asm {
-        xor eax, eax
-        xor edx, edx
         xor esi, esi
-        mov edx, a1
-        mov esi, a2
-        push dword ptr a3
+        mov esi, image
+        push dword ptr direction
         call address
-        mov result_, al
+        add esp, 4
     }
-    return result_;
 }
 void compileHealthBar(CImage *a1, CSprite *a2) {
     int address = 0x4d6010;
@@ -19205,7 +19212,18 @@ void packImageData(CImage *image) {
         call address
     }
 }
-DECL_FUNC(CImage *(__fastcall*CreateHealthBar)(int a1, CSprite *a2), CreateHealthBar, 0x4d6420);
+CImage **CreateHealthBar(CSprite *a2) {
+    int address = 0x4d6420;
+    CImage ** result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__thiscall*sub_4D64A0)(unsigned int this_), sub_4D64A0, 0x4d64a0);
 DECL_FUNC(int(*writeImages)(FILE *a2), writeImages, 0x4d64c0);
 void ISCRIPT_PlaySnd(SfxData sfx, CImage *a1) {
@@ -20914,7 +20932,21 @@ DECL_FUNC(int(*sub_4E5EE0)(), sub_4E5EE0, 0x4e5ee0);
 DECL_FUNC(int(*sub_4E5F00)(), sub_4E5F00, 0x4e5f00);
 DECL_FUNC(void (__stdcall*refreshUnitVision)(CUnit *unit), refreshUnitVision, 0x4e5f30);
 DECL_FUNC(int(*moveScreenToUnit)(), moveScreenToUnit, 0x4e6020);
-DECL_FUNC(CImage *(__fastcall*sub_4E6060)(CUnit *a1, char a2, char a3, char a4), sub_4E6060, 0x4e6060);
+void sub_4E6060(CUnit *a1, char a2, int esi0, char a3, int a4) {
+    int address = 0x4e6060;
+    __asm {
+        xor ecx, ecx
+        xor edx, edx
+        xor esi, esi
+        mov ecx, a1
+        mov dl, a2
+        mov esi, esi0
+        push dword ptr a4
+        push dword ptr a3
+        call address
+        add esp, 8
+    }
+}
 void UpdateUnitDamageOverlay(CUnit *a1) {
     int address = 0x4e6090;
     __asm {
@@ -21513,16 +21545,13 @@ void Unburrow(CUnit *a1) {
         call address
     }
 }
-char sub_4E99D0(CUnit *a1) {
+void sub_4E99D0(CUnit *a1) {
     int address = 0x4e99d0;
-    char result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_DroneLand(CUnit *a1, int a2) {
     int address = 0x4e9aa0;
@@ -24510,6 +24539,7 @@ double& dbl_506248 = * ((decltype(&dbl_506248)) 0x506248);
 double& dbl_506250 = * ((decltype(&dbl_506250)) 0x506250);
 double& dbl_506258 = * ((decltype(&dbl_506258)) 0x506258);
 double& dbl_506260 = * ((decltype(&dbl_506260)) 0x506260);
+double& dbl_506268 = * ((decltype(&dbl_506268)) 0x506268);
 char(&aE000)[] = * ((decltype(&aE000)) 0x506270);
 CHAR(&aIsprocessorfea)[] = * ((decltype(&aIsprocessorfea)) 0x506290);
 CHAR(&aKernel32)[] = * ((decltype(&aKernel32)) 0x5062ac);
@@ -25377,8 +25407,10 @@ int (*(&off_51B44C)[2])() = * ((decltype(&off_51B44C)) 0x51b44c);
 int (*&off_51B450)() = *((decltype(&off_51B450)) 0x51b450);
 char(&aPow_0)[4] = * ((decltype(&aPow_0)) 0x51b468);
 char& byte_51B540 = * ((decltype(&byte_51B540)) 0x51b540);
-char& byte_51B55C = * ((decltype(&byte_51B55C)) 0x51b55c);
+char(&byte_51B55C)[24] = * ((decltype(&byte_51B55C)) 0x51b55c);
 void *(&jpt_4FA13D)[64] = * ((decltype(&jpt_4FA13D)) 0x51b59e);
+double& dbl_51B6A0 = * ((decltype(&dbl_51B6A0)) 0x51b6a0);
+double& dbl_51B6B0 = * ((decltype(&dbl_51B6B0)) 0x51b6b0);
 char *& dword_51BAA0 = * ((decltype(&dword_51BAA0)) 0x51baa0);
 int& dword_51BAA8 = * ((decltype(&dword_51BAA8)) 0x51baa8);
 int& dword_51BAAC = * ((decltype(&dword_51BAAC)) 0x51baac);
@@ -25540,7 +25572,7 @@ char(&building_overlay_state_max)[1000] = * ((decltype(&building_overlay_state_m
 CImage(&stru_5244B8)[64] = * ((decltype(&stru_5244B8)) 0x5244b8);
 CImage *& dword_5254B8 = * ((decltype(&dword_5254B8)) 0x5254b8);
 CImage *& dword_52E4C0 = * ((decltype(&dword_52E4C0)) 0x52e4c0);
-CImage *& dword_52E4C4 = * ((decltype(&dword_52E4C4)) 0x52e4c4);
+CImage *& image = * ((decltype(&image)) 0x52e4c4);
 char(&tileset_shift)[256] = * ((decltype(&tileset_shift)) 0x52e4c8);
 LO_Overlays& ShieldOverlays = * ((decltype(&ShieldOverlays)) 0x52e5c8);
 CImage *& dword_52F564 = * ((decltype(&dword_52F564)) 0x52f564);
@@ -26044,7 +26076,8 @@ TriggerListEntry *& dword_6509AC = * ((decltype(&dword_6509AC)) 0x6509ac);
 int& active_trigger_player = * ((decltype(&active_trigger_player)) 0x6509b0);
 char& byte_6509B4 = * ((decltype(&byte_6509B4)) 0x6509b4);
 _BYTE(&byte_6509B8)[4] = * ((decltype(&byte_6509B8)) 0x6509b8);
-_DWORD(&dword_6509BC)[2] = * ((decltype(&dword_6509BC)) 0x6509bc);
+_DWORD& dword_6509BC = * ((decltype(&dword_6509BC)) 0x6509bc);
+__int16& word_6509C0 = * ((decltype(&word_6509C0)) 0x6509c0);
 int& IS_GAME_PAUSED = * ((decltype(&IS_GAME_PAUSED)) 0x6509c4);
 int(&dword_6509C8)[] = * ((decltype(&dword_6509C8)) 0x6509c8);
 __int16& word_6509CC = * ((decltype(&word_6509CC)) 0x6509cc);
