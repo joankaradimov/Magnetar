@@ -2971,6 +2971,55 @@ void LoadTitle_()
 
 FAIL_STUB_PATCH(LoadTitle);
 
+void InitializeImageData_(CImage* image, CSprite* sprite, int image_id, __int8 horizontal_offset, __int8 vertical_offset)
+{
+	image->imageID = image_id;
+	image->GRPFile = ImageGrpGraphics[image_id];
+	image->flags = (ImageFlags)0;
+	if (Images_IsTurnable[image_id] & 1)
+	{
+		image->flags |= ImageFlags::IF_HAS_DIRECTIONAL_FRAMES;
+	}
+	if (Images_IsClickable[image_id] & 1)
+	{
+		image->flags |= ImageFlags::IF_CLICKABLE;
+	}
+	image->frameSet = 0;
+	image->direction = 0;
+	image->frameIndex = 0;
+	image->iscript_program.anim = Anims::AE_Init;
+	image->spriteOwner = sprite;
+	image->horizontalOffset = horizontal_offset;
+	image->verticalOffset = vertical_offset;
+	memset(&image->grpBounds, 0, sizeof(image->grpBounds));
+	image->coloringData = 0;
+	memset(&image->iscript_program, 0, sizeof(image->iscript_program));
+
+	if (Image_DrawFunction[image->imageID] == 14)
+	{
+		image->coloringData = (void*)sprite->playerID;
+	}
+	if (Image_DrawFunction[image_id] == 9)
+	{
+		image->coloringData = colorShift[Images_Remapping[image_id]].data;
+	}
+}
+
+void __stdcall InitializeImageData__(__int8 horizontal_offset, __int8 vertical_offset)
+{
+	CImage* image;
+	CSprite* sprite;
+	int image_id;
+
+	__asm mov image, eax
+	__asm mov sprite, edi
+	__asm mov image_id, esi
+
+	InitializeImageData_(image, sprite, image_id, horizontal_offset, vertical_offset);
+}
+
+FUNCTION_PATCH((void*)0x4D5A50, InitializeImageData__);
+
 void LoadImageData_()
 {
 	OVERLAPPED a5[999];
