@@ -8623,13 +8623,20 @@ void LoadConsoleImage_()
 
 FAIL_STUB_PATCH(LoadConsoleImage);
 
-void setup_HUD_()
+void sub_47AAC0_()
 {
-	LoadConsoleImage_();
 	if (!SBmpLoadImage("game\\thpbar.pcx", 0, byte_66FBE4, 19, 0, 0, 0))
 	{
 		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
 	}
+}
+
+FAIL_STUB_PATCH(sub_47AAC0);
+
+void setup_HUD_()
+{
+	LoadConsoleImage_();
+	sub_47AAC0_();
 	load_statfluf_BIN_();
 	loadPortdata_BINDLG_();
 	load_statlb_();
