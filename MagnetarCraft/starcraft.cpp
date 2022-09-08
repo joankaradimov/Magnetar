@@ -8653,7 +8653,7 @@ void setup_HUD_()
 		GameScreenConsole.data = NULL;
 	}
 	memset(ClientSelectionGroup, 0, sizeof(ClientSelectionGroup));
-	ClientSelectionCount = NULL;
+	ClientSelectionCount = 0;
 	ActivePortraitUnit = NULL;
 	ctrl_under_mouse = NULL;
 	ctrl_under_mouse_val = NULL;
