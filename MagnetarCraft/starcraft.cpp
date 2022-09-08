@@ -2971,6 +2971,51 @@ void LoadTitle_()
 
 FAIL_STUB_PATCH(LoadTitle);
 
+void updateImageDirection_(CImage* image, u8 direction)
+{
+	if (image->flags & ImageFlags::IF_HAS_DIRECTIONAL_FRAMES)
+	{
+		ImageFlags new_flip_flag = (ImageFlags)0;
+		int new_direction = direction;
+
+		if (new_direction > 16)
+		{
+			new_direction = 32 - new_direction;
+			new_flip_flag = ImageFlags::IF_HORIZONTALLY_FLIPPED;
+		}
+
+		if ((image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) != new_flip_flag || image->direction != new_direction)
+		{
+			image->direction = new_direction;
+			image->flags &= ~ImageFlags::IF_HORIZONTALLY_FLIPPED;
+			image->flags |= new_flip_flag;
+			setImagePaletteType(image, image->paletteType);
+
+			if (image->frameIndex != image->direction + image->frameSet)
+			{
+				image->flags |= ImageFlags::IF_REDRAW;
+				image->frameIndex = image->direction + image->frameSet;
+			}
+
+			if (image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET)
+			{
+				updateImagePositionOffset(image);
+			}
+		}
+	}
+}
+
+void __stdcall updateImageDirection__(u8 direction)
+{
+	CImage* image;
+
+	__asm mov image, eax
+
+	updateImageDirection_(image, direction);
+}
+
+FUNCTION_PATCH((void*)0x4D5EA0, updateImageDirection__);
+
 void setImageDirection_(CImage* image, unsigned __int8 direction)
 {
 	if (image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET)
