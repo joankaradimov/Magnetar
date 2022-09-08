@@ -4217,7 +4217,7 @@ void load_gluMinimap_()
 	word_59CC70 = MoveToTile.x;
 	dword_59C2B8 = 0;
 	dword_59C1A8 = 0;
-	dword_59C1AC = (void*)LoadGraphic("game\\blink.grp", 0, "Starcraft\\SWAR\\lang\\minimap.cpp", 2011);
+	blink_grp = (void*)LoadGraphic("game\\blink.grp", 0, "Starcraft\\SWAR\\lang\\minimap.cpp", 2011);
 	if (!SBmpLoadImage("game\\tblink.pcx", 0, byte_59CAC0, sizeof(byte_59CAC0), 0, 0, 0))
 	{
 		SysWarn_FileNotFound("game\\tblink.pcx", SErrGetLastError());
@@ -5887,10 +5887,10 @@ void free_cmdIcons_()
 		current_dialog = NULL;
 	}
 
-	if (dword_68C1C0)
+	if (cmdbtns_grp)
 	{
-		SMemFree(dword_68C1C0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1107, 0);
-		dword_68C1C0 = NULL;
+		SMemFree(cmdbtns_grp, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1107, 0);
+		cmdbtns_grp = NULL;
 	}
 
 	if (cmdicons_grp)
@@ -5932,7 +5932,7 @@ StatFlufDialog* statfluf_dialogs_[] = {
 	statfluf_neutral,
 };
 
-void sub_4F4CF0_()
+void destroy_statfluf_bin_()
 {
 	for (StatFlufDialog* i = statfluf_dialogs_[statfluf_current_race]; i->position.left != -1; ++i)
 	{
@@ -5944,7 +5944,7 @@ void sub_4F4CF0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4F4CF0);
+FAIL_STUB_PATCH(destroy_statfluf_bin);
 
 void destroyGameHUD_()
 {
@@ -5954,16 +5954,16 @@ void destroyGameHUD_()
 		minimap_Dlg = NULL;
 	}
 
-	if (dword_59C1AC)
+	if (blink_grp)
 	{
-		SMemFree(dword_59C1AC, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
-		dword_59C1AC = NULL;
+		SMemFree(blink_grp, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+		blink_grp = NULL;
 	}
 
-	if (dword_68C140)
+	if (textbox_bin)
 	{
-		DestroyDialog(dword_68C140);
-		dword_68C140 = NULL;
+		DestroyDialog(textbox_bin);
+		textbox_bin = NULL;
 	}
 
 	if (stat_f10_Dlg)
@@ -5972,10 +5972,10 @@ void destroyGameHUD_()
 		stat_f10_Dlg = NULL;
 	}
 
-	if (dword_68C204)
+	if (wirefram_grp)
 	{
-		SMemFree(dword_68C204, "Starcraft\\SWAR\\lang\\statwire.cpp", 367, 0);
-		dword_68C204 = NULL;
+		SMemFree(wirefram_grp, "Starcraft\\SWAR\\lang\\statwire.cpp", 367, 0);
+		wirefram_grp = NULL;
 	}
 
 	destroyStatdata_();
@@ -5989,7 +5989,7 @@ void destroyGameHUD_()
 
 	free_cmdIcons_();
 	clearSelectionPortrait_();
-	sub_4F4CF0_();
+	destroy_statfluf_bin_();
 	refreshSelectionScreen_();
 
 	if (StatTxtTbl.buffer)
@@ -8301,7 +8301,7 @@ void load_statbtn_BIN_()
 	word_68C1C4 = 228;
 	word_68C1BC = -1;
 	_snprintf(buff, MAX_PATH, "unit\\cmdbtns\\%ccmdbtns.grp", race_lowercase_char_id[consoleIndex]);
-	dword_68C1C0 = (void*)LoadGraphic(buff, 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1086);
+	cmdbtns_grp = (void*)LoadGraphic(buff, 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1086);
 	cmdicons_grp = (void*)LoadGraphic("unit\\cmdbtns\\cmdicons.grp", 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1089);
 	if (!SBmpLoadImage("unit\\cmdbtns\\ticon.pcx", 0, byte_68C150, 96, 0, 0, 0))
 	{
@@ -8564,15 +8564,15 @@ int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(textbox_DLG_Interact);
 
-void ctextbox_BIN_()
+void load_textbox_BIN_()
 {
 	char buff[80];
 	_snprintf(buff, sizeof(buff), "rez\\%ctextbox.bin", race_lowercase_char_id[consoleIndex]);
-	dword_68C140 = LoadDialog(buff);
-	InitializeDialog_(dword_68C140, textbox_DLG_Interact_);
+	textbox_bin = LoadDialog(buff);
+	InitializeDialog_(textbox_bin, textbox_DLG_Interact_);
 }
 
-FAIL_STUB_PATCH(ctextbox_BIN);
+FAIL_STUB_PATCH(load_textbox_BIN);
 
 void LoadConsoleImage_()
 {
@@ -8612,7 +8612,7 @@ void setup_HUD_()
 	load_WireframeGRP();
 	load_statbtn_BIN_();
 	load_Statf10_BIN_();
-	ctextbox_BIN_();
+	load_textbox_BIN_();
 	load_gluMinimap_();
 	if (GameScreenConsole.data != NULL)
 	{
@@ -13335,10 +13335,10 @@ int sub_4EE210_()
 		minimap_Dlg = NULL;
 	}
 
-	if (dword_59C1AC)
+	if (blink_grp)
 	{
-		SMemFree(dword_59C1AC, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
-		dword_59C1AC = NULL;
+		SMemFree(blink_grp, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+		blink_grp = NULL;
 	}
 
 	return 1;
@@ -13364,10 +13364,10 @@ void sub_4B8D90_(dialog* dlg)
 		DestroyDialog(minimap_Dlg);
 		minimap_Dlg = NULL;
 
-		if (dword_59C1AC)
+		if (blink_grp)
 		{
-			SMemFree(dword_59C1AC, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
-			dword_59C1AC = NULL;
+			SMemFree(blink_grp, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+			blink_grp = NULL;
 		}
 	}
 }
