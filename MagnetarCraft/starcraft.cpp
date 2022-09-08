@@ -6006,13 +6006,10 @@ void destroyGameHUD_()
 
 	destroy_textbox_bin_();
 	destroy_statf10_bin_();
-
 	destroy_wirefram_grp_();
-
 	destroyStatdata_();
 	destroyStatsesBin_();
 	destroy_statlb_dlg_();
-
 	free_cmdIcons_();
 	clearSelectionPortrait_();
 	destroy_statfluf_bin_();
