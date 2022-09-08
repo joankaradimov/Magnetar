@@ -5839,6 +5839,39 @@ void FreeSAI_Paths_()
 
 FAIL_STUB_PATCH(FreeSAI_Paths);
 
+void destroy_textbox_bin_()
+{
+	if (textbox_bin)
+	{
+		DestroyDialog(textbox_bin);
+		textbox_bin = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroy_textbox_bin);
+
+void destroy_statf10_bin_()
+{
+	if (stat_f10_Dlg)
+	{
+		DestroyDialog(stat_f10_Dlg);
+		stat_f10_Dlg = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroy_statf10_bin);
+
+void destroy_wirefram_grp_()
+{
+	if (wirefram_grp)
+	{
+		SMemFree(wirefram_grp, "Starcraft\\SWAR\\lang\\statwire.cpp", 367, 0);
+		wirefram_grp = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroy_wirefram_grp);
+
 void destroyStatdata_()
 {
 	if (stardata_Dlg)
@@ -5878,6 +5911,17 @@ void destroyStatsesBin_()
 }
 
 FAIL_STUB_PATCH(destroyStatsesBin);
+
+void destroy_statlb_dlg_()
+{
+	if (statlb_Dlg)
+	{
+		DestroyDialog(statlb_Dlg);
+		statlb_Dlg = NULL;
+	}
+}
+
+FAIL_STUB_PATCH(destroy_statlb_dlg);
 
 void free_cmdIcons_()
 {
@@ -5960,32 +6004,14 @@ void destroyGameHUD_()
 		blink_grp = NULL;
 	}
 
-	if (textbox_bin)
-	{
-		DestroyDialog(textbox_bin);
-		textbox_bin = NULL;
-	}
+	destroy_textbox_bin_();
+	destroy_statf10_bin_();
 
-	if (stat_f10_Dlg)
-	{
-		DestroyDialog(stat_f10_Dlg);
-		stat_f10_Dlg = NULL;
-	}
-
-	if (wirefram_grp)
-	{
-		SMemFree(wirefram_grp, "Starcraft\\SWAR\\lang\\statwire.cpp", 367, 0);
-		wirefram_grp = NULL;
-	}
+	destroy_wirefram_grp_();
 
 	destroyStatdata_();
 	destroyStatsesBin_();
-
-	if (statlb_Dlg)
-	{
-		DestroyDialog(statlb_Dlg);
-		statlb_Dlg = NULL;
-	}
+	destroy_statlb_dlg_();
 
 	free_cmdIcons_();
 	clearSelectionPortrait_();
