@@ -17150,7 +17150,7 @@ void CMDACT_SetReplaySpeed_()
 	ReplaySpeedCommand command;
 	command.game_speed = registry_options.GameSpeed;
 	command.replay_speed_multiplier = replay_speed_multiplier;
-	command.command_id_maybe = 86;
+	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = !is_replay_paused;
 
 	BWFXN_QueueCommand(&command, sizeof(command));
@@ -17186,7 +17186,7 @@ void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 	}
 
 	ReplaySpeedCommand command;
-	command.command_id_maybe = 86;
+	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = 0;
 	command.game_speed = registry_options.GameSpeed;
 	command.replay_speed_multiplier = replay_speed_multiplier;
@@ -17245,7 +17245,7 @@ void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 	}
 
 	ReplaySpeedCommand command;
-	command.command_id_maybe = 86;
+	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = 0;
 	command.game_speed = registry_options.GameSpeed;
 	command.replay_speed_multiplier = replay_speed_multiplier;

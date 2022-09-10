@@ -334,21 +334,18 @@ int isUnitMovableAndAtDestination(CUnit *a1) {
     }
     return result_;
 }
-int getImageAttackFrame(int result, CSprite *a2, int a3, unsigned __int8 a4) {
+void getImageAttackFrame(point *a1, CSprite *a2, int a3, unsigned __int8 a4) {
     int address = 0x401df0;
-    int result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         xor edi, edi
-        mov eax, result
+        mov eax, a1
         mov ecx, a2
         mov edi, a3
         push dword ptr a4
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int setSpriteMainImgOffset(CSprite *a1, char a2, char a3) {
     int address = 0x401e40;
@@ -2806,26 +2803,26 @@ DECL_FUNC(int(*CMDACT_CancelNuke)(), CMDACT_CancelNuke, 0x4231d0);
 DECL_FUNC(int(*CMDACT_MergeDarkArchon)(), CMDACT_MergeDarkArchon, 0x4231f0);
 DECL_FUNC(int(*CMDACT_MergeArchon)(), CMDACT_MergeArchon, 0x423210);
 DECL_FUNC(int(*CMDACT_Lift)(), CMDACT_Lift, 0x423230);
-DECL_FUNC(int(*CMDACT_Decloak)(), CMDACT_Decloak, 0x423270);
-DECL_FUNC(int(*CMDACT_Unburrow)(), CMDACT_Unburrow, 0x423290);
-DECL_FUNC(int(*CMDACT_Burrow)(), CMDACT_Burrow, 0x4232b0);
+DECL_FUNC(void (__fastcall*CMDACT_Decloak)(int action_variable, bool is_shift_used), CMDACT_Decloak, 0x423270);
+DECL_FUNC(void (__fastcall*CMDACT_Unburrow)(int action_variable, bool is_shift_used), CMDACT_Unburrow, 0x423290);
+DECL_FUNC(void (__fastcall*CMDACT_Burrow)(int action_variable, bool is_shift_used), CMDACT_Burrow, 0x4232b0);
 DECL_FUNC(int(*CMDACT_CancelAddon)(), CMDACT_CancelAddon, 0x4232d0);
 DECL_FUNC(int(*CMDACT_CancelUpgrade)(), CMDACT_CancelUpgrade, 0x4232f0);
-DECL_FUNC(int(*CMDACT_Upgrade)(), CMDACT_Upgrade, 0x423310);
+DECL_FUNC(void (__fastcall*CMDACT_Upgrade)(int action_variable, bool is_shift_used), CMDACT_Upgrade, 0x423310);
 DECL_FUNC(int(*CMDACT_CancelResearch)(), CMDACT_CancelResearch, 0x423330);
-DECL_FUNC(int(*CMDACT_Research)(), CMDACT_Research, 0x423350);
-DECL_FUNC(int(*CMDACT_HoldPosition)(), CMDACT_HoldPosition, 0x423370);
+DECL_FUNC(void (__fastcall*CMDACT_Research)(int action_variable, bool is_shift_used), CMDACT_Research, 0x423350);
+DECL_FUNC(void (__fastcall*CMDACT_HoldPosition)(int action_variable, bool is_shift_used), CMDACT_HoldPosition, 0x423370);
 DECL_FUNC(int(*CMDACT_TrainFighter)(), CMDACT_TrainFighter, 0x423390);
 DECL_FUNC(int(*CMDACT_ReaverStop)(), CMDACT_ReaverStop, 0x4233b0);
 DECL_FUNC(int(*CMDACT_CarrierStop)(), CMDACT_CarrierStop, 0x4233d0);
-DECL_FUNC(int(*CMDACT_Stop)(), CMDACT_Stop, 0x4233f0);
+DECL_FUNC(void (__fastcall*CMDACT_Stop)(int action_variable, bool is_shift_used), CMDACT_Stop, 0x4233f0);
 DECL_FUNC(int(*CMDACT_CancelUnitMorph)(), CMDACT_CancelUnitMorph, 0x423410);
 DECL_FUNC(int(*CMDACT_CancelConstruction)(), CMDACT_CancelConstruction, 0x423430);
-DECL_FUNC(int(*CMDACT_Siege)(), CMDACT_Siege, 0x423450);
-DECL_FUNC(int(*CMDACT_Unsiege)(), CMDACT_Unsiege, 0x423470);
-DECL_FUNC(int(*CMDACT_CancelTrain)(), CMDACT_CancelTrain, 0x423490);
-DECL_FUNC(int(*CMDACT_Train)(), CMDACT_Train, 0x4234b0);
-DECL_FUNC(int(*CMDACT_Stimpack)(), CMDACT_Stimpack, 0x4234d0);
+DECL_FUNC(void (__fastcall*CMDACT_Siege)(int action_variable, bool is_shift_used), CMDACT_Siege, 0x423450);
+DECL_FUNC(void (__fastcall*CMDACT_Unsiege)(int action_variable, bool is_shift_used), CMDACT_Unsiege, 0x423470);
+DECL_FUNC(void (__fastcall*CMDACT_CancelTrain)(int action_variable, bool is_shift_used), CMDACT_CancelTrain, 0x423490);
+DECL_FUNC(void (__fastcall*CMDACT_Train)(int action_variable, bool is_shift_used), CMDACT_Train, 0x4234b0);
+DECL_FUNC(void (__fastcall*CMDACT_Stimpack)(int action_variable, bool is_shift_used), CMDACT_Stimpack, 0x4234d0);
 DECL_FUNC(int(*unit_CanCloak)(), unit_CanCloak, 0x423540);
 signed int TechUseCheckForGroupEnergyCost(Tech a1) {
     int address = 0x423660;
@@ -2838,15 +2835,15 @@ signed int TechUseCheckForGroupEnergyCost(Tech a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*CMDACT_Cloak)(), CMDACT_Cloak, 0x423730);
-DECL_FUNC(int(*CMDACT_ReturnCargo)(), CMDACT_ReturnCargo, 0x423760);
-DECL_FUNC(int (__fastcall*CMDACT_UnitMorph)(UnitType unit_type), CMDACT_UnitMorph, 0x423790);
-DECL_FUNC(int (__fastcall*CMDACT_BuildingMorph)(UnitType unit_type), CMDACT_BuildingMorph, 0x423860);
+DECL_FUNC(void (__fastcall*CMDACT_Cloak)(int action_variable, bool is_shift_used), CMDACT_Cloak, 0x423730);
+DECL_FUNC(void (__fastcall*CMDACT_ReturnCargo)(int action_variable, bool is_shift_used), CMDACT_ReturnCargo, 0x423760);
+DECL_FUNC(void (__fastcall*CMDACT_Morph)(int action_variable, bool is_shift_used), CMDACT_Morph, 0x423790);
+DECL_FUNC(void (__fastcall*CMDACT_BuildingMorph)(int action_variable, bool is_shift_used), CMDACT_BuildingMorph, 0x423860);
 DECL_FUNC(int(*BTNSACT_SelectLarva)(), BTNSACT_SelectLarva, 0x423930);
 DECL_FUNC(int(*BTNSACT_Heal)(), BTNSACT_Heal, 0x4239e0);
 DECL_FUNC(int(*BTNSACT_UseNuke)(), BTNSACT_UseNuke, 0x423a40);
 DECL_FUNC(int(*BTNSACT_RechargeShields)(), BTNSACT_RechargeShields, 0x423aa0);
-DECL_FUNC(int(*CMDACT_UnloadAll)(), CMDACT_UnloadAll, 0x423b00);
+DECL_FUNC(void (__fastcall*CMDACT_UnloadAll)(int action_variable, bool is_shift_used), CMDACT_UnloadAll, 0x423b00);
 DECL_FUNC(int(*BTNSACT_LoadUnit)(), BTNSACT_LoadUnit, 0x423b40);
 DECL_FUNC(int(*BTNSACT_Harvest)(), BTNSACT_Harvest, 0x423b70);
 DECL_FUNC(int(*BTNSACT_Repair)(), BTNSACT_Repair, 0x423bd0);
@@ -6646,15 +6643,15 @@ void CMDACT_RightClick(dlgEvent *a1) {
         call address
     }
 }
-int sub_456490(int a1, __int16 a2, CUnit *a3) {
+CThingy *sub_456490(int x, __int16 y, CUnit *unit) {
     int address = 0x456490;
-    int result_;
+    CThingy * result_;
     __asm {
         xor eax, eax
         xor edi, edi
-        mov eax, a1
-        mov di, a2
-        push dword ptr a3
+        mov eax, x
+        mov di, y
+        push dword ptr unit
         call address
         mov result_, eax
     }
@@ -6794,7 +6791,7 @@ void CreateContextHelpFromDialog(dialog *a1, char *a2) {
     }
 }
 DECL_FUNC(int(*sub_457390)(), sub_457390, 0x457390);
-DECL_FUNC(unsigned int (__stdcall*CMDACT_CancelGeneric)(dialog *a1), CMDACT_CancelGeneric, 0x4573a0);
+DECL_FUNC(void (__stdcall*CMDACT_CancelGeneric)(dialog *dlg), CMDACT_CancelGeneric, 0x4573a0);
 DECL_FUNC(void (__fastcall*statdata_buttonUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_buttonUpdate, 0x457480);
 DECL_FUNC(void (__fastcall*statdata_iconOverlayUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_iconOverlayUpdate, 0x4574e0);
 DECL_FUNC(int(*sub_457540)(), sub_457540, 0x457540);
@@ -9238,18 +9235,7 @@ DECL_FUNC(int (__stdcall*SortAllUnits)(int, int, int), SortAllUnits, 0x46f0f0);
 DECL_FUNC(int (__stdcall*sub_46F290)(int, int, int), sub_46F290, 0x46f290);
 DECL_FUNC(int (__thiscall*sub_46F380)(int a2), sub_46F380, 0x46f380);
 DECL_FUNC(int (__stdcall*FindUnitAtPoint)(int a2, int a1), FindUnitAtPoint, 0x46f3a0);
-void sub_46F5B0(int esi0, int a1, int a2, CUnit *a3, signed int a4) {
-    int address = 0x46f5b0;
-    __asm {
-        xor esi, esi
-        mov esi, esi0
-        push dword ptr a4
-        push dword ptr a3
-        push dword ptr a2
-        push dword ptr a1
-        call address
-    }
-}
+DECL_FUNC(void(*sub_46F5B0)(int x, int y, CUnit *unit, signed int a4), sub_46F5B0, 0x46f5b0);
 DECL_FUNC(void (__stdcall*getSelectedUnitsInBox)(Box16 *a1), getSelectedUnitsInBox, 0x46fa40);
 DECL_FUNC(void (__fastcall*getSelectedUnitsAtPoint)(int a1, int a2), getSelectedUnitsAtPoint, 0x46fb40);
 DECL_FUNC(void (__thiscall*input_dragSelect_MouseBtnUp)(dlgEvent *), input_dragSelect_MouseBtnUp, 0x46fea0);
@@ -10489,7 +10475,7 @@ char orders_AttackMove(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(char (__stdcall*orders_NukeGround)(CUnit *a1), orders_NukeGround, 0x479200);
-DECL_FUNC(int (__stdcall*BWFXN_KillUnitTarget)(CUnit *a1), BWFXN_KillUnitTarget, 0x479480);
+DECL_FUNC(void (__stdcall*BWFXN_KillUnitTarget)(CUnit *a1), BWFXN_KillUnitTarget, 0x479480);
 void DoWeaponHit(CUnit *target, CUnit *attacker, int show_attacker) {
     int address = 0x4795d0;
     __asm {
@@ -11676,7 +11662,7 @@ int *initializeThingyArray(unsigned __int16 count, CThingy **a2, CThingy **a3, C
     return result_;
 }
 DECL_FUNC(int(*packThingyData)(), packThingyData, 0x487540);
-DECL_FUNC(int(*unpackThingyData)(), unpackThingyData, 0x4875f0);
+DECL_FUNC(void (__cdecl*unpackThingyData)(), unpackThingyData, 0x4875f0);
 DECL_FUNC(int (__stdcall*sub_487690)(CThingy *a1), sub_487690, 0x487690);
 bool isThingyOnMap(signed int a1, signed int a2, CThingy *a3) {
     int address = 0x4877b0;
@@ -11732,7 +11718,7 @@ int CThingyIsVisible(int a1, CThingy *a2) {
 }
 DECL_FUNC(int(*sub_487D90)(), sub_487D90, 0x487d90);
 DECL_FUNC(int (__fastcall*readThingyArray)(int a1, int a2, FILE *a3, CThingy *a4, int a5), readThingyArray, 0x487db0);
-DECL_FUNC(int (__stdcall*writeThingys)(FILE *a1, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
+DECL_FUNC(BOOL (__stdcall*writeThingys)(FILE *file, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
 DECL_FUNC(int (__stdcall*sub_487FD0)(__int16), sub_487FD0, 0x487fd0);
 void sub_488020(CThingy *a1) {
     int address = 0x488020;
@@ -11792,13 +11778,13 @@ CThingy *sub_488350(CThingy *a1) {
 DECL_FUNC(int (__stdcall*sub_488410)(__int16 a1, CSprite *a2), sub_488410, 0x488410);
 DECL_FUNC(void(*updateThingys)(), updateThingys, 0x488510);
 DECL_FUNC(void (__cdecl*InitializeThingyArray)(), InitializeThingyArray, 0x488550);
-void GroundAttackInit(__int16 a1, __int16 a2) {
+void GroundAttackInit(__int16 x, __int16 y) {
     int address = 0x488660;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov ax, a1
-        mov cx, a2
+        mov cx, x
+        mov ax, y
         call address
     }
 }
@@ -12027,7 +12013,7 @@ int GetUnitBulletDamage(CUnit *a1, CBullet *a2) {
 }
 DECL_FUNC(BOOL (__thiscall*isUnitDistanceWithin)(CUnit *this_, CBullet *a2, unsigned int splash_radius), isUnitDistanceWithin, 0x48adb0);
 DECL_FUNC(int (__stdcall*ReadBulletsArray)(__int16), ReadBulletsArray, 0x48ae40);
-DECL_FUNC(int (__stdcall*WriteBullets)(FILE *), WriteBullets, 0x48aeb0);
+DECL_FUNC(int (__stdcall*WriteBullets)(FILE *file), WriteBullets, 0x48aeb0);
 DECL_FUNC(int (__thiscall*FindNextBounceTargetProc)(CUnit *this_), FindNextBounceTargetProc, 0x48afd0);
 DECL_FUNC(signed int (__fastcall*AirSplashProc)(CUnit *a1, CBullet *a2), AirSplashProc, 0x48b150);
 CUnit *FindNextBounceTarget(CBullet *a1) {
@@ -12161,13 +12147,36 @@ DECL_FUNC(int(*nullsub_50)(), nullsub_50, 0x48c730);
 DECL_FUNC(int(*sub_48C740)(), sub_48C740, 0x48c740);
 DECL_FUNC(int(*unpackOrderData)(), unpackOrderData, 0x48c770);
 DECL_FUNC(int(*packOrderData)(), packOrderData, 0x48c7d0);
+size_t WriteOrders(FILE *savegame_file) {
+    int address = 0x48c910;
+    size_t result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, savegame_file
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_48C9F0)(), sub_48C9F0, 0x48c9f0);
 DECL_FUNC(int(*sub_48CA00)(), sub_48CA00, 0x48ca00);
 DECL_FUNC(void (__cdecl*CancelTargetOrder)(), CancelTargetOrder, 0x48ca10);
 DECL_FUNC(int (__stdcall*sub_48CA90)(int, __int16), sub_48CA90, 0x48ca90);
 DECL_FUNC(int (__stdcall*sub_48CAC0)(int), sub_48CAC0, 0x48cac0);
 DECL_FUNC(void (__cdecl*j_CancelTargetOrder)(), j_CancelTargetOrder, 0x48cae0);
-DECL_FUNC(int(*issueTriTargetOrder)(), issueTriTargetOrder, 0x48caf0);
+void issueTriTargetOrder(char a1, char a2, char a3) {
+    int address = 0x48caf0;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov cl, a1
+        mov al, a2
+        mov dl, a3
+        call address
+    }
+}
 DECL_FUNC(int(*sub_48CB50)(), sub_48CB50, 0x48cb50);
 DECL_FUNC(int(*nullsub_51)(), nullsub_51, 0x48cb70);
 void updateTextDisplay(signed int line_number) {
@@ -12179,7 +12188,7 @@ void updateTextDisplay(signed int line_number) {
     }
 }
 DECL_FUNC(void (__cdecl*refreshGameTextIfCounterActive)(), refreshGameTextIfCounterActive, 0x48cc70);
-void setUnitStatTxtErrorMsg(char *message) {
+void setUnitStatTxtErrorMsg(const char *message) {
     int address = 0x48ccb0;
     __asm {
         xor eax, eax
@@ -12417,13 +12426,13 @@ void ShowErrorMessageWithSfx(int playerId, __int16 statTxtId, SfxData sfxId) {
         call address
     }
 }
-void get_statTxt_Str_0(int player, CUnit *unit, int a3) {
+void get_statTxt_Str_0(const char *a1, CUnit *unit, int a3) {
     int address = 0x48ef30;
     __asm {
         xor eax, eax
         xor ecx, ecx
         xor edx, edx
-        mov eax, player
+        mov eax, a1
         mov edx, unit
         mov ecx, a3
         call address
@@ -13266,7 +13275,7 @@ __int32 sub_495980(unsigned __int8 a1, int a2, CUnit *a3) {
 }
 DECL_FUNC(int(*sub_495A10)(), sub_495A10, 0x495a10);
 DECL_FUNC(int (__stdcall*ReadFlingyArray)(FILE *), ReadFlingyArray, 0x495a50);
-DECL_FUNC(int (__stdcall*WriteFlingys)(FILE *), WriteFlingys, 0x495b50);
+DECL_FUNC(int (__stdcall*WriteFlingys)(FILE *file), WriteFlingys, 0x495b50);
 unsigned __int8 sub_495CB0(CFlingy *a1) {
     int address = 0x495cb0;
     unsigned result_;
@@ -13677,7 +13686,7 @@ void unknownColorShiftSomething(u8 result, char a2) {
     }
 }
 DECL_FUNC(int (__stdcall*ReadSpritesArray)(FILE *), ReadSpritesArray, 0x498570);
-DECL_FUNC(int (__stdcall*writeSprites)(FILE *), writeSprites, 0x498740);
+DECL_FUNC(BOOL (__stdcall*writeSprites)(FILE *file), writeSprites, 0x498740);
 DECL_FUNC(int(*RemoveAllSelectionCircles)(), RemoveAllSelectionCircles, 0x4989a0);
 void sub_498A10(CSprite *a1) {
     int address = 0x498a10;
@@ -14575,16 +14584,13 @@ CUnit *removeUnitFromList(CUnit *a1) {
     }
     return result_;
 }
-CUnit *sub_49E3F0(CUnit *result) {
+void sub_49E3F0(CUnit *result) {
     int address = 0x49e3f0;
-    CUnit * result_;
     __asm {
         xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__fastcall*sub_49E4E0)(CUnit *a1, char player_id), sub_49E4E0, 0x49e4e0);
 DECL_FUNC(void (__stdcall*displayLastNetError)(unsigned __int8 player_id), displayLastNetError, 0x49e530);
@@ -14801,18 +14807,15 @@ CUnit *UnitConstructor(UnitType unit_type, int position_x, int position_y, int p
     }
     return result_;
 }
-int _UnitDestructor(CUnit *a1) {
+void _UnitDestructor(CUnit *a1) {
     int address = 0x4a0740;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(int (__thiscall*UnitDestructor)(CUnit *this_), UnitDestructor, 0x4a0990);
+DECL_FUNC(void (__thiscall*UnitDestructor)(CUnit *this_), UnitDestructor, 0x4a0990);
 CUnit *CreateUnit(UnitType unit_type, int position_x, int position_y, int player_id) {
     int address = 0x4a09d0;
     CUnit * result_;
@@ -15014,14 +15017,14 @@ DECL_FUNC(void (__cdecl*minimapVisionUpdate_192_256)(), minimapVisionUpdate_192_
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_96_128)(), minimapVisionUpdate_96_128, 0x4a3b30);
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_64)(), minimapVisionUpdate_64, 0x4a3c00);
 DECL_FUNC(int(*sub_4A3D40)(), sub_4A3D40, 0x4a3d40);
-__int16 getMinimapCursorPos(int *a1, int *a2) {
+__int16 getMinimapCursorPos(int *x, int *y) {
     int address = 0x4a3d70;
     __int16 result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov eax, x
+        mov ecx, y
         call address
         mov result_, ax
     }
@@ -17365,7 +17368,20 @@ DECL_FUNC(int(*sub_4C0260)(), sub_4C0260, 0x4c0260);
 DECL_FUNC(int(*sub_4C0280)(), sub_4C0280, 0x4c0280);
 DECL_FUNC(int(*sub_4C02A0)(), sub_4C02A0, 0x4c02a0);
 DECL_FUNC(int(*sub_4C02C0)(), sub_4C02C0, 0x4c02c0);
-DECL_FUNC(int (__stdcall*CMDACT_TargetOrder)(__int16, __int16, __int16, char), CMDACT_TargetOrder, 0x4c0300);
+void CMDACT_TargetOrder(char a1, CUnit *a2, __int16 a3, __int16 a4, __int16 a5, char a6) {
+    int address = 0x4c0300;
+    __asm {
+        xor edx, edx
+        xor esi, esi
+        mov dl, a1
+        mov esi, a2
+        push dword ptr a6
+        push dword ptr a5
+        push dword ptr a4
+        push dword ptr a3
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*CMDACT_RightClickOrder)(__int16, __int16, __int16, char), CMDACT_RightClickOrder, 0x4c0380);
 void CMDACT_UseCheat(CheatFlags a1) {
     int address = 0x4c0400;
@@ -17440,7 +17456,14 @@ DECL_FUNC(int (__stdcall*CMDRECV_ShiftSelect)(int), CMDRECV_ShiftSelect, 0x4c256
 DECL_FUNC(int (__stdcall*CMDRECV_Select)(int), CMDRECV_Select, 0x4c2750);
 DECL_FUNC(int(*CMDRECV_Hotkey)(), CMDRECV_Hotkey, 0x4c2870);
 DECL_FUNC(int (__stdcall*CMDRECV_Ally)(int), CMDRECV_Ally, 0x4c28a0);
-DECL_FUNC(int(*CMDRECV_SaveGame)(), CMDRECV_SaveGame, 0x4c2910);
+void CMDRECV_SaveGame(SaveGameCommand *command) {
+    int address = 0x4c2910;
+    __asm {
+        xor eax, eax
+        mov eax, command
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*CMDRECV_LeaveGame)(int), CMDRECV_LeaveGame, 0x4c2e90);
 DECL_FUNC(int(*CMDRECV_CancelUnitMorph)(), CMDRECV_CancelUnitMorph, 0x4c2ec0);
 DECL_FUNC(int(*CMDRECV_CancelConstruction)(), CMDRECV_CancelConstruction, 0x4c2ef0);
@@ -17480,7 +17503,7 @@ int CompressWrite(void *a1, size_t a2, FILE *a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4C35C0)(), sub_4C35C0, 0x4c35c0);
+DECL_FUNC(void (__cdecl*sub_4C35C0)(), sub_4C35C0, 0x4c35c0);
 int BINDLG_BlitSurface(dialog *a1) {
     int address = 0x4c35f0;
     int result_;
@@ -19254,7 +19277,7 @@ CImage **CreateHealthBar(CSprite *a2) {
     return result_;
 }
 DECL_FUNC(void (__thiscall*sub_4D64A0)(unsigned int this_), sub_4D64A0, 0x4d64a0);
-DECL_FUNC(int(*writeImages)(FILE *a2), writeImages, 0x4d64c0);
+DECL_FUNC(int (__stdcall*writeImages)(FILE *file), writeImages, 0x4d64c0);
 void ISCRIPT_PlaySnd(SfxData sfx, CImage *a1) {
     int address = 0x4d6610;
     __asm {
@@ -21687,7 +21710,7 @@ BOOL writeUnitPointer(int a1, CUnit *a2, FILE *a3) {
 }
 DECL_FUNC(int(*sub_4EA9D0)(), sub_4EA9D0, 0x4ea9d0);
 DECL_FUNC(int (__stdcall*sub_4EAA80)(int), sub_4EAA80, 0x4eaa80);
-DECL_FUNC(int (__stdcall*WriteUnits)(FILE *), WriteUnits, 0x4eaaf0);
+DECL_FUNC(int (__stdcall*WriteUnits)(FILE *file), WriteUnits, 0x4eaaf0);
 DECL_FUNC(int(*initializeGlobUnitCount)(), initializeGlobUnitCount, 0x4ead50);
 DECL_FUNC(int(*mapTransferVector_clear)(), mapTransferVector_clear, 0x4eadf0);
 DECL_FUNC(int(*sub_4EAF30)(), sub_4EAF30, 0x4eaf30);
@@ -22304,7 +22327,7 @@ void sub_4F3040(dialog *a1) {
         call address
     }
 }
-void SetTargetDlgText(int a2) {
+void SetTargetDlgText(char *a2) {
     int address = 0x4f31d0;
     __asm {
         xor edx, edx
@@ -22625,17 +22648,14 @@ void load_gamemenu(dialog *result) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*statf10_ButtonInteract)(dialog *dlg, dlgEvent *evt), statf10_ButtonInteract, 0x4f5180);
-int Statf10_RegisterCustomProcs(dialog *a1) {
+DECL_FUNC(int (__fastcall*statf10_ButtonInteract)(dialog *dlg, dlgEvent *evt), statf10_ButtonInteract, 0x4f5180);
+void Statf10_RegisterCustomProcs(dialog *a1) {
     int address = 0x4f5210;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__fastcall*Statf10_DialogProc)(dialog *dlg, dlgEvent *evt), Statf10_DialogProc, 0x4f5240);
 DECL_FUNC(int(*load_Statf10_BIN)(), load_Statf10_BIN, 0x4f5300);
@@ -25176,14 +25196,14 @@ ButtonOrder(&stru_515DD0)[5] = * ((decltype(&stru_515DD0)) 0x515dd0);
 ButtonOrder(&stru_515E38)[5] = * ((decltype(&stru_515E38)) 0x515e38);
 ButtonOrder(&stru_515EA0)[7] = * ((decltype(&stru_515EA0)) 0x515ea0);
 ButtonOrder(&stru_515F2C)[2] = * ((decltype(&stru_515F2C)) 0x515f2c);
-ButtonOrder(&stru_515F58)[9] = * ((decltype(&stru_515F58)) 0x515f58);
+ButtonOrder(&larva_buttons)[9] = * ((decltype(&larva_buttons)) 0x515f58);
 ButtonOrder(&stru_51600C)[1] = * ((decltype(&stru_51600C)) 0x51600c);
 ButtonOrder(&stru_516020)[9] = * ((decltype(&stru_516020)) 0x516020);
 ButtonOrder(&stru_5160D8)[7] = * ((decltype(&stru_5160D8)) 0x5160d8);
 ButtonOrder(&stru_516168)[6] = * ((decltype(&stru_516168)) 0x516168);
 ButtonOrder(&stru_5161E0)[7] = * ((decltype(&stru_5161E0)) 0x5161e0);
-ButtonOrder(&stru_516270)[8] = * ((decltype(&stru_516270)) 0x516270);
-ButtonOrder(&stru_516310)[7] = * ((decltype(&stru_516310)) 0x516310);
+ButtonOrder(&hydralisk_buttons)[8] = * ((decltype(&hydralisk_buttons)) 0x516270);
+ButtonOrder(&mutalisk_buttons)[7] = * ((decltype(&mutalisk_buttons)) 0x516310);
 ButtonOrder(&stru_5163A0)[7] = * ((decltype(&stru_5163A0)) 0x5163a0);
 ButtonOrder(&stru_516430)[9] = * ((decltype(&stru_516430)) 0x516430);
 ButtonOrder(&stru_5164E8)[9] = * ((decltype(&stru_5164E8)) 0x5164e8);
@@ -26086,9 +26106,7 @@ u8& Chat_NextLine = * ((decltype(&Chat_NextLine)) 0x640b58);
 Chat_TextLine(&Chat_GameText)[13] = * ((decltype(&Chat_GameText)) 0x640b60);
 u8(&Chat_ColorBytes)[13] = * ((decltype(&Chat_ColorBytes)) 0x641674);
 char(&Chat_LineFlags)[13] = * ((decltype(&Chat_LineFlags)) 0x641684);
-char& byte_641691 = * ((decltype(&byte_641691)) 0x641691);
-char& byte_641692 = * ((decltype(&byte_641692)) 0x641692);
-char& byte_641693 = * ((decltype(&byte_641693)) 0x641693);
+char(&tritarget_command_args)[3] = * ((decltype(&tritarget_command_args)) 0x641691);
 char& is_placing_order = * ((decltype(&is_placing_order)) 0x641694);
 int& COrderCount = * ((decltype(&COrderCount)) 0x641698);
 COrder *& dword_64B2E0 = * ((decltype(&dword_64B2E0)) 0x64b2e0);
@@ -26489,7 +26507,7 @@ char& CanUpdateStatDataDialog = * ((decltype(&CanUpdateStatDataDialog)) 0x68c1f8
 grpHead *& dword_68C1FC = * ((decltype(&dword_68C1FC)) 0x68c1fc);
 dialog *& dword_68C200 = * ((decltype(&dword_68C200)) 0x68c200);
 void *& wirefram_grp = * ((decltype(&wirefram_grp)) 0x68c204);
-char(&buffer)[] = * ((decltype(&buffer)) 0x68c208);
+char(&byte_68C208)[] = * ((decltype(&byte_68C208)) 0x68c208);
 char(&byteShieldStr)[22] = * ((decltype(&byteShieldStr)) 0x68c20a);
 dialog *& dword_68C220 = * ((decltype(&dword_68C220)) 0x68c220);
 dialog *& stat_f10_Dlg = * ((decltype(&stat_f10_Dlg)) 0x68c224);
