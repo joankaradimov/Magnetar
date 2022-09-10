@@ -7715,17 +7715,9 @@ void GameRun_(MenuPosition a1)
 		fclose(loadGameFileHandle);
 		loadGameFileHandle = 0;
 	}
-	if (v1)
-	{
-		GamePosition next_game_position = BeginGame_(a1);
-		DestroyGame_();
-		gwGameMode = next_game_position;
-	}
-	else
-	{
-		DestroyGame_();
-		gwGameMode = GAME_GLUES;
-	}
+	GamePosition next_game_position = v1 ? BeginGame_(a1) : GAME_GLUES;
+	DestroyGame_();
+	gwGameMode = next_game_position;
 }
 
 FAIL_STUB_PATCH(GameRun);
