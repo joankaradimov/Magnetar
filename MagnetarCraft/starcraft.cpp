@@ -450,6 +450,37 @@ void __cdecl DLGErrFatal_()
 
 FUNCTION_PATCH(DLGErrFatal, DLGErrFatal_);
 
+bool hasMessagesWaiting_(MSG* a1, int a2)
+{
+	if (dword_6D0530)
+	{
+		dword_6D0530 = 0;
+		return false;
+	}
+
+	if (!a2 || dword_51BFA8)
+	{
+		return PeekMessageA(a1, 0, 0, 0, 1u);
+	}
+
+	if (multiPlayerMode || gwGameMode == GamePosition::GAME_EXIT)
+	{
+		if (PeekMessageA(a1, 0, 0, 0, 1u))
+		{
+			return true;
+		}
+		else
+		{
+			Sleep(0);
+			return false;
+		}
+	}
+
+	return GetMessageA(a1, 0, 0, 0) != -1;
+}
+
+FAIL_STUB_PATCH(hasMessagesWaiting);
+
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
 	sub_419F80();
@@ -682,7 +713,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 	if (flag)
 	{
 		MSG Msg;
-		while (hasMessagesWaiting(&Msg, flag & 2))
+		while (hasMessagesWaiting_(&Msg, flag & 2))
 		{
 			if (!hAccTable || !hWndParent || !TranslateAcceleratorA(hWndParent, hAccTable, &Msg))
 			{
