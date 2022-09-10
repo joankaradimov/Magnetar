@@ -15153,7 +15153,7 @@ void CreateMainWindow_()
 	const char* window_name = is_expansion_installed ? "Brood War" : "Starcraft";
 	int screen_width = GetSystemMetrics(SM_CXSCREEN);
 	int screen_height = GetSystemMetrics(SM_CYSCREEN);
-	hWndParent = CreateWindowExA(0, "SWarClass", window_name, 0x90080000, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
+	hWndParent = CreateWindowExA(0, "SWarClass", window_name, WS_POPUP | WS_VISIBLE | WS_SYSMENU, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
 	if (!hWndParent)
 	{
 		FatalError("CreateWindowEx");
