@@ -1,4 +1,4 @@
-#include "NopPatch.h"
+#include "patching/NopPatch.h"
 
 NopPatch::NopPatch(const char* file, int line, void* destination_address, size_t block_length) :
 	BasePatch(file, line, destination_address),

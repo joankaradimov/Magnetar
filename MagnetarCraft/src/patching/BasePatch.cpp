@@ -2,7 +2,7 @@
 #include <sstream>
 #include <Windows.h>
 
-#include "BasePatch.h"
+#include "patching/BasePatch.h"
 
 BasePatch::BasePatch(const char* file, int line, void* destination_address):
 	file(file),

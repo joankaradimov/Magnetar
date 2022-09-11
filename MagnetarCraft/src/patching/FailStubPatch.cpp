@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include <vector>
 
-#include "FailStubPatch.h"
+#include "patching/FailStubPatch.h"
 
 FailStubPatch::FailStubPatch(const char* file, int line, void* destination_function) :
 	BasePatch(file, line, destination_function)

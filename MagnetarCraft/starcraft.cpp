@@ -6,7 +6,7 @@
 #include "starcraft.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
-#include "patching/patching.h"
+#include "patching.h"
 
 void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
 {

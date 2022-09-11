@@ -10,7 +10,7 @@
 #include <filesystem>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
-#include "patching/patching.h"
+#include "patching.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;

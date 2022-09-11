@@ -1,7 +1,7 @@
 #include <Windows.h>
 #include <vector>
 
-#include "FunctionPatch.h"
+#include "patching/FunctionPatch.h"
 
 FunctionPatch::FunctionPatch(const char* file, int line, void* destination_function, void* replacement_function) :
 	BasePatch(file, line, destination_function),

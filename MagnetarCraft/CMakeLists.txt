@@ -10,16 +10,17 @@ if (MSVC)
 endif ()
 
 add_executable(MagnetarCraft WIN32
-	patching/BasePatch.cpp
-	patching/CallSitePatch.cpp
-	patching/FailStubPatch.cpp
-	patching/FunctionPatch.cpp
-	patching/NopPatch.cpp
+	src/patching/BasePatch.cpp
+	src/patching/CallSitePatch.cpp
+	src/patching/FailStubPatch.cpp
+	src/patching/FunctionPatch.cpp
+	src/patching/NopPatch.cpp
 	starcraft_exe/offsets.cpp
 	MagnetarCraft.cpp
 	starcraft.cpp
 )
 
+include_directories("./include")
 include_directories(${YAML_CPP_INCLUDE_DIRS})
 include_directories(${MAGNETORM_INCLUDE_DIRS})
 include_directories("${sol2_SOURCE_DIR}/include")
