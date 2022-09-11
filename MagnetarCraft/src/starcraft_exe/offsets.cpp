@@ -1,4 +1,4 @@
-#include "types.h"
+#include "starcraft_exe/types.h"
 
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 

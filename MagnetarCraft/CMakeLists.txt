@@ -15,7 +15,7 @@ add_executable(MagnetarCraft WIN32
 	src/patching/FailStubPatch.cpp
 	src/patching/FunctionPatch.cpp
 	src/patching/NopPatch.cpp
-	starcraft_exe/offsets.cpp
+	src/starcraft_exe/offsets.cpp
 	MagnetarCraft.cpp
 	starcraft.cpp
 )

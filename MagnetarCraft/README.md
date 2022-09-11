@@ -15,9 +15,9 @@ symbols via C++ references to memory locations in `Starcraft.exe`.
 
 ## Symbols
 
-Those can be found under `starcraft_exe/offsets.cpp`/`starcraft_exe/offsets.h`/
-`starcraft_exe/types.h`. All files are auto-generated and should not be
-edited manually. For more details see
+Those can be found under `set/starcraft_exe/offsets.cpp`/
+`include/starcraft_exe/offsets.h`/`include/starcraft_exe/types.h`. All files
+are auto-generated and should not be edited manually. For more details see
 [idb-export](https://github.com/joankaradimov/MagnetarCraft/tree/master/idb-export).
 
 ## Address 0x400000
