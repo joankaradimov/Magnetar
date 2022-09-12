@@ -16,6 +16,7 @@ add_executable(MagnetarCraft WIN32
 	src/patching/FunctionPatch.cpp
 	src/patching/NopPatch.cpp
 	src/starcraft_exe/offsets.cpp
+	src/file_info.cpp
 	src/MagnetarCraft.cpp
 	src/starcraft.cpp
 )

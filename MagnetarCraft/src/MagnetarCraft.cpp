@@ -11,6 +11,7 @@
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 #include "patching.h"
+#include "file_info.h"
 
 void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
 const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
@@ -21,51 +22,6 @@ WORD EXPECTED_PATCH_VERSION = 1;
 
 #pragma section(".scimg", read, write)
 __declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 2];
-
-class FileInfo
-{
-public:
-	FileInfo(const char* path): version_data(nullptr)
-	{
-		DWORD _unused;
-		int version_info_size = GetFileVersionInfoSizeA(path, &_unused);
-		if (version_info_size)
-		{
-			version_data = malloc(version_info_size);
-			if (GetFileVersionInfoA(path, 0, version_info_size, version_data))
-			{
-				VS_FIXEDFILEINFO* file_info_buffer;
-				unsigned int file_info_buffer_length;
-				if (VerQueryValueA(version_data, "\\", (LPVOID*)&file_info_buffer, &file_info_buffer_length))
-				{
-					file_info = file_info_buffer;
-				}
-			}
-		}
-	}
-
-	~FileInfo()
-	{
-		if (version_data)
-		{
-			free(version_data);
-		}
-	}
-
-	bool is_valid()
-	{
-		return version_data != nullptr;
-	}
-
-	VS_FIXEDFILEINFO* operator ->()
-	{
-		return file_info;
-	}
-
-private:
-	void* version_data;
-	VS_FIXEDFILEINFO* file_info;
-};
 
 class StarCraftExecutable
 {
