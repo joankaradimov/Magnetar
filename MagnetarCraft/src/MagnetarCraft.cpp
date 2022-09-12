@@ -11,6 +11,26 @@
 #include "patching.h"
 #include "starcraft_executable.h"
 
+// Patch clib functions that use FILE
+FUNCTION_PATCH((void*)0x4116F5, _fread_nolock);
+FUNCTION_PATCH((void*)0x4117DE, fread);
+FUNCTION_PATCH((void*)0x41182A, _fwrite_nolock);
+FUNCTION_PATCH((void*)0x411931, fwrite);
+FUNCTION_PATCH((void*)0x41197D, ftell);
+FUNCTION_PATCH((void*)0x411ADF, fseek);
+FUNCTION_PATCH((void*)0x411B6E, _fseek_nolock);
+FUNCTION_PATCH((void*)0x411BB7, fgetc);
+FUNCTION_PATCH((void*)0x40D3C8, _fsopen);
+FUNCTION_PATCH((void*)0x40D424, fopen);
+FUNCTION_PATCH((void*)0x40D437, fclose);
+FUNCTION_PATCH((void*)0x40D483, _fclose_nolock);
+FUNCTION_PATCH((void*)0x40D983, _lock_file);
+FUNCTION_PATCH((void*)0x40D9D5, _unlock_file);
+FUNCTION_PATCH((void*)0x411619, setvbuf);
+FUNCTION_PATCH((void*)0x40DE57, fflush);
+FUNCTION_PATCH((void*)0x40DF5A, flushall);
+FUNCTION_PATCH((void*)0x40EBA2, fcloseall);
+
 void init_stacraftexe_clib()
 {
 	int(*_ioinit)() = (int(*)())0x405725;
@@ -174,26 +194,6 @@ std::string LocateStarCraft()
 	SHGetPathFromIDListA(item, path);
 	return path;
 }
-
-// Patch clib functions that use FILE
-FUNCTION_PATCH((void*)0x4116F5, _fread_nolock);
-FUNCTION_PATCH((void*)0x4117DE, fread);
-FUNCTION_PATCH((void*)0x41182A, _fwrite_nolock);
-FUNCTION_PATCH((void*)0x411931, fwrite);
-FUNCTION_PATCH((void*)0x41197D, ftell);
-FUNCTION_PATCH((void*)0x411ADF, fseek);
-FUNCTION_PATCH((void*)0x411B6E, _fseek_nolock);
-FUNCTION_PATCH((void*)0x411BB7, fgetc);
-FUNCTION_PATCH((void*)0x40D3C8, _fsopen);
-FUNCTION_PATCH((void*)0x40D424, fopen);
-FUNCTION_PATCH((void*)0x40D437, fclose);
-FUNCTION_PATCH((void*)0x40D483, _fclose_nolock);
-FUNCTION_PATCH((void*)0x40D983, _lock_file);
-FUNCTION_PATCH((void*)0x40D9D5, _unlock_file);
-FUNCTION_PATCH((void*)0x411619, setvbuf);
-FUNCTION_PATCH((void*)0x40DE57, fflush);
-FUNCTION_PATCH((void*)0x40DF5A, flushall);
-FUNCTION_PATCH((void*)0x40EBA2, fcloseall);
 
 std::filesystem::path GetExecutablePath()
 {
