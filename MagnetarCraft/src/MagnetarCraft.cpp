@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "starcraft.h"
 #include "magnetorm.h"
-#include <exception>
 #include <filesystem>
 #include <fstream>
 #include <yaml-cpp/yaml.h>
@@ -208,7 +207,7 @@ std::filesystem::path GetExecutableFilename()
 	return GetExecutablePath().filename();
 }
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) try
+void StartMagnetar()
 {
 	bool starcraft_root_manually_selected = false;
 	std::string config_filename = GetExecutableFilename().replace_extension("yml").generic_string();
@@ -285,10 +284,4 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	FastIndexInit_();
 	BWSetSecurityInfo();
 	GameMainLoop_();
-
-	return 0;
-}
-catch (const std::exception& e) {
-	report_error(e.what());
-	return 1;
 }

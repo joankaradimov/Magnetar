@@ -15,8 +15,8 @@ time of writing both VS2019 and VS2022 were able to compile the project.
 - To open the project in VS:\
   In visual Studio hit `File -> Open -> Folder` and select the root folder.
 - To run/debug the project:\
-  Expand the `MagnetarCraft` directory, right click on any `.cpp` file under
-  it and select `Set as Startup Item`.
+  Expand the `MagnetarCraft/src` directory, right click on `main.cpp` file and
+  select `Set as Startup Item`.
 
 ## Hacking on Linux/Unix
 
