@@ -3843,6 +3843,8 @@ void minimapGameUpdate_(dialog* a1)
 
 FAIL_STUB_PATCH(minimapGameUpdate);
 
+void CMDACT_RightClick_(dlgEvent* dlg);
+
 int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -3883,7 +3885,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		}
 		else
 		{
-			CMDACT_RightClick(evt);
+			CMDACT_RightClick_(evt);
 			return 1;
 		}
 	case EVN_USER:
@@ -17129,6 +17131,38 @@ void BWFXN_QueueCommand__(const T& buffer)
 	BWFXN_QueueCommand_(&buffer, sizeof(T));
 }
 
+void CMDACT_RightClick_(dlgEvent* dlg)
+{
+	if (ActivePortraitUnit && ActivePortraitUnit->playerID == g_LocalNationID)
+	{
+		if (std::none_of(ClientSelectionGroup, ClientSelectionGroup + _countof(ClientSelectionGroup), [](CUnit* unit) { return unit && DoesAcceptRclickCommands(unit); }))
+		{
+			return;
+		}
+
+		if (std::none_of(ClientSelectionGroup, ClientSelectionGroup + _countof(ClientSelectionGroup), [](CUnit* unit) { return unit && CanRClickGround_maybe(unit); }))
+		{
+			return;
+		}
+
+		int x = dlg->cursor.x;
+		int y = dlg->cursor.y;
+		getMinimapCursorPos(&x, &y);
+
+		RightClickCommand command;
+		command.command_id = 20; // TODO: use the CommandId enum
+		command.x = x;
+		command.y = y;
+		command.var_F = 0;
+		command.var_D = 228;
+		command.is_shift_used = is_keycode_used[VK_SHIFT];
+		BWFXN_QueueCommand__(command);
+		PlayWorkerActionSound(ActivePortraitUnit);
+		GroundAttackInit(x, y);
+	}
+}
+
+FAIL_STUB_PATCH(CMDACT_RightClick);
 
 ButtonState __fastcall BTNSCOND_ReplayPlayPause_(u16 variable, int player_id, CUnit* unit)
 {
