@@ -17123,6 +17123,13 @@ void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size
 
 FUNCTION_PATCH(BWFXN_QueueCommand, BWFXN_QueueCommand_);
 
+template <typename T>
+void BWFXN_QueueCommand__(const T& buffer)
+{
+	BWFXN_QueueCommand_(&buffer, sizeof(T));
+}
+
+
 ButtonState __fastcall BTNSCOND_ReplayPlayPause_(u16 variable, int player_id, CUnit* unit)
 {
 	if (InReplay && getActivePlayerId() == playerid)
@@ -17206,7 +17213,7 @@ void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 		}
 	}
 
-	BWFXN_QueueCommand_(&command, sizeof(command));
+	BWFXN_QueueCommand__(command);
 }
 
 FUNCTION_PATCH(CMDACT_DecreaseReplaySpeed, CMDACT_DecreaseReplaySpeed_);
@@ -17265,7 +17272,7 @@ void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 		}
 	}
 
-	BWFXN_QueueCommand_(&command, sizeof(command));
+	BWFXN_QueueCommand__(command);
 }
 
 FUNCTION_PATCH(CMDACT_IncreaseReplaySpeed, CMDACT_IncreaseReplaySpeed_);
