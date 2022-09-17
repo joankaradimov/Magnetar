@@ -207,14 +207,19 @@ std::filesystem::path GetExecutableFilename()
 	return GetExecutablePath().filename();
 }
 
+std::filesystem::path GetConfigFilename()
+{
+	return GetExecutableFilename().replace_extension("yml");
+}
+
 void StartMagnetar()
 {
 	bool starcraft_root_manually_selected = false;
-	std::string config_filename = GetExecutableFilename().replace_extension("yml").generic_string();
+	std::filesystem::path config_filename = GetConfigFilename();
 	YAML::Node config;
 	try
 	{
-		config = YAML::LoadFile(config_filename);
+		config = YAML::LoadFile(config_filename.generic_string());
 	}
 	catch (const YAML::BadFile& _exception)
 	{
