@@ -21,6 +21,7 @@ add_library(MagnetarCraftObject OBJECT
 )
 
 add_subdirectory(src)
+add_subdirectory(test)
 
 include_directories("./include")
 include_directories(${YAML_CPP_INCLUDE_DIRS})
