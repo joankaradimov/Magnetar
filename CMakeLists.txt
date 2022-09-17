@@ -30,5 +30,3 @@ add_subdirectory("sol2")
 
 set(YAML_CPP_BUILD_TOOLS OFF CACHE INTERNAL "")
 add_subdirectory("yaml-cpp")
-
-add_dependencies(MagnetarCraft MagnetarDat)

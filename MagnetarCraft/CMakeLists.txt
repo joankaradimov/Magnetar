@@ -33,3 +33,5 @@ target_link_libraries(MagnetarCraftObject PRIVATE magnetorm)
 target_link_libraries(MagnetarCraftObject PRIVATE "yaml-cpp")
 target_link_libraries(MagnetarCraftObject PRIVATE libluajit)
 target_link_libraries(MagnetarCraftObject PRIVATE "ddraw" "dsound" "version" "imm32")
+
+add_dependencies(MagnetarCraftObject MagnetarDat)
