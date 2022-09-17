@@ -170,7 +170,7 @@ void FastIndexInit_()
 
 FAIL_STUB_PATCH(FastIndexInit);
 
-std::string LocateStarCraft()
+std::string LocateStarCraftManually()
 {
 	BROWSEINFOA browse_Info;
 	browse_Info.hwndOwner = nullptr;
@@ -238,7 +238,7 @@ void StartMagnetar()
 	catch (const YAML::TypedBadConversion<std::string>& e)
 	{
 		// TODO: try to find StarCraft path in registry, maybe?
-		starcraft_root = LocateStarCraft();
+		starcraft_root = LocateStarCraftManually();
 		starcraft_root_manually_selected = true;
 	}
 
@@ -270,7 +270,7 @@ void StartMagnetar()
 			{
 				report_error(e.what());
 			}
-			starcraft_root = LocateStarCraft();
+			starcraft_root = LocateStarCraftManually();
 			starcraft_root_manually_selected = true;
 		}
 	}
