@@ -40,6 +40,11 @@ StarCraftExecutable::~StarCraftExecutable()
 	}
 }
 
+std::filesystem::path StarCraftExecutable::GetParentDirectory()
+{
+	return executable_path.parent_path();
+}
+
 HMODULE StarCraftExecutable::GetModule()
 {
 	return module;

@@ -10,6 +10,7 @@ public:
 	StarCraftExecutable(const char* path);
 	~StarCraftExecutable();
 
+	std::filesystem::path GetParentDirectory();
 	HMODULE GetModule();
 	void check();
 
