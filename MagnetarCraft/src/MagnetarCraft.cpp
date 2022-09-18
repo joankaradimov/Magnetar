@@ -224,13 +224,11 @@ YAML::Node LoadConfig(const std::filesystem::path& config_filename)
 	}
 }
 
-void StartMagnetar()
+StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 {
 	bool starcraft_root_manually_selected = false;
-	std::filesystem::path config_filename = GetConfigFilename();
-	YAML::Node config = LoadConfig(config_filename);
-
 	std::string starcraft_root;
+
 	try
 	{
 		starcraft_root = config["starcraft-root"].as<std::string>();
@@ -275,6 +273,15 @@ void StartMagnetar()
 		}
 	}
 
+	return starcraft_exe;
+}
+
+void StartMagnetar()
+{
+	std::filesystem::path config_filename = GetConfigFilename();
+	YAML::Node config = LoadConfig(config_filename);
+
+	StarCraftExecutable* starcraft_exe = LocateStarCraftExecutable(config);
 	config["starcraft-root"] = starcraft_exe->GetParentDirectory().generic_string();
 	std::ofstream(config_filename) << config;
 
