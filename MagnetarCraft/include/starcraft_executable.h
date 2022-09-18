@@ -1,7 +1,7 @@
 #include <filesystem>
 #include <Windows.h>
 
-#include "../MemoryModule/MemoryModule.h"
+#include "MemoryModule.h"
 #include "file_info.h"
 
 class StarCraftExecutable

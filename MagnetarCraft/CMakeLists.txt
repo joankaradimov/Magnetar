@@ -24,6 +24,7 @@ add_subdirectory(src)
 add_subdirectory(test)
 
 include_directories("./include")
+include_directories(${MemoryModule_SOURCE_DIR})
 include_directories(${YAML_CPP_INCLUDE_DIRS})
 include_directories(${MAGNETORM_INCLUDE_DIRS})
 include_directories("${sol2_SOURCE_DIR}/include")
