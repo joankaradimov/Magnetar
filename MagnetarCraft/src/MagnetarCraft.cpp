@@ -254,8 +254,7 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 			SFileDestroy();
 
 			starcraft_exe->check();
-
-			break;
+			return starcraft_exe;
 		}
 		catch (const std::exception& e)
 		{
@@ -272,8 +271,6 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 			starcraft_root_manually_selected = true;
 		}
 	}
-
-	return starcraft_exe;
 }
 
 void StartMagnetar()
