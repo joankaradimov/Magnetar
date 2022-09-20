@@ -253,7 +253,6 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 			// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808
 			SFileDestroy();
 
-			starcraft_exe->check();
 			return starcraft_exe;
 		}
 		catch (const std::exception& e)
@@ -279,6 +278,7 @@ void StartMagnetar()
 	YAML::Node config = LoadConfig(config_filename);
 
 	StarCraftExecutable* starcraft_exe = LocateStarCraftExecutable(config);
+	starcraft_exe->check();
 	config["starcraft-root"] = starcraft_exe->GetParentDirectory().generic_string();
 	std::ofstream(config_filename) << config;
 
