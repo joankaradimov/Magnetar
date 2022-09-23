@@ -15931,98 +15931,99 @@ void GameMainLoop_()
 	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	Mouse.x = SCREEN_WIDTH / 2;
 	Mouse.y = SCREEN_HEIGHT / 2;
+
 	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
 		SFileCloseFile(phFile);
-		if ((registry_options.field_18 & 0x800) == 0)
+		if (registry_options.field_18 & 0x800)
 		{
-		LABEL_8:
-			LoadTitle_();
-			LoadInitIscriptBIN_();
-			AppAddExit_(CleanupIscriptBINHandle_);
-			if (gwGameMode != GAME_GLUES && load_screen)
-			{
-				DestroyDialog(load_screen);
-				load_screen = NULL;
-			}
-
-			while (1)
-			{
-				setCursorType_(CursorType::CUR_TIME);
-				BWFXN_RedrawTarget_();
-				if (!is_expansion_installed)
-					IsExpansion = 0;
-				switch (gwGameMode)
-				{
-				case GAME_RUN:
-					GameRun_(GLUE_MAIN_MENU);
-					break;
-				case GAME_CINEMATIC:
-					PlayMovie_(active_cinematic);
-					active_cinematic = Cinematic::C_NONE;
-					if (gwGameMode == GAME_CINEMATIC)
-						ContinueCampaign_(1);
-					break;
-				case GAME_RESTART:
-					next_campaign_mission = 1;
-					[[fallthrough]];
-				case GAME_RUNINIT:
-					gwGameMode = GAME_RUN;
-					break;
-				case GAME_INTRO:
-					PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
-					if (gwGameMode == GAME_INTRO)
-					{
-						if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
-						{
-							SFileCloseFile(phFile);
-							PlayMovie_(Cinematic::C_EXPANSION_INTRO);
-						}
-						else
-						{
-							PlayMovie_(Cinematic::C_INTRO);
-						}
-						if (gwGameMode == GAME_INTRO)
-							gwGameMode = GAME_GLUES;
-					}
-					break;
-				case GAME_GLUES:
-				case GAME_WIN:
-				case GAME_LOSE:
-					SwitchMenu_();
-					break;
-				case GAME_CREDITS:
-					BeginCredits_();
-					if (gwGameMode == GAME_CREDITS)
-					{
-						gwGameMode = GAME_GLUES;
-						glGluesMode = GLUE_MAIN_MENU;
-					}
-					break;
-				case GAME_EPILOG:
-					BeginEpilog_();
-					break;
-				default:
-					AppExit_(0);
-					ProcError(1);
-					exit(0);
-					return;
-				}
-			}
+			registry_options.field_18 &= ~0x800u;
+			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			PlayMovie_(Cinematic::C_EXPANSION_INTRO);
 		}
-		registry_options.field_18 &= ~0x800u;
-		PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
-		PlayMovie_(Cinematic::C_EXPANSION_INTRO);
 	}
 	else
 	{
-		if ((registry_options.field_18 & 0x200) == 0)
-			goto LABEL_8;
-		registry_options.field_18 &= ~0x200u;
-		PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
-		PlayMovie_(Cinematic::C_INTRO);
+		if (registry_options.field_18 & 0x200)
+		{
+			registry_options.field_18 &= ~0x200u;
+			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			PlayMovie_(Cinematic::C_INTRO);
+		}
 	}
-	goto LABEL_8;
+
+	LoadTitle_();
+	LoadInitIscriptBIN_();
+	AppAddExit_(CleanupIscriptBINHandle_);
+	if (gwGameMode != GAME_GLUES && load_screen)
+	{
+		DestroyDialog(load_screen);
+		load_screen = NULL;
+	}
+
+	while (1)
+	{
+		setCursorType_(CursorType::CUR_TIME);
+		BWFXN_RedrawTarget_();
+		if (!is_expansion_installed)
+			IsExpansion = 0;
+		switch (gwGameMode)
+		{
+		case GAME_RUN:
+			GameRun_(GLUE_MAIN_MENU);
+			break;
+		case GAME_CINEMATIC:
+			PlayMovie_(active_cinematic);
+			active_cinematic = Cinematic::C_NONE;
+			if (gwGameMode == GAME_CINEMATIC)
+				ContinueCampaign_(1);
+			break;
+		case GAME_RESTART:
+			next_campaign_mission = 1;
+			[[fallthrough]];
+		case GAME_RUNINIT:
+			gwGameMode = GAME_RUN;
+			break;
+		case GAME_INTRO:
+			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			if (gwGameMode == GAME_INTRO)
+			{
+				if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
+				{
+					SFileCloseFile(phFile);
+					PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+				}
+				else
+				{
+					PlayMovie_(Cinematic::C_INTRO);
+				}
+				if (gwGameMode == GAME_INTRO)
+					gwGameMode = GAME_GLUES;
+			}
+			break;
+		case GAME_GLUES:
+		case GAME_WIN:
+		case GAME_LOSE:
+			SwitchMenu_();
+			break;
+		case GAME_CREDITS:
+			BeginCredits_();
+			if (gwGameMode == GAME_CREDITS)
+			{
+				gwGameMode = GAME_GLUES;
+				glGluesMode = GLUE_MAIN_MENU;
+			}
+			break;
+		case GAME_EPILOG:
+			BeginEpilog_();
+			break;
+		default:
+			AppExit_(0);
+			ProcError(1);
+			exit(0);
+			return;
+		}
+	}
 }
 
 FAIL_STUB_PATCH(sub_4DA790);
