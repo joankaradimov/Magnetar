@@ -15956,19 +15956,19 @@ void GameMainLoop_()
 				{
 				case GAME_RUN:
 					GameRun_(GLUE_MAIN_MENU);
-					continue;
+					break;
 				case GAME_CINEMATIC:
 					PlayMovie_(active_cinematic);
 					active_cinematic = Cinematic::C_NONE;
 					if (gwGameMode == GAME_CINEMATIC)
 						ContinueCampaign_(1);
-					continue;
+					break;
 				case GAME_RESTART:
 					next_campaign_mission = 1;
 					[[fallthrough]];
 				case GAME_RUNINIT:
 					gwGameMode = GAME_RUN;
-					continue;
+					break;
 				case GAME_INTRO:
 					PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
 					if (gwGameMode == GAME_INTRO)
@@ -15985,12 +15985,12 @@ void GameMainLoop_()
 						if (gwGameMode == GAME_INTRO)
 							gwGameMode = GAME_GLUES;
 					}
-					continue;
+					break;
 				case GAME_GLUES:
 				case GAME_WIN:
 				case GAME_LOSE:
 					SwitchMenu_();
-					continue;
+					break;
 				case GAME_CREDITS:
 					BeginCredits_();
 					if (gwGameMode == GAME_CREDITS)
