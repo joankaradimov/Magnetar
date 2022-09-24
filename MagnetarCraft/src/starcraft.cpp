@@ -4925,7 +4925,7 @@ void sub_4D35A0_()
 
 FAIL_STUB_PATCH(sub_4D35A0);
 
-int CreateGame_(GameData* a1)
+int CreateGame_(GameData* data)
 {
 	if (!is_spawn)
 	{
@@ -4934,12 +4934,12 @@ int CreateGame_(GameData* a1)
 		zero.as_number = 0;
 		if (InitializeNetworkProvider(zero))
 		{
-			if (SNetCreateGame(a1->player_name, "", "", 0, 0, 0, a1->max_players, Players[g_LocalNationID].szName, "", &playerid))
+			if (SNetCreateGame(data->player_name, "", "", 0, 0, 0, data->max_players, Players[g_LocalNationID].szName, "", &playerid))
 			{
 				dword_57EEC0[playerid] = g_LocalNationID;
 				dword_57EE7C[playerid] = g_LocalHumanID;
 				Players[g_LocalNationID].dwStormId = playerid;
-				memcpy(&gameData, a1, 141u);
+				memcpy(&gameData, data, 141u);
 				isHost = 1;
 				initializeSlots(playerid);
 				cleanBufferCounts_();
