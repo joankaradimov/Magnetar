@@ -18861,12 +18861,12 @@ signed int InitializeNetworkProvider(Char4 provider_id) {
     }
     return result_;
 }
-int CreateGame(GameData *a1) {
+int CreateGame(GameData *data) {
     int address = 0x4d3fc0;
     int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, data
         call address
         mov result_, eax
     }
@@ -19652,14 +19652,7 @@ int GameLoop_State(void *a1, MenuPosition a2) {
     }
     return result_;
 }
-void GameLoop_Top(MenuPosition a1) {
-    int address = 0x4d9840;
-    __asm {
-        xor ebx, ebx
-        mov ebx, a1
-        call address
-    }
-}
+DECL_FUNC(void(*GameLoop_Top)(), GameLoop_Top, 0x4d9840);
 GamePosition BeginGame(MenuPosition a1) {
     int address = 0x4d9950;
     GamePosition result_;
@@ -20259,13 +20252,13 @@ void sub_4DF4A0(dialog *a1) {
     }
 }
 DECL_FUNC(void (__thiscall*sub_4DF520)(dialog *this_), sub_4DF520, 0x4df520);
-int LoadReplayFile(char *a1, int *a3) {
+int LoadReplayFile(char *filename, int *a3) {
     int address = 0x4df570;
     int result_;
     __asm {
         xor eax, eax
         xor edi, edi
-        mov eax, a1
+        mov eax, filename
         mov edi, a3
         call address
         mov result_, eax
@@ -23859,7 +23852,7 @@ char(&aGameCS)[] = * ((decltype(&aGameCS)) 0x502a70);
 char(&aConsole_pcx)[12] = * ((decltype(&aConsole_pcx)) 0x502a7c);
 char(&aStarcraftSw_64)[] = * ((decltype(&aStarcraftSw_64)) 0x502a88);
 char(&aRezWait_bin)[] = * ((decltype(&aRezWait_bin)) 0x502aa8);
-char(&a1)[] = * ((decltype(&a1)) 0x502ab8);
+char(&asc_502AB8)[] = * ((decltype(&asc_502AB8)) 0x502ab8);
 char(&aRezOk_bin)[] = * ((decltype(&aRezOk_bin)) 0x502acc);
 char(&asc_502AD8)[] = * ((decltype(&asc_502AD8)) 0x502ad8);
 char(&aStarcraftSw_63)[] = * ((decltype(&aStarcraftSw_63)) 0x502afc);
