@@ -13154,7 +13154,6 @@ void CreateRaceDropdown_(dialog* dlg, Race race)
 		DlgSetSelected_UpdateScrollbar(v5, dlg);
 	}
 	dlg->pfcnInteract = sub_450A60;
-	strcpy(byte_596BC8, a1);
 }
 
 void __stdcall CreateRaceDropdown__(Race race)
