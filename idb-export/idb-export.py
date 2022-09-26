@@ -499,9 +499,7 @@ def is_blacklisted(text):
             return True
     return False
 
-def export_functions(declarations, definitions):
-    unused_functions = 0
-
+def exportable_functions():
     for n in range(idaapi.get_segm_qty()):
         segment = idaapi.getnseg(n)
         if idaapi.get_segm_name(segment).startswith('.text'):
@@ -513,14 +511,17 @@ def export_functions(declarations, definitions):
                 if is_blacklisted(function.name):
                     continue
 
-                declaration = function.build_export_declaration()
-                definition = function.build_export_definition()
+                yield function
 
-                if not function.is_used:
-                    unused_functions += 1
+def export_functions(declarations, definitions):
+    unused_functions = 0
 
-                declarations.append(declaration)
-                definitions.append(definition)
+    for function in exportable_functions():
+        if not function.is_used:
+            unused_functions += 1
+
+        declarations.append(function.build_export_declaration())
+        definitions.append(function.build_export_definition())
 
     print('Unused functions: %d' % unused_functions)
 
