@@ -48,4 +48,4 @@ void LoadInitIscriptBIN_();
 void __fastcall CleanupIscriptBINHandle_(bool exit_code);
 int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign);
 int CreateGame_(GameData* data);
-void GameRun_(MenuPosition a1);
+void GameRun_();

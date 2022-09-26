@@ -7596,7 +7596,7 @@ void GameLoop_State_()
 
 FAIL_STUB_PATCH(GameLoop_State);
 
-void GameLoop_Top_(MenuPosition a1)
+void GameLoop_Top_()
 {
 	FramesUntilNextTurn = 1;
 	byte_51CE9D = 0;
@@ -7644,7 +7644,7 @@ void stopAllSound_(void)
 
 FAIL_STUB_PATCH(stopAllSound);
 
-GamePosition BeginGame_(MenuPosition a1)
+GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
 	DLGMusicFade_((MusicTrack) currentMusicId);
@@ -7680,7 +7680,7 @@ GamePosition BeginGame_(MenuPosition a1)
 	{
 		BWFXN_RedrawTarget_();
 	}
-	GameLoop_Top_(a1);
+	GameLoop_Top_();
 	newGame(0);
 	stopAllSound_();
 	sub_41E9E0(3);
@@ -7691,7 +7691,7 @@ GamePosition BeginGame_(MenuPosition a1)
 
 FAIL_STUB_PATCH(BeginGame);
 
-void GameRun_(MenuPosition a1)
+void GameRun_()
 {
 	IsInGameLoop = 1;
 	int v1 = LoadGameInit_();
@@ -7717,7 +7717,7 @@ void GameRun_(MenuPosition a1)
 		fclose(loadGameFileHandle);
 		loadGameFileHandle = 0;
 	}
-	GamePosition next_game_position = v1 ? BeginGame_(a1) : GAME_GLUES;
+	GamePosition next_game_position = v1 ? BeginGame_() : GAME_GLUES;
 	DestroyGame_();
 	gwGameMode = next_game_position;
 }
@@ -15969,7 +15969,7 @@ void GameMainLoop_()
 		switch (gwGameMode)
 		{
 		case GAME_RUN:
-			GameRun_(GLUE_MAIN_MENU);
+			GameRun_();
 			break;
 		case GAME_CINEMATIC:
 			PlayMovie_(active_cinematic);

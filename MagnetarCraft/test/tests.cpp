@@ -56,7 +56,7 @@ int main()
 		IsExpansion = replay_header.is_expansion;
 
 		CreateGame_(&replay_header.game_data);
-		GameRun_(GLUE_MAIN_MENU);
+		GameRun_();
 
 		// TODO: persist the replay game speed between games [when rendering frames]
 		// TODO: save the final game state and compare it with a predefined state
