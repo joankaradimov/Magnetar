@@ -4939,7 +4939,7 @@ int CreateGame_(GameData* data)
 				dword_57EEC0[playerid] = g_LocalNationID;
 				dword_57EE7C[playerid] = g_LocalHumanID;
 				Players[g_LocalNationID].dwStormId = playerid;
-				memcpy(&gameData, data, 141u);
+				memcpy(&gameData, data, sizeof(gameData));
 				isHost = 1;
 				initializeSlots(playerid);
 				cleanBufferCounts_();
