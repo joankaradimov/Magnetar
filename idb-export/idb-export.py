@@ -1,5 +1,6 @@
 import re
 import collections
+import idautils
 
 class IdbExportError(Exception):
     pass
@@ -14,6 +15,12 @@ class Function:
         self.ref_type = get_type(ref) or guess_type(ref)
         self.ref_name = get_func_name(ref)
         self.skip = False
+
+        try:
+            next(idautils.XrefsTo(ref))
+            self.is_used = True
+        except StopIteration:
+            self.is_used = False
 
         # TODO: handle properly
         if self.ref_type == None:
@@ -493,6 +500,8 @@ def is_blacklisted(text):
     return False
 
 def export_functions(declarations, definitions):
+    unused_functions = 0
+
     for n in range(idaapi.get_segm_qty()):
         segment = idaapi.getnseg(n)
         if idaapi.get_segm_name(segment).startswith('.text'):
@@ -507,8 +516,13 @@ def export_functions(declarations, definitions):
                 if is_blacklisted(declaration):
                     continue
 
+                if not function.is_used:
+                    unused_functions += 1
+
                 declarations.append(declaration)
                 definitions.append(definition)
+
+    print('Unused functions: %d' % unused_functions)
 
 def export_data(segment, declarations, definitions):
     data_segment = idaapi.get_segm_by_name(segment)
