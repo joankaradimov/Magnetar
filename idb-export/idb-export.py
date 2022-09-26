@@ -510,11 +510,11 @@ def export_functions(declarations, definitions):
                 if function.skip:
                     continue
 
+                if is_blacklisted(function.name):
+                    continue
+
                 declaration = function.build_export_declaration()
                 definition = function.build_export_definition()
-
-                if is_blacklisted(declaration):
-                    continue
 
                 if not function.is_used:
                     unused_functions += 1
