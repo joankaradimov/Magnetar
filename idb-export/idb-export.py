@@ -5,6 +5,30 @@ import idautils
 class IdbExportError(Exception):
     pass
 
+class Datum:
+    def __init__(self, ref):
+        self.type = get_type(ref) or guess_type(ref)
+        self.name = idaapi.get_name(ref)
+
+        # TODO: handle mangled names (starting with '?')
+        if self.name == None or self.name == '' or self.type == None or self.name[0] == '?':
+            self.valid = False
+            return
+
+        self.valid = True
+        if '[' in self.type: # array -> pointer
+            self.type = self.type.replace('[', '(&' + self.name + ')[', 1)
+            self.definition = '{type} = * ((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+        elif '*)(' in self.type: # function pointer -> reference to function pointer
+            self.type = self.type.replace('*)', '*&' + self.name + ')',  1)
+            self.type = self.type.replace('__hidden this', '__hidden this_')
+            self.definition = '{type} = *((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+        else: # scalar value -> reference
+            self.type = self.type + '& ' + self.name
+            self.definition = '{type} = * ((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+
+        self.declaration = 'extern ' + self.type + ';'
+
 class FunctionArgument:
     def __init__(self, signature):
         self.signature = signature
@@ -531,31 +555,16 @@ def export_data(segment, declarations, definitions):
     ea = data_segment.start_ea
     while ea != idc.BADADDR:
         ea = next_head(ea, data_segment.end_ea)
+        datum = Datum(ea)
 
-        data_type = get_type(ea) or guess_type(ea)
-        data_name = idaapi.get_name(ea)
-
-        # TODO: handle mangled names (starting with '?')
-        if data_name == None or data_name == '' or data_type == None or data_name[0] == '?':
-            continue
-        elif '[' in data_type: # array -> pointer
-            data_type = data_type.replace('[', '(&' + data_name + ')[', 1)
-            definition = '{data_type} = * ((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
-        elif '*)(' in data_type: # function pointer -> reference to function pointer
-            data_type = data_type.replace('*)', '*&' + data_name + ')',  1)
-            data_type = data_type.replace('__hidden this', '__hidden this_')
-            definition = '{data_type} = *((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
-        else: # scalar value -> reference
-            data_type = data_type + '& ' + data_name
-            definition = '{data_type} = * ((decltype(&{data_name})) {address});'.format(data_type = data_type, data_name = data_name, address = hex(ea))
-
-        declaration = 'extern ' + data_type + ';'
-
-        if is_blacklisted(declaration):
+        if not datum.valid:
             continue
 
-        declarations.append(declaration)
-        definitions.append(definition)
+        if is_blacklisted(datum.declaration):
+            continue
+
+        declarations.append(datum.declaration)
+        definitions.append(datum.definition)
 
 def is_type_blacklisted(type_ordinal):
     local_type_name = get_numbered_type_name(type_ordinal)
