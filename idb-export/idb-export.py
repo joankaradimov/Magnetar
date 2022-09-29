@@ -478,8 +478,7 @@ def export(root_dir):
 
     data_declarations = []
     data_definitions = []
-    export_data('.rdata', data_declarations, data_definitions)
-    export_data('.data', data_declarations, data_definitions)
+    export_data(data_declarations, data_definitions)
 
     type_declarations = []
     type_definitions = []
@@ -549,20 +548,25 @@ def export_functions(declarations, definitions):
 
     print('Unused functions: %d' % unused_functions)
 
-def export_data(segment, declarations, definitions):
-    data_segment = idaapi.get_segm_by_name(segment)
+def exportable_data():
+    for segment in ['.rdata', '.data']:
+        data_segment = idaapi.get_segm_by_name(segment)
 
-    ea = data_segment.start_ea
-    while ea != idc.BADADDR:
-        ea = next_head(ea, data_segment.end_ea)
-        datum = Datum(ea)
+        ea = data_segment.start_ea
+        while ea != idc.BADADDR:
+            ea = next_head(ea, data_segment.end_ea)
+            datum = Datum(ea)
 
-        if not datum.valid:
-            continue
+            if not datum.valid:
+                continue
 
-        if is_blacklisted(datum.declaration):
-            continue
+            if is_blacklisted(datum.declaration):
+                continue
 
+            yield datum
+
+def export_data(declarations, definitions):
+    for datum in exportable_data():
         declarations.append(datum.declaration)
         definitions.append(datum.definition)
 
