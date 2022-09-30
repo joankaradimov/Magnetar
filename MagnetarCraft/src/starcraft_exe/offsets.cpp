@@ -18108,7 +18108,7 @@ signed int ReadMapChunks(MapChunks *a1, void *chk_data, int *out_version_loader_
     }
     return result_;
 }
-BOOL LoadFileArchiveToSBigBuf(char *filename, int *a2, int a3, HANDLE *a4) {
+BOOL LoadFileArchiveToSBigBuf(const char *filename, int *a2, int a3, HANDLE *a4) {
     int address = 0x4cc110;
     BOOL result_;
     __asm {
@@ -18141,7 +18141,7 @@ signed int sub_4CC2A0(void *chk_data, int chk_size_, int a3, MapChunks *a4) {
     }
     return result_;
 }
-signed int sub_4CC350(char *a1, char *a2, int a3, size_t a4) {
+signed int sub_4CC350(char *a1, const char *a2, int a3, size_t a4) {
     int address = 0x4cc350;
     signed result_;
     __asm {
