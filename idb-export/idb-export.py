@@ -836,14 +836,11 @@ def sort_topologically(local_types):
 
     levels = takewhile(lambda x: x is not None, (names_by_level.get(i, None) for i in count()))
 
-    sorted_local_types = []
     for level in levels:
         for name in level:
             for local_type in local_types.values():
                 if name == local_type.name:
-                    sorted_local_types.append(local_type)
+                    yield local_type
                     break
-
-    return sorted_local_types
 
 export("""D:\dev\work\MagnetarCraft\MagnetarCraft\\""")
