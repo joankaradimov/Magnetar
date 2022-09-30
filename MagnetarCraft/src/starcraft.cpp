@@ -458,7 +458,7 @@ bool hasMessagesWaiting_(MSG* a1, int a2)
 		return false;
 	}
 
-	if (!a2 || dword_51BFA8)
+	if (!a2 || is_app_active)
 	{
 		return PeekMessageA(a1, 0, 0, 0, 1u);
 	}
@@ -792,7 +792,7 @@ FAIL_STUB_PATCH(updateAllDlgs);
 
 bool realizePalette_()
 {
-	if (!PrimarySurface || !dword_51BFA8 || !hWndParent || IsIconic(hWndParent))
+	if (!PrimarySurface || !is_app_active || !hWndParent || IsIconic(hWndParent))
 	{
 		return false;
 	}
@@ -4770,7 +4770,7 @@ GotFileValues* InitUseMapSettingsTemplate_()
 
 FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
 
-int sub_4CCAC0_(char* a1, MapChunks* a2)
+int sub_4CCAC0_(const char* a1, MapChunks* a2)
 {
 	char buff[MAX_PATH];
 	char v9[MAX_PATH];
@@ -4807,9 +4807,9 @@ int sub_4CCAC0_(char* a1, MapChunks* a2)
 
 FAIL_STUB_PATCH(sub_4CCAC0);
 
-int __stdcall ReadMapData_(char* source, MapChunks* a4, int is_campaign)
+int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
-	char* v8;
+	const char* v8;
 	const char* v13;
 
 	CurrentMapFileName[0] = 0;
@@ -7258,7 +7258,7 @@ FAIL_STUB_PATCH(sub_4C3B10);
 
 void sub_4D93B0_()
 {
-	if (dword_51BFA8 && ColorCycle && !IS_GAME_PAUSED)
+	if (is_app_active && ColorCycle && !IS_GAME_PAUSED)
 	{
 		DWORD tick_count = GetTickCount();
 		if (tick_count >= dword_6D6374 + 10)
@@ -7293,7 +7293,7 @@ FAIL_STUB_PATCH(DoGameLoop);
 
 void PollInput_()
 {
-	if (!dword_51BFA8 || IS_GAME_PAUSED && !multiPlayerMode)
+	if (!is_app_active || IS_GAME_PAUSED && !multiPlayerMode)
 	{
 		return;
 	}
@@ -7552,7 +7552,7 @@ void GameLoop_State_()
 			dword_6D11F0 = 4;
 			break;
 		}
-		if (dword_51BFA8 || multiPlayerMode)
+		if (is_app_active || multiPlayerMode)
 		{
 			ScreenLayers[5].bits |= 2;
 			if (BWFXN_IsPaused_())
@@ -14851,11 +14851,11 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 	case WM_SETCURSOR:
 		return 1;
 	case WM_ACTIVATEAPP:
-		dword_51BFA8 = wParam;
-		GameShowCursor_(dword_51BFA8 == 0);
-		doCursorClip_(dword_51BFA8);
+		is_app_active = wParam;
+		GameShowCursor_(!is_app_active);
+		doCursorClip_(is_app_active);
 		memset(is_keycode_used, 0, sizeof(is_keycode_used));
-		if (dword_51BFA8)
+		if (is_app_active)
 		{
 			dword_6D5E1C = 1;
 			if (gwGameMode == GAME_GLUES && glGluesMode == MenuPosition::GLUE_BATTLE)
@@ -15898,7 +15898,7 @@ void PlayMovie_(Cinematic cinematic)
 	{
 		while (!dword_5967F0)
 		{
-			if (dword_51BFA8 && !SVidPlayContinueSingle(video, 0, 0))
+			if (is_app_active && !SVidPlayContinueSingle(video, 0, 0))
 			{
 				break;
 			}

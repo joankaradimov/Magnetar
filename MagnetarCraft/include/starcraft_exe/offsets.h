@@ -7921,7 +7921,7 @@ extern int& dword_51BF94;
 extern int& dword_51BF98;
 extern int& dword_51BF9C;
 extern int& dword_51BFA0;
-extern int& dword_51BFA8;
+extern int& is_app_active;
 extern HINSTANCE& hInst;
 extern HWND& hWndParent;
 extern int& dword_51BFB4;
