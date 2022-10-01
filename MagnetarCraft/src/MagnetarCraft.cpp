@@ -279,6 +279,7 @@ void StartMagnetar()
 
 	StarCraftExecutable* starcraft_exe = LocateStarCraftExecutable(config);
 	starcraft_exe->check();
+
 	config["starcraft-root"] = starcraft_exe->GetParentDirectory().generic_string();
 	std::ofstream(config_filename) << config;
 
