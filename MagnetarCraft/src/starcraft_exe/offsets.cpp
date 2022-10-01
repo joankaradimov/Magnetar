@@ -20382,14 +20382,7 @@ int VerifySystemMemory(HINSTANCE a1) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*CreateMainWindow)(), CreateMainWindow, 0x4e05b0);
-void GameRun(MenuPosition a1) {
-    int address = 0x4e0710;
-    __asm {
-        xor ebx, ebx
-        mov ebx, a1
-        call address
-    }
-}
+DECL_FUNC(void(*GameRun)(), GameRun, 0x4e0710);
 DECL_FUNC(int(*GameMainLoop)(), GameMainLoop, 0x4e0820);
 DECL_FUNC(int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd), _WinMain, 0x4e0ae0);
 DECL_FUNC(unsigned int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2), sub_4E0B30, 0x4e0b30);

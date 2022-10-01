@@ -4921,7 +4921,7 @@ extern int(*BWSetSecurityInfo)();
 extern int (__stdcall*CheckForOtherInstances)(LPCSTR lpClassName);
 int VerifySystemMemory(HINSTANCE a1);
 extern void (__cdecl*CreateMainWindow)();
-void GameRun(MenuPosition a1);
+extern void(*GameRun)();
 extern int(*GameMainLoop)();
 extern int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd);
 extern unsigned int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2);
