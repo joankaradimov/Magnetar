@@ -2702,7 +2702,16 @@ DECL_FUNC(int(*sub_421510)(), sub_421510, 0x421510);
 DECL_FUNC(void(*FatalError)(const char *arg0, ...), FatalError, 0x4215d0);
 DECL_FUNC(void (__cdecl*SetCursorClipBounds)(), SetCursorClipBounds, 0x4215e0);
 DECL_FUNC(int (__stdcall*sub_421640)(int, int), sub_421640, 0x421640);
-DECL_FUNC(int(*_SetCursorPos)(), _SetCursorPos, 0x421670);
+void _SetCursorPos(__int16 a1, __int16 a2) {
+    int address = 0x421670;
+    __asm {
+        xor edi, edi
+        xor esi, esi
+        mov di, a1
+        mov si, a2
+        call address
+    }
+}
 int _ClipCursor(RECT *a1) {
     int address = 0x421690;
     int result_;

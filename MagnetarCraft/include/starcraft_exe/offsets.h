@@ -558,7 +558,7 @@ extern int(*sub_421510)();
 extern void(*FatalError)(const char *arg0, ...);
 extern void (__cdecl*SetCursorClipBounds)();
 extern int (__stdcall*sub_421640)(int, int);
-extern int(*_SetCursorPos)();
+void _SetCursorPos(__int16 a1, __int16 a2);
 int _ClipCursor(RECT *a1);
 extern int(*sub_4216F0)();
 void doCursorClip(int a1);
