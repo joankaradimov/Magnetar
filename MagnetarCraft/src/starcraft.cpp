@@ -3312,14 +3312,14 @@ FAIL_STUB_PATCH(CreateInitialMeleeWorker);
 
 void CreateInitialMeleeUnits_()
 {
-	for (int player_index = 0; player_index < 8; player_index++)
+	for (int player_index = 7; player_index >= 0; player_index--)
 	{
 		PlayerInfo* player = Players + player_index;
 		if (player->nType == PlayerType::PT_Human || player->nType == PlayerType::PT_Computer)
 		{
 			StartingUnits starting_units;
-			if (gameData.got_file_values.victory_conditions != VictoryConditions::VC_MAP_DEFAULT
-				&& gameData.got_file_values.starting_units != StartingUnits::SU_MAP_DEFAULT
+			if (gameData.got_file_values.victory_conditions == VictoryConditions::VC_MAP_DEFAULT
+				&& gameData.got_file_values.starting_units == StartingUnits::SU_MAP_DEFAULT
 				&& !gameData.got_file_values.tournament_mode
 				&& player_index < 8
 				&& playerForce[player_index])

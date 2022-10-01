@@ -2,6 +2,7 @@
 
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
+  - Fix an issue in melee unit initialization (introduced in 0.2.0)
 
 ## 0.2.0 - Busy Barracks
   - Reimplement ~10% of the functions in StarCraft 1.16.1
