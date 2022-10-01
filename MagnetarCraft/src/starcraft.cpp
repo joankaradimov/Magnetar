@@ -7733,7 +7733,7 @@ GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
 	DLGMusicFade_((MusicTrack) currentMusicId);
-	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	GameState = 1;
 	TickCountSomething(0);
 	DoGameLoop_();
@@ -16025,9 +16025,7 @@ void GameMainLoop_()
 	AppAddExit_(SaveCPUThrottleOption);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
 		CpuThrottle = phFile != 0;
-	SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-	Mouse.x = SCREEN_WIDTH / 2;
-	Mouse.y = SCREEN_HEIGHT / 2;
+	_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
 	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
@@ -16341,9 +16339,7 @@ int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 				}
 			}
 			cursorRefresh();
-			SetCursorPos(GAME_AREA_WIDTH / 2, GAME_AREA_HEIGHT / 2);
-			Mouse.x = GAME_AREA_WIDTH / 2;
-			Mouse.y = GAME_AREA_HEIGHT / 2;
+			_SetCursorPos(GAME_AREA_WIDTH / 2, GAME_AREA_HEIGHT / 2);
 			hAccTable = DlgAccelerator;
 			input_procedures[EVN_SYSCHAR] = AcceleratorTables;
 		}
