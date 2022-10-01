@@ -8861,6 +8861,19 @@ FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
 FAIL_STUB_PATCH(sub_4A3D40);
 
+void CreateMinimapSurface_()
+{
+	minimap_surface.ht = minimap_surface_height;
+	minimap_surface.wid = minimap_surface_width;
+	minimap_surface.data = (u8*)SMemAlloc(minimap_surface.wid * minimap_surface.ht, "Starcraft\\SWAR\\lang\\minimap.cpp", 1637, 0);
+
+	minimap_surface_no_fog.ht = minimap_surface_height;
+	minimap_surface_no_fog.wid = minimap_surface_width;
+	minimap_surface_no_fog.data = (u8*)SMemAlloc(minimap_surface_width * minimap_surface_height, "Starcraft\\SWAR\\lang\\minimap.cpp", 1636, 0);
+}
+
+FAIL_STUB_PATCH(CreateMinimapSurface);
+
 void setMapSizeConstants_()
 {
 	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
@@ -8917,7 +8930,7 @@ void setMapSizeConstants_()
 	minimap_dialog->rct.top += v7;
 	minimap_dialog->rct.bottom -= v7;
 
-	CreateMinimapSurface();
+	CreateMinimapSurface_();
 
 	stru_512D00.left = minimap_dialog->rct.left;
 	stru_512D00.top = minimap_dialog->rct.top + 315;
