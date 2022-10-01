@@ -46,6 +46,7 @@ void CreateMainWindow_();
 void audioVideoInit_();
 void LoadInitIscriptBIN_();
 void __fastcall CleanupIscriptBINHandle_(bool exit_code);
+int LoadReplayFile_(const char* a1, int* a3);
 int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign);
 int CreateGame_(GameData* data);
 void GameRun_();

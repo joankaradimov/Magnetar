@@ -5621,6 +5621,85 @@ void __cdecl createNewGameActionDataBlock_()
 
 FUNCTION_PATCH(createNewGameActionDataBlock, createNewGameActionDataBlock_);
 
+void __cdecl freeChkFileMem_();
+
+int LoadReplayFile_(const char* filename, int* a3)
+{
+	if (a3)
+	{
+		*a3 = 0;
+	}
+	FILE* replay_file = fopen(filename, "rb");
+	if (replay_file == NULL)
+	{
+		return 0;
+	}
+
+	int v6 = 0;
+	if (!DecompressRead(&v6, 4, replay_file) || v6 != 'SRer')
+	{
+		fclose(replay_file);
+		return 0;
+	}
+
+	if (!DecompressRead(&replay_header, 633, replay_file) || !replay_header.game_data.is_replay)
+	{
+		fclose(replay_file);
+		return 0;
+	}
+
+	if (a3 && replay_header.is_expansion)
+	{
+		*a3 = 1;
+	}
+
+	if (replay_header.is_expansion && !IsExpansion)
+	{
+		fclose(replay_file);
+		return 0;
+	}
+
+	CampaignIndex = replay_header.campaign_index;
+	createNewGameActionDataBlock();
+
+	if (!sub_4CE220(replay_file))
+	{
+		fclose(replay_file);
+		return 0;
+	}
+
+	if (!DecompressRead(&scenarioChkSize, 4, replay_file))
+	{
+		fclose(replay_file);
+		return 0;
+	}
+
+	freeChkFileMem_();
+	scenarioChk = SMemAlloc(scenarioChkSize, "Starcraft\\SWAR\\lang\\replay.cpp", 1084, 0);
+	int v5 = DecompressRead(scenarioChk, scenarioChkSize, replay_file);
+	if (!v5)
+	{
+		SMemFree(scenarioChk, "Starcraft\\SWAR\\lang\\replay.cpp", 1088, 0);
+		scenarioChk = 0;
+	}
+
+	fclose(replay_file);
+	return v5;
+}
+
+int __cdecl LoadReplayFile__()
+{
+	char* filename;
+	int* a3;
+
+	__asm mov filename, eax
+	__asm mov a3, edi
+
+	return LoadReplayFile_(filename, a3);
+}
+
+FUNCTION_PATCH((void*)0x4DF570, LoadReplayFile__);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -5628,7 +5707,7 @@ signed int LoadGameInit_()
 	{
 		if (!scenarioChk)
 		{
-			LoadReplayFile(CurrentMapFileName, NULL);
+			LoadReplayFile_(CurrentMapFileName, NULL);
 		}
 		if (InReplay)
 		{

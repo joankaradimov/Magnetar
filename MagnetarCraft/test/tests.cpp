@@ -47,7 +47,7 @@ int main()
 	{
 		InReplay = 1;
 		IsExpansion = 1;
-		LoadReplayFile(replay, 0);
+		LoadReplayFile_(replay, 0);
 
 		MapChunks chunks;
 		ReadMapData_(replay, &chunks, 0);
