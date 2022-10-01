@@ -8,6 +8,8 @@
 #include "tbl_file.h"
 #include "patching.h"
 
+bool keep_app_active_in_background = false;
+
 void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
 {
 	registry_options.GameSpeed = game_speed;
@@ -1442,6 +1444,10 @@ void CommandLineCheck_()
 				else if (!_strnicmp(argument, "ddemulate", argument_length))
 				{
 					byte_6D5DFC = 1;
+				}
+				else if (!_strnicmp(argument, "-keep-app-active", argument_length))
+				{
+					keep_app_active_in_background = true;
 				}
 			}
 		}
@@ -14943,7 +14949,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 	case WM_SETCURSOR:
 		return 1;
 	case WM_ACTIVATEAPP:
-		is_app_active = wParam;
+		is_app_active = keep_app_active_in_background || wParam;
 		GameShowCursor_(!is_app_active);
 		doCursorClip_(is_app_active);
 		memset(is_keycode_used, 0, sizeof(is_keycode_used));

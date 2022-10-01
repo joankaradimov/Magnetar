@@ -37,6 +37,8 @@ DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
 DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
 DEFINE_ENUM_FLAG_OPERATORS(StatusFlags);
 
+extern bool keep_app_active_in_background;
+
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
 int AppAddExit_(AppExitHandle handle);

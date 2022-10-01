@@ -8,6 +8,8 @@
 
 int main()
 {
+	keep_app_active_in_background = true;
+
 	// TODO: remove hard-coded paths
 	SetDllDirectoryA("C:\\games\\Starcraft-1.16");
 	StarCraftExecutable* starcraft_exe = new StarCraftExecutable("C:\\games\\Starcraft-1.16\\StarCraft.exe");
