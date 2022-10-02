@@ -8,6 +8,7 @@
 #include "tbl_file.h"
 #include "patching.h"
 
+bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
 void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
@@ -1444,6 +1445,10 @@ void CommandLineCheck_()
 				else if (!_strnicmp(argument, "ddemulate", argument_length))
 				{
 					byte_6D5DFC = 1;
+				}
+				else if (!_strnicmp(argument, "-skip-end-mission-prompt", argument_length))
+				{
+					end_mission_prompt = false;
 				}
 				else if (!_strnicmp(argument, "-keep-app-active", argument_length))
 				{
@@ -6354,8 +6359,17 @@ void open_lose_mission_dialog_()
 		dword_685178 = 1;
 		sub_484D90_();
 
-		LastControlID = 0;
-		BWFXN_OpenGameDialog_("rez\\lmission.bin", lmission_DLG_Interact_);
+		if (end_mission_prompt)
+		{
+			LastControlID = 0;
+			BWFXN_OpenGameDialog_("rez\\lmission.bin", lmission_DLG_Interact_);
+		}
+		else
+		{
+			lmissionInitSelf(GamePosition::GAME_LOSE);
+			dword_68517C = 1;
+			dword_685178 = 0;
+		}
 	}
 }
 
@@ -6423,8 +6437,17 @@ void open_win_mission_dialog_()
 		dword_685178 = 1;
 		sub_484D90_();
 
-		LastControlID = 0;
-		BWFXN_OpenGameDialog_("rez\\wmission.bin", wmission_BINDLG_Main_);
+		if (end_mission_prompt)
+		{
+			LastControlID = 0;
+			BWFXN_OpenGameDialog_("rez\\wmission.bin", wmission_BINDLG_Main_);
+		}
+		else
+		{
+			lmissionInitSelf(GamePosition::GAME_WIN);
+			dword_68517C = 1;
+			dword_685178 = 0;
+		}
 	}
 }
 

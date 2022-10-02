@@ -8,6 +8,7 @@
 
 int main()
 {
+	end_mission_prompt = false;
 	keep_app_active_in_background = true;
 
 	// TODO: remove hard-coded paths
