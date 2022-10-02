@@ -172,7 +172,7 @@ FUNCTION_PATCH((void*)0x418080, getControlFromIndex__);
 
 int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char player_id, CSprite* sprite)
 {
-	if (x >= map_width_pixels || y >= map_height_pixels)
+	if (x >= (unsigned __int16)map_width_pixels || y >= (unsigned __int16)map_height_pixels)
 	{
 		return 0;
 	}

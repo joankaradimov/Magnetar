@@ -3,6 +3,7 @@
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
   - Fix an issue in melee unit initialization (introduced in 0.2.0)
+  - Fix an issue in sprite initialization (introduced in 0.2.0)
   - Add a command line argument `-keep-app-active` that keeps the app active in the background
 
 ## 0.2.0 - Busy Barracks
