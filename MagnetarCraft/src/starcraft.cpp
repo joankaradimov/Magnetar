@@ -3768,6 +3768,20 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void minimapGameResetMouseInput_(dialog* dlg)
+{
+	removeDlgFromTimerTracking(dlg);
+	SetCursorClipBounds();
+
+	dword_6D5DD4 = 0;
+	if (dword_6D5DD0)
+	{
+		ClipCursor(&screen);
+	}
+}
+
+FAIL_STUB_PATCH(minimapGameResetMouseInput);
+
 void drawAllMinimapBoxes_()
 {
 	Bitmap* v0 = dword_6CF4A8;
@@ -3876,7 +3890,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		}
 	case EVN_LBUTTONUP:
 	case EVN_RBUTTONUP:
-		minimapGameResetMouseInput(dlg);
+		minimapGameResetMouseInput_(dlg);
 		return 1;
 	case EVN_RBUTTONDOWN:
 	case EVN_RBUTTONDBLCLK:
@@ -3902,7 +3916,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 			break;
 		case USER_DESTROY:
 		case USER_NEXT:
-			minimapGameResetMouseInput(dlg);
+			minimapGameResetMouseInput_(dlg);
 			break;
 		case USER_MOUSEMOVE:
 			return 1;
