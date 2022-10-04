@@ -3996,6 +3996,7 @@ int __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(MinimapButton_EventHandler);
 
+void setMinimapConstants();
 void setMapSizeConstants_();
 
 void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
@@ -4139,6 +4140,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 	minimap_dialog = getControlFromIndex_(minimap_Dlg, 1);
 	if (v1 == 0)
 	{
+		setMinimapConstants();
 		setMapSizeConstants_();
 		if (dword_5993AC == 0)
 		{
@@ -4180,6 +4182,7 @@ void minimapPreviewUpdateState_()
 FAIL_STUB_PATCH(minimapPreviewUpdateState);
 
 void initMapData_();
+void setMinimapConstants();
 void setMapSizeConstants_();
 
 int __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
@@ -4304,6 +4307,7 @@ void load_gluMinimap_()
 
 	if (dword_5993AC)
 	{
+		setMinimapConstants();
 		setMapSizeConstants_();
 		minimapSurfaceUpdate();
 		if (dword_5993AC == 1 || !byte_6D5BBF)
@@ -8917,7 +8921,7 @@ void CreateMinimapSurface_()
 
 FAIL_STUB_PATCH(CreateMinimapSurface);
 
-void setMapSizeConstants_()
+void setMinimapConstants()
 {
 	int larger_dimension = map_size.width <= map_size.height ? map_size.height : map_size.width;
 
@@ -8965,7 +8969,10 @@ void setMapSizeConstants_()
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
+}
 
+void setMapSizeConstants_()
+{
 	int v5 = (128 - minimap_surface_width) / 2;
 	int v7 = (128 - minimap_surface_height) / 2;
 	minimap_dialog->rct.left += v5;
