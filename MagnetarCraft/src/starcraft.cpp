@@ -9804,9 +9804,9 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 	sub_4BCEA0();
 
 	MegatileFlags* lowerLeftCournerTiles = &active_tiles[map_size.width * (map_size.height - 2)];
-	for (int i = 0; i <= 2; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
-		for (int j = 0; j <= 5; ++j)
+		for (int j = 0; j < 5; ++j)
 		{
 			lowerLeftCournerTiles[i * map_size.width + j] &= ~(CLIFF_EDGE | REAL_CREEP | MORE_THAN_12_WALKABLE);
 			lowerLeftCournerTiles[i * map_size.width + j] |= ALWAYS_UNBUILDABLE;
@@ -9814,9 +9814,9 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 	}
 
 	MegatileFlags* lowerRightCournerTiles = &active_tiles[map_size.width * (map_size.height - 1) - 5];
-	for (int i = 0; i <= 2; ++i)
+	for (int i = 0; i < 2; ++i)
 	{
-		for (int j = 0; j <= 5; ++j)
+		for (int j = 0; j < 5; ++j)
 		{
 			lowerRightCournerTiles[i * map_size.width + j] &= ~(CLIFF_EDGE | REAL_CREEP | MORE_THAN_12_WALKABLE);
 			lowerRightCournerTiles[i * map_size.width + j] |= ALWAYS_UNBUILDABLE;
