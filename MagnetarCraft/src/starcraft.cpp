@@ -11,6 +11,26 @@
 bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
+void __stdcall MinimapPing_maybe_(unsigned __int16 pos_x, unsigned __int16 pos_y, char a3)
+{
+	for (int i = 0; i < _countof(stru_59C1B8); i++)
+	{
+		if (stru_59C1B8[i].a0 == 0)
+		{
+			unsigned v6 = (unsigned __int16)word_59CC68;
+			stru_59C1B8[i].a0 = 1;
+			stru_59C1B8[i].d = 0;
+			stru_59C1B8[i].b = (pos_x >> 5 << word_59C1B0) / v6 - 64;
+			stru_59C1B8[i].c = (pos_y >> 5 << word_59C1B0) / v6 - 64;
+			LOBYTE(stru_59C1B8[i].e) = a3;
+
+			break;
+		}
+	}
+}
+
+FUNCTION_PATCH(MinimapPing_maybe, MinimapPing_maybe_);
+
 void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
 {
 	registry_options.GameSpeed = game_speed;
@@ -16477,7 +16497,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			if (unit)
 			{
 				unit->sprite->selectionTimer = 45;
-				MinimapPing_maybe(unit->sprite->position.x, unit->sprite->position.y, 17);
+				MinimapPing_maybe_(unit->sprite->position.x, unit->sprite->position.y, 17);
 				DisplayTalkingPortrait_maybe(unit->sprite->position.x, v7, a1->unit, unit->sprite->position.y);
 			}
 			else
@@ -16836,7 +16856,7 @@ int __fastcall TriggerAction_MinimapPing_(Action* a1)
 	if (a1->location && active_trigger_player == g_LocalNationID && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
 		Box32& dimensions = LocationTable[a1->location - 1].dimensions;
-		MinimapPing_maybe((dimensions.left + dimensions.right) / 2, (dimensions.top + dimensions.bottom) / 2, 17);
+		MinimapPing_maybe_((dimensions.left + dimensions.right) / 2, (dimensions.top + dimensions.bottom) / 2, 17);
 	}
 	return 1;
 }
