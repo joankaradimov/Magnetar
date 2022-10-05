@@ -6751,11 +6751,11 @@ void UpdateUnits_()
 
 	if (!--dword_59CCA4)
 	{
-		int v1 = 0;
+		u8 i = 0;
 		for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
 		{
-			unit->orderQueueTimer = v1 % 8;
-			v1 += 1;
+			unit->orderQueueTimer = i++;
+			i %= 8;
 		}
 		dword_59CCA4 = 150;
 	}
@@ -6764,8 +6764,8 @@ void UpdateUnits_()
 		u8 i = 0;
 		for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
 		{
-			unit->secondaryOrderTimer = i % 30;
-			i += 1;
+			unit->secondaryOrderTimer = i++;
+			i %= 30;
 		}
 		dword_6283E8 = 300;
 	}

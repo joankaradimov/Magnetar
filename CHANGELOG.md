@@ -3,6 +3,7 @@
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
   - Fix issues with buildability flags in the bottom map corners (introduced in 0.1.0)
+  - Fix an issue in units updaing within the game loop (introduced in 0.2.0)
   - Fix an issue in melee unit initialization (introduced in 0.2.0)
   - Fix an issue in sprite initialization (introduced in 0.2.0)
   - Add command line arguments:
