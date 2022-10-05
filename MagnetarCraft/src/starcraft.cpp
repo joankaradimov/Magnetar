@@ -6787,12 +6787,11 @@ void UpdateUnits_()
 		}
 	}
 
-	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
 	{
-		next_unit = unit->next;
 		iscript_flingy = unit;
 		iscript_unit = unit;
-		sub_4EBC30(unit);
+		sub_4EBC30_(unit);
 	}
 
 	if (visionUpdated)
@@ -6806,9 +6805,8 @@ void UpdateUnits_()
 		}
 	}
 
-	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = next_unit)
+	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
 	{
-		next_unit = unit->next;
 		UpdateUnitSpriteInfo(unit);
 		if (unit->statusFlags & (Cloaked | RequiresDetection))
 		{
