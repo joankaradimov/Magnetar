@@ -6861,8 +6861,8 @@ void UpdateUnits_()
 		iscript_unit = unit;
 		UpdateUnitOrderData_(unit);
 	}
-	iscript_flingy = 0;
-	iscript_unit = 0;
+	iscript_flingy = nullptr;
+	iscript_unit = nullptr;
 }
 
 FAIL_STUB_PATCH(UpdateUnits);
