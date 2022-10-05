@@ -9324,7 +9324,7 @@ int sub_422A90_(struct_a1_1* a1, Position* a2)
 				u16 v6 = a2->y + a1->word158.y;
 				u16 v7 = a2->y + a1->word15C.y;
 				u16 v8 = a2->x + a1->word15C.x;
-				if (v5 < map_width_pixels && v6 < map_height_pixels && v8 < map_width_pixels && v7 < map_height_pixels)
+				if (v5 < (u16)map_width_pixels && v6 < (u16)map_height_pixels && v8 < (u16)map_width_pixels && v7 < (u16)map_height_pixels)
 				{
 					int v9 = 1;
 					int v10 = v7 / 32 - v6 / 32;
