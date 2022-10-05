@@ -6731,6 +6731,47 @@ void UpdateUnitOrderData_(CUnit* unit)
 
 FAIL_STUB_PATCH(UpdateUnitOrderData);
 
+void unitUpdate_(CUnit* unit)
+{
+	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
+	{
+		iscript_unit = unit->subUnit;
+		unitUpdate_(unit->subUnit);
+		iscript_unit = unit;
+	}
+	Unit_ExecPathingState(unit);
+	updateUnitTimers(unit);
+	ordersIDCases(unit);
+
+	if (unit->secondaryOrderID == Order::TrainFighter)
+	{
+		secondaryOrd_TrainFighter(unit);
+	}
+	else if (unit->secondaryOrderID == Order::Cloak)
+	{
+		secondaryOrd_Cloak(unit);
+	}
+	else if (unit->secondaryOrderID == Order::Decloak && unit->secondaryOrderID != Order::Nothing)
+	{
+		unit->secondaryOrderID = Nothing;
+		unit->secondaryOrderPosition.y = 0;
+		unit->secondaryOrderPosition.x = 0;
+		unit->currentBuildUnit = nullptr;
+		unit->secondaryOrderState = 0;
+	}
+
+	if (unit->sprite)
+	{
+		spriteToIscriptLoop(unit->sprite);
+		if (!unit->sprite->pImageHead)
+		{
+			unit->sprite = 0;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(unitUpdate);
+
 void UpdateUnits_()
 {
 	CUnit* next_unit;
@@ -6840,7 +6881,7 @@ void UpdateUnits_()
 		}
 		iscript_flingy = unit;
 		iscript_unit = unit;
-		unitUpdate(unit);
+		unitUpdate_(unit);
 	}
 
 	updateBurrowingCloakingUnits();
