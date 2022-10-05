@@ -9823,8 +9823,8 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 		}
 	}
 
-	SetFogMask(0x20410000, 1, map_size.width, 0, map_size.height - 1);
-	AddFogMask(1, map_size.width, 0x800000, 0, map_size.height - 1);
+	SetFogMask(CLIFF_EDGE | REAL_CREEP | MORE_THAN_12_WALKABLE, 1, map_size.width, 0, map_size.height - 1);
+	AddFogMask(1, map_size.width, ALWAYS_UNBUILDABLE, 0, map_size.height - 1);
 	return SAI_PathCreate_(active_tiles) != 0;
 }
 
