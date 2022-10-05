@@ -752,7 +752,7 @@ void BlitToBitmap(int result, int a2, void *a3, const void *a4) {
     }
 }
 DECL_FUNC(int(*BWFXN_blitMapTiles)(), BWFXN_blitMapTiles, 0x40c253);
-DECL_FUNC(void (__fastcall*BlitTerrainCacheToGameBitmap)(void *this_, int edx0, int a2, int a3), BlitTerrainCacheToGameBitmap, 0x40c2bd);
+DECL_FUNC(void (__fastcall*BlitTerrainCacheToGameBitmap)(int this_, int edx0, int a2, int a3), BlitTerrainCacheToGameBitmap, 0x40c2bd);
 DECL_FUNC(int (__stdcall*getDistancePrecise)(int, int), getDistancePrecise, 0x40c300);
 DECL_FUNC(int (__stdcall*GetApproxDistance)(int, int), GetApproxDistance, 0x40c360);
 void drawMinitileImageData(signed int framebuf_pos, int minitile) {
@@ -8825,16 +8825,13 @@ int UMMoveToLegal(CUnit *a1) {
     }
     return result_;
 }
-int UMFlyer(CUnit *a1) {
+void UMFlyer(CUnit *a1) {
     int address = 0x46b400;
-    int result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_46B500(CUnit *a1) {
     int address = 0x46b500;
@@ -13141,7 +13138,7 @@ DECL_FUNC(int(*sub_494ED0)(), sub_494ED0, 0x494ed0);
 DECL_FUNC(int(*sub_494F20)(), sub_494F20, 0x494f20);
 DECL_FUNC(int (__fastcall*sub_494F60)(CFlingy *a1, int a2), sub_494F60, 0x494f60);
 DECL_FUNC(int (__thiscall*getFlingyHaltDistance)(CFlingy *this_), getFlingyHaltDistance, 0x494f90);
-DECL_FUNC(int(*sub_494FE0)(), sub_494FE0, 0x494fe0);
+DECL_FUNC(int (__thiscall*sub_494FE0)(CUnit *this_), sub_494FE0, 0x494fe0);
 void ProgressMovementFlag(CUnit *result) {
     int address = 0x495080;
     __asm {
@@ -21975,7 +21972,7 @@ char updateUnitTimers(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*unitUpdate)(CUnit *this_), unitUpdate, 0x4ec420);
+DECL_FUNC(void (__thiscall*unitUpdate)(CUnit *unit), unitUpdate, 0x4ec420);
 void ordersEntries(CUnit *unit) {
     int address = 0x4ec4d0;
     __asm {
