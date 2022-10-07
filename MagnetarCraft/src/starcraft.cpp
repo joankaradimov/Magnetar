@@ -6832,7 +6832,7 @@ void UpdateUnits_()
 	{
 		iscript_flingy = unit;
 		iscript_unit = unit;
-		sub_4EBC30_(unit);
+		sub_4EBC30(unit);
 	}
 
 	if (visionUpdated)
