@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <Windows.h>
 
 #include "starcraft_executable.h"
@@ -41,19 +42,20 @@ int main()
 	gwGameMode = GAME_RUN;
 	strcpy_s(playerName, "Tester");
 
-	char* replays[] = {
-		// TODO: read the replay test fixtures from a folder
-		"Maps\\replays\\LastReplay.rep",
-	};
-
-	for (char* replay : replays)
+	std::string path = "D:\\dev\\work\\MagnetarCraft\\MagnetarCraft\\test\\fixtures";
+	for (const auto& entry : std::filesystem::directory_iterator(path))
 	{
+		if (!entry.is_regular_file() || entry.path().extension() != ".rep")
+		{
+			continue;
+		}
+
 		InReplay = 1;
 		IsExpansion = 1;
-		LoadReplayFile_(replay, 0);
+		LoadReplayFile_(entry.path().generic_string().c_str(), 0);
 
 		MapChunks chunks;
-		ReadMapData_(replay, &chunks, 0);
+		ReadMapData_(entry.path().generic_string().c_str(), &chunks, 0);
 
 		strcpy_s(Players[g_LocalNationID].szName, "Tester");
 		IsExpansion = replay_header.is_expansion;
