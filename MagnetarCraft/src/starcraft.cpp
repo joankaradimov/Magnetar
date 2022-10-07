@@ -6706,6 +6706,84 @@ void RefreshUnit_(CUnit* unit)
 
 FAIL_STUB_PATCH(RefreshUnit);
 
+void spriteToIscriptLoop_(CSprite* sprite)
+{
+	CImage* next_image;
+
+	for (CImage* image = sprite->pImageHead; image; image = next_image)
+	{
+		next_image = image->next;
+
+		image->updateFunction(image);
+		BWFXN_PlayIscript(image, &image->iscript_program, 0, 0);
+		if (sprite->pImageHead == nullptr)
+		{
+			int v2 = (__int16)sprite->position.y / 32;
+			if (v2 < 0)
+			{
+				v2 = 0;
+			}
+			else if (v2 >= map_size.height)
+			{
+				v2 = map_size.height - 1;
+			}
+
+			if (SpritesOnTileRow.heads[v2] == sprite)
+			{
+				SpritesOnTileRow.heads[v2] = sprite->next;
+			}
+			if (SpritesOnTileRow.tails[v2] == sprite)
+			{
+				SpritesOnTileRow.tails[v2] = sprite->prev;
+			}
+			if (sprite->prev)
+			{
+				sprite->prev->next = sprite->next;
+			}
+			CSprite* v3 = sprite->next;
+			if (v3)
+			{
+				v3->prev = sprite->prev;
+			}
+			sprite->prev = 0;
+			sprite->next = 0;
+
+			CSprite* v4 = UnusedSprites;
+			if (UnusedSprites)
+			{
+				if (dword_63FE34 == UnusedSprites)
+				{
+					dword_63FE34 = sprite;
+				}
+				sprite->prev = UnusedSprites;
+				sprite->next = v4->next;
+				CSprite* v5 = v4->next;
+				if (v5)
+				{
+					v5->prev = sprite;
+				}
+				v4->next = sprite;
+			}
+			else
+			{
+				dword_63FE34 = sprite;
+				UnusedSprites = sprite;
+			}
+		}
+	}
+}
+
+void spriteToIscriptLoop__()
+{
+	CSprite* sprite;
+
+	__asm mov sprite, esi
+
+	spriteToIscriptLoop_(sprite);
+}
+
+FUNCTION_PATCH((void*) 0x497920, spriteToIscriptLoop__);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
@@ -6721,7 +6799,7 @@ void UpdateUnitOrderData_(CUnit* unit)
 
 	if (unit->sprite)
 	{
-		spriteToIscriptLoop(unit->sprite);
+		spriteToIscriptLoop_(unit->sprite);
 		if (!unit->sprite->pImageHead)
 		{
 			unit->sprite = 0;
@@ -6762,7 +6840,7 @@ void unitUpdate_(CUnit* unit)
 
 	if (unit->sprite)
 	{
-		spriteToIscriptLoop(unit->sprite);
+		spriteToIscriptLoop_(unit->sprite);
 		if (!unit->sprite->pImageHead)
 		{
 			unit->sprite = 0;
