@@ -6577,10 +6577,10 @@ void DestroyGame_()
 		SMemFree(aiscript_bin_data, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1546, 0);
 		aiscript_bin_data = 0;
 	}
-	if (dword_68C108)
+	if (aiscript_bin)
 	{
-		SMemFree(dword_68C108, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1551, 0);
-		dword_68C108 = 0;
+		SMemFree(aiscript_bin, "Starcraft\\SWAR\\lang\\SAI_Scripts.cpp", 1551, 0);
+		aiscript_bin = 0;
 	}
 	freeAICaptains();
 
