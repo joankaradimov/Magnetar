@@ -3,6 +3,7 @@
 #include <ddraw.h>
 #include <process.h>
 #include <time.h>
+#include "iscript.h"
 #include "starcraft.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
