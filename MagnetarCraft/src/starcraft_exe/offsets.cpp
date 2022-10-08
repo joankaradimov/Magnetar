@@ -10683,7 +10683,7 @@ void ISCRIPT_CastSpell(CUnit *a1, WeaponType weapon_id) {
         call address
     }
 }
-void ISCRIPT_AttackWith(CUnit *attacker, bool is_ground_weapon) {
+void ISCRIPT_AttackWith(CUnit *attacker, u8 is_ground_weapon) {
     int address = 0x479d60;
     __asm {
         xor eax, eax
@@ -11851,14 +11851,14 @@ BOOL sub_4881E0(char player_id, int a2, int position_x, int a4, unsigned __int16
     }
     return result_;
 }
-CThingy *CreateThingy(int sprite_id, int position_x, unsigned __int16 position_y, char playerID) {
+CThingy *CreateThingy(int sprite_id, int position_x, unsigned __int16 position_y, char player_id) {
     int address = 0x488210;
     CThingy * result_;
     __asm {
         xor eax, eax
         xor edi, edi
         mov di, position_y
-        push dword ptr playerID
+        push dword ptr player_id
         push dword ptr position_x
         push dword ptr sprite_id
         call address
@@ -19565,7 +19565,7 @@ CImage **CreateSelectionCircle(CSprite *a1, unsigned __int8 a2, __int16 a3) {
     }
     return result_;
 }
-CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 a2, int a3, int a4, char a5) {
+CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 sprite_id, int a3, int a4, char a5) {
     int address = 0x4d7120;
     CThingy * result_;
     __asm {
@@ -19574,7 +19574,7 @@ CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 a2, int a3, int a4, c
         push dword ptr a5
         push dword ptr a4
         push dword ptr a3
-        push dword ptr a2
+        push dword ptr sprite_id
         call address
         mov result_, eax
     }
