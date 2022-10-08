@@ -6832,21 +6832,21 @@ void unitUpdate_(CUnit* unit)
 	updateUnitTimers(unit);
 	ordersIDCases(unit);
 
-	if (unit->secondaryOrderID == Order::TrainFighter)
+	switch (unit->secondaryOrderID)
 	{
+	case Order::TrainFighter:
 		secondaryOrd_TrainFighter(unit);
-	}
-	else if (unit->secondaryOrderID == Order::Cloak)
-	{
+		break;
+	case Order::Cloak:
 		secondaryOrd_Cloak(unit);
-	}
-	else if (unit->secondaryOrderID == Order::Decloak && unit->secondaryOrderID != Order::Nothing)
-	{
+		break;
+	case Order::Decloak:
 		unit->secondaryOrderID = Nothing;
 		unit->secondaryOrderPosition.y = 0;
 		unit->secondaryOrderPosition.x = 0;
 		unit->currentBuildUnit = nullptr;
 		unit->secondaryOrderState = 0;
+		break;
 	}
 
 	if (unit->sprite)
