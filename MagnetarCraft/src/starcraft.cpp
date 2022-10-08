@@ -3509,6 +3509,10 @@ ChkSectionLoader chk_loaders_ums_broodwar_1_04_[] = {
 };
 
 ChkLoader chk_loaders_[] = {
+	// 17 - Warcraft II retail
+	// 19 - Warcraft II Expansion
+	// 47 - Starcraft Beta
+	// 57 - Starcraft Prerelease
 	{
 		// Loaders for Starcraft 1.00
 		59,
@@ -3518,6 +3522,7 @@ ChkLoader chk_loaders_[] = {
 		chk_loaders_ums_1_00_, _countof(chk_loaders_ums_1_00_),
 		0
 	},
+	// 61 - Brood War internal (same as 63)
 	{
 		// Loaders for Starcraft 1.04
 		63,
@@ -3527,6 +3532,10 @@ ChkLoader chk_loaders_[] = {
 		chk_loaders_ums_1_04_, _countof(chk_loaders_ums_1_04_),
 		0
 	},
+	// 64 - Starcraft Remastered (1.21) (hybrid)
+	// 75 - Broodwar Battle.net Beta
+	// 201 - Brood War internal (same as 59 except it uses ver 63's MRGN; has (optional) expansion sections in its ver 59)
+	// 203 - Brood War internal (same as 205)
 	{
 		// Loaders for Brood War 1.04
 		205,
@@ -3536,6 +3545,7 @@ ChkLoader chk_loaders_[] = {
 		chk_loaders_ums_broodwar_1_04_, _countof(chk_loaders_ums_broodwar_1_04_),
 		1
 	},
+	// 206 - Brood War Remastered (1.21)
 };
 
 MEMORY_PATCH(0x4BF65A, &chk_loaders_->lobby_loader_count);
