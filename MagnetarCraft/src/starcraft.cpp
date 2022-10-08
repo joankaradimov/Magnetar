@@ -8,6 +8,7 @@
 #include "tbl_file.h"
 #include "patching.h"
 
+std::function<void()> on_end_game = nullptr;
 bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
@@ -8007,6 +8008,10 @@ GamePosition BeginGame_()
 		BWFXN_RedrawTarget_();
 	}
 	GameLoop_Top_();
+	if (on_end_game)
+	{
+		on_end_game();
+	}
 	newGame(0);
 	stopAllSound_();
 	sub_41E9E0(3);

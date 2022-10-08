@@ -1,3 +1,4 @@
+#include <fstream>
 #include <filesystem>
 #include <Windows.h>
 
@@ -6,6 +7,21 @@
 #include "MagnetarCraft.h"
 #include "patching.h"
 #include "starcraft.h"
+
+bool files_match(const std::filesystem::path& path1, const std::filesystem::path& path2) {
+	std::ifstream file1(path1, std::ifstream::binary | std::ifstream::ate);
+	std::ifstream file2(path2, std::ifstream::binary | std::ifstream::ate);
+
+	if (file1.fail() || file2.fail() || file1.tellg() != file2.tellg())
+	{
+		return false;
+	}
+
+	file1.seekg(0, std::ifstream::beg);
+	file2.seekg(0, std::ifstream::beg);
+
+	return std::equal(std::istreambuf_iterator<char>(file1.rdbuf()), std::istreambuf_iterator<char>(), std::istreambuf_iterator<char>(file2.rdbuf()));
+}
 
 int main()
 {
@@ -50,6 +66,37 @@ int main()
 			continue;
 		}
 
+		on_end_game = [entry]()
+		{
+			std::filesystem::path replay_path = entry.path();
+			std::filesystem::path actual_state_path = replay_path.replace_extension("replay-actual");
+			std::filesystem::path expected_state_path = replay_path.replace_extension("replay-expected");
+
+			FILE* savegame_file = fopen(actual_state_path.generic_string().c_str(), "wb");
+			// TODO writeImages(savegame_file);
+			writeSprites(savegame_file);
+			// TODO: write thingys
+			WriteFlingys(savegame_file);
+			WriteUnits(savegame_file);
+			WriteBullets(savegame_file);
+			WriteOrders(savegame_file);
+			fclose(savegame_file);
+
+			if (!std::filesystem::exists(expected_state_path))
+			{
+				std::filesystem::rename(actual_state_path, expected_state_path);
+			}
+			else if (files_match(actual_state_path, expected_state_path))
+			{
+				std::filesystem::remove(actual_state_path);
+				puts(".");
+			}
+			else
+			{
+				puts("F");
+			}
+		};
+
 		InReplay = 1;
 		IsExpansion = 1;
 		LoadReplayFile_(entry.path().generic_string().c_str(), 0);
@@ -64,9 +111,6 @@ int main()
 		GameRun_();
 
 		// TODO: persist the replay game speed between games [when rendering frames]
-		// TODO: save the final game state and compare it with a predefined state
-
-		printf(".");
 	}
 	printf("\nDone!\n");
 
