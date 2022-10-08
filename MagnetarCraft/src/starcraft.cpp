@@ -6986,6 +6986,59 @@ void UpdateUnits_()
 
 FAIL_STUB_PATCH(UpdateUnits);
 
+void ImageDrawingBulletDrawing_()
+{
+	CBullet* next_bullet;
+
+	for (CBullet* bullet = BulletNodeTable_FirstElement; bullet; bullet = next_bullet)
+	{
+		next_bullet = bullet->next;
+
+		iscript_flingy = (CUnit*)bullet;
+		iscript_bullet = bullet;
+		sub_4878F0((CThingy*)bullet);
+
+		if (bullet->sprite)
+		{
+			spriteToIscriptLoop_(bullet->sprite);
+			if (bullet->sprite->pImageHead == nullptr)
+			{
+				bullet->sprite = 0;
+			}
+		}
+
+		switch (bullet->behaviourTypeInternal)
+		{
+		case Init:
+			BulletBehaviour_ReAssign(bullet);
+			break;
+		case MovingToPosition:
+			BulletBehaviour_Fly(bullet);
+			break;
+		case MovingToUnit:
+			BulletBehaviour_Follow(bullet);
+			break;
+		case Bounce:
+			BulletBehaviour_Bounce(bullet);
+			break;
+		case TargetGround:
+			BulletBehaviour_Persist(bullet);
+			break;
+		case ReachedDestination:
+			BulletBehaviour_Instant(bullet);
+			break;
+		case MovingNearUnit:
+			BulletBehaviour_Area(bullet);
+			break;
+		}
+	}
+
+	iscript_flingy = nullptr;
+	iscript_bullet = nullptr;
+}
+
+FAIL_STUB_PATCH(ImageDrawingBulletDrawing);
+
 void UpdateImages_()
 {
 	CUnit* next_unit;
@@ -7033,7 +7086,7 @@ void GameLoop_()
 		RemoveFoWCheat_();
 	}
 	UpdateUnits_();
-	ImageDrawingBulletDrawing();
+	ImageDrawingBulletDrawing_();
 	UpdateImages_();
 	updateThingys_();
 	SetInGameLoop(0);
