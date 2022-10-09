@@ -738,12 +738,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)(v100 + 2);
             if (!noop)
             {
-                CUnit* v101 = iscript_unit->orderTarget.pUnit;
-                if (v101)
+                if (CUnit* target = iscript_unit->orderTarget.pUnit)
                 {
                     v103 = iscript_unit->sprite;
-                    v104 = (__int16)v101->sprite->position.y;
-                    v105 = (__int16)v101->sprite->position.x;
+                    v104 = (__int16)target->sprite->position.y;
+                    v105 = (__int16)target->sprite->position.x;
                     v106 = (__int16)v103->position.x;
                     v123 = (__int16)v103->position.y;
                     v131 = (CUnit*)v103;
