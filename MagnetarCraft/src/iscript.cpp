@@ -114,7 +114,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     int a4; // [esp+28h] [ebp-18h] BYREF
     CUnit* v131; // [esp+2Ch] [ebp-14h] FORCED
     WeaponType weapon_id; // [esp+30h] [ebp-10h]
-    char v135; // [esp+3Eh] [ebp-2h]
     char v136; // [esp+3Fh] [ebp-1h]
 
     if (program_state->wait)
@@ -812,14 +811,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             LOWORD(v131) = v36;
             v38 = *(v37 - 1);
             v5 = v37 + 1;
-            v135 = v38;
             if (noop)
             {
                 continue;
             }
             if (canUnitTypeFitAt(v38 + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, v136 + image->spriteOwner->position.y + image->verticalOffset))
             {
-                ISCRIPT_CreateSprite(image, (unsigned __int16)v131, v135, v136, image->spriteOwner->elevationLevel + 1);
+                ISCRIPT_CreateSprite(image, (unsigned __int16)v131, v38, v136, image->spriteOwner->elevationLevel + 1);
             }
             continue;
         case opc_dogrddamage:
