@@ -755,8 +755,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v72 = v71->pImagePrimary == image;
-            goto LABEL_88;
+            if (v71->pImagePrimary != image)
+            {
+                v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
+            }
+            continue;
         case opc_trgtrangecondjmp:
             v95 = *(_WORD*)v5;
             v96 = (short*)(v5 + 2);
@@ -830,9 +833,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v72 = (iscript_unit->statusFlags & 4) == 0;
-        LABEL_88:
-            if (!v72)
+            if (iscript_unit->statusFlags & 4)
             {
                 v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             }
