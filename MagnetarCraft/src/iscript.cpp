@@ -95,7 +95,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
-    struct CUnit* v113; // ecx
     unsigned int v117; // ebx
     unsigned int v118; // eax
     CUnit* v119; // ebx
@@ -569,8 +568,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v113 = iscript_unit->orderTarget.pUnit;
-            if (!v113 || (v113->statusFlags & StatusFlags::InAir) == 0)
+            if (!iscript_unit->orderTarget.pUnit || (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir) == 0)
             {
                 ISCRIPT_AttackWith(iscript_unit, 1);
                 continue;
