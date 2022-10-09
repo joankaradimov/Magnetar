@@ -823,8 +823,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v39 = image->spriteOwner;
             v40 = (char)v7 + v39->position.y + image->verticalOffset;
             LOWORD(v7) = v39->position.x + image->horizontalOffset;
-            LOWORD(v39) = v38;
-            if (canUnitTypeFitAt((signed int)v39 + v7, Terran_Marine, v40))
+            if (canUnitTypeFitAt(v38 + v7, Terran_Marine, v40))
             {
                 ISCRIPT_CreateSprite(image, (unsigned __int16)v131, v135, v136, image->spriteOwner->elevationLevel + 1);
             }
