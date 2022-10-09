@@ -31,8 +31,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v36; // dx
     _BYTE* v37; // edi
     char v38; // dl
-    CSprite* v39; // ecx
-    __int16 v40; // di
     unsigned __int16 v41; // ax
     char* v42; // edi
     char v43; // bl
@@ -810,20 +808,16 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         case opc_grdsprol:
             v36 = *(_WORD*)v5;
             v37 = v5 + 3;
-            LOBYTE(v7) = *v37;
+            v136 = *v37;
             LOWORD(v131) = v36;
             v38 = *(v37 - 1);
             v5 = v37 + 1;
             v135 = v38;
-            v136 = v7;
             if (noop)
             {
                 continue;
             }
-            v39 = image->spriteOwner;
-            v40 = (char)v7 + v39->position.y + image->verticalOffset;
-            LOWORD(v7) = v39->position.x + image->horizontalOffset;
-            if (canUnitTypeFitAt(v38 + v7, Terran_Marine, v40))
+            if (canUnitTypeFitAt(v38 + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, v136 + image->spriteOwner->position.y + image->verticalOffset))
             {
                 ISCRIPT_CreateSprite(image, (unsigned __int16)v131, v135, v136, image->spriteOwner->elevationLevel + 1);
             }
