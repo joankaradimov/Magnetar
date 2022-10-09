@@ -68,7 +68,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned int v83; // eax
     CImage* v84; // eax
     CImage* v86; // eax
-    CSprite* v87; // edx
     CImage* v88; // eax
     unsigned __int8 v89; // cl
     char v90; // dl
@@ -617,9 +616,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v87 = image->spriteOwner;
             image->frameSet = (unsigned __int8)*(v5 - 1);
-            v88 = v87->pImagePrimary;
+            v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
             image->flags ^= ImageFlags((LOBYTE(image->flags) ^ LOBYTE(v88->flags)) & 2);
             v86 = setImagePaletteType(image, image->paletteType);
