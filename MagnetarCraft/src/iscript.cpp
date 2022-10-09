@@ -106,7 +106,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     CUnit* v119; // ebx
     int v120; // eax
     CUnit* v121; // eax
-    char* v122; // eax
     int v123; // [esp-10h] [ebp-50h]
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
@@ -678,9 +677,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_call:
-            v122 = (char*)iscript_data + *(unsigned __int16*)v5;
             program_state->unsigned4 = (BYTE*)v5 + 2 - (BYTE*)iscript_data;
-            v5 = v122;
+            v5 = (char*)iscript_data + *(unsigned __int16*)v5;
             continue;
         case opc_return:
             v5 = (char*)iscript_data + program_state->unsigned4;
