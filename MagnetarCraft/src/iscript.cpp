@@ -363,7 +363,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (image->flags & 2)
+            if (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED)
             {
                 setAllOverlayDirectionsGeneric(v60, 32 - image->direction);
             }
@@ -383,7 +383,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             ISCRIPT_UseLOFile(&v125, image, *(v5 - 1), 0);
             if (CThingy* thingy = ISCRIPT_CreateSprite(v48, v47, v125.x, v125.y, v48->spriteOwner->elevationLevel + 1))
             {
-                if (image->flags & 2)
+                if (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED)
                 {
                     setAllOverlayDirectionsGeneric(thingy, 32 - image->direction);
                 }
