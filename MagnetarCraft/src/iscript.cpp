@@ -154,7 +154,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_setvertpos:
             v11 = *v5++;
-            if (!noop && (!iscript_unit || (iscript_unit->statusFlags & 0x300) == 0) && image->verticalOffset != v11)
+            if (!noop && (!iscript_unit || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != v11)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
                 image->verticalOffset = v11;
@@ -273,7 +273,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 if (iscript_bullet && (v131 = iscript_bullet->sourceUnit) != 0 && UnitIsGoliath(v131)
                     && (UpgradeLevelBW[v131->playerID].items[8]
-                        || (Unit_PrototypeFlags[v131->unitType] & 0x40) != 0 && IsExpansion))
+                        || (Unit_PrototypeFlags[v131->unitType] & UnitPrototypeFlags::Hero) != 0 && IsExpansion))
                 {
                     ISCRIPT_CreateSprite(image, 0x1F9u, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
                 }
@@ -620,7 +620,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             if (!noop)
             {
                 v121 = iscript_unit;
-                v121->statusFlags |= StatusFlags(0x2000);
+                v121->statusFlags |= StatusFlags::NoBrkCodeStart;
                 v121->sprite->flags |= 0x80u;
             }
             continue;
