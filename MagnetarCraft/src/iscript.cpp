@@ -411,8 +411,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             ISCRIPT_PlaySnd((SfxData) * ((unsigned __int16*)v5 - 1), image);
             continue;
-        case opc_playsndrand:
-            goto LABEL_98;
         case opc_playsndbtwn:
             v79 = *(_WORD*)v5;
             v80 = v5 + 2;
@@ -440,7 +438,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ISCRIPT_AttackMelee(iscript_unit);
-        LABEL_98:
+            [[fallthrough]];
+        case opc_playsndrand:
             v73 = *v5;
             v74 = v5 + 1;
             if (noop)
