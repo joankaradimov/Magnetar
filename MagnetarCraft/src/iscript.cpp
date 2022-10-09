@@ -66,7 +66,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v79; // ax
     char* v80; // edi
     unsigned __int16 v81; // dx
-    int v82; // ebx
     unsigned int v83; // eax
     CImage* v84; // eax
     CImage* v86; // eax
@@ -425,10 +424,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             {
-                v82 = v79;
-                int v131 = v79;
                 v83 = RandomizeShort(5);
-                ISCRIPT_PlaySnd((SfxData)(v131 + v83 % ((unsigned int)v81 - v82 + 1)), image);
+                ISCRIPT_PlaySnd((SfxData)(v79 + v83 % ((unsigned int)v81 - v79 + 1)), image);
             }
             continue;
         case opc_domissiledmg:
