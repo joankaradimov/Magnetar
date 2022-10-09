@@ -5,7 +5,6 @@
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
     void* v8; // eax
-    unsigned __int16 v9; // ax
     s8 v10; // al
     s8 v11; // al
     char v12; // dl
@@ -138,7 +137,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 += 2;
             if (!noop)
             {
-                v9 = CurrentTileSet + *((_WORD*)v5 - 1);
+                unsigned __int16 v9 = CurrentTileSet + *((_WORD*)v5 - 1);
                 if (v9 < (unsigned __int16)(image->GRPFile->wFrames & 0x7FFF))
                 {
                     ISCRIPT_PlayFrame(image, v9);
