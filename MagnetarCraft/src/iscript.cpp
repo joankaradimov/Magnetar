@@ -162,7 +162,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if ((!iscript_unit || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != v11)
+            if ((iscript_unit == nullptr || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != v11)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
                 image->verticalOffset = v11;
@@ -516,7 +516,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (!iscript_unit->orderTarget.pUnit)
+            if (iscript_unit->orderTarget.pUnit == nullptr)
             {
                 turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8);
             }
@@ -567,7 +567,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (!iscript_unit->orderTarget.pUnit || (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir) == 0)
+            if (iscript_unit->orderTarget.pUnit == nullptr || (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir) == 0)
             {
                 ISCRIPT_AttackWith(iscript_unit, 1);
                 continue;
@@ -685,7 +685,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (!iscript_unit->orderTarget.pUnit)
+            if (iscript_unit->orderTarget.pUnit == nullptr)
             {
                 IgnoreAllScriptAndGotoIdle(iscript_unit);
                 continue;
