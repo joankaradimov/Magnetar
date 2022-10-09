@@ -759,11 +759,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             if (iscript_unit->orderTarget.pUnit)
             {
                 sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
-                if (!isDistanceGreaterThanHaltDistance(a3, iscript_unit, (unsigned __int16)v131, a4))
+                if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, (unsigned __int16)v131, a4))
                 {
-                    continue;
+                    v5 = (char*)iscript_data + v97;
                 }
-                v5 = (char*)iscript_data + v97;
             }
             continue;
         case opc_trgtarccondjmp:
