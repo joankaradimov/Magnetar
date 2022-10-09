@@ -572,7 +572,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             v112 = iscript_unit;
             v113 = iscript_unit->orderTarget.pUnit;
-            if (!v113 || (v113->statusFlags & 4) == 0)
+            if (!v113 || (v113->statusFlags & StatusFlags::InAir) == 0)
             {
                 ISCRIPT_AttackWith(v112, 1);
                 continue;
@@ -859,7 +859,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             v8 = (void*)*((unsigned __int16*)v5 - 1);
-            LOBYTE(image->flags) |= 1u;
+            image->flags |= ImageFlags::IF_REDRAW;
             image->coloringData = v8;
             continue;
         case opc_orderdone:
