@@ -56,7 +56,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     int v67; // esi
     CImage* v68; // eax
     CImage* v69; // ebx
-    CSprite* v71; // eax
     unsigned __int8 v73; // bl
     char* v74; // edi
     unsigned __int8 v75; // dl
@@ -742,13 +741,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_pwrupcondjmp:
-            v71 = image->spriteOwner;
             v5 += 2;
-            if (!v71)
-            {
-                continue;
-            }
-            if (v71->pImagePrimary != image)
+            if (image->spriteOwner && image->spriteOwner->pImagePrimary != image)
             {
                 v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             }
