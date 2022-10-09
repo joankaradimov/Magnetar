@@ -805,11 +805,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (sub_494BD0(v109, iscript_unit->currentDirection1) >= v111)
+            if (sub_494BD0(v109, iscript_unit->currentDirection1) < v111)
             {
-                continue;
+                v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             }
-            v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             continue;
         case opc_imgulnextid:
             v23 = *v5;
