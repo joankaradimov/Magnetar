@@ -808,7 +808,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v36 = *(_WORD*)v5;
             v37 = v5 + 3;
             v136 = *v37;
-            LOWORD(v131) = v36;
             v38 = *(v37 - 1);
             v5 = v37 + 1;
             if (noop)
@@ -817,7 +816,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (canUnitTypeFitAt(v38 + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, v136 + image->spriteOwner->position.y + image->verticalOffset))
             {
-                ISCRIPT_CreateSprite(image, (unsigned __int16)v131, v38, v136, image->spriteOwner->elevationLevel + 1);
+                ISCRIPT_CreateSprite(image, v36, v38, v136, image->spriteOwner->elevationLevel + 1);
             }
             continue;
         case opc_dogrddamage:
