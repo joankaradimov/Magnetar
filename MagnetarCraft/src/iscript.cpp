@@ -745,7 +745,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                     v105 = (__int16)target->sprite->position.x;
                     v106 = (__int16)v103->position.x;
                     v123 = (__int16)v103->position.y;
-                    v131 = (CUnit*)v103;
                     v107 = GetAngle(v106, v123, v105, v104);
                     v108 = sub_494BD0((int)v99, v107);
                     if (v108 < v128)
