@@ -95,7 +95,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
-    CUnit* v112; // eax MAPDST
     struct CUnit* v113; // ecx
     unsigned int v117; // ebx
     unsigned int v118; // eax
@@ -570,18 +569,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v112 = iscript_unit;
             v113 = iscript_unit->orderTarget.pUnit;
             if (!v113 || (v113->statusFlags & StatusFlags::InAir) == 0)
             {
-                ISCRIPT_AttackWith(v112, 1);
+                ISCRIPT_AttackWith(iscript_unit, 1);
                 continue;
             }
-            weapon_id = Unit_AirWeapon[v112->unitType];
-            FireUnitWeapon(v112, weapon_id);
+            weapon_id = Unit_AirWeapon[iscript_unit->unitType];
+            FireUnitWeapon(iscript_unit, weapon_id);
             if (Weapon_DamageFactor[weapon_id] == 2)
             {
-                FireUnitWeapon(v112, weapon_id);
+                FireUnitWeapon(iscript_unit, weapon_id);
             }
             continue;
         case opc_castspell:
