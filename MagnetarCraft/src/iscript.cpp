@@ -4,7 +4,6 @@
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    int v7; // eax
     void* v8; // eax
     unsigned __int16 v9; // ax
     s8 v10; // al
@@ -131,7 +130,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
 
     while (2)
     {
-        v7 = (unsigned __int8)*v5++;
+        IScriptOpcodes v7 = (IScriptOpcodes) *v5++;
         v134 = v5;
         switch (v7)
         {
