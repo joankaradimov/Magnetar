@@ -221,9 +221,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (CImage* new_image = ISCRIPT_CreateImage(image, v24, 0, 0, IMGORD_ABOVE))
             {
-                if ((new_image->flags & IF_USES_SPECIAL_OFFSET) == 0)
+                if ((new_image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET) == 0)
                 {
-                    new_image->flags |= IF_USES_SPECIAL_OFFSET;
+                    new_image->flags |= ImageFlags::IF_USES_SPECIAL_OFFSET;
                     updateImagePositionOffset(new_image);
                 }
             }
@@ -237,9 +237,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (CImage* new_image = ISCRIPT_CreateImage(image, v27, 0, 0, IMGORD_BELOW))
             {
-                if ((new_image->flags & IF_USES_SPECIAL_OFFSET) == 0)
+                if ((new_image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET) == 0)
                 {
-                    new_image->flags |= IF_USES_SPECIAL_OFFSET;
+                    new_image->flags |= ImageFlags::IF_USES_SPECIAL_OFFSET;
                     updateImagePositionOffset(new_image);
                 }
             }
@@ -464,13 +464,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             v84 = image->spriteOwner->pImagePrimary;
-            if (v84 == nullptr || image->frameIndex == v84->frameIndex && ((image->flags ^ v84->flags) & IF_HORIZONTALLY_FLIPPED) == 0)
+            if (v84 == nullptr || image->frameIndex == v84->frameIndex && ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED) == 0)
             {
                 continue;
             }
             image->frameSet = v84->frameSet;
             image->direction = v84->direction;
-            image->flags ^= ((image->flags ^ v84->flags) & IF_HORIZONTALLY_FLIPPED);
+            image->flags ^= ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
