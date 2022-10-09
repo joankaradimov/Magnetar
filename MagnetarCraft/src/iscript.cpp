@@ -357,14 +357,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED)
-            {
-                setAllOverlayDirectionsGeneric(v60, 32 - image->direction);
-            }
-            else
-            {
-                setAllOverlayDirectionsGeneric(v60, image->direction);
-            }
+            setAllOverlayDirectionsGeneric(v60, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             continue;
         case opc_sproluselo:
             v47 = *(_WORD*)v5;
@@ -376,14 +369,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             ISCRIPT_UseLOFile(&v125, image, *(v5 - 1), 0);
             if (CThingy* thingy = ISCRIPT_CreateSprite(image, v47, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
             {
-                if (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED)
-                {
-                    setAllOverlayDirectionsGeneric(thingy, 32 - image->direction);
-                }
-                else
-                {
-                    setAllOverlayDirectionsGeneric(thingy, image->direction);
-                }
+                setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
             continue;
         case opc_end:
