@@ -37,7 +37,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     CThingy* v46; // eax
     unsigned __int16 v47; // bx
     CImage* v48; // edx
-    CThingy* v49; // eax
     unsigned __int16 v50; // ax
     char* v51; // edi
     char v52; // cl
@@ -382,16 +381,15 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             v48 = image;
             ISCRIPT_UseLOFile(&v125, image, *(v5 - 1), 0);
-            v49 = ISCRIPT_CreateSprite(v48, v47, v125.x, v125.y, v48->spriteOwner->elevationLevel + 1);
-            if (v49)
+            if (CThingy* thingy = ISCRIPT_CreateSprite(v48, v47, v125.x, v125.y, v48->spriteOwner->elevationLevel + 1))
             {
                 if (image->flags & 2)
                 {
-                    setAllOverlayDirectionsGeneric(v49, 32 - image->direction);
+                    setAllOverlayDirectionsGeneric(thingy, 32 - image->direction);
                 }
                 else
                 {
-                    setAllOverlayDirectionsGeneric(v49, image->direction);
+                    setAllOverlayDirectionsGeneric(thingy, image->direction);
                 }
             }
             continue;
