@@ -765,7 +765,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            goto LABEL_89;
+            v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
+            continue;
         case opc_imgulnextid:
             v23 = *v5;
             v5 += 2;
@@ -784,7 +785,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         LABEL_88:
             if (!v72)
             {
-            LABEL_89:
                 v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             }
             continue;
