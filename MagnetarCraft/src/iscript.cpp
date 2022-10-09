@@ -349,7 +349,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if ((image->flags & 2) != 0)
+            if (image->flags & 2)
             {
                 setAllOverlayDirectionsGeneric(v60, 32 - image->direction);
             }
@@ -370,7 +370,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v49 = ISCRIPT_CreateSprite(v48, v47, v125.x, v125.y, v48->spriteOwner->elevationLevel + 1);
             if (v49)
             {
-                if ((image->flags & 2) != 0)
+                if (image->flags & 2)
                 {
                     setAllOverlayDirectionsGeneric(v49, 32 - image->direction);
                 }
