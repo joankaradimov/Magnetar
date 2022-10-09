@@ -95,8 +95,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
     unsigned int v117; // ebx
-    unsigned int v118; // eax
-    CUnit* v119; // ebx
     int v120; // eax
     int v123; // [esp-10h] [ebp-50h]
     point v124; // [esp+0h] [ebp-40h] BYREF
@@ -613,10 +611,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v118 = v117;
-            v119 = iscript_unit;
-            v120 = GetModifiedUnitSpeed(v118, iscript_unit);
-            SetUnitMovementSpeed(v119, v120);
+            v120 = GetModifiedUnitSpeed(v117, iscript_unit);
+            SetUnitMovementSpeed(iscript_unit, v120);
             continue;
         case opc_gotorepeatattk:
             if (noop)
