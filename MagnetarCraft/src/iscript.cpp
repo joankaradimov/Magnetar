@@ -805,7 +805,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (sub_494BD0(v109, iscript_unit->currentDirection1) >= (unsigned int)v111)
+            if (sub_494BD0(v109, iscript_unit->currentDirection1) >= v111)
             {
                 continue;
             }

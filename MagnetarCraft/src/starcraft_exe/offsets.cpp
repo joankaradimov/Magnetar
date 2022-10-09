@@ -11867,17 +11867,13 @@ CThingy *CreateThingy(int sprite_id, int position_x, unsigned __int16 position_y
     return result_;
 }
 DECL_FUNC(int(*sub_488310)(), sub_488310, 0x488310);
-CThingy *sub_488350(CThingy *a1) {
+void sub_488350(CThingy *a1) {
     int address = 0x488350;
-    CThingy * result_;
     __asm {
-        xor eax, eax
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__stdcall*sub_488410)(__int16 a1, CSprite *a2), sub_488410, 0x488410);
 DECL_FUNC(void(*updateThingys)(), updateThingys, 0x488510);
@@ -12131,17 +12127,6 @@ CUnit *FindNextBounceTarget(CBullet *a1) {
     }
     return result_;
 }
-int ProgressBulletMovement(CBullet *a1) {
-    int address = 0x48b250;
-    int result_;
-    __asm {
-        xor eax, eax
-        mov eax, a1
-        call address
-        mov result_, eax
-    }
-    return result_;
-}
 void BulletBehaviour_Bounce(CBullet *a1) {
     int address = 0x48b2d0;
     __asm {
@@ -12240,7 +12225,7 @@ CBullet *CreateBullet(CUnit *a1, WeaponType weapon_id, int a3, __int16 a4, char 
     }
     return result_;
 }
-DECL_FUNC(int(*ImageDrawingBulletDrawing)(), ImageDrawingBulletDrawing, 0x48c3d0);
+DECL_FUNC(void (__cdecl*ImageDrawingBulletDrawing)(), ImageDrawingBulletDrawing, 0x48c3d0);
 DECL_FUNC(int(*sub_48C4A0)(), sub_48C4A0, 0x48c4a0);
 DECL_FUNC(int(*sub_48C4B0)(), sub_48C4B0, 0x48c4b0);
 DECL_FUNC(int(*sub_48C4D0)(), sub_48C4D0, 0x48c4d0);
@@ -13203,9 +13188,9 @@ void AttackFlyToTarget(CBullet *bullet, int x, int y) {
     }
 }
 DECL_FUNC(int(*setSecondaryWaypoint)(), setSecondaryWaypoint, 0x494bb0);
-int sub_494BD0(int direction, char a2) {
+unsigned int sub_494BD0(int direction, char a2) {
     int address = 0x494bd0;
-    int result_;
+    unsigned result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
@@ -19583,12 +19568,12 @@ CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 sprite_id, int a3, in
 DECL_FUNC(int(*LoadImageData)(), LoadImageData, 0x4d7180);
 DECL_FUNC(int(*LoadInitIscriptBIN)(), LoadInitIscriptBIN, 0x4d7390);
 DECL_FUNC(void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgram *program_state, int noop, _DWORD *distance_moved), BWFXN_PlayIscript, 0x4d74c0);
-void PlayIscriptAnim(CImage *this_, Anims anim) {
+void PlayIscriptAnim(CImage *this_, Anims new_animation) {
     int address = 0x4d8470;
     __asm {
         xor ecx, ecx
         mov ecx, this_
-        push dword ptr anim
+        push dword ptr new_animation
         call address
     }
 }
@@ -22054,18 +22039,14 @@ __int16 MoveUnit(CUnit *unit, __int16 pos_x, __int16 pos_y) {
     }
     return result_;
 }
-char RefreshSprite(CSprite *a1, unsigned __int8 a2) {
+void RefreshSprite(CSprite *a1, unsigned __int8 a2) {
     int address = 0x4ebbd0;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         push dword ptr a2
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(void (__thiscall*sub_4EBC30)(CUnit *unit), sub_4EBC30, 0x4ebc30);
 char sub_4EBDB0(CUnit *a1) {
