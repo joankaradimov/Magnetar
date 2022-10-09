@@ -833,7 +833,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_unit->statusFlags & 4)
+            if (iscript_unit->statusFlags & StatusFlags::InAir)
             {
                 v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
             }
