@@ -57,7 +57,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     CImage* v68; // eax
     CImage* v69; // ebx
     CSprite* v71; // eax
-    bool v72; // zf
     unsigned __int8 v73; // bl
     char* v74; // edi
     unsigned __int8 v75; // dl
@@ -75,7 +74,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     CImage* v88; // eax
     unsigned __int8 v89; // cl
     char v90; // dl
-    CUnit* v91; // eax
     unsigned __int8 v92; // dl
     _WORD* v93; // edi
     unsigned __int16 v94; // bx
@@ -521,15 +519,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v72 = (RandomizeShort(6) & 3) == 1;
-            v91 = iscript_unit;
-            if (v72)
+            if ((RandomizeShort(6) & 3) == 1)
             {
-                turn_unit_left(v91, v90);
+                turn_unit_left(iscript_unit, v90);
             }
             else
             {
-                turnUnit(v91, v91->currentDirection1 + 8 * v90);
+                turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * v90);
             }
             continue;
         case opc_setspawnframe:
