@@ -101,7 +101,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned int v118; // eax
     CUnit* v119; // ebx
     int v120; // eax
-    CUnit* v121; // eax
     int v123; // [esp-10h] [ebp-50h]
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
@@ -619,9 +618,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         case opc_nobrkcodestart:
             if (!noop)
             {
-                v121 = iscript_unit;
-                v121->statusFlags |= StatusFlags::NoBrkCodeStart;
-                v121->sprite->flags |= 0x80u;
+                iscript_unit->statusFlags |= StatusFlags::NoBrkCodeStart;
+                iscript_unit->sprite->flags |= 0x80u;
             }
             continue;
         case opc_nobrkcodeend:
