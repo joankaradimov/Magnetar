@@ -84,7 +84,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v95; // dx
     _WORD* v96; // edi
     unsigned __int16 v97; // bx
-    CUnit* v98; // esi
     unsigned __int16 v99; // dx
     __int16* v100; // edi
     int v104; // eax
@@ -778,9 +777,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (iscript_unit->orderTarget.pUnit)
             {
-                v98 = iscript_unit;
                 sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
-                if (!isDistanceGreaterThanHaltDistance(a3, v98, (unsigned __int16)v131, a4))
+                if (!isDistanceGreaterThanHaltDistance(a3, iscript_unit, (unsigned __int16)v131, a4))
                 {
                     continue;
                 }
