@@ -600,7 +600,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             image->frameSet = (unsigned __int8)*(v5 - 1);
             v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
-            image->flags ^= ImageFlags((LOBYTE(image->flags) ^ LOBYTE(v88->flags)) & 2);
+            image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
@@ -613,7 +613,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
             image->frameSet = v88->frameSet + v89 * (v88->GRPFile->wFrames & 0x7FFF);
-            image->flags ^= ImageFlags((LOBYTE(image->flags) ^ LOBYTE(v88->flags)) & 2);
+            image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
