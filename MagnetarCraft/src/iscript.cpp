@@ -45,7 +45,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char* v57; // edi
     char v58; // cl
     char v59; // dl
-    CThingy* v60; // eax
     unsigned __int16 v61; // cx
     char* v62; // edi
     char v63; // dl
@@ -331,8 +330,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v60 = ISCRIPT_CreateSprite(image, v56, v58, v59, image->spriteOwner->elevationLevel);
-            goto LABEL_80;
+            if (CThingy* thingy = ISCRIPT_CreateSprite(image, v56, v58, v59, image->spriteOwner->elevationLevel))
+            {
+                setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
+            }
+            continue;
         case opc_sprul:
             v61 = *(_WORD*)v5;
             v62 = v5 + 2;
@@ -347,11 +349,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v60 = ISCRIPT_CreateSprite(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1);
-        LABEL_80:
-            if (v60)
+            if (CThingy* thingy = ISCRIPT_CreateSprite(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1))
             {
-                setAllOverlayDirectionsGeneric(v60, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
+                setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
             continue;
         case opc_sproluselo:
