@@ -7131,6 +7131,59 @@ void sub_488020_(CThingy* thingy)
 
 FAIL_STUB_PATCH(sub_488020);
 
+void sub_488350_(CThingy* thingy)
+{
+	RefreshSprite(thingy->sprite, byte_581D6A[thingy->sprite->playerID]);
+	if (!CThingyIsVisible(0, thingy))
+	{
+		removeSelectionCircle(thingy->sprite);
+		SpriteDestructor(thingy->sprite);
+		thingy->sprite = 0;
+		if (dword_654868 == thingy)
+		{
+			dword_654868 = thingy->next;
+		}
+		if (dword_65486C == thingy)
+		{
+			dword_65486C = thingy->prev;
+		}
+		if (thingy->prev)
+		{
+			thingy->prev->next = thingy->next;
+		}
+		CThingy* v1 = thingy->next;
+		if (v1)
+		{
+			v1->prev = thingy->prev;
+		}
+		thingy->prev = 0;
+		thingy->next = 0;
+		CThingy* v2 = dword_6509D0;
+		if (dword_6509D0)
+		{
+			if (dword_654870 == dword_6509D0)
+			{
+				dword_654870 = thingy;
+			}
+			thingy->prev = dword_6509D0;
+			thingy->next = v2->next;
+			CThingy* v3 = v2->next;
+			if (v3)
+			{
+				v3->prev = thingy;
+			}
+			v2->next = thingy;
+		}
+		else
+		{
+			dword_654870 = thingy;
+			dword_6509D0 = thingy;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_488350);
+
 void updateThingys_()
 {
 	CThingy* next_thingy;
@@ -7144,7 +7197,7 @@ void updateThingys_()
 	for (CThingy* thingy = dword_654868; thingy; thingy = next_thingy)
 	{
 		next_thingy = thingy->next;
-		sub_488350(thingy);
+		sub_488350_(thingy);
 	}
 }
 
