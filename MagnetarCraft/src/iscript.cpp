@@ -96,7 +96,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v128; // [esp+20h] [ebp-20h]
     int a3; // [esp+24h] [ebp-1Ch] BYREF
     int a4; // [esp+28h] [ebp-18h] BYREF
-    CUnit* v131; // [esp+2Ch] [ebp-14h] FORCED
     WeaponType weapon_id; // [esp+30h] [ebp-10h]
     char v136; // [esp+3Fh] [ebp-1h]
 
@@ -734,7 +733,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v96 = (short*)(v5 + 2);
             v97 = *v96;
             v5 = (char*)(v96 + 1);
-            LOWORD(v131) = v95;
             if (noop)
             {
                 continue;
@@ -742,7 +740,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             if (iscript_unit->orderTarget.pUnit)
             {
                 sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
-                if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, (unsigned __int16)v131, a4))
+                if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, v95, a4))
                 {
                     v5 = (char*)iscript_data + v97;
                 }
