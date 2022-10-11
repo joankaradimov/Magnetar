@@ -635,14 +635,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_unit->orderTarget.pUnit == nullptr)
+            if (iscript_unit->orderTarget.pUnit)
             {
-                IgnoreAllScriptAndGotoIdle(iscript_unit);
-                continue;
+                program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data - 1;
+                program_state->wait = 10;
+                return;
             }
-            program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data - 1;
-            program_state->wait = 10;
-            return;
+            IgnoreAllScriptAndGotoIdle(iscript_unit);
+            continue;
         case opc_attkshiftproj:
             ++v5;
             if (noop)
