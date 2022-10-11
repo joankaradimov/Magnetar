@@ -49,7 +49,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char v63; // dl
     char v64; // bl
     char v65; // bl
-    int v66; // ecx
     int v67; // esi
     unsigned __int8 v73; // bl
     char* v74; // edi
@@ -701,8 +700,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ISCRIPT_UseLOFile(&v124, image, 2, v65);
-            LOWORD(v66) = v65;
-            v67 = v66 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
+            v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
             {
                 image_Insert(v68, &image->spriteOwner->pImageHead, image);
