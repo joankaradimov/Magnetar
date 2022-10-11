@@ -351,11 +351,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             v60 = ISCRIPT_CreateSprite(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1);
         LABEL_80:
-            if (!v60)
+            if (v60)
             {
-                continue;
+                setAllOverlayDirectionsGeneric(v60, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
-            setAllOverlayDirectionsGeneric(v60, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             continue;
         case opc_sproluselo:
             v47 = *(_WORD*)v5;
