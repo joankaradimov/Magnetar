@@ -95,7 +95,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v128; // [esp+20h] [ebp-20h]
     int a3; // [esp+24h] [ebp-1Ch] BYREF
     int a4; // [esp+28h] [ebp-18h] BYREF
-    WeaponType weapon_id; // [esp+30h] [ebp-10h]
     char v136; // [esp+3Fh] [ebp-1h]
 
     if (program_state->wait)
@@ -536,13 +535,15 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             if (iscript_unit->orderTarget.pUnit == nullptr || (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir) == 0)
             {
                 ISCRIPT_AttackWith(iscript_unit, 1);
-                continue;
             }
-            weapon_id = Unit_AirWeapon[iscript_unit->unitType];
-            FireUnitWeapon(iscript_unit, weapon_id);
-            if (Weapon_DamageFactor[weapon_id] == 2)
+            else
             {
+                WeaponType weapon_id = Unit_AirWeapon[iscript_unit->unitType];
                 FireUnitWeapon(iscript_unit, weapon_id);
+                if (Weapon_DamageFactor[weapon_id] == 2)
+                {
+                    FireUnitWeapon(iscript_unit, weapon_id);
+                }
             }
             continue;
         case opc_castspell:
