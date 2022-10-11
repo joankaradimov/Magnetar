@@ -275,9 +275,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_bullet && (v131 = iscript_bullet->sourceUnit) && UnitIsGoliath(v131)
-                && (UpgradeLevelBW[v131->playerID].items[8]
-                    || (Unit_PrototypeFlags[v131->unitType] & UnitPrototypeFlags::Hero) && IsExpansion))
+            if (iscript_bullet && iscript_bullet->sourceUnit && UnitIsGoliath(iscript_bullet->sourceUnit)
+                && (UpgradeLevelBW[iscript_bullet->sourceUnit->playerID].items[8]
+                    || (Unit_PrototypeFlags[iscript_bullet->sourceUnit->unitType] & UnitPrototypeFlags::Hero) && IsExpansion))
             {
                 ISCRIPT_CreateSprite(image, 0x1F9u, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
             }
