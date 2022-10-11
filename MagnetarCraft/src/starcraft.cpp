@@ -7063,6 +7063,74 @@ void UpdateImages_()
 
 FAIL_STUB_PATCH(UpdateImages);
 
+void sub_488020_(CThingy* thingy)
+{
+	u16 sprite_id = thingy->sprite->spriteID;
+	if (sprite_id <= 0x81u || sprite_id >= 0x182u && sprite_id <= 0x1E0u)
+	{
+		sub_487690(thingy);
+	}
+	else
+	{
+		isThingyOnMap(thingy->sprite->unkflags_13, thingy->sprite->unkflags_12, thingy);
+	}
+
+	if (thingy->sprite)
+	{
+		spriteToIscriptLoop_(thingy->sprite);
+		if (thingy->sprite->pImageHead == nullptr)
+		{
+			thingy->sprite = nullptr;
+		}
+	}
+
+	if (thingy->sprite == nullptr)
+	{
+		if (first_lone_sprite == thingy)
+		{
+			first_lone_sprite = thingy->next;
+		}
+		if (dword_65291C == thingy)
+		{
+			dword_65291C = thingy->prev;
+		}
+		if (thingy->prev)
+		{
+			thingy->prev->next = thingy->next;
+		}
+		CThingy* v4 = thingy->next;
+		if (v4)
+		{
+			v4->prev = thingy->prev;
+		}
+		thingy->prev = 0;
+		thingy->next = 0;
+		CThingy* v5 = dword_654878;
+		if (dword_654878)
+		{
+			if (dword_65487C == dword_654878)
+			{
+				dword_65487C = thingy;
+			}
+			thingy->prev = dword_654878;
+			thingy->next = v5->next;
+			CThingy* v6 = v5->next;
+			if (v6)
+			{
+				v6->prev = thingy;
+			}
+			v5->next = thingy;
+		}
+		else
+		{
+			dword_65487C = thingy;
+			dword_654878 = thingy;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_488020);
+
 void updateThingys_()
 {
 	CThingy* next_thingy;
@@ -7070,7 +7138,7 @@ void updateThingys_()
 	for (CThingy* thingy = first_lone_sprite; thingy; thingy = next_thingy)
 	{
 		next_thingy = thingy->next;
-		sub_488020(thingy);
+		sub_488020_(thingy);
 	}
 
 	for (CThingy* thingy = dword_654868; thingy; thingy = next_thingy)
