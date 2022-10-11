@@ -34,7 +34,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char* v42; // edi
     char v43; // bl
     unsigned __int16 v44; // bx
-    CThingy* v46; // eax
     unsigned __int16 v47; // bx
     unsigned __int16 v50; // ax
     char* v51; // edi
@@ -317,7 +316,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (CFlingy* v45 = ISCRIPT_CreateFlingy(0, image->spriteOwner->position.y + image->verticalOffset, (__int16)image->spriteOwner->position.x + image->horizontalOffset, (FlingyID)v44))
             {
-                v46 = (CThingy*)uflunstableRandomize(v45);
+                CThingy* v46 = (CThingy*)uflunstableRandomize(v45);
                 sub_4878F0(v46);
             }
             continue;
