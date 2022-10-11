@@ -80,7 +80,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     int v105; // ecx
     int v106; // edx
     char v107; // al
-    unsigned int v108; // eax
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
@@ -760,8 +759,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 v106 = (__int16)iscript_unit->sprite->position.x;
                 v123 = (__int16)iscript_unit->sprite->position.y;
                 v107 = GetAngle(v106, v123, v105, v104);
-                v108 = sub_494BD0((int)v99, v107);
-                if (v108 < v128)
+                if (sub_494BD0((int)v99, v107) < v128)
                 {
                     v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
                 }
