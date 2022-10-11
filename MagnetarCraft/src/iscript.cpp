@@ -4,7 +4,6 @@
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    void* v8; // eax
     s8 v10; // al
     s8 v11; // al
     char v12; // dl
@@ -799,9 +798,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v8 = (void*)*((unsigned __int16*)v5 - 1);
             image->flags |= ImageFlags::IF_REDRAW;
-            image->coloringData = v8;
+            image->coloringData = (void*)*((unsigned __int16*)v5 - 1);
             continue;
         case opc_orderdone:
             ++v5;
