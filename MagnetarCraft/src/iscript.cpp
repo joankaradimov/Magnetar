@@ -185,7 +185,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, v17, v19 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), IMGORD_ABOVE);
+            ISCRIPT_CreateImage(image, v17, v19 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_ABOVE);
             continue;
         case opc_imgul:
             v20 = *(_WORD*)v5;
@@ -196,7 +196,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, v20, v22 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), IMGORD_BELOW);
+            ISCRIPT_CreateImage(image, v20, v22 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_BELOW);
             continue;
         case opc_imgolorig:
             v24 = *(_WORD*)v5;
@@ -205,7 +205,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (CImage* new_image = ISCRIPT_CreateImage(image, v24, 0, 0, IMGORD_ABOVE))
+            if (CImage* new_image = ISCRIPT_CreateImage(image, v24, 0, 0, ImageOrder::IMGORD_ABOVE))
             {
                 if ((new_image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET) == 0)
                 {
@@ -221,7 +221,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (CImage* new_image = ISCRIPT_CreateImage(image, v27, 0, 0, IMGORD_BELOW))
+            if (CImage* new_image = ISCRIPT_CreateImage(image, v27, 0, 0, ImageOrder::IMGORD_BELOW))
             {
                 if ((new_image->flags & ImageFlags::IF_USES_SPECIAL_OFFSET) == 0)
                 {
@@ -240,7 +240,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ISCRIPT_UseLOFile(&a1, image, v30, *(v5 - 1));
-            ISCRIPT_CreateImage(image, v28, LOBYTE(a1.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(a1.y) + image->verticalOffset), IMGORD_ABOVE);
+            ISCRIPT_CreateImage(image, v28, LOBYTE(a1.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(a1.y) + image->verticalOffset), ImageOrder::IMGORD_ABOVE);
             continue;
         case opc_imguluselo:
             v32 = *(_WORD*)v5;
@@ -252,7 +252,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ISCRIPT_UseLOFile(&v126, image, v34, *(v5 - 1));
-            ISCRIPT_CreateImage(image, v32, LOBYTE(v126.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(v126.y) + image->verticalOffset), IMGORD_BELOW);
+            ISCRIPT_CreateImage(image, v32, LOBYTE(v126.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(v126.y) + image->verticalOffset), ImageOrder::IMGORD_BELOW);
             continue;
         case opc_sprol:
             v41 = *(_WORD*)v5;
@@ -779,7 +779,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, image->imageID + 1, v23 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), IMGORD_BELOW);
+            ISCRIPT_CreateImage(image, image->imageID + 1, v23 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_BELOW);
             continue;
         case opc_liftoffcondjmp:
             v5 += 2;
