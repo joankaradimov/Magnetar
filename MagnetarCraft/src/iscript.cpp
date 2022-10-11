@@ -85,8 +85,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     point v126; // [esp+10h] [ebp-30h] BYREF
     point a1; // [esp+18h] [ebp-28h] BYREF
     unsigned __int16 v128; // [esp+20h] [ebp-20h]
-    int a3; // [esp+24h] [ebp-1Ch] BYREF
-    int a4; // [esp+28h] [ebp-18h] BYREF
     char v136; // [esp+3Fh] [ebp-1h]
 
     if (program_state->wait)
@@ -729,6 +727,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (iscript_unit->orderTarget.pUnit)
             {
+                int a3;
+                int a4;
                 sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
                 if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, v95, a4))
                 {
