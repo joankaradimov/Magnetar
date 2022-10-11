@@ -541,11 +541,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (Orders_TargetingWeapon[iscript_unit->orderID] >= WT_None)
-            {
-                continue;
-            }
-            if (!canCastSpell_0(iscript_unit))
+            if (Orders_TargetingWeapon[iscript_unit->orderID] < WT_None && !canCastSpell_0(iscript_unit))
             {
                 ISCRIPT_CastSpell(iscript_unit, Orders_TargetingWeapon[iscript_unit->orderID]);
             }
