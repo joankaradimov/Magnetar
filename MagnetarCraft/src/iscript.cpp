@@ -75,16 +75,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v97; // bx
     unsigned __int16 v99; // dx
     __int16* v100; // edi
-    int v104; // eax
-    int v105; // ecx
-    int v106; // edx
     char v107; // al
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
     unsigned int v117; // ebx
     int v120; // eax
-    int v123; // [esp-10h] [ebp-50h]
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
     point v126; // [esp+10h] [ebp-30h] BYREF
@@ -752,10 +748,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (CUnit* target = iscript_unit->orderTarget.pUnit)
             {
-                v104 = (__int16)target->sprite->position.y;
-                v105 = (__int16)target->sprite->position.x;
-                v106 = (__int16)iscript_unit->sprite->position.x;
-                v123 = (__int16)iscript_unit->sprite->position.y;
+                int v104 = (__int16)target->sprite->position.y;
+                int v105 = (__int16)target->sprite->position.x;
+                int v106 = (__int16)iscript_unit->sprite->position.x;
+                int v123 = (__int16)iscript_unit->sprite->position.y;
                 v107 = GetAngle(v106, v123, v105, v104);
                 if (sub_494BD0((int)v99, v107) < v128)
                 {
