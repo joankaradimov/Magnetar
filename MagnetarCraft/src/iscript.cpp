@@ -42,9 +42,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v32; // bx
     unsigned __int8* v33; // edi
     unsigned __int8 v34; // cl
-    unsigned __int16 v36; // dx
     _BYTE* v37; // edi
-    char v38; // dl
     unsigned __int16 v41; // ax
     char* v42; // edi
     char v43; // bl
@@ -94,7 +92,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     point v126; // [esp+10h] [ebp-30h] BYREF
     point a1; // [esp+18h] [ebp-28h] BYREF
     unsigned __int16 v128; // [esp+20h] [ebp-20h]
-    char v136; // [esp+3Fh] [ebp-1h]
 
     if (program_state->wait)
     {
@@ -810,20 +807,23 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             iscript_flingy->orderSignal &= ~*(v5 - 1);
             continue;
         case opc_grdsprol:
-            v36 = *(_WORD*)v5;
-            v37 = v5 + 3;
-            v136 = *v37;
-            v38 = *(v37 - 1);
-            v5 = v37 + 1;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
+
             if (noop)
             {
                 continue;
             }
-            if (canUnitTypeFitAt(v38 + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, v136 + image->spriteOwner->position.y + image->verticalOffset))
+            if (canUnitTypeFitAt(x + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, y + image->spriteOwner->position.y + image->verticalOffset))
             {
-                ISCRIPT_CreateSprite(image, v36, v38, v136, image->spriteOwner->elevationLevel + 1);
+                ISCRIPT_CreateSprite(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
             }
             continue;
+        }
         case opc_dogrddamage:
             if (noop)
             {
