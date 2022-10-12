@@ -6815,7 +6815,7 @@ void UpdateUnitOrderData_(CUnit* unit)
 		spriteToIscriptLoop_(unit->sprite);
 		if (!unit->sprite->pImageHead)
 		{
-			unit->sprite = 0;
+			unit->sprite = nullptr;
 		}
 	}
 }
