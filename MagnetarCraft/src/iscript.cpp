@@ -808,13 +808,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             image->coloringData = (void*)*((unsigned __int16*)v5 - 1);
             continue;
         case opc_orderdone:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u8 arg = take_iscript_datum<u8>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            iscript_flingy->orderSignal &= ~*(v5 - 1);
+            iscript_flingy->orderSignal &= ~arg;
             continue;
+        }
         case opc_grdsprol:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
