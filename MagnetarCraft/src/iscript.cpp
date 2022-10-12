@@ -799,14 +799,18 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_warpoverlay:
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 arg = take_iscript_datum<unsigned __int16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
             image->flags |= ImageFlags::IF_REDRAW;
-            image->coloringData = (void*)*((unsigned __int16*)v5 - 1);
+            image->coloringData = (void*)arg;
             continue;
+        }
         case opc_orderdone:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
