@@ -121,19 +121,21 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_playframtile:
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            _WORD arg = take_iscript_datum<_WORD>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
+            unsigned __int16 v9 = CurrentTileSet + arg;
+            if (v9 < (unsigned __int16)(image->GRPFile->wFrames & 0x7FFF))
             {
-                unsigned __int16 v9 = CurrentTileSet + *((_WORD*)v5 - 1);
-                if (v9 < (unsigned __int16)(image->GRPFile->wFrames & 0x7FFF))
-                {
-                    ISCRIPT_PlayFrame(image, v9);
-                }
+                ISCRIPT_PlayFrame(image, v9);
             }
             continue;
+        }
         case opc_sethorpos:
             v10 = *v5++;
             if (noop)
