@@ -95,8 +95,8 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
 
     while (2)
     {
-        IScriptOpcodes v7 = (IScriptOpcodes) *v5++;
-        switch (v7)
+        IScriptOpcodes opcode = (IScriptOpcodes) *v5++;
+        switch (opcode)
         {
         case opc_playfram:
             v5 += 2;
