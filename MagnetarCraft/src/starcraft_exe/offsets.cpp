@@ -3664,7 +3664,7 @@ signed int UMAnotherPath(CUnit *a1, points a2) {
 }
 DECL_FUNC(int(*sub_42FE90)(), sub_42FE90, 0x42fe90);
 DECL_FUNC(int(*sub_42FEC0)(), sub_42FEC0, 0x42fec0);
-DECL_FUNC(int(*resetUnitBoundsLists_GetMaxUnitTypeSize)(), resetUnitBoundsLists_GetMaxUnitTypeSize, 0x42fee0);
+DECL_FUNC(void (__cdecl*resetUnitBoundsLists_GetMaxUnitTypeSize)(), resetUnitBoundsLists_GetMaxUnitTypeSize, 0x42fee0);
 DECL_FUNC(int(*getAllUnitsInBounds)(), getAllUnitsInBounds, 0x42ff80);
 DECL_FUNC(int (__stdcall*getUnitsAtPoint)(int), getUnitsAtPoint, 0x4300e0);
 DECL_FUNC(s32 *(__thiscall*UnitRelManyFinderUMScoutPath)(CUnit *this_, __int16 a2, __int16 a3), UnitRelManyFinderUMScoutPath, 0x430190);
@@ -8846,13 +8846,13 @@ int UMBldgTurret(CUnit *unit) {
     }
     return result_;
 }
-signed int UMTerrainSlide(CUnit *a1) {
+signed int UMTerrainSlide(CUnit *unit) {
     int address = 0x46ae20;
     signed result_;
     __asm {
         xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
         mov result_, eax
     }
@@ -9067,13 +9067,13 @@ signed int UMRetryPath(CUnit *a1) {
     }
     return result_;
 }
-signed int UMInitialize(CUnit *a1) {
+signed int UMInitialize(CUnit *unit) {
     int address = 0x46c320;
     signed result_;
     __asm {
         xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
         mov result_, eax
     }
@@ -10402,6 +10402,17 @@ int SetAttackTarget(CUnit *a1, CUnit *a2, int a3, int a4) {
     }
     return result_;
 }
+int sub_4770E0(CUnit *unit) {
+    int address = 0x4770e0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(signed int (__thiscall*AI_AggressiveUnitTask)(CUnit *this_, int a2, int a3, signed int a4), AI_AggressiveUnitTask, 0x477160);
 DECL_FUNC(void (__thiscall*holdPositionProc)(CUnit *this_, CUnit *a2), holdPositionProc, 0x477510);
 void ReactToHit(CUnit *attacker, CUnit *target) {
@@ -10673,12 +10684,12 @@ void FireUnitWeapon(CUnit *unit, WeaponType weapon_id) {
         call address
     }
 }
-void ISCRIPT_CastSpell(CUnit *a1, WeaponType weapon_id) {
+void ISCRIPT_CastSpell(CUnit *unit, WeaponType weapon_id) {
     int address = 0x479d40;
     __asm {
         xor eax, eax
         xor ebx, ebx
-        mov eax, a1
+        mov eax, unit
         mov bl, weapon_id
         call address
     }
@@ -13445,11 +13456,11 @@ signed int sub_4961B0(CUnit *a1) {
     }
     return result_;
 }
-void UpdateImage(CUnit *a1) {
+void UpdateImage(CUnit *unit) {
     int address = 0x4961f0;
     __asm {
         xor edi, edi
-        mov edi, a1
+        mov edi, unit
         call address
     }
 }
@@ -19278,11 +19289,11 @@ CImage *sub_4D5930(CImage *result, char a2) {
     }
     return result_;
 }
-void updateImageFrameIndex(CImage *result) {
+void updateImageFrameIndex(CImage *image) {
     int address = 0x4d5940;
     __asm {
         xor eax, eax
-        mov eax, result
+        mov eax, image
         call address
     }
 }
@@ -22060,19 +22071,19 @@ char sub_4EBDB0(CUnit *a1) {
     }
     return result_;
 }
-void RefreshUnit(CUnit *result) {
+void RefreshUnit(CUnit *unit) {
     int address = 0x4ebde0;
     __asm {
         xor eax, eax
-        mov eax, result
+        mov eax, unit
         call address
     }
 }
-void UpdateUnitSpriteInfo(CUnit *a1) {
+void UpdateUnitSpriteInfo(CUnit *unit) {
     int address = 0x4ebe10;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
     }
 }
@@ -22109,16 +22120,13 @@ char performSecondaryOrders(CUnit *a1) {
     }
     return result_;
 }
-char updateUnitTimers(CUnit *a1) {
+void updateUnitTimers(CUnit *unit) {
     int address = 0x4ec290;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(void (__thiscall*unitUpdate)(CUnit *unit), unitUpdate, 0x4ec420);
 void ordersEntries(CUnit *unit) {
@@ -26475,7 +26483,6 @@ u16(&Unit_IdlePortrait)[228] = * ((decltype(&Unit_IdlePortrait)) 0x662f88);
 u8(&Unit_Elevation)[228] = * ((decltype(&Unit_Elevation)) 0x663150);
 u8(&Unit_SightRange)[228] = * ((decltype(&Unit_SightRange)) 0x663238);
 Order(&Unit_AttackUnitOrder)[228] = * ((decltype(&Unit_AttackUnitOrder)) 0x663320);
-char& byte_663325 = * ((decltype(&byte_663325)) 0x663325);
 char& byte_66333E = * ((decltype(&byte_66333E)) 0x66333e);
 Order& order_id = * ((decltype(&order_id)) 0x66333f);
 char& byte_663369 = * ((decltype(&byte_663369)) 0x663369);
@@ -26597,9 +26604,9 @@ int& dword_685174 = * ((decltype(&dword_685174)) 0x685174);
 int& dword_685178 = * ((decltype(&dword_685178)) 0x685178);
 int& dword_68517C = * ((decltype(&dword_68517C)) 0x68517c);
 char& byte_685180 = * ((decltype(&byte_685180)) 0x685180);
-int(&dword_685188)[228][12] = * ((decltype(&dword_685188)) 0x685188);
-int(&dword_687C48)[228][12] = * ((decltype(&dword_687C48)) 0x687c48);
-int(&dword_68A708)[12] = * ((decltype(&dword_68A708)) 0x68a708);
+int(&completed_unit_counts_at_location)[228][12] = * ((decltype(&completed_unit_counts_at_location)) 0x685188);
+int(&all_unit_counts_at_location)[228][12] = * ((decltype(&all_unit_counts_at_location)) 0x687c48);
+int(&all_unit_counts)[12] = * ((decltype(&all_unit_counts)) 0x68a708);
 int(&dword_68A738)[72] = * ((decltype(&dword_68A738)) 0x68a738);
 int(&dword_68A858)[12] = * ((decltype(&dword_68A858)) 0x68a858);
 int(&dword_68A888)[72] = * ((decltype(&dword_68A888)) 0x68a888);
@@ -26891,6 +26898,7 @@ int(&dword_6BB210)[227] = * ((decltype(&dword_6BB210)) 0x6bb210);
 int(&dword_6BB59C)[] = * ((decltype(&dword_6BB59C)) 0x6bb59c);
 int(&dword_6BB5A0)[228] = * ((decltype(&dword_6BB5A0)) 0x6bb5a0);
 int& MaxUnitHeight = * ((decltype(&MaxUnitHeight)) 0x6bb930);
+CUnit *(&tempUnitsListsArray)[1701] = * ((decltype(&tempUnitsListsArray)) 0x6bb938);
 int(&dword_6BD3D0)[1701] = * ((decltype(&dword_6BD3D0)) 0x6bd3d0);
 int& tempUnitsListCurrentArrayCount = * ((decltype(&tempUnitsListCurrentArrayCount)) 0x6bee64);
 int& MaxUnitWidth = * ((decltype(&MaxUnitWidth)) 0x6bee68);
