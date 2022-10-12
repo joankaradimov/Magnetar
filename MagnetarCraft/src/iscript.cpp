@@ -264,12 +264,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 && (UpgradeLevelBW[iscript_bullet->sourceUnit->playerID].items[8]
                     || (Unit_PrototypeFlags[iscript_bullet->sourceUnit->unitType] & UnitPrototypeFlags::Hero) && IsExpansion))
             {
-                ISCRIPT_CreateSprite(image, 0x1F9u, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
+                v41 = 0x1F9;
             }
-            else
-            {
-                ISCRIPT_CreateSprite(image, v41, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
-            }
+            ISCRIPT_CreateSprite(image, v41, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
             continue;
         case opc_highsprol:
             v50 = *(_WORD*)v5;
