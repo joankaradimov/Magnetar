@@ -7052,13 +7052,89 @@ void ImageDrawingBulletDrawing_()
 
 FAIL_STUB_PATCH(ImageDrawingBulletDrawing);
 
+void UpdateImage_(CUnit* unit)
+{
+	if (unit->sprite)
+	{
+		spriteToIscriptLoop_(unit->sprite);
+		if (unit->sprite->pImageHead == nullptr)
+		{
+			unit->sprite = nullptr;
+		}
+	}
+	if (unit->sprite)
+	{
+		byte_63FEC2 = unit->movementFlags;
+		Unit_AssignNextWP(unit);
+		sub_495CB0((CFlingy*)unit);
+		ProgressMovementFlag(unit);
+		sub_4956C0(unit);
+		byte_63FEC0 = unit->movementFlags;
+		unit->movementFlags = byte_63FEC2;
+		sub_496030(unit);
+		CSprite* v5 = unit->sprite;
+		if ((__int16)v5->position.x >= (unsigned int)(unsigned __int16)map_width_pixels || (__int16)v5->position.y >= (unsigned int)(unsigned __int16)map_height_pixels || unit->moveTarget.pt.x == unit->position.x && unit->moveTarget.pt.y == unit->position.y)
+		{
+			for (CImage* image = v5->pImageHead; image; image = image->next)
+			{
+				PlayIscriptAnim(image, AE_Death);
+			}
+		}
+	}
+	else
+	{
+		if (dword_63FF34 == unit)
+		{
+			dword_63FF34 = unit->next;
+		}
+		if (dword_63FEC8 == unit)
+		{
+			dword_63FEC8 = unit->prev;
+		}
+		if (unit->prev)
+		{
+			unit->prev->next = unit->next;
+		}
+		CUnit* v2 = unit->next;
+		if (v2)
+		{
+			v2->prev = unit->prev;
+		}
+		unit->prev = 0;
+		unit->next = 0;
+		CUnit* v3 = dword_63FF38;
+		if (dword_63FF38)
+		{
+			if (dword_63FF3C == dword_63FF38)
+			{
+				dword_63FF3C = unit;
+			}
+			unit->prev = dword_63FF38;
+			unit->next = v3->next;
+			CUnit* v4 = v3->next;
+			if (v4)
+			{
+				v4->prev = unit;
+			}
+			v3->next = unit;
+		}
+		else
+		{
+			dword_63FF3C = unit;
+			dword_63FF38 = unit;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(UpdateImage);
+
 void UpdateImages_()
 {
 	CUnit* next_unit;
 	for (CUnit* unit = dword_63FF34; unit; unit = next_unit)
 	{
 		next_unit = unit->next;
-		UpdateImage(unit);
+		UpdateImage_(unit);
 	}
 }
 
