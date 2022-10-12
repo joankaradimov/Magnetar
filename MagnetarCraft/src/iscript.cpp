@@ -13,9 +13,7 @@ T* take_iscript_data(IScriptProgram* program_state, int count)
 template<typename T>
 T take_iscript_datum(IScriptProgram* program_state)
 {
-    BYTE* data = (BYTE*)iscript_data + program_state->program_counter;
-    program_state->program_counter += sizeof(T);
-    return *(T*)data;
+    return *take_iscript_data<T>(program_state, 1);
 }
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
