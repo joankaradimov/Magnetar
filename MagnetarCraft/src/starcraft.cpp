@@ -6727,7 +6727,7 @@ void spriteToIscriptLoop_(CSprite* sprite)
 		next_image = image->next;
 
 		image->updateFunction(image);
-		BWFXN_PlayIscript(image, &image->iscript_program, 0, 0);
+		BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 		if (sprite->pImageHead == nullptr)
 		{
 			int v2 = (__int16)sprite->position.y / 32;
