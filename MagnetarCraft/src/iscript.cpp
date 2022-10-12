@@ -20,9 +20,6 @@ T take_iscript_datum(IScriptProgram* program_state)
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    s8 v10; // al
-    s8 v11; // al
-    char v12; // dl
     unsigned __int8 v13; // bl
     _BYTE* v14; // edi
     unsigned __int8 v15; // dl
@@ -136,38 +133,50 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_sethorpos:
-            v10 = *v5++;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            s8 x = take_iscript_datum<s8>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            if (image->horizontalOffset != v10)
+            if (image->horizontalOffset != x)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
-                image->horizontalOffset = v10;
+                image->horizontalOffset = x;
             }
             continue;
+        }
         case opc_setvertpos:
-            v11 = *v5++;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            s8 y = take_iscript_datum<s8>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            if ((iscript_unit == nullptr || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != v11)
+            if ((iscript_unit == nullptr || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != y)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
-                image->verticalOffset = v11;
+                image->verticalOffset = y;
             }
             continue;
+        }
         case opc_setpos:
-            v12 = *v5;
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_setPosition(image, v12, *(v5 - 1));
+            ISCRIPT_setPosition(image, x, y);
             continue;
+        }
         case opc_wait:
             program_state->wait = *v5 - 1;
             program_state->program_counter = (BYTE*)v5 + 1 - (BYTE*)iscript_data;
