@@ -3,6 +3,14 @@
 #include "patching.h"
 
 template<typename T>
+T* take_iscript_data(IScriptProgram* program_state, int count)
+{
+    BYTE* data = (BYTE*)iscript_data + program_state->program_counter;
+    program_state->program_counter += sizeof(T) * count;
+    return (T*)data;
+}
+
+template<typename T>
 T take_iscript_datum(IScriptProgram* program_state)
 {
     BYTE* data = (BYTE*)iscript_data + program_state->program_counter;
@@ -58,12 +66,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char v64; // bl
     char v65; // bl
     int v67; // esi
-    unsigned __int8 v73; // bl
-    char* v74; // edi
-    unsigned __int8 v75; // dl
-    int v76; // edi
-    int v77; // ecx
-    SfxData v78; // ebx
     unsigned __int16 v79; // ax
     char* v80; // edi
     unsigned __int16 v81; // dx
@@ -423,22 +425,18 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             ISCRIPT_AttackMelee(iscript_unit);
             [[fallthrough]];
         case opc_playsndrand:
-            v73 = *v5;
-            v74 = v5 + 1;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int8 arg_count = take_iscript_datum<char>(program_state);
+            u16* args = take_iscript_data<u16>(program_state, arg_count);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                v5 = &v74[2 * v73];
+                continue;
             }
-            else
-            {
-                v75 = RandomizeShort(4) % v73;
-                v76 = (int)&v74[2 * v75 + 2];
-                v77 = (unsigned __int8)(v73 - v75 - 1);
-                v78 = SfxData(*(unsigned __int16*)(v76 - 2));
-                v5 = (char*)(v76 + 2 * v77);
-                ISCRIPT_PlaySnd(v78, image);
-            }
+            ISCRIPT_PlaySnd((SfxData)args[RandomizeShort(4) % arg_count], image);
             continue;
+        }
         case opc_followmaingraphic:
             if (noop)
             {
