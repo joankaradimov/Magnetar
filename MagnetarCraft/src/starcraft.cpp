@@ -6696,6 +6696,7 @@ void RemoveFoWCheat_()
 	{
 		ScreenLayers[5].bits |= 2;
 	}
+
 	if ((GameCheats & (CHEAT_BlackSheepWall | CHEAT_WarAintWhatItUsedToBe)) == 0)
 	{
 		RefreshLayer5();
