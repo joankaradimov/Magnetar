@@ -2,6 +2,14 @@
 #include "starcraft.h"
 #include "patching.h"
 
+template<typename T>
+T take_iscript_datum(IScriptProgram* program_state)
+{
+    BYTE* data = (BYTE*)iscript_data + program_state->program_counter;
+    program_state->program_counter += sizeof(T);
+    return *(T*)data;
+}
+
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
     s8 v10; // al
@@ -95,7 +103,9 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
 
     while (2)
     {
-        IScriptOpcodes opcode = (IScriptOpcodes) *v5++;
+        program_state->program_counter = v5 - (char*)iscript_data;
+        IScriptOpcodes opcode = take_iscript_datum<IScriptOpcodes>(program_state);
+        v5 = (char*)iscript_data + program_state->program_counter;
         switch (opcode)
         {
         case opc_playfram:
