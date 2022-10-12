@@ -528,12 +528,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             else
             {
-                WeaponType weapon_id = Unit_AirWeapon[iscript_unit->unitType];
-                FireUnitWeapon(iscript_unit, weapon_id);
-                if (Weapon_DamageFactor[weapon_id] == 2)
-                {
-                    FireUnitWeapon(iscript_unit, weapon_id);
-                }
+                ISCRIPT_CastSpell(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
             }
             continue;
         case opc_castspell:
