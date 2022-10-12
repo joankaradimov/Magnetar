@@ -61,10 +61,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char v64; // bl
     char v65; // bl
     int v67; // esi
-    unsigned __int16 v79; // ax
-    char* v80; // edi
-    unsigned __int16 v81; // dx
-    unsigned int v83; // eax
     CImage* v84; // eax
     CImage* v86; // eax
     CImage* v88; // eax
@@ -395,27 +391,30 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             flipImage(image, *(v5 - 1));
             continue;
         case opc_playsnd:
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sfx = take_iscript_datum<unsigned __int16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_PlaySnd((SfxData) * ((unsigned __int16*)v5 - 1), image);
+            ISCRIPT_PlaySnd((SfxData)sfx, image);
             continue;
+        }
         case opc_playsndbtwn:
-            v79 = *(_WORD*)v5;
-            v80 = v5 + 2;
-            v81 = *(_WORD*)v80;
-            v5 = v80 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 v79 = take_iscript_datum<unsigned __int16>(program_state);
+            unsigned __int16 v81 = take_iscript_datum<unsigned __int16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            {
-                v83 = RandomizeShort(5);
-                ISCRIPT_PlaySnd((SfxData)(v79 + v83 % ((unsigned int)v81 - v79 + 1)), image);
-            }
+            ISCRIPT_PlaySnd((SfxData)(v79 + RandomizeShort(5) % ((unsigned int)v81 - v79 + 1)), image);
             continue;
+        }
         case opc_domissiledmg:
             if (noop)
             {
