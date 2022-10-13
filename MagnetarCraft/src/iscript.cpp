@@ -24,7 +24,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v20; // ax
     char* v21; // edi
     char v22; // cl
-    char v23; // al
     unsigned __int16 v24; // ax
     unsigned __int16 v27; // ax
     unsigned __int16 v28; // bx
@@ -682,13 +681,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             showImage(image);
             continue;
         case opc_setfldirect:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            turnUnit(iscript_unit, 8 * *(v5 - 1));
+            turnUnit(iscript_unit, 8 * arg);
             continue;
+        }
         case opc_call:
             program_state->unsigned4 = (BYTE*)v5 + 2 - (BYTE*)iscript_data;
             v5 = (char*)iscript_data + *(unsigned __int16*)v5;
@@ -782,14 +785,18 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_imgulnextid:
-            v23 = *v5;
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, image->imageID + 1, v23 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_BELOW);
+            ISCRIPT_CreateImage(image, image->imageID + 1, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_BELOW);
             continue;
+        }
         case opc_liftoffcondjmp:
             v5 += 2;
             if (noop)
