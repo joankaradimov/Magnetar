@@ -16,6 +16,19 @@ T take_iscript_datum(IScriptProgram* program_state)
     return *take_iscript_data<T>(program_state, 1);
 }
 
+CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x, int y, char elevation_level)
+{
+    CThingy* result = CreateThingy(sprite_id, x + image->horizontalOffset + (__int16)image->spriteOwner->position.x, y + image->verticalOffset + image->spriteOwner->position.y, 0);
+    if (result)
+    {
+        result->sprite->elevationLevel = elevation_level;
+        sub_4878F0(result);
+    }
+    return result;
+}
+
+FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
+
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
     _BYTE* v37; // edi
@@ -283,7 +296,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 v41 = 0x1F9;
             }
-            ISCRIPT_CreateSprite(image, v41, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
+            ISCRIPT_CreateSprite_(image, v41, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
             continue;
         case opc_highsprol:
             v50 = *(_WORD*)v5;
@@ -294,7 +307,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_CreateSprite(image, v50, v52, *(v5 - 1), image->spriteOwner->elevationLevel - 1);
+            ISCRIPT_CreateSprite_(image, v50, v52, *(v5 - 1), image->spriteOwner->elevationLevel - 1);
             continue;
         case opc_lowsprul:
             v53 = *(_WORD*)v5;
@@ -305,7 +318,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_CreateSprite(image, v53, v55, *(v5 - 1), 1);
+            ISCRIPT_CreateSprite_(image, v53, v55, *(v5 - 1), 1);
             continue;
         case opc_uflunstable:
             v44 = *(_WORD*)v5;
@@ -334,7 +347,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (CThingy* thingy = ISCRIPT_CreateSprite(image, v56, v58, v59, image->spriteOwner->elevationLevel))
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v56, v58, v59, image->spriteOwner->elevationLevel))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
@@ -353,7 +366,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (CThingy* thingy = ISCRIPT_CreateSprite(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1))
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
@@ -366,7 +379,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ISCRIPT_UseLOFile(&v125, image, *(v5 - 1), 0);
-            if (CThingy* thingy = ISCRIPT_CreateSprite(image, v47, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v47, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
@@ -899,7 +912,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (canUnitTypeFitAt(x + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, y + image->spriteOwner->position.y + image->verticalOffset))
             {
-                ISCRIPT_CreateSprite(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
+                ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
             }
             continue;
         }
