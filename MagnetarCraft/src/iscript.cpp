@@ -18,12 +18,6 @@ T take_iscript_datum(IScriptProgram* program_state)
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    unsigned __int16 v28; // bx
-    unsigned __int8* v29; // edi
-    unsigned __int8 v30; // cl
-    unsigned __int16 v32; // bx
-    unsigned __int8* v33; // edi
-    unsigned __int8 v34; // cl
     _BYTE* v37; // edi
     unsigned __int16 v41; // ax
     char* v42; // edi
@@ -60,8 +54,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v111; // dx
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
-    point v126; // [esp+10h] [ebp-30h] BYREF
-    point a1; // [esp+18h] [ebp-28h] BYREF
     unsigned __int16 v128; // [esp+20h] [ebp-20h]
 
     if (program_state->wait)
@@ -245,29 +237,37 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_imgoluselo:
-            v28 = *(_WORD*)v5;
-            v29 = (unsigned __int8*)(v5 + 2);
-            v30 = *v29;
-            v5 = (char*)(v29 + 2);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
+            unsigned __int8 v30 = take_iscript_datum<unsigned __int8>(program_state);
+            char v29 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_UseLOFile(&a1, image, v30, *(v5 - 1));
-            ISCRIPT_CreateImage(image, v28, LOBYTE(a1.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(a1.y) + image->verticalOffset), ImageOrder::IMGORD_ABOVE);
+            point pt;
+            ISCRIPT_UseLOFile(&pt, image, v30, v29);
+            ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_ABOVE);
             continue;
+        }
         case opc_imguluselo:
-            v32 = *(_WORD*)v5;
-            v33 = (unsigned __int8*)(v5 + 2);
-            v34 = *v33;
-            v5 = (char*)(v33 + 2);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
+            unsigned __int8 v34 = take_iscript_datum<unsigned __int8>(program_state);
+            char v33 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_UseLOFile(&v126, image, v34, *(v5 - 1));
-            ISCRIPT_CreateImage(image, v32, LOBYTE(v126.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(v126.y) + image->verticalOffset), ImageOrder::IMGORD_BELOW);
+            point pt;
+            ISCRIPT_UseLOFile(&pt, image, v34, v33);
+            ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_BELOW);
             continue;
+        }
         case opc_sprol:
             v41 = *(_WORD*)v5;
             v42 = v5 + 2;
