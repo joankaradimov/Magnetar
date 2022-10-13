@@ -54,8 +54,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char v64; // bl
     CImage* v84; // eax
     CImage* v86; // eax
-    CImage* v88; // eax
-    unsigned __int8 v89; // cl
     unsigned __int8 v92; // dl
     _WORD* v93; // edi
     unsigned __int16 v94; // bx
@@ -604,31 +602,39 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_engframe:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int8 arg5 = take_iscript_datum<unsigned __int8>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            image->frameSet = (unsigned __int8)*(v5 - 1);
-            v88 = image->spriteOwner->pImagePrimary;
+            image->frameSet = arg5;
+            CImage* v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
             image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
-            v86 = setImagePaletteType(image, image->paletteType);
+            CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
+        }
         case opc_engset:
-            v89 = *v5++;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int8 v89 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            v88 = image->spriteOwner->pImagePrimary;
+            CImage* v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
             image->frameSet = v88->frameSet + v89 * (v88->GRPFile->wFrames & 0x7FFF);
             image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
-            v86 = setImagePaletteType(image, image->paletteType);
+            CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
+        }
         case opc___2d:
             if (noop)
             {
