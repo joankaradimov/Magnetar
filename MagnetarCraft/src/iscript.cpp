@@ -18,10 +18,6 @@ T take_iscript_datum(IScriptProgram* program_state)
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    unsigned __int8 v13; // bl
-    _BYTE* v14; // edi
-    unsigned __int8 v15; // dl
-    unsigned __int8 v16; // al
     unsigned __int16 v17; // ax
     char* v18; // edi
     char v19; // cl
@@ -175,18 +171,20 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             program_state->program_counter = (BYTE*)v5 + 1 - (BYTE*)iscript_data;
             return;
         case opc_waitrand:
-            v13 = *v5;
-            v14 = v5 + 1;
-            v15 = *v14;
-            v5 = v14 + 1;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int8 v13 = take_iscript_datum<unsigned char>(program_state);
+            unsigned __int8 v15 = take_iscript_datum<unsigned char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            v16 = RandomizeShort(3);
+            unsigned __int8 v16 = RandomizeShort(3);
             program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data;
             program_state->wait = v13 + v16 % (v15 - v13 + 1) - 1;
             return;
+        }
         case opc_goto:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
