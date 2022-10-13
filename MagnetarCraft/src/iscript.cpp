@@ -63,7 +63,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     CImage* v86; // eax
     CImage* v88; // eax
     unsigned __int8 v89; // cl
-    char v90; // dl
     unsigned __int8 v92; // dl
     _WORD* v93; // edi
     unsigned __int16 v94; // bx
@@ -498,20 +497,24 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_turnrand:
-            v90 = *v5++;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
             if ((RandomizeShort(6) & 3) == 1)
             {
-                turn_unit_left(iscript_unit, v90);
+                turn_unit_left(iscript_unit, arg);
             }
             else
             {
-                turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * v90);
+                turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
             }
             continue;
+        }
         case opc_setspawnframe:
             ++v5;
             if (noop)
