@@ -56,9 +56,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int8 v92; // dl
     _WORD* v93; // edi
     unsigned __int16 v94; // bx
-    unsigned __int16 v95; // dx
-    _WORD* v96; // edi
-    unsigned __int16 v97; // bx
     unsigned __int16 v99; // dx
     __int16* v100; // edi
     char v107; // al
@@ -794,10 +791,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_trgtrangecondjmp:
-            v95 = *(_WORD*)v5;
-            v96 = (short*)(v5 + 2);
-            v97 = *v96;
-            v5 = (char*)(v96 + 1);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 v95 = take_iscript_datum<_WORD>(program_state);
+            unsigned __int16 v97 = take_iscript_datum<unsigned short>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -809,10 +807,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
                 if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, v95, a4))
                 {
-                    v5 = (char*)iscript_data + v97;
+                    program_state->program_counter = v97;
+                    v5 = (char*)iscript_data + program_state->program_counter;
                 }
             }
             continue;
+        }
         case opc_trgtarccondjmp:
             v99 = *(_WORD*)v5;
             v100 = (__int16*)(v5 + 2);
