@@ -60,8 +60,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
-    unsigned int v117; // ebx
-    int v120; // eax
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
     point v126; // [esp+10h] [ebp-30h] BYREF
@@ -585,9 +583,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             ISCRIPT_UseWeapon(iscript_unit, (WeaponType) * (v5 - 1));
             continue;
         case opc_move:
-            ++v5;
-            v117 = 0;
-            BYTE1(v117) = *(v5 - 1);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
+            unsigned int v117 = 0;
+            BYTE1(v117) = arg;
             if (distance_moved)
             {
                 *distance_moved = GetModifiedUnitSpeed(v117, iscript_unit);
@@ -596,9 +597,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            v120 = GetModifiedUnitSpeed(v117, iscript_unit);
+            int v120 = GetModifiedUnitSpeed(v117, iscript_unit);
             SetUnitMovementSpeed(iscript_unit, v120);
             continue;
+        }
         case opc_gotorepeatattk:
             if (noop)
             {
