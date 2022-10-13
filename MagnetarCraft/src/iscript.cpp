@@ -523,13 +523,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_setspawnframe:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            unitSetRetreatPoint(*(v5 - 1), iscript_unit);
+            unitSetRetreatPoint(arg, iscript_unit);
             continue;
+        }
         case opc_sigorder:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
