@@ -53,9 +53,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char v64; // bl
     CImage* v84; // eax
     CImage* v86; // eax
-    unsigned __int8 v92; // dl
-    _WORD* v93; // edi
-    unsigned __int16 v94; // bx
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
 
@@ -463,15 +460,19 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             updateImageFrameIndex(v86);
             continue;
         case opc_randcondjmp:
-            v92 = *v5;
-            v93 = (short*)(v5 + 1);
-            v94 = *v93;
-            v5 = (char*)(v93 + 1);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int8 v92 = take_iscript_datum<char>(program_state);
+            unsigned __int16 new_pc = take_iscript_datum<unsigned short>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
+
             if ((unsigned __int8)RandomizeShort(7) <= (unsigned int)v92)
             {
-                v5 = (char*)iscript_data + v94;
+                program_state->program_counter = new_pc;
+                v5 = (char*)iscript_data + program_state->program_counter;
             }
             continue;
+        }
         case opc_turnccwise:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
