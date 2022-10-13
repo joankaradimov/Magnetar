@@ -18,12 +18,6 @@ T take_iscript_datum(IScriptProgram* program_state)
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    unsigned __int16 v17; // ax
-    char* v18; // edi
-    char v19; // cl
-    unsigned __int16 v20; // ax
-    char* v21; // edi
-    char v22; // cl
     unsigned __int16 v24; // ax
     unsigned __int16 v27; // ax
     unsigned __int16 v28; // bx
@@ -189,27 +183,33 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_imgol:
-            v17 = *(_WORD*)v5;
-            v18 = v5 + 2;
-            v19 = *v18;
-            v5 = v18 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 image_id = take_iscript_datum<u16>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, v17, v19 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_ABOVE);
+            ISCRIPT_CreateImage(image, image_id, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_ABOVE);
             continue;
+        }
         case opc_imgul:
-            v20 = *(_WORD*)v5;
-            v21 = v5 + 2;
-            v22 = *v21;
-            v5 = v21 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 image_id = take_iscript_datum<u16>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_CreateImage(image, v20, v22 + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + *(v5 - 1)), ImageOrder::IMGORD_BELOW);
+            ISCRIPT_CreateImage(image, image_id, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_BELOW);
             continue;
+        }
         case opc_imgolorig:
             v24 = *(_WORD*)v5;
             v5 += 2;
