@@ -382,13 +382,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data;
             return;
         case opc_setflipstate:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            flipImage(image, *(v5 - 1));
+            flipImage(image, arg);
             continue;
+        }
         case opc_playsnd:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
