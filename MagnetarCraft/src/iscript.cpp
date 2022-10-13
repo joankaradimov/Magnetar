@@ -668,14 +668,18 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             IgnoreAllScriptAndGotoIdle(iscript_unit);
             continue;
         case opc_attkshiftproj:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            Weapon_XOffset[UnitGetGrndWeapon(iscript_unit)] = *(v5 - 1);
+            Weapon_XOffset[UnitGetGrndWeapon(iscript_unit)] = arg;
             ISCRIPT_AttackWith(iscript_unit, 1);
             continue;
+        }
         case opc_tmprmgraphicstart:
             if (noop)
             {
