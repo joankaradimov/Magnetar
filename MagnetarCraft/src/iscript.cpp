@@ -52,8 +52,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     char* v62; // edi
     char v63; // dl
     char v64; // bl
-    char v65; // bl
-    int v67; // esi
     CImage* v84; // eax
     CImage* v86; // eax
     CImage* v88; // eax
@@ -726,19 +724,23 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             iscript_unit->flingyTopSpeed = *((unsigned __int16*)v5 - 1);
             continue;
         case opc_creategasoverlays:
-            v65 = *v5++;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char v65 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
             ISCRIPT_UseLOFile(&v124, image, 2, v65);
-            v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
+            int v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
             {
                 image_Insert(v68, &image->spriteOwner->pImageHead, image);
                 somePlayImageCrapThatCrashes(LOBYTE(v124.y) + image->verticalOffset, LOBYTE(v124.x) + image->horizontalOffset, v68, image->spriteOwner, (unsigned __int16)v67);
             }
             continue;
+        }
         case opc_pwrupcondjmp:
             v5 += 2;
             if (image->spriteOwner && image->spriteOwner->pImagePrimary != image)
