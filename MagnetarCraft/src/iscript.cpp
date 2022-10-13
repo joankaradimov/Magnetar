@@ -189,8 +189,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             program_state->wait = v13 + v16 % (v15 - v13 + 1) - 1;
             return;
         case opc_goto:
-            v5 = (char*)iscript_data + *(unsigned __int16*)v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 new_pc = take_iscript_datum<u16>(program_state);
+            program_state->program_counter = new_pc;
+            v5 = (char*)iscript_data + program_state->program_counter;
             continue;
+        }
         case opc_imgol:
             v17 = *(_WORD*)v5;
             v18 = v5 + 2;
