@@ -468,21 +468,29 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_turnccwise:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            turn_unit_left(iscript_unit, *(v5 - 1));
+            turn_unit_left(iscript_unit, arg);
             continue;
+        }
         case opc_turncwise:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * *(v5 - 1));
+            turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
             continue;
+        }
         case opc_turn1cwise:
             if (noop)
             {
