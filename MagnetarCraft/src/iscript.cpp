@@ -693,11 +693,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_call:
-            program_state->unsigned4 = (BYTE*)v5 + 2 - (BYTE*)iscript_data;
-            v5 = (char*)iscript_data + *(unsigned __int16*)v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 new_pc = take_iscript_datum<u16>(program_state);
+            program_state->unsigned4 = program_state->program_counter;
+            program_state->program_counter = new_pc;
+            v5 = (char*)iscript_data + program_state->program_counter;
             continue;
+        }
         case opc_return:
-            v5 = (char*)iscript_data + program_state->unsigned4;
+            program_state->program_counter = program_state->unsigned4;
+            v5 = (char*)iscript_data + program_state->program_counter;
             continue;
         case opc_setflspeed:
             v5 += 2;
