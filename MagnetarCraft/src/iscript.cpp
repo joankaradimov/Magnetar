@@ -18,8 +18,6 @@ T take_iscript_datum(IScriptProgram* program_state)
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    unsigned __int16 v24; // ax
-    unsigned __int16 v27; // ax
     unsigned __int16 v28; // bx
     unsigned __int8* v29; // edi
     unsigned __int8 v30; // cl
@@ -209,8 +207,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_imgolorig:
-            v24 = *(_WORD*)v5;
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 v24 = take_iscript_datum<u16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -224,9 +224,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 }
             }
             continue;
+        }
         case opc_switchul:
-            v27 = *(_WORD*)v5;
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 v27 = take_iscript_datum<u16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -240,6 +243,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 }
             }
             continue;
+        }
         case opc_imgoluselo:
             v28 = *(_WORD*)v5;
             v29 = (unsigned __int8*)(v5 + 2);
