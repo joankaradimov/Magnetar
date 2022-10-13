@@ -583,13 +583,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_useweapon:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_UseWeapon(iscript_unit, (WeaponType) * (v5 - 1));
+            ISCRIPT_UseWeapon(iscript_unit, (WeaponType)arg);
             continue;
+        }
         case opc_move:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
