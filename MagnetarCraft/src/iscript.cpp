@@ -537,13 +537,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             iscript_flingy->orderSignal |= *(v5 - 1);
             continue;
         case opc_attackwith:
-            ++v5;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_AttackWith(iscript_unit, *(v5 - 1));
+            ISCRIPT_AttackWith(iscript_unit, arg);
             continue;
+        }
         case opc_attack:
             if (noop)
             {
