@@ -56,15 +56,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     unsigned __int8 v92; // dl
     _WORD* v93; // edi
     unsigned __int16 v94; // bx
-    unsigned __int16 v99; // dx
-    __int16* v100; // edi
-    char v107; // al
     unsigned __int16 v109; // ax
     _WORD* v110; // edi
     unsigned __int16 v111; // dx
     point v124; // [esp+0h] [ebp-40h] BYREF
     point v125; // [esp+8h] [ebp-38h] BYREF
-    unsigned __int16 v128; // [esp+20h] [ebp-20h]
 
     if (program_state->wait)
     {
@@ -814,10 +810,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_trgtarccondjmp:
-            v99 = *(_WORD*)v5;
-            v100 = (__int16*)(v5 + 2);
-            v128 = *v100;
-            v5 = (char*)(v100 + 2);
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 v99 = take_iscript_datum<_WORD>(program_state);
+            unsigned __int16 v128 = take_iscript_datum<unsigned short>(program_state);
+            u16 new_pc = take_iscript_datum<u16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -828,13 +826,15 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 int v105 = (__int16)target->sprite->position.x;
                 int v106 = (__int16)iscript_unit->sprite->position.x;
                 int v123 = (__int16)iscript_unit->sprite->position.y;
-                v107 = GetAngle(v106, v123, v105, v104);
+                char v107 = GetAngle(v106, v123, v105, v104);
                 if (sub_494BD0((int)v99, v107) < v128)
                 {
-                    v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
+                    program_state->program_counter = new_pc;
+                    v5 = (char*)iscript_data + program_state->program_counter;
                 }
             }
             continue;
+        }
         case opc_curdirectcondjmp:
             v109 = *(_WORD*)v5;
             v110 = (short*)(v5 + 2);
