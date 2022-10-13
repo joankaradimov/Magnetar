@@ -330,7 +330,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_unit && (iscript_unit->statusFlags & 0x300) && !Image_DrawIfCloaked[Sprites_Image[v56]])
+            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[v56]])
             {
                 continue;
             }
@@ -349,7 +349,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_unit && (iscript_unit->statusFlags & 0x300) && !Image_DrawIfCloaked[Sprites_Image[v61]])
+            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[v61]])
             {
                 continue;
             }
