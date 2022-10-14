@@ -94,12 +94,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     {
         program_state->program_counter = v5 - (char*)iscript_data;
         IScriptOpcodes opcode = take_iscript_datum<IScriptOpcodes>(program_state);
-        v5 = (char*)iscript_data + program_state->program_counter;
         switch (opcode)
         {
         case opc_playfram:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 arg = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -111,7 +109,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_playframtile:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             _WORD arg = take_iscript_datum<_WORD>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -127,7 +124,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_sethorpos:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             s8 x = take_iscript_datum<s8>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -143,7 +139,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_setvertpos:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             s8 y = take_iscript_datum<s8>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -159,7 +154,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_setpos:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -172,14 +166,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_wait:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             program_state->wait = arg - 1;
             return;
         }
         case opc_waitrand:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int8 v13 = take_iscript_datum<unsigned char>(program_state);
             unsigned __int8 v15 = take_iscript_datum<unsigned char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -193,7 +185,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_goto:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 new_pc = take_iscript_datum<u16>(program_state);
             program_state->program_counter = new_pc;
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -201,7 +192,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imgol:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 image_id = take_iscript_datum<u16>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -215,7 +205,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imgul:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 image_id = take_iscript_datum<u16>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -229,7 +218,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imgolorig:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 v24 = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -248,7 +236,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_switchul:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 v27 = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -267,7 +254,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imgoluselo:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
             unsigned __int8 v30 = take_iscript_datum<unsigned __int8>(program_state);
             char v29 = take_iscript_datum<char>(program_state);
@@ -283,7 +269,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imguluselo:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
             unsigned __int8 v34 = take_iscript_datum<unsigned __int8>(program_state);
             char v33 = take_iscript_datum<char>(program_state);
@@ -299,7 +284,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_sprol:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -319,7 +303,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_highsprol:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -333,7 +316,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_lowsprul:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -347,7 +329,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_uflunstable:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 flingy_id = take_iscript_datum<_WORD>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -363,7 +344,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_spruluselo:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -384,7 +364,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_sprul:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 v61 = take_iscript_datum<_WORD>(program_state);
             char v63 = take_iscript_datum<char>(program_state);
             char v64 = take_iscript_datum<char>(program_state);
@@ -405,7 +384,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_sproluselo:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char v62 = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -422,6 +400,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_end:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -430,7 +409,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             return;
         case opc_setflipstate:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -442,7 +420,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_playsnd:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sfx = take_iscript_datum<unsigned __int16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -454,7 +431,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_playsndbtwn:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 v79 = take_iscript_datum<unsigned __int16>(program_state);
             unsigned __int16 v81 = take_iscript_datum<unsigned __int16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -466,6 +442,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_domissiledmg:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -473,6 +450,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             CBullet_Damage(iscript_bullet);
             continue;
         case opc_attackmelee:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -481,7 +459,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             [[fallthrough]];
         case opc_playsndrand:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int8 arg_count = take_iscript_datum<char>(program_state);
             u16* args = take_iscript_data<u16>(program_state, arg_count);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -494,6 +471,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_followmaingraphic:
         {
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -512,7 +490,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_randcondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int8 v92 = take_iscript_datum<char>(program_state);
             unsigned __int16 new_pc = take_iscript_datum<unsigned short>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -526,7 +503,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_turnccwise:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -538,7 +514,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_turncwise:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -549,6 +524,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_turn1cwise:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -560,7 +536,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_turnrand:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -579,7 +554,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_setspawnframe:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -591,7 +565,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_sigorder:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -603,7 +576,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_attackwith:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -614,6 +586,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_attack:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -628,6 +601,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_castspell:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -639,7 +613,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_useweapon:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -651,7 +624,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_move:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             unsigned int v117 = arg << 8;
@@ -668,6 +640,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_gotorepeatattk:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -679,7 +652,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_engframe:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int8 arg5 = take_iscript_datum<unsigned __int8>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -696,7 +668,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_engset:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int8 v89 = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -712,6 +683,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc___2d:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -719,6 +691,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             wantThingyUpdate = 0;
             continue;
         case opc_nobrkcodestart:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -727,6 +700,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             iscript_unit->sprite->flags |= 0x80u;
             continue;
         case opc_nobrkcodeend:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -737,6 +711,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_ignorerest:
+            v5 = (char*)iscript_data + program_state->program_counter;
             program_state->program_counter = v5 - (char*)iscript_data;
             if (noop)
             {
@@ -752,7 +727,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_attkshiftproj:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -764,6 +738,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_tmprmgraphicstart:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -771,6 +746,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             hideImage(image);
             continue;
         case opc_tmprmgraphicend:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -779,7 +755,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         case opc_setfldirect:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -791,7 +766,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_call:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 new_pc = take_iscript_datum<u16>(program_state);
             program_state->unsigned4 = program_state->program_counter;
             program_state->program_counter = new_pc;
@@ -799,12 +773,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_return:
+            v5 = (char*)iscript_data + program_state->program_counter;
             program_state->program_counter = program_state->unsigned4;
             v5 = (char*)iscript_data + program_state->program_counter;
             continue;
         case opc_setflspeed:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 arg = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -816,7 +790,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_creategasoverlays:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char v65 = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -835,7 +808,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_pwrupcondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 new_pc = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (image->spriteOwner && image->spriteOwner->pImagePrimary != image)
@@ -847,7 +819,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_trgtrangecondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 v95 = take_iscript_datum<_WORD>(program_state);
             unsigned __int16 v97 = take_iscript_datum<unsigned short>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -870,7 +841,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_trgtarccondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 v99 = take_iscript_datum<_WORD>(program_state);
             unsigned __int16 v128 = take_iscript_datum<unsigned short>(program_state);
             u16 new_pc = take_iscript_datum<u16>(program_state);
@@ -896,7 +866,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_curdirectcondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 v109 = take_iscript_datum<_WORD>(program_state);
             unsigned __int16 v111 = take_iscript_datum<unsigned short>(program_state);
             u16 new_pc = take_iscript_datum<u16>(program_state);
@@ -914,7 +883,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_imgulnextid:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
@@ -927,7 +895,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_liftoffcondjmp:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u16 new_pc = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -943,7 +910,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_warpoverlay:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 arg = take_iscript_datum<unsigned __int16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -956,7 +922,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_orderdone:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             u8 arg = take_iscript_datum<u8>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
@@ -968,7 +933,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_grdsprol:
         {
-            program_state->program_counter = v5 - (char*)iscript_data;
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
             char x = take_iscript_datum<char>(program_state);
             char y = take_iscript_datum<char>(program_state);
@@ -985,6 +949,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_dogrddamage:
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -992,6 +957,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             CBullet_Damage(iscript_bullet);
             continue;
         default:
+            v5 = (char*)iscript_data + program_state->program_counter;
             continue;
         }
     }
