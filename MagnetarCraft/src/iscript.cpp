@@ -941,3 +941,45 @@ void __stdcall BWFXN_PlayIscript__(IScriptProgram* program_state, int noop, int*
 }
 
 FUNCTION_PATCH((void*)0x4D74C0, BWFXN_PlayIscript__);
+
+void PlayIscriptAnim_(CImage* image, Anims new_animation)
+{
+    Anims animation = new_animation;
+
+    if ((new_animation != Anims::AE_Death || image->iscript_program.anim != Anims::AE_Death) && ((image->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) || new_animation == Anims::AE_Init || new_animation == Anims::AE_Death))
+    {
+        Anims v3 = image->iscript_program.anim;
+        if (new_animation != v3 || new_animation != AE_Walking && new_animation != Anims::AE_IsWorking)
+        {
+            if (new_animation == Anims::AE_GndAttkRpt)
+            {
+                if (v3 != Anims::AE_GndAttkRpt && v3 != Anims::AE_GndAttkInit)
+                {
+                    animation = Anims::AE_GndAttkInit;
+                }
+            }
+            else if (new_animation == Anims::AE_AirAttkRpt && v3 != Anims::AE_AirAttkRpt && v3 != Anims::AE_AirAttkInit)
+            {
+                animation = Anims::AE_AirAttkInit;
+            }
+
+            char* v5 = (char*)iscript_data;
+            image->iscript_program.anim = animation;
+            image->iscript_program.program_counter = *(_WORD*)&v5[2 * (unsigned __int8)animation + 8 + image->iscript_program.iscript_header];
+            image->iscript_program.wait = 0;
+            image->iscript_program.unsigned4 = 0;
+            BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+        }
+    }
+}
+
+void __stdcall PlayIscriptAnim__(Anims new_animation)
+{
+    CImage* image;
+
+    __asm mov image, ecx
+
+    PlayIscriptAnim_(image, new_animation);
+}
+
+FUNCTION_PATCH((void*)0x4D8470, PlayIscriptAnim__);
