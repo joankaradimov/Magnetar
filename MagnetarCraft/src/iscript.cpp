@@ -785,12 +785,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_pwrupcondjmp:
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 new_pc = take_iscript_datum<u16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (image->spriteOwner && image->spriteOwner->pImagePrimary != image)
             {
-                v5 = (char*)iscript_data + *((unsigned __int16*)v5 - 1);
+                program_state->program_counter = new_pc;
+                v5 = (char*)iscript_data + program_state->program_counter;
             }
             continue;
+        }
         case opc_trgtrangecondjmp:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
