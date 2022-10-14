@@ -102,10 +102,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_PlayFrame_(image, arg);
-            continue;
+            break;
         }
         case opc_playframtile:
         {
@@ -113,14 +113,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             unsigned __int16 v9 = CurrentTileSet + arg;
             if (v9 < (unsigned __int16)(image->GRPFile->wFrames & 0x7FFF))
             {
                 ISCRIPT_PlayFrame_(image, v9);
             }
-            continue;
+            break;
         }
         case opc_sethorpos:
         {
@@ -128,14 +128,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (image->horizontalOffset != x)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
                 image->horizontalOffset = x;
             }
-            continue;
+            break;
         }
         case opc_setvertpos:
         {
@@ -143,14 +143,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if ((iscript_unit == nullptr || (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) == 0) && image->verticalOffset != y)
             {
                 image->flags |= ImageFlags::IF_REDRAW;
                 image->verticalOffset = y;
             }
-            continue;
+            break;
         }
         case opc_setpos:
         {
@@ -159,10 +159,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_setPosition(image, x, y);
-            continue;
+            break;
         }
         case opc_wait:
         {
@@ -177,7 +177,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             unsigned __int8 v16 = RandomizeShort(3);
             program_state->wait = v13 + v16 % (v15 - v13 + 1) - 1;
@@ -188,7 +188,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             u16 new_pc = take_iscript_datum<u16>(program_state);
             program_state->program_counter = new_pc;
             v5 = (char*)iscript_data + program_state->program_counter;
-            continue;
+            break;
         }
         case opc_imgol:
         {
@@ -198,10 +198,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_CreateImage(image, image_id, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_ABOVE);
-            continue;
+            break;
         }
         case opc_imgul:
         {
@@ -211,10 +211,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_CreateImage(image, image_id, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_BELOW);
-            continue;
+            break;
         }
         case opc_imgolorig:
         {
@@ -222,7 +222,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (CImage* new_image = ISCRIPT_CreateImage(image, v24, 0, 0, ImageOrder::IMGORD_ABOVE))
             {
@@ -232,7 +232,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                     updateImagePositionOffset(new_image);
                 }
             }
-            continue;
+            break;
         }
         case opc_switchul:
         {
@@ -240,7 +240,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (CImage* new_image = ISCRIPT_CreateImage(image, v27, 0, 0, ImageOrder::IMGORD_BELOW))
             {
@@ -250,7 +250,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                     updateImagePositionOffset(new_image);
                 }
             }
-            continue;
+            break;
         }
         case opc_imgoluselo:
         {
@@ -260,12 +260,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             point pt;
             ISCRIPT_UseLOFile(&pt, image, v30, v29);
             ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_ABOVE);
-            continue;
+            break;
         }
         case opc_imguluselo:
         {
@@ -275,12 +275,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             point pt;
             ISCRIPT_UseLOFile(&pt, image, v34, v33);
             ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_BELOW);
-            continue;
+            break;
         }
         case opc_sprol:
         {
@@ -290,7 +290,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_bullet && iscript_bullet->sourceUnit && UnitIsGoliath(iscript_bullet->sourceUnit)
                 && (UpgradeLevelBW[iscript_bullet->sourceUnit->playerID].items[8]
@@ -299,7 +299,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 sprite_id = 0x1F9;
             }
             ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
-            continue;
+            break;
         }
         case opc_highsprol:
         {
@@ -309,10 +309,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel - 1);
-            continue;
+            break;
         }
         case opc_lowsprul:
         {
@@ -322,10 +322,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_CreateSprite_(image, sprite_id, x, y, 1);
-            continue;
+            break;
         }
         case opc_uflunstable:
         {
@@ -333,14 +333,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (CFlingy* v45 = ISCRIPT_CreateFlingy(0, image->spriteOwner->position.y + image->verticalOffset, (__int16)image->spriteOwner->position.x + image->horizontalOffset, (FlingyID)flingy_id))
             {
                 CThingy* v46 = (CThingy*)uflunstableRandomize(v45);
                 sub_4878F0(v46);
             }
-            continue;
+            break;
         }
         case opc_spruluselo:
         {
@@ -350,17 +350,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[sprite_id]])
             {
-                continue;
+                break;
             }
             if (CThingy* thingy = ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
-            continue;
+            break;
         }
         case opc_sprul:
         {
@@ -370,17 +370,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[v61]])
             {
-                continue;
+                break;
             }
             if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
-            continue;
+            break;
         }
         case opc_sproluselo:
         {
@@ -389,7 +389,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             point v125;
             ISCRIPT_UseLOFile(&v125, image, v62, 0);
@@ -397,13 +397,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
-            continue;
+            break;
         }
         case opc_end:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ImageDestructor(image);
             return;
@@ -413,10 +413,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             flipImage(image, arg);
-            continue;
+            break;
         }
         case opc_playsnd:
         {
@@ -424,10 +424,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_PlaySnd((SfxData)sfx, image);
-            continue;
+            break;
         }
         case opc_playsndbtwn:
         {
@@ -436,24 +436,24 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_PlaySnd((SfxData)(v79 + RandomizeShort(5) % ((unsigned int)v81 - v79 + 1)), image);
-            continue;
+            break;
         }
         case opc_domissiledmg:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             CBullet_Damage(iscript_bullet);
-            continue;
+            break;
         case opc_attackmelee:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_AttackMelee(iscript_unit);
             [[fallthrough]];
@@ -464,29 +464,29 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_PlaySnd((SfxData)args[RandomizeShort(4) % arg_count], image);
-            continue;
+            break;
         }
         case opc_followmaingraphic:
         {
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             CImage* v84 = image->spriteOwner->pImagePrimary;
             if (v84 == nullptr || image->frameIndex == v84->frameIndex && ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED) == 0)
             {
-                continue;
+                break;
             }
             image->frameSet = v84->frameSet;
             image->direction = v84->direction;
             image->flags ^= ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
-            continue;
+            break;
         }
         case opc_randcondjmp:
         {
@@ -499,7 +499,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 program_state->program_counter = new_pc;
                 v5 = (char*)iscript_data + program_state->program_counter;
             }
-            continue;
+            break;
         }
         case opc_turnccwise:
         {
@@ -507,10 +507,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             turn_unit_left(iscript_unit, arg);
-            continue;
+            break;
         }
         case opc_turncwise:
         {
@@ -518,29 +518,29 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
-            continue;
+            break;
         }
         case opc_turn1cwise:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit->orderTarget.pUnit == nullptr)
             {
                 turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8);
             }
-            continue;
+            break;
         case opc_turnrand:
         {
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if ((RandomizeShort(6) & 3) == 1)
             {
@@ -550,7 +550,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
             }
-            continue;
+            break;
         }
         case opc_setspawnframe:
         {
@@ -558,10 +558,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             unitSetRetreatPoint(arg, iscript_unit);
-            continue;
+            break;
         }
         case opc_sigorder:
         {
@@ -569,10 +569,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             iscript_flingy->orderSignal |= arg;
-            continue;
+            break;
         }
         case opc_attackwith:
         {
@@ -580,16 +580,16 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_AttackWith_(iscript_unit, arg);
-            continue;
+            break;
         }
         case opc_attack:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit->orderTarget.pUnit && (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir))
             {
@@ -599,28 +599,28 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 ISCRIPT_AttackWith_(iscript_unit, 1);
             }
-            continue;
+            break;
         case opc_castspell:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (Orders_TargetingWeapon[iscript_unit->orderID] < WT_None && !canCastSpell_0(iscript_unit))
             {
                 ISCRIPT_CastSpell_(iscript_unit, Orders_TargetingWeapon[iscript_unit->orderID]);
             }
-            continue;
+            break;
         case opc_useweapon:
         {
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_UseWeapon(iscript_unit, (WeaponType)arg);
-            continue;
+            break;
         }
         case opc_move:
         {
@@ -633,30 +633,30 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (noop)
             {
-                continue;
+                break;
             }
             int v120 = GetModifiedUnitSpeed(v117, iscript_unit);
             SetUnitMovementSpeed(iscript_unit, v120);
-            continue;
+            break;
         }
         case opc_gotorepeatattk:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit)
             {
                 iscript_unit->movementFlags &= ~8;
             }
-            continue;
+            break;
         case opc_engframe:
         {
             unsigned __int8 arg5 = take_iscript_datum<unsigned __int8>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             image->frameSet = arg5;
             CImage* v88 = image->spriteOwner->pImagePrimary;
@@ -664,7 +664,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
-            continue;
+            break;
         }
         case opc_engset:
         {
@@ -672,7 +672,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             CImage* v88 = image->spriteOwner->pImagePrimary;
             image->direction = v88->direction;
@@ -680,42 +680,42 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             image->flags ^= ((image->flags ^ v88->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
             CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
-            continue;
+            break;
         }
         case opc___2d:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             wantThingyUpdate = 0;
-            continue;
+            break;
         case opc_nobrkcodestart:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             iscript_unit->statusFlags |= StatusFlags::NoBrkCodeStart;
             iscript_unit->sprite->flags |= 0x80u;
-            continue;
+            break;
         case opc_nobrkcodeend:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit)
             {
                 ISCRIPT_NoBrkCodeEnd(iscript_unit);
             }
-            continue;
+            break;
         case opc_ignorerest:
             v5 = (char*)iscript_data + program_state->program_counter;
             program_state->program_counter = v5 - (char*)iscript_data;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit->orderTarget.pUnit)
             {
@@ -724,45 +724,45 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 return;
             }
             IgnoreAllScriptAndGotoIdle(iscript_unit);
-            continue;
+            break;
         case opc_attkshiftproj:
         {
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             Weapon_XOffset[UnitGetGrndWeapon(iscript_unit)] = arg;
             ISCRIPT_AttackWith_(iscript_unit, 1);
-            continue;
+            break;
         }
         case opc_tmprmgraphicstart:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             hideImage(image);
-            continue;
+            break;
         case opc_tmprmgraphicend:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             showImage(image);
-            continue;
+            break;
         case opc_setfldirect:
         {
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             turnUnit(iscript_unit, 8 * arg);
-            continue;
+            break;
         }
         case opc_call:
         {
@@ -770,23 +770,23 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             program_state->unsigned4 = program_state->program_counter;
             program_state->program_counter = new_pc;
             v5 = (char*)iscript_data + program_state->program_counter;
-            continue;
+            break;
         }
         case opc_return:
             v5 = (char*)iscript_data + program_state->program_counter;
             program_state->program_counter = program_state->unsigned4;
             v5 = (char*)iscript_data + program_state->program_counter;
-            continue;
+            break;
         case opc_setflspeed:
         {
             u16 arg = take_iscript_datum<u16>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             iscript_unit->flingyTopSpeed = arg;
-            continue;
+            break;
         }
         case opc_creategasoverlays:
         {
@@ -794,7 +794,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             point v124;
             ISCRIPT_UseLOFile(&v124, image, 2, v65);
@@ -804,7 +804,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 image_Insert(v68, &image->spriteOwner->pImageHead, image);
                 somePlayImageCrapThatCrashes(LOBYTE(v124.y) + image->verticalOffset, LOBYTE(v124.x) + image->horizontalOffset, v68, image->spriteOwner, (unsigned __int16)v67);
             }
-            continue;
+            break;
         }
         case opc_pwrupcondjmp:
         {
@@ -815,7 +815,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 program_state->program_counter = new_pc;
                 v5 = (char*)iscript_data + program_state->program_counter;
             }
-            continue;
+            break;
         }
         case opc_trgtrangecondjmp:
         {
@@ -824,7 +824,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit->orderTarget.pUnit)
             {
@@ -837,7 +837,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                     v5 = (char*)iscript_data + program_state->program_counter;
                 }
             }
-            continue;
+            break;
         }
         case opc_trgtarccondjmp:
         {
@@ -847,7 +847,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (CUnit* target = iscript_unit->orderTarget.pUnit)
             {
@@ -862,7 +862,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                     v5 = (char*)iscript_data + program_state->program_counter;
                 }
             }
-            continue;
+            break;
         }
         case opc_curdirectcondjmp:
         {
@@ -872,14 +872,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (sub_494BD0(v109, iscript_unit->currentDirection1) < v111)
             {
                 program_state->program_counter = new_pc;
                 v5 = (char*)iscript_data + program_state->program_counter;
             }
-            continue;
+            break;
         }
         case opc_imgulnextid:
         {
@@ -888,10 +888,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             ISCRIPT_CreateImage(image, image->imageID + 1, x + image->horizontalOffset, (unsigned __int8)(image->verticalOffset + y), ImageOrder::IMGORD_BELOW);
-            continue;
+            break;
         }
         case opc_liftoffcondjmp:
         {
@@ -899,14 +899,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             if (iscript_unit->statusFlags & StatusFlags::InAir)
             {
                 program_state->program_counter = new_pc;
                 v5 = (char*)iscript_data + program_state->program_counter;
             }
-            continue;
+            break;
         }
         case opc_warpoverlay:
         {
@@ -914,11 +914,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             image->flags |= ImageFlags::IF_REDRAW;
             image->coloringData = (void*)arg;
-            continue;
+            break;
         }
         case opc_orderdone:
         {
@@ -926,10 +926,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             iscript_flingy->orderSignal &= ~arg;
-            continue;
+            break;
         }
         case opc_grdsprol:
         {
@@ -940,25 +940,25 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
 
             if (noop)
             {
-                continue;
+                break;
             }
             if (canUnitTypeFitAt(x + image->spriteOwner->position.x + image->horizontalOffset, Terran_Marine, y + image->spriteOwner->position.y + image->verticalOffset))
             {
                 ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
             }
-            continue;
+            break;
         }
         case opc_dogrddamage:
             v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
-                continue;
+                break;
             }
             CBullet_Damage(iscript_bullet);
-            continue;
+            break;
         default:
             v5 = (char*)iscript_data + program_state->program_counter;
-            continue;
+            break;
         }
     }
 }
