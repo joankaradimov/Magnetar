@@ -31,9 +31,6 @@ FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    _BYTE* v37; // edi
-    char* v51; // edi
-    char* v54; // edi
     CImage* v84; // eax
     CImage* v86; // eax
     point v124; // [esp+0h] [ebp-40h] BYREF
