@@ -6797,6 +6797,44 @@ void spriteToIscriptLoop__()
 
 FUNCTION_PATCH((void*) 0x497920, spriteToIscriptLoop__);
 
+void sub_4EB5E0_(CUnit* a1)
+{
+	if (a1->sprite && (a1->sprite->flags & 0x20))
+	{
+		SpriteDestructor(a1->sprite);
+		a1->sprite = nullptr;
+	}
+
+	if (a1->sprite)
+	{
+		spriteToIscriptLoop_(a1->sprite);
+		if (!a1->sprite->pImageHead)
+		{
+			a1->sprite = nullptr;
+		}
+	}
+	if (a1->statusFlags & UNKNOWN2)
+	{
+		if (dword_658AE4)
+		{
+			--dword_658AE4;
+			return;
+		}
+		dword_658AE4 = 3;
+		if (!sub_47DF90(a1))
+		{
+			return;
+		}
+	}
+
+	if (!a1->sprite)
+	{
+		removeUnitFromList(a1);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4EB5E0);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
@@ -6908,7 +6946,7 @@ void UpdateUnits_()
 		next_unit = unit->next;
 		iscript_flingy = unit;
 		iscript_unit = unit;
-		sub_4EB5E0(unit);
+		sub_4EB5E0_(unit);
 		if (unit->sprite)
 		{
 			if (visionUpdated && Players[unit->playerID].nType == PT_Human)
