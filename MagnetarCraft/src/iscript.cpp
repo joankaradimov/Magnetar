@@ -569,13 +569,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            if (iscript_unit->orderTarget.pUnit == nullptr || (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir) == 0)
+            if (iscript_unit->orderTarget.pUnit && (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir))
             {
-                ISCRIPT_AttackWith(iscript_unit, 1);
+                ISCRIPT_CastSpell(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
             }
             else
             {
-                ISCRIPT_CastSpell(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
+                ISCRIPT_AttackWith(iscript_unit, 1);
             }
             continue;
         case opc_castspell:
