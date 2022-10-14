@@ -32,29 +32,11 @@ FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
     _BYTE* v37; // edi
-    unsigned __int16 v41; // ax
-    char* v42; // edi
-    char v43; // bl
-    unsigned __int16 v44; // bx
-    unsigned __int16 v47; // bx
-    unsigned __int16 v50; // ax
     char* v51; // edi
-    char v52; // cl
-    unsigned __int16 v53; // ax
     char* v54; // edi
-    char v55; // cl
-    unsigned __int16 v56; // ax
-    char* v57; // edi
-    char v58; // cl
-    char v59; // dl
-    unsigned __int16 v61; // cx
-    char* v62; // edi
-    char v63; // dl
-    char v64; // bl
     CImage* v84; // eax
     CImage* v86; // eax
     point v124; // [esp+0h] [ebp-40h] BYREF
-    point v125; // [esp+8h] [ebp-38h] BYREF
 
     if (program_state->wait)
     {
@@ -269,10 +251,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_sprol:
-            v41 = *(_WORD*)v5;
-            v42 = v5 + 2;
-            v43 = *v42;
-            v5 = v42 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -281,70 +265,83 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 && (UpgradeLevelBW[iscript_bullet->sourceUnit->playerID].items[8]
                     || (Unit_PrototypeFlags[iscript_bullet->sourceUnit->unitType] & UnitPrototypeFlags::Hero) && IsExpansion))
             {
-                v41 = 0x1F9;
+                sprite_id = 0x1F9;
             }
-            ISCRIPT_CreateSprite_(image, v41, v43, *(v5 - 1), image->spriteOwner->elevationLevel + 1);
+            ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel + 1);
             continue;
+        }
         case opc_highsprol:
-            v50 = *(_WORD*)v5;
-            v51 = v5 + 2;
-            v52 = *v51;
-            v5 = v51 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_CreateSprite_(image, v50, v52, *(v5 - 1), image->spriteOwner->elevationLevel - 1);
+            ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel - 1);
             continue;
+        }
         case opc_lowsprul:
-            v53 = *(_WORD*)v5;
-            v54 = v5 + 2;
-            v55 = *v54;
-            v5 = v54 + 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_CreateSprite_(image, v53, v55, *(v5 - 1), 1);
+            ISCRIPT_CreateSprite_(image, sprite_id, x, y, 1);
             continue;
+        }
         case opc_uflunstable:
-            v44 = *(_WORD*)v5;
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 flingy_id = take_iscript_datum<_WORD>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            if (CFlingy* v45 = ISCRIPT_CreateFlingy(0, image->spriteOwner->position.y + image->verticalOffset, (__int16)image->spriteOwner->position.x + image->horizontalOffset, (FlingyID)v44))
+            if (CFlingy* v45 = ISCRIPT_CreateFlingy(0, image->spriteOwner->position.y + image->verticalOffset, (__int16)image->spriteOwner->position.x + image->horizontalOffset, (FlingyID)flingy_id))
             {
                 CThingy* v46 = (CThingy*)uflunstableRandomize(v45);
                 sub_4878F0(v46);
             }
             continue;
+        }
         case opc_spruluselo:
-            v56 = *(_WORD*)v5;
-            v57 = v5 + 2;
-            v58 = *v57++;
-            v59 = *v57;
-            v5 = v57 + 1;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[v56]])
+            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[sprite_id]])
             {
                 continue;
             }
-            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v56, v58, v59, image->spriteOwner->elevationLevel))
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
             continue;
+        }
         case opc_sprul:
-            v61 = *(_WORD*)v5;
-            v62 = v5 + 2;
-            v63 = *v62++;
-            v64 = *v62;
-            v5 = v62 + 1;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 v61 = take_iscript_datum<_WORD>(program_state);
+            char v63 = take_iscript_datum<char>(program_state);
+            char v64 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
@@ -358,19 +355,25 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
             continue;
+        }
         case opc_sproluselo:
-            v47 = *(_WORD*)v5;
-            v5 += 3;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char v62 = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            ISCRIPT_UseLOFile(&v125, image, *(v5 - 1), 0);
-            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v47, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
+            point v125;
+            ISCRIPT_UseLOFile(&v125, image, v62, 0);
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, sprite_id, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
             continue;
+        }
         case opc_end:
             if (noop)
             {
