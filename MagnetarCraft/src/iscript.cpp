@@ -31,10 +31,6 @@ FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
-    CImage* v84; // eax
-    CImage* v86; // eax
-    point v124; // [esp+0h] [ebp-40h] BYREF
-
     if (program_state->wait)
     {
         program_state->wait -= 1;
@@ -448,11 +444,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_followmaingraphic:
+        {
             if (noop)
             {
                 continue;
             }
-            v84 = image->spriteOwner->pImagePrimary;
+            CImage* v84 = image->spriteOwner->pImagePrimary;
             if (v84 == nullptr || image->frameIndex == v84->frameIndex && ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED) == 0)
             {
                 continue;
@@ -460,9 +457,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             image->frameSet = v84->frameSet;
             image->direction = v84->direction;
             image->flags ^= ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
-            v86 = setImagePaletteType(image, image->paletteType);
+            CImage* v86 = setImagePaletteType(image, image->paletteType);
             updateImageFrameIndex(v86);
             continue;
+        }
         case opc_randcondjmp:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
@@ -777,6 +775,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
+            point v124;
             ISCRIPT_UseLOFile(&v124, image, 2, v65);
             int v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
