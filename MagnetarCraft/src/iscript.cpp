@@ -88,11 +88,10 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         program_state->wait -= 1;
         return;
     }
-    char* v5 = (char*)iscript_data + program_state->program_counter;
-    program_state->program_counter = v5 - (char*)iscript_data;
 
     while (2)
     {
+        char* v5;
         IScriptOpcodes opcode = take_iscript_datum<IScriptOpcodes>(program_state);
         switch (opcode)
         {
