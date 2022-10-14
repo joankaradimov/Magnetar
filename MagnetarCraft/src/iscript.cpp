@@ -29,6 +29,17 @@ CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x,
 
 FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 
+void ISCRIPT_CastSpell_(CUnit* unit, WeaponType weapon_id)
+{
+    FireUnitWeapon(unit, weapon_id);
+    if (Weapon_DamageFactor[weapon_id] == 2)
+    {
+        FireUnitWeapon(unit, weapon_id);
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_CastSpell);
+
 void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
 {
     if (attacker->orderTarget.pUnit)
@@ -48,7 +59,7 @@ void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
             weapon_type = WT_None;
         }
 
-        ISCRIPT_CastSpell(attacker, weapon_type);
+        ISCRIPT_CastSpell_(attacker, weapon_type);
     }
 }
 
@@ -596,7 +607,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (iscript_unit->orderTarget.pUnit && (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir))
             {
-                ISCRIPT_CastSpell(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
+                ISCRIPT_CastSpell_(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
             }
             else
             {
@@ -610,7 +621,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (Orders_TargetingWeapon[iscript_unit->orderID] < WT_None && !canCastSpell_0(iscript_unit))
             {
-                ISCRIPT_CastSpell(iscript_unit, Orders_TargetingWeapon[iscript_unit->orderID]);
+                ISCRIPT_CastSpell_(iscript_unit, Orders_TargetingWeapon[iscript_unit->orderID]);
             }
             continue;
         case opc_useweapon:
