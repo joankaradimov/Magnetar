@@ -16,6 +16,22 @@ T take_iscript_datum(IScriptProgram* program_state)
     return *take_iscript_data<T>(program_state, 1);
 }
 
+void ISCRIPT_PlayFrame_(CImage* image, int a2)
+{
+    if (image->frameSet != a2)
+    {
+        image->frameSet = a2;
+        int v3 = (unsigned __int16)a2 + image->direction;
+        if (image->frameIndex != v3)
+        {
+            image->flags |= ImageFlags::IF_REDRAW;
+            image->frameIndex = v3;
+        }
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_PlayFrame);
+
 CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x, int y, char elevation_level)
 {
     CThingy* result = CreateThingy(sprite_id, x + image->horizontalOffset + (__int16)image->spriteOwner->position.x, y + image->verticalOffset + image->spriteOwner->position.y, 0);
@@ -90,7 +106,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 continue;
             }
-            ISCRIPT_PlayFrame(image, arg);
+            ISCRIPT_PlayFrame_(image, arg);
             continue;
         }
         case opc_playframtile:
@@ -105,7 +121,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             unsigned __int16 v9 = CurrentTileSet + arg;
             if (v9 < (unsigned __int16)(image->GRPFile->wFrames & 0x7FFF))
             {
-                ISCRIPT_PlayFrame(image, v9);
+                ISCRIPT_PlayFrame_(image, v9);
             }
             continue;
         }
