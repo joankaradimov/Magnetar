@@ -657,8 +657,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
             v5 = (char*)iscript_data + program_state->program_counter;
-            unsigned int v117 = 0;
-            BYTE1(v117) = arg;
+            unsigned int v117 = arg << 8;
             if (distance_moved)
             {
                 *distance_moved = GetModifiedUnitSpeed(v117, iscript_unit);
