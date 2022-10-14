@@ -93,6 +93,20 @@ void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
 
 FAIL_STUB_PATCH(ISCRIPT_AttackWith);
 
+void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
+{
+    if (Weapon_Graphic[weapon_type])
+    {
+        CreateBullet(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+        if (Weapon_DamageFactor[weapon_type] == 2)
+        {
+            CreateBullet(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+        }
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_UseWeapon);
+
 void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 {
     unit->statusFlags &= ~StatusFlags::NoBrkCodeStart;
@@ -601,7 +615,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            ISCRIPT_UseWeapon(iscript_unit, (WeaponType)arg);
+            ISCRIPT_UseWeapon_(iscript_unit, (WeaponType)arg);
             break;
         }
         case opc_move:
