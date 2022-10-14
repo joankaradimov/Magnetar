@@ -690,13 +690,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             continue;
         case opc_ignorerest:
+            program_state->program_counter = v5 - (char*)iscript_data;
             if (noop)
             {
                 continue;
             }
             if (iscript_unit->orderTarget.pUnit)
             {
-                program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data - 1;
+                program_state->program_counter -= 1;
                 program_state->wait = 10;
                 return;
             }
