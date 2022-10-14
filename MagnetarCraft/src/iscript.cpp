@@ -126,9 +126,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             continue;
         }
         case opc_wait:
-            program_state->wait = *v5 - 1;
-            program_state->program_counter = (BYTE*)v5 + 1 - (BYTE*)iscript_data;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            char arg = take_iscript_datum<char>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
+            program_state->wait = arg - 1;
             return;
+        }
         case opc_waitrand:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
