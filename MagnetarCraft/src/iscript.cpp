@@ -32,6 +32,18 @@ void ISCRIPT_PlayFrame_(CImage* image, int a2)
 
 FAIL_STUB_PATCH(ISCRIPT_PlayFrame);
 
+void ISCRIPT_setPosition_(CImage* image, char x, char y)
+{
+    if (image->horizontalOffset != x || image->verticalOffset != y)
+    {
+        image->flags |= IF_REDRAW;
+        image->horizontalOffset = x;
+        image->verticalOffset = y;
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_setPosition);
+
 CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x, int y, char elevation_level)
 {
     CThingy* result = CreateThingy(sprite_id, x + image->horizontalOffset + (__int16)image->spriteOwner->position.x, y + image->verticalOffset + image->spriteOwner->position.y, 0);
@@ -154,7 +166,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            ISCRIPT_setPosition(image, x, y);
+            ISCRIPT_setPosition_(image, x, y);
             break;
         }
         case opc_wait:
