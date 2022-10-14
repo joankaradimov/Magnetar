@@ -93,6 +93,19 @@ void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
 
 FAIL_STUB_PATCH(ISCRIPT_AttackWith);
 
+void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
+{
+    unit->statusFlags &= ~StatusFlags::NoBrkCodeStart;
+    unit->sprite->flags &= ~0x80;
+    if (unit->orderQueueHead && (unit->userActionFlags & 1))
+    {
+        IgnoreAllScriptAndGotoIdle(unit);
+        PrepareForNextOrderFunc(unit);
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd);
+
 void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
 {
     if (program_state->wait)
@@ -670,7 +683,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             if (iscript_unit)
             {
                 u16 v5 = program_state->program_counter;
-                ISCRIPT_NoBrkCodeEnd(iscript_unit);
+                ISCRIPT_NoBrkCodeEnd_(iscript_unit);
                 program_state->program_counter = v5;
             }
             break;
