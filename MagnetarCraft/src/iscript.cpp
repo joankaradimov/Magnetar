@@ -174,7 +174,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         {
             program_state->program_counter = v5 - (char*)iscript_data;
             char arg = take_iscript_datum<char>(program_state);
-            v5 = (char*)iscript_data + program_state->program_counter;
             program_state->wait = arg - 1;
             return;
         }
@@ -189,7 +188,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             unsigned __int8 v16 = RandomizeShort(3);
-            program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data;
             program_state->wait = v13 + v16 % (v15 - v13 + 1) - 1;
             return;
         }
@@ -429,7 +427,6 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 continue;
             }
             ImageDestructor(image);
-            program_state->program_counter = (BYTE*)v5 - (BYTE*)iscript_data;
             return;
         case opc_setflipstate:
         {
