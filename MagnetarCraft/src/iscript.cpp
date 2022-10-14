@@ -755,13 +755,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             v5 = (char*)iscript_data + program_state->program_counter;
             continue;
         case opc_setflspeed:
-            v5 += 2;
+        {
+            program_state->program_counter = v5 - (char*)iscript_data;
+            u16 arg = take_iscript_datum<u16>(program_state);
+            v5 = (char*)iscript_data + program_state->program_counter;
             if (noop)
             {
                 continue;
             }
-            iscript_unit->flingyTopSpeed = *((unsigned __int16*)v5 - 1);
+            iscript_unit->flingyTopSpeed = arg;
             continue;
+        }
         case opc_creategasoverlays:
         {
             program_state->program_counter = v5 - (char*)iscript_data;
