@@ -68,6 +68,25 @@ void ISCRIPT_CastSpell_(CUnit* unit, WeaponType weapon_id)
 
 FAIL_STUB_PATCH(ISCRIPT_CastSpell);
 
+void ISCRIPT_AttackMelee_(CUnit* unit)
+{
+    if (CUnit* target = unit->orderTarget.pUnit)
+    {
+        WeaponType v3 = unit->unitType != Zerg_Lurker || (unit->statusFlags & Burrowed) ? Unit_GroundWeapon[unit->unitType] : WeaponType::WT_None;
+
+        if (unit->statusFlags & StatusFlags::IsHallucination)
+        {
+            attackOverlayAndNotify(target, unit, v3, unit->currentDirection1);
+        }
+        else
+        {
+            DoWeaponDamage((Weapon_DamageAmount[v3] + getUnitDamageBonus(unit, v3)) << 8, target, v3, 1, unit->currentDirection1, unit, unit->playerID);
+        }
+    }
+}
+
+FAIL_STUB_PATCH(ISCRIPT_AttackMelee);
+
 void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
 {
     if (attacker->orderTarget.pUnit)
@@ -466,7 +485,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            ISCRIPT_AttackMelee(iscript_unit);
+            ISCRIPT_AttackMelee_(iscript_unit);
             [[fallthrough]];
         case opc_playsndrand:
         {
