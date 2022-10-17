@@ -17890,3 +17890,279 @@ void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 }
 
 FUNCTION_PATCH(CMDACT_IncreaseReplaySpeed, CMDACT_IncreaseReplaySpeed_);
+
+ButtonState __fastcall BTNSCOND_Always_(u16 variable, int player_id, CUnit* unit)
+{
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_Always, BTNSCOND_Always_);
+
+ButtonState __fastcall BTNSCOND_Rally_(u16 variable, int player_id, CUnit* unit)
+{
+	dword_66FF60 = 0;
+	if (Orders_Unknown17[40] == -1)
+	{
+		parseOrdersDatReqs();
+	}
+
+	if (player_id != unit->playerID)
+	{
+		dword_66FF60 = 1;
+		return BTNST_HIDDEN;
+	}
+	else if ((unit->statusFlags & StatusFlags::DoodadStatesThing) || unit->status.lockdownTimer || unit->status.stasisTimer || unit->status.maelstromTimer)
+	{
+		dword_66FF60 = 10;
+		return BTNST_HIDDEN;
+	}
+	else if ((unit->statusFlags & StatusFlags::Burrowed) && unit->unitType != Zerg_Lurker)
+	{
+		dword_66FF60 = 11;
+		return BTNST_HIDDEN;
+	}
+	else if (unit->unitType == Terran_SCV && unit->orderID == ConstructingBuilding
+		|| UnitIsGhost(unit) && unit->orderID == Hallucination2
+		|| unit->unitType == Protoss_Archon && unit->orderID == CompletingArchonSummon
+		|| unit->unitType == Protoss_Dark_Archon && unit->orderID == CompletingArchonSummon)
+	{
+		dword_66FF60 = 8;
+		return BTNST_HIDDEN;
+	}
+	else if (Orders_Unknown17[40])
+	{
+		return (ButtonState) parseRequirementOpcodes((unsigned __int16)Orders_Unknown17[40], unit, TECH2_unknown_tech40, player_id, (int)word_514CF8);
+	}
+	else
+	{
+		dword_66FF60 = 23;
+		return (ButtonState) Orders_Unknown17[40];
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_Rally, BTNSCOND_Rally_);
+
+ButtonState __fastcall BTNSCOND_IsConstructing_(u16 variable, int player_id, CUnit* unit)
+{
+	return (unit->statusFlags & StatusFlags::Completed) ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsConstructing, BTNSCOND_IsConstructing_);
+
+ButtonState __fastcall BTNSCOND_HatcheryLairHive_(u16 variable, int player_id, CUnit* unit)
+{
+	switch (unit->unitType)
+	{
+	case UnitType::Zerg_Hatchery:
+	case UnitType::Zerg_Lair:
+	case UnitType::Zerg_Hive:
+		return ButtonState::BTNST_ENABLED;
+	default:
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_HatcheryLairHive, BTNSCOND_HatcheryLairHive_);
+
+ButtonState __fastcall BTNSCOND_HatcheryLairHiveRally_(u16 variable, int player_id, CUnit* unit)
+{
+	switch (unit->unitType)
+	{
+	case UnitType::Zerg_Hatchery:
+	case UnitType::Zerg_Lair:
+	case UnitType::Zerg_Hive:
+		return BTNSCOND_Rally_(variable, player_id, unit);
+	default:
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_HatcheryLairHiveRally, BTNSCOND_HatcheryLairHiveRally_);
+
+ButtonState __fastcall BTNSCOND_CanMove_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		CUnit* unit = ClientSelectionGroup[i];
+		if (ClientSelectionGroup[i] == NULL)
+		{
+			continue;
+		}
+		else if (unit->unitType == Zerg_Lurker && (unit->statusFlags & Burrowed))
+		{
+			continue;
+		}
+		else if (Unit_RightClickAction[unit->unitType] == 3)
+		{
+			continue;
+		}
+		else if (Unit_RightClickAction[unit->unitType] != 0)
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+		else if ((unit->statusFlags & GoundedBuilding) && Unit_IsFactoryBuilding(unit))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMove, BTNSCOND_CanMove_);
+
+ButtonState __fastcall BTNSCOND_CanMoveSpecialCase_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		CUnit* unit = ClientSelectionGroup[i];
+		if (ClientSelectionGroup[i] == NULL)
+		{
+			continue;
+		}
+		else if (unit->unitType == Zerg_Lurker && (unit->statusFlags & Burrowed))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+		else if (Unit_RightClickAction[unit->unitType] || (unit->statusFlags & GoundedBuilding) != 0 && Unit_IsFactoryBuilding(unit))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMoveSpecialCase, BTNSCOND_CanMoveSpecialCase_);
+
+ButtonState __fastcall BTNSCOND_CanAttack_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		CUnit* v4 = ClientSelectionGroup[i];
+
+		if (v4)
+		{
+			if (v4->unitType == Zerg_Lurker && (v4->statusFlags & Burrowed) || Unit_RightClickAction[v4->unitType] || (v4->statusFlags & StatusFlags::GoundedBuilding) && Unit_IsFactoryBuilding(v4))
+			{
+				if (AI_UnitCanAttack(v4))
+				{
+					return ButtonState::BTNST_ENABLED;
+				}
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanAttack, BTNSCOND_CanAttack_);
+
+ButtonState __fastcall BTNSCOND_NoCargo_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		CUnit* unit = ClientSelectionGroup[i];
+
+		if (unit && (unit->resourceType & 3) == 0)
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_NoCargo, BTNSCOND_NoCargo_);
+
+ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
+{
+	if (CanUseTech(unit, (Tech2)variable, player_id) != 1)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		CUnit* unit = ClientSelectionGroup[i];
+
+		if (unit && (unit->unitType == Terran_Siege_Tank_Siege_Mode || unit->unitType == Hero_Edmund_Duke_Siege_Mode))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsSieged, BTNSCOND_IsSieged_);
+
+ButtonState __fastcall BTNSCOND_IsLiftedCanMove_(u16 variable, int player_id, CUnit* unit)
+{
+	if (unit->statusFlags & StatusFlags::GoundedBuilding)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+	else
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_IsLiftedCanMove, BTNSCOND_IsLiftedCanMove_);
+
+ButtonState __fastcall BTNSCOND_IsLifted_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1 && !(unit->statusFlags & StatusFlags::GoundedBuilding))
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+	else
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_IsLifted, BTNSCOND_IsLifted_);
+
+ButtonState __fastcall BTNSCOND_IsLanded_(u16 variable, int player_id, CUnit* unit)
+{
+	if ((unit->statusFlags & StatusFlags::GoundedBuilding) && !UnitIsTrainingOrMorphing(unit) && unit->fields1.building.techType == Tech::TECH_none && unit->fields1.building.upgradeType == 61)
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+	else
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_IsLanded, BTNSCOND_IsLanded_);
+
+ButtonState __fastcall BTNSCOND_IsBuildingAddon_(u16 variable, int player_id, CUnit* unit)
+{
+	if (unit->secondaryOrderID == BuildAddon && (unit->statusFlags & StatusFlags::GoundedBuilding))
+	{
+		if (unit->currentBuildUnit && (unit->currentBuildUnit->statusFlags & StatusFlags::Completed) == 0)
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsBuildingAddon, BTNSCOND_IsBuildingAddon_);
+
+ButtonState __fastcall BTNSCOND_SiloHasNoNuke_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1)
+	{
+		return TTAllowed((UnitType)variable, unit, player_id);
+	}
+	else
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_SiloHasNoNuke, BTNSCOND_SiloHasNoNuke_);
