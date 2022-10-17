@@ -485,16 +485,17 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            CImage* v84 = image->spriteOwner->pImagePrimary;
-            if (v84 == nullptr || image->frameIndex == v84->frameIndex && ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED) == 0)
+            if (CImage* v84 = image->spriteOwner->pImagePrimary)
             {
-                break;
+                if (image->frameIndex != v84->frameIndex || ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED))
+                {
+                    image->frameSet = v84->frameSet;
+                    image->direction = v84->direction;
+                    image->flags ^= ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
+                    CImage* v86 = setImagePaletteType(image, image->paletteType);
+                    updateImageFrameIndex(v86);
+                }
             }
-            image->frameSet = v84->frameSet;
-            image->direction = v84->direction;
-            image->flags ^= ((image->flags ^ v84->flags) & ImageFlags::IF_HORIZONTALLY_FLIPPED);
-            CImage* v86 = setImagePaletteType(image, image->paletteType);
-            updateImageFrameIndex(v86);
             break;
         }
         case opc_randcondjmp:
