@@ -21,11 +21,10 @@ void ISCRIPT_PlayFrame_(CImage* image, int a2)
     if (image->frameSet != a2)
     {
         image->frameSet = a2;
-        int v3 = (unsigned __int16)a2 + image->direction;
-        if (image->frameIndex != v3)
+        if (image->frameIndex != image->frameSet + image->direction)
         {
             image->flags |= ImageFlags::IF_REDRAW;
-            image->frameIndex = v3;
+            image->frameIndex = image->frameSet + image->direction;
         }
     }
 }
