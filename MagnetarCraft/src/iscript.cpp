@@ -56,56 +56,56 @@ CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x,
 
 FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 
-void ISCRIPT_CastSpell_(CUnit* unit, WeaponType weapon_id)
+void ISCRIPT_CastSpell_(WeaponType weapon_id)
 {
-    FireUnitWeapon(unit, weapon_id);
+    FireUnitWeapon(iscript_unit, weapon_id);
     if (Weapon_DamageFactor[weapon_id] == 2)
     {
-        FireUnitWeapon(unit, weapon_id);
+        FireUnitWeapon(iscript_unit, weapon_id);
     }
 }
 
 FAIL_STUB_PATCH(ISCRIPT_CastSpell);
 
-void ISCRIPT_AttackMelee_(CUnit* unit)
+void ISCRIPT_AttackMelee_()
 {
-    if (CUnit* target = unit->orderTarget.pUnit)
+    if (CUnit* target = iscript_unit->orderTarget.pUnit)
     {
-        WeaponType v3 = unit->unitType != Zerg_Lurker || (unit->statusFlags & Burrowed) ? Unit_GroundWeapon[unit->unitType] : WeaponType::WT_None;
+        WeaponType v3 = iscript_unit->unitType != Zerg_Lurker || (iscript_unit->statusFlags & Burrowed) ? Unit_GroundWeapon[iscript_unit->unitType] : WeaponType::WT_None;
 
-        if (unit->statusFlags & StatusFlags::IsHallucination)
+        if (iscript_unit->statusFlags & StatusFlags::IsHallucination)
         {
-            attackOverlayAndNotify(target, unit, v3, unit->currentDirection1);
+            attackOverlayAndNotify(target, iscript_unit, v3, iscript_unit->currentDirection1);
         }
         else
         {
-            DoWeaponDamage((Weapon_DamageAmount[v3] + getUnitDamageBonus(unit, v3)) << 8, target, v3, 1, unit->currentDirection1, unit, unit->playerID);
+            DoWeaponDamage((Weapon_DamageAmount[v3] + getUnitDamageBonus(iscript_unit, v3)) << 8, target, v3, 1, iscript_unit->currentDirection1, iscript_unit, iscript_unit->playerID);
         }
     }
 }
 
 FAIL_STUB_PATCH(ISCRIPT_AttackMelee);
 
-void ISCRIPT_AttackWith_(CUnit* attacker, u8 is_ground_weapon)
+void ISCRIPT_AttackWith_(u8 is_ground_weapon)
 {
-    if (attacker->orderTarget.pUnit)
+    if (iscript_unit->orderTarget.pUnit)
     {
         WeaponType weapon_type;
 
         if (is_ground_weapon != 1)
         {
-            weapon_type = Unit_AirWeapon[attacker->unitType];
+            weapon_type = Unit_AirWeapon[iscript_unit->unitType];
         }
-        else if (attacker->unitType != Zerg_Lurker || (attacker->statusFlags & Burrowed))
+        else if (iscript_unit->unitType != Zerg_Lurker || (iscript_unit->statusFlags & Burrowed))
         {
-            weapon_type = Unit_GroundWeapon[attacker->unitType];
+            weapon_type = Unit_GroundWeapon[iscript_unit->unitType];
         }
         else
         {
             weapon_type = WT_None;
         }
 
-        ISCRIPT_CastSpell_(attacker, weapon_type);
+        ISCRIPT_CastSpell_(weapon_type);
     }
 }
 
@@ -484,7 +484,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            ISCRIPT_AttackMelee_(iscript_unit);
+            ISCRIPT_AttackMelee_();
             [[fallthrough]];
         case opc_playsndrand:
         {
@@ -600,7 +600,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            ISCRIPT_AttackWith_(iscript_unit, arg);
+            ISCRIPT_AttackWith_(arg);
             break;
         }
         case opc_attack:
@@ -610,11 +610,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (iscript_unit->orderTarget.pUnit && (iscript_unit->orderTarget.pUnit->statusFlags & StatusFlags::InAir))
             {
-                ISCRIPT_CastSpell_(iscript_unit, Unit_AirWeapon[iscript_unit->unitType]);
+                ISCRIPT_CastSpell_(Unit_AirWeapon[iscript_unit->unitType]);
             }
             else
             {
-                ISCRIPT_AttackWith_(iscript_unit, 1);
+                ISCRIPT_AttackWith_(1);
             }
             break;
         case opc_castspell:
@@ -624,7 +624,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (Orders_TargetingWeapon[iscript_unit->orderID] < WT_None && !canCastSpell_0(iscript_unit))
             {
-                ISCRIPT_CastSpell_(iscript_unit, Orders_TargetingWeapon[iscript_unit->orderID]);
+                ISCRIPT_CastSpell_(Orders_TargetingWeapon[iscript_unit->orderID]);
             }
             break;
         case opc_useweapon:
@@ -745,7 +745,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 break;
             }
             Weapon_XOffset[UnitGetGrndWeapon(iscript_unit)] = arg;
-            ISCRIPT_AttackWith_(iscript_unit, 1);
+            ISCRIPT_AttackWith_(1);
             break;
         }
         case opc_tmprmgraphicstart:
