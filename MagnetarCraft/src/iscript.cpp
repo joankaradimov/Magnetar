@@ -223,14 +223,14 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_waitrand:
         {
-            unsigned __int8 v13 = take_iscript_datum<unsigned char>(program_state);
-            unsigned __int8 v15 = take_iscript_datum<unsigned char>(program_state);
+            unsigned __int8 min = take_iscript_datum<unsigned char>(program_state);
+            unsigned __int8 max = take_iscript_datum<unsigned char>(program_state);
             if (noop)
             {
                 break;
             }
             unsigned __int8 v16 = RandomizeShort(3);
-            program_state->wait = v13 + v16 % (v15 - v13 + 1) - 1;
+            program_state->wait = min + v16 % (max - min + 1) - 1;
             return;
         }
         case opc_goto:
@@ -464,13 +464,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         }
         case opc_playsndbtwn:
         {
-            unsigned __int16 v79 = take_iscript_datum<unsigned __int16>(program_state);
-            unsigned __int16 v81 = take_iscript_datum<unsigned __int16>(program_state);
+            unsigned __int16 min = take_iscript_datum<unsigned __int16>(program_state);
+            unsigned __int16 max = take_iscript_datum<unsigned __int16>(program_state);
             if (noop)
             {
                 break;
             }
-            ISCRIPT_PlaySnd((SfxData)(v79 + RandomizeShort(5) % ((unsigned int)v81 - v79 + 1)), image);
+            ISCRIPT_PlaySnd((SfxData)(min + RandomizeShort(5) % ((unsigned int)max - min + 1)), image);
             break;
         }
         case opc_domissiledmg:
@@ -850,12 +850,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             }
             if (CUnit* target = iscript_unit->orderTarget.pUnit)
             {
-                int v104 = (__int16)target->sprite->position.y;
-                int v105 = (__int16)target->sprite->position.x;
-                int v106 = (__int16)iscript_unit->sprite->position.x;
-                int v123 = (__int16)iscript_unit->sprite->position.y;
-                char v107 = GetAngle(v106, v123, v105, v104);
-                if (sub_494BD0((int)v99, v107) < v128)
+                int target_x = (__int16)target->sprite->position.x;
+                int target_y = (__int16)target->sprite->position.y;
+                int unit_x = (__int16)iscript_unit->sprite->position.x;
+                int unit_y = (__int16)iscript_unit->sprite->position.y;
+                char angle = GetAngle(unit_x, unit_y, target_x, target_y);
+                if (sub_494BD0((int)v99, angle) < v128)
                 {
                     program_state->program_counter = new_pc;
                 }
