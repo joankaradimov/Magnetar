@@ -9974,7 +9974,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 				{
 					a1->regions[v12].rgnBox.bottom += 1;
 				}
-				SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox - 1, a1->regions[v12].accessabilityFlags);
+				SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox, a1->regions[v12].accessabilityFlags);
 			}
 		}
 	}
