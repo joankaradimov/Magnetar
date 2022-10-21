@@ -9980,7 +9980,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 	}
 }
 
-// FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
 
 void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
 {
@@ -10120,7 +10120,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 {
 	int old_region_count = a2->regionCount;
 
-	if (!SAI_PathCreate_Sub3_0(a2, a1->position, a1->map_size)) // TODO -- use reimplemented
+	if (!SAI_PathCreate_Sub3_0_(a2, a1->position, a1->map_size))
 	{
 		return 0;
 	}
