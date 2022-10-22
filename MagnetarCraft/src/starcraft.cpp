@@ -9851,26 +9851,18 @@ FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
 int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 {
-	int x;
-	int y;
-	int v23;
-	int v24;
-	int v28;
-	int v29;
-	int v30;
-
-	x = a2.x;
-	y = a2.y;
-	v23 = a1->regionCount;
+	int x = a2.x;
+	int y = a2.y;
+	int v23 = a1->regionCount;
 	dword_6D5BF8 = 0;
-	v24 = 0;
+	int v24 = 0;
 	SaiAccessabilityFlags a5 = (SaiAccessabilityFlags) 0;
-	v28 = 56;
+	int v28 = 56;
 	while (2)
 	{
 		rect v19 = { 0, 0, 0, 0 };
-		v29 = 0;
-		v30 = 0;
+		int v29 = 0;
+		int v30 = 0;
 
 		if (x >= (__int16)size.width)
 		{
