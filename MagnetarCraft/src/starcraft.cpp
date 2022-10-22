@@ -10486,6 +10486,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 }
 
 FAIL_STUB_PATCH(ChkLoader_UNIT);
+FAIL_STUB_PATCH(sub_4CD090);
 
 bool __stdcall ChkLoader_UPRP_(SectionData* section_data, int section_size, MapChunks* a3)
 {
