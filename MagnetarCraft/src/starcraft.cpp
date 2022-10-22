@@ -6835,6 +6835,48 @@ void sub_4EB5E0_(CUnit* a1)
 
 FAIL_STUB_PATCH(sub_4EB5E0);
 
+void UpdateUnitSpriteInfo_(CUnit* unit)
+{
+	bool v1 = isThingyOnMap(Unit_Placement[unit->unitType].y, Unit_Placement[unit->unitType].x, (CThingy*)unit);
+
+	if (unit->subUnit && (unit->subUnit->sprite->flags & 0x20) == 0)
+	{
+		refreshAllVisibleImagesAtScreenPosition(unit->subUnit->sprite, unit->sprite->visibilityFlags);
+	}
+
+	if (v1)
+	{
+		if (unit->sprite->flags & 8)
+		{
+			updateBuildingLandUnitSelection(unit);
+		}
+		removeSelectionCircle(unit->sprite);
+		if (unit->sprite->flags & 6)
+		{
+			unit->sprite->flags &= ~6;
+			removeSelectionCircleFromSprite(unit->sprite);
+		}
+		if ((unit->statusFlags & GoundedBuilding) || unit->unitType >= Special_Floor_Missile_Trap && unit->unitType <= Special_Right_Wall_Flame_Trap)
+		{
+			if (unit->sprite && (unit->orderID || unit->orderState != 1))
+			{
+				sub_488410(unit->unitType, unit->sprite);
+			}
+		}
+	}
+}
+
+void UpdateUnitSpriteInfo__()
+{
+	CUnit* unit;
+
+	__asm mov unit, esi
+
+	UpdateUnitSpriteInfo_(unit);
+}
+
+FUNCTION_PATCH((void*)0x4EBE10, UpdateUnitSpriteInfo__);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
@@ -6953,7 +6995,7 @@ void UpdateUnits_()
 			{
 				revealSightAtLocation(1, PlayerVision[unit->playerID], unit->sprite->position.x, unit->sprite->position.y, unit->statusFlags & 4);
 			}
-			UpdateUnitSpriteInfo(unit);
+			UpdateUnitSpriteInfo_(unit);
 		}
 	}
 
@@ -6977,7 +7019,7 @@ void UpdateUnits_()
 
 	for (CUnit* unit = UnitNodeList_VisibleUnit_First; unit; unit = unit->next)
 	{
-		UpdateUnitSpriteInfo(unit);
+		UpdateUnitSpriteInfo_(unit);
 		if (unit->statusFlags & (Cloaked | RequiresDetection))
 		{
 			unit->isCloaked = 0;
@@ -10436,7 +10478,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 	for (; v18; v18 = sub_4CCF90(v18));
 	for (CUnit* i = UnitNodeList_VisibleUnit_First; i; i = i->next)
 	{
-		UpdateUnitSpriteInfo(i);
+		UpdateUnitSpriteInfo_(i);
 	}
 	CanUpdatePoweredStatus = 1;
 
