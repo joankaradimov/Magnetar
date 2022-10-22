@@ -3144,7 +3144,7 @@ DECL_FUNC(signed int (__thiscall*isContourSpaceAvailable)(SaiContourHub *this_, 
 DECL_FUNC(int (__stdcall*sub_429D50)(__int16, __int16, int), sub_429D50, 0x429d50);
 DECL_FUNC(int (__stdcall*sub_42A1B0)(int, int, int), sub_42A1B0, 0x42a1b0);
 DECL_FUNC(int (__stdcall*sub_42A570)(int), sub_42A570, 0x42a570);
-DECL_FUNC(int (__stdcall*sub_42A5C0)(int *a1, Position *a2, signed __int16 *a3), sub_42A5C0, 0x42a5c0);
+DECL_FUNC(int (__stdcall*sub_42A5C0)(Position *a1, Position *a2, signed __int16 *a3), sub_42A5C0, 0x42a5c0);
 DECL_FUNC(int (__stdcall*sub_42A840)(int), sub_42A840, 0x42a840);
 DECL_FUNC(int(*sub_42A860)(), sub_42A860, 0x42a860);
 DECL_FUNC(int (__stdcall*sub_42A8A0)(int), sub_42A8A0, 0x42a8a0);
@@ -10209,7 +10209,7 @@ int getUnitMissChance(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4762C0)(CUnit *unit, int a2, int a3), sub_4762C0, 0x4762c0);
+DECL_FUNC(void (__stdcall*sub_4762C0)(CUnit *unit, int *x, int *y), sub_4762C0, 0x4762c0);
 DECL_FUNC(int (__thiscall*isTargetWithinMinMovementRange)(unsigned int min_range), isTargetWithinMinMovementRange, 0x4763d0);
 signed int isUnitTargetOutOfMaxRange(CUnit *a1, CUnit *a2) {
     int address = 0x476430;
@@ -10646,11 +10646,11 @@ int WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
     }
     return result_;
 }
-void ISCRIPT_AttackMelee(CUnit *a1) {
+void ISCRIPT_AttackMelee(CUnit *unit) {
     int address = 0x479b40;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -11831,7 +11831,14 @@ int CThingyIsVisible(int a1, CThingy *a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_487D90)(), sub_487D90, 0x487d90);
+void sub_487D90(CThingy *a1) {
+    int address = 0x487d90;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
 DECL_FUNC(int (__fastcall*readThingyArray)(int a1, int a2, FILE *a3, CThingy *a4, int a5), readThingyArray, 0x487db0);
 DECL_FUNC(BOOL (__stdcall*writeThingys)(FILE *file, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
 DECL_FUNC(int (__stdcall*sub_487FD0)(__int16), sub_487FD0, 0x487fd0);
@@ -19209,7 +19216,7 @@ CImage *unpackImageGrpData(CImage *result) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4D56F0)(int), sub_4D56F0, 0x4d56f0);
+DECL_FUNC(BOOL (__fastcall*sub_4D56F0)(CImage *a1, int a2, int a3), sub_4D56F0, 0x4d56f0);
 int sub_4D5740(int result, _DWORD a2, int a3) {
     int address = 0x4d5740;
     int result_;
@@ -19275,8 +19282,20 @@ void ISCRIPT_setPosition(CImage *result, char x, char y) {
         call address
     }
 }
-DECL_FUNC(int(*sub_4D5920)(), sub_4D5920, 0x4d5920);
-CImage *sub_4D5930(CImage *result, char a2) {
+CImage *ISCRIPT_setVerticalPosition(CImage *result, char a2) {
+    int address = 0x4d5920;
+    CImage * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, result
+        mov cl, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+CImage *ISCRIPT_setHorizontalPosition(CImage *result, char a2) {
     int address = 0x4d5930;
     CImage * result_;
     __asm {
@@ -19532,7 +19551,7 @@ unsigned __int16 InitializeHealthBarImage(int a1, CImage *a2) {
     return result_;
 }
 DECL_FUNC(int(*InitializePresetImageArrays)(), InitializePresetImageArrays, 0x4d6930);
-DECL_FUNC(CImage *(__stdcall*ISCRIPT_CreateImage)(CImage *a1, int a2, char a3, int arg_C, ImageOrder image_order), ISCRIPT_CreateImage, 0x4d6d90);
+DECL_FUNC(CImage *(__stdcall*ISCRIPT_CreateImage)(CImage *image, int image_id, char horizontal_offset, int vertical_offset, ImageOrder image_order), ISCRIPT_CreateImage, 0x4d6d90);
 DECL_FUNC(CImage *(__fastcall*sub_4D6F00)(int a1, CSprite *a2, unsigned int a3, unsigned int a4), sub_4D6F00, 0x4d6f00);
 CImage *sub_4D6F90(CSprite *a1, unsigned __int16 a2, unsigned int a3, unsigned __int16 a4) {
     int address = 0x4d6f90;
@@ -19561,15 +19580,15 @@ CImage **CreateSelectionCircle(CSprite *a1, unsigned __int8 a2, __int16 a3) {
     }
     return result_;
 }
-CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 sprite_id, int a3, int a4, char a5) {
+CThingy *ISCRIPT_CreateSprite(CImage *image, unsigned __int16 sprite_id, int x, int y, char elevation_level) {
     int address = 0x4d7120;
     CThingy * result_;
     __asm {
         xor eax, eax
-        mov eax, a1
-        push dword ptr a5
-        push dword ptr a4
-        push dword ptr a3
+        mov eax, image
+        push dword ptr elevation_level
+        push dword ptr y
+        push dword ptr x
         push dword ptr sprite_id
         call address
         mov result_, eax
@@ -19579,11 +19598,11 @@ CThingy *ISCRIPT_CreateSprite(CImage *a1, unsigned __int16 sprite_id, int a3, in
 DECL_FUNC(int(*LoadImageData)(), LoadImageData, 0x4d7180);
 DECL_FUNC(int(*LoadInitIscriptBIN)(), LoadInitIscriptBIN, 0x4d7390);
 DECL_FUNC(void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgram *program_state, int noop, _DWORD *distance_moved), BWFXN_PlayIscript, 0x4d74c0);
-void PlayIscriptAnim(CImage *this_, Anims new_animation) {
+void PlayIscriptAnim(CImage *image, Anims new_animation) {
     int address = 0x4d8470;
     __asm {
         xor ecx, ecx
-        mov ecx, this_
+        mov ecx, image
         push dword ptr new_animation
         call address
     }
@@ -21927,17 +21946,13 @@ int orders_HoldPositionSuicidal(CUnit *a1) {
     }
     return result_;
 }
-int sub_4EB5E0(CUnit *a1) {
+void sub_4EB5E0(CUnit *a1) {
     int address = 0x4eb5e0;
-    int result_;
     __asm {
-        xor eax, eax
         xor ebx, ebx
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 char ProgressSubunitDirection(CUnit *a1, char a2) {
     int address = 0x4eb660;
@@ -22334,7 +22349,7 @@ DECL_FUNC(int(*contour_gen_topRight)(), contour_gen_topRight, 0x4f08c0);
 DECL_FUNC(int(*contour_gen_leftTop)(), contour_gen_leftTop, 0x4f0d50);
 DECL_FUNC(int(*contour_gen_bottomLeft)(), contour_gen_bottomLeft, 0x4f1200);
 DECL_FUNC(int(*sub_4F1680)(), sub_4F1680, 0x4f1680);
-DECL_FUNC(int (__stdcall*sub_4F16C0)(int, int, int), sub_4F16C0, 0x4f16c0);
+DECL_FUNC(int (__stdcall*sub_4F16C0)(int, signed __int16 *a3, int), sub_4F16C0, 0x4f16c0);
 DECL_FUNC(int(*sub_4F17C0)(), sub_4F17C0, 0x4f17c0);
 int sub_4F1870(CUnit *a1, __int16 a2, __int16 a3) {
     int address = 0x4f1870;

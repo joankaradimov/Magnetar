@@ -775,12 +775,12 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         case opc_call:
         {
             u16 new_pc = take_iscript_datum<u16>(program_state);
-            program_state->unsigned4 = program_state->program_counter;
+            program_state->return_address = program_state->program_counter;
             program_state->program_counter = new_pc;
             break;
         }
         case opc_return:
-            program_state->program_counter = program_state->unsigned4;
+            program_state->program_counter = program_state->return_address;
             break;
         case opc_setflspeed:
         {
@@ -830,7 +830,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 int a3;
                 int a4;
-                sub_4762C0(iscript_unit, (int)&a4, (int)&a3);
+                sub_4762C0(iscript_unit, &a4, &a3);
                 if (isDistanceGreaterThanHaltDistance(a3, iscript_unit, v95, a4))
                 {
                     program_state->program_counter = v97;
@@ -986,7 +986,7 @@ void PlayIscriptAnim_(CImage* image, Anims new_animation)
             image->iscript_program.anim = animation;
             image->iscript_program.program_counter = *(_WORD*)&v5[2 * (unsigned __int8)animation + 8 + image->iscript_program.iscript_header];
             image->iscript_program.wait = 0;
-            image->iscript_program.unsigned4 = 0;
+            image->iscript_program.return_address = 0;
             BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
         }
     }
