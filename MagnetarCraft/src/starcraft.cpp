@@ -3808,7 +3808,7 @@ MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 void minimapGameResetMouseInput_(dialog* dlg)
 {
 	removeDlgFromTimerTracking(dlg);
-	SetCursorClipBounds();
+	SetCursorClipBounds_();
 
 	dword_6D5DD4 = 0;
 	if (dword_6D5DD0)
