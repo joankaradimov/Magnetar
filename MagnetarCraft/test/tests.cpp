@@ -25,6 +25,7 @@ bool files_match(const std::filesystem::path& path1, const std::filesystem::path
 
 int main()
 {
+	frame_capping = false;
 	end_mission_prompt = false;
 	keep_app_active_in_background = true;
 

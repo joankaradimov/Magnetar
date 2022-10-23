@@ -40,6 +40,7 @@ DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
 DEFINE_ENUM_FLAG_OPERATORS(StatusFlags);
 
 extern std::function<void()> on_end_game;
+extern bool frame_capping;
 extern bool end_mission_prompt;
 extern bool keep_app_active_in_background;
 

@@ -10,6 +10,7 @@
 #include "patching.h"
 
 std::function<void()> on_end_game = nullptr;
+bool frame_capping = true;
 bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
@@ -39,7 +40,19 @@ void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_mult
 	replay_speed_multiplier = speed_multiplier;
 	is_replay_paused = a2;
 
-	if (game_speed)
+	if (!frame_capping)
+	{
+
+		dword_51BFDC[0] = 0;
+		dword_51BFDC[1] = 0;
+		dword_51BFDC[2] = 0;
+		dword_51BFDC[3] = 0;
+		dword_51BFDC[4] = 0;
+		dword_51BFDC[5] = 0;
+		dword_51BFDC[6] = 0;
+		FrameSkip = 1;
+	}
+	else if (game_speed)
 	{
 		dword_51BFDC[0] = 0xA7 / speed_multiplier;
 		dword_51BFDC[1] = 0x6F / speed_multiplier;
