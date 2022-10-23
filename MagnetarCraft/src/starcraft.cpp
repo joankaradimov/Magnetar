@@ -11,6 +11,7 @@
 
 std::function<void()> on_end_game = nullptr;
 bool frame_capping = true;
+bool has_viewport = true;
 bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
@@ -108,16 +109,19 @@ FUNCTION_PATCH((void*)0x4DEB90, SetGameSpeed_maybe__);
 
 void SetCursorClipBounds_()
 {
-	POINT top_left;
-	POINT bottom_right;
+	if (has_viewport)
+	{
+		POINT top_left;
+		POINT bottom_right;
 
-	top_left.x = 0;
-	top_left.y = 0;
-	bottom_right.x = SCREEN_WIDTH;
-	bottom_right.y = SCREEN_HEIGHT;
-	ClientToScreen(hWndParent, &top_left);
-	ClientToScreen(hWndParent, &bottom_right);
-	SetRect(&screen, top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+		top_left.x = 0;
+		top_left.y = 0;
+		bottom_right.x = SCREEN_WIDTH;
+		bottom_right.y = SCREEN_HEIGHT;
+		ClientToScreen(hWndParent, &top_left);
+		ClientToScreen(hWndParent, &bottom_right);
+		SetRect(&screen, top_left.x, top_left.y, bottom_right.x, bottom_right.y);
+	}
 }
 
 FUNCTION_PATCH(SetCursorClipBounds, SetCursorClipBounds_);
@@ -134,7 +138,7 @@ void InitializeInputProcs_()
 	SetCursorClipBounds_();
 
 	dword_6D5DD4 = 0;
-	if (dword_6D5DD0)
+	if (has_viewport && dword_6D5DD0)
 	{
 		ClipCursor(&screen);
 	}
@@ -951,39 +955,42 @@ FAIL_STUB_PATCH(DirtyArrayHandling);
 
 void BWFXN_RedrawTarget_()
 {
-	sub_4BD3A0_();
-	if (realizePalette_())
+	if (has_viewport)
 	{
-		if (ScreenLayers[1].buffers)
+		sub_4BD3A0_();
+		if (realizePalette_())
 		{
-			if (ScreenLayers[1].width)
+			if (ScreenLayers[1].buffers)
 			{
-				RECT rc;
-				SetRect(&rc, ScreenLayers[1].left, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1, ScreenLayers[1].height + ScreenLayers[1].top - 1);
-				isRectBoundsInside_Assign_32(&rc, &ScrLimit);
-				sub_41C2A0(&rc);
-				sub_41C2A0(&stru_6D63F4);
-				stru_6D63F4 = rc;
-			}
-			else
-			{
-				if (stru_6D63F4.left || stru_6D63F4.right)
+				if (ScreenLayers[1].width)
 				{
+					RECT rc;
+					SetRect(&rc, ScreenLayers[1].left, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1, ScreenLayers[1].height + ScreenLayers[1].top - 1);
+					isRectBoundsInside_Assign_32(&rc, &ScrLimit);
+					sub_41C2A0(&rc);
 					sub_41C2A0(&stru_6D63F4);
+					stru_6D63F4 = rc;
 				}
-				if (stru_6D63F4.left || stru_6D63F4.right || stru_6D63F4.top || stru_6D63F4.bottom)
+				else
 				{
-					stru_6D63F4.top = stru_6D63F4.bottom + 1;
+					if (stru_6D63F4.left || stru_6D63F4.right)
+					{
+						sub_41C2A0(&stru_6D63F4);
+					}
+					if (stru_6D63F4.left || stru_6D63F4.right || stru_6D63F4.top || stru_6D63F4.bottom)
+					{
+						stru_6D63F4.top = stru_6D63F4.bottom + 1;
+					}
 				}
 			}
+			DirtyArrayHandling_();
 		}
-		DirtyArrayHandling_();
-	}
 
-	if (dword_6D5E2C)
-	{
-		SRgnDelete(dword_6D5E2C);
-		dword_6D5E2C = 0;
+		if (dword_6D5E2C)
+		{
+			SRgnDelete(dword_6D5E2C);
+			dword_6D5E2C = 0;
+		}
 	}
 }
 
@@ -2298,6 +2305,10 @@ MEMORY_PATCH((void*)0x40BC2E, SCREEN_WIDTH * SCREEN_HEIGHT);
 MEMORY_PATCH((void*)0x40B5A9, SCREEN_WIDTH * SCREEN_HEIGHT);
 MEMORY_PATCH((void*)0x40B454, SCREEN_WIDTH * SCREEN_HEIGHT);
 
+void __fastcall DrawNullProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2)
+{
+}
+
 void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
@@ -2343,7 +2354,7 @@ void InitializeGameLayer_()
 	ScreenLayers[5].bits = 0;
 	ScreenLayers[5].width = GAME_AREA_WIDTH;
 	ScreenLayers[5].height = GAME_AREA_HEIGHT;
-	ScreenLayers[5].pUpdate = DrawGameProc_;
+	ScreenLayers[5].pUpdate = has_viewport ? DrawGameProc_ : DrawNullProc_;
 	memset(RefreshRegions, 1u, sizeof(RefreshRegions));
 	for (int i = 3; i <= 5; ++i)
 	{
@@ -2948,23 +2959,26 @@ FUNCTION_PATCH(QuitMissionMenu, QuitMissionMenu_);
 
 void TitlePaletteUpdate_(int a1)
 {
-	PALETTEENTRY* v1;
-	PALETTEENTRY a2[256];
-
-	if (byte_51A0E9)
+	if (has_viewport)
 	{
-		memset(GamePalette, 0, sizeof(GamePalette));
-		byte_51A0E9 = 0;
-		v1 = GamePalette;
-		if (Gamma != 100)
+		PALETTEENTRY* v1;
+		PALETTEENTRY a2[256];
+
+		if (byte_51A0E9)
 		{
-			sub_41DC20(GamePalette, a2, 256);
-			v1 = a2;
+			memset(GamePalette, 0, sizeof(GamePalette));
+			byte_51A0E9 = 0;
+			v1 = GamePalette;
+			if (Gamma != 100)
+			{
+				sub_41DC20(GamePalette, a2, 256);
+				v1 = a2;
+			}
+			SDrawUpdatePalette(0, 0x100u, v1, 1);
+			BWFXN_RedrawTarget_();
+			memset(stru_6CE720, 0, sizeof(stru_6CE720));
+			gluDlgFadePalette(a1);
 		}
-		SDrawUpdatePalette(0, 0x100u, v1, 1);
-		BWFXN_RedrawTarget_();
-		memset(stru_6CE720, 0, sizeof(stru_6CE720));
-		gluDlgFadePalette(a1);
 	}
 }
 
@@ -3824,7 +3838,8 @@ void minimapGameResetMouseInput_(dialog* dlg)
 	SetCursorClipBounds_();
 
 	dword_6D5DD4 = 0;
-	if (dword_6D5DD0)
+
+	if (has_viewport && dword_6D5DD0)
 	{
 		ClipCursor(&screen);
 	}
@@ -8267,7 +8282,10 @@ GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
 	DLGMusicFade_((MusicTrack) currentMusicId);
-	_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	if (has_viewport)
+	{
+		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 	GameState = 1;
 	TickCountSomething(0);
 	DoGameLoop_();
@@ -15296,7 +15314,10 @@ void doCursorClip_(int a1)
 		{
 			SetCursorClipBounds_();
 		}
-		ClipCursor(dword_6D5DD0 ? &screen : NULL);
+		if (has_viewport)
+		{
+			ClipCursor(dword_6D5DD0 ? &screen : NULL);
+		}
 	}
 }
 
@@ -15778,7 +15799,12 @@ void CreateMainWindow_()
 	const char* window_name = is_expansion_installed ? "Brood War" : "Starcraft";
 	int screen_width = GetSystemMetrics(SM_CXSCREEN);
 	int screen_height = GetSystemMetrics(SM_CYSCREEN);
-	hWndParent = CreateWindowExA(0, "SWarClass", window_name, WS_POPUP | WS_VISIBLE | WS_SYSMENU, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
+	unsigned window_style = WS_POPUP | WS_SYSMENU;
+	if (has_viewport)
+	{
+		window_style |= WS_VISIBLE;
+	}
+	hWndParent = CreateWindowExA(0, "SWarClass", window_name, window_style, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
 	if (!hWndParent)
 	{
 		FatalError("CreateWindowEx");
@@ -16559,7 +16585,10 @@ void GameMainLoop_()
 	AppAddExit_(SaveCPUThrottleOption);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
 		CpuThrottle = phFile != 0;
-	_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	if (has_viewport)
+	{
+		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+	}
 
 	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
 	{
@@ -16873,7 +16902,10 @@ int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 				}
 			}
 			cursorRefresh();
-			_SetCursorPos(GAME_AREA_WIDTH / 2, GAME_AREA_HEIGHT / 2);
+			if (has_viewport)
+			{
+				_SetCursorPos(GAME_AREA_WIDTH / 2, GAME_AREA_HEIGHT / 2);
+			}
 			hAccTable = DlgAccelerator;
 			input_procedures[EVN_SYSCHAR] = AcceleratorTables;
 		}

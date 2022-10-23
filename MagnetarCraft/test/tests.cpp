@@ -26,6 +26,7 @@ bool files_match(const std::filesystem::path& path1, const std::filesystem::path
 int main()
 {
 	frame_capping = false;
+	has_viewport = false;
 	end_mission_prompt = false;
 	keep_app_active_in_background = true;
 
@@ -46,7 +47,10 @@ int main()
 
 	PreInitData_();
 	CreateMainWindow_();
-	audioVideoInit_();
+	if (has_viewport)
+	{
+		audioVideoInit_();
+	}
 	CpuThrottle = 0;
 
 	LoadInitIscriptBIN_();
