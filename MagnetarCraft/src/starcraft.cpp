@@ -10022,7 +10022,6 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			v24 = 1;
 			for (int v12 = v23; v12 < a1->regionCount; v12++)
 			{
-				u16* v14 = &a1->regions[v12].rgnBox.top;
 				if ((__int16)a1->regions[v12].rgnBox.left > 0)
 				{
 					a1->regions[v12].rgnBox.left -= 1;
