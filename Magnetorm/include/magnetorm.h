@@ -7,14 +7,14 @@
 extern "C"
 {
 
-BOOL __stdcall SNetGetProviderCaps(char* caps);
+BOOL __stdcall SNetGetProviderCaps(struct SNETCAPS* caps);
 HANDLE __stdcall SNetRegisterEventHandler(int type, void(__stdcall* event)(struct s_evt* evt));
 BOOL __stdcall SNetEnumGamesEx(int a1, int a2, int(__fastcall* callback)(DWORD, DWORD, DWORD), int* hintnextcall);
 BOOL __stdcall SNetCreateGame(const char* pszGameName, const char* pszGamePassword, const char* pszGameStatString, DWORD dwGameType, char* GameTemplateData, int GameTemplateSize, int playerCount, const char* creatorName, const char* a11, int* playerID);
 BOOL __stdcall SNetDestroy();
 BOOL __stdcall SNetCreateLadderGame(char* gameName, char* gamePassword, char* gameDataString, DWORD gameType, int a5, int a6, char* GameTemplateData, int GameTemplateSize, int playerCount, char* playerName, char* a11, int* playerID);
 BOOL __stdcall SNetJoinGame(unsigned int a1, char* gameName, char* gamePassword, char* playerName, char* userStats, int* playerid);
-BOOL __stdcall SNetInitializeProvider(DWORD providerName, int* providerData, int* userData, int* a4, int* a5);
+BOOL __stdcall SNetInitializeProvider(DWORD providerName, struct SNETPROGRAMDATA* providerData, struct SNETPLAYERDATA* userData, struct SNETUIDATA* a4, struct _SNETVERSIONDATA* a5);
 BOOL __stdcall SNetPerformUpgrade(DWORD* upgradestatus);
 int __stdcall SNetLeagueLogout(char* bnetName);
 BOOL __stdcall SNetGetNumPlayers(int* firstplayerid, int* lastplayerid, int* activeplayers);
