@@ -6863,9 +6863,75 @@ void sub_4EB5E0_(CUnit* a1)
 
 FAIL_STUB_PATCH(sub_4EB5E0);
 
+bool isThingyOnMap_(int y, int x, CThingy* thingy)
+{
+	CSprite* v5 = thingy->sprite;
+	if (!v5 || (v5->flags & 0x20) != 0)
+	{
+		return 0;
+	}
+	__int64 v6 = (__int16)v5->position.x - x / 2;
+	int v7 = (__int16)v5->position.y - y / 2;
+	int v8 = ((BYTE4(v6) & 0x1F) + (int)v6) >> 5;
+	int v9 = v7 / 32;
+	int v10 = (unsigned int)(x + 31) >> 5;
+	int v11 = (unsigned int)(y + 31) >> 5;
+	if (v8 < 0)
+	{
+		v10 += v8;
+		if (v10 <= 0)
+		{
+			return v5->visibilityFlags != 0;
+		}
+		v8 = 0;
+	}
+	if (v9 < 0)
+	{
+		v11 += v9;
+		v9 = 0;
+		if (v11 <= 0)
+		{
+			return v5->visibilityFlags != 0;
+		}
+	}
+	if (v10 + v8 > map_size.width)
+	{
+		v10 = map_size.width - v8;
+		if (v10 <= 0)
+		{
+			return v5->visibilityFlags != 0;
+		}
+	}
+	if (v11 + v9 > map_size.height)
+	{
+		v11 = map_size.height - v9;
+		if (v11 <= 0)
+		{
+			return v5->visibilityFlags != 0;
+		}
+	}
+	char v13 = getVisibilityMaskFromPositionAndSize(v11, v8, v9, v10);
+
+	if (v5->visibilityFlags != v13)
+	{
+		char v17 = playerVisions & thingy->sprite->visibilityFlags;
+		refreshAllVisibleImagesAtScreenPosition(thingy->sprite, v13);
+		if (v17)
+		{
+			if (((unsigned __int8)playerVisions & thingy->sprite->visibilityFlags) == 0)
+			{
+				return 1;
+			}
+		}
+	}
+	return 0;
+}
+
+FAIL_STUB_PATCH(isThingyOnMap);
+
 void UpdateUnitSpriteInfo_(CUnit* unit)
 {
-	bool v1 = isThingyOnMap(Unit_Placement[unit->unitType].y, Unit_Placement[unit->unitType].x, (CThingy*)unit);
+	bool v1 = isThingyOnMap_(Unit_Placement[unit->unitType].y, Unit_Placement[unit->unitType].x, (CThingy*)unit);
 
 	if (unit->subUnit && (unit->subUnit->sprite->flags & 0x20) == 0)
 	{
@@ -7257,7 +7323,7 @@ void sub_488020_(CThingy* thingy)
 	}
 	else
 	{
-		isThingyOnMap(thingy->sprite->unkflags_13, thingy->sprite->unkflags_12, thingy);
+		isThingyOnMap_(thingy->sprite->unkflags_13, thingy->sprite->unkflags_12, thingy);
 	}
 
 	if (thingy->sprite)
