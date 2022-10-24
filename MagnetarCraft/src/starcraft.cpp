@@ -6863,6 +6863,22 @@ void sub_4EB5E0_(CUnit* a1)
 
 FAIL_STUB_PATCH(sub_4EB5E0);
 
+int getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, __int16 height)
+{
+	MegatileFlags result = (MegatileFlags)0;
+
+	for (int i = 0; i < height; i++)
+	{
+		for (int j = 0; j < width; j++)
+		{
+			result |= ~(active_tiles[(y + i) * map_size.width + x + j] & (MegatileFlags)0xFF);
+		}
+	}
+	return result;
+}
+
+FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize);
+
 bool isThingyOnMap_(int y, int x, CThingy* thingy)
 {
 	CSprite* v5 = thingy->sprite;
@@ -6910,7 +6926,7 @@ bool isThingyOnMap_(int y, int x, CThingy* thingy)
 			return v5->visibilityFlags != 0;
 		}
 	}
-	char v13 = getVisibilityMaskFromPositionAndSize(v11, v8, v9, v10);
+	char v13 = getVisibilityMaskFromPositionAndSize_(v8, v9, v10, v11);
 
 	if (v5->visibilityFlags != v13)
 	{
@@ -10506,22 +10522,6 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 }
 
 FAIL_STUB_PATCH(unitNotNeutral);
-
-int __fastcall getVisibilityMaskFromPositionAndSize_(int a1, __int16 a2, __int16 a3, __int16 a4, __int16 a5)
-{
-	MegatileFlags result = (MegatileFlags) 0;
-
-	for (int i = 0; i < a2; i++)
-	{
-		for (int j = 0; j < a5; j++)
-		{
-			result |= ~(active_tiles[(a4 + i) * map_size.width + a3 + j] & (MegatileFlags)0xFF);
-		}
-	}
-	return result;
-}
-
-FUNCTION_PATCH(getVisibilityMaskFromPositionAndSize, getVisibilityMaskFromPositionAndSize_);
 
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
