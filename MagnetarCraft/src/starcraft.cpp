@@ -9086,10 +9086,63 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void Statf10_RegisterCustomProcs_(dialog* dlg)
+{
+	static FnInteract functions[] = {
+		statf10_ButtonInteract,
+	};
+
+	dlg->lFlags |= DialogFlags::CTRL_USELOCALGRAPHIC;
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	BINDLG_BlitSurface(dlg);
+}
+
+FAIL_STUB_PATCH(Statf10_RegisterCustomProcs);
+
+int __fastcall Statf10_DialogProc_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYRPT:
+		return 0;
+	case EventNo::EVN_MOUSEMOVE:
+		Statf10_MouseMoveEvt(dlg, evt);
+		[[fallthough]];
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		if (IS_GAME_PAUSED)
+		{
+			genericDlgInteract(dlg, evt);
+			return 1;
+		}
+		break;
+	case EventNo::EVN_USER:
+		if (evt->dwUser == USER_CREATE)
+		{
+			Statf10_RegisterCustomProcs_(dlg);
+		}
+		else if (evt->dwUser == USER_MOUSEMOVE)
+		{
+			return 1;
+		}
+		break;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(Statf10_DialogProc);
+
 void load_Statf10_BIN_()
 {
 	stat_f10_Dlg = LoadDialog("rez\\stat_f10.bin"); // The menu button in the in-game UI
-	InitializeDialog_(stat_f10_Dlg, Statf10_DialogProc);
+	InitializeDialog_(stat_f10_Dlg, Statf10_DialogProc_);
 }
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
