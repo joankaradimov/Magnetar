@@ -86,6 +86,29 @@ void ISCRIPT_AttackMelee_()
 
 FAIL_STUB_PATCH(ISCRIPT_AttackMelee);
 
+void flipImage_(CImage* image, char is_flipped)
+{
+    if (((image->flags & IF_HORIZONTALLY_FLIPPED) != 0) != is_flipped)
+    {
+        if (is_flipped & 1)
+        {
+            image->flags |= ImageFlags::IF_HORIZONTALLY_FLIPPED;
+        }
+        else
+        {
+            image->flags &= ~ImageFlags::IF_HORIZONTALLY_FLIPPED;
+        }
+
+        CImage* v4 = setImagePaletteType(image, image->paletteType);
+        if (v4->flags & ImageFlags::IF_USES_SPECIAL_OFFSET)
+        {
+            updateImagePositionOffset(v4);
+        }
+    }
+}
+
+FAIL_STUB_PATCH(flipImage);
+
 void ISCRIPT_AttackWith_(u8 is_ground_weapon)
 {
     if (iscript_unit->orderTarget.pUnit)
@@ -448,7 +471,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
             {
                 break;
             }
-            flipImage(image, arg);
+            flipImage_(image, arg);
             break;
         }
         case opc_playsnd:
