@@ -2285,9 +2285,8 @@ int sub_41C810(int a1, _DWORD a2) {
 DECL_FUNC(int(*BWFXN_RedrawTarget)(), BWFXN_RedrawTarget, 0x41ca00);
 DECL_FUNC(void (__fastcall*DialogUpdateProc)(int a1, int a2, Bitmap *pSurface, bounds *pBounds), DialogUpdateProc, 0x41cb50);
 DECL_FUNC(int(*fixDrawBoundsWithin)(), fixDrawBoundsWithin, 0x41cf60);
-int BWFXN_PrintIcon(int a1, Bitmap *a2, __int16 a3, __int16 a4) {
+void BWFXN_PrintIcon(bounds *a1, Bitmap *a2, __int16 a3, __int16 a4) {
     int address = 0x41d090;
-    int result_;
     __asm {
         xor eax, eax
         xor edi, edi
@@ -2296,9 +2295,7 @@ int BWFXN_PrintIcon(int a1, Bitmap *a2, __int16 a3, __int16 a4) {
         push dword ptr a4
         push dword ptr a3
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_41D160(unsigned __int8 a1, Bitmap *a2, int a3, int a4, int a5, int a6, int a7) {
     int address = 0x41d160;
@@ -7313,11 +7310,29 @@ __int16 sub_45E400(Bitmap *a1, int a2, char a3) {
 DECL_FUNC(int (__stdcall*rgbValue)(int), rgbValue, 0x45e450);
 DECL_FUNC(int (__thiscall*sub_45E4C0)(HANDLE video, int a2), sub_45E4C0, 0x45e4c0);
 DECL_FUNC(int(*sub_45E560)(), sub_45E560, 0x45e560);
-DECL_FUNC(int (__stdcall*sub_45E570)(char), sub_45E570, 0x45e570);
+int sub_45E570(rect *a1, unsigned __int8 a2) {
+    int address = 0x45e570;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__fastcall*GameTalkingPortrait_CB)(dialog *a1, __int16 timer_id), GameTalkingPortrait_CB, 0x45e610);
-DECL_FUNC(int (__stdcall*statPortBtnUpdate)(int, int), statPortBtnUpdate, 0x45e650);
+DECL_FUNC(void (__fastcall*statPortBtnUpdate)(dialog *dlg, int x, int y, rect *dst), statPortBtnUpdate, 0x45e650);
 DECL_FUNC(void (__cdecl*clearSelectionPortrait)(), clearSelectionPortrait, 0x45e710);
-DECL_FUNC(int(*sub_45E770)(), sub_45E770, 0x45e770);
+void sub_45E770(dialog *dlg) {
+    int address = 0x45e770;
+    __asm {
+        xor eax, eax
+        mov eax, dlg
+        call address
+    }
+}
 DECL_FUNC(int (__stdcall*displayIdlePortrait)(__int16), displayIdlePortrait, 0x45e7a0);
 DECL_FUNC(int (__stdcall*displayTalkingPortrait)(__int16), displayTalkingPortrait, 0x45e8a0);
 DECL_FUNC(int(*sub_45E9A0)(), sub_45E9A0, 0x45e9a0);
@@ -7363,7 +7378,7 @@ signed int DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_typ
     }
     return result_;
 }
-DECL_FUNC(bool (__fastcall*statPortBtnInteract)(dialog *dlg, dlgEvent *evt), statPortBtnInteract, 0x45ee90);
+DECL_FUNC(int (__fastcall*statPortBtnInteract)(dialog *dlg, dlgEvent *evt), statPortBtnInteract, 0x45ee90);
 DECL_FUNC(int (__thiscall*sub_45EF50)(dialog *a2), sub_45EF50, 0x45ef50);
 int *DoUnitEventNotify(CUnit *a1, int a2, char a3, int a4, int *a5, unsigned int a6) {
     int address = 0x45efe0;
@@ -7384,16 +7399,13 @@ int *DoUnitEventNotify(CUnit *a1, int a2, char a3, int a4, int *a5, unsigned int
     }
     return result_;
 }
-dialog *statport_Buttonpress(dialog *a1) {
+void statport_Buttonpress(dialog *dlg) {
     int address = 0x45f0b0;
-    dialog * result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__fastcall*statport_Dlg_Interact)(dialog *dlg, struct dlgEvent *evt), statport_Dlg_Interact, 0x45f290);
 DECL_FUNC(int(*loadPortdata_BINDLG)(), loadPortdata_BINDLG, 0x45f320);
@@ -17624,17 +17636,13 @@ int CompressWrite(void *a1, size_t a2, FILE *a3) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*sub_4C35C0)(), sub_4C35C0, 0x4c35c0);
-int BINDLG_BlitSurface(dialog *a1) {
+void BINDLG_BlitSurface(dialog *a1) {
     int address = 0x4c35f0;
-    int result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4C3690)(), sub_4C3690, 0x4c3690);
 DECL_FUNC(int(*RefreshConsole)(), RefreshConsole, 0x4c36c0);
@@ -21159,7 +21167,14 @@ char getRightClickActionOrder(CUnit *a1) {
 DECL_FUNC(int(*sub_4E5EE0)(), sub_4E5EE0, 0x4e5ee0);
 DECL_FUNC(int(*sub_4E5F00)(), sub_4E5F00, 0x4e5f00);
 DECL_FUNC(void (__stdcall*refreshUnitVision)(CUnit *unit), refreshUnitVision, 0x4e5f30);
-DECL_FUNC(int(*moveScreenToUnit)(), moveScreenToUnit, 0x4e6020);
+void moveScreenToUnit(CUnit *a1) {
+    int address = 0x4e6020;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 void sub_4E6060(CUnit *a1, char a2, int esi0, char a3, int a4) {
     int address = 0x4e6060;
     __asm {
@@ -26638,7 +26653,7 @@ int& dword_68AC70 = * ((decltype(&dword_68AC70)) 0x68ac70);
 char& CanUpdateSelectedUnitPortrait = * ((decltype(&CanUpdateSelectedUnitPortrait)) 0x68ac74);
 Bitmap& stru_68AC78 = * ((decltype(&stru_68AC78)) 0x68ac78);
 Bitmap& stru_68AC80 = * ((decltype(&stru_68AC80)) 0x68ac80);
-int& dword_68AC88 = * ((decltype(&dword_68AC88)) 0x68ac88);
+char *& dword_68AC88 = * ((decltype(&dword_68AC88)) 0x68ac88);
 dialog *& statport_Dlg = * ((decltype(&statport_Dlg)) 0x68ac8c);
 int& dword_68AC90 = * ((decltype(&dword_68AC90)) 0x68ac90);
 int& dword_68AC94 = * ((decltype(&dword_68AC94)) 0x68ac94);
