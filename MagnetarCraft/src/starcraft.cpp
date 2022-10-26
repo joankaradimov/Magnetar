@@ -4056,6 +4056,27 @@ int __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(MinimapButton_EventHandler);
 
+void BINDLG_BlitSurface_(dialog* dlg)
+{
+	Bitmap* v3 = dword_6CF4A8;
+	dlg->srcBits.wid = dlg->fields.dlg.dstBits_wid;
+	dlg->srcBits.ht = dlg->fields.dlg.dstBits_ht;
+	dlg->srcBits.data = (u8*)SMemAlloc(dlg->srcBits.wid * dlg->srcBits.ht, "Starcraft\\SWAR\\lang\\status.cpp", 181, 0);
+
+	bounds a1a;
+	a1a.left = dlg->rct.left;
+	a1a.height = dlg->srcBits.ht;
+	a1a.top = dlg->rct.top;
+	a1a.width = dlg->srcBits.wid;
+	a1a.right = dlg->srcBits.wid + a1a.left - 1;
+	a1a.bottom = a1a.height + dlg->rct.top - 1;
+	dword_6CF4A8 = &dlg->srcBits;
+	BlitSurface(&a1a, &GameScreenConsole, 0, 0);
+	dword_6CF4A8 = v3;
+}
+
+FAIL_STUB_PATCH(BINDLG_BlitSurface);
+
 void setMinimapConstants();
 void setMapSizeConstants_();
 
@@ -4189,7 +4210,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 	else if (dword_5993AC == 0)
 	{
 		registerUserDialogAction(dlg, sizeof(ingame_functions), ingame_functions);
-		BINDLG_BlitSurface(dlg);
+		BINDLG_BlitSurface_(dlg);
 		v1 = dword_5993AC;
 	}
 	else
@@ -8491,7 +8512,7 @@ FAIL_STUB_PATCH(sub_458BB0);
 void statflufDlgUpdate_(dialog* dlg)
 {
 	dlg->lFlags |= CTRL_TRANSPARENT;
-	BINDLG_BlitSurface(dlg);
+	BINDLG_BlitSurface_(dlg);
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
 	{
 		dlg->lFlags |= CTRL_UPDATE;
@@ -8645,7 +8666,7 @@ void statport_Buttonpress_(dialog* dlg)
 	};
 
 	registerUserDialogAction(dlg, sizeof(functions), functions);
-	BINDLG_BlitSurface(dlg); // TODO: reimplement
+	BINDLG_BlitSurface_(dlg);
 
 	char buff[MAX_PATH];
 	_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", InReplay ? 'n' : race_lowercase_char_id[consoleIndex], "conover.pcx");
@@ -9043,7 +9064,7 @@ void statdata_extendedCtrlID_(dialog* dlg)
 	};
 
 	registerUserDialogAction(dlg, sizeof(functions), functions);
-	BINDLG_BlitSurface(dlg);
+	BINDLG_BlitSurface_(dlg);
 	CanUpdateStatDataDialog = 1;
 }
 
@@ -9145,7 +9166,7 @@ void statbtn_BIN_CustomCtrlID_(dialog* dlg)
 	};
 
 	registerUserDialogAction(dlg, sizeof(functions), functions);
-	BINDLG_BlitSurface(dlg);
+	BINDLG_BlitSurface_(dlg);
 }
 
 FAIL_STUB_PATCH(statbtn_BIN_CustomCtrlID);
@@ -9210,7 +9231,7 @@ void Statf10_RegisterCustomProcs_(dialog* dlg)
 
 	dlg->lFlags |= DialogFlags::CTRL_USELOCALGRAPHIC;
 	registerUserDialogAction(dlg, sizeof(functions), functions);
-	BINDLG_BlitSurface(dlg);
+	BINDLG_BlitSurface_(dlg);
 }
 
 FAIL_STUB_PATCH(Statf10_RegisterCustomProcs);
