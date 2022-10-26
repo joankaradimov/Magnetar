@@ -8550,6 +8550,122 @@ void load_statfluf_BIN_()
 
 FAIL_STUB_PATCH(load_statfluf_BIN);
 
+void __fastcall statPortBtnUpdate_(dialog* dlg, int x, int y, rect* dst)
+{
+	bounds a1;
+
+	if (UnitPortraits)
+	{
+		a1.width = stru_68AC80.wid;
+		a1.right = stru_68AC80.wid - 1;
+		a1.height = stru_68AC80.ht;
+		a1.bottom = stru_68AC80.ht - 1;
+		a1.left = 0;
+		a1.top = 0;
+		BlitSurface(&a1, &stru_68AC80, (unsigned __int16)dlg->rct.left, dlg->rct.top);
+		if ((unsigned __int8)byte_68AC9C < 80)
+		{
+			sub_45E570(&dlg->rct, byte_68AC9C);
+		}
+	}
+
+	a1.width = stru_68AC78.wid;
+	a1.right = stru_68AC78.wid - 1;
+	a1.height = stru_68AC78.ht;
+	a1.bottom = stru_68AC78.ht - 1;
+	a1.left = 0;
+	a1.top = 0;
+	BWFXN_PrintIcon(&a1, &stru_68AC78, (unsigned __int16)dlg->rct.left, dlg->rct.top);
+}
+
+FAIL_STUB_PATCH(statPortBtnUpdate);
+
+void sub_45E770_(dialog* dlg)
+{
+	dlg->lUser = 0;
+	dlg->wUser = word_51521C[consoleIndex];
+	dlg->pfcnUpdate = statPortBtnUpdate_;
+	dword_68AC98 = dlg;
+}
+
+FAIL_STUB_PATCH(sub_45E770);
+
+int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_45E770_(dlg);
+			SetCallbackTimer(1, dlg, 50, sub_45EC40);
+			SetCallbackTimer(2, dlg, 30, sub_45EC40);
+			return 1;
+		case EventUser::USER_DESTROY:
+			waitLoopCntd(1, dlg);
+			waitLoopCntd(2, dlg);
+			waitLoopCntd(3, dlg);
+			waitLoopCntd(4, dlg);
+			dword_68AC98 = 0;
+			break;
+		case EventUser::USER_ACTIVATE:
+			if (CUnit* unit = (CUnit*) dlg->lUser)
+			{
+				moveScreenToUnit(unit);
+			}
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(statPortBtnInteract);
+
+void statport_Buttonpress_(dialog* dlg)
+{
+	dialog* v2 = getControlFromIndex_(dlg, 1);
+	stru_68AC80.wid = v2->rct.right - v2->rct.left + 1;
+	dword_68AC90 = (__int16)stru_68AC80.wid;
+	dword_68AC6C = (__int16)stru_68AC80.wid - 1;
+	dword_68AC64 = 0;
+	dword_68AC68 = 0;
+	stru_68AC80.ht = v2->rct.bottom - v2->rct.top + 1;
+	dword_68AC94 = (__int16)stru_68AC80.ht;
+	dword_68AC70 = (__int16)stru_68AC80.ht - 1;
+
+	unsigned v5 = (__int16)stru_68AC80.wid * (__int16)stru_68AC80.ht;
+	stru_68AC80.data = (u8*)SMemAlloc((__int16)stru_68AC80.wid * dword_68AC94, "Starcraft\\SWAR\\lang\\statport.cpp", 635, 0);
+
+	memset(stru_68AC80.data, HIBYTE(dword_6CEB2C), v5);
+	memset(&stru_68AC80.data[4 * (v5 >> 2)], HIBYTE(dword_6CEB2C), v5 & 3);
+
+	static FnInteract functions[] = {
+		statPortBtnInteract_,
+	};
+
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	BINDLG_BlitSurface(dlg); // TODO: reimplement
+
+	char buff[MAX_PATH];
+	_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", InReplay ? 'n' : race_lowercase_char_id[consoleIndex], "conover.pcx");
+	stru_68AC78.data = 0;
+
+	void* buffer;
+	int width;
+	int height;
+	if (!SBmpAllocLoadImage(buff, 0, &buffer, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(buff, SErrGetLastError());
+	}
+	stru_68AC78.wid = (unsigned __int16)width;
+	stru_68AC78.ht = height;
+	stru_68AC78.data = (u8*)buffer;
+	dword_68AC88 = getControlFromIndex_(dlg, -10)->pszText;
+}
+
+FAIL_STUB_PATCH(statport_Buttonpress);
+
 int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -8562,7 +8678,7 @@ int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case USER_CREATE:
-			statport_Buttonpress(dlg);
+			statport_Buttonpress_(dlg);
 			break;
 		case USER_DESTROY:
 			statport_alloc();
