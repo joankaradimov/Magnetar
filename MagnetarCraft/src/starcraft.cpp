@@ -17051,6 +17051,84 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 
 FUNCTION_PATCH(packColorShifts, packColorShifts_);
 
+void UpdateCountdownTimer_()
+{
+	char buff[32];
+
+	if (CountdownTimer / 3600)
+	{
+		_snprintf(buff, sizeof(buff), "%d:%02d:%02d", CountdownTimer / 3600, CountdownTimer % 3600 / 60, CountdownTimer % 60);
+	}
+	else
+	{
+		_snprintf(buff, sizeof(buff), "%d:%02d", CountdownTimer / 60, CountdownTimer % 60);
+	}
+	setCountdownTimerString(buff);
+}
+
+FAIL_STUB_PATCH(UpdateCountdownTimer);
+
+void DisableCountdownTimer_()
+{
+	dialog* v1 = getControlFromIndex_(statres_Dlg, -10);
+	HideDialog(v1);
+}
+
+FAIL_STUB_PATCH(DisableCountdownTimer);
+
+void countdownTimersExecute_(unsigned int a2)
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		if (byte_6509B8[i])
+		{
+			if (dword_650980[i] != -1)
+			{
+				if (dword_650980[i] > a2)
+				{
+					dword_650980[i] -= a2;
+				}
+				else
+				{
+					byte_6509B8[i] = 0;
+					dword_650980[i] = 0;
+					word_6509A0 = 1;
+				}
+			}
+		}
+	}
+
+	if (!IS_GAME_PAUSED)
+	{
+		bool v3 = word_65097C-- == 0;
+		if (v3)
+		{
+			word_65097C = 15;
+			updateLeaderboardSorting();
+		}
+		v3 = word_6509C0-- == 0;
+		if (v3)
+		{
+			++ElapsedTimeSeconds;
+			if (CountdownTimer)
+			{
+				if (!TimerIsPaused && !--CountdownTimer)
+				{
+					word_6509A0 = 1;
+				}
+				UpdateCountdownTimer_();
+			}
+			else
+			{
+				DisableCountdownTimer_();
+			}
+			word_6509C0 = 15;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(countdownTimersExecute);
+
 int __fastcall TriggerAction_NoAction_(Action* a1)
 {
 	return 1;
@@ -17951,7 +18029,7 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 	if (!IS_GAME_PAUSED || byte_6509B4)
 	{
 		load_endmission_();
-		countdownTimersExecute(dwMillisecondsPerFrame);
+		countdownTimersExecute_(dwMillisecondsPerFrame);
 		if (word_6509A0-- == 0)
 		{
 			memset(endgame_state, EndgameState::INITIAL, 8);
