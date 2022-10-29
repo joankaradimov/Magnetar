@@ -12,6 +12,7 @@
 std::function<void()> on_end_game = nullptr;
 bool frame_capping = true;
 bool has_viewport = true;
+bool has_hud = true;
 bool end_mission_prompt = true;
 bool keep_app_active_in_background = false;
 
@@ -6170,16 +6171,19 @@ FAIL_STUB_PATCH(free_cmdIcons);
 
 void clearSelectionPortrait_()
 {
-	if (video)
+	if (has_hud)
 	{
-		SVidPlayEnd(video);
-		video = NULL;
-	}
+		if (video)
+		{
+			SVidPlayEnd(video);
+			video = NULL;
+		}
 
-	if (statport_Dlg)
-	{
-		DestroyDialog(statport_Dlg);
-		statport_Dlg = NULL;
+		if (statport_Dlg)
+		{
+			DestroyDialog(statport_Dlg);
+			statport_Dlg = NULL;
+		}
 	}
 
 	if (dword_6D5C9C)
@@ -6214,27 +6218,31 @@ FAIL_STUB_PATCH(destroy_statfluf_bin);
 
 void destroyGameHUD_()
 {
-	if (minimap_Dlg)
+	if (has_hud)
 	{
-		DestroyDialog(minimap_Dlg);
-		minimap_Dlg = NULL;
+		if (minimap_Dlg)
+		{
+			DestroyDialog(minimap_Dlg);
+			minimap_Dlg = NULL;
+		}
+
+		if (blink_grp)
+		{
+			SMemFree(blink_grp, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
+			blink_grp = NULL;
+		}
+
+		destroy_textbox_bin_();
+		destroy_statf10_bin_();
+		destroy_wirefram_grp_();
+		destroyStatdata_();
+		destroyStatsesBin_();
+		destroy_statlb_dlg_();
+		free_cmdIcons_();
+		clearSelectionPortrait_();
+		destroy_statfluf_bin_();
 	}
 
-	if (blink_grp)
-	{
-		SMemFree(blink_grp, "Starcraft\\SWAR\\lang\\minimap.cpp", 2065, 0);
-		blink_grp = NULL;
-	}
-
-	destroy_textbox_bin_();
-	destroy_statf10_bin_();
-	destroy_wirefram_grp_();
-	destroyStatdata_();
-	destroyStatsesBin_();
-	destroy_statlb_dlg_();
-	free_cmdIcons_();
-	clearSelectionPortrait_();
-	destroy_statfluf_bin_();
 	refreshSelectionScreen_();
 
 	if (StatTxtTbl.buffer)
@@ -8010,10 +8018,13 @@ FAIL_STUB_PATCH(sub_4D93B0);
 
 void updateHUDInformation_()
 {
-	sub_4C3B10_();
-	refreshScreen();
-	sub_4D93B0_();
-	refreshGameTextIfCounterActive();
+	if (has_hud)
+	{
+		sub_4C3B10_();
+		refreshScreen();
+		sub_4D93B0_();
+		refreshGameTextIfCounterActive();
+	}
 }
 
 FAIL_STUB_PATCH(updateHUDInformation);
@@ -9570,18 +9581,32 @@ FAIL_STUB_PATCH(sub_47AAC0);
 
 void setup_HUD_()
 {
-	LoadConsoleImage_();
-	sub_47AAC0_();
-	load_statfluf_BIN_();
-	loadPortdata_BINDLG_();
-	load_statlb_();
-	load_StatRes_BIN_();
-	load_Statdata_BIN_();
-	load_WireframeGRP();
-	load_statbtn_BIN_();
-	load_Statf10_BIN_();
-	load_textbox_BIN_();
-	load_gluMinimap_();
+	if (has_hud)
+	{
+		LoadConsoleImage_();
+		sub_47AAC0_();
+		load_statfluf_BIN_();
+		loadPortdata_BINDLG_();
+		load_statlb_();
+		load_StatRes_BIN_();
+		load_Statdata_BIN_();
+		load_WireframeGRP();
+		load_statbtn_BIN_();
+		load_Statf10_BIN_();
+		load_textbox_BIN_();
+		load_gluMinimap_();
+	}
+	else
+	{
+		u8 buffer[SCREEN_WIDTH * SCREEN_HEIGHT] = { 0 };
+		GameScreenConsole.ht = SCREEN_HEIGHT;
+		GameScreenConsole.wid = SCREEN_WIDTH;
+		GameScreenConsole.data = buffer;
+		MainBltMask = BltMask_Constructor(&GameScreenConsole, 0, 0);
+
+		setMinimapConstants();
+	}
+
 	if (GameScreenConsole.data != NULL)
 	{
 		SMemFree(GameScreenConsole.data, "Starcraft\\SWAR\\lang\\status.cpp", 217, NULL);
@@ -17116,11 +17141,17 @@ void countdownTimersExecute_(unsigned int a2)
 				{
 					word_6509A0 = 1;
 				}
-				UpdateCountdownTimer_();
+				if (has_hud)
+				{
+					UpdateCountdownTimer_();
+				}
 			}
 			else
 			{
-				DisableCountdownTimer_();
+				if (has_hud)
+				{
+					DisableCountdownTimer_();
+				}
 			}
 			word_6509C0 = 15;
 		}

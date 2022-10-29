@@ -27,6 +27,7 @@ int main()
 {
 	frame_capping = false;
 	has_viewport = false;
+	has_hud = false;
 	end_mission_prompt = false;
 	keep_app_active_in_background = true;
 
