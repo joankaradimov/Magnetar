@@ -17636,11 +17636,11 @@ int CompressWrite(void *a1, size_t a2, FILE *a3) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*sub_4C35C0)(), sub_4C35C0, 0x4c35c0);
-void BINDLG_BlitSurface(dialog *a1) {
+void BINDLG_BlitSurface(dialog *dlg) {
     int address = 0x4c35f0;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, dlg
         call address
     }
 }
@@ -25740,8 +25740,8 @@ MapData4& level_cheat_mission = * ((decltype(&level_cheat_mission)) 0x51c410);
 int& dword_51C414 = * ((decltype(&dword_51C414)) 0x51c414);
 dialog *& dword_51C418 = * ((decltype(&dword_51C418)) 0x51c418);
 int& dword_51C428 = * ((decltype(&dword_51C428)) 0x51c428);
-__int16& word_51C42C = * ((decltype(&word_51C42C)) 0x51c42c);
-int(&dword_51C430)[] = * ((decltype(&dword_51C430)) 0x51c430);
+__int16& active_timers_count_maybe = * ((decltype(&active_timers_count_maybe)) 0x51c42c);
+swishTimer(&active_timers_maybe)[1] = * ((decltype(&active_timers_maybe)) 0x51c430);
 __int16(&word_51C480)[20] = * ((decltype(&word_51C480)) 0x51c480);
 int& dword_51C4A8 = * ((decltype(&dword_51C4A8)) 0x51c4a8);
 int& dword_51C4AC = * ((decltype(&dword_51C4AC)) 0x51c4ac);
