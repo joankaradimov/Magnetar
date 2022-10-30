@@ -11299,6 +11299,17 @@ int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 	}
 }
 
+int __stdcall gluLoadBINDlg__(FnInteract fn_interact)
+{
+	dialog* dlg;
+
+	__asm mov dlg, eax
+
+	return gluLoadBINDlg_(dlg, fn_interact);
+}
+
+FUNCTION_PATCH((void*)0x41A080, gluLoadBINDlg__);
+
 void AnimateVideos_(dialog* result)
 {
 	for (dialog* i = result->fields.dlg.pFirstChild; i; i = i->pNext)
