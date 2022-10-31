@@ -12191,7 +12191,117 @@ bool sub_4B2810_(dialog* a1)
 
 FAIL_STUB_PATCH(sub_4B2810);
 
-// TODO: reimplement DlgSwooshin -- all of its calls are moved away from StarCraft.exe
+void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 a4)
+{
+	memset(&dword_51C428, 0, 0x90u);
+	active_timers_count_maybe = timers_count;
+	int v6 = 0;
+	dword_51C428 = (int)timers;
+	dword_51C4AC = (unsigned __int16)a4 / 20;
+	dword_51C4A8 = 0;
+	__int16 v20 = 0;
+	__int16 a1a = 0;
+	for (int v6 = 0; v6 < (unsigned __int16)timers_count; v6++)
+	{
+		dialog* v8 = getControlFromIndex_(a3, timers[v6].wIndex);
+		v8->lFlags |= CTRL_PLAIN;
+		__int16 v9 = 0;
+		switch (timers[v6].wType)
+		{
+		case 0u:
+			v9 = v8->rct.right + 1;
+			v8->rct.left -= v9;
+			v8->rct.right = -1;
+			break;
+		case 1u:
+			v9 = v8->rct.bottom + 1;
+			v8->rct.top -= v9;
+			v8->rct.bottom = -1;
+			break;
+		case 2u:
+			v9 = 640 - v8->rct.left;
+			v8->rct.right += v9;
+			v8->rct.left = 640;
+			break;
+		case 3u:
+			v9 = 480 - v8->rct.top;
+			v8->rct.bottom += v9;
+			v8->rct.top = 480;
+			break;
+		default:
+			break;
+		}
+		word_51C480[v6] = v9;
+		v8->wUser = v9;
+		a1a = max(a1a, v9);
+		if ((__int16)timers[v6].wIndex > v20)
+		{
+			v20 = timers[v6].wIndex;
+			dword_51C4B0 = v8;
+		}
+		active_timers_maybe[v6] = { 0, 1 };
+	}
+
+	if (dword_51C4B0)
+	{
+		dword_51C4B0 = dword_51C4B0->pNext;
+		ListNode* v10 = (ListNode*)SMemAlloc(12, "new", -1, 0);
+		if (v10)
+		{
+			v10->next = 0;
+			v10[1].previous = 0;
+			v10->next = (ListNode*)&v10->next;
+			v10->previous = 0;
+			v10[1].previous = (ListNode*)~(unsigned int)&v10->next;
+			dword_51C4B4 = v10;
+		}
+		else
+		{
+			dword_51C4B4 = 0;
+		}
+	}
+	SetCallbackTimer(7, a3, 20, DLG_SwishInLock);
+	for (dialog* a1b = dword_51C4B0; a1b; a1b = a1b->pNext)
+	{
+		if (a1b->lFlags & 8)
+		{
+			ListNode* v11 = dword_51C4B4;
+			const char* v12 = type_info__szName((type_info*)0x51A368);
+			ListNode* v13 = (ListNode*)SMemAlloc(12, v12, -2, 8);
+			ListNode* v14;
+			if (v13)
+			{
+				v13->previous = 0;
+				v13->next = 0;
+				v14 = v13;
+			}
+			else
+			{
+				v14 = 0;
+				v13 = (ListNode*)&v11->next;
+			}
+			ListNode* v15 = v13->previous;
+			if (v13->previous)
+			{
+				int v16 = (int)v13->next;
+				int v17 = v16 > 0 ? (char*)v13 - (char*)v15->next + v16 : ~v16;
+				*(_DWORD*)v17 = (_DWORD)v15;
+				v13->previous->next = v13->next;
+				v13->previous = 0;
+				v13->next = 0;
+			}
+			ListNode* v18 = v11->next;
+			v13->previous = v18;
+			v13->next = v18->next;
+			v18->next = v14;
+			v11->next = v13;
+			v14[1].previous = (ListNode*)a1b;
+			HideDialog(a1b);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(DlgSwooshin);
 
 void DLG_SwishIn_(dialog* a1)
 {
@@ -12267,7 +12377,7 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 	};
 
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin(2, gluCmpgnSwishController, dlg, 0);
+	DlgSwooshin_(2, gluCmpgnSwishController, dlg, 0);
 }
 
 FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
@@ -12350,7 +12460,7 @@ void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 	};
 
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin(2, &commonSwishControllers[40], dlg, 0);
+	DlgSwooshin_(2, &commonSwishControllers[40], dlg, 0);
 }
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
@@ -12413,7 +12523,7 @@ void gluLogin_CustomCtrlID_(dialog* dlg)
 	};
 
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin(3, &commonSwishControllers[5], dlg, 0);
+	DlgSwooshin_(3, &commonSwishControllers[5], dlg, 0);
 }
 
 FAIL_STUB_PATCH(gluLogin_CustomCtrlID);
@@ -12626,7 +12736,7 @@ void gluJoin_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin(4, &commonSwishControllers[18], dlg, 0);
+	DlgSwooshin_(4, &commonSwishControllers[18], dlg, 0);
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
@@ -12708,7 +12818,7 @@ FAIL_STUB_PATCH(loadMenu_gluJoin);
 
 void gluCustm_initSwish_(dialog* dlg)
 {
-	DlgSwooshin(5, gluCustmSwishController, dlg, 0);
+	DlgSwooshin_(5, gluCustmSwishController, dlg, 0);
 	getControlFromIndex_(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
@@ -13505,7 +13615,7 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin(_countof(timers), timers, dlg, 80);
+	DlgSwooshin_(_countof(timers), timers, dlg, 80);
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
@@ -13816,7 +13926,7 @@ void ConnSel_InitChildren_(dialog* a1)
 		0,
 	};
 
-	DlgSwooshin(5, commonSwishControllers, a1, 0);
+	DlgSwooshin_(5, commonSwishControllers, a1, 0);
 	registerMenuFunctions_(v2, a1, sizeof(v2));
 }
 
@@ -13948,7 +14058,7 @@ void gluModem_CustomCtrlID_(dialog* a1)
 	};
 
 	registerMenuFunctions_(functions, a1, sizeof(functions));
-	DlgSwooshin(4, stru_51A99C, a1, 0);
+	DlgSwooshin_(4, stru_51A99C, a1, 0);
 }
 
 FAIL_STUB_PATCH(gluModem_CustomCtrlID);
@@ -14118,7 +14228,7 @@ void gluChat_init_(dialog* dlg)
 		HideDialog(getControlFromIndex_(dlg, 7));
 	}
 	sub_4B9480(dlg);
-	DlgSwooshin(5, gluChatSwishController, dlg, 0);
+	DlgSwooshin_(5, gluChatSwishController, dlg, 0);
 }
 
 FAIL_STUB_PATCH(gluChat_init);
@@ -14670,7 +14780,7 @@ void gluLoad_CustomCtrlID_(dialog* a1)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin(3, &commonSwishControllers[23], a1, 0);
+	DlgSwooshin_(3, &commonSwishControllers[23], a1, 0);
 	registerMenuFunctions_(functions, a1, sizeof(functions));
 }
 
@@ -15196,7 +15306,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 		gluScore_SaveReplay_,
 	};
 
-	DlgSwooshin(_countof(timers), timers, dlg, 500);
+	DlgSwooshin_(_countof(timers), timers, dlg, 500);
 	registerMenuFunctions_(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions));
 }
 
