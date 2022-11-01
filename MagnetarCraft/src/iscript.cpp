@@ -322,28 +322,28 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         case opc_imgoluselo:
         {
             unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
-            unsigned __int8 v30 = take_iscript_datum<unsigned __int8>(program_state);
+            OverlayType v30 = take_iscript_datum<OverlayType>(program_state);
             char v29 = take_iscript_datum<char>(program_state);
             if (noop)
             {
                 break;
             }
             point pt;
-            ISCRIPT_UseLOFile(&pt, image, v30, v29);
+            ISCRIPT_UseLOFile_(&pt, image, v30, v29);
             ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_ABOVE);
             break;
         }
         case opc_imguluselo:
         {
             unsigned __int16 image_id = take_iscript_datum<_WORD>(program_state);
-            unsigned __int8 v34 = take_iscript_datum<unsigned __int8>(program_state);
+            OverlayType v34 = take_iscript_datum<OverlayType>(program_state);
             char v33 = take_iscript_datum<char>(program_state);
             if (noop)
             {
                 break;
             }
             point pt;
-            ISCRIPT_UseLOFile(&pt, image, v34, v33);
+            ISCRIPT_UseLOFile_(&pt, image, v34, v33);
             ISCRIPT_CreateImage(image, image_id, LOBYTE(pt.x) + image->horizontalOffset, (unsigned __int8)(LOBYTE(pt.y) + image->verticalOffset), ImageOrder::IMGORD_BELOW);
             break;
         }
@@ -444,13 +444,13 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         case opc_sproluselo:
         {
             unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
-            char v62 = take_iscript_datum<char>(program_state);
+            OverlayType v62 = take_iscript_datum<OverlayType>(program_state);
             if (noop)
             {
                 break;
             }
             point v125;
-            ISCRIPT_UseLOFile(&v125, image, v62, 0);
+            ISCRIPT_UseLOFile_(&v125, image, v62, 0);
             if (CThingy* thingy = ISCRIPT_CreateSprite_(image, sprite_id, v125.x, v125.y, image->spriteOwner->elevationLevel + 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
@@ -823,7 +823,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 break;
             }
             point v124;
-            ISCRIPT_UseLOFile(&v124, image, 2, v65);
+            ISCRIPT_UseLOFile(&v124, image, OverlayType::OT_SPECIAL, v65);
             int v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
             {

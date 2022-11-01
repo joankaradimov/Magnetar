@@ -3213,12 +3213,12 @@ void LoadImageData_()
 	loadImagesData_lowMem(ImageGrpGraphics, Images_GrpFile, images_tbl, 999, a5, a6);
 	dword_6D1210 = 0;
 
-	loadImagesData(&lo_files.attackOverlays, Images_AttackOverlayLO, images_tbl, 999, a5, a6);
-	loadImagesData(&lo_files.damageOverlays, Images_InjuryOverlayLO, images_tbl, 999, a5, a6);
-	loadImagesData(&lo_files.specialOverlays, Images_SpecialOverlayLO, images_tbl, 999, a5, a6);
-	loadImagesData(&lo_files.landingDustOverlays, Images_LandingDustLO, images_tbl, 999, a5, a6);
-	loadImagesData(&lo_files.liftoffDustOverlays, Images_LiftOffDustLO, images_tbl, 999, a5, a6);
-	loadImagesData(&ShieldOverlays, Images_ShieldOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(lo_files.overlays[OverlayType::OT_ATTACK], Images_AttackOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(lo_files.overlays[OverlayType::OT_DAMAGE], Images_InjuryOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(lo_files.overlays[OverlayType::OT_SPECIAL], Images_SpecialOverlayLO, images_tbl, 999, a5, a6);
+	loadImagesData(lo_files.overlays[OverlayType::OT_LANDING], Images_LandingDustLO, images_tbl, 999, a5, a6);
+	loadImagesData(lo_files.overlays[OverlayType::OT_LIFTOFF], Images_LiftOffDustLO, images_tbl, 999, a5, a6);
+	loadImagesData(ShieldOverlays, Images_ShieldOverlayLO, images_tbl, 999, a5, a6);
 	if (images_tbl)
 	{
 		SMemFree(images_tbl, "Starcraft\\SWAR\\lang\\CImage.cpp", 1389, 0);
@@ -3270,13 +3270,13 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 		iscript_data = NULL;
 	}
 
-	sub_47AB40((LO_Overlays*)ImageGrpGraphics, 999);
-	sub_47AB40(&lo_files.attackOverlays, 999);
-	sub_47AB40(&lo_files.damageOverlays, 999);
-	sub_47AB40(&lo_files.specialOverlays, 999);
-	sub_47AB40(&lo_files.landingDustOverlays, 999);
-	sub_47AB40(&lo_files.liftoffDustOverlays, 999);
-	sub_47AB40(&ShieldOverlays, 999);
+	sub_47AB40((LO_Header**)ImageGrpGraphics, 999);
+	sub_47AB40(lo_files.overlays[OverlayType::OT_ATTACK], 999);
+	sub_47AB40(lo_files.overlays[OverlayType::OT_DAMAGE], 999);
+	sub_47AB40(lo_files.overlays[OverlayType::OT_SPECIAL], 999);
+	sub_47AB40(lo_files.overlays[OverlayType::OT_LANDING], 999);
+	sub_47AB40(lo_files.overlays[OverlayType::OT_LIFTOFF], 999);
+	sub_47AB40(ShieldOverlays, 999);
 
 	// TODO: dynamically clean imagesDat memory
 	delete[] imagesDat_;
@@ -6146,7 +6146,7 @@ void destroy_statlb_dlg_()
 
 FAIL_STUB_PATCH(destroy_statlb_dlg);
 
-void free_cmdIcons_()
+void destroy_statbtn_BIN_()
 {
 	if (current_dialog)
 	{
@@ -6167,7 +6167,7 @@ void free_cmdIcons_()
 	}
 }
 
-FAIL_STUB_PATCH(free_cmdIcons);
+FAIL_STUB_PATCH(destroy_statbtn_BIN);
 
 void clearSelectionPortrait_()
 {
@@ -6238,7 +6238,7 @@ void destroyGameHUD_()
 		destroyStatdata_();
 		destroyStatsesBin_();
 		destroy_statlb_dlg_();
-		free_cmdIcons_();
+		destroy_statbtn_BIN_();
 		clearSelectionPortrait_();
 		destroy_statfluf_bin_();
 	}

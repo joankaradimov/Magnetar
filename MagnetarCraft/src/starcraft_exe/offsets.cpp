@@ -6966,7 +6966,7 @@ void sub_458BB0(dialog *dlg) {
     }
 }
 DECL_FUNC(void (__cdecl*updateButtonSetEx)(), updateButtonSetEx, 0x458bc0);
-DECL_FUNC(void (__cdecl*free_cmdIcons)(), free_cmdIcons, 0x458cf0);
+DECL_FUNC(void (__cdecl*destroy_statbtn_BIN)(), destroy_statbtn_BIN, 0x458cf0);
 DECL_FUNC(int(*sub_458D50)(), sub_458D50, 0x458d50);
 DECL_FUNC(void (__cdecl*updateButtonSet)(), updateButtonSet, 0x458de0);
 void sub_458E70(dialog *a1) {
@@ -10782,7 +10782,7 @@ DECL_FUNC(int(*sub_47A800)(), sub_47A800, 0x47a800);
 DECL_FUNC(__int16 (__fastcall*imageRenderFxn11_0)(int a1, int a2, int a3, int a4, CUnit *a5), imageRenderFxn11_0, 0x47a820);
 DECL_FUNC(int(*sub_47AAC0)(), sub_47AAC0, 0x47aac0);
 DECL_FUNC(int (__stdcall*sub_47AAF0)(int), sub_47AAF0, 0x47aaf0);
-void sub_47AB40(LO_Overlays *a1, signed int a2) {
+void sub_47AB40(LO_Header **a1, signed int a2) {
     int address = 0x47ab40;
     __asm {
         xor edi, edi
@@ -10829,7 +10829,7 @@ void *readImageFile(int *overlay_index, unsigned __int16 *a2, int image_id, HAND
     return result_;
 }
 DECL_FUNC(void (__stdcall*loadImagesData_lowMem)(grpHead **a1, int *a2, u16 *images_tbl, int a4, LPOVERLAPPED a5, void *a6), loadImagesData_lowMem, 0x47ae30);
-DECL_FUNC(void (__stdcall*loadImagesData)(LO_Overlays *a1, int *a2, unsigned __int16 *images_tbl, int a4, LPOVERLAPPED a5, _DWORD *a6), loadImagesData, 0x47af30);
+DECL_FUNC(void (__stdcall*loadImagesData)(LO_Header **a1, int *a2, unsigned __int16 *images_tbl, int a4, LPOVERLAPPED a5, _DWORD *a6), loadImagesData, 0x47af30);
 DECL_FUNC(int(*unit_isRefineryUnit)(), unit_isRefineryUnit, 0x47afe0);
 DECL_FUNC(int(*sub_47B000)(), sub_47B000, 0x47b000);
 DECL_FUNC(int(*sub_47B030)(), sub_47B030, 0x47b030);
@@ -15887,11 +15887,11 @@ void gluCustm_UpdateMapFolderDisplay(const char *a1) {
         call address
     }
 }
-void gluCustm_initSwish(dialog *a1) {
+void gluCustm_initSwish(dialog *dlg) {
     int address = 0x4adac0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -25832,7 +25832,7 @@ CImage *& dword_5254B8 = * ((decltype(&dword_5254B8)) 0x5254b8);
 CImage *& dword_52E4C0 = * ((decltype(&dword_52E4C0)) 0x52e4c0);
 CImage *& dword_52E4C4 = * ((decltype(&dword_52E4C4)) 0x52e4c4);
 char(&tileset_shift)[256] = * ((decltype(&tileset_shift)) 0x52e4c8);
-LO_Overlays& ShieldOverlays = * ((decltype(&ShieldOverlays)) 0x52e5c8);
+LO_Header *(&ShieldOverlays)[999] = * ((decltype(&ShieldOverlays)) 0x52e5c8);
 CImage *& dword_52F564 = * ((decltype(&dword_52F564)) 0x52f564);
 CImage(&images)[5000] = * ((decltype(&images)) 0x52f568);
 CImage(&stru_57D768)[80] = * ((decltype(&stru_57D768)) 0x57d768);
