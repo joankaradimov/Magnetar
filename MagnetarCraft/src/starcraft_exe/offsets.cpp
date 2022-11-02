@@ -3076,10 +3076,10 @@ DECL_FUNC(int(*sub_428270)(), sub_428270, 0x428270);
 DECL_FUNC(int(*sub_4282A0)(), sub_4282A0, 0x4282a0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Always)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Always, 0x4282d0);
 DECL_FUNC(int(*sub_4282E0)(), sub_4282E0, 0x4282e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_ScvIsBuilding)(int), BTNSCOND_ScvIsBuilding, 0x428310);
-DECL_FUNC(int (__stdcall*BTNSCOND_NoNydusExit)(int), BTNSCOND_NoNydusExit, 0x428340);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ScvIsBuilding)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ScvIsBuilding, 0x428310);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoNydusExit)(u16 variable, int player_id, CUnit *unit), BTNSCOND_NoNydusExit, 0x428340);
 DECL_FUNC(int (__stdcall*BTNSCOND_LurkerStop)(int), BTNSCOND_LurkerStop, 0x428360);
-DECL_FUNC(int (__stdcall*BTNSCOND_Movement)(int), BTNSCOND_Movement, 0x4283c0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Movement)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Movement, 0x4283c0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLifted)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLifted, 0x4283f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLiftedCanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLiftedCanMove, 0x428420);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanRechargeShields)(int), BTNSCOND_CanRechargeShields, 0x428440);
@@ -3089,31 +3089,35 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsConstructing)(u16 variable, int pla
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHive)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHive, 0x428500);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsTraining)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsTraining, 0x428530);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasCargoTerran)(CUnit *unit), BTNSCOND_HasCargoTerran, 0x428560);
-DECL_FUNC(int (__stdcall*BTNSCOND_NoCargoTerran)(CUnit *unit), BTNSCOND_NoCargoTerran, 0x4285a0);
-DECL_FUNC(int (__stdcall*BTNSCOND_CanRepair)(int), BTNSCOND_CanRepair, 0x4285e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_SCVCanAttack)(int), BTNSCOND_SCVCanAttack, 0x428610);
-DECL_FUNC(int (__stdcall*BTNSCOND_SCVCanStop)(int), BTNSCOND_SCVCanStop, 0x428640);
-DECL_FUNC(int (__stdcall*BTNSCOND_SCVCanMove)(int), BTNSCOND_SCVCanMove, 0x428670);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasScarabs)(int), BTNSCOND_HasScarabs, 0x4286a0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoCargoTerran)(u16 variable, int player_id, CUnit *unit), BTNSCOND_NoCargoTerran, 0x4285a0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanRepair)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanRepair, 0x4285e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanAttack)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanAttack, 0x428610);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanStop)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanStop, 0x428640);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanMove, 0x428670);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasScarabs)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasScarabs, 0x4286a0);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasInterceptors)(int), BTNSCOND_HasInterceptors, 0x4286e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_ZergHasCargo)(CUnit *unit), BTNSCOND_ZergHasCargo, 0x428730);
-DECL_FUNC(int (__stdcall*BTNSCOND_ZergNoCargo)(CUnit *unit), BTNSCOND_ZergNoCargo, 0x428780);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergHasCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergHasCargo, 0x428730);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergNoCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergNoCargo, 0x428780);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLanded)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLanded, 0x4287d0);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasNuke)(int), BTNSCOND_HasNuke, 0x428810);
-DECL_FUNC(int (__stdcall*BTNSCOND_TankMove)(int), BTNSCOND_TankMove, 0x428860);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasNuke)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasNuke, 0x428810);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TankMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TankMove, 0x428860);
 DECL_FUNC(int(*sub_4288A0)(), sub_4288A0, 0x4288a0);
 DECL_FUNC(int(*sub_4288C0)(), sub_4288C0, 0x4288c0);
-DECL_FUNC(int (__stdcall*BTNSCOND_IsResearching)(int), BTNSCOND_IsResearching, 0x4288e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_IsUpgrading)(int), BTNSCOND_IsUpgrading, 0x428900);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsResearching)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsResearching, 0x4288e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUpgrading)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsUpgrading, 0x428900);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsBuildingAddon)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsBuildingAddon, 0x428920);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SiloHasNoNuke)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SiloHasNoNuke, 0x428960);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TerranAdvanced)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TerranAdvanced, 0x428990);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TerranBasic)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TerranBasic, 0x428a10);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergBasic)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergBasic, 0x428cb0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMoveSpecialCase)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMoveSpecialCase, 0x428d40);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMove, 0x428da0);
-DECL_FUNC(int (__fastcall*BTNSCOND_CanBuildUnit)(UnitType unit_type, int player_id, CUnit *a2), BTNSCOND_CanBuildUnit, 0x428e60);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasUnit)(int), BTNSCOND_HasUnit, 0x428ea0);
-DECL_FUNC(int (__stdcall*BTNSCOND_Stationary)(int), BTNSCOND_Stationary, 0x428ed0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TrainingFighter)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TrainingFighter, 0x428e00);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanBuildUnit)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanBuildUnit, 0x428e60);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasUnit)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasUnit, 0x428ea0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Stationary)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Stationary, 0x428ed0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanAttack)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanAttack, 0x428f30);
-DECL_FUNC(int (__stdcall*BTNSCOND_BattleOrders)(CUnit *unit), BTNSCOND_BattleOrders, 0x428fa0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_BattleOrders)(u16 variable, int player_id, CUnit *unit), BTNSCOND_BattleOrders, 0x428fa0);
 DECL_FUNC(int (__stdcall*BTNSCOND_HasRoom)(int), BTNSCOND_HasRoom, 0x428ff0);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanBurrow)(int), BTNSCOND_CanBurrow, 0x4290f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsSieged, 0x429170);
@@ -3121,8 +3125,8 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked)(int), BTNSCOND_IsCloaked, 0x429210);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanCloak)(int), BTNSCOND_CanCloak, 0x4292c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked_0)(int), BTNSCOND_IsCloaked_0, 0x429370);
-DECL_FUNC(int (__stdcall*BTNSCOND_CanCloak_0)(int), BTNSCOND_CanCloak_0, 0x4293e0);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasSpidermines)(int), BTNSCOND_HasSpidermines, 0x429470);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak_0)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak_0, 0x4293e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasSpidermines)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasSpidermines, 0x429470);
 DECL_FUNC(bool (__fastcall*BTNSCOND_HasTech)(Tech a1, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanResearch)(Tech a1, int a2, CUnit *a3), BTNSCOND_CanResearch, 0x429500);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Rally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Rally, 0x429520);
@@ -19240,16 +19244,16 @@ int sub_4D5740(int result, _DWORD a2, int a3) {
     }
     return result_;
 }
-void ISCRIPT_UseLOFile(point *a1, CImage *a2, unsigned __int8 a3, int a4) {
+void ISCRIPT_UseLOFile(point *p, CImage *image, OverlayType overlay_type, int a4) {
     int address = 0x4d5770;
     __asm {
         xor eax, eax
         xor ecx, ecx
         xor edi, edi
         xor edx, edx
-        mov eax, a1
-        mov edx, a2
-        mov cl, a3
+        mov eax, p
+        mov edx, image
+        mov cl, overlay_type
         mov edi, a4
         call address
     }
