@@ -7573,6 +7573,36 @@ void colorCycleInterval_()
 
 FAIL_STUB_PATCH(colorCycleInterval);
 
+void updateButtonSet_()
+{
+	word_68C1C8 = 228;
+	word_68C14C = 228;
+
+	if (InReplay)
+	{
+		word_68C1C8 = 249 - (is_replay_paused != 0);
+	}
+	else if (ClientSelectionCount)
+	{
+		if (is_placing_order)
+		{
+			word_68C1C8 = 229;
+		}
+		else if (is_placing_building)
+		{
+			word_68C1C8 = 230;
+		}
+	}
+
+	word_68C1C4 = 228;
+	if ((u8)ClientSelectionCount > 1 && !InReplay)
+	{
+		updateButtonSetEx(); // TODO: reimplement
+	}
+}
+
+FAIL_STUB_PATCH(updateButtonSet);
+
 void updateSelectedUnitData_()
 {
 	memcpy(ClientSelectionGroup, PlayerSelection, sizeof(ClientSelectionGroup));
@@ -7596,7 +7626,7 @@ void updateSelectedUnitData_()
 		ClientSelectionGroup[0] = ActivePortraitUnit;
 		memset(&ClientSelectionGroup[1], 0, 0x2Cu);
 	}
-	updateButtonSet();
+	updateButtonSet_();
 }
 
 FAIL_STUB_PATCH(updateSelectedUnitData);
@@ -7607,7 +7637,7 @@ void updateCurrentButtonset_()
 	int v1 = CanUpdateCurrentButtonSet;
 	if (CanUpdateCurrentButtonSet && (word_68C1C8 == 228 || InReplay))
 	{
-		updateButtonSet();
+		updateButtonSet_();
 	}
 	if (word_68C1C8 == 228)
 	{
