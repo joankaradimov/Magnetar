@@ -52,7 +52,6 @@ void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_mult
 		dword_51BFDC[4] = 0;
 		dword_51BFDC[5] = 0;
 		dword_51BFDC[6] = 0;
-		FrameSkip = 1;
 	}
 	else if (game_speed)
 	{
@@ -63,7 +62,6 @@ void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_mult
 		dword_51BFDC[4] = 0x38 / speed_multiplier;
 		dword_51BFDC[5] = 0x30 / speed_multiplier;
 		dword_51BFDC[6] = 0x2A / speed_multiplier;
-		FrameSkip = speed_multiplier < 8 ? 1 : 10;
 	}
 	else
 	{
@@ -74,7 +72,6 @@ void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_mult
 		dword_51BFDC[4] = 56 * speed_multiplier;
 		dword_51BFDC[5] = 48 * speed_multiplier;
 		dword_51BFDC[6] = 42 * speed_multiplier;
-		FrameSkip = 1;
 	}
 
 	GameSpeedModifiers.gameSpeedModifiers[0] = dword_51BFDC[0];
@@ -8276,7 +8273,7 @@ void GameLoop_State_()
 	DWORD v10 = GetTickCount() + 2000;
 	int v9 = 0;
 	dword_6D11F0 = 0;
-	for (int i = 0; i < FrameSkip; i++)
+	do
 	{
 		if (InReplay)
 		{
@@ -8338,7 +8335,8 @@ void GameLoop_State_()
 			dword_6D11F0 = 7;
 			break;
 		}
-	}
+	} while (false);
+
 	IsRunning = v9;
 }
 
