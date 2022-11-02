@@ -43,6 +43,18 @@ void ISCRIPT_setPosition_(CImage* image, char x, char y)
 
 FAIL_STUB_PATCH(ISCRIPT_setPosition);
 
+void ISCRIPT_UseLOFile_(point* p, CImage* image, OverlayType overlay_type, int a4)
+{
+    LO_Header* v4 = lo_files.overlays[overlay_type][image->imageID];
+    grpFrame* v5 = (grpFrame*)((char*)v4 + 2 * a4 + v4->frameOffsets[image->frameIndex]);
+
+    __int32 v6 = (char)v5->x;
+    p->x = (image->flags & IF_HORIZONTALLY_FLIPPED) ? -v6 : v6;
+    p->y = (char)v5->y;
+}
+
+FAIL_STUB_PATCH(ISCRIPT_UseLOFile);
+
 CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x, int y, char elevation_level)
 {
     CThingy* result = CreateThingy(sprite_id, x + image->horizontalOffset + (__int16)image->spriteOwner->position.x, y + image->verticalOffset + image->spriteOwner->position.y, 0);
@@ -823,7 +835,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
                 break;
             }
             point v124;
-            ISCRIPT_UseLOFile(&v124, image, OverlayType::OT_SPECIAL, v65);
+            ISCRIPT_UseLOFile_(&v124, image, OverlayType::OT_SPECIAL, v65);
             int v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
             {
