@@ -8271,73 +8271,73 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 void GameLoop_State_()
 {
 	DWORD v10 = GetTickCount() + 2000;
-	int v9 = 0;
 	dword_6D11F0 = 0;
-	do
+
+	if (InReplay)
 	{
+		replayLoop_();
+	}
+
+	int v5;
+	if (!GameLoopWaitSendTurn_(&v5))
+	{
+		dword_6D11F0 = 1;
+		return;
+	}
+	if (InReplay && is_replay_paused)
+	{
+		replayFrameComputation_();
+		dword_6D11F0 = 2;
+		return;
+	}
+	if (!GameState)
+	{
+		dword_6D11F0 = 4;
+		return;
+	}
+
+	int v9 = 0;
+	if (is_app_active || multiPlayerMode)
+	{
+		ScreenLayers[5].bits |= 2;
+		if (BWFXN_IsPaused_())
+		{
+			RefreshAllUnits_();
+		}
+		else
+		{
+			++ElapsedTimeFrames;
+			v9 = 1;
+			GameLoop_();
+		}
+		SetInGameLoop(1);
+		BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
+		SetInGameLoop(0);
 		if (InReplay)
 		{
-			replayLoop_();
-		}
-
-		int v5;
-		if (!GameLoopWaitSendTurn_(&v5))
-		{
-			dword_6D11F0 = 1;
-			break;
-		}
-		if (InReplay && is_replay_paused)
-		{
 			replayFrameComputation_();
-			dword_6D11F0 = 2;
-			break;
 		}
-		if (!GameState)
-		{
-			dword_6D11F0 = 4;
-			break;
-		}
-		if (is_app_active || multiPlayerMode)
-		{
-			ScreenLayers[5].bits |= 2;
-			if (BWFXN_IsPaused_())
-			{
-				RefreshAllUnits_();
-			}
-			else
-			{
-				++ElapsedTimeFrames;
-				++v9;
-				GameLoop_();
-			}
-			SetInGameLoop(1);
-			BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
-			SetInGameLoop(0);
-			if (InReplay)
-			{
-				replayFrameComputation_();
-			}
-		}
-		dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed];
-		DWORD v6 = GetTickCount();
-		if (v6 < dword_51CE94)
-		{
-			dword_6D11F0 = 5;
-			break;
-		}
-		if (v10 < v6)
-		{
-			dword_6D11F0 = 6;
-			break;
-		}
-		if (v5 && (!InReplay || !dword_6D11E8))
-		{
-			dword_6D11F0 = 7;
-			break;
-		}
-	} while (false);
-
-	IsRunning = v9;
+	}
+	dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed];
+	DWORD v6 = GetTickCount();
+	if (v6 < dword_51CE94)
+	{
+		IsRunning = v9;
+		dword_6D11F0 = 5;
+		return;
+	}
+	if (v10 < v6)
+	{
+		IsRunning = v9;
+		dword_6D11F0 = 6;
+		return;
+	}
+	if (v5 && (!InReplay || !dword_6D11E8))
+	{
+		IsRunning = v9;
+		dword_6D11F0 = 7;
+		return;
+	}
 }
 
 FAIL_STUB_PATCH(GameLoop_State);
