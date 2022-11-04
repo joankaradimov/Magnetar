@@ -7573,6 +7573,69 @@ void colorCycleInterval_()
 
 FAIL_STUB_PATCH(colorCycleInterval);
 
+void updateButtonSetEx_()
+{
+	u16 v0 = ActivePortraitUnit->currentButtonSet;
+	char v7 = 0;
+	char v8 = 0;
+	char v9 = 0;
+	char v10 = 0;
+
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			u16 v5 = unit->currentButtonSet;
+			if (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::Worker)
+			{
+				++v10;
+			}
+			if (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::Cloakable)
+			{
+				++v9;
+			}
+			if ((unit->statusFlags & InAir) == 0 && (Unit_GroupFlags[unit->unitType] & 1) != 0)
+			{
+				++v8;
+			}
+			if (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::Burrowable)
+			{
+				v7 = 1;
+			}
+			if (v5 != v0 && button_sets[v5].button_order != button_sets[v0].button_order && button_sets[v5].f3 != v0)
+			{
+				if (button_sets[v0].f3 == v5)
+				{
+					v0 = unit->currentButtonSet;
+					word_68C1C4 = v0;
+				}
+				else
+				{
+					word_68C1C4 = 244;
+				}
+			}
+		}
+	}
+
+	if (word_68C1C4 != 228)
+	{
+		if (ClientSelectionCount == v10)
+		{
+			word_68C1C4 = 245;
+		}
+		else if (ClientSelectionCount == v9)
+		{
+			word_68C1C4 = 246;
+		}
+		else if (v7 && ClientSelectionCount == v8)
+		{
+			word_68C1C4 = 247;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(updateButtonSetEx);
+
 void updateButtonSet_()
 {
 	word_68C1C8 = 228;
@@ -7597,7 +7660,7 @@ void updateButtonSet_()
 	word_68C1C4 = 228;
 	if ((u8)ClientSelectionCount > 1 && !InReplay)
 	{
-		updateButtonSetEx(); // TODO: reimplement
+		updateButtonSetEx_();
 	}
 }
 
