@@ -749,6 +749,7 @@ extern ButtonState (__fastcall*BTNSCOND_IsBuildingAddon)(u16 variable, int playe
 extern ButtonState (__fastcall*BTNSCOND_SiloHasNoNuke)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_TerranAdvanced)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_TerranBasic)(u16 variable, int player_id, CUnit *unit);
+extern ButtonState (__fastcall*BTNSCOND_ZergAdvanced)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_ZergBasic)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_CanMoveSpecialCase)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_CanMove)(u16 variable, int player_id, CUnit *unit);

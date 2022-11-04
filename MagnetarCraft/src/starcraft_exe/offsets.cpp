@@ -3109,6 +3109,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsBuildingAddon)(u16 variable, int pl
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SiloHasNoNuke)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SiloHasNoNuke, 0x428960);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TerranAdvanced)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TerranAdvanced, 0x428990);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_TerranBasic)(u16 variable, int player_id, CUnit *unit), BTNSCOND_TerranBasic, 0x428a10);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergAdvanced)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergAdvanced, 0x428c30);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergBasic)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergBasic, 0x428cb0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMoveSpecialCase)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMoveSpecialCase, 0x428d40);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMove, 0x428da0);
