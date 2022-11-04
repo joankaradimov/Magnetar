@@ -18731,6 +18731,197 @@ ButtonState __fastcall BTNSCOND_NoCargo_(u16 variable, int player_id, CUnit* uni
 
 FUNCTION_PATCH(BTNSCOND_NoCargo, BTNSCOND_NoCargo_);
 
+ButtonState __fastcall BTNSCOND_HasCargo_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] && (ClientSelectionGroup[i]->resourceType & 3))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasCargo, BTNSCOND_HasCargo_);
+
+ButtonState __fastcall BTNSCOND_HasRoom_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			if ((unit->statusFlags & IsHallucination) != 0)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if (unit->unitType == Zerg_Overlord && !UpgradeLevelSC[unit->playerID].items[24])
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if (!Unit_SpaceProvided[unit->unitType])
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if (getLoadedSpaceAmount(unit) < (unsigned int)Unit_SpaceProvided[unit->unitType])
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasRoom, BTNSCOND_HasRoom_);
+
+ButtonState __fastcall BTNSCOND_HasUnit_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] && isUnitLoaded(ClientSelectionGroup[i]))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasUnit, BTNSCOND_HasUnit_);
+
+ButtonState __fastcall BTNSCOND_Stationary_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			if ((unit->statusFlags & StatusFlags::DoodadStatesThing) == 0 && !unit->status.lockdownTimer && !unit->status.stasisTimer && !unit->status.maelstromTimer && AI_UnitCanAttack(unit))
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_Stationary, BTNSCOND_Stationary_);
+
+ButtonState __fastcall BTNSCOND_CanBuildUnit_(u16 variable, int player_id, CUnit* unit)
+{
+	if ((u8)ClientSelectionCount <= 1 || unit->unitType == Zerg_Larva || unit->unitType == Zerg_Mutalisk || unit->unitType == Zerg_Hydralisk)
+	{
+		return TTAllowed((UnitType)variable, unit, player_id);
+	}
+	else
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_CanBuildUnit, BTNSCOND_CanBuildUnit_);
+
+ButtonState __fastcall BTNSCOND_Movement_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] && (ClientSelectionGroup[i]->statusFlags & Burrowed))
+		{
+			return ButtonState::BTNST_HIDDEN;
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_Movement, BTNSCOND_Movement_);
+
+ButtonState __fastcall BTNSCOND_BattleOrders_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] && (ClientSelectionGroup[i]->statusFlags & Burrowed))
+		{
+			return ButtonState::BTNST_HIDDEN;
+		}
+	}
+
+	return BTNSCOND_CanAttack(variable, player_id, unit) != ButtonState::BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_BattleOrders, BTNSCOND_BattleOrders_);
+
+ButtonState __fastcall BTNSCOND_ZergNoCargo_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] || (ClientSelectionGroup[i]->statusFlags & Burrowed))
+		{
+			return ButtonState::BTNST_HIDDEN;
+		}
+	}
+
+	return BTNSCOND_NoCargo(variable, player_id, unit) != BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ZergNoCargo, BTNSCOND_ZergNoCargo_);
+
+ButtonState __fastcall BTNSCOND_ZergHasCargo_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (ClientSelectionGroup[i] || (ClientSelectionGroup[i]->statusFlags & Burrowed))
+		{
+			return ButtonState::BTNST_HIDDEN;
+		}
+	}
+
+	return BTNSCOND_HasCargo(variable, player_id, unit) != BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ZergHasCargo, BTNSCOND_ZergHasCargo_);
+
+ButtonState __fastcall BTNSCOND_ZergBasic_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1 && (unit->statusFlags & StatusFlags::Burrowed) == 0)
+	{
+		if (TTAllowed(Zerg_Hatchery, unit, player_id)
+			|| TTAllowed(Zerg_Creep_Colony, unit, player_id)
+			|| TTAllowed(Zerg_Extractor, unit, player_id)
+			|| TTAllowed(Zerg_Spawning_Pool, unit, player_id)
+			|| TTAllowed(Zerg_Evolution_Chamber, unit, player_id)
+			|| TTAllowed(Zerg_Hydralisk_Den, unit, player_id))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ZergBasic, BTNSCOND_ZergBasic_);
+
+ButtonState __fastcall BTNSCOND_ZergAdvanced_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1 && (unit->statusFlags & StatusFlags::Burrowed) == 0)
+	{
+		if (TTAllowed(Zerg_Nydus_Canal, unit, player_id)
+			|| TTAllowed(Zerg_Spire, unit, player_id)
+			|| TTAllowed(Zerg_Queens_Nest, unit, player_id)
+			|| TTAllowed(Zerg_Ultralisk_Cavern, unit, player_id)
+			|| TTAllowed(Zerg_Defiler_Mound, unit, player_id))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ZergAdvanced, BTNSCOND_ZergAdvanced_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech(unit, (Tech2)variable, player_id) != 1)
