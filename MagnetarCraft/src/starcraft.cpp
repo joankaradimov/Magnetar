@@ -9780,6 +9780,13 @@ FAIL_STUB_PATCH(minimapVisionUpdate_64);
 FAIL_STUB_PATCH(minimapVisionUpdate_96_128);
 FAIL_STUB_PATCH(minimapVisionUpdate_192_256);
 
+char sub_4A3D40_(__int16 cell, int minitile_y, int minitile_x)
+{
+	return byte_59CB60[VR4Data->cdata[4 * (VX4Data[cell].wImageRef[minitile_y][minitile_x] & 0xFFFE) + 6][7]];
+}
+
+FAIL_STUB_PATCH(sub_4A3D40);
+
 template <int PIXEL_STRIDE>
 void minimapSurfaceUpdateMegatile(int x, int y)
 {
@@ -9789,7 +9796,7 @@ void minimapSurfaceUpdateMegatile(int x, int y)
 	{
 		for (int j = 0; j < PIXEL_STRIDE; j++)
 		{
-			minimap_surface_no_fog.data[(PIXEL_STRIDE * x + i) * minimap_surface_width + PIXEL_STRIDE * y + j] = byte_59CB60[VR4Data->cdata[4 * (VX4Data[cell].wImageRef[i][j] & 0xFFFE) + 6][7]];
+			minimap_surface_no_fog.data[(PIXEL_STRIDE * x + i) * minimap_surface_width + PIXEL_STRIDE * y + j] = sub_4A3D40_(cell, i, j);
 		}
 	}
 }
@@ -9809,7 +9816,6 @@ void minimapSurfaceUpdate_()
 FAIL_STUB_PATCH(minimapSurfaceUpdate_64);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
 FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
-FAIL_STUB_PATCH(sub_4A3D40);
 
 void CreateMinimapSurface_()
 {
