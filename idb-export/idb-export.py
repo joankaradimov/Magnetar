@@ -386,9 +386,9 @@ TYPES_HEADER_TEMPLATE = """#pragma once
 #define LOWORD(x)   (*((_WORD*)&(x)))   // low word
 #define LODWORD(x)  (*((_DWORD*)&(x)))  // low dword
 #undef HIBYTE
-#define HIBYTE(x)   (*((_BYTE*)&(x)+1))
+#define HIBYTE(x)   (*((_BYTE*)&(x)+sizeof(x)-1))
 #undef HIWORD
-#define HIWORD(x)   (*((_WORD*)&(x)+1))
+#define HIWORD(x)   (*((_WORD*)&(x)+sizeof(x)/2-1))
 #define HIDWORD(x)  (*((_DWORD*)&(x)+1))
 #define BYTEn(x, n)   (*((_BYTE*)&(x)+n))
 #define WORDn(x, n)   (*((_WORD*)&(x)+n))

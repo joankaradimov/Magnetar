@@ -3119,7 +3119,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasUnit)(u16 variable, int player_id,
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Stationary)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Stationary, 0x428ed0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanAttack)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanAttack, 0x428f30);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_BattleOrders)(u16 variable, int player_id, CUnit *unit), BTNSCOND_BattleOrders, 0x428fa0);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasRoom)(int), BTNSCOND_HasRoom, 0x428ff0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasRoom)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasRoom, 0x428ff0);
 DECL_FUNC(int (__stdcall*BTNSCOND_CanBurrow)(int), BTNSCOND_CanBurrow, 0x4290f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsSieged, 0x429170);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsUnsieged, 0x4291c0);

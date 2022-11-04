@@ -759,7 +759,7 @@ extern ButtonState (__fastcall*BTNSCOND_HasUnit)(u16 variable, int player_id, CU
 extern ButtonState (__fastcall*BTNSCOND_Stationary)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_CanAttack)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_BattleOrders)(u16 variable, int player_id, CUnit *unit);
-extern int (__stdcall*BTNSCOND_HasRoom)(int);
+extern ButtonState (__fastcall*BTNSCOND_HasRoom)(u16 variable, int player_id, CUnit *unit);
 extern int (__stdcall*BTNSCOND_CanBurrow)(int);
 extern ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit);
 extern ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_id, CUnit *unit);
