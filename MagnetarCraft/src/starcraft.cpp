@@ -7293,7 +7293,7 @@ void UpdateImage_(CUnit* unit)
 		{
 			for (CImage* image = v5->pImageHead; image; image = image->next)
 			{
-				PlayIscriptAnim(image, AE_Death);
+				PlayIscriptAnim_(image, AE_Death);
 			}
 		}
 	}
