@@ -6763,6 +6763,189 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+void Unit_ExecPathingState_(CUnit* unit)
+{
+	dword_66FF70 = visionUpdated != 0;
+	while (2)
+	{
+		int v2;
+
+		switch (unit->movementState)
+		{
+		case UnitMovementState::UM_Init:
+			v2 = UMInitialize(unit);
+			break;
+		case UnitMovementState::UM_InitSeq:
+			if (unit->statusFlags & NoBrkCodeStart)
+			{
+				return;
+			}
+			unit->movementState = UM_Init;
+			continue;
+		case UnitMovementState::UM_Turret:
+			v2 = UMTurret(unit);
+			break;
+		case UnitMovementState::UM_Bunker:
+			v2 = UMBunker(unit);
+			break;
+		case UnitMovementState::UM_BldgTurret:
+			v2 = UMBldgTurret(unit);
+			break;
+		case UnitMovementState::UM_Hidden:
+			dword_66FF70 = 0;
+			return;
+		case UnitMovementState::UM_Flyer:
+			v2 = UMFlyer(unit);
+			break;
+		case UnitMovementState::UM_AtRest:
+			v2 = UMAtRest(unit);
+			break;
+		case UnitMovementState::UM_Dormant:
+			v2 = UMDormant(unit);
+			break;
+		case UnitMovementState::UM_AtMoveTarget:
+			v2 = UMAtMoveTarget(unit);
+			break;
+		case UnitMovementState::UM_CheckIllegal:
+			v2 = UMCheckIllegal(unit);
+			break;
+		case UnitMovementState::UM_MoveToLegal:
+			v2 = UMMoveToLegal(unit);
+			break;
+		case UnitMovementState::UM_LumpWannabe:
+			v2 = UMLumpWannabe(unit);
+			break;
+		case UnitMovementState::UM_FailedPath:
+			unit->pathingCollisionInterval = 10;
+			UMFailedPath(unit);
+			unit->movementState = UM_RetryPath;
+			return;
+		case UnitMovementState::UM_RetryPath:
+			v2 = UMRetryPath(unit);
+			break;
+		case UnitMovementState::UM_StartPath:
+			v2 = UMStartPath(unit);
+			break;
+		case UnitMovementState::UM_UIOrderDelay:
+			v2 = UMUIOrderDelay(unit);
+			break;
+		case UnitMovementState::UM_TurnAndStart:
+			v2 = UMTurnAndStart(unit);
+			break;
+		case UnitMovementState::UM_FaceTarget:
+			v2 = UMFaceTarget(unit);
+			break;
+		case UnitMovementState::UM_NewMoveTarget:
+			v2 = UMNewMoveTarget(unit);
+			break;
+		case UnitMovementState::UM_AnotherPath:
+			unit->movementState = UMAnotherPath(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+			return;
+		case UnitMovementState::UM_Repath:
+			v2 = UMRepath(unit);
+			break;
+		case UnitMovementState::UM_RepathMovers:
+			v2 = UMRepathMovers(unit);
+			break;
+		case UnitMovementState::UM_FollowPath:
+			v2 = UMFollowPath(unit);
+			break;
+		case UnitMovementState::UM_ScoutPath:
+			v2 = UMScoutPath(unit);
+			break;
+		case UnitMovementState::UM_ScoutFree:
+			unit->movementState = UM_FollowPath;
+			continue;
+		case UnitMovementState::UM_FixCollision:
+			v2 = UMFixCollision(unit);
+			break;
+		case UnitMovementState::UM_WaitFree:
+			v2 = UMWaitFree(unit);
+			break;
+		case UnitMovementState::UM_GetFree:
+			v2 = UMGetFree(unit);
+			break;
+		case UnitMovementState::UM_SlidePrep:
+			v2 = UMSlidePrep(unit);
+			break;
+		case UnitMovementState::UM_SlideFree:
+			v2 = UMSlideFree(unit);
+			break;
+		case UnitMovementState::UM_ForceMoveFree:
+			v2 = UMForceMoveFree(unit);
+			break;
+		case UnitMovementState::UM_FixTerrain:
+			v2 = UMFixTerrain(unit);
+			break;
+		case UnitMovementState::UM_TerrainSlide:
+			v2 = UMTerrainSlide(unit);
+			break;
+		default:
+			return;
+		}
+
+		if (v2 == 0)
+		{
+			return;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(Unit_ExecPathingState);
+
+void sub_4EBC30_(CUnit* unit)
+{
+	u8 v2 = unit->velocityDirection1;
+	Unit_ExecPathingState_(unit);
+	if (dword_66FF70)
+	{
+		refreshUnitVision(unit);
+	}
+
+	CUnit* subunit = unit->subUnit;
+	if ((unit->statusFlags & Completed) && subunit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
+	{
+		point p;
+		ProgressSubunitDirection(subunit, unit->velocityDirection1 - v2);
+		getImageAttackFrame(&p, unit->sprite, 0, 2);
+		int x = unit->halt.x;
+		int y = unit->halt.y;
+		subunit->halt.x = x;
+		subunit->halt.y = y;
+		subunit->position.x = x >> 8;
+		subunit->position.y = y >> 8;
+		sub_497A10(subunit->sprite, subunit->position.x, subunit->position.y);
+		ISCRIPT_setPosition_(subunit->sprite->pImagePrimary, LOBYTE(p.x), LOBYTE(p.y));
+		iscript_unit = subunit;
+		if ((unit->movementFlags & 2) == 0 && (subunit->statusFlags & StatusFlags::UNKNOWN6))
+		{
+			subunit->statusFlags &= ~StatusFlags::UNKNOWN6;
+			if ((unit->statusFlags & StatusFlags::IsABuilding) != 0 && (subunit->movementFlags & 8) == 0)
+			{
+				for (CImage* i = subunit->sprite->pImageHead; i; i = i->next)
+				{
+					PlayIscriptAnim(i, AE_WalkingToIdle);
+				}
+			}
+		}
+		else if ((unit->movementFlags & 2) && (subunit->statusFlags & StatusFlags::UNKNOWN6) == 0)
+		{
+			unit->subUnit->statusFlags |= StatusFlags::UNKNOWN6;
+			if ((subunit->movementFlags & 8) == 0)
+			{
+				for (CImage* j = subunit->sprite->pImageHead; j; j = j->next)
+				{
+					PlayIscriptAnim(j, AE_Walking);
+				}
+			}
+		}
+		sub_4EBC30_(unit->subUnit);
+		iscript_unit = unit;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4EBC30);
+
 void RefreshUnit_(CUnit* unit)
 {
 	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0 && (unit->sprite->flags & 0x20) == 0)
@@ -7046,7 +7229,7 @@ void unitUpdate_(CUnit* unit)
 		unitUpdate_(unit->subUnit);
 		iscript_unit = unit;
 	}
-	Unit_ExecPathingState(unit);
+	Unit_ExecPathingState_(unit);
 	updateUnitTimers(unit);
 	ordersIDCases(unit);
 
@@ -7139,7 +7322,7 @@ void UpdateUnits_()
 	{
 		iscript_flingy = unit;
 		iscript_unit = unit;
-		sub_4EBC30(unit);
+		sub_4EBC30_(unit);
 	}
 
 	if (visionUpdated)
