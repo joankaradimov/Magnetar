@@ -3609,7 +3609,15 @@ signed int unitSubtractPathDelayAndCheck(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*unitSetPathDelay)(char), unitSetPathDelay, 0x42f720);
+void unitSetPathDelay(CUnit *a1, char a2) {
+    int address = 0x42f720;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a2
+        call address
+    }
+}
 int reAssignPath(CUnit *a1) {
     int address = 0x42f740;
     int result_;
@@ -3623,9 +3631,21 @@ int reAssignPath(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*assignPathCreateFromUnitPath)(), assignPathCreateFromUnitPath, 0x42f790);
-DECL_FUNC(int (__stdcall*getAllocatedPathSingleStep)(int, int), getAllocatedPathSingleStep, 0x42f830);
+int getAllocatedPathSingleStep(CUnit *a1, int a2, int a3) {
+    int address = 0x42f830;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*getUnitDistanceToPathEnd)(), getUnitDistanceToPathEnd, 0x42f8f0);
-signed int isLargePath(CUnit *a1, int a2) {
+signed int isLargePath(CUnit *a1, points a2) {
     int address = 0x42f920;
     signed result_;
     __asm {
@@ -3639,12 +3659,12 @@ signed int isLargePath(CUnit *a1, int a2) {
 }
 DECL_FUNC(int (__stdcall*unitHasPathToDestOnGround)(__int16), unitHasPathToDestOnGround, 0x42fa00);
 DECL_FUNC(int (__thiscall*unitGetImaginaryPathDistanceToPosition)(CUnit *a1, int), unitGetImaginaryPathDistanceToPosition, 0x42fa30);
-signed int sub_42FC10(CUnit *a1, Position a2, int a3) {
+signed int sub_42FC10(CUnit *unit, Position a2, points *a3) {
     int address = 0x42fc10;
     signed result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         push dword ptr a3
         push dword ptr a2
         call address
@@ -3652,13 +3672,13 @@ signed int sub_42FC10(CUnit *a1, Position a2, int a3) {
     }
     return result_;
 }
-signed int UMAnotherPath(CUnit *a1, points a2) {
+signed int UMAnotherPath(CUnit *unit, points p) {
     int address = 0x42fe00;
     signed result_;
     __asm {
         xor eax, eax
-        mov eax, a1
-        push dword ptr a2
+        mov eax, unit
+        push dword ptr p
         call address
         mov result_, eax
     }
@@ -8863,6 +8883,17 @@ int UMBldgTurret(CUnit *unit) {
     }
     return result_;
 }
+signed int MoveUnit_Partial(CUnit *unit) {
+    int address = 0x46ad90;
+    signed result_;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int UMTerrainSlide(CUnit *unit) {
     int address = 0x46ae20;
     signed result_;
@@ -10865,7 +10896,18 @@ u32 UpdateHPGain(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*CUnitToUnitID)(), CUnitToUnitID, 0x47b1d0);
+unsigned int CUnitToUnitID(CUnit *a1) {
+    int address = 0x47b1d0;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 CUnit *unitIDtoUnitMemFast(CUnit *a1) {
     int address = 0x47b210;
     CUnit * result_;
@@ -22419,9 +22461,9 @@ int sub_4F1C70(CUnit *a1, int a2) {
     }
     return result_;
 }
-int FindCollidingUnit(CUnit *a1) {
+CUnit *FindCollidingUnit(CUnit *a1) {
     int address = 0x4f20d0;
-    int result_;
+    CUnit * result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
@@ -22434,6 +22476,17 @@ int FindCollidingUnit(CUnit *a1) {
 signed int sub_4F2160(CUnit *a1) {
     int address = 0x4f2160;
     signed result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+CUnit **sub_4F2240(CUnit *a1) {
+    int address = 0x4f2240;
+    CUnit ** result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -25406,7 +25459,8 @@ ButtonOrder(&stru_5163A0)[7] = * ((decltype(&stru_5163A0)) 0x5163a0);
 ButtonOrder(&stru_516430)[9] = * ((decltype(&stru_516430)) 0x516430);
 ButtonOrder(&stru_5164E8)[9] = * ((decltype(&stru_5164E8)) 0x5164e8);
 ButtonOrder(&stru_5165A0)[7] = * ((decltype(&stru_5165A0)) 0x5165a0);
-ButtonOrder& stru_516630 = * ((decltype(&stru_516630)) 0x516630);
+ButtonOrder(&stru_516630)[10] = * ((decltype(&stru_516630)) 0x516630);
+ButtonOrder(&stru_5166F8)[9] = * ((decltype(&stru_5166F8)) 0x5166f8);
 ButtonOrder(&stru_5167B0)[5] = * ((decltype(&stru_5167B0)) 0x5167b0);
 ButtonOrder(&stru_516818)[9] = * ((decltype(&stru_516818)) 0x516818);
 ButtonOrder(&stru_5168D0)[8] = * ((decltype(&stru_5168D0)) 0x5168d0);

@@ -2073,7 +2073,6 @@ struct AI_Flags
 };
 static_assert(sizeof(AI_Flags) == 2, "Incorrect size for type `AI_Flags`. Expected: 2");
 
-#pragma pack(push, 1)
 struct ButtonSet
 {
   int button_count;
@@ -2081,7 +2080,6 @@ struct ButtonSet
   __int16 f3;
   __int16 f4;
 };
-#pragma pack(pop)
 static_assert(sizeof(ButtonSet) == 12, "Incorrect size for type `ButtonSet`. Expected: 12");
 
 struct PlayerAlliance
