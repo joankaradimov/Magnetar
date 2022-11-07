@@ -7877,6 +7877,82 @@ void updateSelectedUnitData_()
 
 FAIL_STUB_PATCH(updateSelectedUnitData);
 
+void sub_4591D0_()
+{
+	int v1 = 0;
+	ButtonSet* v3 = &button_sets[word_68C14C];
+	ButtonOrder* button_order = v3->button_order;
+	ButtonState v10 = ButtonState::BTNST_HIDDEN;
+
+	for (dialog* dlg = getControlFromIndex_(current_dialog, 1); dlg; dlg = dlg->pNext)
+	{
+		if (dlg->wIndex < 1)
+		{
+			return;
+		}
+		if (dlg->wIndex <= 9)
+		{
+			for (; v1 < LOWORD(v3->button_count); v1++)
+			{
+				v10 = button_order->condition(button_order->condition_variable, g_LocalNationID, ActivePortraitUnit);
+				if (v10)
+				{
+					break;
+				}
+				++button_order;
+			}
+			if ((InReplay || !ActivePortraitUnit || ActivePortraitUnit->playerID == g_LocalNationID)
+				&& v1 < LOWORD(v3->button_count)
+				&& dlg->wIndex >= (int)button_order->position)
+			{
+				dlg->lUser = (int)button_order;
+				if (dlg->wUser != button_order->icon_id)
+				{
+					dlg->wUser = button_order->icon_id;
+					if ((dlg->lFlags & 1) == 0)
+					{
+						dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+						updateDialog(dlg);
+					}
+					dlgEvent v9;
+					v9.cursor.y = Mouse.y;
+					v9.wNo = EVN_USER;
+					v9.dwUser = USER_NEXT;
+					*(_DWORD*)&v9.wSelection = 0;
+					v9.cursor.x = Mouse.x;
+					dlg->pfcnInteract(dlg, &v9);
+				}
+				showDialog(dlg);
+				if (v10 >= BTNST_HIDDEN)
+				{
+					EnableControl(dlg);
+				}
+				else
+				{
+					DisableControl(dlg);
+					if (dword_66FF60 == 21)
+					{
+						button_order->action_string_id = 762;
+						++button_order;
+						++v1;
+						continue;
+					}
+				}
+				++button_order;
+				++v1;
+			}
+			else
+			{
+				HideDialog(dlg);
+				dlg->wUser = -1;
+				dlg->lUser = 0;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4591D0);
+
 void updateCurrentButtonset_()
 {
 	u16 v0 = word_68C1C8;
@@ -7910,7 +7986,7 @@ void updateCurrentButtonset_()
 LABEL_14:
 	if (v1 || CanUpdateCurrentButtonSet)
 	{
-		sub_4591D0();
+		sub_4591D0_();
 		sub_459770();
 		if (ActivePortraitUnit)
 		{
