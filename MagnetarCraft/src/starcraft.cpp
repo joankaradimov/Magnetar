@@ -10713,7 +10713,7 @@ FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__);
 int sub_422A90_(struct_a1_1* a1, Position* a2)
 {
 	int v18 = 1;
-	while (2)
+	while (1)
 	{
 		int v19 = 0;
 		do
@@ -10795,7 +10795,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 	int v24 = 0;
 	SaiAccessabilityFlags a5 = (SaiAccessabilityFlags) 0;
 	int v28 = 56;
-	while (2)
+	while (1)
 	{
 		rect v19 = { 0, 0, 0, 0 };
 		int v29 = 0;

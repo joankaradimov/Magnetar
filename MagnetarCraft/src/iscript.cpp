@@ -181,7 +181,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
         return;
     }
 
-    while (2)
+    while (1)
     {
         IScriptOpcodes opcode = take_iscript_datum<IScriptOpcodes>(program_state);
         switch (opcode)
