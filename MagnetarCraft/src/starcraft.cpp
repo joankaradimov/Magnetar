@@ -14758,7 +14758,7 @@ FAIL_STUB_PATCH(loadMenu_gluModem);
 
 void CreateRaceDropdown_(dialog* dlg, Race race)
 {
-	HIBYTE(dlg->wUser) |= 1u;
+	HIBYTE(dlg->wUser) |= 1;
 	if (!dword_68F520)
 	{
 		showDialog(dlg);
@@ -17605,7 +17605,7 @@ void GameMainLoop_()
 		SFileCloseFile(phFile);
 		if (registry_options.field_18 & 0x800)
 		{
-			registry_options.field_18 &= ~0x800u;
+			registry_options.field_18 &= ~0x800;
 			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
 			PlayMovie_(Cinematic::C_EXPANSION_INTRO);
 		}
@@ -17614,7 +17614,7 @@ void GameMainLoop_()
 	{
 		if (registry_options.field_18 & 0x200)
 		{
-			registry_options.field_18 &= ~0x200u;
+			registry_options.field_18 &= ~0x200;
 			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
 			PlayMovie_(Cinematic::C_INTRO);
 		}
@@ -17969,7 +17969,7 @@ int __fastcall TriggerAction_PauseGame_(Action* a1)
 			input_procedures[16] = input_standardSysHotkeys;
 			RefreshCursor_0();
 			PauseGame_maybe();
-			dword_6509AC->container.dwExecutionFlags |= 0x20u;
+			dword_6509AC->container.dwExecutionFlags |= 0x20;
 			byte_6509B4 = 1;
 		}
 	}
@@ -17985,7 +17985,7 @@ int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 		PlayerType player_type = Players[active_trigger_player].nType;
 		if (player_type != PT_Computer && player_type != PT_Rescuable && player_type != PT_Unknown0 && player_type != PT_Neutral)
 		{
-			dword_6509AC->container.dwExecutionFlags &= ~0x20u;
+			dword_6509AC->container.dwExecutionFlags &= ~0x20;
 			byte_6509B4 = 0;
 			if (IS_GAME_PAUSED)
 			{
