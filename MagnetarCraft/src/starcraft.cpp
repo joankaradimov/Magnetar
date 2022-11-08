@@ -764,7 +764,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 				}
 			}
 		}
-		if (CpuThrottle && flag & 2)
+		if (CpuThrottle && (flag & 2))
 		{
 			Sleep(1u);
 		}
