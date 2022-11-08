@@ -8011,26 +8011,26 @@ ButtonSet button_sets_[] = {
 
 void updateButtonSetEx_()
 {
-	u16 v0 = ActivePortraitUnit->currentButtonSet;
+	u16 portrait_button_set = ActivePortraitUnit->currentButtonSet;
 	char v7 = 0;
 	char v8 = 0;
-	char v9 = 0;
-	char v10 = 0;
+	char cloackable_count = 0;
+	char worker_count = 0;
 
 	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
 	{
 		if (CUnit* unit = ClientSelectionGroup[i])
 		{
-			u16 v5 = unit->currentButtonSet;
+			u16 unit_button_set = unit->currentButtonSet;
 			if (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::Worker)
 			{
-				++v10;
+				++worker_count;
 			}
 			if (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::Cloakable)
 			{
-				++v9;
+				++cloackable_count;
 			}
-			if ((unit->statusFlags & InAir) == 0 && (Unit_GroupFlags[unit->unitType] & 1) != 0)
+			if ((unit->statusFlags & InAir) == 0 && (Unit_GroupFlags[unit->unitType] & 1))
 			{
 				++v8;
 			}
@@ -8038,12 +8038,12 @@ void updateButtonSetEx_()
 			{
 				v7 = 1;
 			}
-			if (v5 != v0 && button_sets_[v5].button_order != button_sets_[v0].button_order && button_sets_[v5].f3 != v0)
+			if (unit_button_set != portrait_button_set && button_sets_[unit_button_set].button_order != button_sets_[portrait_button_set].button_order && button_sets_[unit_button_set].f3 != portrait_button_set)
 			{
-				if (button_sets_[v0].f3 == v5)
+				if (button_sets_[portrait_button_set].f3 == unit_button_set)
 				{
-					v0 = unit->currentButtonSet;
-					word_68C1C4 = v0;
+					portrait_button_set = unit->currentButtonSet;
+					word_68C1C4 = portrait_button_set;
 				}
 				else
 				{
@@ -8055,11 +8055,11 @@ void updateButtonSetEx_()
 
 	if (word_68C1C4 != 228)
 	{
-		if (ClientSelectionCount == v10)
+		if (ClientSelectionCount == worker_count)
 		{
 			word_68C1C4 = 245;
 		}
-		else if (ClientSelectionCount == v9)
+		else if (ClientSelectionCount == cloackable_count)
 		{
 			word_68C1C4 = 246;
 		}
