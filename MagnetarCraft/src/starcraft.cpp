@@ -766,7 +766,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 		}
 		if (CpuThrottle && (flag & 2))
 		{
-			Sleep(1u);
+			Sleep(1);
 		}
 		if (InputFlags & 1)
 		{
@@ -1281,7 +1281,7 @@ signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 		return 1;
 	if (a3 <= 3)
 	{
-		Sleep(0xAu);
+		Sleep(10);
 		return 1;
 	}
 	if (!byte_596910[0])
@@ -2395,7 +2395,7 @@ int DSoundCreate_(AudioVideoInitializationError* a1)
 			{
 				break;
 			}
-			Sleep(1000u);
+			Sleep(1000);
 			--dword_51A43C;
 			v5 = DirectSoundCreate(0, &direct_sound, 0);
 			a1->error_code = v5;
@@ -15960,7 +15960,7 @@ int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			break;
 		case USER_DESTROY:
-			Sleep(0x3E8u);
+			Sleep(1000);
 			sub_4B30A0(dlg);
 			break;
 		case USER_ACTIVATE:
