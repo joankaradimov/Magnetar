@@ -13433,6 +13433,34 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+void InitGlueMapListBox_()
+{
+	map_listbox->lFlags |= CTRL_LBOX_NORECALC;
+	ClearListBox(map_listbox);
+	int v1 = getMapListEntryCount(AddMapToList_CB, 40, CurrentMapFolder, byte_59BA68[0] != 0 ? byte_59BA68 : 0);
+	if (map_listbox->lFlags & CTRL_LBOX_NORECALC)
+	{
+		map_listbox->lFlags &= ~CTRL_LBOX_NORECALC;
+		List_Update(map_listbox);
+	}
+	if (v1 != 255)
+	{
+		sub_4A7FC0(map_listbox->fields.list.pdwData[v1]);
+	}
+
+	if ((unsigned __int8)v1 < map_listbox->fields.scroll.bSliderSkip || (_BYTE)v1 == 0xFF)
+	{
+		dlgEvent v5;
+		*(_DWORD*)&v5.wSelection = (unsigned __int8)v1;
+		v5.wNo = EVN_USER;
+		v5.dwUser = USER_SELECT;
+		map_listbox->pfcnInteract(map_listbox, &v5);
+		DlgSetSelected_UpdateScrollbar(v1, map_listbox);
+	}
+}
+
+FAIL_STUB_PATCH(InitGlueMapListBox);
+
 int gluCustmLoadMapFromList_()
 {
 	if (map_listbox->fields.list.bStrs)
@@ -13474,7 +13502,7 @@ int gluCustmLoadMapFromList_()
 			case 0x8000000B:
 				gluCustm_UpdateMapFolderDisplay(CurrentMapFolder);
 				byte_59BA68[0] = 0;
-				InitGlueMapListBox();
+				InitGlueMapListBox_();
 				return 0;
 			case 0x8000000C:
 				error_tbl_entry = UMS_ONLY;
@@ -13754,7 +13782,7 @@ int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 			gluCustm_CustomCtrl_InitializeChildren_(dlg);
 			break;
 		case 1029:
-			InitGlueMapListBox();
+			InitGlueMapListBox_();
 			break;
 		}
 	}
