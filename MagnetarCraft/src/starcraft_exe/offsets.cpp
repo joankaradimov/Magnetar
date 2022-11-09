@@ -3078,7 +3078,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Always)(u16 variable, int player_id, 
 DECL_FUNC(int(*sub_4282E0)(), sub_4282E0, 0x4282e0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ScvIsBuilding)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ScvIsBuilding, 0x428310);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoNydusExit)(u16 variable, int player_id, CUnit *unit), BTNSCOND_NoNydusExit, 0x428340);
-DECL_FUNC(int (__stdcall*BTNSCOND_LurkerStop)(int), BTNSCOND_LurkerStop, 0x428360);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_LurkerStop)(u16 variable, int player_id, CUnit *unit), BTNSCOND_LurkerStop, 0x428360);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Movement)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Movement, 0x4283c0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLifted)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLifted, 0x4283f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLiftedCanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLiftedCanMove, 0x428420);
@@ -3120,7 +3120,8 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Stationary)(u16 variable, int player_
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanAttack)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanAttack, 0x428f30);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_BattleOrders)(u16 variable, int player_id, CUnit *unit), BTNSCOND_BattleOrders, 0x428fa0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasRoom)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasRoom, 0x428ff0);
-DECL_FUNC(int (__stdcall*BTNSCOND_CanBurrow)(int), BTNSCOND_CanBurrow, 0x4290f0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsBurrowed)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsBurrowed, 0x429070);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanBurrow)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanBurrow, 0x4290f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsSieged, 0x429170);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsUnsieged, 0x4291c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked)(int), BTNSCOND_IsCloaked, 0x429210);
@@ -3128,11 +3129,12 @@ DECL_FUNC(int (__stdcall*BTNSCOND_CanCloak)(int), BTNSCOND_CanCloak, 0x4292c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked_0)(int), BTNSCOND_IsCloaked_0, 0x429370);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak_0)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak_0, 0x4293e0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasSpidermines)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasSpidermines, 0x429470);
-DECL_FUNC(bool (__fastcall*BTNSCOND_HasTech)(Tech a1, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasTech)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanResearch)(Tech a1, int a2, CUnit *a3), BTNSCOND_CanResearch, 0x429500);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Rally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Rally, 0x429520);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeDarkArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeDarkArchonOneSelected, 0x429680);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeArchonOneSelected, 0x4296f0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMorphLurker)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMorphLurker, 0x429720);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHiveRally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHiveRally, 0x429740);
 DECL_FUNC(int(*BTNSACT_TargetOrderCancel)(), BTNSACT_TargetOrderCancel, 0x429770);
 DECL_FUNC(int(*BTNSACT_CancelPlacement)(), BTNSACT_CancelPlacement, 0x429780);
@@ -5854,12 +5856,12 @@ DECL_FUNC(int (__stdcall*DrawChannelUser_maybe)(LPCSTR lpString, int, char, int)
 DECL_FUNC(int (__stdcall*BattleGetErrorString)(int, int, int, int, int, char *dest, size_t size_), BattleGetErrorString, 0x449810);
 DECL_FUNC(int (__stdcall*BattleUpdateIcons)(int, int, LPCSTR lpString, int, int, char, int, int, int, COLORREF color), BattleUpdateIcons, 0x449f60);
 DECL_FUNC(int (__stdcall*GetObjectHeight)(HGDIOBJ h), GetObjectHeight, 0x44a000);
-DECL_FUNC(int (__stdcall*addItemProc)(LPARAM, LPARAM lParam, int), addItemProc, 0x44a210);
+DECL_FUNC(int (__stdcall*addItemProc)(MapDirEntry *, char *, MapDirEntryFlags), addItemProc, 0x44a210);
 DECL_FUNC(int(*sub_44A250)(), sub_44A250, 0x44a250);
 DECL_FUNC(int(*sub_44A2B0)(), sub_44A2B0, 0x44a2b0);
 DECL_FUNC(int (__stdcall*sub_44A380)(HWND hWnd), sub_44A380, 0x44a380);
 DECL_FUNC(int (__stdcall*sub_44A410)(HWND hWnd), sub_44A410, 0x44a410);
-DECL_FUNC(int (__stdcall*sub_44A560)(LPARAM, LPARAM lParam, char), sub_44A560, 0x44a560);
+DECL_FUNC(int (__stdcall*sub_44A560)(MapDirEntry *, char *, MapDirEntryFlags), sub_44A560, 0x44a560);
 DECL_FUNC(int (__stdcall*_ShowWindow)(int, HWND hWnd, int), _ShowWindow, 0x44a5d0);
 DECL_FUNC(int (__stdcall*updateFont)(HWND hWnd), updateFont, 0x44a660);
 DECL_FUNC(int(*sub_44A730)(), sub_44A730, 0x44a730);
@@ -15398,7 +15400,7 @@ int GetMapNameOrdering(const char *filename, char *other) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4A6580)(), sub_4A6580, 0x4a6580);
+DECL_FUNC(void (__cdecl*sub_4A6580)(), sub_4A6580, 0x4a6580);
 void **mapEntry_Append(MapDirEntry *a1) {
     int address = 0x4a6660;
     void ** result_;
@@ -15453,7 +15455,18 @@ int GetMapDirEntryInformation(MapDirEntry *entry, struct_a2 *a2) {
     return result_;
 }
 DECL_FUNC(int(*LoadRecentMapsCombobox)(), LoadRecentMapsCombobox, 0x4a6ee0);
-DECL_FUNC(int (__stdcall*fileExt)(char), fileExt, 0x4a7050);
+void fileExt(const char *a1, int ebx0, char a2) {
+    int address = 0x4a7050;
+    __asm {
+        xor ebx, ebx
+        xor edi, edi
+        mov edi, a1
+        mov ebx, ebx0
+        push dword ptr a2
+        call address
+        add esp, 4
+    }
+}
 MapDirEntry *save_Recent_Map_Data(MapDirEntry *result) {
     int address = 0x4a7210;
     MapDirEntry * result_;
@@ -15465,7 +15478,20 @@ MapDirEntry *save_Recent_Map_Data(MapDirEntry *result) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*getMapListEntryCount)(int, int, char *), getMapListEntryCount, 0x4a73c0);
+int getMapListEntryCount(int (__stdcall *a1)(MapDirEntry *, char *, MapDirEntryFlags), int a2, char *a3, char *a4) {
+    int address = 0x4a73c0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a4
+        push dword ptr a3
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__stdcall*sub_4A7540)(MapDirEntry *a1), sub_4A7540, 0x4a7540);
 int FullyLoadMapDirEntry(MapDirEntry *a1) {
     int address = 0x4a7740;
@@ -15954,7 +15980,7 @@ void sub_4ADD90(int a1, dialog *player_type_dropdown) {
     }
 }
 DECL_FUNC(int (__stdcall*sub_4ADEA0)(char *a1, int, int, int), sub_4ADEA0, 0x4adea0);
-DECL_FUNC(int (__stdcall*AddMapToList_CB)(int, char *a1, int), AddMapToList_CB, 0x4adee0);
+DECL_FUNC(int (__stdcall*AddMapToList_CB)(MapDirEntry *, char *, MapDirEntryFlags), AddMapToList_CB, 0x4adee0);
 void gluCustm_raceDropdown(dialog *a1) {
     int address = 0x4adf20;
     __asm {
@@ -20231,7 +20257,7 @@ DECL_FUNC(void (__cdecl*sub_4DC8D0)(), sub_4DC8D0, 0x4dc8d0);
 DECL_FUNC(int(*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
 DECL_FUNC(int(*sub_4DC940)(), sub_4DC940, 0x4dc940);
 DECL_FUNC(int (__thiscall*cleanUpFileNameString)(char *), cleanUpFileNameString, 0x4dca20);
-void sub_4DCB00(void *a1, char *a2) {
+void sub_4DCB00(char *a1, char *a2) {
     int address = 0x4dcb00;
     __asm {
         xor eax, eax
