@@ -14428,6 +14428,24 @@ void sub_46D200_(MusicTrack music_track)
 
 FAIL_STUB_PATCH(sub_46D200);
 
+MenuPosition BWFXN_NetSelectReturnMenu_()
+{
+	switch (NetMode.as_number)
+	{
+	case 'BNET': return MenuPosition::GLUE_BATTLE;
+	case 'ATLK': return MenuPosition::GLUE_GAME_SELECT;
+	case 'IPXN': return MenuPosition::GLUE_GAME_SELECT;
+	case 'IPXX': return MenuPosition::GLUE_GAME_SELECT;
+	case 'UDPN': return MenuPosition::GLUE_GAME_SELECT;
+	case 'MODM': return MenuPosition::GLUE_MODEM;
+	case 'MDMX': return MenuPosition::GLUE_MODEM;
+	case 'SCBL': return MenuPosition::GLUE_DIRECT;
+	}
+	return MenuPosition::GLUE_MAIN_MENU;
+}
+
+FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu);
+
 void sub_46D1F0_()
 {
 	stopMusic();
@@ -14450,7 +14468,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path)
 		case 14:
 			if (multiPlayerMode)
 			{
-				BWFXN_NetSelectReturnMenu();
+				glGluesMode = BWFXN_NetSelectReturnMenu_();
 			}
 			else
 			{
@@ -16062,7 +16080,7 @@ void loadMenu_gluScore_()
 	{
 		if (multiPlayerMode)
 		{
-			BWFXN_NetSelectReturnMenu();
+			glGluesMode = BWFXN_NetSelectReturnMenu_();
 		}
 		else if (!ContinueCampaign_(dword_59B75C))
 		{
