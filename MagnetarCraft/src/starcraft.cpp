@@ -44,7 +44,6 @@ void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_mult
 
 	if (!frame_capping)
 	{
-
 		dword_51BFDC[0] = 0;
 		dword_51BFDC[1] = 0;
 		dword_51BFDC[2] = 0;
