@@ -6921,9 +6921,9 @@ void sub_4EBC30_(CUnit* unit)
 			subunit->statusFlags &= ~StatusFlags::UNKNOWN6;
 			if ((unit->statusFlags & StatusFlags::IsABuilding) != 0 && (subunit->movementFlags & 8) == 0)
 			{
-				for (CImage* i = subunit->sprite->pImageHead; i; i = i->next)
+				for (CImage* image = subunit->sprite->pImageHead; image; image = image->next)
 				{
-					PlayIscriptAnim_(i, AE_WalkingToIdle);
+					PlayIscriptAnim_(image, AE_WalkingToIdle);
 				}
 			}
 		}
@@ -6932,9 +6932,9 @@ void sub_4EBC30_(CUnit* unit)
 			unit->subUnit->statusFlags |= StatusFlags::UNKNOWN6;
 			if ((subunit->movementFlags & 8) == 0)
 			{
-				for (CImage* j = subunit->sprite->pImageHead; j; j = j->next)
+				for (CImage* image = subunit->sprite->pImageHead; image; image = image->next)
 				{
-					PlayIscriptAnim_(j, AE_Walking);
+					PlayIscriptAnim_(image, AE_Walking);
 				}
 			}
 		}
