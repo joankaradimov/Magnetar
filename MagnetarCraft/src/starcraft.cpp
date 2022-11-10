@@ -6923,7 +6923,7 @@ void sub_4EBC30_(CUnit* unit)
 			{
 				for (CImage* i = subunit->sprite->pImageHead; i; i = i->next)
 				{
-					PlayIscriptAnim(i, AE_WalkingToIdle);
+					PlayIscriptAnim_(i, AE_WalkingToIdle);
 				}
 			}
 		}
@@ -6934,7 +6934,7 @@ void sub_4EBC30_(CUnit* unit)
 			{
 				for (CImage* j = subunit->sprite->pImageHead; j; j = j->next)
 				{
-					PlayIscriptAnim(j, AE_Walking);
+					PlayIscriptAnim_(j, AE_Walking);
 				}
 			}
 		}
