@@ -19485,6 +19485,102 @@ ButtonState __fastcall BTNSCOND_ZergAdvanced_(u16 variable, int player_id, CUnit
 
 FUNCTION_PATCH(BTNSCOND_ZergAdvanced, BTNSCOND_ZergAdvanced_);
 
+ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			if ((Unit_PrototypeFlags[unit->unitType] & Burrowable))
+			{
+				bool result = CanUseTech(unit, (Tech2)variable, player_id);
+
+				if (result != ButtonState::BTNST_ENABLED)
+				{
+					return (ButtonState) result;
+				}
+				if ((unit->statusFlags & 0x10) == 0 && unit->orderID != Order::Burrowing && unit->orderID != Order::Teleport)
+				{
+					return ButtonState::BTNST_ENABLED;
+				}
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanBurrow, BTNSCOND_CanBurrow_);
+
+ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* unit)
+{
+	Tech tech = (Tech)variable;
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			if (Unit_PrototypeFlags[unit->unitType] & Burrowable)
+			{
+				if ((unit->statusFlags & Burrowed) == 0)
+				{
+					return ButtonState::BTNST_HIDDEN;
+				}
+				if (unit->orderID == Order::Burrowing || unit->orderID == Order::Teleport)
+				{
+					return ButtonState::BTNST_HIDDEN;
+				}
+				if (CanUseTech(unit, (Tech2)tech, player_id) != 1)
+				{
+					return ButtonState::BTNST_HIDDEN;
+				}
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsBurrowed, BTNSCOND_IsBurrowed_);
+
+ButtonState __fastcall BTNSCOND_CanMorphLurker_(u16 variable, int player_id, CUnit* unit)
+{
+	return CanUseTech(unit, TECH2_lurker_aspect, player_id) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMorphLurker, BTNSCOND_CanMorphLurker_);
+
+ButtonState __fastcall BTNSCOND_LurkerStop_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			if (ActivePortraitUnit->statusFlags & StatusFlags::Burrowed)
+			{
+				if ((unit->statusFlags & StatusFlags::Burrowed) == 0)
+				{
+					return ButtonState::BTNST_HIDDEN;
+				}
+			}
+			else if (unit->statusFlags & StatusFlags::Burrowed)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_LurkerStop, BTNSCOND_LurkerStop_);
+
+ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* unit)
+{
+	return CanUseTech(unit, (Tech2)variable, player_id) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech(unit, (Tech2)variable, player_id) != 1)
