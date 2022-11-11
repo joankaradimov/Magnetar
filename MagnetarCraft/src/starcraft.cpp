@@ -7087,7 +7087,7 @@ int getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, _
 
 FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize);
 
-bool isThingyOnMap_(int y, int x, CThingy* thingy)
+bool isThingyOnMap_(int x, int y,CThingy* thingy)
 {
 	CSprite* v5 = thingy->sprite;
 	if (!v5 || (v5->flags & 0x20) != 0)
@@ -7155,7 +7155,7 @@ FAIL_STUB_PATCH(isThingyOnMap);
 
 void UpdateUnitSpriteInfo_(CUnit* unit)
 {
-	bool v1 = isThingyOnMap_(Unit_Placement[unit->unitType].y, Unit_Placement[unit->unitType].x, (CThingy*)unit);
+	bool v1 = isThingyOnMap_(Unit_Placement[unit->unitType].x, Unit_Placement[unit->unitType].y, (CThingy*)unit);
 
 	if (unit->subUnit && (unit->subUnit->sprite->flags & 0x20) == 0)
 	{
@@ -7547,7 +7547,7 @@ void sub_488020_(CThingy* thingy)
 	}
 	else
 	{
-		isThingyOnMap_(thingy->sprite->unkflags_13, thingy->sprite->unkflags_12, thingy);
+		isThingyOnMap_(thingy->sprite->unkflags_12, thingy->sprite->unkflags_13, thingy);
 	}
 
 	if (thingy->sprite)
