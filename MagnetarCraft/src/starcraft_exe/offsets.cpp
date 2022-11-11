@@ -3125,12 +3125,13 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanBurrow)(u16 variable, int player_i
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsSieged, 0x429170);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsUnsieged, 0x4291c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked)(int), BTNSCOND_IsCloaked, 0x429210);
-DECL_FUNC(int (__stdcall*BTNSCOND_CanCloak)(int), BTNSCOND_CanCloak, 0x4292c0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak, 0x4292c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked_0)(int), BTNSCOND_IsCloaked_0, 0x429370);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak_0)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak_0, 0x4293e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanUpgrade)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanUpgrade, 0x429450);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasSpidermines)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasSpidermines, 0x429470);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasTech)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasTech, 0x4294e0);
-DECL_FUNC(int (__fastcall*BTNSCOND_CanResearch)(Tech a1, int a2, CUnit *a3), BTNSCOND_CanResearch, 0x429500);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanResearch)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanResearch, 0x429500);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Rally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Rally, 0x429520);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeDarkArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeDarkArchonOneSelected, 0x429680);
 DECL_FUNC(int (__fastcall*BTNSCOND_CanMergeArchonOneSelected)(Tech a1, int a2, CUnit *unit), BTNSCOND_CanMergeArchonOneSelected, 0x4296f0);
@@ -6572,7 +6573,7 @@ void ApplyDefensiveMatrix(CUnit *a1) {
         call address
     }
 }
-DECL_FUNC(char (__stdcall*orders_DefensiveMatrix)(CUnit *a1), orders_DefensiveMatrix, 0x4550a0);
+DECL_FUNC(void(*orders_DefensiveMatrix)(CUnit *a1), orders_DefensiveMatrix, 0x4550a0);
 void OpticalFlareHit(CUnit *a1, char attacking_player) {
     int address = 0x455170;
     __asm {
@@ -8740,11 +8741,42 @@ void updateUnitSorting(CUnit *a1) {
         call address
     }
 }
-DECL_FUNC(int(*sub_46A5E0)(), sub_46A5E0, 0x46a5e0);
+DECL_FUNC(int (__cdecl*UMHidden)(), UMHidden, 0x46a5e0);
 DECL_FUNC(int(*sub_46A5F0)(), sub_46A5F0, 0x46a5f0);
-DECL_FUNC(int(*sub_46A600)(), sub_46A600, 0x46a600);
-DECL_FUNC(int (__stdcall*sub_46A620)(char), sub_46A620, 0x46a620);
-DECL_FUNC(int(*sub_46A630)(), sub_46A630, 0x46a630);
+CUnit *sub_46A600(CUnit *result) {
+    int address = 0x46a600;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+CUnit *sub_46A620(CUnit *result, char a2) {
+    int address = 0x46a620;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int UMScoutFree(CUnit *a1) {
+    int address = 0x46a630;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int UMAtMoveTarget(CUnit *a1) {
     int address = 0x46a640;
     signed result_;
@@ -8756,7 +8788,17 @@ signed int UMAtMoveTarget(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_46A690)(), sub_46A690, 0x46a690);
+int UMInitSeq(CUnit *a1) {
+    int address = 0x46a690;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void UMFailedPath(CUnit *this_) {
     int address = 0x46a6b0;
     __asm {
@@ -8765,7 +8807,7 @@ void UMFailedPath(CUnit *this_) {
         call address
     }
 }
-DECL_FUNC(int(*sub_46A700)(), sub_46A700, 0x46a700);
+DECL_FUNC(int (__thiscall*sub_46A700)(CUnit *this_), sub_46A700, 0x46a700);
 int sub_46A720(int a1, CUnit *a2) {
     int address = 0x46a720;
     int result_;
@@ -9015,6 +9057,18 @@ signed int UMFollowPath(CUnit *a1) {
     }
     return result_;
 }
+int sub_46BBA0(CUnit *a1) {
+    int address = 0x46bba0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int UMRepathMovers(CUnit *unit) {
     int address = 0x46bbc0;
     signed result_;
@@ -9048,13 +9102,13 @@ signed int UMTurnAndStart(CUnit *a1) {
     }
     return result_;
 }
-signed int UMStartPath(CUnit *a1) {
+signed int UMStartPath(CUnit *unit) {
     int address = 0x46bd90;
     signed result_;
     __asm {
         xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
         mov result_, eax
     }
@@ -11035,7 +11089,18 @@ int unitLurkerIsNotIdle(CUnit *a1) {
 }
 DECL_FUNC(unsigned int (__thiscall*getModifiedUnitTurnRadius)(CUnit *this_), getModifiedUnitTurnRadius, 0x47b850);
 DECL_FUNC(unsigned int (__thiscall*getModifiedUnitAcceleration)(CUnit *this_), getModifiedUnitAcceleration, 0x47b8a0);
-DECL_FUNC(int (__fastcall*GetUnitSpeed)(int a1, CUnit *a2), GetUnitSpeed, 0x47b8f0);
+unsigned int GetUnitSpeed(CUnit *unit) {
+    int address = 0x47b8f0;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov edx, unit
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*isUnitEnemyOf)(), isUnitEnemyOf, 0x47b910);
 void DisableDoodadState(CUnit *a1) {
     int address = 0x47b960;
@@ -20220,7 +20285,20 @@ DECL_FUNC(int(*sub_4DC510)(), sub_4DC510, 0x4dc510);
 DECL_FUNC(int(*sub_4DC520)(), sub_4DC520, 0x4dc520);
 DECL_FUNC(int(*sub_4DC530)(), sub_4DC530, 0x4dc530);
 DECL_FUNC(void (__thiscall*SetInGameLoop)(int this_), SetInGameLoop, 0x4dc540);
-DECL_FUNC(int (__stdcall*RandBetween)(int), RandBetween, 0x4dc550);
+unsigned int RandBetween(int a1, unsigned int a2, int a3) {
+    int address = 0x4dc550;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__cdecl*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
 void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3) {
     int address = 0x4dc630;
@@ -21165,7 +21243,20 @@ BOOL sub_4E5AD0(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4E5B30)(), sub_4E5B30, 0x4e5b30);
-DECL_FUNC(signed int (__fastcall*getUpdatedSightRange)(int a1, CUnit *a2, int a3), getUpdatedSightRange, 0x4e5b40);
+signed int getUpdatedSightRange(CUnit *unit, int a3) {
+    int address = 0x4e5b40;
+    signed result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov edx, unit
+        push dword ptr a3
+        call address
+        mov result_, eax
+        add esp, 4
+    }
+    return result_;
+}
 unsigned __int32 UnitIsInvincible_(CUnit *a1) {
     int address = 0x4e5c70;
     unsigned result_;
@@ -21797,7 +21888,19 @@ DECL_FUNC(bool (__fastcall*netdlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), netd
 DECL_FUNC(void(*sub_4E8BB0)(), sub_4E8BB0, 0x4e8bb0);
 DECL_FUNC(int (__stdcall*pixelPosHasCreep)(__int16), pixelPosHasCreep, 0x4e8bc0);
 DECL_FUNC(int(*sub_4E8C00)(), sub_4E8C00, 0x4e8c00);
-DECL_FUNC(int(*sub_4E8C20)(), sub_4E8C20, 0x4e8c20);
+BOOL sub_4E8C20(CUnit *a1, CUnit *a2) {
+    int address = 0x4e8c20;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        xor edx, edx
+        mov eax, a1
+        mov edx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4E8C60)(), sub_4E8C60, 0x4e8c60);
 DECL_FUNC(int (__fastcall*larvaCounterProc)(CUnit *a1, CUnit *a2), larvaCounterProc, 0x4e8c80);
 DECL_FUNC(int (__stdcall*sub_4E8CB0)(int, int), sub_4E8CB0, 0x4e8cb0);

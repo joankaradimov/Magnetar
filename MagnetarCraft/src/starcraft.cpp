@@ -9224,6 +9224,22 @@ void sub_45E770_(dialog* dlg)
 
 FAIL_STUB_PATCH(sub_45E770);
 
+void moveScreenToUnit_(CUnit* unit)
+{
+	BWFXN_MoveScreen((unit->sprite->position.x - 320) / 32 * 32, (unit->sprite->position.y - 192) / 32 * 32);
+}
+
+void moveScreenToUnit__(__int16 x)
+{
+	CUnit* unit;
+
+	__asm mov unit, eax
+
+	moveScreenToUnit_(unit);
+}
+
+FUNCTION_PATCH((void*)0x4E6020, moveScreenToUnit__);
+
 int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -9245,7 +9261,7 @@ int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			if (CUnit* unit = (CUnit*) dlg->lUser)
 			{
-				moveScreenToUnit(unit);
+				moveScreenToUnit_(unit);
 			}
 			break;
 		}
