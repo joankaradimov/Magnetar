@@ -8,5 +8,9 @@ include_directories(${MAGNETORM_INCLUDE_DIRS})
 
 add_executable(MagnetarTest tests.cpp)
 
+include(GoogleTest)
 target_link_libraries(MagnetarTest PRIVATE MagnetarCraftObject)
 target_link_libraries(MagnetarTest PRIVATE magnetorm)
+target_link_libraries(MagnetarTest PRIVATE GTest::gtest_main)
+
+gtest_discover_tests(MagnetarTest)
