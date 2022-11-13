@@ -6762,6 +6762,99 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+int UMFollowPath_(CUnit* unit)
+{
+	if (DestinationAndCollisionCheck(unit, 1))
+	{
+		return 1;
+	}
+	if (!UMAnotherPath(unit, unit->moveTarget.pt))
+	{
+		unit->movementState = UnitMovementState::UM_AnotherPath;
+		return 1;
+	}
+
+	sub_495EE0(unit);
+	s32 v13 = unit->flingyMovementType ? unit->current_speed2 : unit->current_speed1;
+	CUnit* v14 = (unit->statusFlags & StatusFlags::IsNormal) ? FindCollidingUnit(unit) : 0;
+	if (v14)
+	{
+		if (TerrainCollision(unit))
+		{
+			goto LABEL_18;
+		}
+		if (unit->current_speed.x < 32 && unit->current_speed.y < 32)
+		{
+			goto LABEL_18;
+		}
+		if (dword_63FF2C != unit->current_speed1)
+		{
+			goto LABEL_18;
+		}
+		int v6 = dword_63FED8;
+		int v5 = dword_63FF40;
+		__int16 v12 = dword_63FED4;
+		__int16 v11 = dword_63FECC;
+
+		dword_63FED8 = unit->halt.x + unit->current_speed.x / 2;
+		dword_63FF40 = unit->halt.y + unit->current_speed.y / 2;
+		LOWORD(dword_63FED4) = dword_63FED8 >> 8;
+		LOWORD(dword_63FECC) = dword_63FF40 >> 8;
+		if (sub_4F2240(unit))
+		{
+			dword_63FED8 = unit->halt.x + unit->current_speed.x / 4;
+			dword_63FF40 = unit->halt.y + unit->current_speed.y / 4;
+			LOWORD(dword_63FED4) = dword_63FED8 >> 8;
+			LOWORD(dword_63FECC) = dword_63FF40 >> 8;
+			if (sub_4F2240(unit))
+			{
+				dword_63FED8 = v6;
+				dword_63FF40 = v5;
+				LOWORD(dword_63FED4) = v12;
+				LOWORD(dword_63FECC) = v11;
+
+			LABEL_18:
+				unit->path->colliding_unit_id = CUnitToUnitID(v14);
+				unit->path->speed = v13;
+				unit->movementState = UnitMovementState::UM_FixCollision;
+				return 1;
+			}
+		}
+	}
+	else if (TerrainCollision(unit))
+	{
+		unit->path->speed = v13;
+		unit->movementState = UnitMovementState::UM_FixTerrain;
+		return 1;
+	}
+
+	if ((_WORD)dword_63FED4 != unit->sprite->position.x || (_WORD)dword_63FECC != unit->sprite->position.y)
+	{
+		u8 v10 = unit->pathingCollisionInterval;
+		if (v10 > 2)
+		{
+			unit->pathingCollisionInterval = 2;
+		}
+		else if (v10)
+		{
+			unit->pathingCollisionInterval = v10 - 1;
+		}
+	}
+	MoveUnit_Partial(unit);
+	if (isUnitMovableAndAtDestination(unit))
+	{
+		unit->movementState = UnitMovementState::UM_AtMoveTarget;
+	}
+	else if (unitSubtractPathDelayAndCheck(unit))
+	{
+		unitSetPathDelay(unit, 30);
+		unit->movementState = UnitMovementState::UM_ScoutPath;
+	}
+	return 0;
+}
+
+FAIL_STUB_PATCH(UMFollowPath);
+
 void Unit_ExecPathingState_(CUnit* unit)
 {
 	dword_66FF70 = visionUpdated != 0;
@@ -6847,7 +6940,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMRepathMovers(unit);
 			break;
 		case UnitMovementState::UM_FollowPath:
-			v2 = UMFollowPath(unit);
+			v2 = UMFollowPath_(unit);
 			break;
 		case UnitMovementState::UM_ScoutPath:
 			v2 = UMScoutPath(unit);
