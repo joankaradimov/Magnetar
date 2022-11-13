@@ -7090,7 +7090,7 @@ FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize);
 bool isThingyOnMap_(int x, int y,CThingy* thingy)
 {
 	CSprite* v5 = thingy->sprite;
-	if (!v5 || (v5->flags & 0x20) != 0)
+	if (!v5 || (v5->flags & 0x20))
 	{
 		return 0;
 	}
