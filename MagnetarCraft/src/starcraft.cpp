@@ -19597,6 +19597,48 @@ ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* uni
 
 FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
 
+ButtonState __fastcall BTNSCOND_CanResearch_(u16 variable, int player_id, CUnit* unit)
+{
+	return ReasearchAllowed((Tech2)variable, player_id, unit) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanResearch, BTNSCOND_CanResearch_);
+
+ButtonState __fastcall BTNSCOND_IsResearching_(u16 variable, int player_id, CUnit* unit)
+{
+	return unit->fields1.building.techType != Tech::TECH_none ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsResearching, BTNSCOND_IsResearching_);
+
+ButtonState __fastcall BTNSCOND_CanUpgrade_(u16 variable, int player_id, CUnit* unit)
+{
+	return UpgradeAllowed((unsigned __int8)variable, player_id, unit) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanUpgrade, BTNSCOND_CanUpgrade_);
+
+ButtonState __fastcall BTNSCOND_IsUpgrading_(u16 variable, int player_id, CUnit* unit)
+{
+	return unit->fields1.building.upgradeType != 61 ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsUpgrading, BTNSCOND_IsUpgrading_);
+
+ButtonState __fastcall BTNSCOND_NoNydusExit_(u16 variable, int player_id, CUnit* unit)
+{
+	return unit->fields2.nydus.exit ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_NoNydusExit, BTNSCOND_NoNydusExit_);
+
+ButtonState __fastcall BTNSCOND_IsTraining_(u16 variable, int player_id, CUnit* unit)
+{
+	return unit->buildQueue[unit->buildQueueSlot % 5] <= 105 ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsTraining, BTNSCOND_IsTraining_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech(unit, (Tech2)variable, player_id) != 1)
