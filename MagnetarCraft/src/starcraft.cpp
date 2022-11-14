@@ -6762,6 +6762,39 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+int UMStartPath_(CUnit* unit)
+{
+	if (UMAnotherPath(unit, unit->moveTarget.pt))
+	{
+		if (unit->userActionFlags & 2)
+		{
+			unit->userActionFlags &= ~2;
+			if (unit->flingyMovementType == 2)
+			{
+				unit->path->byte19 = RandBetween(51, 0, 2);
+				unit->movementState = UnitMovementState::UM_UIOrderDelay;
+			}
+			else
+			{
+				unit->movementState = UnitMovementState::UM_FollowPath;
+			}
+		}
+		else
+		{
+			unit->movementState = UnitMovementState::UM_FollowPath;
+		}
+
+		return 1;
+	}
+	else
+	{
+		unit->movementState = UnitMovementState::UM_FailedPath;
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(UMStartPath);
+
 int UMFollowPath_(CUnit* unit)
 {
 	if (DestinationAndCollisionCheck(unit, 1))
@@ -6916,7 +6949,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMRetryPath(unit);
 			break;
 		case UnitMovementState::UM_StartPath:
-			v2 = UMStartPath(unit);
+			v2 = UMStartPath_(unit);
 			break;
 		case UnitMovementState::UM_UIOrderDelay:
 			v2 = UMUIOrderDelay(unit);
