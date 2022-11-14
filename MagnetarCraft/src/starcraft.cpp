@@ -6762,6 +6762,34 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+int UMInitSeq_(CUnit* unit)
+{
+	if (unit->statusFlags & NoBrkCodeStart)
+	{
+		return 0;
+	}
+	unit->movementState = UnitMovementState::UM_Init;
+	return 1;
+}
+
+FAIL_STUB_PATCH(UMInitSeq);
+
+int UMHidden_()
+{
+	dword_66FF70 = 0;
+	return 0;
+}
+
+FAIL_STUB_PATCH(UMHidden);
+
+int UMScoutFree_(CUnit* unit)
+{
+	unit->movementState = UnitMovementState::UM_FollowPath;
+	return 1;
+}
+
+FAIL_STUB_PATCH(UMScoutFree);
+
 int UMStartPath_(CUnit* unit)
 {
 	if (UMAnotherPath(unit, unit->moveTarget.pt))
@@ -6901,12 +6929,8 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMInitialize(unit);
 			break;
 		case UnitMovementState::UM_InitSeq:
-			if (unit->statusFlags & NoBrkCodeStart)
-			{
-				return;
-			}
-			unit->movementState = UM_Init;
-			continue;
+			v2 = UMInitSeq_(unit);
+			break;
 		case UnitMovementState::UM_Turret:
 			v2 = UMTurret(unit);
 			break;
@@ -6917,8 +6941,8 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMBldgTurret(unit);
 			break;
 		case UnitMovementState::UM_Hidden:
-			dword_66FF70 = 0;
-			return;
+			v2 = UMHidden_();
+			break;
 		case UnitMovementState::UM_Flyer:
 			v2 = UMFlyer(unit);
 			break;
@@ -6979,8 +7003,8 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMScoutPath(unit);
 			break;
 		case UnitMovementState::UM_ScoutFree:
-			unit->movementState = UM_FollowPath;
-			continue;
+			v2 = UMScoutFree_(unit);
+			break;
 		case UnitMovementState::UM_FixCollision:
 			v2 = UMFixCollision(unit);
 			break;
