@@ -4183,6 +4183,36 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 
 FAIL_STUB_PATCH(updateMinimapSurfaceInfo2Proc);
 
+void showDialog_(dialog* dlg)
+{
+	if (!(dlg->lFlags & DialogFlags::CTRL_VISIBLE))
+	{
+		dlgEvent event;
+		event.cursor.y = Mouse.y;
+		event.wNo = EVN_USER;
+		event.dwUser = USER_SHOW;
+		*(_DWORD*)&event.wSelection = 0;
+		event.cursor.x = Mouse.x;
+
+		if (dlg->pfcnInteract(dlg, &event) && !(dlg->lFlags & DialogFlags::CTRL_UPDATE))
+		{
+			dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(dlg);
+		}
+	}
+}
+
+void showDialog__()
+{
+	dialog* dlg;
+
+	__asm mov dlg, esi
+
+	return showDialog_(dlg);
+}
+
+FUNCTION_PATCH((void*)0x4186A0, showDialog__);
+
 void HideDialog_(dialog* dlg)
 {
 	if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
@@ -4272,7 +4302,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 			}
 			if (dword_5993AC == 0)
 			{
-				showDialog(minimap_dialog);
+				showDialog_(minimap_dialog);
 			}
 		}
 	}
@@ -8364,7 +8394,7 @@ void sub_4591D0_()
 					v9.cursor.x = Mouse.x;
 					dlg->pfcnInteract(dlg, &v9);
 				}
-				showDialog(dlg);
+				showDialog_(dlg);
 				if (v10 >= BTNST_HIDDEN)
 				{
 					EnableControl(dlg);
@@ -9608,7 +9638,7 @@ void __stdcall hideLeftmostResource_(int a1)
 		dialog* v3 = getControlFromIndex_(statres_Dlg, 6);
 		if (a1)
 		{
-			showDialog(v3);
+			showDialog_(v3);
 		}
 		else
 		{
@@ -10202,7 +10232,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 	}
 	else
 	{
-		showDialog(v13);
+		showDialog_(v13);
 	}
 }
 
@@ -14503,7 +14533,7 @@ void sub_46D220_(dialog* a1)
 	if (!a1->lUser)
 	{
 		dialog* v6 = getControlFromIndex_(a1, -14);
-		showDialog(v6);
+		showDialog_(v6);
 		if (multiPlayerMode)
 		{
 			BriefingStart(a1, 0);
@@ -14846,9 +14876,9 @@ int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 			ConnSel_InitChildren_(dlg);
 			break;
 		case 0x405:
-			showDialog(getControlFromIndex_(gluConn_Dlg, 12));
-			showDialog(getControlFromIndex_(gluConn_Dlg, 13));
-			showDialog(getControlFromIndex_(gluConn_Dlg, 14));
+			showDialog_(getControlFromIndex_(gluConn_Dlg, 12));
+			showDialog_(getControlFromIndex_(gluConn_Dlg, 13));
+			showDialog_(getControlFromIndex_(gluConn_Dlg, 14));
 			break;
 		}
 	}
@@ -15012,7 +15042,7 @@ void CreateRaceDropdown_(dialog* dlg, Race race)
 	HIBYTE(dlg->wUser) |= 1;
 	if (!dword_68F520)
 	{
-		showDialog(dlg);
+		showDialog_(dlg);
 	}
 	EnableControl(dlg);
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
@@ -17218,7 +17248,7 @@ void sub_4D8840_(int element_length, char* element_start)
 				dword_51CEB0->lFlags |= CTRL_UPDATE;
 				updateDialog(dword_51CEB0);
 			}
-			showDialog(dword_51CEB0);
+			showDialog_(dword_51CEB0);
 		}
 	}
 }
