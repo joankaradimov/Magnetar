@@ -4183,6 +4183,46 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 
 FAIL_STUB_PATCH(updateMinimapSurfaceInfo2Proc);
 
+void HideDialog_(dialog* dlg)
+{
+	if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
+	{
+		dlgEvent event;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+		event.wNo = EventNo::EVN_USER;
+		event.dwUser = EventUser::USER_HIDE;
+		*(_DWORD*)&event.wSelection = 0;
+
+		if (dlg->pfcnInteract(dlg, &event))
+		{
+			event.cursor.x = Mouse.x;
+			event.cursor.y = Mouse.y;
+			event.wNo = EventNo::EVN_USER;
+			event.dwUser = EventUser::USER_NEXT;
+			*(_DWORD*)&event.wSelection = 0;
+			dlg->pfcnInteract(dlg, &event);
+
+			if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+			{
+				dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+				updateDialog(dlg);
+			}
+		}
+	}
+}
+
+void HideDialog__()
+{
+	dialog* dlg;
+
+	__asm mov dlg, esi
+
+	return HideDialog_(dlg);
+}
+
+FUNCTION_PATCH((void*)0x418700, HideDialog__);
+
 void updateMinimapPreviewDlg_(dialog* dlg)
 {
 	static FnInteract menu_functions[] = {
@@ -8345,7 +8385,7 @@ void sub_4591D0_()
 			}
 			else
 			{
-				HideDialog(dlg);
+				HideDialog_(dlg);
 				dlg->wUser = -1;
 				dlg->lUser = 0;
 			}
@@ -8728,7 +8768,7 @@ void sub_458120_()
 	{
 		for (dialog* v1 = stardata_Dlg->wCtrlType != DialogType::cDLG ? stardata_Dlg : stardata_Dlg->fields.dlg.pFirstChild; v1; v1 = v1->pNext)
 		{
-			HideDialog(v1);
+			HideDialog_(v1);
 		}
 		statusScreenFunc = 0;
 	}
@@ -9259,7 +9299,7 @@ void sub_458E70_(dialog* a1)
 {
 	a1->wUser = -1;
 	a1->pfcnUpdate = statbtn_Btn_Update;
-	HideDialog(a1);
+	HideDialog_(a1);
 }
 
 FAIL_STUB_PATCH(sub_458E70);
@@ -9572,7 +9612,7 @@ void __stdcall hideLeftmostResource_(int a1)
 		}
 		else
 		{
-			HideDialog(v3);
+			HideDialog_(v3);
 		}
 		v3->lUser = 0;
 	}
@@ -10158,7 +10198,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 	dialog* v13 = getControlFromIndex_(a1, 5);
 	if (byte_68C144 || v13->pszText == NULL)
 	{
-		HideDialog(v13);
+		HideDialog_(v13);
 	}
 	else
 	{
@@ -13070,7 +13110,7 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 			v18->next = v14;
 			v11->next = v13;
 			v14[1].previous = (ListNode*)a1b;
-			HideDialog(a1b);
+			HideDialog_(a1b);
 		}
 	}
 }
@@ -14348,9 +14388,9 @@ void sub_46D3C0_(dialog* dlg)
 	if (multiPlayerMode)
 	{
 		dialog* v2 = getControlFromIndex_(dlg, 5);
-		HideDialog(v2);
+		HideDialog_(v2);
 		dialog* v4 = getControlFromIndex_(dlg, 20);
-		HideDialog(v4);
+		HideDialog_(v4);
 	}
 	dword_6556D8 = 0;
 	byte_6554B0 = 1;
@@ -15044,8 +15084,8 @@ void gluChat_init_(dialog* dlg)
 
 	if (!isHost)
 	{
-		HideDialog(getControlFromIndex_(dlg, 5));
-		HideDialog(getControlFromIndex_(dlg, 7));
+		HideDialog_(getControlFromIndex_(dlg, 5));
+		HideDialog_(getControlFromIndex_(dlg, 7));
 	}
 	sub_4B9480(dlg);
 	DlgSwooshin_(5, gluChatSwishController, dlg, 0);
@@ -15512,15 +15552,15 @@ int __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 			}
 			else
 			{
-				HideDialog(minimap_preview_dlg);
+				HideDialog_(minimap_preview_dlg);
 			}
 			break;
 		case 0x405:
 			updatePasswordDisplay(dlg);
 			dword_68F520 = 0;
 			dword_68F4F0 = 1;
-			HideDialog(starting_in_dlg);
-			HideDialog(countdown_dlg);
+			HideDialog_(starting_in_dlg);
+			HideDialog_(countdown_dlg);
 			dword_5999DC = 1;
 			return 1;
 		}
@@ -15730,7 +15770,7 @@ void saveGame_Create_(dialog* dlg)
 	dialog* v3 = getControlFromIndex_(dlg, 3);
 	if (v3)
 	{
-		HideDialog(v3);
+		HideDialog_(v3);
 	}
 
 	dialog* v6 = getControlFromIndex_(dlg, 1);
@@ -17167,7 +17207,7 @@ void sub_4D8840_(int element_length, char* element_start)
 		{
 			SMemFree(dword_51CEB0->pszText, "Starcraft\\SWAR\\lang\\credits.cpp", 321, 0);
 			dword_51CEB0->pszText = 0;
-			HideDialog(dword_51CEB0);
+			HideDialog_(dword_51CEB0);
 		}
 		if (element_length)
 		{
@@ -17265,7 +17305,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 			{
 				if (dword_51CEB0)
 				{
-					HideDialog(dword_51CEB0);
+					HideDialog_(dword_51CEB0);
 				}
 				dword_51CEB0 = getControlFromIndex_(dlg, position.index);
 				break;
@@ -18037,7 +18077,7 @@ FAIL_STUB_PATCH(UpdateCountdownTimer);
 void DisableCountdownTimer_()
 {
 	dialog* v1 = getControlFromIndex_(statres_Dlg, -10);
-	HideDialog(v1);
+	HideDialog_(v1);
 }
 
 FAIL_STUB_PATCH(DisableCountdownTimer);
