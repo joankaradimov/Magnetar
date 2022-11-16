@@ -19729,7 +19729,7 @@ ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* u
 		{
 			if ((Unit_PrototypeFlags[unit->unitType] & Burrowable))
 			{
-				bool result = CanUseTech(unit, (Tech2)variable, player_id);
+				ButtonState result = CanUseTech(unit, (Tech2)variable, player_id);
 
 				if (result != ButtonState::BTNST_ENABLED)
 				{
@@ -19765,7 +19765,7 @@ ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* 
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
-				if (CanUseTech(unit, (Tech2)tech, player_id) != 1)
+				if (CanUseTech(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
@@ -19780,7 +19780,7 @@ FUNCTION_PATCH(BTNSCOND_IsBurrowed, BTNSCOND_IsBurrowed_);
 
 ButtonState __fastcall BTNSCOND_CanMorphLurker_(u16 variable, int player_id, CUnit* unit)
 {
-	return CanUseTech(unit, TECH2_lurker_aspect, player_id) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+	return CanUseTech(unit, TECH2_lurker_aspect, player_id);
 }
 
 FUNCTION_PATCH(BTNSCOND_CanMorphLurker, BTNSCOND_CanMorphLurker_);
@@ -19812,14 +19812,14 @@ FUNCTION_PATCH(BTNSCOND_LurkerStop, BTNSCOND_LurkerStop_);
 
 ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* unit)
 {
-	return CanUseTech(unit, (Tech2)variable, player_id) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+	return CanUseTech(unit, (Tech2)variable, player_id);
 }
 
 FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
 
 ButtonState __fastcall BTNSCOND_CanResearch_(u16 variable, int player_id, CUnit* unit)
 {
-	return ReasearchAllowed((Tech2)variable, player_id, unit) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+	return ReasearchAllowed((Tech2)variable, player_id, unit);
 }
 
 FUNCTION_PATCH(BTNSCOND_CanResearch, BTNSCOND_CanResearch_);
@@ -19833,7 +19833,7 @@ FUNCTION_PATCH(BTNSCOND_IsResearching, BTNSCOND_IsResearching_);
 
 ButtonState __fastcall BTNSCOND_CanUpgrade_(u16 variable, int player_id, CUnit* unit)
 {
-	return UpgradeAllowed((unsigned __int8)variable, player_id, unit) ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
+	return UpgradeAllowed((Tech2)variable, player_id, unit);
 }
 
 FUNCTION_PATCH(BTNSCOND_CanUpgrade, BTNSCOND_CanUpgrade_);

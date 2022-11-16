@@ -1641,19 +1641,19 @@ int DisableControl(dialog *a1) {
     }
     return result_;
 }
-void showDialog(dialog *a1) {
+void showDialog(dialog *dlg) {
     int address = 0x4186a0;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, dlg
         call address
     }
 }
-void HideDialog(dialog *a1) {
+void HideDialog(dialog *dlg) {
     int address = 0x418700;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, dlg
         call address
     }
 }
@@ -3124,7 +3124,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsBurrowed)(u16 variable, int player_
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanBurrow)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanBurrow, 0x4290f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsSieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsSieged, 0x429170);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsUnsieged)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsUnsieged, 0x4291c0);
-DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked)(int), BTNSCOND_IsCloaked, 0x429210);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsCloaked)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsCloaked, 0x429210);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak, 0x4292c0);
 DECL_FUNC(int (__stdcall*BTNSCOND_IsCloaked_0)(int), BTNSCOND_IsCloaked_0, 0x429370);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanCloak_0)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanCloak_0, 0x4293e0);
@@ -9280,9 +9280,9 @@ DECL_FUNC(int(*parseOrdersDatReqs)(), parseOrdersDatReqs, 0x46d450);
 DECL_FUNC(void (__cdecl*parseTechUseData)(), parseTechUseData, 0x46d4c0);
 DECL_FUNC(int(*parseTechResearchData)(), parseTechResearchData, 0x46d530);
 DECL_FUNC(int(*parseUpgradeData)(), parseUpgradeData, 0x46d5a0);
-signed int parseRequirementOpcodes(__int16 a1, CUnit *a3, Tech2 a4, int a5, int a6) {
+ButtonState parseRequirementOpcodes(__int16 a1, CUnit *a3, Tech2 a4, int a5, int a6) {
     int address = 0x46d610;
-    signed result_;
+    ButtonState result_;
     __asm {
         xor eax, eax
         xor esi, esi
@@ -9310,9 +9310,9 @@ int OrderAllowed(CUnit *a1, unsigned __int16 order, int a3) {
     }
     return result_;
 }
-bool CanUseTech(CUnit *unit, Tech2 tech_id, int player_id) {
+ButtonState CanUseTech(CUnit *unit, Tech2 tech_id, int player_id) {
     int address = 0x46dd80;
-    bool result_;
+    ButtonState result_;
     __asm {
         xor eax, eax
         xor edi, edi
@@ -9320,35 +9320,35 @@ bool CanUseTech(CUnit *unit, Tech2 tech_id, int player_id) {
         mov di, tech_id
         push dword ptr player_id
         call address
-        mov result_, al
+        mov result_, eax
     }
     return result_;
 }
-int ReasearchAllowed(Tech2 a1, int a2, CUnit *a3) {
+ButtonState ReasearchAllowed(Tech2 tech, int a2, CUnit *unit) {
     int address = 0x46de90;
-    int result_;
+    ButtonState result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
         xor edi, edi
-        mov bx, a1
+        mov bx, tech
         mov edi, a2
-        push dword ptr a3
+        push dword ptr unit
         call address
         mov result_, eax
     }
     return result_;
 }
-int UpgradeAllowed(unsigned __int16 a1, int player_id, CUnit *a3) {
+ButtonState UpgradeAllowed(Tech2 tech, int player_id, CUnit *unit) {
     int address = 0x46dfc0;
-    int result_;
+    ButtonState result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
         xor edi, edi
-        mov bx, a1
+        mov bx, tech
         mov edi, player_id
-        push dword ptr a3
+        push dword ptr unit
         call address
         mov result_, eax
     }
