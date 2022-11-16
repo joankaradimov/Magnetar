@@ -19567,9 +19567,7 @@ ButtonState __fastcall BTNSCOND_CanAttack_(u16 variable, int player_id, CUnit* u
 {
 	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
 	{
-		CUnit* v4 = ClientSelectionGroup[i];
-
-		if (v4)
+		if (CUnit* v4 = ClientSelectionGroup[i])
 		{
 			if (v4->unitType == Zerg_Lurker && (v4->statusFlags & Burrowed) || Unit_RightClickAction[v4->unitType] || (v4->statusFlags & StatusFlags::GoundedBuilding) && Unit_IsFactoryBuilding(v4))
 			{
