@@ -19106,6 +19106,71 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 
 FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers);
 
+ButtonState CanUseTech_(CUnit* unit, Tech2 tech_id, int player_id)
+{
+	dword_66FF60 = 0;
+	if (tech_id >= TECH_none)
+	{
+		dword_66FF60 = 17;
+		return ButtonState::BTNST_HIDDEN;
+	}
+
+	if (Tech_Unknown2[tech_id] == -1)
+	{
+		parseTechUseData();
+	}
+	if (player_id != unit->playerID)
+	{
+		dword_66FF60 = 1;
+		return ButtonState::BTNST_HIDDEN;
+	}
+
+	if ((unit->statusFlags & Completed) == 0)
+	{
+		dword_66FF60 = 20;
+		return ButtonState::BTNST_HIDDEN;
+	}
+	if (UnitIsFrozenOrInAir(unit))
+	{
+		dword_66FF60 = 10;
+		return ButtonState::BTNST_HIDDEN;
+	}
+	if (unit->statusFlags & IsHallucination)
+	{
+		dword_66FF60 = 22;
+		return ButtonState::BTNST_HIDDEN;
+	}
+	if (techIsResearchedSCBW(player_id, tech_id) || (GameCheats & CheatFlags::CHEAT_MedievalMan))
+	{
+		ButtonState button_state = (ButtonState)(u16)Tech_Unknown2[tech_id];
+		if (button_state)
+		{
+			return parseRequirementOpcodes(button_state, unit, tech_id, player_id, (int)word_514A48);
+		}
+		else
+		{
+			dword_66FF60 = 23;
+			return ButtonState::BTNST_HIDDEN;
+		}
+	}
+
+	dword_66FF60 = 2;
+	return ButtonState::BTNST_HIDDEN;
+}
+
+ButtonState __stdcall CanUseTech__(int player_id)
+{
+	CUnit* unit;
+	Tech2 tech_id;
+
+	__asm mov unit, eax
+	__asm mov tech_id, di
+
+	return CanUseTech_(unit, tech_id, player_id);
+}
+
+FUNCTION_PATCH((void*)0x46DD80, CanUseTech__);
+
 void BWFXN_sendTurn_()
 {
 	if (sgdwBytesInCmdQueue == 0)
@@ -19729,7 +19794,7 @@ ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* u
 		{
 			if ((Unit_PrototypeFlags[unit->unitType] & Burrowable))
 			{
-				ButtonState result = CanUseTech(unit, (Tech2)variable, player_id);
+				ButtonState result = CanUseTech_(unit, (Tech2)variable, player_id);
 
 				if (result != ButtonState::BTNST_ENABLED)
 				{
@@ -19765,7 +19830,7 @@ ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* 
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
-				if (CanUseTech(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
+				if (CanUseTech_(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
@@ -19780,7 +19845,7 @@ FUNCTION_PATCH(BTNSCOND_IsBurrowed, BTNSCOND_IsBurrowed_);
 
 ButtonState __fastcall BTNSCOND_CanMorphLurker_(u16 variable, int player_id, CUnit* unit)
 {
-	return CanUseTech(unit, TECH2_lurker_aspect, player_id);
+	return CanUseTech_(unit, TECH2_lurker_aspect, player_id);
 }
 
 FUNCTION_PATCH(BTNSCOND_CanMorphLurker, BTNSCOND_CanMorphLurker_);
@@ -19812,7 +19877,7 @@ FUNCTION_PATCH(BTNSCOND_LurkerStop, BTNSCOND_LurkerStop_);
 
 ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* unit)
 {
-	return CanUseTech(unit, (Tech2)variable, player_id);
+	return CanUseTech_(unit, (Tech2)variable, player_id);
 }
 
 FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
@@ -19838,7 +19903,7 @@ ButtonState __fastcall BTNSCOND_CanCloak_(u16 variable, int player_id, CUnit* un
 				tech = unit->unitType == UnitType::Terran_Wraith || unit->unitType == UnitType::Hero_Tom_Kazansky ? Tech::TECH_cloaking_field : Tech::TECH_none;
 			}
 
-			if (CanUseTech(unit, (Tech2) tech, player_id) == ButtonState::BTNST_ENABLED)
+			if (CanUseTech_(unit, (Tech2) tech, player_id) == ButtonState::BTNST_ENABLED)
 			{
 				if (((unit->statusFlags & CloakingForFree) == 0 || (unit->statusFlags & Burrowed)) && (unit->statusFlags & RequiresDetection) == 0)
 				{
@@ -19875,7 +19940,7 @@ ButtonState __fastcall BTNSCOND_IsCloaked_(u16 variable, int player_id, CUnit* u
 				tech = unit->unitType == UnitType::Terran_Wraith || unit->unitType == UnitType::Hero_Tom_Kazansky ? Tech::TECH_cloaking_field : Tech::TECH_none;
 			}
 
-			if (CanUseTech(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
+			if (CanUseTech_(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
 			{
 				return ButtonState::BTNST_HIDDEN;
 			}
@@ -19939,7 +20004,7 @@ FUNCTION_PATCH(BTNSCOND_IsTraining, BTNSCOND_IsTraining_);
 
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
-	if (CanUseTech(unit, (Tech2)variable, player_id) != 1)
+	if (CanUseTech_(unit, (Tech2)variable, player_id) != 1)
 	{
 		return ButtonState::BTNST_HIDDEN;
 	}
