@@ -13668,11 +13668,81 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+int getMapListEntryCount_(int (__stdcall* callback)(MapDirEntry*, char*, MapDirEntryFlags), MapDirEntryFlags flags, char* directory, char* filename)
+{
+	if (!callback)
+	{
+		return 255;
+	}
+	if (!byte_6D5AA8)
+	{
+		strcpy(&byte_6D5AA8, get_GluAll_String(SAVE));
+	}
+	vector_delete(&stru_51A274);
+	if (flags & 0x10)
+	{
+		LoadRecentMapsCombobox();
+	}
+	else
+	{
+		fileExt(directory, flags);
+	}
+
+	for (MapDirEntry* entry = (MapDirEntry*)((int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C); (int)entry > 0; entry = entry->next)
+	{
+		entry->listbox_index_maybe = callback(entry, entry->name, entry->flags);
+	}
+
+	if (filename)
+	{
+		for (MapDirEntry* entry = (MapDirEntry*)((int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C); (int)entry > 0; entry = entry->next)
+		{
+			if (!_strnicmp(filename, entry->name, strlen(entry->name)))
+			{
+				return entry->listbox_index_maybe;
+			}
+			if (!entry)
+			{
+				entry = (MapDirEntry*)&stru_51A274.next;
+			}
+		}
+	}
+
+	for (MapDirEntry* entry = (MapDirEntry*)((int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C); (int)entry > 0; entry = entry->next)
+	{
+		if (char* extension = strrchr(entry->full_path, '.'))
+		{
+			if (!_stricmp(extension + 1, "scx") || !_stricmp(extension + 1, "scm"))
+			{
+				return entry->listbox_index_maybe;
+			}
+		}
+		if (!entry)
+		{
+			entry = (MapDirEntry*)&stru_51A274.next;
+		}
+	}
+
+	unsigned entry = (int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C;
+	return (u8)((entry != 0) - 1);
+}
+
+int __stdcall getMapListEntryCount__(MapDirEntryFlags flags, char* directory, char* filename)
+{
+	int(__stdcall * callback)(MapDirEntry*, char*, MapDirEntryFlags);
+
+	__asm mov callback, eax
+
+	return getMapListEntryCount_(callback, flags, directory, filename);
+}
+
+FUNCTION_PATCH((void*)0x4A73C0, getMapListEntryCount__);
+
 void InitGlueMapListBox_()
 {
 	map_listbox->lFlags |= CTRL_LBOX_NORECALC;
 	ClearListBox(map_listbox);
-	int v1 = getMapListEntryCount(AddMapToList_CB, 40, CurrentMapFolder, byte_59BA68[0] != 0 ? byte_59BA68 : 0);
+	int v1 = getMapListEntryCount_(AddMapToList_CB, (MapDirEntryFlags) 40, CurrentMapFolder, byte_59BA68[0] != 0 ? byte_59BA68 : 0);
 	if (map_listbox->lFlags & CTRL_LBOX_NORECALC)
 	{
 		map_listbox->lFlags &= ~CTRL_LBOX_NORECALC;
