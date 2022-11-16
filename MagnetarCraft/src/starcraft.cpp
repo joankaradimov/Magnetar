@@ -14133,6 +14133,14 @@ void loadMenu_gluCustm_(int is_multiplayer)
 
 FAIL_STUB_PATCH(loadMenu_gluCustm);
 
+void gluMainDestroy_(dialog* dlg)
+{
+	dialog* v1 = getControlFromIndex_(dlg, 10);
+	SMemFree(v1->pszText, "Starcraft\\SWAR\\lang\\gluMain.cpp", 452, 0);
+}
+
+FAIL_STUB_PATCH(gluMainDestroy);
+
 int load_gluGameMode_BINDLG_()
 {
 	if (dword_6D5A3C)
@@ -14292,7 +14300,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			DLGMusicFade_(MT_TITLE);
 			return true;
 		case USER_DESTROY:
-			gluMainDestroy(dlg);
+			gluMainDestroy_(dlg);
 			break;
 		case USER_ACTIVATE:
 			switch (LastControlID)
