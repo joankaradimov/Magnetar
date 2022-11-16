@@ -19817,6 +19817,84 @@ ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* uni
 
 FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
 
+ButtonState __fastcall BTNSCOND_CanCloak_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			Tech tech;
+			if (unit->unitType == UnitType::Terran_Ghost
+				|| unit->unitType == UnitType::Hero_Sarah_Kerrigan
+				|| unit->unitType == UnitType::Hero_Alexei_Stukov
+				|| unit->unitType == UnitType::Hero_Samir_Duran
+				|| unit->unitType == UnitType::Hero_Infested_Duran
+				|| unit->unitType == UnitType::Hero_Infested_Kerrigan)
+			{
+				tech = TECH_personnel_cloaking;
+			}
+			else
+			{
+				tech = unit->unitType == UnitType::Terran_Wraith || unit->unitType == UnitType::Hero_Tom_Kazansky ? Tech::TECH_cloaking_field : Tech::TECH_none;
+			}
+
+			if (CanUseTech(unit, (Tech2) tech, player_id) == ButtonState::BTNST_ENABLED)
+			{
+				if (((unit->statusFlags & CloakingForFree) == 0 || (unit->statusFlags & Burrowed)) && (unit->statusFlags & RequiresDetection) == 0)
+				{
+					return ButtonState::BTNST_ENABLED;
+				}
+			}
+		}
+	}
+
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanCloak, BTNSCOND_CanCloak_);
+
+ButtonState __fastcall BTNSCOND_IsCloaked_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* unit = ClientSelectionGroup[i])
+		{
+			Tech tech;
+			if (unit->unitType == UnitType::Terran_Ghost
+				|| unit->unitType == UnitType::Hero_Sarah_Kerrigan
+				|| unit->unitType == UnitType::Hero_Alexei_Stukov
+				|| unit->unitType == UnitType::Hero_Samir_Duran
+				|| unit->unitType == UnitType::Hero_Infested_Duran
+				|| unit->unitType == UnitType::Hero_Infested_Kerrigan)
+			{
+				tech = TECH_personnel_cloaking;
+			}
+			else
+			{
+				tech = unit->unitType == UnitType::Terran_Wraith || unit->unitType == UnitType::Hero_Tom_Kazansky ? Tech::TECH_cloaking_field : Tech::TECH_none;
+			}
+
+			if (CanUseTech(unit, (Tech2)tech, player_id) != ButtonState::BTNST_ENABLED)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if ((unit->statusFlags & StatusFlags::CloakingForFree) && (unit->statusFlags & StatusFlags::Burrowed) == 0)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if ((unit->statusFlags & StatusFlags::RequiresDetection) == 0)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsCloaked, BTNSCOND_IsCloaked_);
+
 ButtonState __fastcall BTNSCOND_CanResearch_(u16 variable, int player_id, CUnit* unit)
 {
 	return ReasearchAllowed((Tech2)variable, player_id, unit);
