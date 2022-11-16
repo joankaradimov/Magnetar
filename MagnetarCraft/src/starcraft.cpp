@@ -13680,7 +13680,7 @@ void InitGlueMapListBox_()
 	}
 	if (v1 != 255)
 	{
-		sub_4A7FC0(map_listbox->fields.list.pdwData[v1]);
+		sub_4A7FC0((MapDirEntry*)map_listbox->fields.list.pdwData[v1]);
 	}
 
 	if ((unsigned __int8)v1 < map_listbox->fields.scroll.bSliderSkip || (_BYTE)v1 == 0xFF)
@@ -13790,7 +13790,7 @@ int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 			genericListboxInteract(dlg, evt);
 			if (dlg->fields.list.bStrs)
 			{
-				sub_4A7FC0(dlg->fields.list.pdwData[dlg->fields.list.bCurrStr]);
+				sub_4A7FC0((MapDirEntry*)dlg->fields.list.pdwData[dlg->fields.list.bCurrStr]);
 			}
 
 			dword_59B848 = 1;
