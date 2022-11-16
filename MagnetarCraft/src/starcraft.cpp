@@ -19988,14 +19988,7 @@ ButtonState __fastcall BTNSCOND_LurkerStop_(u16 variable, int player_id, CUnit* 
 	{
 		if (CUnit* unit = ClientSelectionGroup[i])
 		{
-			if (ActivePortraitUnit->statusFlags & StatusFlags::Burrowed)
-			{
-				if ((unit->statusFlags & StatusFlags::Burrowed) == 0)
-				{
-					return ButtonState::BTNST_HIDDEN;
-				}
-			}
-			else if (unit->statusFlags & StatusFlags::Burrowed)
+			if ((ActivePortraitUnit->statusFlags & StatusFlags::Burrowed) != (unit->statusFlags & StatusFlags::Burrowed))
 			{
 				return ButtonState::BTNST_HIDDEN;
 			}
