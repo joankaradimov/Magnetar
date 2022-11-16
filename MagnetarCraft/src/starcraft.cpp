@@ -13668,6 +13668,62 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+void fileExt_(const char* a1, MapDirEntryFlags flags)
+{
+	char FileName[MAX_PATH];
+
+	strcpy(FileName, a1);
+	size_t v3 = strlen(FileName);
+	if (v3 && FileName[v3 - 1] != '\\')
+	{
+		SStrNCat(FileName, "\\", MAX_PATH);
+	}
+	SStrNCat(FileName, "*.*", MAX_PATH);
+
+	MapDirEntryFlags v15 = MapDirEntryFlags(flags & 0x70);
+	WIN32_FIND_DATAA FindFileData;
+	HANDLE hFindFile = FindFirstFileA(FileName, &FindFileData);
+	if (hFindFile != INVALID_HANDLE_VALUE)
+	{
+		do
+		{
+			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+			{
+				if (flags & MapDirEntryFlags::MDEF_DIRECTORY)
+				{
+					AddDirectoryToMapDirListing(FindFileData.cFileName, a1);
+				}
+			}
+			else if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
+			{
+				if (const char* extension = strrchr(FindFileData.cFileName, '.'))
+				{
+					if (IsExpansion && !_stricmp(extension, ".scx"))
+					{
+						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SCENARIO);
+					}
+					else if (!_stricmp(extension, ".scm"))
+					{
+						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SCENARIO);
+					}
+					else if (multiPlayerMode && !_stricmp(extension, getSaveExtension()))
+					{
+						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SAVEGAME);
+					}
+					else if (!_stricmp(extension, ".rep"))
+					{
+						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_REPLAY);
+					}
+				}
+			}
+		} while (FindNextFileA(hFindFile, &FindFileData));
+
+		FindClose(hFindFile);
+	}
+}
+
+FAIL_STUB_PATCH(fileExt);
+
 int getMapListEntryCount_(int (__stdcall* callback)(MapDirEntry*, char*, MapDirEntryFlags), MapDirEntryFlags flags, char* directory, char* filename)
 {
 	if (!callback)
@@ -13685,7 +13741,7 @@ int getMapListEntryCount_(int (__stdcall* callback)(MapDirEntry*, char*, MapDirE
 	}
 	else
 	{
-		fileExt(directory, flags);
+		fileExt_(directory, flags);
 	}
 
 	for (MapDirEntry* entry = (MapDirEntry*)((int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C); (int)entry > 0; entry = entry->next)
