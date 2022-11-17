@@ -20127,6 +20127,74 @@ ButtonState __fastcall BTNSCOND_IsTraining_(u16 variable, int player_id, CUnit* 
 
 FUNCTION_PATCH(BTNSCOND_IsTraining, BTNSCOND_IsTraining_);
 
+ButtonState __fastcall BTNSCOND_TrainingFighter_(u16 variable, int player_id, CUnit* unit)
+{
+	ButtonState result = BTNST_HIDDEN;
+
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* selected_unit = ClientSelectionGroup[i])
+		{
+			if (selected_unit->unitType != unit->unitType)
+			{
+				return BTNST_HIDDEN;
+			}
+			if (result == BTNST_HIDDEN)
+			{
+				result = TTAllowed((UnitType)variable, selected_unit, player_id);
+			}
+		}
+	}
+
+	return result;
+}
+
+FUNCTION_PATCH(BTNSCOND_TrainingFighter, BTNSCOND_TrainingFighter_);
+
+ButtonState __fastcall BTNSCOND_ProtossBasic_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1)
+	{
+		if ((TTAllowed(Protoss_Nexus, unit, player_id)
+			|| TTAllowed(Protoss_Pylon, unit, player_id)
+			|| TTAllowed(Protoss_Assimilator, unit, player_id)
+			|| TTAllowed(Protoss_Gateway, unit, player_id)
+			|| TTAllowed(Protoss_Forge, unit, player_id)
+			|| TTAllowed(Protoss_Photon_Cannon, unit, player_id)
+			|| TTAllowed(Protoss_Cybernetics_Core, unit, player_id)
+			|| TTAllowed(Protoss_Shield_Battery, unit, player_id)))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ProtossBasic, BTNSCOND_ProtossBasic_);
+
+ButtonState __fastcall BTNSCOND_ProtossAdvanced_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1)
+	{
+		if (TTAllowed(Protoss_Robotics_Facility, unit, player_id)
+			|| TTAllowed(Protoss_Stargate, unit, player_id)
+			|| TTAllowed(Protoss_Citadel_of_Adun, unit, player_id)
+			|| TTAllowed(Protoss_Robotics_Support_Bay, unit, player_id)
+			|| TTAllowed(Protoss_Fleet_Beacon, unit, player_id)
+			|| TTAllowed(Protoss_Templar_Archives, unit, player_id)
+			|| TTAllowed(Protoss_Observatory, unit, player_id)
+			|| TTAllowed(Protoss_Arbiter_Tribunal, unit, player_id))
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_ProtossAdvanced, BTNSCOND_ProtossAdvanced_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech_(unit, (Tech2)variable, player_id) != 1)
