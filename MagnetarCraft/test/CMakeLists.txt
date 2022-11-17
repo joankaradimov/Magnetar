@@ -13,4 +13,4 @@ target_link_libraries(MagnetarTest PRIVATE MagnetarCraftObject)
 target_link_libraries(MagnetarTest PRIVATE magnetorm)
 target_link_libraries(MagnetarTest PRIVATE GTest::gtest_main)
 
-gtest_discover_tests(MagnetarTest)
+gtest_discover_tests(MagnetarTest DISCOVERY_MODE PRE_TEST)
