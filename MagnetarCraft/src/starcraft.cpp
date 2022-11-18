@@ -9014,6 +9014,51 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits);
 
+int gameLoopTurns_()
+{
+	if (glGluesMode == GLUE_GENERIC)
+	{
+		return 0;
+	}
+	if (!RecvSaveTurns() && InGame)
+	{
+		timeoutProcDropdown();
+	}
+	if (!byte_57EE78)
+	{
+		return 0;
+	}
+	if (glGluesMode == GLUE_GENERIC)
+	{
+		return 0;
+	}
+	GameKeepAlive();
+	if (glGluesMode == GLUE_GENERIC)
+	{
+		return 0;
+	}
+	if (InGame)
+	{
+		ParseGameRecvInfo();
+	}
+	else
+	{
+		Cls2RecvFrom();
+	}
+	if (glGluesMode == GLUE_GENERIC)
+	{
+		return 0;
+	}
+	++turn_counter;
+	if (InGame)
+	{
+		UpdateGameHash();
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(gameLoopTurns);
+
 int GameLoopWaitSendTurn_(int* a1)
 {
 	*a1 = 0;
@@ -9021,7 +9066,7 @@ int GameLoopWaitSendTurn_(int* a1)
 	{
 		return 1;
 	}
-	else if (gameLoopTurns())
+	else if (gameLoopTurns_())
 	{
 		if (byte_51CE9D)
 		{
@@ -9251,7 +9296,7 @@ GamePosition BeginGame_()
 	loseSightSelection();
 	turn_counter = 0;
 	GameKeepAlive();
-	while (GameState && !gameLoopTurns())
+	while (GameState && !gameLoopTurns_())
 	{
 		BWFXN_RedrawTarget_();
 	}
@@ -14574,7 +14619,7 @@ BOOL BriefingLoopTurns_(int* a1)
 	{
 		return 1;
 	}
-	gameLoopTurns();
+	gameLoopTurns_();
 	if (byte_57EE78)
 	{
 		dword_6D63D0 = tick_count;
@@ -15426,7 +15471,7 @@ bool LobbyLoopTurns_()
 	{
 		return 0;
 	}
-	if (!gameLoopTurns())
+	if (!gameLoopTurns_())
 	{
 		if (tick_count >= 20000 + dword_66FF48)
 		{
