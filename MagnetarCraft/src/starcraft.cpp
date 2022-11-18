@@ -14566,10 +14566,29 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+BOOL BriefingLoopTurns_(int* a1)
+{
+	*a1 = 0;
+	DWORD tick_count = GetTickCount();
+	if (tick_count < dword_6D63D0 + 250)
+	{
+		return 1;
+	}
+	gameLoopTurns();
+	if (byte_57EE78)
+	{
+		dword_6D63D0 = tick_count;
+	}
+	*a1 = sub_485820();
+	return glGluesMode != GLUE_GENERIC;
+}
+
+FAIL_STUB_PATCH(BriefingLoopTurns);
+
 bool __fastcall sub_46D340_(dialog* dlg)
 {
 	int v5;
-	int v2 = BriefingLoopTurns(&v5);
+	int v2 = BriefingLoopTurns_(&v5);
 	if (!v2)
 	{
 		LastControlID = 100;
