@@ -13706,55 +13706,39 @@ FAIL_STUB_PATCH(gluCustm_initSwish);
 
 void fileExt_(const char* a1, MapDirEntryFlags flags)
 {
-	char FileName[MAX_PATH];
-
-	strcpy(FileName, a1);
-	size_t v3 = strlen(FileName);
-	if (v3 && FileName[v3 - 1] != '\\')
-	{
-		SStrNCat(FileName, "\\", MAX_PATH);
-	}
-	SStrNCat(FileName, "*.*", MAX_PATH);
-
 	MapDirEntryFlags v15 = MapDirEntryFlags(flags & 0x70);
-	WIN32_FIND_DATAA FindFileData;
-	HANDLE hFindFile = FindFirstFileA(FileName, &FindFileData);
-	if (hFindFile != INVALID_HANDLE_VALUE)
-	{
-		do
-		{
-			if (FindFileData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
-			{
-				if (flags & MapDirEntryFlags::MDEF_DIRECTORY)
-				{
-					AddDirectoryToMapDirListing(FindFileData.cFileName, a1);
-				}
-			}
-			else if (!(FindFileData.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
-			{
-				if (const char* extension = strrchr(FindFileData.cFileName, '.'))
-				{
-					if (IsExpansion && !_stricmp(extension, ".scx"))
-					{
-						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SCENARIO);
-					}
-					else if (!_stricmp(extension, ".scm"))
-					{
-						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SCENARIO);
-					}
-					else if (multiPlayerMode && !_stricmp(extension, getSaveExtension()))
-					{
-						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_SAVEGAME);
-					}
-					else if (!_stricmp(extension, ".rep"))
-					{
-						AddFileToMapDirListing(a1, FindFileData.cFileName, v15 | MapDirEntryFlags::MDEF_REPLAY);
-					}
-				}
-			}
-		} while (FindNextFileA(hFindFile, &FindFileData));
 
-		FindClose(hFindFile);
+	AddDirectoryToMapDirListing("..", a1);
+
+	for (const auto& entry : std::filesystem::directory_iterator(a1))
+	{
+		std::filesystem::path filename = entry.path().filename();
+
+		if (entry.is_directory())
+		{
+			AddDirectoryToMapDirListing(filename.generic_string().c_str(), a1);
+		}
+		else if ((GetFileAttributes(entry.path().c_str()) & FILE_ATTRIBUTE_HIDDEN) == 0)
+		{
+			std::filesystem::path extension = filename.extension();
+
+			if (IsExpansion && extension == ".scx")
+			{
+				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
+			}
+			else if (extension == ".scm")
+			{
+				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
+			}
+			else if (multiPlayerMode && extension == getSaveExtension())
+			{
+				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SAVEGAME);
+			}
+			else if (extension == ".rep")
+			{
+				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_REPLAY);
+			}
+		}
 	}
 }
 
