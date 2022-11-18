@@ -7293,18 +7293,18 @@ void sub_4EB5E0_(CUnit* a1)
 
 FAIL_STUB_PATCH(sub_4EB5E0);
 
-int getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, __int16 height)
+u8 getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, __int16 height)
 {
-	MegatileFlags result = (MegatileFlags)0;
+	u8 result = ~0;
 
 	for (int i = 0; i < height; i++)
 	{
 		for (int j = 0; j < width; j++)
 		{
-			result |= ~(active_tiles[(y + i) * map_size.width + x + j] & (MegatileFlags)0xFF);
+			result &= active_tiles[(y + i) * map_size.width + x + j];
 		}
 	}
-	return result;
+	return ~result;
 }
 
 FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize);
@@ -7356,7 +7356,7 @@ bool isThingyOnMap_(int x, int y,CThingy* thingy)
 			return v5->visibilityFlags != 0;
 		}
 	}
-	char v13 = getVisibilityMaskFromPositionAndSize_(v8, v9, v10, v11);
+	u8 v13 = getVisibilityMaskFromPositionAndSize_(v8, v9, v10, v11);
 
 	if (v5->visibilityFlags != v13)
 	{
