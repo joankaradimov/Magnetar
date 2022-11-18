@@ -1427,6 +1427,8 @@ bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
 
 FAIL_STUB_PATCH(radioFreeZergCheat);
 
+int campaignTypeCheatStrings_(const char* a2);
+
 BOOL CommandLineCheatCompare_(CheatFlags* game_cheats, const char* a2)
 {
 	CheatHashMaybe v7;
@@ -1455,7 +1457,7 @@ BOOL CommandLineCheatCompare_(CheatFlags* game_cheats, const char* a2)
 	}
 	else
 	{
-		return campaignTypeCheatStrings(a2) != 0;
+		return campaignTypeCheatStrings_(a2) != 0;
 	}
 }
 
@@ -12740,7 +12742,7 @@ void ContinueCampaignWithLevelCheat_(ExpandedMapData mission, bool is_expansion,
 
 FAIL_STUB_PATCH(ContinueCampaignWithLevelCheat);
 
-int campaignTypeCheatStrings_(char* a2)
+int campaignTypeCheatStrings_(const char* a2)
 {
 	if (multiPlayerMode || (GameCheats & CheatFlags::CHEAT_Ophelia) == 0)
 	{
@@ -12764,7 +12766,7 @@ int campaignTypeCheatStrings_(char* a2)
 
 	ExpandedMapData mission;
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString_(relevant_campaign, a2 + prefix_length, &mission) && mission != EMD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*) a2 + prefix_length, &mission) && mission != EMD_xbonus)
 	{
 		ContinueCampaignWithLevelCheat_(mission, relevant_campaign->is_expansion, relevant_campaign->race);
 		if (gwGameMode == GAME_RUN)
@@ -12787,27 +12789,7 @@ int campaignTypeCheatStrings_(char* a2)
 	return 1;
 }
 
-__declspec(naked) int campaignTypeCheatStrings__()
-{
-	char* a2;
-
-	__asm {
-		push ebp
-		mov ebp, esp
-		mov a2, edi
-	}
-
-	campaignTypeCheatStrings_(a2);
-
-	__asm {
-		mov eax, eax // Put the result in the correct register
-		mov esp, ebp
-		pop ebp
-		ret
-	}
-}
-
-FUNCTION_PATCH((void*) 0x4b1dc0, campaignTypeCheatStrings__);
+FAIL_STUB_PATCH(campaignTypeCheatStrings);
 
 ExpandedCampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
 {
