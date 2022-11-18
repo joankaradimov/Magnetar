@@ -20214,6 +20214,56 @@ ButtonState __fastcall BTNSCOND_ProtossAdvanced_(u16 variable, int player_id, CU
 
 FUNCTION_PATCH(BTNSCOND_ProtossAdvanced, BTNSCOND_ProtossAdvanced_);
 
+ButtonState __fastcall BTNSCOND_CanMergeArchonOneSelected_(u16 variable, int player_id, CUnit* unit)
+{
+	return CanUseTech(unit, (Tech2)(u8)variable, player_id) != BTNST_DISABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_DISABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMergeArchonOneSelected, BTNSCOND_CanMergeArchonOneSelected_);
+
+ButtonState __fastcall BTNSCOND_CanMergeArchonTwoSelected_(u16 variable, int player_id, CUnit* unit)
+{
+	if (CanUseTech(unit, TECH2_archon_warp, player_id) != BTNST_ENABLED)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+	else if (ClientSelectionCount > 1)
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+	else
+	{
+		return ButtonState::BTNST_DISABLED;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMergeArchonTwoSelected, BTNSCOND_CanMergeArchonTwoSelected_);
+
+ButtonState __fastcall BTNSCOND_CanMergeDarkArchonOneSelected_(u16 variable, int player_id, CUnit* unit)
+{
+	return CanUseTech(unit, (Tech2)(u8)variable, player_id) != BTNST_DISABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_DISABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonOneSelected, BTNSCOND_CanMergeDarkArchonOneSelected_);
+
+ButtonState __fastcall BTNSCOND_CanMergeDarkArchonTwoSelected_(u16 variable, int player_id, CUnit* unit)
+{
+	if (CanUseTech(unit, TECH2_dark_archon_meld, player_id) != BTNST_ENABLED)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+	else if (ClientSelectionCount > 1)
+	{
+		return ButtonState::BTNST_ENABLED;
+	}
+	else
+	{
+		return ButtonState::BTNST_DISABLED;
+	}
+}
+
+FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonTwoSelected, BTNSCOND_CanMergeDarkArchonTwoSelected_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech_(unit, (Tech2)variable, player_id) != 1)
