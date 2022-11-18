@@ -14241,6 +14241,43 @@ void loadMenu_gluCustm_(int is_multiplayer)
 
 FAIL_STUB_PATCH(loadMenu_gluCustm);
 
+void loadMenu_None_()
+{
+	glGluesMode = GLUE_MAIN_MENU;
+	LastControlID = -1;
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	if (dword_6D5A58)
+	{
+		LastControlID = 3;
+		DestroyDialog(dword_6D5A58);
+	}
+	if (dword_51C418)
+	{
+		DestroyDialog(dword_51C418);
+	}
+	dword_51C418 = 0;
+}
+
+FAIL_STUB_PATCH(loadMenu_None);
+
+void jmpNoMenu_()
+{
+	if (glGluesMode == GLUE_GENERIC)
+	{
+		loadMenu_None_();
+	}
+}
+
+FAIL_STUB_PATCH(jmpNoMenu);
+
 void gluMainDestroy_(dialog* dlg)
 {
 	dialog* v1 = getControlFromIndex_(dlg, 10);
@@ -16560,7 +16597,7 @@ LABEL_28:
 		BWFXN_RedrawTarget_();
 	}
 	RefreshCursor_0();
-	dword_6D5E38 = jmpNoMenu;
+	dword_6D5E38 = jmpNoMenu_;
 	if (glue_background_palette[0].data)
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
@@ -16570,7 +16607,7 @@ LABEL_28:
 		switch (glGluesMode)
 		{
 		case GLUE_GENERIC:
-			loadMenu_None();
+			loadMenu_None_();
 			break;
 		case GLUE_MAIN_MENU:
 			outOfGame = 0;
