@@ -147,7 +147,7 @@ EXPORTS
     SDrawClearSurface = StormLibDrawClearSurface @343
     SDrawDestroy = StormLibDrawDestroy @344
     SDrawFlipPage = StormLibDrawFlipPage @345
-    SDrawGetFrameWindow = StormLibDrawGetFrameWindow @346
+    SDrawGetFrameWindow@4 = StormLibDrawGetFrameWindow @346
     SDrawGetObjects = StormLibDrawGetObjects @347
     SDrawGetScreenSize = StormLibDrawGetScreenSize @348
     SDrawGetServiceLevel = StormLibDrawGetServiceLevel @349

@@ -4740,6 +4740,57 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT);
 
+void doNetTBLError_(int line, const char* error_message, char* file_name, int a4)
+{
+	if (byte_51A0E9 || !DialogList)
+	{
+		sub_4BB1A0(error_message, a4, file_name, line);
+		return;
+	}
+
+	char buff[256] = { 0 };
+	if (error_message && file_name && line)
+	{
+		_snprintf(buff, sizeof(buff), "%s file: %s:%d", error_message, file_name, line);
+	}
+
+	if (gwGameMode == GAME_RUN)
+	{
+		int v5 = dword_51267C;
+		int v6 = g_ActiveNationID;
+
+		dword_51267C = g_LocalHumanID;
+		g_ActiveNationID = g_LocalNationID;
+		load_DLGFatal_BIN(buff, GetNetworkTblString(a4));
+
+		g_ActiveNationID = v6;
+		dword_51267C = v5;
+	}
+	else if (glGluesMode == GLUE_BATTLE)
+	{
+		sub_4AD0E0(GetNetworkTblString(a4), buff);
+	}
+	else
+	{
+		sub_4B5CC0(GetNetworkTblString(a4), buff);
+	}
+}
+
+void __stdcall doNetTBLError__(int a4)
+{
+	int a1;
+	const char* error_message;
+	char* file_name;
+
+	__asm mov a1, eax
+	__asm mov error_message, edx
+	__asm mov file_name, ecx
+
+	doNetTBLError_(a1, error_message, file_name, a4);
+}
+
+FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
+
 int sub_4EEFD0_()
 {
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
@@ -4771,7 +4822,7 @@ int sub_4EEFD0_()
 		{
 			leaveGame(3);
 			outOfGame = 1;
-			doNetTBLError(0, 0, 0, 97);
+			doNetTBLError_(0, 0, 0, 97);
 			if (gwGameMode == GAME_RUN)
 			{
 				GameState = 0;
@@ -4921,7 +4972,7 @@ signed int GameInit_()
 	{
 		leaveGame(3);
 		outOfGame = 1;
-		doNetTBLError(0, 0, 0, 97);
+		doNetTBLError_(0, 0, 0, 97);
 		if (gwGameMode == GamePosition::GAME_RUN)
 		{
 			GameState = 0;
@@ -5137,7 +5188,7 @@ int CreateGame_(GameData* data)
 	}
 	leaveGame(3);
 	outOfGame = 1;
-	doNetTBLError(0, 0, 0, 103);
+	doNetTBLError_(0, 0, 0, 103);
 	if (gwGameMode == GAME_RUN)
 	{
 		GameState = 0;
@@ -5187,7 +5238,7 @@ int LevelCheatInitGame_()
 			{
 				leaveGame(3);
 				outOfGame = 1;
-				doNetTBLError(0, 0, 0, 97);
+				doNetTBLError_(0, 0, 0, 97);
 				if (gwGameMode == GAME_RUN)
 				{
 					GameState = 0;
@@ -5238,7 +5289,7 @@ int LevelCheatInitGame_()
 				{
 					leaveGame(3);
 					outOfGame = 1;
-					doNetTBLError(0, 0, 0, 97);
+					doNetTBLError_(0, 0, 0, 97);
 					if (gwGameMode == GAME_RUN)
 					{
 						GameState = 0;
@@ -5259,7 +5310,7 @@ int LevelCheatInitGame_()
 			{
 				leaveGame(3);
 				outOfGame = 1;
-				doNetTBLError(0, 0, 0, 102);
+				doNetTBLError_(0, 0, 0, 102);
 				if (gwGameMode == GAME_RUN)
 				{
 					GameState = 0;
@@ -5278,7 +5329,7 @@ int LevelCheatInitGame_()
 	{
 		leaveGame(3);
 		outOfGame = 1;
-		doNetTBLError(0, 0, 0, 97);
+		doNetTBLError_(0, 0, 0, 97);
 		if (gwGameMode == GAME_RUN)
 		{
 			GameState = 0;
@@ -5312,7 +5363,7 @@ signed int LoadGameCreate_()
 		{
 			leaveGame(3);
 			outOfGame = 1;
-			doNetTBLError(0, 0, 0, 97);
+			doNetTBLError_(0, 0, 0, 97);
 			if (gwGameMode == GAME_RUN)
 			{
 				GameState = 0;
@@ -5355,7 +5406,7 @@ int RestartGame_()
 			{
 				leaveGame(3);
 				outOfGame = 1;
-				doNetTBLError(0, 0, 0, 97);
+				doNetTBLError_(0, 0, 0, 97);
 				if (gwGameMode == GAME_RUN)
 				{
 					GameState = 0;
@@ -5376,7 +5427,7 @@ int RestartGame_()
 		{
 			leaveGame(3);
 			outOfGame = 1;
-			doNetTBLError(0, 0, 0, 97);
+			doNetTBLError_(0, 0, 0, 97);
 			if (gwGameMode == GAME_RUN)
 			{
 				GameState = 0;
@@ -5746,7 +5797,7 @@ int LoadGameCore_()
 		{
 			leaveGame(3);
 			outOfGame = 1;
-			doNetTBLError(0, 0, 0, 98);
+			doNetTBLError_(0, 0, 0, 98);
 			if (gwGameMode == GAME_RUN)
 			{
 				GameState = 0;
@@ -11147,7 +11198,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			{
 				leaveGame(3);
 				outOfGame = 1;
-				doNetTBLError(
+				doNetTBLError_(
 					0,
 					"The map could not be loaded because it had too many obstructions. "
 					"Try widening corridors and reducing the number of small nooks and crannies to correct the problem.\n\n",
@@ -12883,7 +12934,7 @@ bool LoadCampaignWithCharacter_(Race race)
 		const char* v1 = GetNetworkTblString(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
 		{
-			doNetTBLError(0, 0, 0, 88);
+			doNetTBLError_(0, 0, 0, 88);
 		}
 	}
 
@@ -12935,7 +12986,7 @@ bool LoadPrecursorCampaign()
 		const char* v1 = GetNetworkTblString(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
 		{
-			doNetTBLError(0, 0, 0, 88);
+			doNetTBLError_(0, 0, 0, 88);
 		}
 	}
 
@@ -15390,7 +15441,7 @@ signed int sub_4D4130_()
 			sub_4D3860();
 			if (!outOfGame)
 			{
-				doNetTBLError(0, 0, 0, 95);
+				doNetTBLError_(0, 0, 0, 95);
 			}
 			return 0;
 		}
@@ -15449,7 +15500,7 @@ signed int sub_4D4130_()
 		sub_4D3860();
 		if (!outOfGame)
 		{
-			doNetTBLError(0, 0, 0, 100);
+			doNetTBLError_(0, 0, 0, 100);
 		}
 		return 0;
 	}
@@ -16509,7 +16560,7 @@ void sub_4DBEE0_(ExpandedCampaignMenuEntry* a1)
 		const char* v1 = GetNetworkTblString(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&v5, playerName)) && !outOfGame)
 		{
-			doNetTBLError(0, 0, 0, 88);
+			doNetTBLError_(0, 0, 0, 88);
 		}
 	}
 	int* v3 = IsExpansion ? v5.unlocked_expcampaign_mission + a1->race : v5.unlocked_campaign_mission + a1->race;
@@ -17937,7 +17988,7 @@ int CreateNextCampaignGame_()
 	}
 	if (!outOfGame)
 	{
-		doNetTBLError(0, 0, 0, 106);
+		doNetTBLError_(0, 0, 0, 106);
 	}
 	glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 	return 0;
