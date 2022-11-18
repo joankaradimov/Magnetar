@@ -2594,7 +2594,7 @@ FAIL_STUB_PATCH(initVolume);
 unsigned __stdcall DSoundThread_(void* a2)
 {
 	void* location = NULL;
-	WaitForSingleObject(dword_6D5A00, 0xFFFFFFFF);
+	WaitForSingleObject(dword_6D5A00, INFINITE);
 
 	while (dword_6D5A08)
 	{
@@ -2681,7 +2681,7 @@ unsigned __stdcall DSoundThread_(void* a2)
 			dword_6D59FC += v22;
 			LeaveCriticalSection(&stru_6D5F4C);
 		}
-		WaitForSingleObject(dword_6D5A00, 0xFFFFFFFF);
+		WaitForSingleObject(dword_6D5A00, INFINITE);
 	}
 
 	return 0;
