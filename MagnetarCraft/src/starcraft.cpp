@@ -13767,6 +13767,226 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest)
+{
+	KillTimer(hWndParent, 0xCu);
+	if (!source && !dest)
+	{
+		return 0x80000006;
+	}
+
+	MapDirEntry* v8 = (MapDirEntry*)((int)dword_51A27C <= 0 ? 0 : (unsigned int)dword_51A27C);
+	if ((int)v8 <= 0)
+	{
+		return 0x80000006;
+	}
+	while (v8 != a1)
+	{
+		v8 = v8->next;
+		if ((int)v8 <= 0)
+		{
+			return 0x80000006;
+		}
+	}
+
+	InReplay = 0;
+	switch (v8->flags & 0x8F)
+	{
+	case MapDirEntryFlags::MDEF_SAVEGAME:
+		if (!v8->fully_loaded)
+		{
+			sub_4A7540(v8);
+		}
+		if (v8->error == 1)
+		{
+			return 0x80000007;
+		}
+		if (v8->error == 2)
+		{
+			return 0x80000001;
+		}
+		if (!source)
+		{
+			SStrCopy(dest, v8->full_path, MAX_PATH);
+			return 0;
+		}
+		if (a3 && !*(_BYTE*)a3)
+		{
+			return 0x80000009;
+		}
+		GameData game_data;
+		memcpy(&game_data, &v8->game_data, sizeof(game_data));
+		SStrCopy(game_data.player_name, source, sizeof(game_data.player_name));
+		if (CreateLadderGame(&game_data, a3) == 1)
+		{
+			return 0;
+		}
+		return SErrGetLastError() == 183 ? 0x80000004 : 0x80000006;
+	case MapDirEntryFlags::MDEF_SCENARIO:
+		if (!v8->fully_loaded)
+		{
+			FullyLoadMapDirEntry(v8);
+		}
+		if (v8->error == 1)
+		{
+			return 0x80000007;
+		}
+		if (v8->error == 2)
+		{
+			return 0x80000001;
+		}
+
+		MapChunks a4a;
+		a4a.data0 = 0;
+		for (int i = 0; i < _countof(a4a.player_force); i++)
+		{
+			a4a.player_force[i] = 0;
+		}
+		for (int i = 0; i < _countof(a4a.tbl_index_force_name); i++)
+		{
+			a4a.tbl_index_force_name[i] = 0;
+		}
+		for (int i = 0; i < _countof(a4a.force_flags); i++)
+		{
+			a4a.force_flags[i] = (ForceFlags)0;
+		}
+		a4a.version = 0;
+		a4a.data7 = 0;
+		if (!ReadMapData_(v8->full_path, &a4a, 0))
+		{
+			return LOWORD(a4a.version) > 0x3B ? 0x80000001 : 0x80000007;
+		}
+		if (!source)
+		{
+			SStrCopy(dest, v8->full_path, 0x104u);
+			return 0;
+		}
+		if (!multiPlayerMode)
+		{
+			if (sub_4AAF50(SBYTE1(a4), SHIWORD(a4), (GameType)a4))
+			{
+				if (!v8->human_player_slots)
+				{
+					return 0x8000000C;
+				}
+				if (!v8->computer_slots)
+				{
+					return 0x8000000D;
+				}
+			}
+			else if (v8->human_player_slots_maybe < 2)
+			{
+				return 0x8000000D;
+			}
+		}
+
+		memset(&game_data, 0, sizeof(game_data));
+		SStrCopy(game_data.player_name, source, 24u);
+		SStrCopy(game_data.map_name, v8->title, 32u);
+		game_data.height = v8->map_height_tiles;
+		game_data.width = v8->map_width_tiles;
+		*(_DWORD*)&game_data.game_type = a4;
+		game_data.max_players = v8->human_player_slots_maybe;
+		game_data.tileset = CurrentTileSet;
+		game_data.approval_status = v8->unknown2;
+		game_data.active_human_players = 1;
+		if (unsigned result = sub_4A68D0(&game_data, a5))
+		{
+			return result;
+		}
+		isHost = 0;
+		char v13;
+		if (multiPlayerMode)
+		{
+			v13 = CreateLadderGame(&game_data, a3);
+		}
+		else
+		{
+			if (!initSingle())
+			{
+				return 0x80000007;
+			}
+			v13 = CreateGame_(&game_data);
+		}
+		if (v13)
+		{
+			save_Recent_Map_Data(v8);
+			return 0;
+		}
+		switch (SErrGetLastError())
+		{
+		case 68:
+			return 0x80000005;
+		case 183:
+			return 0x80000004;
+		case 0x85100085:
+			return 0x8000000F;
+		default:
+			return 0x80000006;
+		}
+	case MapDirEntryFlags::MDEF_DIRECTORY:
+		SStrCopy(dest, v8->full_path, MAX_PATH);
+		return 0x8000000B;
+	case MapDirEntryFlags::MDEF_REPLAY:
+		InReplay = 1;
+		v8->fully_loaded = 0;
+		LoadReplayMapDirEntry(v8);
+		if (v8->error == 1)
+		{
+			return 0x80000007;
+		}
+		if (v8->error == 2)
+		{
+			return 0x80000001;
+		}
+		if (!source)
+		{
+			SStrCopy(dest, v8->full_path, 0x104u);
+			return 0;
+		}
+		if (a3 && !*(_BYTE*)a3)
+		{
+			return 0x8000000A;
+		}
+		memcpy(&game_data, &v8->game_data, sizeof(game_data));
+		SStrCopy(game_data.player_name, source, sizeof(game_data.player_name));
+		if (!multiPlayerMode)
+		{
+			if (!initSingle())
+			{
+				return 0x80000007;
+			}
+			if (!CreateGame(&game_data))
+			{
+				return 0x80000006;
+			}
+			return 0;
+		}
+		if (CreateLadderGame(&game_data, a3))
+		{
+			return 0;
+		}
+		if (SErrGetLastError() == 183)
+		{
+			return 0x80000004;
+		}
+		return 0x80000006;
+	default:
+		return 0x80000006;
+	}
+}
+
+unsigned __stdcall sub_4A8050__(char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest)
+{
+	MapDirEntry* a1;
+
+	__asm mov a1, eax
+
+	return sub_4A8050_(a1, source, a3, a4, a5, dest);
+}
+
+FUNCTION_PATCH((void*)0x4A8050, sub_4A8050__);
+
 void fileExt_(const char* a1, MapDirEntryFlags flags)
 {
 	MapDirEntryFlags v15 = MapDirEntryFlags(flags & 0x70);
@@ -13915,7 +14135,7 @@ int gluCustmLoadMapFromList_()
 			GluAllTblEntry error_tbl_entry;
 			MapDirEntry* directory_entry = (MapDirEntry*)map_listbox->fields.list.pdwData[v0];
 			auto flags = (unsigned __int8)selectedGameType[0] | ((((unsigned __int16)selectedGameTypeParam << 8) | (unsigned __int8)selectedGameType[1]) << 8);
-			int error_code = sub_4A8050(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
+			int error_code = sub_4A8050_(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
 
 			switch (error_code)
 			{
