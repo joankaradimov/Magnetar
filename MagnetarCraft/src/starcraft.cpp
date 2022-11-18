@@ -13548,6 +13548,34 @@ int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluLogin_Main);
 
+void changeMenu_()
+{
+	if (dword_51C4B4)
+	{
+		HiddenCtrl_Destructor(dword_51C4B4);
+		if (dword_51C4B4)
+		{
+			_Unknown_Destructor(dword_51C4B4, 1);
+		}
+		dword_51C4B4 = 0;
+	}
+	if (dword_50E064 != stru_4FFAD0[glGluesMode].menu_position)
+	{
+		if (glue_background_palette[0].data)
+		{
+			SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
+		}
+		memset(glue_background_palette, 0, sizeof(glue_background_palette));
+		sub_41E9E0(3);
+		RefreshCursor_0();
+	}
+	BWFXN_RedrawTarget();
+	memset(&dword_51C428, 0, 0x90u);
+	dialog_count = 0;
+}
+
+FAIL_STUB_PATCH(changeMenu);
+
 void loadMenu_gluLogin_()
 {
 	gluLogin_Dlg = LoadDialog("rez\\gluLogin.bin");
@@ -13576,7 +13604,7 @@ void loadMenu_gluLogin_()
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluLogin);
@@ -13616,7 +13644,7 @@ void loadMenu_gluCmpgn_()
 		glGluesMode = GLUE_MAIN_MENU;
 		break;
 	}
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluCmpgn);
@@ -13655,7 +13683,7 @@ void loadMenu_gluExpCmpgn_()
 		glGluesMode = GLUE_MAIN_MENU;
 		break;
 	}
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
@@ -13755,7 +13783,7 @@ void loadMenu_gluJoin_()
 		break;
 	}
 
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluJoin);
@@ -14564,7 +14592,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 
-	changeMenu();
+	changeMenu_();
 	if (dword_59BA60)
 		SMemFree(dword_59BA60, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1484, v1);
 	dword_6D5A74 = 0;
@@ -14890,7 +14918,7 @@ void loadMenu_gluMain_()
 			glGluesMode = GLUE_MAIN_MENU;
 			break;
 		}
-		changeMenu();
+		changeMenu_();
 		return;
 	}
 }
@@ -15263,7 +15291,7 @@ void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path)
 			sub_46D1F0_();
 			break;
 		}
-		changeMenu();
+		changeMenu_();
 	}
 }
 
@@ -15462,7 +15490,7 @@ void loadMenu_gluConn_()
 		glGluesMode = glGluesRelated_maybe;
 	}
 
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluConn);
@@ -15570,7 +15598,7 @@ void loadMenu_gluModem_()
 		break;
 	}
 
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluModem);
@@ -16217,7 +16245,7 @@ void loadMenu_gluChat_()
 		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		break;
 	}
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluChat);
@@ -16284,7 +16312,7 @@ void loadMenu_gluLoad_()
 		break;
 	}
 
-	changeMenu();
+	changeMenu_();
 }
 
 FAIL_STUB_PATCH(loadMenu_gluLoad);
@@ -16892,7 +16920,7 @@ void loadMenu_gluScore_()
 		glGluesMode = GLUE_MAIN_MENU;
 	}
 
-	changeMenu();
+	changeMenu_();
 	stopMusic();
 	if (iscore_grp)
 	{
