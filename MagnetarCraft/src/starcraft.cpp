@@ -15400,11 +15400,37 @@ signed int sub_4D4130_()
 
 FAIL_STUB_PATCH(sub_4D4130);
 
+bool LobbyLoopTurns_()
+{
+	DWORD tick_count = GetTickCount();
+	if (tick_count < 250 + dword_66FF48)
+	{
+		return 0;
+	}
+	if (!gameLoopTurns())
+	{
+		if (tick_count >= 20000 + dword_66FF48)
+		{
+			GetPlayerNames();
+		}
+		return 0;
+	}
+	ProgressDownload_maybe();
+	JoinGame();
+	dword_66FF48 = tick_count;
+	GameKeepAlive();
+	update_lobby_glue = 1;
+	ProgressCountdown();
+	return gameState == 9;
+}
+
+FAIL_STUB_PATCH(LobbyLoopTurns);
+
 int LobbyLoopCnt_()
 {
 	LeagueChatFilter();
 
-	if (!LobbyLoopTurns())
+	if (!LobbyLoopTurns_())
 	{
 		return LobbyRecv();
 	}
