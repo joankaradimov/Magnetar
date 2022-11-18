@@ -3,7 +3,26 @@
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
 DECL_FUNC(void (__cdecl*type_info_destructor_dealloc)(void *location), type_info_destructor_dealloc, 0x401000);
-DECL_FUNC(int(*HiddenCtrl_Destructor)(), HiddenCtrl_Destructor, 0x401090);
+ListNode *_Unknown_Destructor(ListNode *node, char a2) {
+    int address = 0x401020;
+    ListNode * result_;
+    __asm {
+        xor eax, eax
+        mov eax, node
+        push dword ptr a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+void HiddenCtrl_Destructor(ListNode *a1) {
+    int address = 0x401090;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+    }
+}
 void somePlayImageCrapThatCrashes(char a1, char a2, CImage *image, CSprite *edi0, int a4) {
     int address = 0x4010e0;
     __asm {
@@ -16716,7 +16735,7 @@ DECL_FUNC(int (__fastcall*gluExpCmpgn_Main)(dialog *dlg, struct dlgEvent *evt), 
 DECL_FUNC(int(*loadMenu_gluExpCmpgn)(), loadMenu_gluExpCmpgn, 0x4b52a0);
 DECL_FUNC(int(*sub_4B53C0)(), sub_4B53C0, 0x4b53c0);
 DECL_FUNC(int(*sub_4B53D0)(), sub_4B53D0, 0x4b53d0);
-DECL_FUNC(int (__thiscall*LoadPCXFromResource)(LPCSTR lpName, int, int, int), LoadPCXFromResource, 0x4b5450);
+DECL_FUNC(void (__fastcall*LoadPCXFromResource)(const char *fileName, Bitmap *a2, PALETTEENTRY *palette, const char *source_filename, int source_line), LoadPCXFromResource, 0x4b5450);
 DECL_FUNC(int (__thiscall*sub_4B5500)(LPCSTR lpName, int amount, int, int), sub_4B5500, 0x4b5500);
 DECL_FUNC(int (__stdcall*sub_4B55A0)(int), sub_4B55A0, 0x4b55a0);
 void sub_4B5640(dialog *a1) {
@@ -16741,6 +16760,14 @@ int sub_4B57B0(dialog *a1) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*gluOK_Dlg_Interact_CB)(dialog *dlg, struct dlgEvent *evt), gluOK_Dlg_Interact_CB, 0x4b5920);
+void sub_4B59A0(const char *a1) {
+    int address = 0x4b59a0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+    }
+}
 bool sub_4B5B20(const char *a1) {
     int address = 0x4b5b20;
     bool result_;
@@ -16752,18 +16779,15 @@ bool sub_4B5B20(const char *a1) {
     }
     return result_;
 }
-char sub_4B5CC0(const char *race_name, const char *a2) {
+void sub_4B5CC0(const char *race_name, const char *a2) {
     int address = 0x4b5cc0;
-    char result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov ecx, race_name
         mov eax, a2
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4B5E80)(), sub_4B5E80, 0x4b5e80);
 DECL_FUNC(int(*sub_4B5EB0)(), sub_4B5EB0, 0x4b5eb0);
@@ -16947,7 +16971,16 @@ CampaignMenuEntry *loadmenu_GluHist(int a1, CampaignMenuEntry *menu_entries) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*load_gluPOKSplitBINDLG)(char *a1), load_gluPOKSplitBINDLG, 0x4b7a70);
+void load_gluPOKSplitBINDLG(const char *a1, const char *a2) {
+    int address = 0x4b7a70;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4B7C90)(), sub_4B7C90, 0x4b7c90);
 DECL_FUNC(int(*sub_4B7CB0)(), sub_4B7CB0, 0x4b7cb0);
 DECL_FUNC(int(*sub_4B7D10)(), sub_4B7D10, 0x4b7d10);
@@ -20538,7 +20571,7 @@ void setDialogString(dialog *a1, __int16 a2, const char *a3) {
         call address
     }
 }
-DECL_FUNC(int (__cdecl*changeMenu)(), changeMenu, 0x4dcfa0);
+DECL_FUNC(void (__cdecl*changeMenu)(), changeMenu, 0x4dcfa0);
 DECL_FUNC(char (__stdcall*DLG_SwishOut)(dialog *a1), DLG_SwishOut, 0x4dd040);
 DECL_FUNC(void (__cdecl*jmpNoMenu)(), jmpNoMenu, 0x4dd1c0);
 DECL_FUNC(void (__stdcall*buttonMouseOver)(int a1), buttonMouseOver, 0x4dd1d0);
@@ -25744,20 +25777,20 @@ ButtonOrder(&stru_515DD0)[5] = * ((decltype(&stru_515DD0)) 0x515dd0);
 ButtonOrder(&stru_515E38)[5] = * ((decltype(&stru_515E38)) 0x515e38);
 ButtonOrder(&stru_515EA0)[7] = * ((decltype(&stru_515EA0)) 0x515ea0);
 ButtonOrder(&stru_515F2C)[2] = * ((decltype(&stru_515F2C)) 0x515f2c);
-ButtonOrder(&larva_buttons)[9] = * ((decltype(&larva_buttons)) 0x515f58);
+ButtonOrder(&button_set_larva)[9] = * ((decltype(&button_set_larva)) 0x515f58);
 ButtonOrder(&stru_51600C)[1] = * ((decltype(&stru_51600C)) 0x51600c);
-ButtonOrder(&stru_516020)[9] = * ((decltype(&stru_516020)) 0x516020);
-ButtonOrder(&stru_5160D8)[7] = * ((decltype(&stru_5160D8)) 0x5160d8);
-ButtonOrder(&stru_516168)[6] = * ((decltype(&stru_516168)) 0x516168);
+ButtonOrder(&button_set_drone)[9] = * ((decltype(&button_set_drone)) 0x516020);
+ButtonOrder(&button_set_basic_zerg_buildings)[7] = * ((decltype(&button_set_basic_zerg_buildings)) 0x5160d8);
+ButtonOrder(&button_set_advanced_zerg_buildings)[6] = * ((decltype(&button_set_advanced_zerg_buildings)) 0x516168);
 ButtonOrder(&stru_5161E0)[7] = * ((decltype(&stru_5161E0)) 0x5161e0);
-ButtonOrder(&hydralisk_buttons)[8] = * ((decltype(&hydralisk_buttons)) 0x516270);
-ButtonOrder(&mutalisk_buttons)[7] = * ((decltype(&mutalisk_buttons)) 0x516310);
-ButtonOrder(&stru_5163A0)[7] = * ((decltype(&stru_5163A0)) 0x5163a0);
+ButtonOrder(&button_set_hydralisk)[8] = * ((decltype(&button_set_hydralisk)) 0x516270);
+ButtonOrder(&button_set_mutalisk)[7] = * ((decltype(&button_set_mutalisk)) 0x516310);
+ButtonOrder(&button_set_lurker)[7] = * ((decltype(&button_set_lurker)) 0x5163a0);
 ButtonOrder(&stru_516430)[9] = * ((decltype(&stru_516430)) 0x516430);
-ButtonOrder(&stru_5164E8)[9] = * ((decltype(&stru_5164E8)) 0x5164e8);
+ButtonOrder(&button_set_deflier)[9] = * ((decltype(&button_set_deflier)) 0x5164e8);
 ButtonOrder(&stru_5165A0)[7] = * ((decltype(&stru_5165A0)) 0x5165a0);
-ButtonOrder(&stru_516630)[10] = * ((decltype(&stru_516630)) 0x516630);
-ButtonOrder(&stru_5166F8)[9] = * ((decltype(&stru_5166F8)) 0x5166f8);
+ButtonOrder(&button_set_infested_kerrigan)[10] = * ((decltype(&button_set_infested_kerrigan)) 0x516630);
+ButtonOrder(&button_set_infested_duran)[9] = * ((decltype(&button_set_infested_duran)) 0x5166f8);
 ButtonOrder(&stru_5167B0)[5] = * ((decltype(&stru_5167B0)) 0x5167b0);
 ButtonOrder(&stru_516818)[9] = * ((decltype(&stru_516818)) 0x516818);
 ButtonOrder(&stru_5168D0)[8] = * ((decltype(&stru_5168D0)) 0x5168d0);
@@ -25791,40 +25824,40 @@ ButtonOrder(&stru_517470)[4] = * ((decltype(&stru_517470)) 0x517470);
 ButtonOrder(&stru_5174C0)[8] = * ((decltype(&stru_5174C0)) 0x5174c0);
 ButtonOrder(&stru_517560)[4] = * ((decltype(&stru_517560)) 0x517560);
 ButtonOrder(&stru_5175B0)[7] = * ((decltype(&stru_5175B0)) 0x5175b0);
-ButtonOrder(&stru_517640)[5] = * ((decltype(&stru_517640)) 0x517640);
-ButtonOrder(&stru_5176A8)[4] = * ((decltype(&stru_5176A8)) 0x5176a8);
-ButtonOrder(&stru_5176F8)[1] = * ((decltype(&stru_5176F8)) 0x5176f8);
-ButtonOrder(&stru_51770C)[3] = * ((decltype(&stru_51770C)) 0x51770c);
-ButtonOrder(&stru_517748)[7] = * ((decltype(&stru_517748)) 0x517748);
+ButtonOrder(&button_set_arbiter_tribunal)[5] = * ((decltype(&button_set_arbiter_tribunal)) 0x517640);
+ButtonOrder(&button_set_robotics_support_bay)[4] = * ((decltype(&button_set_robotics_support_bay)) 0x5176a8);
+ButtonOrder(&button_set_shield_battery)[1] = * ((decltype(&button_set_shield_battery)) 0x5176f8);
+ButtonOrder(&button_set_observatory)[3] = * ((decltype(&button_set_observatory)) 0x51770c);
+ButtonOrder(&button_set_wraith)[7] = * ((decltype(&button_set_wraith)) 0x517748);
 ButtonOrder(&button_set_terran_infantry)[6] = * ((decltype(&button_set_terran_infantry)) 0x5177d8);
-ButtonOrder(&stru_517850)[7] = * ((decltype(&stru_517850)) 0x517850);
-ButtonOrder(&scv_orders)[9] = * ((decltype(&scv_orders)) 0x5178e0);
-ButtonOrder(&stru_517998)[9] = * ((decltype(&stru_517998)) 0x517998);
-ButtonOrder(&stru_517A50)[5] = * ((decltype(&stru_517A50)) 0x517a50);
-ButtonOrder(&stru_517AB8)[9] = * ((decltype(&stru_517AB8)) 0x517ab8);
-ButtonOrder(&stru_517B70)[8] = * ((decltype(&stru_517B70)) 0x517b70);
+ButtonOrder(&button_set_medic)[7] = * ((decltype(&button_set_medic)) 0x517850);
+ButtonOrder(&button_set_scv)[9] = * ((decltype(&button_set_scv)) 0x5178e0);
+ButtonOrder(&button_set_basic_terran_buildings)[9] = * ((decltype(&button_set_basic_terran_buildings)) 0x517998);
+ButtonOrder(&button_set_advanced_terran_buildings)[5] = * ((decltype(&button_set_advanced_terran_buildings)) 0x517a50);
+ButtonOrder(&button_set_ghost)[9] = * ((decltype(&button_set_ghost)) 0x517ab8);
+ButtonOrder(&button_set_ghost_hero)[8] = * ((decltype(&button_set_ghost_hero)) 0x517b70);
 ButtonOrder(&stru_517C10)[6] = * ((decltype(&stru_517C10)) 0x517c10);
-ButtonOrder(&stru_517C88)[7] = * ((decltype(&stru_517C88)) 0x517c88);
+ButtonOrder(&button_set_siege_tank)[7] = * ((decltype(&button_set_siege_tank)) 0x517c88);
 ButtonOrder(&stru_517D18)[7] = * ((decltype(&stru_517D18)) 0x517d18);
-ButtonOrder(&stru_517DA8)[8] = * ((decltype(&stru_517DA8)) 0x517da8);
-ButtonOrder(&stru_517E48)[6] = * ((decltype(&stru_517E48)) 0x517e48);
+ButtonOrder(&button_set_science_vessel)[8] = * ((decltype(&button_set_science_vessel)) 0x517da8);
+ButtonOrder(&button_set_battlecruiser)[6] = * ((decltype(&button_set_battlecruiser)) 0x517e48);
 ButtonOrder(&stru_517EC0)[6] = * ((decltype(&stru_517EC0)) 0x517ec0);
-ButtonOrder(&stru_517F38)[10] = * ((decltype(&stru_517F38)) 0x517f38);
-ButtonOrder(&stru_518000)[1] = * ((decltype(&stru_518000)) 0x518000);
-ButtonOrder(&stru_518014)[2] = * ((decltype(&stru_518014)) 0x518014);
-ButtonOrder(&stru_51803C)[2] = * ((decltype(&stru_51803C)) 0x51803c);
-ButtonOrder(&stru_518068)[11] = * ((decltype(&stru_518068)) 0x518068);
-ButtonOrder(&stru_518148)[12] = * ((decltype(&stru_518148)) 0x518148);
-ButtonOrder(&stru_518238)[12] = * ((decltype(&stru_518238)) 0x518238);
-ButtonOrder(&stru_518328)[13] = * ((decltype(&stru_518328)) 0x518328);
-ButtonOrder(&stru_518430)[4] = * ((decltype(&stru_518430)) 0x518430);
-ButtonOrder(&stru_518480)[7] = * ((decltype(&stru_518480)) 0x518480);
-ButtonOrder(&stru_518510)[6] = * ((decltype(&stru_518510)) 0x518510);
-ButtonOrder(&stru_518588)[4] = * ((decltype(&stru_518588)) 0x518588);
-ButtonOrder(&stru_5185D8)[5] = * ((decltype(&stru_5185D8)) 0x5185d8);
-ButtonOrder(&stru_518640)[7] = * ((decltype(&stru_518640)) 0x518640);
-ButtonOrder(&stru_5186D0)[6] = * ((decltype(&stru_5186D0)) 0x5186d0);
-ButtonOrder(&stru_518748)[7] = * ((decltype(&stru_518748)) 0x518748);
+ButtonOrder(&button_set_command_center)[10] = * ((decltype(&button_set_command_center)) 0x517f38);
+ButtonOrder(&button_set_comsat)[1] = * ((decltype(&button_set_comsat)) 0x518000);
+ButtonOrder(&button_set_nuclear_silo)[2] = * ((decltype(&button_set_nuclear_silo)) 0x518014);
+ButtonOrder(&button_set_bunker)[2] = * ((decltype(&button_set_bunker)) 0x51803c);
+ButtonOrder(&button_set_barracks)[11] = * ((decltype(&button_set_barracks)) 0x518068);
+ButtonOrder(&button_set_factory)[12] = * ((decltype(&button_set_factory)) 0x518148);
+ButtonOrder(&button_set_science_facility)[12] = * ((decltype(&button_set_science_facility)) 0x518238);
+ButtonOrder(&button_set_starport)[13] = * ((decltype(&button_set_starport)) 0x518328);
+ButtonOrder(&button_set_control_tower)[4] = * ((decltype(&button_set_control_tower)) 0x518430);
+ButtonOrder(&button_set_engineering_bay)[7] = * ((decltype(&button_set_engineering_bay)) 0x518480);
+ButtonOrder(&button_set_covert_ops)[6] = * ((decltype(&button_set_covert_ops)) 0x518510);
+ButtonOrder(&button_set_physics_lab)[4] = * ((decltype(&button_set_physics_lab)) 0x518588);
+ButtonOrder(&button_set_armory)[5] = * ((decltype(&button_set_armory)) 0x5185d8);
+ButtonOrder(&button_set_academy)[7] = * ((decltype(&button_set_academy)) 0x518640);
+ButtonOrder(&button_set_machine_shop)[6] = * ((decltype(&button_set_machine_shop)) 0x5186d0);
+ButtonOrder(&button_set_infested_command_center)[7] = * ((decltype(&button_set_infested_command_center)) 0x518748);
 ButtonOrder(&stru_5187D4)[1] = * ((decltype(&stru_5187D4)) 0x5187d4);
 ButtonSet(&button_sets)[250] = * ((decltype(&button_sets)) 0x5187e8);
 UnitStat(&unit_stats)[228] = * ((decltype(&unit_stats)) 0x5193a0);
