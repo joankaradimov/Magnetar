@@ -4740,6 +4740,18 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT);
 
+void sub_4AD0E0_(const char* text, const char* caption)
+{
+	HWND window = GetActiveWindow();
+	if (!window)
+	{
+		window = SDrawGetFrameWindow(0);
+	}
+	BattleErrorDialog(window, text, caption, 0);
+}
+
+FAIL_STUB_PATCH(sub_4AD0E0);
+
 void doNetTBLError_(int line, const char* error_message, char* file_name, int a4)
 {
 	if (byte_51A0E9 || !DialogList)
@@ -4768,7 +4780,7 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 	}
 	else if (glGluesMode == GLUE_BATTLE)
 	{
-		sub_4AD0E0(GetNetworkTblString(a4), buff);
+		sub_4AD0E0_(GetNetworkTblString(a4), buff);
 	}
 	else
 	{
