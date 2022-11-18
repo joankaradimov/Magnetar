@@ -14566,6 +14566,41 @@ void loadMenu_gluMain_()
 
 FAIL_STUB_PATCH(loadMenu_gluMain);
 
+bool __fastcall sub_46D340_(dialog* dlg)
+{
+	int v5;
+	int v2 = BriefingLoopTurns(&v5);
+	if (!v2)
+	{
+		LastControlID = 100;
+		dlgEvent event;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+		*(_DWORD*)&event.wSelection = 0;
+		event.dwUser = USER_ACTIVATE;
+		event.wNo = EVN_USER;
+		v2 = dlg->pfcnInteract(dlg, &event);
+		dlg->fields.dlg.pModalFcn = 0;
+		return v2;
+	}
+	if (v5)
+	{
+		LastControlID = 101;
+		dlgEvent event;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+		*(_DWORD*)&event.wSelection = 0;
+		event.dwUser = USER_ACTIVATE;
+		event.wNo = EVN_USER;
+		v2 = dlg->pfcnInteract(dlg, &event);
+		dlg->fields.dlg.pModalFcn = 0;
+		return v2;
+	}
+	return v2;
+}
+
+FAIL_STUB_PATCH(sub_46D340);
+
 void sub_46D3C0_(dialog* dlg)
 {
 	if (multiPlayerMode)
@@ -14579,7 +14614,7 @@ void sub_46D3C0_(dialog* dlg)
 	byte_6554B0 = 1;
 	dword_6556DC = 0;
 	GameKeepAlive();
-	dlg->fields.dlg.pModalFcn = sub_46D340;
+	dlg->fields.dlg.pModalFcn = sub_46D340_;
 }
 
 FAIL_STUB_PATCH(sub_46D3C0);
