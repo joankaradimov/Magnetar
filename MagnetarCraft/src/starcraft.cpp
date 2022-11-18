@@ -13689,7 +13689,16 @@ FAIL_STUB_PATCH(loadMenu_gluJoin);
 
 void gluCustm_initSwish_(dialog* dlg)
 {
-	DlgSwooshin_(5, gluCustmSwishController, dlg, 0);
+	static swishTimer timers[] =
+	{
+		{1, 0},
+		{2, 2},
+		{3, 3},
+		{4, 2},
+		{19, 0},
+	};
+
+	DlgSwooshin_(_countof(timers), timers, dlg, 0);
 	getControlFromIndex_(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
