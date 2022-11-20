@@ -20770,6 +20770,123 @@ ButtonState __fastcall BTNSCOND_CanMergeDarkArchonTwoSelected_(u16 variable, int
 
 FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonTwoSelected, BTNSCOND_CanMergeDarkArchonTwoSelected_);
 
+ButtonState __fastcall BTNSCOND_HasScarabs_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* selected_unit = ClientSelectionGroup[i])
+		{
+			if (selected_unit->unitType == Protoss_Reaver || selected_unit->unitType == Hero_Warbringer)
+			{
+				if (selected_unit->fields1.carrier.inHangerCount)
+				{
+					return ButtonState::BTNST_ENABLED;
+				}
+			}
+		}
+	}
+
+	return BTNST_DISABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasScarabs, BTNSCOND_HasScarabs_);
+
+ButtonState __fastcall BTNSCOND_ScvIsBuilding_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* selected_unit = ClientSelectionGroup[i])
+		{
+			if (selected_unit->orderID != Order::ConstructingBuilding)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_ScvIsBuilding, BTNSCOND_ScvIsBuilding_);
+
+ButtonState __fastcall BTNSCOND_ScvNotConstructing(u16 variable, int player_id, CUnit* unit)
+{
+	return BTNSCOND_ScvIsBuilding_(variable, player_id, unit) == ButtonState::BTNST_ENABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_SCVCanMove, BTNSCOND_ScvNotConstructing);
+FUNCTION_PATCH(BTNSCOND_SCVCanStop, BTNSCOND_ScvNotConstructing);
+FUNCTION_PATCH(BTNSCOND_SCVCanAttack, BTNSCOND_ScvNotConstructing);
+FUNCTION_PATCH(BTNSCOND_CanRepair, BTNSCOND_ScvNotConstructing);
+
+ButtonState __fastcall BTNSCOND_NoCargoTerran_(u16 variable, int player_id, CUnit* unit)
+{
+	if (BTNSCOND_NoCargo(variable, player_id, unit) == ButtonState::BTNST_HIDDEN)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+	return BTNSCOND_ScvNotConstructing(variable, player_id, unit);
+}
+
+FUNCTION_PATCH(BTNSCOND_NoCargoTerran, BTNSCOND_NoCargoTerran_);
+
+ButtonState __fastcall BTNSCOND_HasCargoTerran_(u16 variable, int player_id, CUnit* unit)
+{
+	if (BTNSCOND_HasCargo(variable, player_id, unit) == ButtonState::BTNST_HIDDEN)
+	{
+		return ButtonState::BTNST_HIDDEN;
+	}
+	return BTNSCOND_ScvNotConstructing(variable, player_id, unit);
+}
+
+FUNCTION_PATCH(BTNSCOND_HasCargoTerran, BTNSCOND_HasCargoTerran_);
+
+ButtonState __fastcall BTNSCOND_TerranBasic_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1)
+	{
+		if (BTNSCOND_ScvNotConstructing(variable, player_id, unit) == ButtonState::BTNST_ENABLED)
+		{
+			if (TTAllowed(Terran_Command_Center, unit, player_id)
+				|| TTAllowed(Terran_Supply_Depot, unit, player_id)
+				|| TTAllowed(Terran_Refinery, unit, player_id)
+				|| TTAllowed(Terran_Barracks, unit, player_id)
+				|| TTAllowed(Terran_Engineering_Bay, unit, player_id)
+				|| TTAllowed(Terran_Missile_Turret, unit, player_id)
+				|| TTAllowed(Terran_Academy, unit, player_id)
+				|| TTAllowed(Terran_Bunker, unit, player_id))
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_TerranBasic, BTNSCOND_TerranBasic_);
+
+ButtonState __fastcall BTNSCOND_TerranAdvanced_(u16 variable, int player_id, CUnit* unit)
+{
+	if (ClientSelectionCount == 1)
+	{
+		if (BTNSCOND_ScvNotConstructing(variable, player_id, unit) == ButtonState::BTNST_ENABLED)
+		{
+			if (TTAllowed(Terran_Factory, unit, player_id)
+				|| TTAllowed(Terran_Starport, unit, player_id)
+				|| TTAllowed(Terran_Science_Facility, unit, player_id)
+				|| TTAllowed(Terran_Armory, unit, player_id))
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_TerranAdvanced, BTNSCOND_TerranAdvanced_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech_(unit, (Tech2)variable, player_id) != 1)
