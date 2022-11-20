@@ -4788,6 +4788,62 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
+void sub_4B5CC0_(const char* error_message, const char* error_details)
+{
+	if (dword_6D5A58)
+	{
+		LastControlID = 3;
+		DestroyDialog(dword_6D5A58);
+	}
+	if (error_details == nullptr || strlen(error_details) == 0)
+	{
+		sub_4B59A0(error_message);
+	}
+	else if (DialogList && (++dword_6D63AC, dword_6D63AC == 1))
+	{
+		load_gluPOKSplitBINDLG(error_details, error_message);
+		dword_6D63AC = 0;
+	}
+	else
+	{
+		dword_6D5A5C = off_51A7F0;
+		dword_59A0D0 = 20;
+		strcpy(byte_599FD0, error_message);
+		strcpy(byte_599DC8, error_details);
+		strcpy(dword_599EC8, "GLUEOK_PCX");
+
+		if (HRSRC resource = FindResource(local_dll_library, L"GLUEOK_BIN", MAKEINTRESOURCE(7004)))
+		{
+			if (DWORD resource_size = SizeofResource(local_dll_library, resource))
+			{
+				if (HGLOBAL v7 = LoadResource(local_dll_library, resource))
+				{
+					resource = (HRSRC)LockResource(v7);
+
+					dword_6D5A58 = (dialog*)SMemAlloc(resource_size, "Starcraft\\SWAR\\lang\\gluError.cpp", 58, 0);
+					memcpy(dword_6D5A58, resource, resource_size);
+					if (dword_6D5A58)
+					{
+						dword_6D5A58->lFlags |= CTRL_ACTIVE;
+						AllocInitDialogData(dword_6D5A58, dword_6D5A58, LoadPCXFromResource, "Starcraft\\SWAR\\lang\\gluError.cpp", 359);
+					}
+					gluLoadBINDlg(dword_6D5A58, gluOK_Dlg_Interact_CB);
+					dword_6D63AC = 0;
+					return;
+				}
+			}
+		}
+
+		std::string error_with_details;
+		error_with_details += error_message;
+		error_with_details += + "\n\n";
+		error_with_details += error_details;
+		throw std::runtime_error(error_with_details);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4B5CC0);
+
 void doNetTBLError_(int line, const char* error_message, char* file_name, int a4)
 {
 	if (byte_51A0E9 || !DialogList)
@@ -4820,7 +4876,7 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 	}
 	else
 	{
-		sub_4B5CC0(GetNetworkTblString(a4), buff);
+		sub_4B5CC0_(GetNetworkTblString(a4), buff);
 	}
 }
 
