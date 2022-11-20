@@ -36,7 +36,7 @@ EXPORTS
     SNetSendDatagram = StormLibNetSendDatagram @135
     SNetReceiveDatagram = StormLibNetReceiveDatagram @136
     SNetDisconnectAll = StormLibDisconnectAll @137
-    SNetCreateLadderGame = StormLibNetCreateLadderGame @138
+    SNetCreateLadderGame@48 = StormLibNetCreateLadderGame @138
     SNetReportGameResult = StormLibNetReportGameResult @139
     SNetCheckDataFile = StormLibNetCheckDataFile @140
     SNetSendLeagueCommand = StormLibNetSendLeagueCommand @141

@@ -14040,6 +14040,103 @@ void gluCustm_initSwish_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluCustm_initSwish);
 
+int CreateLadderGame_(GameData* a1, int a2)
+{
+	char gameDataString[128];
+
+	if (is_spawn)
+	{
+		if (!outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError(0, 0, 0, 104);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					replay_header.ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+	}
+	else if (GotFileValues* v3 = sub_4AAC90(a1->game_type_param, a1->game_type_unk, a1->game_type))
+	{
+		GotFileValues* GameTemplateData = &a1->got_file_values;
+		memcpy(&a1->got_file_values, v3, sizeof(a1->got_file_values));
+		a1->active_human_players = 1;
+		if (strlen(playerName) < 0x19)
+		{
+			SStrCopy(a1->host_name, playerName, 0x19u);
+			if (a1->got_file_values.team_mode && !a1->save_timestamp)
+			{
+				a1->max_players = 8;
+			}
+			int a5 = 0;
+			switch (a1->got_file_values.tournament_mode)
+			{
+			case 0:
+				a5 = 0;
+				break;
+			case 1:
+				a5 = 1;
+				break;
+			case 2:
+				a5 = 3;
+				break;
+			case 3:
+				a5 = 5;
+				break;
+			default:
+				break;
+			}
+			if (gameData.got_file_values.template_id >= 0x11u && gameData.got_file_values.template_id <= (GT_Greed | 0x10))
+			{
+				struct_a4* v5 = sub_4AAC60(a1->game_type_unk, a1->game_type_param, a1->game_type);
+				if (v5)
+				{
+					a5 = v5->dword124;
+				}
+			}
+			if (a1->got_file_values.victory_conditions == VC_ONE_ON_ONE && !a1->save_timestamp)
+			{
+				if (a1->max_players >= 2)
+				{
+					a1->max_players = 2;
+				}
+			}
+			if (IsScenarioGame(a1) && !a1->save_timestamp)
+			{
+				a1->max_players = getNumOpenSlots();
+			}
+			a1->cdkey_hash = makeStringHash();
+			sub_472300(gameDataString, (int)&a1->save_timestamp, 0x80u);
+			int v7 = (unsigned __int8)GameTemplateData->template_id | ((GameTemplateData->unused1 | (GameTemplateData->variation_id << 8)) << 8);
+			int v8 = sub_4AADA0(GameTemplateData);
+			if (SNetCreateLadderGame(a1->player_name, (char*)a2, gameDataString, v7, a5, v8, (char*)GameTemplateData, 32, (unsigned __int8)a1->max_players, playerName, "", &playerid))
+			{
+				memcpy(&gameData, a1, sizeof(gameData));
+				isHost = 1;
+				return 1;
+			}
+		}
+	}
+	else
+	{
+		if (!outOfGame)
+		{
+			doNetTBLError(0, 0, 0, 93);
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(CreateLadderGame);
+
 unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest)
 {
 	KillTimer(hWndParent, 0xCu);
@@ -14090,7 +14187,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		GameData game_data;
 		memcpy(&game_data, &v8->game_data, sizeof(game_data));
 		SStrCopy(game_data.player_name, source, sizeof(game_data.player_name));
-		if (CreateLadderGame(&game_data, a3) == 1)
+		if (CreateLadderGame_(&game_data, a3) == 1)
 		{
 			return 0;
 		}
@@ -14171,7 +14268,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		char v13;
 		if (multiPlayerMode)
 		{
-			v13 = CreateLadderGame(&game_data, a3);
+			v13 = CreateLadderGame_(&game_data, a3);
 		}
 		else
 		{
@@ -14235,7 +14332,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 			}
 			return 0;
 		}
-		if (CreateLadderGame(&game_data, a3))
+		if (CreateLadderGame_(&game_data, a3))
 		{
 			return 0;
 		}
