@@ -9107,6 +9107,30 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits);
 
+void sub_4C4FA0_()
+{
+	if (multiPlayerMode)
+	{
+		for (int i = 0; i < 8; ++i)
+		{
+			if (player_left[i])
+			{
+				if (gwGameMode == GAME_GLUES)
+				{
+					sub_4C4A80(i, player_left[i]);
+				}
+				else if (gwGameMode == GAME_RUN)
+				{
+					playerLeaveGame(i, 0, player_left[i]);
+				}
+				player_left[i] = 0;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4C4FA0);
+
 void timeoutProcDropdown_()
 {
 	if (!byte_6D5BC2)
@@ -9127,7 +9151,7 @@ void timeoutProcDropdown_()
 			{
 				int v1 = IsInGameLoop;
 				IsInGameLoop = 1;
-				sub_4C4FA0();
+				sub_4C4FA0_();
 				IsInGameLoop = v1;
 				dword_6D63D4 = v0;
 				byte_57EE78 = 1;
@@ -9168,7 +9192,7 @@ bool ReceiveTurns_(unsigned int* arraydatabytes, char** arraydata, DWORD* a3, in
 	{
 		int v5 = IsInGameLoop;
 		IsInGameLoop = 1;
-		sub_4C4FA0();
+		sub_4C4FA0_();
 		IsInGameLoop = v5;
 		return true;
 	}
