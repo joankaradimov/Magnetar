@@ -2942,6 +2942,47 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+char gamemenu_CustomCtrlID_(dialog* dlg)
+{
+	static FnInteract functions[] =
+	{
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+		gameMenu_DLG,
+	};
+
+	sub_4C9CC0(dlg, 0);
+	sub_4C90C0(dlg);
+	registerUserDialogAction(dlg, sizeof(functions), functions);
+	UpdateOKButton(dlg, 4, CTRL_USELOCALGRAPHIC);
+	UpdateCancelButton(dlg, 4, CTRL_USELOCALGRAPHIC);
+	if (dword_6D1234 == gameMenu_BINDLG)
+	{
+		sub_4C9440(dlg);
+	}
+	if (dword_6D1234 == sub_4CA450 && (multiPlayerMode || InReplay))
+	{
+		checkSaveGameDialog(dlg);
+	}
+	if (dword_6D1234 == BWFXN_QuitMission)
+	{
+		dialog* v3 = getControlFromIndex_(dlg, 1);
+		HideDialog(v3);
+	}
+	if (dword_6D1234 == MainMenuOptionsCustomInteract)
+	{
+		sub_4C94F0(dlg);
+	}
+	return ++byte_6D1224;
+}
+
+FAIL_STUB_PATCH(gamemenu_CustomCtrlID);
+
 int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -2950,7 +2991,7 @@ int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			gamemenu_CustomCtrlID(dlg);
+			gamemenu_CustomCtrlID_(dlg);
 			break;
 		case EventUser::USER_DESTROY:
 			options_Cancel(dlg, evt);
