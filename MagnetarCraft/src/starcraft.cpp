@@ -2942,6 +2942,44 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			gamemenu_CustomCtrlID(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			options_Cancel(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			dword_6D1234(dlg);
+			return 1;
+		default:
+			break;
+		}
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(gamemenu_Dlg_Interact, gamemenu_Dlg_Interact_);
+
 void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 {
 	dword_6D1234 = 0;
@@ -2973,7 +3011,7 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	}
 	byte_6D1224 = v1 - 1;
 	dword_6D1234 = gameMenu_BINDLG;
-	BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
+	BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
 }
 
 FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe);
@@ -2983,12 +3021,12 @@ void QuitMissionMenu_()
 	if (InReplay)
 	{
 		dword_6D1234 = BWFXN_QuitReplay_maybe_;
-		BWFXN_OpenGameDialog_("rez\\quitrepl.bin", gamemenu_Dlg_Interact);
+		BWFXN_OpenGameDialog_("rez\\quitrepl.bin", gamemenu_Dlg_Interact_);
 	}
 	else
 	{
 		dword_6D1234 = BWFXN_QuitMission;
-		BWFXN_OpenGameDialog_("rez\\quit2mnu.bin", gamemenu_Dlg_Interact);
+		BWFXN_OpenGameDialog_("rez\\quit2mnu.bin", gamemenu_Dlg_Interact_);
 	}
 }
 
