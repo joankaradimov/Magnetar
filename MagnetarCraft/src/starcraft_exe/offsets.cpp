@@ -9636,7 +9636,6 @@ void sub_472300(char *a1, int a2, size_t a3) {
         mov ebx, a2
         push dword ptr a3
         call address
-        add esp, 4
     }
 }
 DECL_FUNC(int(*sub_472500)(), sub_472500, 0x472500);
@@ -18419,7 +18418,7 @@ DECL_FUNC(void (__cdecl*loadoptionsMenu)(), loadoptionsMenu, 0x4c9f60);
 DECL_FUNC(bool (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
 DECL_FUNC(int (__thiscall*helpmenu_lastBINDLG)(dialog *a1), helpmenu_lastBINDLG, 0x4ca010);
 DECL_FUNC(void(*sub_4CA090)(), sub_4CA090, 0x4ca090);
-DECL_FUNC(int (__thiscall*MainMenuOptionsCustomInteract)(dialog *a1), MainMenuOptionsCustomInteract, 0x4ca0a0);
+DECL_FUNC(void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_), MainMenuOptionsCustomInteract, 0x4ca0a0);
 char gamemenu_CustomCtrlID(dialog *a1) {
     int address = 0x4ca160;
     char result_;
@@ -18438,7 +18437,7 @@ DECL_FUNC(void (__cdecl*ExitGameMenu)(), ExitGameMenu, 0x4ca330);
 DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);
 DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);
 DECL_FUNC(void (__cdecl*sub_4CA430)(), sub_4CA430, 0x4ca430);
-DECL_FUNC(int (__thiscall*sub_4CA450)(dialog *a1), sub_4CA450, 0x4ca450);
+DECL_FUNC(void (__fastcall*sub_4CA450)(dialog *dlg), sub_4CA450, 0x4ca450);
 DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
 DECL_FUNC(int(*mapHandleDestroy)(), mapHandleDestroy, 0x4ca520);
 DECL_FUNC(int (__stdcall*mapAuthCallback)(char *szFileName, int, int), mapAuthCallback, 0x4ca540);
