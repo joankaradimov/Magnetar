@@ -5250,16 +5250,7 @@ int CreateGame_(GameData* data)
 	return 0;
 }
 
-int CreateGame__()
-{
-	GameData* a1;
-
-	__asm mov a1, eax
-
-	return CreateGame_(a1);
-}
-
-FUNCTION_PATCH((void*)0x4D3FC0, CreateGame__);
+FAIL_STUB_PATCH(CreateGame);
 
 int LevelCheatInitGame_()
 {
@@ -14096,7 +14087,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 			{
 				return 0x80000007;
 			}
-			if (!CreateGame(&game_data))
+			if (!CreateGame_(&game_data))
 			{
 				return 0x80000006;
 			}
