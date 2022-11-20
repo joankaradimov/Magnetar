@@ -14,7 +14,7 @@ BOOL __stdcall SNetCreateGame(const char* pszGameName, const char* pszGamePasswo
 BOOL __stdcall SNetDestroy();
 BOOL __stdcall SNetCreateLadderGame(char* gameName, char* gamePassword, char* gameDataString, DWORD gameType, int a5, int a6, char* GameTemplateData, int GameTemplateSize, int playerCount, char* playerName, char* a11, int* playerID);
 BOOL __stdcall SNetJoinGame(unsigned int a1, char* gameName, char* gamePassword, char* playerName, char* userStats, int* playerid);
-BOOL __stdcall SNetInitializeProvider(DWORD providerName, struct SNETPROGRAMDATA* providerData, struct SNETPLAYERDATA* userData, struct SNETUIDATA* a4, struct _SNETVERSIONDATA* a5);
+BOOL __stdcall SNetInitializeProvider(DWORD providerName, struct SNETPROGRAMDATA* providerData, struct SNETPLAYERDATA* userData, struct SNETUIDATA* a4, struct SNETVERSIONDATA* a5);
 BOOL __stdcall SNetPerformUpgrade(DWORD* upgradestatus);
 int __stdcall SNetLeagueLogout(char* bnetName);
 BOOL __stdcall SNetGetNumPlayers(int* firstplayerid, int* lastplayerid, int* activeplayers);

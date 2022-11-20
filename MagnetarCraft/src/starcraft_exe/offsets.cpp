@@ -9627,6 +9627,18 @@ DECL_FUNC(int(*sub_4721E0)(), sub_4721E0, 0x4721e0);
 DECL_FUNC(int(*replaceNewlines)(), replaceNewlines, 0x472210);
 DECL_FUNC(int(*hex_to_int)(), hex_to_int, 0x472260);
 DECL_FUNC(int (__stdcall*sub_4722C0)(char *buff), sub_4722C0, 0x4722c0);
+void sub_472300(char *a1, int a2, size_t a3) {
+    int address = 0x472300;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        mov eax, a1
+        mov ebx, a2
+        push dword ptr a3
+        call address
+        add esp, 4
+    }
+}
 DECL_FUNC(int(*sub_472500)(), sub_472500, 0x472500);
 DECL_FUNC(int(*sub_472570)(), sub_472570, 0x472570);
 DECL_FUNC(int(*sub_472720)(), sub_472720, 0x472720);
@@ -15960,7 +15972,22 @@ DECL_FUNC(int(*sub_4AABA0)(), sub_4AABA0, 0x4aaba0);
 DECL_FUNC(int(*sub_4AABB0)(), sub_4AABB0, 0x4aabb0);
 DECL_FUNC(int(*sub_4AABD0)(), sub_4AABD0, 0x4aabd0);
 DECL_FUNC(int(*sub_4AABF0)(), sub_4AABF0, 0x4aabf0);
-DECL_FUNC(int(*sub_4AAC60)(), sub_4AAC60, 0x4aac60);
+struct_a4 *sub_4AAC60(char a1, __int16 variation_id, GameType template_id) {
+    int address = 0x4aac60;
+    struct_a4 * result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        xor ecx, ecx
+        xor edx, edx
+        mov dl, a1
+        mov cx, variation_id
+        mov bl, template_id
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 GotFileValues *sub_4AAC90(__int16 a1, char a2, char a3) {
     int address = 0x4aac90;
     GotFileValues * result_;
@@ -16108,7 +16135,7 @@ char *initializeProviderStruct(SNETUIDATA *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*SelectGame)(), SelectGame, 0x4ad230);
+DECL_FUNC(void (__cdecl*SelectGame)(), SelectGame, 0x4ad230);
 DECL_FUNC(void (__cdecl*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
 DECL_FUNC(int (__thiscall*sub_4AD390)(dialog *this_), sub_4AD390, 0x4ad390);
 DECL_FUNC(unsigned __int8 (__thiscall*sub_4AD3E0)(dialog *this_), sub_4AD3E0, 0x4ad3e0);
@@ -16779,12 +16806,12 @@ bool sub_4B5B20(const char *a1) {
     }
     return result_;
 }
-void sub_4B5CC0(const char *race_name, const char *a2) {
+void sub_4B5CC0(const char *error_message, const char *a2) {
     int address = 0x4b5cc0;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov ecx, race_name
+        mov ecx, error_message
         mov eax, a2
         call address
     }
@@ -18290,7 +18317,7 @@ int sub_4C90C0(dialog *a1) {
 }
 DECL_FUNC(void (__fastcall*sub_4C9120)(bool exit_code), sub_4C9120, 0x4c9120);
 DECL_FUNC(void (__fastcall*sub_4C9150)(dialog *dlg, __int16 a2), sub_4C9150, 0x4c9150);
-DECL_FUNC(void (__fastcall*BWFXN_QuitReplay_maybe)(dialog *this_), BWFXN_QuitReplay_maybe, 0x4c9280);
+DECL_FUNC(void (__fastcall*BWFXN_QuitReplay_maybe)(dialog *dlg), BWFXN_QuitReplay_maybe, 0x4c9280);
 DECL_FUNC(int(*options_OK)(), options_OK, 0x4c9360);
 int sub_4C93A0(dialog *a1) {
     int address = 0x4c93a0;
@@ -18409,7 +18436,7 @@ DECL_FUNC(void(*sub_4CA2D0)(), sub_4CA2D0, 0x4ca2d0);
 DECL_FUNC(void (__cdecl*QuitMissionMenu)(), QuitMissionMenu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*ExitGameMenu)(), ExitGameMenu, 0x4ca330);
 DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);
-DECL_FUNC(int (__thiscall*gameMenu_BINDLG)(dialog *a1), gameMenu_BINDLG, 0x4ca370);
+DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);
 DECL_FUNC(void (__cdecl*sub_4CA430)(), sub_4CA430, 0x4ca430);
 DECL_FUNC(int (__thiscall*sub_4CA450)(dialog *a1), sub_4CA450, 0x4ca450);
 DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
@@ -18818,7 +18845,7 @@ dialog *UpdateOKButton(dialog *a1, unsigned __int16 a2, DialogFlags a3) {
 }
 DECL_FUNC(int (__fastcall*sub_4CDAD0)(dialog *dlg, dlgEvent *evt), sub_4CDAD0, 0x4cdad0);
 DECL_FUNC(signed int (__fastcall*gameMenu_DLG)(dialog *a1, dlgEvent *a2), gameMenu_DLG, 0x4cdb40);
-DECL_FUNC(const char *(__fastcall*getRaceName)(__int16 race_key), getRaceName, 0x4cdb70);
+DECL_FUNC(const char *(__fastcall*getRaceName)(__int16 network_tbl_entry), getRaceName, 0x4cdb70);
 DECL_FUNC(void (__fastcall*FreeNetworkTBLHandle)(bool exit_code), FreeNetworkTBLHandle, 0x4cdba0);
 DECL_FUNC(int(*LoadNetworkTBL)(), LoadNetworkTBL, 0x4cdbd0);
 DECL_FUNC(int(*sub_4CDCC0)(), sub_4CDCC0, 0x4cdcc0);
@@ -26191,7 +26218,7 @@ void *& dword_51CC30 = * ((decltype(&dword_51CC30)) 0x51cc30);
 HANDLE& cd_archive_mpq = * ((decltype(&cd_archive_mpq)) 0x51cc34);
 HANDLE& stardat_mpq = * ((decltype(&stardat_mpq)) 0x51cc38);
 char(&tstrFilename)[260] = * ((decltype(&tstrFilename)) 0x51cc40);
-_SNETVERSIONDATA& snet_version_data = * ((decltype(&snet_version_data)) 0x51cd44);
+SNETVERSIONDATA& snet_version_data = * ((decltype(&snet_version_data)) 0x51cd44);
 char(&patch_archive_file)[260] = * ((decltype(&patch_archive_file)) 0x51cd58);
 int& cdkey_encrypted_len = * ((decltype(&cdkey_encrypted_len)) 0x51ce5c);
 void *& cdkey_encrypted = * ((decltype(&cdkey_encrypted)) 0x51ce60);
@@ -26470,7 +26497,7 @@ dialog *& glu_load_Dlg = * ((decltype(&glu_load_Dlg)) 0x599d9c);
 dialog *& dword_599DA0 = * ((decltype(&dword_599DA0)) 0x599da0);
 char(&byte_599DA4)[28] = * ((decltype(&byte_599DA4)) 0x599da4);
 int& dword_599DC0 = * ((decltype(&dword_599DC0)) 0x599dc0);
-char& byte_599DC8 = * ((decltype(&byte_599DC8)) 0x599dc8);
+char(&byte_599DC8)[256] = * ((decltype(&byte_599DC8)) 0x599dc8);
 CHAR(&dword_599EC8)[] = * ((decltype(&dword_599EC8)) 0x599ec8);
 int& dword_599ECC = * ((decltype(&dword_599ECC)) 0x599ecc);
 int& dword_599ED0 = * ((decltype(&dword_599ED0)) 0x599ed0);
