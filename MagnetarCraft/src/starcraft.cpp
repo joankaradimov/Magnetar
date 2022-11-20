@@ -9162,10 +9162,32 @@ void timeoutProcDropdown_()
 
 FAIL_STUB_PATCH(timeoutProcDropdown);
 
+bool ReceiveTurns_(unsigned int* arraydatabytes, char** arraydata, DWORD* a3, int a4, int arraysize)
+{
+	if (SNetReceiveTurns(a4, arraysize, arraydata, arraydatabytes, a3))
+	{
+		int v5 = IsInGameLoop;
+		IsInGameLoop = 1;
+		sub_4C4FA0();
+		IsInGameLoop = v5;
+		return true;
+	}
+	else
+	{
+		if (SErrGetLastError() != 0x8510006B && !outOfGame)
+		{
+			packetErrHandle(SErrGetLastError(), 81, 0, 0, 1);
+		}
+		return false;
+	}
+}
+
+FAIL_STUB_PATCH(ReceiveTurns);
+
 bool RecvSaveTurns_()
 {
 	DWORD tick_count = GetTickCount();
-	if (ReceiveTurns((unsigned int*)arraydatabytes, (char**)arraydata, (DWORD*)playerStatusArray, 0, 8))
+	if (ReceiveTurns_((unsigned int*)arraydatabytes, (char**)arraydata, (DWORD*)playerStatusArray, 0, 8))
 	{
 		dword_6D63D4 = tick_count;
 		byte_57EE78 = 1;
