@@ -6929,23 +6929,16 @@ int UMStartPath_(CUnit* unit)
 {
 	if (UMAnotherPath(unit, unit->moveTarget.pt))
 	{
-		if (unit->userActionFlags & 2)
+		if ((unit->userActionFlags & 2) && unit->flingyMovementType == 2)
 		{
-			unit->userActionFlags &= ~2;
-			if (unit->flingyMovementType == 2)
-			{
-				unit->path->byte19 = RandBetween(51, 0, 2);
-				unit->movementState = UnitMovementState::UM_UIOrderDelay;
-			}
-			else
-			{
-				unit->movementState = UnitMovementState::UM_FollowPath;
-			}
+			unit->path->byte19 = RandBetween(51, 0, 2);
+			unit->movementState = UnitMovementState::UM_UIOrderDelay;
 		}
 		else
 		{
 			unit->movementState = UnitMovementState::UM_FollowPath;
 		}
+		unit->userActionFlags &= ~2;
 
 		return 1;
 	}
