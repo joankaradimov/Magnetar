@@ -16997,6 +16997,49 @@ void loadMenu_gluScore_()
 
 FAIL_STUB_PATCH(loadMenu_gluScore);
 
+void SelectGame_()
+{
+	SNETUIDATA ui_data;
+	SNETPROGRAMDATA program_data;
+	SNETPLAYERDATA player_data;
+	int playerid;
+
+	initializeProviderVersion(&program_data);
+	player_data.dwUnknown = 0;
+	player_data.dwSize = 16;
+	player_data.pszPlayerName = playerName;
+	player_data.pszUnknown = (char*)empty_string;
+	initializeProviderStruct(&ui_data);
+	SDlg224(CpuThrottle);
+	int v0 = SNetSelectGame(1, &program_data, &player_data, &ui_data, 0, &playerid);
+	ClearAndFreeCdkeyStrings((const char*)program_data.key, (const char*)program_data.key_owner);
+	memset(&program_data, 0, sizeof(program_data));
+
+	if (v0)
+	{
+		if (!SNetGetPlayerName(playerid, playerName, 0x19u))
+		{
+			playerName[0] = 0;
+		}
+		::playerid = playerid;
+		glGluesMode = GLUE_CHAT;
+		sub_4DCEE0();
+		if (!isHost && !sub_452900())
+		{
+			glGluesMode = GLUE_BATTLE;
+		}
+	}
+	else
+	{
+		sub_4DCEE0();
+		checkLastFileError();
+		memset(is_keycode_used, 0, sizeof(is_keycode_used));
+		glGluesMode = GLUE_CONNECT;
+	}
+}
+
+FAIL_STUB_PATCH(SelectGame);
+
 void loadMenu_gluBNRes_()
 {
 	if (!dword_59BD8C)
@@ -17007,7 +17050,7 @@ void loadMenu_gluBNRes_()
 		dword_59BD9C = (void*)fastFileRead(&dword_59BDA0, 0, "rez\\gluBNRes.res", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 		dword_59BD8C = 1;
 	}
-	SelectGame();
+	SelectGame_();
 	sub_4ACF20();
 	dword_50E064 = -1;
 }

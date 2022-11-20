@@ -11,7 +11,7 @@ EXPORTS
     SNetGetOwnerTurnsWaiting = StormLibNetGetOwnerTurnsWaiting @110
     SNetGetPerformanceData = StormLibNetGetPerformanceData @111
     SNetGetPlayerCaps = StormLibNetGetPlayerCaps @112
-    SNetGetPlayerName = StormLibNetGetPlayerName @113
+    SNetGetPlayerName@12 = StormLibNetGetPlayerName @113
     SNetGetProviderCaps@4 = StormLibNetGetProviderCaps @114
     SNetGetTurnsInTransit@4 = StormLibNetGetTurnsInTransit @115
     SNetInitializeDevice = StormLibNetInitializeDevice @116
@@ -23,7 +23,7 @@ EXPORTS
     SNetReceiveTurns@20 = StormLibNetReceiveTurns @122
     SNetRegisterEventHandler@8 = StormLibNetRegisterEventHandler @123
     SNetResetLatencyMeasurements = StormLibNetResetLatencyMeasurements @124
-    SNetSelectGame = StormLibNetSelectGame @125
+    SNetSelectGame@24 = StormLibNetSelectGame @125
     SNetSelectProvider = StormLibNetSelectProvider @126
     SNetSendMessage = StormLibNetSendMessage @127
     SNetSendTurn@8 = StormLibNetSendTurn @128
@@ -68,7 +68,7 @@ EXPORTS
     SDlgBltToWindowE = StormLibDlgBltToWindowE @221
     SDlgSetBitmapE = StormLibDlgSetBitmapE @222
     SDlgSetLocale = StormLibDlgSetLocale @223
-    SDlg224 = StormLibDlg224 @224
+    SDlg224@4 = StormLibDlg224 @224
 
     SFileAuthenticateArchive = StormLibFileAuthenticateArchive @251
     SFileCloseArchive@4 = StormLibFileCloseArchive @252
