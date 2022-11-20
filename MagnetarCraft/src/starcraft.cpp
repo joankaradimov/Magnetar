@@ -13130,10 +13130,10 @@ FAIL_STUB_PATCH(sub_4B2810);
 
 void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 a4)
 {
-	memset(&dword_51C428, 0, 0x90u);
-	active_timers_count_maybe = timers_count;
+	memset(&timer_related, 0, 0x90u);
+	timer_related.active_timers_count_maybe = timers_count;
 	int v6 = 0;
-	dword_51C428 = (int)timers;
+	timer_related.timers = timers;
 	dword_51C4AC = (unsigned __int16)a4 / 20;
 	dword_51C4A8 = 0;
 	__int16 v20 = 0;
@@ -13176,20 +13176,20 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 			v20 = timers[v6].wIndex;
 			dword_51C4B0 = v8;
 		}
-		active_timers_maybe[v6] = { 0, 1 };
+		timer_related.active_timers_maybe[v6] = { 0, 1 };
 	}
 
 	if (dword_51C4B0)
 	{
 		dword_51C4B0 = dword_51C4B0->pNext;
-		ListNode* v10 = (ListNode*)SMemAlloc(12, "new", -1, 0);
+		ListNodeUnknown* v10 = (ListNodeUnknown*)SMemAlloc(12, "new", -1, 0);
 		if (v10)
 		{
 			v10->next = 0;
-			v10[1].previous = 0;
-			v10->next = (ListNode*)&v10->next;
+			v10->unknown = 0;
+			v10->next = (ListNodeUnknown*)&v10->next;
 			v10->previous = 0;
-			v10[1].previous = (ListNode*)~(unsigned int)&v10->next;
+			v10->unknown = (ListNodeUnknown*)~(unsigned int)&v10->next;
 			dword_51C4B4 = v10;
 		}
 		else
@@ -13202,10 +13202,10 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 	{
 		if (a1b->lFlags & 8)
 		{
-			ListNode* v11 = dword_51C4B4;
+			ListNodeUnknown* v11 = dword_51C4B4;
 			const char* v12 = type_info__szName((type_info*)0x51A368);
-			ListNode* v13 = (ListNode*)SMemAlloc(12, v12, -2, 8);
-			ListNode* v14;
+			ListNodeUnknown* v13 = (ListNodeUnknown*)SMemAlloc(12, v12, -2, 8);
+			ListNodeUnknown* v14;
 			if (v13)
 			{
 				v13->previous = 0;
@@ -13215,9 +13215,9 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 			else
 			{
 				v14 = 0;
-				v13 = (ListNode*)&v11->next;
+				v13 = (ListNodeUnknown*)&v11->next;
 			}
-			ListNode* v15 = v13->previous;
+			ListNodeUnknown* v15 = v13->previous;
 			if (v13->previous)
 			{
 				int v16 = (int)v13->next;
@@ -13227,12 +13227,12 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 				v13->previous = 0;
 				v13->next = 0;
 			}
-			ListNode* v18 = v11->next;
+			ListNodeUnknown* v18 = v11->next;
 			v13->previous = v18;
 			v13->next = v18->next;
 			v18->next = v14;
 			v11->next = v13;
-			v14[1].previous = (ListNode*)a1b;
+			v14->unknown = (ListNodeUnknown*)a1b;
 			HideDialog_(a1b);
 		}
 	}
@@ -13563,7 +13563,7 @@ void changeMenu_()
 		RefreshCursor_0();
 	}
 	BWFXN_RedrawTarget();
-	memset(&dword_51C428, 0, 0x90u);
+	memset(&timer_related, 0, 0x90u);
 	dialog_count = 0;
 }
 

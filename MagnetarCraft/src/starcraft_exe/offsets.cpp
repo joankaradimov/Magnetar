@@ -3,19 +3,19 @@
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
 DECL_FUNC(void (__cdecl*type_info_destructor_dealloc)(void *location), type_info_destructor_dealloc, 0x401000);
-ListNode *_Unknown_Destructor(ListNode *node, char a2) {
+ListNode *_Unknown_Destructor(ListNodeUnknown *a1, char a2) {
     int address = 0x401020;
     ListNode * result_;
     __asm {
         xor eax, eax
-        mov eax, node
+        mov eax, a1
         push dword ptr a2
         call address
         mov result_, eax
     }
     return result_;
 }
-void HiddenCtrl_Destructor(ListNode *a1) {
+void HiddenCtrl_Destructor(ListNodeUnknown *a1) {
     int address = 0x401090;
     __asm {
         xor ebx, ebx
@@ -3114,7 +3114,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoCargo)(u16 variable, int player_id,
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsConstructing)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsConstructing, 0x4284e0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHive)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHive, 0x428500);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsTraining)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsTraining, 0x428530);
-DECL_FUNC(int (__stdcall*BTNSCOND_HasCargoTerran)(CUnit *unit), BTNSCOND_HasCargoTerran, 0x428560);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasCargoTerran)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasCargoTerran, 0x428560);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoCargoTerran)(u16 variable, int player_id, CUnit *unit), BTNSCOND_NoCargoTerran, 0x4285a0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanRepair)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanRepair, 0x4285e0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanAttack)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanAttack, 0x428610);
@@ -15360,9 +15360,9 @@ DECL_FUNC(int(*GetPlayerNames)(), GetPlayerNames, 0x4a3010);
 DECL_FUNC(int(*j_GetPlayerNames)(), j_GetPlayerNames, 0x4a3130);
 DECL_FUNC(int(*sub_4A3140)(), sub_4A3140, 0x4a3140);
 DECL_FUNC(int(*dropTimerProc)(), dropTimerProc, 0x4a3150);
-DECL_FUNC(bool (__fastcall*Timeout_BINDLG)(dialog *dlg, struct dlgEvent *evt), Timeout_BINDLG, 0x4a3250);
-DECL_FUNC(int(*loadTimeoutDlg)(), loadTimeoutDlg, 0x4a3320);
-DECL_FUNC(int(*timeoutProcDropdown)(), timeoutProcDropdown, 0x4a3380);
+DECL_FUNC(int (__fastcall*Timeout_BINDLG)(dialog *dlg, struct dlgEvent *evt), Timeout_BINDLG, 0x4a3250);
+DECL_FUNC(void (__cdecl*loadTimeoutDlg)(), loadTimeoutDlg, 0x4a3320);
+DECL_FUNC(void (__cdecl*timeoutProcDropdown)(), timeoutProcDropdown, 0x4a3380);
 DECL_FUNC(void (__stdcall*MinimapPing_maybe)(unsigned __int16 pos_x, unsigned __int16 pos_y, char a3), MinimapPing_maybe, 0x4a34c0);
 DECL_FUNC(void (__fastcall*MiniMapUpdate)(dialog *dlg, int x, int y, rect *dst), MiniMapUpdate, 0x4a3570);
 DECL_FUNC(void (__cdecl*CreateMinimapSurface)(), CreateMinimapSurface, 0x4a3720);
@@ -16759,7 +16759,7 @@ int sub_4B57B0(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(bool (__fastcall*gluOK_Dlg_Interact_CB)(dialog *dlg, struct dlgEvent *evt), gluOK_Dlg_Interact_CB, 0x4b5920);
+DECL_FUNC(int (__fastcall*gluOK_Dlg_Interact_CB)(dialog *dlg, struct dlgEvent *evt), gluOK_Dlg_Interact_CB, 0x4b5920);
 void sub_4B59A0(const char *a1) {
     int address = 0x4b59a0;
     __asm {
@@ -17345,7 +17345,23 @@ void doNetTBLError(int a1, const char *error_message, char *file_name, int a4) {
 }
 DECL_FUNC(char (__fastcall*BigPacketError)(int a1, const CHAR *a2, char *a3, int a4, int a5), BigPacketError, 0x4bb430);
 DECL_FUNC(int(*sub_4BB4B0)(), sub_4BB4B0, 0x4bb4b0);
-DECL_FUNC(int (__fastcall*ReceiveTurns)(unsigned int *arraydatabytes, char **arraydata, int a1, int arraysize_), ReceiveTurns, 0x4bb530);
+int ReceiveTurns(unsigned int *arraydatabytes, char **arraydata, DWORD *a3, int a4, int arraysize_) {
+    int address = 0x4bb530;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov ecx, arraydatabytes
+        mov edx, arraydata
+        mov eax, a3
+        push dword ptr arraysize_
+        push dword ptr a4
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int CreateSoundBuffer(AudioVideoInitializationError *a1) {
     int address = 0x4bb5a0;
     signed result_;
@@ -20588,13 +20604,13 @@ void DLG_ServerMenuSwishBegin(int a1, dialog *a2, int a3) {
         add esp, 4
     }
 }
-void DlgSwooshin(__int16 a1, swishTimer *a2, dialog *a3, signed __int16 a4) {
+void DlgSwooshin(__int16 timers_count, swishTimer *timers, dialog *a3, signed __int16 a4) {
     int address = 0x4dd5e0;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov ax, a1
-        mov ecx, a2
+        mov ax, timers_count
+        mov ecx, timers
         push dword ptr a4
         push dword ptr a3
         call address
@@ -26128,14 +26144,12 @@ FontColorRelated *& dword_51C40C = * ((decltype(&dword_51C40C)) 0x51c40c);
 MapData4& level_cheat_mission = * ((decltype(&level_cheat_mission)) 0x51c410);
 int& dword_51C414 = * ((decltype(&dword_51C414)) 0x51c414);
 dialog *& dword_51C418 = * ((decltype(&dword_51C418)) 0x51c418);
-int& dword_51C428 = * ((decltype(&dword_51C428)) 0x51c428);
-__int16& active_timers_count_maybe = * ((decltype(&active_timers_count_maybe)) 0x51c42c);
-swishTimer(&active_timers_maybe)[1] = * ((decltype(&active_timers_maybe)) 0x51c430);
+TimerRelated& timer_related = * ((decltype(&timer_related)) 0x51c428);
 __int16(&word_51C480)[20] = * ((decltype(&word_51C480)) 0x51c480);
 int& dword_51C4A8 = * ((decltype(&dword_51C4A8)) 0x51c4a8);
 int& dword_51C4AC = * ((decltype(&dword_51C4AC)) 0x51c4ac);
 dialog *& dword_51C4B0 = * ((decltype(&dword_51C4B0)) 0x51c4b0);
-ListNode *& dword_51C4B4 = * ((decltype(&dword_51C4B4)) 0x51c4b4);
+ListNodeUnknown *& dword_51C4B4 = * ((decltype(&dword_51C4B4)) 0x51c4b4);
 int& dialog_count = * ((decltype(&dialog_count)) 0x51c4b8);
 int& level_cheat_is_bw = * ((decltype(&level_cheat_is_bw)) 0x51c4bc);
 CHAR(&main_directory)[260] = * ((decltype(&main_directory)) 0x51c4c0);
