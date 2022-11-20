@@ -21237,6 +21237,85 @@ ButtonState __fastcall BTNSCOND_TerranAdvanced_(u16 variable, int player_id, CUn
 
 FUNCTION_PATCH(BTNSCOND_TerranAdvanced, BTNSCOND_TerranAdvanced_);
 
+ButtonState __fastcall BTNSCOND_HasNuke_(u16 variable, int player_id, CUnit* unit)
+{
+	for (CUnit* player_unit = UnitNodeList_PlayerFirstUnit[unit->playerID]; player_unit; player_unit = player_unit->nextPlayerUnit)
+	{
+		if (player_unit->unitType == Terran_Nuclear_Silo && player_unit->fields2.silo.bReady)
+		{
+			return ButtonState::BTNST_ENABLED;
+		}
+	}
+	return ButtonState::BTNST_DISABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasNuke, BTNSCOND_HasNuke_);
+
+ButtonState __fastcall BTNSCOND_HasSpidermines_(u16 variable, int player_id, CUnit* unit)
+{
+	ButtonState v7 = ButtonState::BTNST_HIDDEN;
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* selected_unit = ClientSelectionGroup[i])
+		{
+			ButtonState v5 = CanUseTech(selected_unit, (Tech2)(u8)variable, player_id);
+			if (v5 == ButtonState::BTNST_ENABLED)
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+			else if (v5 == ButtonState::BTNST_DISABLED)
+			{
+				v7 = ButtonState::BTNST_DISABLED;
+			}
+		}
+	}
+
+	return v7;
+}
+
+FUNCTION_PATCH(BTNSCOND_HasSpidermines, BTNSCOND_HasSpidermines_);
+
+ButtonState __fastcall BTNSCOND_TankMove_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* selected_unit = ClientSelectionGroup[i])
+		{
+			if (selected_unit->unitType == Terran_Siege_Tank_Siege_Mode || selected_unit->unitType == Hero_Edmund_Duke_Siege_Mode)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_TankMove, BTNSCOND_TankMove_);
+
+ButtonState __fastcall BTNSCOND_IsUnsieged_(u16 variable, int player_id, CUnit* unit)
+{
+	ButtonState button_state = CanUseTech(unit, (Tech2)(u8)variable, player_id);
+
+	if (button_state == ButtonState::BTNST_ENABLED)
+	{
+		for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+		{
+			if (CUnit* selected_unit = ClientSelectionGroup[i])
+			{
+				if (selected_unit->unitType == Terran_Siege_Tank_Siege_Mode || selected_unit->unitType == Hero_Edmund_Duke_Siege_Mode)
+				{
+					return ButtonState::BTNST_HIDDEN;
+				}
+			}
+		}
+	}
+
+	return button_state;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsUnsieged, BTNSCOND_IsUnsieged_);
+
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
 	if (CanUseTech_(unit, (Tech2)variable, player_id) != 1)
