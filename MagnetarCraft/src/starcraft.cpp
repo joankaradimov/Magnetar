@@ -17086,7 +17086,8 @@ int SwitchMenu_()
 			gwGameMode = GAME_RUNINIT;
 	}
 LABEL_28:
-	Sleep(1500); // TODO: should I get rid of this?
+	// TODO: drop the loading screen entirely, maybe?
+	Sleep(600);
 	if (load_screen)
 	{
 		DestroyDialog(load_screen);
