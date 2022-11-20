@@ -20,7 +20,7 @@ EXPORTS
     SNetLeaveGame@4 = StormLibNetLeaveGame @119
     SNetPerformUpgrade = StormLibNetPerformUpgrade @120
     SNetReceiveMessage = StormLibNetReceiveMessage @121
-    SNetReceiveTurns = StormLibNetReceiveTurns @122
+    SNetReceiveTurns@20 = StormLibNetReceiveTurns @122
     SNetRegisterEventHandler@8 = StormLibNetRegisterEventHandler @123
     SNetResetLatencyMeasurements = StormLibNetResetLatencyMeasurements @124
     SNetSelectGame = StormLibNetSelectGame @125

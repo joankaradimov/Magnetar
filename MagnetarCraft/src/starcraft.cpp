@@ -9080,6 +9080,61 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits);
 
+void timeoutProcDropdown_()
+{
+	if (!byte_6D5BC2)
+	{
+		byte_6D5BC2 = 1;
+		loadTimeoutDlg();
+		dword_59CC84 = 0;
+		DWORD v3 = GetTickCount();
+		while (!byte_57EE78)
+		{
+			if (dword_59CC84)
+			{
+				break;
+			}
+			RecvMessage();
+			DWORD v0 = GetTickCount();
+			if (SNetReceiveTurns(0, 8, (char**)arraydata, (unsigned int*)arraydatabytes, (DWORD*)playerStatusArray))
+			{
+				int v1 = IsInGameLoop;
+				IsInGameLoop = 1;
+				sub_4C4FA0();
+				IsInGameLoop = v1;
+				dword_6D63D4 = v0;
+				byte_57EE78 = 1;
+			}
+			else
+			{
+				if (SErrGetLastError() != 0x8510006B && !outOfGame)
+				{
+					packetErrHandle(SErrGetLastError(), 81, 0, 0, 1);
+				}
+				byte_57EE78 = 0;
+			}
+			BWFXN_videoLoop(3);
+			UpdateNetTimeoutPlayers();
+			if (GetTickCount() > v3 + 1000)
+			{
+				updateCountdownDropTimer();
+				v3 = GetTickCount();
+			}
+			BWFXN_RedrawTarget();
+		}
+		if (dword_6D5BC4)
+		{
+			DestroyDialog(dword_6D5BC4);
+			dword_6D5BC4 = 0;
+		}
+		BWFXN_RedrawTarget();
+		byte_6D5BC2 = 0;
+		countdownTimeRemaining = GetTickCount();
+	}
+}
+
+FAIL_STUB_PATCH(timeoutProcDropdown);
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
@@ -9088,7 +9143,7 @@ int gameLoopTurns_()
 	}
 	if (!RecvSaveTurns() && InGame)
 	{
-		timeoutProcDropdown();
+		timeoutProcDropdown_();
 	}
 	if (!byte_57EE78)
 	{
