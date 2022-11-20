@@ -2940,11 +2940,47 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
+{
+	dword_6D1234 = 0;
+	if (LastControlID == -2)
+	{
+		GameState = 0;
+		if (multiPlayerMode)
+		{
+			gwNextGameMode = byte_58D700[g_LocalNationID] == 3 ? GamePosition::GAME_WIN : GamePosition::GAME_LOSE;
+		}
+		else
+		{
+			gwNextGameMode = GamePosition::GAME_GLUES;
+			glGluesMode = IsExpansion ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
+		}
+
+		if (!InReplay)
+		{
+			replay_header.ReplayFrames = ElapsedTimeFrames;
+		}
+		DestroyDialog(dlg);
+		return;
+	}
+	char v1 = --byte_6D1224;
+	if (!byte_6D1224)
+	{
+		DestroyDialog(dlg);
+		return;
+	}
+	byte_6D1224 = v1 - 1;
+	dword_6D1234 = gameMenu_BINDLG;
+	BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe);
+
 void QuitMissionMenu_()
 {
 	if (InReplay)
 	{
-		dword_6D1234 = BWFXN_QuitReplay_maybe;
+		dword_6D1234 = BWFXN_QuitReplay_maybe_;
 		BWFXN_OpenGameDialog_("rez\\quitrepl.bin", gamemenu_Dlg_Interact);
 	}
 	else
