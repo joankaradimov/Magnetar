@@ -18845,7 +18845,7 @@ dialog *UpdateOKButton(dialog *a1, unsigned __int16 a2, DialogFlags a3) {
 }
 DECL_FUNC(int (__fastcall*sub_4CDAD0)(dialog *dlg, dlgEvent *evt), sub_4CDAD0, 0x4cdad0);
 DECL_FUNC(signed int (__fastcall*gameMenu_DLG)(dialog *a1, dlgEvent *a2), gameMenu_DLG, 0x4cdb40);
-DECL_FUNC(const char *(__fastcall*getRaceName)(__int16 network_tbl_entry), getRaceName, 0x4cdb70);
+DECL_FUNC(const char *(__fastcall*GetNetworkTblString)(__int16 network_tbl_entry), GetNetworkTblString, 0x4cdb70);
 DECL_FUNC(void (__fastcall*FreeNetworkTBLHandle)(bool exit_code), FreeNetworkTBLHandle, 0x4cdba0);
 DECL_FUNC(int(*LoadNetworkTBL)(), LoadNetworkTBL, 0x4cdbd0);
 DECL_FUNC(int(*sub_4CDCC0)(), sub_4CDCC0, 0x4cdcc0);

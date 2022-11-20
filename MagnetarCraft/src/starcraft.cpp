@@ -629,10 +629,12 @@ const char* GetTblString(WORD* table, __int16 tbl_entry)
 	}
 }
 
-const char* GetNetworkTblString(__int16 network_tbl_entry)
+const char* GetNetworkTblString_(__int16 network_tbl_entry)
 {
 	return GetTblString(networkTable, network_tbl_entry);
 }
+
+// TODO: patch GetNetworkTblString in StarCraft.exe
 
 const char* GetMapTblString(__int16 map_tbl_entry)
 {
@@ -701,7 +703,7 @@ void PlayMusic_(MusicTrack a1)
 		{
 			if (gwGameMode == GAME_RUN)
 			{
-				BWFXN_PrintText(8, (char*) GetNetworkTblString(140), 0);
+				BWFXN_PrintText(8, (char*) GetNetworkTblString_(140), 0);
 			}
 		}
 		else
@@ -1383,12 +1385,12 @@ void playRadioFreeZerg_()
 	if (current_music == MT_RADIO_FREE_ZERG)
 	{
 		v0 = MT_ZERG1;
-		v1 = GetNetworkTblString(66);
+		v1 = GetNetworkTblString_(66);
 	}
 	else
 	{
 		v0 = MT_RADIO_FREE_ZERG;
-		v1 = GetNetworkTblString(65);
+		v1 = GetNetworkTblString_(65);
 	}
 
 	if (v1)
@@ -4865,18 +4867,18 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 
 		dword_51267C = g_LocalHumanID;
 		g_ActiveNationID = g_LocalNationID;
-		load_DLGFatal_BIN(buff, GetNetworkTblString(a4));
+		load_DLGFatal_BIN(buff, GetNetworkTblString_(a4));
 
 		g_ActiveNationID = v6;
 		dword_51267C = v5;
 	}
 	else if (glGluesMode == GLUE_BATTLE)
 	{
-		sub_4AD0E0_(GetNetworkTblString(a4), buff);
+		sub_4AD0E0_(GetNetworkTblString_(a4), buff);
 	}
 	else
 	{
-		sub_4B5CC0_(GetNetworkTblString(a4), buff);
+		sub_4B5CC0_(GetNetworkTblString_(a4), buff);
 	}
 }
 
@@ -5320,7 +5322,7 @@ int LevelCheatInitGame_()
 	OpheliaEnabled = 0;
 	if (!playerName[0])
 	{
-		const char* v1 = GetNetworkTblString(72);
+		const char* v1 = GetNetworkTblString_(72);
 		SStrCopy(playerName, v1, sizeof(playerName));
 	}
 	if (CampaignIndex == MD_none)
@@ -6193,7 +6195,7 @@ int SaveReplay_(const char* a1, int a3)
 	if (a3 && !DeleteFileA(FileName) && GetFileAttributesA(FileName) != -1)
 	{
 		char buff[256];
-		const char* var = GetNetworkTblString(2);
+		const char* var = GetNetworkTblString_(2);
 		_snprintf(buff, 0x100u, var, &byte_51BFB8);
 		loadOKBIN_(1, buff, dword_6D0F2C);
 		return -1;
@@ -6692,7 +6694,7 @@ void wmissionDlgActivate_()
 	}
 	else if (LastControlID == 1)
 	{
-		InfoMessage(0, GetNetworkTblString(16));
+		InfoMessage(0, GetNetworkTblString_(16));
 	}
 }
 
@@ -13148,7 +13150,7 @@ bool LoadCampaignWithCharacter_(Race race)
 	CharacterData character_data;
 	if (!LoadCharacterData(&character_data, playerName))
 	{
-		const char* v1 = GetNetworkTblString(72);
+		const char* v1 = GetNetworkTblString_(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
 		{
 			doNetTBLError_(0, 0, 0, 88);
@@ -13200,7 +13202,7 @@ bool LoadPrecursorCampaign()
 	CharacterData character_data;
 	if (!LoadCharacterData(&character_data, playerName))
 	{
-		const char* v1 = GetNetworkTblString(72);
+		const char* v1 = GetNetworkTblString_(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&character_data, playerName)) && !outOfGame)
 		{
 			doNetTBLError_(0, 0, 0, 88);
@@ -13231,7 +13233,7 @@ int sub_4B5110_(Race race)
 {
 	if (dword_59A0D4[race])
 	{
-		const char* v3 = GetNetworkTblString(race != Race::RACE_Terran ? 144 : 143);
+		const char* v3 = GetNetworkTblString_(race != Race::RACE_Terran ? 144 : 143);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -13248,7 +13250,7 @@ bool sub_4B27A0_(Race race)
 {
 	if (dword_59B760[race])
 	{
-		const char* v3 = GetNetworkTblString(race == Race::RACE_Protoss ? 142 : 141);
+		const char* v3 = GetNetworkTblString_(race == Race::RACE_Protoss ? 142 : 141);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -13940,7 +13942,7 @@ int __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 			}
 			else
 			{
-				const char* str = GetNetworkTblString(104);
+				const char* str = GetNetworkTblString_(104);
 				BWFXN_gluPOK_MBox(str);
 			}
 			return 1;
@@ -15007,7 +15009,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			case 3:
 				if (is_spawn)
 				{
-					const char* s = GetNetworkTblString(103);
+					const char* s = GetNetworkTblString_(103);
 					BWFXN_gluPOK_MBox(s);
 					return true;
 				}
@@ -15755,7 +15757,7 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 			case 9:
 				if (is_spawn)
 				{
-					BWFXN_gluPOK_MBox(GetNetworkTblString(104));
+					BWFXN_gluPOK_MBox(GetNetworkTblString_(104));
 					return 1;
 				}
 				return DLG_SwishOut(dlg);
@@ -16803,7 +16805,7 @@ int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 	}
 
 	char buff[256];
-	_snprintf(buff, 0x100u, GetNetworkTblString(a2), v3);
+	_snprintf(buff, 0x100u, GetNetworkTblString_(a2), v3);
 
 	free(v3);
 	return loadOKCancelBIN_(1, buff, dword_6D0F2C) == -2;
@@ -16869,7 +16871,7 @@ int LoadSaveGameBIN_Main_(int a1, Race a2)
 		}
 		else if (v13 == 0)
 		{
-			const char* v14 = GetNetworkTblString(101);
+			const char* v14 = GetNetworkTblString_(101);
 			loadOKBIN_(1, v14, dword_6D0F2C);
 		}
 		break;
@@ -17022,7 +17024,7 @@ void sub_4DBEE0_(ExpandedCampaignMenuEntry* a1)
 
 	if (!LoadCharacterData(&v5, playerName))
 	{
-		const char* v1 = GetNetworkTblString(72);
+		const char* v1 = GetNetworkTblString_(72);
 		if ((_stricmp(playerName, v1) || !verifyCharacterFile(&v5, playerName)) && !outOfGame)
 		{
 			doNetTBLError_(0, 0, 0, 88);
@@ -17223,7 +17225,7 @@ int SwitchMenu_()
 		Ophelia = 0;
 		if (!playerName[0])
 		{
-			const char* v3 = GetNetworkTblString(72);
+			const char* v3 = GetNetworkTblString_(72);
 			SStrCopy(playerName, v3, sizeof(playerName));
 		}
 		customSingleplayer[0] = 0;
@@ -17488,7 +17490,7 @@ void TakeScreenshot_()
 
 	if (SDrawCaptureScreen(buff) && gwGameMode == GAME_RUN)
 	{
-		const char* v0 = GetNetworkTblString(110);
+		const char* v0 = GetNetworkTblString_(110);
 		char text[512];
 		_snprintf(text, 0x200u, v0, buff);
 		InfoMessage(2000, text);

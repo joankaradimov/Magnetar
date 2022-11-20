@@ -4455,7 +4455,7 @@ dialog *UpdateCancelButton(dialog *a1, unsigned __int16 a2, DialogFlags a3);
 dialog *UpdateOKButton(dialog *a1, unsigned __int16 a2, DialogFlags a3);
 extern int (__fastcall*sub_4CDAD0)(dialog *dlg, dlgEvent *evt);
 extern signed int (__fastcall*gameMenu_DLG)(dialog *a1, dlgEvent *a2);
-extern const char *(__fastcall*getRaceName)(__int16 network_tbl_entry);
+extern const char *(__fastcall*GetNetworkTblString)(__int16 network_tbl_entry);
 extern void (__fastcall*FreeNetworkTBLHandle)(bool exit_code);
 extern int(*LoadNetworkTBL)();
 extern int(*sub_4CDCC0)();
