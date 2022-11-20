@@ -9135,13 +9135,31 @@ void timeoutProcDropdown_()
 
 FAIL_STUB_PATCH(timeoutProcDropdown);
 
+bool RecvSaveTurns_()
+{
+	DWORD tick_count = GetTickCount();
+	if (ReceiveTurns((unsigned int*)arraydatabytes, (char**)arraydata, (DWORD*)playerStatusArray, 0, 8))
+	{
+		dword_6D63D4 = tick_count;
+		byte_57EE78 = 1;
+		return true;
+	}
+	else
+	{
+		byte_57EE78 = 0;
+		return tick_count < dword_6D63D4 + 2500;
+	}
+}
+
+FAIL_STUB_PATCH(RecvSaveTurns);
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
 	{
 		return 0;
 	}
-	if (!RecvSaveTurns() && InGame)
+	if (!RecvSaveTurns_() && InGame)
 	{
 		timeoutProcDropdown_();
 	}
