@@ -9632,7 +9632,7 @@ FAIL_STUB_PATCH(sub_45E770);
 
 void moveScreenToUnit_(CUnit* unit)
 {
-	BWFXN_MoveScreen((unit->sprite->position.x - 320) / 32 * 32, (unit->sprite->position.y - 192) / 32 * 32);
+	BWFXN_MoveScreen(unit->sprite->position.x - GAME_AREA_WIDTH / 2, unit->sprite->position.y - GAME_AREA_HEIGHT / 2);
 }
 
 void moveScreenToUnit__(__int16 x)
