@@ -5102,6 +5102,42 @@ void GameInitAI_()
 
 FAIL_STUB_PATCH(GameInitAI);
 
+u8 illegalTeamCheck_()
+{
+	if (gameData.got_file_values.team_mode == 2)
+	{
+		return 4;
+	}
+	else if (gameData.got_file_values.team_mode == 3)
+	{
+		return gameData.got_file_values.team_mode;
+	}
+	else if (gameData.got_file_values.team_mode == 4)
+	{
+		return 2;
+	}
+	else if (!outOfGame)
+	{
+		leaveGame(3);
+		outOfGame = 1;
+		doNetTBLError(113, GetNetworkTblString_(73), "Starcraft\\SWAR\\lang\\Teams.cpp", 93);
+		if (gwGameMode == GAME_RUN)
+		{
+			GameState = 0;
+			gwNextGameMode = GAME_GLUES;
+			if (!InReplay)
+			{
+				replay_header.ReplayFrames = ElapsedTimeFrames;
+			}
+		}
+		nextLeaveGameMenu();
+	}
+
+	return 0;
+}
+
+FUNCTION_PATCH(illegalTeamCheck, illegalTeamCheck_);
+
 void CreateInitialTeamMeleeUnits_()
 {
 	int team_count = gameData.got_file_values.template_id != 15 ? gameData.got_file_values.team_mode : 2;
@@ -5126,7 +5162,7 @@ void CreateInitialTeamMeleeUnits_()
 
 	LABEL_15:
 		u8 a1 = byte_57F1CB[team_index + 1];
-		u8 v6 = team_index * illegalTeamCheck();
+		u8 v6 = team_index * illegalTeamCheck_();
 		if (gameData.got_file_values.starting_units == StartingUnits::SU_WORKER_AND_CENTER)
 		{
 			CreateInitialMeleeBuildings_(byte_57F1C0[v6], a1);
@@ -5137,7 +5173,7 @@ void CreateInitialTeamMeleeUnits_()
 		}
 		for (int j = 0; j < 4; ++j)
 		{
-			int v9 = j % illegalTeamCheck();
+			int v9 = j % illegalTeamCheck_();
 			Race v10 = v6 + v9 < 8 ? byte_57F1C0[v6 + v9] : byte_57F1C0[v6 + 1];
 
 			if (gameData.got_file_values.starting_units && gameData.got_file_values.starting_units <= StartingUnits::SU_WORKER_AND_CENTER)
