@@ -21512,6 +21512,55 @@ ButtonState __fastcall BTNSCOND_TerranAdvanced_(u16 variable, int player_id, CUn
 
 FUNCTION_PATCH(BTNSCOND_TerranAdvanced, BTNSCOND_TerranAdvanced_);
 
+ButtonState __fastcall BTNSCOND_CanCloak_0_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* v4 = ClientSelectionGroup[i])
+		{
+			ButtonState result = CanUseTech(v4, (Tech2)(u8)variable, player_id);
+			if (result != ButtonState::BTNST_ENABLED)
+			{
+				return result;
+			}
+			if (((v4->statusFlags & StatusFlags::CloakingForFree) == 0 || (v4->statusFlags & StatusFlags::Burrowed) != 0) && (v4->statusFlags & StatusFlags::RequiresDetection) == 0)
+			{
+				return ButtonState::BTNST_ENABLED;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_HIDDEN;
+}
+
+FUNCTION_PATCH(BTNSCOND_CanCloak_0, BTNSCOND_CanCloak_0_);
+
+ButtonState __fastcall BTNSCOND_IsCloaked_0_(u16 variable, int player_id, CUnit* unit)
+{
+	for (int i = 0; i < _countof(ClientSelectionGroup); i++)
+	{
+		if (CUnit* v4 = ClientSelectionGroup[i])
+		{
+			if (CanUseTech(v4, (Tech2)(u8)variable, player_id) != ButtonState::BTNST_ENABLED)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if ((v4->statusFlags & StatusFlags::CloakingForFree) != 0 && (v4->statusFlags & StatusFlags::Burrowed) == 0)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+			if ((v4->statusFlags & StatusFlags::RequiresDetection) == 0)
+			{
+				return ButtonState::BTNST_HIDDEN;
+			}
+		}
+	}
+
+	return ButtonState::BTNST_ENABLED;
+}
+
+FUNCTION_PATCH(BTNSCOND_IsCloaked_0, BTNSCOND_IsCloaked_0_);
+
 ButtonState __fastcall BTNSCOND_HasNuke_(u16 variable, int player_id, CUnit* unit)
 {
 	for (CUnit* player_unit = UnitNodeList_PlayerFirstUnit[unit->playerID]; player_unit; player_unit = player_unit->nextPlayerUnit)
