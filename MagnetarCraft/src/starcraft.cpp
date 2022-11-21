@@ -9485,6 +9485,49 @@ bool RecvSaveTurns_()
 
 FAIL_STUB_PATCH(RecvSaveTurns);
 
+void GameKeepAlive_()
+{
+	int turns;
+	if (SNetGetTurnsInTransit(&turns))
+	{
+		unsigned v1 = LatencyCalls;
+		if (InGame)
+		{
+			v1 = Latency + LatencyCalls;
+		}
+
+		for (; turns < v1; turns++)
+		{
+			if (!sgdwBytesInCmdQueue)
+			{
+				TurnBuffer[0] = 5;
+				sgdwBytesInCmdQueue = 1;
+			}
+			if (!SNetSendTurn(TurnBuffer, sgdwBytesInCmdQueue) && !outOfGame)
+			{
+				DWORD v3 = SErrGetLastError();
+				if (!outOfGame && v3 != 0x8510006A && v3 != 288 && v3 != 1223)
+				{
+					char buffer[256];
+					SErrGetErrorStr(v3, buffer, sizeof(buffer));
+					BigPacketError('[', buffer, 0, 0, 1);
+				}
+			}
+			sgdwBytesInCmdQueue = 0;
+			if (InGame)
+			{
+				CMDACT_GameHash();
+			}
+		}
+	}
+	else if (!outOfGame)
+	{
+		packetErrHandle(SErrGetLastError(), 81, "Starcraft\\SWAR\\lang\\net_mgr.cpp", 2292, 1);
+	}
+}
+
+FAIL_STUB_PATCH(GameKeepAlive);
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
@@ -9503,7 +9546,7 @@ int gameLoopTurns_()
 	{
 		return 0;
 	}
-	GameKeepAlive();
+	GameKeepAlive_();
 	if (glGluesMode == GLUE_GENERIC)
 	{
 		return 0;
@@ -9766,7 +9809,7 @@ GamePosition BeginGame_()
 	BWFXN_videoLoop_(0);
 	loseSightSelection();
 	turn_counter = 0;
-	GameKeepAlive();
+	GameKeepAlive_();
 	while (GameState && !gameLoopTurns_())
 	{
 		BWFXN_RedrawTarget_();
@@ -15485,7 +15528,7 @@ void sub_46D3C0_(dialog* dlg)
 	dword_6556D8 = 0;
 	byte_6554B0 = 1;
 	dword_6556DC = 0;
-	GameKeepAlive();
+	GameKeepAlive_();
 	dlg->fields.dlg.pModalFcn = sub_46D340_;
 }
 
@@ -16248,7 +16291,7 @@ signed int sub_4D4130_()
 	{
 		download_percentage = -1;
 		dword_66FF48 = GetTickCount();
-		GameKeepAlive();
+		GameKeepAlive_();
 		countdownTimerInterval = 0;
 		gameState = 2;
 		if (isHost)
@@ -16290,7 +16333,7 @@ bool LobbyLoopTurns_()
 	ProgressDownload_maybe();
 	JoinGame();
 	dword_66FF48 = tick_count;
-	GameKeepAlive();
+	GameKeepAlive_();
 	update_lobby_glue = 1;
 	ProgressCountdown();
 	return gameState == 9;
