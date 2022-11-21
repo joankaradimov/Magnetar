@@ -367,7 +367,7 @@ void FileFatal_(HANDLE a1, int a2)
 
 	if (!SFileGetFileName(a1, buffer, 260))
 	{
-		SStrCopy(buffer, "*unknown*", 0x104u);
+		strcpy_s(buffer, "*unknown*");
 	}
 	SysWarn_FileNotFound(buffer, a2);
 }
@@ -1232,7 +1232,7 @@ int InitializeArchiveHandles_()
 
 	if (SFileOpenArchive(patch_rt_path.generic_string().c_str(), 7000u, 2u, &patch_rt_mpq))
 	{
-		SStrCopy(patch_archive_file, patch_rt_path.generic_string().c_str(), sizeof(patch_archive_file));
+		strcpy_s(patch_archive_file, patch_rt_path.generic_string().c_str());
 	}
 	else
 	{
@@ -1245,7 +1245,7 @@ int InitializeArchiveHandles_()
 	auto separator = strrchr(magnetarDatFilename, '\\');
 	if (separator)
 		*separator = 0;
-	SStrNCat(magnetarDatFilename, "\\MagnetarDat.mpq", MAX_PATH);
+	strcat_s(magnetarDatFilename, "\\MagnetarDat.mpq");
 	if (!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &magnetar_mpq))
 	{
 		SysWarn_FileNotFound("MagnetarDat.mpq", GetLastError());
@@ -1261,8 +1261,8 @@ int InitializeArchiveHandles_()
 	{
 		if (SFileOpenArchive(broodat_path.generic_string().c_str(), 2500u, 2u, &broodat_mpq))
 		{
-			SStrCopy(archive_files, broodat_path.generic_string().c_str(), sizeof(archive_files));
-			SStrNCat(archive_files, ";", sizeof(archive_files));
+			strcpy_s(archive_files, broodat_path.generic_string().c_str());
+			strcat_s(archive_files, ";");
 		}
 		else
 		{
@@ -1271,7 +1271,7 @@ int InitializeArchiveHandles_()
 	}
 
 	DetectExpansionInstallation_();
-	return SStrNCat(archive_files, stardat_path.generic_string().c_str(), sizeof(archive_files));
+	return strcat_s(archive_files, stardat_path.generic_string().c_str());
 }
 
 FAIL_STUB_PATCH(InitializeArchiveHandles);
@@ -1288,7 +1288,7 @@ signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 	if (!byte_596910[0])
 	{
 		EnterCriticalSection(&stru_6D5EDC);
-		SStrCopy(byte_596910, source, MAX_PATH);
+		strcpy_s(byte_596910, source);
 		LeaveCriticalSection(&stru_6D5EDC);
 	}
 	return 0;
@@ -1731,8 +1731,8 @@ void LoadCursors_()
 	for (CursorType i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
 	{
 		char dest[260];
-		SStrCopy(dest, "cursor\\", 0x104u);
-		SStrNCat(dest, cursor_filenames[i], 260);
+		strcpy_s(dest, "cursor\\");
+		strcat_s(dest, cursor_filenames[i]);
 		grpHead* v1 = LoadGraphic(dest, 0, "Starcraft\\SWAR\\lang\\cur.cpp", 212);
 
 		for (int frame_index = (v1->wFrames & 0x7FFF) - 1; frame_index >= 0; frame_index--)
@@ -3920,7 +3920,7 @@ BOOL sub_4CC7F0_(char* a1)
 
 	if (CampaignIndex)
 	{
-		SStrCopy(dest, a1, 0x104u);
+		strcpy_s(dest, a1);
 	}
 	else
 	{
@@ -3937,7 +3937,7 @@ BOOL sub_4CC7F0_(char* a1)
 	}
 	else
 	{
-		SStrCopy(buff, "staredit\\scenario.chk", 0x104u);
+		strcpy_s(buff, "staredit\\scenario.chk");
 	}
 	void* chk_data = (void*)fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2141);
 	int result;
@@ -4941,7 +4941,7 @@ void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 	strcpy(byte_599B98, a1);
 
 	char dest[MAX_PATH];
-	SStrCopy(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position], 0x104u);
+	strcpy_s(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
 	strcat_s(dest, "\\pOPopup.pcx");
 	AllocBackgroundImage(dest, &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 473);
 
@@ -5326,7 +5326,7 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 	if (v9[0])
 		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
 	else
-		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
+		strcpy_s(buff, "staredit\\scenario.chk");
 	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (chk_data)
 	{
@@ -5398,7 +5398,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	sub_45AC10(a4->player_force);
 	updatePlayerForce();
 	strrchr(v8, '\\');
-	SStrCopy(CurrentMapFileName, v8, MAX_PATH);
+	strcpy_s(CurrentMapFileName, v8);
 	if (!is_campaign)
 	{
 		CampaignIndex = MD_none;
@@ -5407,7 +5407,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	dword_5994DC = 1;
 	v13 = GetMapTblString(v12);
 
-	SStrCopy(CurrentMapName, v13, sizeof(CurrentMapName));
+	strcpy_s(CurrentMapName, v13);
 	return 1;
 }
 
@@ -5525,12 +5525,12 @@ int LevelCheatInitGame_()
 	if (!playerName[0])
 	{
 		const char* v1 = GetNetworkTblString_(72);
-		SStrCopy(playerName, v1, sizeof(playerName));
+		strcpy_s(playerName, v1);
 	}
 	if (CampaignIndex == MD_none)
 	{
 		char dest[MAX_PATH];
-		SStrCopy(dest, CurrentMapFileName, sizeof(dest));
+		strcpy_s(dest, CurrentMapFileName);
 		if (!ReadMapData_(dest, &map_chunks, 0))
 		{
 			if (!outOfGame)
@@ -5567,8 +5567,8 @@ int LevelCheatInitGame_()
 		GameData v6;
 		memset(&v6, 0, 140u);
 		v6.got_file_values.unused3[4] = 0;
-		SStrCopy(v6.player_name, playerName, sizeof(v6.player_name));
-		SStrCopy(v6.map_name, CurrentMapName, sizeof(v6.map_name));
+		strcpy_s(v6.player_name, playerName);
+		strcpy_s(v6.map_name, CurrentMapName);
 		v6.active_human_players = 1;
 		v6.max_players = 1;
 		v6.game_speed = registry_options.GameSpeed;
@@ -5689,7 +5689,7 @@ int RestartGame_()
 	Race v1 = Players[g_LocalNationID].nRace;
 	next_campaign_mission = 0;
 	char dest[260];
-	SStrCopy(dest, CurrentMapFileName, 0x104u);
+	strcpy_s(dest, CurrentMapFileName);
 	MapChunks a4;
 	if (ReadMapData_(dest, &a4, 1))
 	{
@@ -12576,7 +12576,7 @@ void sub_4CC990_()
 
 	if (CampaignIndex)
 	{
-		SStrCopy(dest, CurrentMapFileName, MAX_PATH);
+		strcpy_s(dest, CurrentMapFileName);
 	}
 	else
 	{
@@ -12588,7 +12588,7 @@ void sub_4CC990_()
 	if (dest[0])
 		_snprintf(buff, MAX_PATH, "%s\\%s", dest, "staredit\\scenario.chk");
 	else
-		SStrCopy(buff, "staredit\\scenario.chk", MAX_PATH);
+		strcpy_s(buff, "staredit\\scenario.chk");
 	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
 	if (chk_data)
 	{
@@ -12698,8 +12698,8 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		if (!glue_background_palette[0].data || a2 == (dialog*)-12)
 		{
 			char dest[260];
-			SStrCopy(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position], 0x104u);
-			SStrNCat(dest, "\\BackGnd.pcx", 260);
+			strcpy_s(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
+			strcat_s(dest, "\\BackGnd.pcx");
 			AllocBackgroundImage(dest, &a2->srcBits, palette, "Starcraft\\SWAR\\lang\\glues.cpp", 1052);
 			glue_background_palette[0].wid = a2->srcBits.wid;
 			glue_background_palette[0].ht = a2->srcBits.ht;
@@ -12769,8 +12769,8 @@ int CreateCampaignGame_(MapData mapData)
 	{
 		GameData v4;
 		memset(&v4, 0, sizeof(v4));
-		SStrCopy(v4.player_name, playerName, sizeof(v4.player_name));
-		SStrCopy(v4.map_name, CurrentMapName, sizeof(v4.map_name));
+		strcpy_s(v4.player_name, playerName);
+		strcpy_s(v4.map_name, CurrentMapName);
 		v4.game_speed = registry_options.GameSpeed;
 		v4.active_human_players = 1;
 		v4.max_players = 1;
@@ -14233,7 +14233,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 		a1->active_human_players = 1;
 		if (strlen(playerName) < 0x19)
 		{
-			SStrCopy(a1->host_name, playerName, 0x19u);
+			strcpy_s(a1->host_name, playerName);
 			if (a1->got_file_values.team_mode && !a1->save_timestamp)
 			{
 				a1->max_players = 8;
@@ -14349,7 +14349,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		}
 		GameData game_data;
 		memcpy(&game_data, &v8->game_data, sizeof(game_data));
-		SStrCopy(game_data.player_name, source, sizeof(game_data.player_name));
+		strcpy_s(game_data.player_name, source);
 		if (CreateLadderGame_(&game_data, a3) == 1)
 		{
 			return 0;
@@ -14414,8 +14414,8 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		}
 
 		memset(&game_data, 0, sizeof(game_data));
-		SStrCopy(game_data.player_name, source, 24u);
-		SStrCopy(game_data.map_name, v8->title, 32u);
+		strcpy_s(game_data.player_name, source);
+		strcpy_s(game_data.map_name, v8->title);
 		game_data.height = v8->map_height_tiles;
 		game_data.width = v8->map_width_tiles;
 		*(_DWORD*)&game_data.game_type = a4;
@@ -14482,7 +14482,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 			return 0x8000000A;
 		}
 		memcpy(&game_data, &v8->game_data, sizeof(game_data));
-		SStrCopy(game_data.player_name, source, sizeof(game_data.player_name));
+		strcpy_s(game_data.player_name, source);
 		if (!multiPlayerMode)
 		{
 			if (!initSingle())
@@ -15157,8 +15157,7 @@ int load_gluGameMode_BINDLG_()
 	byte_599B98[0] = 0;
 
 	char fileName[260];
-	const char* v14 = &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position];
-	SStrCopy(fileName, v14, 0x104u);
+	strcpy_s(fileName, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
 	strcat_s(fileName, "\\retail_ex.pcx");
 
 	int width;
@@ -15229,8 +15228,8 @@ signed int loadStareditProcess_(dialog* a1)
 	{
 		v2[1] = 0;
 	}
-	SStrCopy(CommandLine, Filename, 0x104u);
-	SStrNCat(CommandLine, "StarEdit.exe", 260);
+	strcpy_s(CommandLine, Filename);
+	strcat_s(CommandLine, "StarEdit.exe");
 
 	struct _PROCESS_INFORMATION ProcessInformation;
 	struct _STARTUPINFOA StartupInfo;
@@ -17523,8 +17522,7 @@ int SwitchMenu_()
 		Ophelia = 0;
 		if (!playerName[0])
 		{
-			const char* v3 = GetNetworkTblString_(72);
-			SStrCopy(playerName, v3, sizeof(playerName));
+			strcpy_s(playerName, GetNetworkTblString_(72));
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = level_cheat_is_bw != 0;
@@ -18770,13 +18768,13 @@ int CreateNextCampaignGame_()
 		SMemFree(v1, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 319, 0);
 
 		char dest[260];
-		SStrCopy(dest, CurrentMapFileName, 0x104u);
+		strcpy_s(dest, CurrentMapFileName);
 		char* v3 = strrchr(dest, '\\');
 
 		if (v3)
 		{
 			v3[1] = 0;
-			SStrNCat(dest, next_scenario, 260);
+			strcat_s(dest, next_scenario);
 
 			if (!LoadScenarioSingle_(dest, v2, playerName, registry_options.GameSpeed))
 			{
@@ -19442,7 +19440,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 		const char* chk_string = get_chk_String(a1->wavString);
 		if (CampaignIndex == MD_none)
 		{
-			SStrCopy(buff, chk_string, 260u);
+			strcpy_s(buff, chk_string);
 		}
 		else
 		{
@@ -19916,7 +19914,7 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 {
 	if (a1->string)
 	{
-		SStrCopy(next_scenario, GetMapTblString(a1->string), sizeof(next_scenario));
+		strcpy_s(next_scenario, GetMapTblString(a1->string));
 	}
 	return 1;
 }
