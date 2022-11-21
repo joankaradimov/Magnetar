@@ -3042,17 +3042,17 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 			replay_header.ReplayFrames = ElapsedTimeFrames;
 		}
 		DestroyDialog(dlg);
-		return;
 	}
-	char v1 = --byte_6D1224;
-	if (!byte_6D1224)
+	else if (--byte_6D1224 == 0)
 	{
 		DestroyDialog(dlg);
-		return;
 	}
-	byte_6D1224 = v1 - 1;
-	dword_6D1234 = gameMenu_BINDLG;
-	BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+	else
+	{
+		byte_6D1224 -= 1;
+		dword_6D1234 = gameMenu_BINDLG;
+		BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+	}
 }
 
 FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe);
