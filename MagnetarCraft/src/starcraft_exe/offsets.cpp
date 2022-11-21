@@ -18355,7 +18355,7 @@ void sub_4C94F0(dialog *a1) {
     }
 }
 DECL_FUNC(int (__thiscall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
-DECL_FUNC(void (__fastcall*BWFXN_QuitMission)(dialog *this_), BWFXN_QuitMission, 0x4c95a0);
+DECL_FUNC(void (__fastcall*BWFXN_QuitMission)(dialog *dlg), BWFXN_QuitMission, 0x4c95a0);
 DECL_FUNC(int (__thiscall*quit_lastBINDLG)(dialog *a1), quit_lastBINDLG, 0x4c96d0);
 DECL_FUNC(void (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
 bool options_Cancel(dialog *a1, dlgEvent *a2) {
@@ -26489,7 +26489,7 @@ int& dword_599A84 = * ((decltype(&dword_599A84)) 0x599a84);
 int& dword_599A88 = * ((decltype(&dword_599A88)) 0x599a88);
 char(&byte_599A90)[256] = * ((decltype(&byte_599A90)) 0x599a90);
 Bitmap& p_hist_pcx = * ((decltype(&p_hist_pcx)) 0x599b90);
-char& byte_599B98 = * ((decltype(&byte_599B98)) 0x599b98);
+char(&byte_599B98)[256] = * ((decltype(&byte_599B98)) 0x599b98);
 char(&byte_599C98)[256] = * ((decltype(&byte_599C98)) 0x599c98);
 int& dword_599D98 = * ((decltype(&dword_599D98)) 0x599d98);
 dialog *& glu_load_Dlg = * ((decltype(&glu_load_Dlg)) 0x599d9c);

@@ -15115,7 +15115,7 @@ int load_gluGameMode_BINDLG_()
 	dword_6D5A40 = off_51A6F0;
 	dword_599D98 = 28;
 	SStrCopy(byte_599C98, get_GluAll_String((GluAllTblEntry)0xAA), 0xFFu);
-	byte_599B98 = 0;
+	byte_599B98[0] = 0;
 
 	char fileName[260];
 	const char* v14 = &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position];
