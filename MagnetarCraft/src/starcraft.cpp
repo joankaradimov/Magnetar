@@ -7786,10 +7786,95 @@ void UpdateUnitSpriteInfo__()
 
 FUNCTION_PATCH((void*)0x4EBE10, UpdateUnitSpriteInfo__);
 
+void updateUnitTimers_(CUnit* unit)
+{
+	if (unit->mainOrderTimer)
+	{
+		unit->mainOrderTimer -= 1;
+	}
+	if (unit->groundWeaponCooldown)
+	{
+		unit->groundWeaponCooldown -= 1;
+	}
+	if (unit->airWeaponCooldown)
+	{
+		unit->airWeaponCooldown -= 1;
+	}
+	if (unit->spellCooldown)
+	{
+		unit->spellCooldown -= 1;
+	}
+
+	if (Unit_ShieldsEnabled[unit->unitType])
+	{
+		int v8 = Unit_MaxShieldPoints[unit->unitType] << 8;
+		if (unit->shieldPoints != v8)
+		{
+			unit->shieldPoints += 7;
+			if (unit->shieldPoints > v8)
+			{
+				unit->shieldPoints = v8;
+			}
+			if (unit->sprite->flags & 8)
+			{
+				setAllImageGroupFlagsPal11(unit->sprite);
+			}
+		}
+	}
+
+	if ((unit->unitType == Zerg_Zergling || unit->unitType == Hero_Devouring_One) && !unit->groundWeaponCooldown)
+	{
+		unit->orderQueueTimer = 0;
+	}
+	unit->isBeingHealed = 0;
+	if ((unit->statusFlags & Completed) || (unit->sprite->flags & 0x20) == 0)
+	{
+		unit->status.cycleCounter += 1;
+		if (unit->status.cycleCounter >= 8)
+		{
+			unit->status.cycleCounter = 0;
+			updateUnitStatusTimers(unit);
+		}
+	}
+	if (unit->statusFlags & Completed)
+	{
+		if (SLOBYTE(Unit_PrototypeFlags[unit->unitType]) < 0)
+		{
+			if (unit->hitPoints > 0 && unit->hitPoints != Unit_MaxHitPoints[unit->unitType])
+			{
+				SetUnitHp(unit, unit->hitPoints + 4);
+			}
+		}
+		UpdateEnergyTimer(unit);
+		if (unit->recentOrderTimer)
+		{
+			unit->recentOrderTimer -= 1;
+		}
+		u16 v17;
+		if (unit->status.removeTimer == 0 || --unit->status.removeTimer)
+		{
+			u8 v19 = Unit_GroupFlags[unit->unitType];
+			if ((v19 & 5) == 0 && (v19 & 2) != 0 && ((unit->statusFlags & GoundedBuilding) || (Unit_PrototypeFlags[unit->unitType] & FlyingBuilding)))
+			{
+				if (unitHPbelow33_percent(unit))
+				{
+					DamageUnitHp(20, unit, 0, unit->lastAttackingPlayer, 1);
+				}
+			}
+		}
+		else
+		{
+			RemoveUnit(unit);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(updateUnitTimers);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
-	updateUnitTimers(unit);
+	updateUnitTimers_(unit);
 	ordersEntries(unit);
 	performSecondaryOrders(unit);
 	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
@@ -7820,7 +7905,7 @@ void unitUpdate_(CUnit* unit)
 		iscript_unit = unit;
 	}
 	Unit_ExecPathingState_(unit);
-	updateUnitTimers(unit);
+	updateUnitTimers_(unit);
 	ordersIDCases(unit);
 
 	switch (unit->secondaryOrderID)
