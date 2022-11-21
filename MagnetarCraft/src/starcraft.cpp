@@ -2942,6 +2942,8 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+void __fastcall BWFXN_QuitMission_(dialog* dlg);
+
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] =
@@ -2969,7 +2971,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	{
 		checkSaveGameDialog(dlg);
 	}
-	if (dword_6D1234 == BWFXN_QuitMission)
+	if (dword_6D1234 == BWFXN_QuitMission_)
 	{
 		dialog* v3 = getControlFromIndex_(dlg, 1);
 		HideDialog(v3);
@@ -3057,6 +3059,51 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 
 FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe);
 
+void sub_460F70_();
+
+void __fastcall BWFXN_QuitMission_(dialog* dlg)
+{
+	dword_6D1234 = 0;
+	if (LastControlID == -2)
+	{
+		sub_460F70_();
+
+		GameState = 0;
+		if (multiPlayerMode)
+		{
+			gwNextGameMode = byte_58D700[g_LocalNationID] == 3 ? GamePosition::GAME_WIN : GamePosition::GAME_LOSE;
+		}
+		else
+		{
+			gwNextGameMode = GamePosition::GAME_GLUES;
+			glGluesMode = IsExpansion ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
+		}
+
+		if (!InReplay)
+		{
+			replay_header.ReplayFrames = ElapsedTimeFrames;
+		}
+		DestroyDialog(dlg);
+	}
+	else if (LastControlID == 1)
+	{
+		DestroyDialog(dlg);
+		byte_6D1224 = 0;
+	}
+	else if (--byte_6D1224 == 0)
+	{
+		DestroyDialog(dlg);
+	}
+	else
+	{
+		byte_6D1224 -= 1;
+		dword_6D1234 = gameMenu_BINDLG;
+		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_QuitMission);
+
 void QuitMissionMenu_()
 {
 	if (InReplay)
@@ -3066,7 +3113,7 @@ void QuitMissionMenu_()
 	}
 	else
 	{
-		dword_6D1234 = BWFXN_QuitMission;
+		dword_6D1234 = BWFXN_QuitMission_;
 		BWFXN_OpenGameDialog_("rez\\quit2mnu.bin", gamemenu_Dlg_Interact_);
 	}
 }
