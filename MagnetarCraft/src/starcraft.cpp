@@ -6775,12 +6775,39 @@ void CleanupSpritesDat_()
 
 FAIL_STUB_PATCH(CleanupSpritesDat);
 
+void ReportGameResult_()
+{
+	char details_info[2048];
+	char header_info[1024];
+	int results[8];
+
+	if (!game_result_reported_maybe && !InReplay)
+	{
+		ApplyGameVictoryStatus(results, 0);
+		if (!endgameData(header_info, sizeof(header_info), details_info, sizeof(details_info))) // TODO: reimplement endgameData; and patch GetNetworkTblString
+		{
+			details_info[0] = 0;
+			header_info[0] = 0;
+		}
+		SNetReportGameResult(0, 8, results, header_info, details_info);
+		if (league_maybe ? &league_maybe : 0)
+		{
+			char* player_names[8];
+			SNetGetPlayerNames(player_names);
+			GameResultText(results, player_names, header_info, details_info);
+		}
+		game_result_reported_maybe = 1;
+	}
+}
+
+FAIL_STUB_PATCH(ReportGameResult);
+
 void sub_460F70_()
 {
 	if (multiPlayerMode && NetMode.as_number == 'BNET' && !dword_685174)
 	{
 		dword_685174 = 1;
-		ReportGameResult();
+		ReportGameResult_();
 	}
 }
 
@@ -6990,7 +7017,7 @@ void DestroyGame_()
 	}
 	if (multiPlayerMode && NetMode.as_number == 'BNET')
 	{
-		ReportGameResult();
+		ReportGameResult_();
 	}
 	leaveGame(0x40000001);
 	if (gwGameMode == GamePosition::GAME_GLUES && glGluesMode == MenuPosition::GLUE_MAIN_MENU)
