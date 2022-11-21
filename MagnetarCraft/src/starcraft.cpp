@@ -4995,7 +4995,7 @@ void sub_4B5CC0_(const char* error_message, const char* error_details)
 						dword_6D5A58->lFlags |= CTRL_ACTIVE;
 						AllocInitDialogData(dword_6D5A58, dword_6D5A58, LoadPCXFromResource, "Starcraft\\SWAR\\lang\\gluError.cpp", 359);
 					}
-					gluLoadBINDlg(dword_6D5A58, gluOK_Dlg_Interact_CB);
+					gluLoadBINDlg_(dword_6D5A58, gluOK_Dlg_Interact_CB);
 					dword_6D63AC = 0;
 					return;
 				}
@@ -15172,7 +15172,7 @@ int load_gluGameMode_BINDLG_()
 	p_hist_pcx.data = (u8*)read;
 
 	dword_6D5A3C = LoadDialog("rez\\gluGameMode.bin");
-	return gluLoadBINDlg(dword_6D5A3C, Popup_Main_);
+	return gluLoadBINDlg_(dword_6D5A3C, Popup_Main_);
 }
 
 FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
