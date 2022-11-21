@@ -4916,6 +4916,46 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
+int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
+int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt);
+
+void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
+{
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	if (!a1 || !*a1)
+	{
+		BWFXN_gluPOK_MBox(a2);
+		return;
+	}
+	dword_6D5A40 = off_51A6B8;
+	dword_599D98 = 20;
+	strcpy(byte_599C98, a2);
+	strcpy(byte_599B98, a1);
+
+	char dest[MAX_PATH];
+	SStrCopy(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position], 0x104u);
+	strcat_s(dest, "\\pOPopup.pcx");
+	AllocBackgroundImage(dest, &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 473);
+
+	dword_6D5A3C = (dialog*) fastFileRead_(0, 0, "rez\\gluPOkSplit.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (dword_6D5A3C)
+	{
+		dword_6D5A3C->lFlags |= DialogFlags::CTRL_ACTIVE;
+		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 475);
+	}
+	gluLoadBINDlg_(dword_6D5A3C, Popup_Main_);
+}
+
+FAIL_STUB_PATCH(load_gluPOKSplitBINDLG);
+
 void sub_4B5CC0_(const char* error_message, const char* error_details)
 {
 	if (dword_6D5A58)
@@ -4929,7 +4969,7 @@ void sub_4B5CC0_(const char* error_message, const char* error_details)
 	}
 	else if (DialogList && (++dword_6D63AC, dword_6D63AC == 1))
 	{
-		load_gluPOKSplitBINDLG(error_details, error_message);
+		load_gluPOKSplitBINDLG_(error_details, error_message);
 		dword_6D63AC = 0;
 	}
 	else
@@ -6326,7 +6366,6 @@ FAIL_STUB_PATCH(sub_49CC10);
 FAIL_STUB_PATCH(LoadGameInit);
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
-int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
 
 int loadOKBIN_(int a1, const char* message, HANDLE a3)
 {
