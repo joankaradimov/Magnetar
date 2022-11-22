@@ -5712,13 +5712,42 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
 
+void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
+{
+	if (!outOfGame)
+	{
+		if (a5)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError_(a4, a2, a3, a1);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					replay_header.ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		else
+		{
+			doNetTBLError_(0, 0, 0, a1);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BigPacketError);
+
 void packetErrHandle_(DWORD last_error, int a2, char* a3, int a4, int a5)
 {
 	if (!outOfGame && last_error != 0x8510006A && last_error != 288 && last_error != 1223)
 	{
 		char buffer[256];
 		SErrGetErrorStr(last_error, buffer, sizeof(buffer));
-		BigPacketError(a2, buffer, a3, a4, a5);
+		BigPacketError_(a2, buffer, a3, a4, a5);
 	}
 }
 
@@ -6626,10 +6655,10 @@ signed int LoadGameInit_()
 	{
 		if (loadGameFileHandle)
 		{
-			BigPacketError(99, CurrentMapFileName, 0, 0, 1);
+			BigPacketError_(99, CurrentMapFileName, 0, 0, 1);
 			return 0;
 		}
-		BigPacketError(97, 0, 0, 0, 1);
+		BigPacketError_(97, 0, 0, 0, 1);
 		return 0;
 	}
 	GameCheats = (CheatFlags)((int)GameCheats & (CHEAT_NoGlues | CHEAT_Ophelia | 0x8000000)); // TODO: fix the mess with the flags
@@ -6639,7 +6668,7 @@ signed int LoadGameInit_()
 	{
 		if (!chooseTRGTemplate())
 		{
-			BigPacketError(93, 0, 0, 0, 1);
+			BigPacketError_(93, 0, 0, 0, 1);
 			return 0;
 		}
 		if (!mapStarted)
