@@ -16242,13 +16242,13 @@ FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
 void selConn_connectionList_Create_(dialog* a1)
 {
-	dialog* v2 = getControlFromIndex_(gluConn_Dlg, 9);
-	v2->lFlags |= CTRL_DISABLED;
+	dialog* ok_button = getControlFromIndex_(gluConn_Dlg, 9);
+	ok_button->lFlags |= DialogFlags::CTRL_DISABLED;
 	InitNetProviders(a1);
-	if ((v2->lFlags & CTRL_UPDATE) == 0)
+	if ((ok_button->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
-		v2->lFlags |= CTRL_UPDATE;
-		updateDialog(v2);
+		ok_button->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(ok_button);
 	}
 }
 
