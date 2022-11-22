@@ -10003,6 +10003,21 @@ void GameKeepAlive_()
 
 FAIL_STUB_PATCH(GameKeepAlive);
 
+void Cls2RecvFrom_()
+{
+	for (int v0 = _countof(playerStatusArray) - 1; v0 >= 0; v0--)
+	{
+		dword_512680 = v0;
+		if (playerStatusArray[v0] & 0x20000)
+		{
+			LOBBYCLASS2_RECV(arraydata[v0], arraydatabytes[v0], v0);
+		}
+	}
+	dword_512680 = 8;
+}
+
+FAIL_STUB_PATCH(Cls2RecvFrom);
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
@@ -10032,7 +10047,7 @@ int gameLoopTurns_()
 	}
 	else
 	{
-		Cls2RecvFrom();
+		Cls2RecvFrom_();
 	}
 	if (glGluesMode == GLUE_GENERIC)
 	{
