@@ -1965,6 +1965,72 @@ void drawMinitileImageData_(int framebuf_pos, int minitile)
 
 FAIL_STUB_PATCH(drawMinitileImageData);
 
+void renderTerrainGRPToCache_(grpFrame* a1, int a2)
+{
+	dword_50CED9 = GameTerrainCache + TILE_CACHE_SIZE;
+	int terrain_cache_index = RENDER_AREA_WIDTH * a1->y + a1->x + a2;
+
+	dword_50CECD = a1->wid;
+	dword_50CEC5 = RENDER_AREA_WIDTH - dword_50CECD;
+	u16* v6 = (u16*)a1->dataOffset;
+	int v7 = 0;
+	int i = 0;
+
+	for (dword_50CED1 = a1->hgt; dword_50CED1; dword_50CED1--)
+	{
+		terrain_cache_index %= TILE_CACHE_SIZE;
+		int v9 = dword_50CECD;
+		byte* v11 = (byte*)v6 + v6[i];
+		i++;
+		do
+		{
+			while (1)
+			{
+				while (1)
+				{
+					LOBYTE(v7) = *v11;
+					v11++;
+					if ((v7 & 0x80u) == 0)
+					{
+						break;
+					}
+					LOBYTE(v7) = v7 & 0x7F;
+					v9 -= v7;
+					terrain_cache_index += v7;
+					if (v9 <= 0)
+					{
+						goto LABEL_16;
+					}
+				}
+				if (v7 & 0x40)
+				{
+					break;
+				}
+				v9 -= v7;
+				memcpy(GameTerrainCache + terrain_cache_index, v11, v7);
+				v11 += v7;
+				terrain_cache_index += v7;
+				v7 = 0;
+				if (v9 <= 0)
+				{
+					goto LABEL_16;
+				}
+			}
+			LOBYTE(v7) = v7 & 0xBF;
+			v9 -= v7;
+			memset(GameTerrainCache + terrain_cache_index, *v11, v7);
+			terrain_cache_index += v7;
+			v7 = 0;
+			v11++;
+		} while (v9 > 0);
+
+	LABEL_16:
+		terrain_cache_index += dword_50CEC5;
+	}
+}
+
+FAIL_STUB_PATCH(renderTerrainGRPToCache);
+
 void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 {
 	for (int i = 0; i < 4; i++)
@@ -1980,7 +2046,7 @@ void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 		u8 v20 = CreepEdgeData[y * dword_6D0F08 + x];
 		if (v20)
 		{
-			renderTerrainGRPToCache((grpFrame*)((char*)TerrainGraphics + 8 * v20 - 2), framebuf_position);
+			renderTerrainGRPToCache_((grpFrame*)((char*)TerrainGraphics + 8 * v20 - 2), framebuf_position);
 		}
 	}
 }
