@@ -9770,6 +9770,39 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits);
 
+void RecvMessage_()
+{
+	DWORD senderplayerid;
+	BYTE* data;
+	DWORD databytes;
+
+	while (SNetReceiveMessage(&senderplayerid, (LPVOID*) &data, &databytes))
+	{
+		while (databytes && *data < 3)
+		{
+			int v1 = funcs_485FB0[*data](senderplayerid, (int)data, databytes);
+			if (v1 == 0)
+			{
+				break;
+			}
+			data += v1;
+			databytes -= v1;
+		}
+	}
+	if (SErrGetLastError() != 0x8510006B && !outOfGame)
+	{
+		DWORD last_error = SErrGetLastError();
+		if (!outOfGame && last_error != 0x8510006A && last_error != 288 && last_error != 1223)
+		{
+			char buffer[256];
+			SErrGetErrorStr(last_error, buffer, sizeof(buffer));
+			BigPacketError('Q', buffer, 0, 0, 1);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(RecvMessage);
+
 void sub_4C4FA0_()
 {
 	if (multiPlayerMode)
@@ -9808,7 +9841,7 @@ void timeoutProcDropdown_()
 			{
 				break;
 			}
-			RecvMessage();
+			RecvMessage_();
 			DWORD v0 = GetTickCount();
 			if (SNetReceiveTurns(0, 8, (char**)arraydata, (unsigned int*)arraydatabytes, (DWORD*)playerStatusArray))
 			{
@@ -10152,7 +10185,7 @@ void GameLoop_Top_()
 			PollInput_();
 			v2 = true;
 		}
-		RecvMessage();
+		RecvMessage_();
 		LeagueChatFilter();
 		if (v1 >= dword_51CE94)
 		{

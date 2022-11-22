@@ -26,7 +26,7 @@ BOOL __stdcall SNetGetPlayerNames(char** buffer);
 BOOL __stdcall SNetGetGameInfo(int type, char* src, unsigned int length, int* byteswritten);
 BOOL __stdcall SNetDropPlayer(int playerid, DWORD flags);
 BOOL __stdcall SNetSendMessage(unsigned int playerID, char* data, unsigned int databytes);
-BOOL __stdcall SNetReceiveMessage(int* senderplayerid, BYTE** data, int* databytes);
+BOOL __stdcall SNetReceiveMessage(DWORD* senderplayerid, LPVOID* data, DWORD* databytes);
 BOOL __stdcall SNetReceiveTurns(int a1, int arraysize, char** arraydata, unsigned int* arraydatabytes, DWORD* arrayplayerstatus);
 BOOL __stdcall SNetSendTurn(char* data, unsigned int databytes);
 BOOL __stdcall SNetEnumProviders(int minicaps, int(__stdcall* callback)(int, char*, char*, int));
