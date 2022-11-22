@@ -5417,7 +5417,7 @@ u8 illegalTeamCheck_()
 	{
 		leaveGame(3);
 		outOfGame = 1;
-		doNetTBLError(113, GetNetworkTblString_(73), "Starcraft\\SWAR\\lang\\Teams.cpp", 93);
+		doNetTBLError_(113, GetNetworkTblString_(73), "Starcraft\\SWAR\\lang\\Teams.cpp", 93);
 		if (gwGameMode == GAME_RUN)
 		{
 			GameState = 0;
@@ -14625,7 +14625,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 		{
 			leaveGame(3);
 			outOfGame = 1;
-			doNetTBLError(0, 0, 0, 104);
+			doNetTBLError_(0, 0, 0, 104);
 			if (gwGameMode == GAME_RUN)
 			{
 				GameState = 0;
@@ -14703,7 +14703,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 	{
 		if (!outOfGame)
 		{
-			doNetTBLError(0, 0, 0, 93);
+			doNetTBLError_(0, 0, 0, 93);
 		}
 	}
 
