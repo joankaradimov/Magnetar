@@ -5712,6 +5712,27 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
 
+void packetErrHandle_(DWORD last_error, int a2, char* a3, int a4, int a5)
+{
+	if (!outOfGame && last_error != 0x8510006A && last_error != 288 && last_error != 1223)
+	{
+		char buffer[256];
+		SErrGetErrorStr(last_error, buffer, sizeof(buffer));
+		BigPacketError(a2, buffer, a3, a4, a5);
+	}
+}
+
+void __stdcall packetErrHandle__(int a2, char* a3, int a4, int a5)
+{
+	DWORD last_error;
+
+	__asm mov last_error, eax
+
+	packetErrHandle_(last_error, a2, a3, a4, a5);
+}
+
+FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__);
+
 void cleanBufferCounts_()
 {
 	for (int i = 0; i < _countof(arraydatabytes); i++)
@@ -5777,7 +5798,7 @@ int CreateGame_(GameData* data)
 			}
 			if (!outOfGame)
 			{
-				packetErrHandle(SErrGetLastError(), 92, "Starcraft\\SWAR\\lang\\net_glue.cpp", 577, 1);
+				packetErrHandle_(SErrGetLastError(), 92, "Starcraft\\SWAR\\lang\\net_glue.cpp", 577, 1);
 			}
 		}
 		return 0;
@@ -9791,13 +9812,7 @@ void RecvMessage_()
 	}
 	if (SErrGetLastError() != 0x8510006B && !outOfGame)
 	{
-		DWORD last_error = SErrGetLastError();
-		if (!outOfGame && last_error != 0x8510006A && last_error != 288 && last_error != 1223)
-		{
-			char buffer[256];
-			SErrGetErrorStr(last_error, buffer, sizeof(buffer));
-			BigPacketError('Q', buffer, 0, 0, 1);
-		}
+		packetErrHandle_(SErrGetLastError(), 'Q', nullptr, 0, 1);
 	}
 }
 
@@ -9856,7 +9871,7 @@ void timeoutProcDropdown_()
 			{
 				if (SErrGetLastError() != 0x8510006B && !outOfGame)
 				{
-					packetErrHandle(SErrGetLastError(), 81, 0, 0, 1);
+					packetErrHandle_(SErrGetLastError(), 81, 0, 0, 1);
 				}
 				byte_57EE78 = 0;
 			}
@@ -9896,7 +9911,7 @@ bool ReceiveTurns_(unsigned int* arraydatabytes, char** arraydata, DWORD* a3, in
 	{
 		if (SErrGetLastError() != 0x8510006B && !outOfGame)
 		{
-			packetErrHandle(SErrGetLastError(), 81, 0, 0, 1);
+			packetErrHandle_(SErrGetLastError(), 81, 0, 0, 1);
 		}
 		return false;
 	}
@@ -9942,13 +9957,7 @@ void GameKeepAlive_()
 			}
 			if (!SNetSendTurn(TurnBuffer, sgdwBytesInCmdQueue) && !outOfGame)
 			{
-				DWORD v3 = SErrGetLastError();
-				if (!outOfGame && v3 != 0x8510006A && v3 != 288 && v3 != 1223)
-				{
-					char buffer[256];
-					SErrGetErrorStr(v3, buffer, sizeof(buffer));
-					BigPacketError('[', buffer, 0, 0, 1);
-				}
+				packetErrHandle_(SErrGetLastError(), '[', nullptr, 0, 1);
 			}
 			sgdwBytesInCmdQueue = 0;
 			if (InGame)
@@ -20807,7 +20816,7 @@ void BWFXN_sendTurn_()
 	}
 	if (!SNetSendTurn(TurnBuffer, sgdwBytesInCmdQueue) && !outOfGame)
 	{
-		packetErrHandle(SErrGetLastError(), 91, 0, 0, 1);
+		packetErrHandle_(SErrGetLastError(), 91, 0, 0, 1);
 	}
 	sgdwBytesInCmdQueue = 0;
 	if (InGame)
@@ -20840,7 +20849,7 @@ void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size
 		{
 			if (!outOfGame)
 			{
-				packetErrHandle(SErrGetLastError(), 81, "Starcraft\\SWAR\\lang\\net_mgr.cpp", 225, 1);
+				packetErrHandle_(SErrGetLastError(), 81, "Starcraft\\SWAR\\lang\\net_mgr.cpp", 225, 1);
 			}
 			return;
 		}
