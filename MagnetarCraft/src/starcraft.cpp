@@ -711,7 +711,7 @@ void PlayMusic_(MusicTrack a1)
 			byte_6D5BBD = 0;
 			if (registry_options.Music)
 			{
-				if (SFileDdaBeginEx(directsound, 0x40000u, music_tracks[a1].track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
+				if (SFileDdaBeginEx(directsound, 0x40000, music_tracks[a1].track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
 				{
 					byte_6D5BBC = 1;
 				}
@@ -5015,7 +5015,7 @@ void sub_4E4820_(dialog* dlg)
 	}
 	byte_6D1214 = 1;
 	ScreenLayers[0].buffers = 1;
-	ScreenLayers[0].bits |= 1u;
+	ScreenLayers[0].bits |= 1;
 	BWFXN_RefreshTarget(
 		(__int16)ScreenLayers[0].left,
 		(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
