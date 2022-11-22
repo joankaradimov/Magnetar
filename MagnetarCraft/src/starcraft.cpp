@@ -4904,6 +4904,198 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT);
 
+bool __fastcall j_BWFXN_NextFrameHelperFunctionTarget_(dialog*)
+{
+	BWFXN_NextFrameHelperFunctionTarget();
+	return false;
+}
+
+FAIL_STUB_PATCH(j_BWFXN_NextFrameHelperFunctionTarget);
+
+void sub_4E4820_(dialog* dlg)
+{
+	if (gwGameMode == GamePosition::GAME_RUN)
+	{
+		dlg->lFlags |= DialogFlags::CTRL_DLG_NOREDRAW;
+	}
+	dlg->fields.dlg.pModalFcn = j_BWFXN_NextFrameHelperFunctionTarget_;
+	dlg->pfcnUpdate = sub_4E46A0;
+	getControlFromIndex_(dlg, -2)->pfcnUpdate = sub_4E4770;
+	if (dword_68EC88)
+	{
+		if (dialog* child_dlg = getControlFromIndex_(dlg, -10))
+		{
+			child_dlg->pszText = dword_68EC88;
+			child_dlg->pfcnUpdate = sub_4E4750;
+		}
+	}
+	if (dword_68EC84)
+	{
+		if (dialog* child_dlg = getControlFromIndex_(dlg, -20))
+		{
+			child_dlg->pszText = dword_68EC84;
+			child_dlg->pfcnUpdate = sub_4E4750;
+		}
+	}
+
+	if (last_cursor_type != CursorType::CUR_ARROW)
+	{
+		last_cursor_type = CursorType::CUR_ARROW;
+		if (last_cursor != cursor_graphics[CursorType::CUR_ARROW])
+		{
+			last_cursor = cursor_graphics[CursorType::CUR_ARROW];
+			drawCursor();
+		}
+	}
+	byte_6D1214 = 1;
+	ScreenLayers[0].buffers = 1;
+	ScreenLayers[0].bits |= 1u;
+	BWFXN_RefreshTarget(
+		(__int16)ScreenLayers[0].left,
+		(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
+		(__int16)ScreenLayers[0].top,
+		(__int16)ScreenLayers[0].width + (__int16)ScreenLayers[0].left - 1);
+	DlgAccelerator = hAccTable;
+	AcceleratorTables = input_procedures[EventNo::EVN_SYSCHAR];
+	hAccTable = dword_5968F8;
+	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
+	refreshSelectionScreen();
+}
+
+FAIL_STUB_PATCH(sub_4E4820);
+
+void sub_4E4590_(dialog* dlg)
+{
+	SetCursorClipBounds();
+	dword_6D5DD4 = 0;
+	if (dword_6D5DD0)
+	{
+		ClipCursor(&screen);
+	}
+	if (dialog* child_dlg = getControlFromIndex_(dlg, -10))
+	{
+		child_dlg->pszText = nullptr;
+	}
+	if (dialog* child_dlg = getControlFromIndex_(dlg, -20))
+	{
+		child_dlg->pszText = nullptr;
+	}
+	if (dword_68EC88)
+	{
+		SMemFree(dword_68EC88, "Starcraft\\SWAR\\lang\\dlgFatal.cpp", 153, 0);
+		dword_68EC88 = 0;
+	}
+	if (dword_68EC84)
+	{
+		SMemFree(dword_68EC84, "Starcraft\\SWAR\\lang\\dlgFatal.cpp", 159, 0);
+		dword_68EC84 = 0;
+	}
+	byte_6D1214 = 0;
+	hAccTable = DlgAccelerator;
+	input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
+}
+
+FAIL_STUB_PATCH(sub_4E4590);
+
+void sub_4E4670_(dialog* dlg)
+{
+	RECT rect;
+
+	rect.left = dlg->rct.left;
+	rect.top = dlg->rct.top;
+	rect.right = dlg->rct.right;
+	rect.bottom = dlg->rct.bottom;
+	ClipCursor(&rect);
+}
+
+FAIL_STUB_PATCH(sub_4E4670);
+
+int __fastcall dlgfatal_loop_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_4E4820_(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			sub_4E4590_(dlg);
+			genericDlgInteract(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			DestroyDialog(dlg);
+			return 1;
+		case EventUser::USER_INIT:
+			sub_4E4670_(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(dlgfatal_loop);
+
+int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
+
+void load_DLGFatal_BIN_(const char* error_location, const char* a2)
+{
+	if (!byte_51A0E9)
+	{
+		if (is_placing_building)
+		{
+			refreshLayer3And4();
+			refreshPlaceBuildingLocation();
+		}
+		if (is_placing_order)
+		{
+			CancelTargetOrder();
+		}
+		if (!multiPlayerMode)
+		{
+			TickCountSomething(1);
+		}
+		if (GameMenuDlg)
+		{
+			DestroyDialog(GameMenuDlg);
+			GameMenuDlg = 0;
+			if (gwGameMode == GamePosition::GAME_RUN)
+			{
+				hAccTable = DlgAccelerator;
+				input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
+			}
+			byte_6D1214 = 0;
+		}
+		if (dlgFatal_Dlg)
+		{
+			DestroyDialog(dlgFatal_Dlg);
+		}
+		if (a2)
+		{
+			dword_68EC88 = (char*) SMemAlloc(strlen(a2) + 1, "Starcraft\\SWAR\\lang\\dlgFatal.cpp", 225, 0);
+			strcpy(dword_68EC88, a2);
+		}
+		if (error_location)
+		{
+			dword_68EC84 = (char*)SMemAlloc(strlen(error_location) + 1, "Starcraft\\SWAR\\lang\\dlgFatal.cpp", 229, 0);
+			strcpy(dword_68EC84, error_location);
+		}
+
+		dlgFatal_Dlg = (dialog*) fastFileRead_(0, 0, "rez\\dlgFatal.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+		if (dlgFatal_Dlg)
+		{
+			dlgFatal_Dlg->lFlags |= DialogFlags::CTRL_ACTIVE;
+			AllocInitDialogData(dlgFatal_Dlg, dlgFatal_Dlg, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\dlgFatal.cpp", 234);
+		}
+
+		gluLoadBINDlg_(dlgFatal_Dlg, dlgfatal_loop_);
+		dlgFatal_Dlg = 0;
+	}
+}
+
+FAIL_STUB_PATCH(load_DLGFatal_BIN);
+
 void sub_4AD0E0_(const char* text, const char* caption)
 {
 	HWND window = GetActiveWindow();
@@ -4916,7 +5108,6 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
-int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
 int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt);
 
 void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
@@ -5033,7 +5224,7 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 
 		dword_51267C = g_LocalHumanID;
 		g_ActiveNationID = g_LocalNationID;
-		load_DLGFatal_BIN(buff, GetNetworkTblString_(a4));
+		load_DLGFatal_BIN_(buff, GetNetworkTblString_(a4));
 
 		g_ActiveNationID = v6;
 		dword_51267C = v5;
