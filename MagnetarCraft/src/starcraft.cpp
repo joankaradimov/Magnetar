@@ -4970,9 +4970,44 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT);
 
+void BWFXN_NextFrameHelperFunctionTarget_()
+{
+	if (!byte_6D1214)
+	{
+		int a1;
+		int a2;
+		CursorType cursor_type = (CursorType) getScrollCursorType(&a1, &a2);
+		if (cursor_type == CUR_ARROW)
+		{
+			cursor_type = getCursorType();
+		}
+		if (last_cursor_type != cursor_type)
+		{
+			last_cursor_type = cursor_type;
+			if (last_cursor != cursor_graphics[cursor_type])
+			{
+				last_cursor = cursor_graphics[cursor_type];
+				drawCursor();
+			}
+		}
+	}
+	if (last_cursor && last_cursor->wFrames != 1)
+	{
+		DWORD v2 = GetTickCount();
+		if ((int)(v2 - dword_597398) >= 0)
+		{
+			dword_597398 = v2 + 100;
+			++dword_597390;
+			drawCursor();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_NextFrameHelperFunctionTarget);
+
 bool __fastcall j_BWFXN_NextFrameHelperFunctionTarget_(dialog*)
 {
-	BWFXN_NextFrameHelperFunctionTarget();
+	BWFXN_NextFrameHelperFunctionTarget_();
 	return false;
 }
 
@@ -10110,7 +10145,7 @@ void GameLoop_Top_()
 		{
 			dword_51CE94 = v1;
 		}
-		BWFXN_NextFrameHelperFunctionTarget();
+		BWFXN_NextFrameHelperFunctionTarget_();
 		if (v1 + dword_51CE8C[0] > 0xA)
 		{
 			dword_51CE8C[0] = -v1;
