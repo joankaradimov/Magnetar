@@ -17022,6 +17022,24 @@ void gluChat_CustomCtrlID_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_CustomCtrlID);
 
+void SendLobbyMessage_()
+{
+	if (*dword_5999E4->pszText)
+	{
+		BWFXN_SendLobbyCallTarget(dword_5999E4->pszText);
+	}
+	*dword_5999E4->pszText = 0;
+	dword_5999E4->fields.edit.bCursorPos = 0;
+
+	if ((dword_5999E4->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+	{
+		dword_5999E4->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(dword_5999E4);
+	}
+}
+
+FAIL_STUB_PATCH(SendLobbyMessage);
+
 int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 {
 	switch (last_control_id)
@@ -17048,7 +17066,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		}
 		return 1;
 	case 9:
-		SendLobbyMessage();
+		SendLobbyMessage_();
 		return 1;
 	case 8:
 		DisableControl(getControlFromIndex_(dlg, 8));
