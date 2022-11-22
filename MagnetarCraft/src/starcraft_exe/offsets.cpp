@@ -22955,7 +22955,14 @@ void SetTargetDlgText(char *a2) {
     }
 }
 DECL_FUNC(bool (__fastcall*textBox_ctrl_charEvent)(dialog *a1, dlgEvent *a2), textBox_ctrl_charEvent, 0x4f3240);
-DECL_FUNC(int(*sendChatMessage)(), sendChatMessage, 0x4f3280);
+void sendChatMessage(const char *message) {
+    int address = 0x4f3280;
+    __asm {
+        xor eax, eax
+        mov eax, message
+        call address
+    }
+}
 void onSendText(dialog *a1, dlgEvent *a2, CheatFlags a3) {
     int address = 0x4f32d0;
     __asm {

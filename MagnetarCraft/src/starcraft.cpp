@@ -11127,7 +11127,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 			}
 			else if ((!InReplay || !replayCommand(dest)) && multiPlayerMode)
 			{
-				sendChatMessage();
+				sendChatMessage(dest);
 			}
 		}
 		SStrCopy(v4->pszText, empty_string, 0x100u);

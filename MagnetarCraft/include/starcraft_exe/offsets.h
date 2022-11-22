@@ -5261,7 +5261,7 @@ extern int(*destroy_textbox_bin)();
 void sub_4F3040(dialog *a1);
 void SetTargetDlgText(char *a2);
 extern bool (__fastcall*textBox_ctrl_charEvent)(dialog *a1, dlgEvent *a2);
-extern int(*sendChatMessage)();
+void sendChatMessage(const char *message);
 void onSendText(dialog *a1, dlgEvent *a2, CheatFlags a3);
 extern int (__fastcall*textbox_CtrlInteract)(dialog *dlg, struct dlgEvent *evt);
 void textbox_DLG_Init_Evt(dialog *dlg);
