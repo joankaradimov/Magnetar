@@ -16311,11 +16311,35 @@ FAIL_STUB_PATCH(loadMenu_gluRdyT);
 FAIL_STUB_PATCH(loadMenu_gluRdyZ);
 FAIL_STUB_PATCH(loadMenu_gluRdyP);
 
+void InitNetProviders_(dialog* dlg)
+{
+	dlg->lFlags |= CTRL_LBOX_NORECALC;
+	for (TPROVIDER* provider = (int)dword_51A21C > 0 ? dword_51A21C : 0 ; (int)provider > 0; provider = provider->next)
+	{
+		ListBox_AddEntry(provider->name, dlg, 0);
+	}
+
+	if (dlg->lFlags & DialogFlags::CTRL_LBOX_NORECALC)
+	{
+		dlg->lFlags &= ~DialogFlags::CTRL_LBOX_NORECALC;
+		List_Update(dlg);
+	}
+
+	dlgEvent event;
+	*(_DWORD*)&event.wSelection = (unsigned __int8)byte_5999B8;
+	event.wNo = EVN_USER;
+	event.dwUser = USER_SELECT;
+	dlg->pfcnInteract(dlg, &event);
+	selConn_connectionList_setSelection(dlg);
+}
+
+FAIL_STUB_PATCH(InitNetProviders);
+
 void selConn_connectionList_Create_(dialog* a1)
 {
 	dialog* ok_button = getControlFromIndex_(gluConn_Dlg, 9);
 	ok_button->lFlags |= DialogFlags::CTRL_DISABLED;
-	InitNetProviders(a1);
+	InitNetProviders_(a1);
 	if ((ok_button->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		ok_button->lFlags |= DialogFlags::CTRL_UPDATE;
