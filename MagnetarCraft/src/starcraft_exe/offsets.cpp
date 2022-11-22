@@ -7143,7 +7143,14 @@ const char *SendMapNameData(MapDownload *a1, int a2) {
 }
 DECL_FUNC(int (__stdcall*sub_45A010)(char), sub_45A010, 0x45a010);
 DECL_FUNC(int(*Download_maybe)(), Download_maybe, 0x45a050);
-DECL_FUNC(int(*sub_45A0B0)(), sub_45A0B0, 0x45a0b0);
+void sub_45A0B0(char a1) {
+    int address = 0x45a0b0;
+    __asm {
+        xor ebx, ebx
+        mov bl, a1
+        call address
+    }
+}
 DECL_FUNC(int(*dataXFer_0x05)(), dataXFer_0x05, 0x45a190);
 DECL_FUNC(int (__stdcall*dataXFer_0x03)(int), dataXFer_0x03, 0x45a1f0);
 DECL_FUNC(int(*dataXFer_0x02)(), dataXFer_0x02, 0x45a230);
@@ -9518,7 +9525,16 @@ DECL_FUNC(int(*sub_4700C0)(), sub_4700C0, 0x4700c0);
 DECL_FUNC(int(*sub_470100)(), sub_470100, 0x470100);
 DECL_FUNC(int(*sub_470120)(), sub_470120, 0x470120);
 DECL_FUNC(int(*updatePlayerOwnerInternal)(), updatePlayerOwnerInternal, 0x470150);
-DECL_FUNC(int (__stdcall*bootPlayer)(int), bootPlayer, 0x470180);
+void bootPlayer(int result, int a2) {
+    int address = 0x470180;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        push dword ptr a2
+        call address
+        add esp, 4
+    }
+}
 DECL_FUNC(int (__stdcall*ForceNameTransfer)(int), ForceNameTransfer, 0x4701a0);
 DECL_FUNC(int (__thiscall*LOBSEND_0x50)(unsigned int playerID), LOBSEND_0x50, 0x470210);
 DECL_FUNC(int(*LOBSEND_DataRequest)(), LOBSEND_DataRequest, 0x470250);
@@ -9551,7 +9567,19 @@ char *getPlayerName(unsigned __int8 player) {
     }
     return result_;
 }
-DECL_FUNC(int(*getPlayerFlags)(), getPlayerFlags, 0x470c00);
+int getPlayerFlags(unsigned __int8 a1, _WORD *a2) {
+    int address = 0x470c00;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov al, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_470C30)(), sub_470C30, 0x470c30);
 DECL_FUNC(int (__stdcall*sub_470C40)(int, int), sub_470C40, 0x470c40);
 DECL_FUNC(int(*sub_470C90)(), sub_470C90, 0x470c90);
@@ -9596,7 +9624,16 @@ DECL_FUNC(void (__cdecl*clearGameNextMenu)(), clearGameNextMenu, 0x4710b0);
 DECL_FUNC(int(*sub_471260)(), sub_471260, 0x471260);
 DECL_FUNC(int(*CreateGameInitBuffer)(), CreateGameInitBuffer, 0x471270);
 DECL_FUNC(int (__stdcall*RECV_raceChange)(int, int), RECV_raceChange, 0x471300);
-DECL_FUNC(int (__stdcall*RECV_PlayerVersion)(int), RECV_PlayerVersion, 0x4713e0);
+void RECV_PlayerVersion(int a2, int a3) {
+    int address = 0x4713e0;
+    __asm {
+        xor edx, edx
+        mov edx, a2
+        push dword ptr a3
+        call address
+        add esp, 4
+    }
+}
 void RECV_GameSlotMod(int a1, int a2) {
     int address = 0x471460;
     __asm {
@@ -9617,7 +9654,7 @@ DECL_FUNC(int(*JoinGame)(), JoinGame, 0x471a50);
 DECL_FUNC(int(*sub_471CD0)(), sub_471CD0, 0x471cd0);
 DECL_FUNC(int (__stdcall*versionCheck)(int, int playerid, int), versionCheck, 0x471d00);
 DECL_FUNC(BOOL (__stdcall*createVersionBuffer)(__int16 net_player_flags, __int16 net_player_x4, __int16 protocol_version, char save_player_unique_id, char save_player_id, int save_hash, BOOL create), createVersionBuffer, 0x471fb0);
-DECL_FUNC(int (__thiscall*RECV_StartGame)(int ecx0, int a1), RECV_StartGame, 0x472060);
+DECL_FUNC(void (__thiscall*RECV_StartGame)(int ecx0, int a1), RECV_StartGame, 0x472060);
 void RECV_SetRandomSeed(signed int a1, struct_v2 *a2) {
     int address = 0x472110;
     __asm {
@@ -9680,7 +9717,19 @@ int IsDownloadComplete(MapDownload *a2) {
     return result_;
 }
 DECL_FUNC(const char *(__stdcall*UserInfo_Constructor)(MapDownload *a1, int a2), UserInfo_Constructor, 0x472ab0);
-DECL_FUNC(int(*sub_472BA0)(), sub_472BA0, 0x472ba0);
+_DWORD *sub_472BA0(MapDownload *a1, char a2) {
+    int address = 0x472ba0;
+    _DWORD * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov cl, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(MapDownload *(__stdcall*sub_472C10)(MapDownload **a1), sub_472C10, 0x472c10);
 DECL_FUNC(int(*sub_472D50)(), sub_472D50, 0x472d50);
 DECL_FUNC(int(*killTimerFunc)(), killTimerFunc, 0x472d60);
@@ -11901,7 +11950,7 @@ DECL_FUNC(int(*sub_484E80)(), sub_484E80, 0x484e80);
 DECL_FUNC(int(*sub_484E90)(), sub_484E90, 0x484e90);
 DECL_FUNC(int(*sub_484EF0)(), sub_484EF0, 0x484ef0);
 DECL_FUNC(int(*sub_484F20)(), sub_484F20, 0x484f20);
-DECL_FUNC(int(*gameIsTeamGame)(), gameIsTeamGame, 0x484f50);
+DECL_FUNC(BOOL (__cdecl*gameIsTeamGame)(), gameIsTeamGame, 0x484f50);
 DECL_FUNC(int (__stdcall*GetMainPlayerForTeam)(char), GetMainPlayerForTeam, 0x484f70);
 char getOpenObsPlayerCount(char a1) {
     int address = 0x484fc0;
@@ -11966,7 +12015,17 @@ void CMDRECV_SetLatency(int a1) {
 DECL_FUNC(int (__stdcall*SendTextMessagePrivate)(int), SendTextMessagePrivate, 0x485f30);
 DECL_FUNC(int (__stdcall*SendTextMessagePublic)(int), SendTextMessagePublic, 0x485f50);
 DECL_FUNC(void (__cdecl*RecvMessage)(), RecvMessage, 0x485f70);
-DECL_FUNC(int(*Cls2RecvFrom)(), Cls2RecvFrom, 0x486530);
+void LOBBYCLASS2_RECV(int a1, int a4, int a5) {
+    int address = 0x486040;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr a5
+        push dword ptr a4
+        call address
+    }
+}
+DECL_FUNC(void (__cdecl*Cls2RecvFrom)(), Cls2RecvFrom, 0x486530);
 DECL_FUNC(int(*RecvSaveTurns)(), RecvSaveTurns, 0x486580);
 void Game_RECV(u8 *a1, int a2, int a3) {
     int address = 0x4865d0;
@@ -17085,16 +17144,13 @@ void gluJoin_CustomCtrlID(dialog *dlg) {
 }
 DECL_FUNC(int (__fastcall*gluJoin_Main)(dialog *dlg, struct dlgEvent *evt), gluJoin_Main, 0x4b8590);
 DECL_FUNC(int(*loadMenu_gluJoin)(), loadMenu_gluJoin, 0x4b86c0);
-int bootReason(unsigned __int8 a1) {
+void bootReason(unsigned __int8 a1) {
     int address = 0x4b8870;
-    int result_;
     __asm {
         xor eax, eax
         mov al, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4B8920)(), sub_4B8920, 0x4b8920);
 DECL_FUNC(int(*sub_4B8930)(), sub_4B8930, 0x4b8930);
@@ -17164,7 +17220,15 @@ void gluChat_Listbox_Create(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*printLobbyString)(char *source), printLobbyString, 0x4b91c0);
+void printLobbyString(unsigned int a1, char *source) {
+    int address = 0x4b91c0;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        push dword ptr source
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4B92F0)(), sub_4B92F0, 0x4b92f0);
 DECL_FUNC(int (__stdcall*DLG_GlueCountdown)(char), DLG_GlueCountdown, 0x4b9300);
 DECL_FUNC(void (__stdcall*sub_4B9480)(dialog *dlg), sub_4B9480, 0x4b9480);
