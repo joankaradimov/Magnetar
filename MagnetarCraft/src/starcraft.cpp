@@ -3382,7 +3382,7 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	{
 		byte_6D1224 -= 1;
 		dword_6D1234 = gameMenu_BINDLG;
-		BWFXN_OpenGameDialog("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
 	}
 }
 
