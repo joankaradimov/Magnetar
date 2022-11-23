@@ -167,6 +167,20 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen);
 
+void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
+{
+	if (event->wVirtKey >= '0' && event->wVirtKey <= '9')
+	{
+		selectUnitGroup(event->wVirtKey - '0');
+	}
+	else if (event->wVirtKey == VK_ESCAPE)
+	{
+		keyPress_Escape();
+	}
+}
+
+FAIL_STUB_PATCH(input_Game_UserKeyPress);
+
 template <typename T> void BWFXN_QueueCommand__(const T& buffer);
 
 void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
@@ -422,7 +436,7 @@ void SetInGameInputProcs_()
 	input_procedures[EventNo::EVN_MBUTTONDOWN] = input_Game_MiddleMouseBtnDwn;
 	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp;
 	input_procedures[EventNo::EVN_IDLE] = input_Game_Idle;
-	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress;
+	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress_;
 	input_procedures[EventNo::EVN_SYSCHAR] = CMDACT_Hotkey;
 	input_procedures[EventNo::EVN_WHEELUP] = nullptr;
 	input_procedures[EventNo::EVN_WHEELDWN] = nullptr;
