@@ -205,6 +205,27 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
+CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
+{
+	if (CThingy* result = sub_487A10(x, y))
+	{
+		result->sprite->selectionTimer = 31;
+		return result;
+	}
+	else if (unit)
+	{
+		unit->sprite->selectionTimer = 31;
+		return nullptr;
+	}
+	else
+	{
+		GroundAttackInit(x, y);
+		return nullptr;
+	}
+}
+
+FAIL_STUB_PATCH(sub_456490);
+
 void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
 {
 	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
@@ -212,7 +233,7 @@ void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
 		int x = MoveToX + (__int16)event->cursor.x;
 		int y = MoveToY + (__int16)event->cursor.y;
 		CUnit* v5 = FindUnitAtPoint(x, y);
-		CThingy* v6 = sub_456490(x, y, v5);
+		CThingy* v6 = sub_456490_(x, y, v5);
 		sub_46F5B0(x, y, v5, v6 ? LOWORD(v6->hitPoints) : 228);
 		resetGameInputProcs(CursorType::CUR_ARROW);
 	}
@@ -374,7 +395,7 @@ void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
 						}
 					}
 				}
-				CThingy* v12 = sub_456490(v6, v7, v8);
+				CThingy* v12 = sub_456490_(v6, v7, v8);
 				CMDACT_RightClickOrder(v8, v6, v7, v12 ? v12->hitPoints : 228, is_keycode_used[VK_SHIFT]);
 				if (ShowRClickErrorIfNeeded(v8))
 				{
