@@ -12632,6 +12632,77 @@ void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
 
+void SAI_PathCreate_Sub3_2_(SAI_Paths* a1)
+{
+	int v17 = 0;
+
+	int v24 = 4;
+	do
+	{
+		v24 += 2;
+		for (int v20 = a1->regionCount - 1; v20 >= 0; --v20)
+		{
+			SaiRegion* region = &a1->regions[v20];
+			if (region->tileCount && region->groupIndex < 0x4000 && region->tileCount < v24 && region->neighborCount)
+			{
+				SaiRegion* v6 = 0;
+				for (int neighbor_index = 0; neighbor_index < region->neighborCount; neighbor_index++)
+				{
+					u16 neighbor = region->neighbors[neighbor_index];
+					SaiRegion* neighboring_region = &a1->regions[neighbor];
+					if (neighboring_region->tileCount && neighboring_region->groupIndex < 0x4000 && region->accessabilityFlags == neighboring_region->accessabilityFlags && (!v6 || neighboring_region->tileCount < v6->tileCount))
+					{
+						v6 = neighboring_region;
+					}
+				}
+
+				if (v6)
+				{
+					for (int v9 = (__int16)region->rgnBox.top / 32; v9 < (__int16)region->rgnBox.bottom / 32; v9++)
+					{
+						for (int v10 = (__int16)region->rgnBox.left / 32; v10 < (__int16)region->rgnBox.right / 32; v10++)
+						{
+							if (a1->mapTileRegionId[v9][v10] == v20)
+							{
+								a1->mapTileRegionId[v9][v10] = v6 - a1->regions;
+							}
+						}
+					}
+					v6->tileCount += region->tileCount;
+					region->accessabilityFlags = (SaiAccessabilityFlags)0x1FFF;
+					region->tileCount = 0;
+
+					if ((__int16)region->rgnBox.top < (__int16)v6->rgnBox.top)
+					{
+						v6->rgnBox.top = region->rgnBox.top;
+					}
+					if ((__int16)region->rgnBox.bottom > (__int16)v6->rgnBox.bottom)
+					{
+						v6->rgnBox.bottom = (__int16)region->rgnBox.bottom;
+					}
+					if ((__int16)region->rgnBox.left < (__int16)v6->rgnBox.left)
+					{
+						v6->rgnBox.left = (__int16)region->rgnBox.left;
+					}
+					if ((__int16)region->rgnBox.right > (__int16)v6->rgnBox.right)
+					{
+						v6->rgnBox.right = (__int16)region->rgnBox.right;
+					}
+				}
+			}
+		}
+		for (int i = 0; i < a1->regionCount; i++)
+		{
+			if (a1->regions[i].tileCount)
+			{
+				++v17;
+			}
+		}
+	} while (v17 >= 2500);
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_2);
+
 void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 {
 	__int16 v16[5000];
@@ -12684,7 +12755,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 	}
 
 	SAI_PathCreate_Sub3_1_(old_region_count, a2);
-	SAI_PathCreate_Sub3_2(a2);
+	SAI_PathCreate_Sub3_2_(a2);
 	SAI_PathCreate_Sub3_3_(a2);
 	SAI_PathCreate_Sub3_1_(old_region_count, a2);
 	a2->splitTiles_end = a2->splitTiles;
