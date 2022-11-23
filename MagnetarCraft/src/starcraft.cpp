@@ -145,11 +145,33 @@ void InitializeInputProcs_()
 
 FAIL_STUB_PATCH(InitializeInputProcs);
 
+int IsOutsideGameScreen_(int x, int y)
+{
+	if (y < possible_gamescreen_y_min)
+	{
+		return 0;
+	}
+	if (y >= possible_gamescreen_y_max)
+	{
+		return 1;
+	}
+	if (cached_game_screen_region_check_x != x || cached_game_screen_region_check_y != y)
+	{
+		cached_game_screen_region_check_y = y;
+		cached_game_screen_region_check_x = x;
+		cached_game_screen_region_check_result = !STransPointInMask(handle, x, y);
+	}
+
+	return cached_game_screen_region_check_result;
+}
+
+FAIL_STUB_PATCH(IsOutsideGameScreen);
+
 template <typename T> void BWFXN_QueueCommand__(const T& buffer);
 
 void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
 {
-	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
 	{
 		refreshScreen();
 
@@ -185,7 +207,7 @@ FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
 void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
 {
-	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
 	{
 		int x = MoveToX + (__int16)event->cursor.x;
 		int y = MoveToY + (__int16)event->cursor.y;
@@ -216,7 +238,7 @@ CursorType getCursorType_()
 	{
 		return word_6556FC;
 	}
-	if (IsOutsideGameScreen(Mouse.x, Mouse.y) || !PtInRect(&game_screen_pos, Mouse))
+	if (IsOutsideGameScreen_(Mouse.x, Mouse.y) || !PtInRect(&game_screen_pos, Mouse))
 	{
 		return CursorType::CUR_ARROW;
 	}
@@ -283,7 +305,7 @@ FAIL_STUB_PATCH(input_dragSelect_MouseBtnUp);
 
 void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
 {
-	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
 	{
 		if (is_placing_order)
 		{
@@ -320,7 +342,7 @@ FAIL_STUB_PATCH(sub_4BFA40);
 
 void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
 {
-	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
 	{
 		if (sub_4BFA40_() == g_LocalNationID && ActivePortraitUnit && unitIsOwnerByCurrentPlayer(ActivePortraitUnit))
 		{

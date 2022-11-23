@@ -114,7 +114,7 @@ BOOL __stdcall SRegDeleteValue(char* keyname, char* valuename, BYTE flags);
 BOOL __stdcall SRegLoadString(char* keyname, char* valuename, BYTE flags, char* buffer, size_t buffersize);
 BOOL __stdcall SRegLoadValue(char* keyname, char* valuename, BYTE flags, int* value);
 
-BOOL __stdcall STransPointInMask(int a1, int a2, int a3, char* a4, size_t a5);
+BOOL __stdcall STransPointInMask(HANDLE a1, int a2, int a3);
 BOOL __stdcall STransBlt(int handle, int a2, int a3, int a4, int a5);
 BOOL __stdcall STransDelete(int handle);
 BOOL __stdcall STransCreateE(int a1, int a2, int a3, int bpp, int a5, int bufferSize, int a7);

@@ -218,7 +218,7 @@ EXPORTS
     STransLoadI = StormLibTransLoadI @439
     STransSetDirtyArrayInfo = StormLibTransSetDirtyArrayInfo @440
     STransUpdateDirtyArray = StormLibTransUpdateDirtyArray @441
-    STransPointInMask = StormLibPointInMask @442
+    STransPointInMask@12 = StormLibPointInMask @442
     STransCombineMasks = StormLibTransCombineMasks @443
     STransCreateMaskI = StormLibTransCreateMaskI @444
     STransCreateE = StormLibTransCreateE @445
