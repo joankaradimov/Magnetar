@@ -7378,6 +7378,75 @@ void CleanupSpritesDat_()
 
 FAIL_STUB_PATCH(CleanupSpritesDat);
 
+int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
+{
+	if (!a1 || !buff || !dword_59B618)
+	{
+		return 0;
+	}
+
+	__int16 v4;
+	if (consoleIndex == Race::RACE_Zerg)
+	{
+		v4 = 7;
+	}
+	else if (consoleIndex == Race::RACE_Terran)
+	{
+		v4 = 8;
+	}
+	else if (consoleIndex == Race::RACE_Protoss)
+	{
+		v4 = 9;
+	}
+	else
+	{
+		v4 = 8;
+	}
+
+	time_t v19 = time(0);
+	char* v5 = ctime(&v19);
+	char dest[1024];
+	SStrVPrintf(dest, sizeof(dest), "%s%s%s", playerName, CurrentMapFileName, v5);
+	int v16[5];
+	ShaState v17;
+	sha1_init(&v17);
+	MD5_0(&v17, dest, strlen(dest));
+	MD5_1(&v17, (BYTE*) v16);
+	game_id_hash = v16[0] ^ v16[1] ^ v16[2] ^ v16[3] ^ v16[4];
+	int leagueID = 0;
+	SNetGetLeagueName(&leagueID);
+	char v14[256] = { 0 };
+	unsigned elapsed_time = getElapsedGameTimeSeconds();
+	sub_4B2FC0(0xFFu, v14, elapsed_time);
+	const char* v7 = GetNetworkTblString_(v4);
+	_snprintf(buff, a4, "<leagueid>%d</leagueid>\n<gameid>0x%08x</gameid>\n<race>%s</race>\n<time>%u</time>\n", leagueID, game_id_hash, v7, elapsed_time);
+
+	static ScoreFormatRelated v18[] =
+	{
+		{overallScoreCalc, "<score overall=\"%u\" units=\"%u\" structures=\"%u\" resources=\"%u\"/>\n", 4, 5, 6},
+		{unitScoreCalc, "<units score=\"%u\" produced=\"%u\" killed=\"%u\" lost=\"%u\"/>\n", 7, 8, 9},
+		{structureScoreCalc, "<structures score=\"%u\" constructed=\"%u\" razed=\"%u\" lost=\"%u\"/>\n", 10, 11, 12},
+		{resourceScoreCalc, "<resources score=\"%u\" gas=\"%u\" minerals=\"%u\" spent=\"%u\"/>\n", 13, 14, 15},
+	};
+
+	for (int i = 0; i < _countof(v18); i++)
+	{
+		char new_[1024];
+		sub_4B31C0(stru_59A0F0, byte_59B3D8, 8, v18[i].score_calc);
+		_snprintf(new_, sizeof(new_), v18[i].format_string,
+			stru_59A0F0[g_LocalNationID].total_score_field,
+			stru_59A0F0[g_LocalNationID].score_field_0,
+			stru_59A0F0[g_LocalNationID].score_field_1,
+			stru_59A0F0[g_LocalNationID].score_field_2);
+		SStrNCat(buff, "\n  ", a4);
+		SStrNCat(buff, new_, a4);
+	}
+	_snprintf(a1, a2, "<map>%s</map>\n", CurrentMapName);
+	return 1;
+}
+
+FAIL_STUB_PATCH(endgameData);
+
 void ReportGameResult_()
 {
 	char details_info[2048];
@@ -7387,7 +7456,7 @@ void ReportGameResult_()
 	if (!game_result_reported_maybe && !InReplay)
 	{
 		ApplyGameVictoryStatus(results, 0);
-		if (!endgameData(header_info, sizeof(header_info), details_info, sizeof(details_info))) // TODO: reimplement endgameData; and patch GetNetworkTblString
+		if (!endgameData_(header_info, sizeof(header_info), details_info, sizeof(details_info)))
 		{
 			details_info[0] = 0;
 			header_info[0] = 0;

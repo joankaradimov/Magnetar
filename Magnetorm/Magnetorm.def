@@ -41,7 +41,7 @@ EXPORTS
     SNetCheckDataFile = StormLibNetCheckDataFile @140
     SNetSendLeagueCommand = StormLibNetSendLeagueCommand @141
     SNetSendReplayPath@12 = StormLibNetSendReplayPath @142
-    SNetGetLeagueName = StormLibNetGetLeagueName @143
+    SNetGetLeagueName@4 = StormLibNetGetLeagueName @143
     SNetGetPlayerNames@4 = StormLibGetPlayerNames @144
     SNetLeagueLogout@4 = StormLibNetLeagueLogout @145
     SNetGetLeaguePlayerName@8 = StormLibNetGetLeaguePlayerName @146
