@@ -210,11 +210,51 @@ FAIL_STUB_PATCH(input_targetOrder_RightMouseClick);
 
 void setCursorType_(CursorType cursor_type);
 
+CursorType getCursorType_()
+{
+	if (PtInRect(&stru_512D00, Mouse))
+	{
+		return word_6556FC;
+	}
+	if (IsOutsideGameScreen(Mouse.x, Mouse.y) || !PtInRect(&game_screen_pos, Mouse))
+	{
+		return CursorType::CUR_ARROW;
+	}
+	if (byte_66FF5C)
+	{
+		return CursorType::CUR_DRAG;
+	}
+	if (is_placing_building)
+	{
+		return CursorType::CUR_ARROW;
+	}
+
+	CUnit* v0 = FindUnitAtPoint(Mouse.x + MoveToX, MoveToY + Mouse.y);
+	if (!v0)
+	{
+		return is_placing_order ? CursorType::CUR_TARG_N : CursorType::CUR_ARROW;
+	}
+	else if (v0->playerID == 11)
+	{
+		return is_placing_order ? CursorType::CUR_TARG_Y : CursorType::CUR_MAG_Y;
+	}
+	else if (UnitIsEnemy(v0))
+	{
+		return is_placing_order ? CursorType::CUR_TARG_R : CursorType::CUR_MAG_R;
+	}
+	else
+	{
+		return is_placing_order ? CursorType::CUR_TARG_G : CursorType::CUR_MAG_G;
+	}
+}
+
+FAIL_STUB_PATCH(getCursorType);
+
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
 	input_dragSelect_MouseMove(a1);
 	SetInGameInputProcs();
-	setCursorType_(getCursorType());
+	setCursorType_(getCursorType_());
 	stru_66FF50.left += MoveToX;
 	stru_66FF50.right += MoveToX;
 	__int16 v3 = MoveToY + stru_66FF50.bottom;
@@ -5159,7 +5199,7 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 		CursorType cursor_type = (CursorType) getScrollCursorType(&a1, &a2);
 		if (cursor_type == CUR_ARROW)
 		{
-			cursor_type = getCursorType();
+			cursor_type = getCursorType_();
 		}
 		if (last_cursor_type != cursor_type)
 		{
@@ -10517,7 +10557,7 @@ GamePosition BeginGame_()
 	TickCountSomething(0);
 	DoGameLoop_();
 	RefreshLayer5();
-	setCursorType_(getCursorType());
+	setCursorType_(getCursorType_());
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
 	{
