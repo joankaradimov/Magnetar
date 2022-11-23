@@ -3501,7 +3501,7 @@ void DrawBINDialog_(dialog* dlg)
 		byte_51A0E9 = 1;
 		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
 		gluDlgFadePalette(3);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 }
 
@@ -10197,14 +10197,14 @@ void timeoutProcDropdown_()
 				updateCountdownDropTimer();
 				v3 = GetTickCount();
 			}
-			BWFXN_RedrawTarget();
+			BWFXN_RedrawTarget_();
 		}
 		if (dword_6D5BC4)
 		{
 			DestroyDialog(dword_6D5BC4);
 			dword_6D5BC4 = 0;
 		}
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 		byte_6D5BC2 = 0;
 		countdownTimeRemaining = GetTickCount();
 	}
@@ -14857,7 +14857,7 @@ void changeMenu_()
 		sub_41E9E0(3);
 		RefreshCursor_0();
 	}
-	BWFXN_RedrawTarget();
+	BWFXN_RedrawTarget_();
 	memset(&timer_related, 0, 0x90u);
 	dialog_count = 0;
 }
