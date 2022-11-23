@@ -88,433 +88,344 @@ typedef __int32 _DWORD;
 typedef __int64 _QWORD;
 typedef __int8 _TBYTE;
 
-struct Char4_characters;
-struct PlayerResources;
-struct __declspec(align(2)) DatLoad;
-enum CommandId;
-struct CUnitFighter;
-struct activation_delays;
-enum FogOfWar;
-enum MusicTrackType;
-union SaiRegionUser;
-struct SNETVERSIONDATA;
-struct struc_51B1E8;
-enum UnitMovementState;
-enum SnetInfoType;
-struct RegistryOption;
-struct MapDownload;
-enum CheatFlags;
-struct __declspec(align(4)) UnitRelated20;
-struct __declspec(align(4)) BNetGateways;
-struct _RTTIClassHierarchyDescriptor;
-enum UnitGroupFlags;
-struct struct_1;
-enum DialogType;
-struct __declspec(align(4)) EstablishingShotPosition;
-struct Timer;
-enum MapData;
-struct CUnitNydus;
-enum Cinematic;
-struct dialog_ctrl;
-enum UnitPrototypeFlags;
-struct struct_5;
-enum OverlayType;
-struct TemplateList;
-struct DlgGrp;
-enum MapDirEntryFlags;
-struct SpriteTileData;
-enum PlayerTypes;
-struct UpdateFunction;
-enum GluAllTblEntry;
-struct bounds;
-enum ImageFlags;
-struct ChunkListItem;
-enum WeaponBehavior;
-enum UnitStats;
-struct ForceName;
-enum PrintFlags;
-enum ForceFlags;
-enum IScriptOpcodes;
-struct struct_2;
-enum Race;
-struct PMD;
-struct UnknownTilesetRelated2;
-enum SfxData;
-struct RTCI;
-struct struct_a1_2;
-struct point;
-enum MenuPosition;
-struct ChkLoader;
-enum WeaponType;
-enum Anims;
-enum StartingPositions;
-enum UnitType;
-struct struc_64DEC8;
-enum VictoryConditions;
-enum PlayerGroups;
-struct STREAMED;
-struct ButtonSet;
-struct TileID;
-struct __declspec(align(4)) struct_v4;
-struct ImagesDatExtraOverlayLO_Files;
-enum StatusFlags;
-struct SNETPLAYERDATA;
-struct RightClickCommand;
-struct GameSpeeds;
-enum EventNo;
-struct vx4entry;
-enum ImageOrder;
-struct CThingy;
-enum Tech2;
-enum GamePosition;
-struct struct_0;
-enum MapData4;
-struct CUnitSilo;
-enum ButtonState;
-struct RTTIClassHierarchyDescriptor;
-struct struct_a4;
-enum MusicTrack;
+struct __declspec(align(2)) ChkSectionLoader;
 struct __declspec(align(4)) TriggerOrderRelated;
-struct __declspec(align(2)) AudioVideoInitializationError;
-struct Chat_TextLine;
-struct __declspec(align(4)) struct_a2;
-struct UnitDimentions;
-enum Order;
-enum PlayerType;
-struct __declspec(align(4)) ChunkNode;
-struct SNETCAPS;
+enum ForceFlags;
+struct struc_64DEC8;
+struct __declspec(align(4)) struc_59A0F0;
+struct point;
+struct bounds;
+struct ImagesDatExtraOverlayLO_Files;
+struct RTCI;
+struct RTTIClassHierarchyDescriptor;
+struct _RTTIClassHierarchyDescriptor;
+enum DialogFlags;
+struct PlayerResources;
+enum BulletState;
+struct __declspec(align(4)) GameActionDataBlock;
+struct struct_2;
+struct UnknownTilesetRelated2;
 struct ScoreFormatRelated;
-struct _RTTICompleteObjectLocator;
-struct AI_Flags;
-struct RenderFunction;
-enum Icon;
+struct __declspec(align(4)) CharacterData;
+enum EventNo;
+struct __declspec(align(2)) AudioVideoInitializationError;
+struct __declspec(align(4)) struct_v4;
+struct CUnitGhost;
+struct __declspec(align(4)) struct_a3;
+struct activation_delays;
+enum IScriptOpcodes;
+struct struct_a1_2;
+enum FlingyID;
+struct ListNode;
+struct PMD;
+struct __declspec(align(4)) SNETPROGRAMDATA;
+struct __declspec(align(1)) struct_v2;
+struct SNETCAPS;
+struct __declspec(align(4)) SNETUIDATA;
+struct __declspec(align(4)) BNetGateways;
+struct Chat_TextLine;
+struct TileID;
+struct __unaligned __declspec(align(1)) struct_v0;
+struct TransVectorEntry;
+struct RightClickCommand;
+enum GameType;
+struct GameSpeeds;
+struct ButtonSet;
+enum Cinematic;
+enum DamageType;
+struct Char4_characters;
+struct UnitStat;
+enum ImageFlags;
+enum StartingUnits;
+struct dialog_ctrl;
+struct struct_0;
+struct SNETPLAYERDATA;
+enum StatusFlags;
+struct MapDownload;
+struct SNETVERSIONDATA;
+enum MenuPosition;
+struct BltMask;
+enum UnitType;
+struct DlgGrp;
 enum ResourceType;
 enum CursorType;
-struct __declspec(align(4)) GameActionDataBlock;
-enum DamageType;
-enum StartingUnits;
-enum MegatileFlags;
-enum FlingyID;
-struct CndSignature;
-enum GameType;
-struct BltMask;
-struct ListNode;
-struct __declspec(align(1)) struct_v2;
-struct PlayerAlliance;
-struct points;
-struct struct_v6;
-struct __declspec(align(2)) struc_66FE20;
-struct __declspec(align(1)) swishTimer;
-enum BulletState;
-struct LO_Overlays;
-enum EndgameState;
-struct __declspec(align(2)) ChkSectionLoader;
-enum WeaponTargetFlags;
-enum Tech;
-struct __declspec(align(4)) struct_a3;
-struct __declspec(align(4)) SNETUIDATA;
-struct __declspec(align(4)) CharacterData;
-struct CUnitGatherer;
-struct __declspec(align(4)) SNETPROGRAMDATA;
-struct __declspec(align(4)) struc_59A0F0;
-enum EventUser;
-struct TriggerList;
-struct __declspec(align(8)) FontColorRelated;
-struct _SCOPETABLE_ENTRY;
-enum Tileset;
-struct __declspec(align(4)) ListNodeUnknown;
-struct CUnitPylon;
-enum Color;
-enum DialogFlags;
-struct CUnitGhost;
-struct CUnitPsiProvider;
-struct TransVectorEntry;
-enum SaiAccessabilityFlags;
+struct struct_1;
 struct struc_659B10;
-struct UnitStat;
+enum EventUser;
+struct STREAMED;
+struct __declspec(align(4)) ChunkNode;
+enum Race;
+enum DialogType;
+struct PlayerAlliance;
+struct Timer;
+enum MegatileFlags;
+struct UnitDimentions;
+struct AI_Flags;
+enum GluAllTblEntry;
+enum Color;
+enum PlayerGroups;
+enum ImageOrder;
+enum SaiAccessabilityFlags;
+enum Anims;
+enum WeaponTargetFlags;
+enum Tech2;
+struct __declspec(align(4)) EstablishingShotPosition;
+struct __declspec(align(2)) struc_66FE20;
+enum MapData4;
+enum WeaponType;
+enum SfxData;
+struct __declspec(align(4)) UnitRelated20;
+struct UpdateFunction;
+enum PrintFlags;
+enum SnetInfoType;
+struct vx4entry;
+enum Tech;
+enum PlayerTypes;
+enum OverlayType;
+struct ShaState;
+enum PlayerType;
+enum UnitStats;
+struct ChunkListItem;
+enum MapData;
+enum ButtonState;
+struct ForceName;
+enum VictoryConditions;
+struct struc_51B1E8;
+struct SpriteTileData;
+struct __declspec(align(4)) struct_a2;
+union SaiRegionUser;
+struct CndSignature;
+struct CUnitSilo;
+enum StartingPositions;
+struct CUnitPylon;
+enum MapDirEntryFlags;
+enum EndgameState;
+enum UnitPrototypeFlags;
+struct CThingy;
+struct ChkLoader;
+enum Order;
+struct struct_v6;
+struct TemplateList;
+enum Icon;
+enum WeaponBehavior;
+enum Tileset;
+struct __declspec(align(8)) FontColorRelated;
+struct struct_5;
+struct RenderFunction;
+struct points;
+enum UnitGroupFlags;
+struct CUnitGatherer;
+struct TriggerList;
+enum MusicTrack;
+struct CUnitNydus;
+enum GamePosition;
+struct struct_a4;
+struct __declspec(align(1)) swishTimer;
+enum FogOfWar;
+struct __declspec(align(2)) DatLoad;
+struct LO_Overlays;
+enum CommandId;
 struct RTTICompleteObjectLocator;
-struct ReturnCargoCommand;
+struct CUnitPsiProvider;
+enum UnitMovementState;
+struct CUnitFighter;
+enum CheatFlags;
+struct _SCOPETABLE_ENTRY;
+struct RegistryOption;
+enum MusicTrackType;
+struct _RTTICompleteObjectLocator;
+struct __declspec(align(4)) ListNodeUnknown;
 struct MinimapSurfaceInfoRelated;
-struct dialog_scroll;
-struct CUnitPowerup;
-struct TechSC;
-struct CancelUpgradeCommand;
-struct struc_581D76;
-struct __declspec(align(4)) MapChunks;
-struct __declspec(align(1)) Position;
-struct __declspec(align(2)) RegistryOptions;
 struct PlayerInfo;
-struct UnsiegeCommand;
-struct RTTIBaseClassDescriptor;
-struct __declspec(align(4)) MissionCheatRelated;
-struct LO_Header;
-struct MergeArchonCommand;
-struct CancelUnitMorphCommand;
-struct Font;
-struct grpFrame;
-struct RestarGameCommand;
-struct vr4entry;
-struct SetLatencyCommand;
-struct CUnitBeacon;
-struct __declspec(align(1)) TrainCommand;
-struct CinematicIntro;
-struct Action;
-struct __declspec(align(1)) MorphCommand;
-struct CUnitWorker;
-struct __declspec(align(4)) ButtonOrder;
-struct FontChar;
-struct UpgradeCommand;
-struct __declspec(align(1)) CancelTrainCommand;
-struct __declspec(align(4)) Target_;
-struct CancelResearchCommand;
-struct CancelNukeCommand;
-struct ReplayPlayer;
-struct UpgradesBW;
-struct CUnitFinder;
-struct __declspec(align(4)) SaiContourHub;
-struct UnburrowCommand;
-struct __declspec(align(2)) CampaignMenuEntry;
-struct TimerRelated;
-struct TileType;
-struct __declspec(align(4)) SFX_related;
-struct __declspec(align(2)) TypeDropdownSelect;
-struct ID;
-struct __declspec(align(2)) ColorShiftData;
-struct UnitProperties;
-struct CarrierStopCommand;
-struct DecloakCommand;
 struct CUnitResource;
-struct CycleStruct;
-struct ReaverStopCommand;
-struct MapSize;
-struct SuppliesPerRace;
-struct Box16;
-struct Bitmap;
-struct Counts;
-struct __declspec(align(1)) BuildingMorphCommand;
-struct __declspec(align(2)) CUnitBuilding;
-struct SaiSplit;
-struct UnloadAllCommand;
-struct __declspec(align(2)) IScriptProgram;
-struct TrainFighterCommand;
-struct CancelAddonCommand;
-struct HoldPositionCommand;
-struct CUnitCarrier;
-struct UnknownTilesetRelated1;
-struct UnitAvail;
-struct EstablishingShot;
-struct __declspec(align(2)) MusicTrackDescription;
-union Char4;
-struct SiegeCommand;
-struct __declspec(align(4)) GlueRelated;
-struct __declspec(align(2)) CheatHashMaybe;
-struct s_evt;
-struct MergeDarkArchonCommand;
-struct SaiContour;
-struct __declspec(align(1)) GotFileValues;
-struct _EH3_EXCEPTION_REGISTRATION;
-struct UnitFinderData;
-struct StimpackCommand;
-struct Condition;
-struct CUnitVulture;
-struct UpgradesSC;
-struct __declspec(align(2)) rect;
-struct dialog_dlg;
-struct layer;
-struct ScrollSpeeds;
-struct CancelConstructionCommand;
-struct Box32;
-struct __declspec(align(2)) AiCaptain;
-struct CloakCommand;
-struct BurrowCommand;
-struct MiniTileFlagArray;
-struct CUnitStatus;
-struct ResearchCommand;
-struct __declspec(align(2)) LobbySlot;
-struct dialog_optn;
-struct __declspec(align(4)) struct_a1;
-struct fontMemStruct;
 struct __declspec(align(2)) SightStruct;
-struct __declspec(align(1)) ReplaySpeedCommand;
-struct TechBW;
-struct CUnitRally;
-struct RaceDropdownSelect;
-struct __declspec(align(1)) SaveGameCommand;
-struct pt;
-struct StringTbl;
-struct dialog_edit;
-struct struct_6;
+struct __declspec(align(2)) RegistryOptions;
+struct MergeDarkArchonCommand;
+struct UpgradesBW;
+struct ReturnCargoCommand;
 struct StopCommand;
+struct TileType;
+struct TimerRelated;
+struct BurrowCommand;
+struct UnsiegeCommand;
+struct Action;
+struct SetLatencyCommand;
+struct __declspec(align(2)) ColorShiftData;
+struct dialog_dlg;
+struct __declspec(align(2)) MusicTrackDescription;
+struct CancelNukeCommand;
+struct RestarGameCommand;
+struct _EH3_EXCEPTION_REGISTRATION;
+struct Font;
+struct EstablishingShot;
+struct MapSize;
+union Char4;
+struct layer;
+struct __declspec(align(2)) AiCaptain;
+struct CUnitFinder;
+struct CancelAddonCommand;
+struct ReaverStopCommand;
+struct RTTIBaseClassDescriptor;
+struct ReplayPlayer;
+struct Condition;
+struct __declspec(align(1)) Position;
+struct __declspec(align(4)) MapChunks;
+struct UnitFinderData;
+struct CUnitStatus;
+struct UnitAvail;
+struct UpgradeCommand;
+struct LO_Header;
+struct __declspec(align(4)) Target_;
+struct Box32;
+struct dialog_scroll;
+struct s_evt;
+struct __declspec(align(4)) GlueRelated;
+struct ID;
+struct ResearchCommand;
+struct CinematicIntro;
+struct CarrierStopCommand;
+struct dialog_optn;
+struct __declspec(align(4)) SFX_related;
+struct grpFrame;
+struct __declspec(align(1)) TrainCommand;
+struct TechBW;
+struct CUnitVulture;
+struct __declspec(align(1)) CancelTrainCommand;
+struct __declspec(align(2)) CampaignMenuEntry;
+struct struct_6;
+struct fontMemStruct;
+struct CancelConstructionCommand;
+struct __declspec(align(1)) ReplaySpeedCommand;
+struct UnloadAllCommand;
+struct __declspec(align(1)) BuildingMorphCommand;
+struct CloakCommand;
+struct __declspec(align(2)) CheatHashMaybe;
+struct ScrollSpeeds;
+struct UnburrowCommand;
+struct __declspec(align(1)) MorphCommand;
+struct CancelResearchCommand;
+struct __declspec(align(2)) IScriptProgram;
+struct __declspec(align(4)) struct_a1;
+struct Counts;
+struct __declspec(align(1)) SaveGameCommand;
+struct RaceDropdownSelect;
+struct vr4entry;
+struct CancelUpgradeCommand;
+struct StimpackCommand;
+struct Bitmap;
+struct CUnitBeacon;
+struct StringTbl;
+struct MergeArchonCommand;
+struct UpgradesSC;
+struct CUnitWorker;
+struct SiegeCommand;
+struct HoldPositionCommand;
+struct SuppliesPerRace;
+struct pt;
+struct UnknownTilesetRelated1;
+struct __declspec(align(4)) SaiContourHub;
+struct CUnitRally;
+struct __declspec(align(2)) TypeDropdownSelect;
+struct TrainFighterCommand;
+struct __declspec(align(2)) LobbySlot;
+struct __declspec(align(2)) CUnitBuilding;
+struct MiniTileFlagArray;
+struct __declspec(align(4)) MissionCheatRelated;
+struct CancelUnitMorphCommand;
+struct CUnitCarrier;
+struct SaiSplit;
+struct FontChar;
+struct UnitProperties;
+struct TechSC;
+struct UnknownPathRelated;
+struct __declspec(align(1)) GotFileValues;
+struct dialog_edit;
+struct DecloakCommand;
+struct CycleStruct;
+struct struc_581D76;
+struct SaiContour;
+struct CUnitPowerup;
+struct __declspec(align(4)) ButtonOrder;
+struct Box16;
+struct __declspec(align(2)) rect;
+struct COrder;
+struct Chunk;
+struct SaiRegion;
+struct __declspec(align(4)) CSprite;
+struct TemplateListEntry;
+struct MiniTileMaps_type;
+struct __declspec(align(4)) SectionData;
+struct __declspec(align(4)) TPROVIDER;
+struct __declspec(align(4)) CBullet;
 union CUnitFields3;
-struct CheatHashRelated;
+struct __declspec(align(2)) PlaceBuildingCommand;
 struct dlgEvent;
-struct __declspec(align(4)) CImage;
-struct __declspec(align(2)) grpHead;
 union CUnitFields1;
+struct __declspec(align(4)) baseLocation;
+struct __declspec(align(1)) struct_path_related;
+struct AllScoresStruct;
+struct __declspec(align(2)) PathCreateRelated;
+struct __declspec(align(2)) grpHead;
+struct CPPEH_RECORD;
+struct __declspec(align(4)) Map;
+struct CheatHashRelated;
+struct StatFlufDialog;
+struct __declspec(align(1)) dialog_list;
+struct __unaligned __declspec(align(1)) LiftCommand;
+struct Trigger;
+struct ChunkUnitEntry;
+struct __declspec(align(4)) CImage;
+struct dialog_btn;
 struct __declspec(align(2)) AI_Main;
 struct Location;
-struct StatFlufDialog;
-struct Chunk;
-struct BriefingEntry;
-struct __declspec(align(1)) struct_path_related;
-struct __declspec(align(1)) GameData;
-struct TemplateListEntry;
-struct __declspec(align(4)) SectionData;
-struct Trigger;
-struct GotFile;
-struct __unaligned __declspec(align(1)) LiftCommand;
-struct __declspec(align(1)) dialog_list;
-struct ChunkUnitEntry;
-struct CPPEH_RECORD;
-struct COrder;
-struct __declspec(align(4)) baseLocation;
-struct __declspec(align(4)) CBullet;
-struct __declspec(align(4)) TPROVIDER;
-struct SaiRegion;
-struct AllScoresStruct;
-struct __declspec(align(4)) CFlingy;
-struct dialog_btn;
-struct __declspec(align(4)) CSprite;
-struct __declspec(align(2)) PathCreateRelated;
 struct CUnitHatchery;
+struct GotFile;
+struct __declspec(align(1)) GameData;
+struct BriefingEntry;
 struct __declspec(align(4)) struct_a1_1;
-struct __declspec(align(4)) Map;
-struct MiniTileMaps_type;
-struct __declspec(align(4)) MapDirEntry;
-struct __unaligned __declspec(align(1)) ReplayHeader;
+struct __declspec(align(4)) CFlingy;
 struct TriggerListEntry;
 struct __declspec(align(2)) ChunkData;
+struct __declspec(align(4)) MapDirEntry;
+struct __unaligned __declspec(align(1)) ReplayHeader;
 union dialog_fields;
-struct __declspec(align(4)) SAI_Paths;
+struct SAI_Paths;
 union CUnitFields2;
 struct __declspec(align(2)) dialog;
 struct __declspec(align(4)) CUnit;
 
 
 
-typedef void (__fastcall *AppExitHandle)(bool exit_code);
-
-typedef unsigned __int16 u16;
-
-struct Char4_characters
+struct __declspec(align(2)) ChkSectionLoader
 {
-  char _0;
-  char _1;
-  char _2;
-  char _3;
+  const char name[4];
+  bool (__stdcall *func)(SectionData *, int, MapChunks *);
+  int flags;
 };
-static_assert(sizeof(Char4_characters) == 4, "Incorrect size for type `Char4_characters`. Expected: 4");
+static_assert(sizeof(ChkSectionLoader) == 12, "Incorrect size for type `ChkSectionLoader`. Expected: 12");
 
-struct PlayerResources
+struct __declspec(align(4)) TriggerOrderRelated
 {
-  int minerals[12];
-  int gas[12];
-  int cumulativeGas[12];
-  int cumulativeMinerals[12];
+  int player;
+  _DWORD unit_type;
+  _WORD location_flags;
+  _DWORD x;
+  _DWORD y;
+  _DWORD dword14;
 };
-static_assert(sizeof(PlayerResources) == 192, "Incorrect size for type `PlayerResources`. Expected: 192");
+static_assert(sizeof(TriggerOrderRelated) == 24, "Incorrect size for type `TriggerOrderRelated`. Expected: 24");
 
-#pragma pack(push, 1)
-struct __declspec(align(2)) DatLoad
+enum ForceFlags : unsigned __int8
 {
-  void *address;
-  int length;
-  int entries;
-};
-#pragma pack(pop)
-static_assert(sizeof(DatLoad) == 12, "Incorrect size for type `DatLoad`. Expected: 12");
-
-enum CommandId : unsigned __int8
-{
-  CMD_RestarGame = 0x8,
-  CMD_CancelConstruction = 0x18,
-  CMD_CancelGenericMaybe = 0x20,
-  CMD_CancelUnitMorph = 0x19,
-  CMD_Stop = 0x1A,
-  CMD_CarrierStop = 0x1B,
-  CMD_ReaverStop = 0x1C,
-  CMD_ReturnCargo = 0x1E,
-  CMD_Train = 0x1F,
-  CMD_CancelTrain = 0x20,
-  CMD_Cloak = 0x21,
-  CMD_Decloak = 0x22,
-  CMD_Morph = 0x23,
-  CMD_Unsiege = 0x25,
-  CMD_Siege = 0x26,
-  CMD_TrainFighter = 0x27,
-  CMD_UnloadAll = 0x28,
-  CMD_MergeArchon = 0x2A,
-  CMD_HoldPosition = 0x2B,
-  CMD_Unburrow = 0x2D,
-  CMD_CancelNuke = 0x2E,
-  CMD_Burrow = 0x2C,
-  CMD_Lift = 0x2F,
-  CMD_Research = 0x30,
-  CMD_CancelResearch = 0x31,
-  CMD_Upgrade = 0x32,
-  CMD_CancelUpgrade = 0x33,
-  CMD_CancelAddon = 0x34,
-  CMD_BuildingMorph = 0x35,
-  CMD_Stimpack = 0x36,
-  CMD_SetLatency = 0x55,
-  CMD_ReplaySpeed = 0x56,
-  CMD_MergeDarkArchon = 0x5A,
+  RANDOM_START_LOCATION = 0x1,
+  ALLIES = 0x2,
+  ALLIED_VICTORY = 0x4,
+  SHARED_VISION = 0x8,
 };
 
-struct CUnitFighter
+struct struc_64DEC8
 {
-  CUnit *parent;
-  CUnit *prev;
-  CUnit *next;
-  bool inHanger;
-};
-static_assert(sizeof(CUnitFighter) == 16, "Incorrect size for type `CUnitFighter`. Expected: 16");
-
-typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
-
-#pragma pack(push, 1)
-struct activation_delays
-{
-  int anonymous_0;
-  dialog *anonymous_1;
-};
-#pragma pack(pop)
-static_assert(sizeof(activation_delays) == 8, "Incorrect size for type `activation_delays`. Expected: 8");
-
-enum FogOfWar : unsigned __int8
-{
-  FOW_OFF = 0x0,
-  FOW_WARCRAFT1 = 0x1,
-  FOW_ON = 0x2,
-};
-
-enum MusicTrackType : unsigned __int8
-{
-  NONE = 0x0,
-  MENU_MUSIC = 0x1,
-  IN_GAME_MUSIC = 0x2,
-};
-
-union SaiRegionUser
-{
-  void *node;
-  int relation;
-};
-static_assert(sizeof(SaiRegionUser) == 4, "Incorrect size for type `SaiRegionUser`. Expected: 4");
-
-struct SNETVERSIONDATA
-{
-  unsigned int size;
-  char *versionstring;
-  char *executablefile;
-  char *originalarchivefile;
-  char *patcharchivefile;
-};
-static_assert(sizeof(SNETVERSIONDATA) == 20, "Incorrect size for type `SNETVERSIONDATA`. Expected: 20");
-
-struct struc_51B1E8
-{
-  int field_0[1];
+  int field_0;
   int field_4;
   int field_8;
   int field_C;
@@ -524,522 +435,65 @@ struct struc_51B1E8
   int field_1C;
   int field_20;
   int field_24;
+  int field_28;
+  int field_2C;
+  int field_30;
+  int field_34;
+  int field_38;
+  int field_3C;
+  int field_40;
+  int field_44;
+  int field_48;
+  int field_4C;
+  int field_50;
+  int field_54;
+  int field_58;
+  int field_5C;
+  int field_60;
+  int field_64;
+  int field_68;
+  int field_6C;
+  int field_70;
+  int field_74;
+  int field_78;
+  int field_7C;
 };
-static_assert(sizeof(struc_51B1E8) == 40, "Incorrect size for type `struc_51B1E8`. Expected: 40");
+static_assert(sizeof(struc_64DEC8) == 128, "Incorrect size for type `struc_64DEC8`. Expected: 128");
 
-enum UnitMovementState : __int8
+struct __declspec(align(4)) struc_59A0F0
 {
-  UM_Init = 0x0,
-  UM_InitSeq = 0x1,
-  UM_Lump = 0x2,
-  UM_Turret = 0x3,
-  UM_Bunker = 0x4,
-  UM_BldgTurret = 0x5,
-  UM_Hidden = 0x6,
-  UM_Flyer = 0x7,
-  UM_FakeFlyer = 0x8,
-  UM_AtRest = 0x9,
-  UM_Dormant = 0xA,
-  UM_AtMoveTarget = 0xB,
-  UM_CheckIllegal = 0xC,
-  UM_MoveToLegal = 0xD,
-  UM_LumpWannabe = 0xE,
-  UM_FailedPath = 0xF,
-  UM_RetryPath = 0x10,
-  UM_StartPath = 0x11,
-  UM_UIOrderDelay = 0x12,
-  UM_TurnAndStart = 0x13,
-  UM_FaceTarget = 0x14,
-  UM_NewMoveTarget = 0x15,
-  UM_AnotherPath = 0x16,
-  UM_Repath = 0x17,
-  UM_RepathMovers = 0x18,
-  UM_FollowPath = 0x19,
-  UM_ScoutPath = 0x1A,
-  UM_ScoutFree = 0x1B,
-  UM_FixCollision = 0x1C,
-  UM_WaitFree = 0x1D,
-  UM_GetFree = 0x1E,
-  UM_SlidePrep = 0x1F,
-  UM_SlideFree = 0x20,
-  UM_ForceMoveFree = 0x21,
-  UM_FixTerrain = 0x22,
-  UM_TerrainSlide = 0x23,
-};
-
-enum SnetInfoType
-{
-  SNET_INFO_GAMENAME = 0x1,
-  SNET_INFO_GAMEPASSWORD = 0x2,
-  SNET_INFO_GAMEDESCRIPTION = 0x3,
-  SNET_INFO_GAMEMODE = 0x4,
-  SNET_INFO_INITDATA = 0x5,
-  SNET_INFO_MAXPLAYERS = 0x6,
-};
-
-struct RegistryOption
-{
-  int field_0;
-  void *aSpeed;
-  int field_8;
+  char field_0[12];
   int field_C;
-  int field_10;
-  RegistryOptions *field_14;
+  dialog *field_10;
+  int field_14;
+  int field_18;
+  char field_1C[384];
+  int score_field_0;
+  int score_field_1;
+  int score_field_2;
+  int field_1A8;
+  int field_1AC;
+  int field_1B0;
+  int field_1B4;
+  int field_1B8;
+  int field_1BC;
+  int field_1C0;
+  int field_1C4;
+  int field_1C8;
+  int gap1B4[32];
+  int total_score_field;
+  int unk0;
+  int unk1;
+  int unk2;
 };
-static_assert(sizeof(RegistryOption) == 24, "Incorrect size for type `RegistryOption`. Expected: 24");
+static_assert(sizeof(struc_59A0F0) == 604, "Incorrect size for type `struc_59A0F0`. Expected: 604");
 
-struct MapDownload
+struct point
 {
-  int u1;
-  int u2;
-  int net_players;
-  int map_size;
-  int checksum;
-  int u3;
-  char map_path[260];
-  char unknown[4];
-  int u4;
-  int u5;
+  __int32 x;
+  __int32 y;
 };
-static_assert(sizeof(MapDownload) == 296, "Incorrect size for type `MapDownload`. Expected: 296");
-
-typedef int (__fastcall *ActionPointer)(Action *);
-
-enum CheatFlags : unsigned __int32
-{
-  CHEAT_None = 0x0,
-  CHEAT_BlackSheepWall = 0x1,
-  CHEAT_OperationCwal = 0x2,
-  CHEAT_PowerOverwelming = 0x4,
-  CHEAT_SomethingForNothing = 0x8,
-  CHEAT_ShowMeTheMoney = 0x10,
-  CHEAT_GameOverMan = 0x40,
-  CHEAT_ThereIsNoCowLevel = 0x80,
-  CHEAT_StayingAlive = 0x100,
-  CHEAT_Ophelia = 0x200,
-  CHEAT_TheGathering = 0x800,
-  CHEAT_MedievalMan = 0x1000,
-  CHEAT_ModifyThePhaseVariance = 0x2000,
-  CHEAT_WarAintWhatItUsedToBe = 0x4000,
-  CHEAT_FoodForThought = 0x20000,
-  CHEAT_WhatsMineIsMine = 0x40000,
-  CHEAT_BreatheDeep = 0x80000,
-  CHEAT_NoGlues = 0x20000000,
-};
-
-typedef int (__fastcall *BriefingAction)(int arg1, int arg2);
-
-typedef void (__fastcall *InputProcedure)(dlgEvent *);
-
-struct __declspec(align(4)) UnitRelated20
-{
-  _DWORD unit_id;
-  _DWORD dword4;
-  CUnit *unit;
-  UnitRelated20 *dwordC;
-  UnitRelated20 *dword10;
-};
-static_assert(sizeof(UnitRelated20) == 20, "Incorrect size for type `UnitRelated20`. Expected: 20");
-
-struct __declspec(align(4)) BNetGateways
-{
-  _BYTE byte0;
-  _DWORD dword4;
-  _DWORD gateway_count;
-  _DWORD dwordC;
-  const char *configuration;
-  _DWORD configuration_length;
-  _DWORD dword18;
-  _DWORD dword1C;
-};
-static_assert(sizeof(BNetGateways) == 32, "Incorrect size for type `BNetGateways`. Expected: 32");
-
-struct _RTTIClassHierarchyDescriptor
-{
-  int signature;
-  int attributes;
-  int numBaseClasses;
-  void *baseClassArray;
-};
-static_assert(sizeof(_RTTIClassHierarchyDescriptor) == 16, "Incorrect size for type `_RTTIClassHierarchyDescriptor`. Expected: 16");
-
-enum UnitGroupFlags : unsigned __int16
-{
-  CLOAK = 0x1,
-  BURROW = 0x2,
-  IN_TRANSIT = 0x4,
-  HALLUCIONATED = 0x8,
-  INVINCIBLE = 0x10,
-};
-
-#pragma pack(push, 1)
-struct struct_1
-{
-  struct_1 *field_0;
-  char gap_4[28];
-  __int16 field_4;
-  char gap_22[36];
-  char field_5;
-  char gap_47[1];
-  char field_6;
-};
-#pragma pack(pop)
-static_assert(sizeof(struct_1) == 73, "Incorrect size for type `struct_1`. Expected: 73");
-
-enum DialogType : unsigned __int16
-{
-  cDLG = 0x0,
-  cDFLTBTN = 0x1,
-  cBUTTON = 0x2,
-  cOPTION = 0x3,
-  cCHKBOX = 0x4,
-  cIMAGE = 0x5,
-  cHSCROLL = 0x6,
-  cVSCROLL = 0x7,
-  cEDIT = 0x8,
-  cLSTATIC = 0x9,
-  cRSTATIC = 0xA,
-  cCSTATIC = 0xB,
-  cLIST = 0xC,
-  cCOMBO = 0xD,
-  cFLCBTN = 0xE,
-};
-
-typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, struct_a4 *);
-
-struct __declspec(align(4)) EstablishingShotPosition
-{
-  int index;
-  const char *tag;
-};
-static_assert(sizeof(EstablishingShotPosition) == 8, "Incorrect size for type `EstablishingShotPosition`. Expected: 8");
-
-struct Timer
-{
-  struct Timer *next;
-  dialog *parent;
-  void (__fastcall *callback)(dialog *dlg, __int16 timer_id);
-  int start_tick;
-  int finish_tick;
-  __int16 id;
-  int unknown;
-};
-static_assert(sizeof(Timer) == 28, "Incorrect size for type `Timer`. Expected: 28");
-
-enum MapData : __int16
-{
-  MD_none = 0x0,
-  MD_tutorial = 0x1,
-  MD_terran01 = 0x2,
-  MD_terran02 = 0x3,
-  MD_terran03 = 0x4,
-  MD_terran04 = 0x5,
-  MD_terran05 = 0x6,
-  MD_terran06 = 0x7,
-  MD_terran08 = 0x8,
-  MD_terran09 = 0x9,
-  MD_terran11 = 0xA,
-  MD_terran12 = 0xB,
-  MD_zerg01 = 0xC,
-  MD_zerg02 = 0xD,
-  MD_zerg03 = 0xE,
-  MD_zerg04 = 0xF,
-  MD_zerg05 = 0x10,
-  MD_zerg06 = 0x11,
-  MD_zerg07 = 0x12,
-  MD_zerg08 = 0x13,
-  MD_zerg09 = 0x14,
-  MD_zerg10 = 0x15,
-  MD_protoss01 = 0x16,
-  MD_protoss02 = 0x17,
-  MD_protoss03 = 0x18,
-  MD_protoss04 = 0x19,
-  MD_protoss05 = 0x1A,
-  MD_protoss06 = 0x1B,
-  MD_protoss07 = 0x1C,
-  MD_protoss08 = 0x1D,
-  MD_protoss09 = 0x1E,
-  MD_protoss10 = 0x1F,
-  MD_xprotoss01 = 0x20,
-  MD_xprotoss02 = 0x21,
-  MD_xprotoss03 = 0x22,
-  MD_xprotoss04 = 0x23,
-  MD_xprotoss05 = 0x24,
-  MD_xprotoss06 = 0x25,
-  MD_xprotoss07 = 0x26,
-  MD_xprotoss08 = 0x27,
-  MD_xterran01 = 0x28,
-  MD_xterran02 = 0x29,
-  MD_xterran03 = 0x2A,
-  MD_xterran04 = 0x2B,
-  MD_xterran05a = 0x2C,
-  MD_xterran05b = 0x2D,
-  MD_xterran06 = 0x2E,
-  MD_xterran07 = 0x2F,
-  MD_xterran08 = 0x30,
-  MD_xzerg01 = 0x31,
-  MD_xzerg02 = 0x32,
-  MD_xzerg03 = 0x33,
-  MD_xzerg04a = 0x34,
-  MD_xzerg04b = 0x35,
-  MD_xzerg04c = 0x36,
-  MD_xzerg04d = 0x37,
-  MD_xzerg04e = 0x38,
-  MD_xzerg04f = 0x39,
-  MD_xzerg05 = 0x3A,
-  MD_xzerg06 = 0x3B,
-  MD_xzerg07 = 0x3C,
-  MD_xzerg08 = 0x3D,
-  MD_xzerg09 = 0x3E,
-  MD_xbonus = 0x3F,
-  MD_xzerg10 = 0x40,
-  MD_Unknown = 0x41,
-};
-
-struct CUnitNydus
-{
-  CUnit *exit;
-};
-static_assert(sizeof(CUnitNydus) == 4, "Incorrect size for type `CUnitNydus`. Expected: 4");
-
-enum Cinematic : __int8
-{
-  C_BLIZZARD_LOGO = 0x0,
-  C_INTRO = 0x1,
-  C_WASTELAND_PATROL_INTRO = 0x2,
-  C_THE_DOWNING_OF_NORAD_II_INTRO = 0x3,
-  C_OPEN_REBELION_INTRO = 0x4,
-  C_THE_INAUGURATION_INTRO = 0x5,
-  C_WASTELAND_PATROL = 0x6,
-  C_THE_DOWNING_OF_NORAD_II = 0x7,
-  C_OPEN_REBELION = 0x8,
-  C_THE_INAUGURATION = 0x9,
-  C_BATTLE_ON_THE_AMERIGO_INTRO = 0xA,
-  C_THE_WARP_INTRO = 0xB,
-  C_THE_INVASION_OF_AIUR_INTRO = 0xC,
-  C_THE_DREAM = 0xD,
-  C_BATTLE_ON_THE_AMERIGO = 0xE,
-  C_THE_WARP = 0xF,
-  C_THE_INVASION_OF_AIUR = 0x10,
-  C_THE_FALL_OF_FENIX_INTRO = 0x11,
-  C_THE_AMBUSH_INTRO = 0x12,
-  C_THE_RETURN_TO_AIUR_INTRO = 0x13,
-  C_THE_FALL_OF_FENIX = 0x14,
-  C_THE_AMBUSH = 0x15,
-  C_THE_RETURN_TO_AIUR = 0x16,
-  C_THE_DEATH_OF_THE_OVERMIND = 0x17,
-  C_EXPANSION_INTRO = 0x18,
-  C_FURY_OF_THE_XEL_NAGA = 0x19,
-  C_UED_VICTORY_REPORT = 0x1A,
-  C_THE_ASCENTION = 0x1B,
-  C_NONE = 0x19,
-};
-
-struct dialog_ctrl
-{
-  dialog *pDlg;
-};
-static_assert(sizeof(dialog_ctrl) == 4, "Incorrect size for type `dialog_ctrl`. Expected: 4");
-
-enum UnitPrototypeFlags
-{
-  Building = 0x1,
-  Addon = 0x2,
-  Flyer = 0x4,
-  Worker = 0x8,
-  Subunit = 0x10,
-  FlyingBuilding = 0x20,
-  Hero = 0x40,
-  RegeneratesHP = 0x80,
-  AnimatedIdle = 0x100,
-  Cloakable = 0x200,
-  TwoUnitsIn1Egg = 0x400,
-  NeutralAccessories = 0x800,
-  ResourceDepot = 0x1000,
-  ResourceContainer = 0x2000,
-  RoboticUnit = 0x4000,
-  Detector = 0x8000,
-  OrganicUnit = 0x10000,
-  CreepBuilding = 0x20000,
-  Unused = 0x40000,
-  RequiresPsi = 0x80000,
-  Burrowable = 0x100000,
-  Spellcaster = 0x200000,
-  PermanentCloak = 0x400000,
-  NPCOrAccessories = 0x800000,
-  MorphFromOtherUnit = 0x1000000,
-  LargeUnit = 0x2000000,
-  HugeUnit = 0x4000000,
-  AutoAttackAndMove = 0x8000000,
-  Attack = 0x10000000,
-  Invincible_ = 0x20000000,
-  Mechanical = 0x40000000,
-  ProducesUnits = 0x80000000,
-};
-
-#pragma pack(push, 1)
-struct struct_5
-{
-  int sound_buffer_bytes;
-  int anonymous_1;
-  int anonymous_2;
-  IDirectSoundBuffer *sound_buffer;
-};
-#pragma pack(pop)
-static_assert(sizeof(struct_5) == 16, "Incorrect size for type `struct_5`. Expected: 16");
-
-enum OverlayType : unsigned __int8
-{
-  OT_ATTACK = 0x0,
-  OT_DAMAGE = 0x1,
-  OT_SPECIAL = 0x2,
-  OT_LANDING = 0x3,
-  OT_LIFTOFF = 0x4,
-};
-
-struct TemplateList
-{
-  int field_0;
-  TemplateListEntry *end;
-  TemplateListEntry *begin;
-};
-static_assert(sizeof(TemplateList) == 12, "Incorrect size for type `TemplateList`. Expected: 12");
-
-struct DlgGrp
-{
-  _BYTE gap0[268];
-  _DWORD dword10C;
-  _WORD word110;
-  _WORD word112;
-  _WORD word114;
-  _WORD word116;
-  _WORD word118;
-  _WORD word11A;
-  _WORD word11C;
-  _WORD word11E;
-  _WORD word120;
-  _WORD word122;
-  _WORD word124;
-  _WORD word126;
-  _WORD word128;
-  _WORD word12A;
-  _WORD word12C;
-  _WORD word12E;
-  _WORD word130;
-  _WORD word132;
-  _WORD word134;
-  _WORD word136;
-  _WORD word138;
-  _WORD word13A;
-  _WORD word13C;
-  _WORD word13E;
-  _WORD word140;
-  _WORD word142;
-  _WORD word144;
-  _WORD word146;
-  _WORD word148;
-  _WORD word14A;
-};
-static_assert(sizeof(DlgGrp) == 332, "Incorrect size for type `DlgGrp`. Expected: 332");
-
-enum MapDirEntryFlags : unsigned __int8
-{
-  MDEF_SAVEGAME = 0x1,
-  MDEF_SCENARIO = 0x4,
-  MDEF_DIRECTORY = 0x8,
-  MDEF_10 = 0x10,
-  MDEF_20 = 0x20,
-  MDEF_40 = 0x40,
-  MDEF_REPLAY = 0x80,
-};
-
-struct SpriteTileData
-{
-  CSprite *tails[256];
-  CSprite *heads[256];
-};
-static_assert(sizeof(SpriteTileData) == 2048, "Incorrect size for type `SpriteTileData`. Expected: 2048");
-
-enum PlayerTypes : unsigned __int8
-{
-  PT_NO_SINGLE = 0x0,
-  PT_NO_COMPUTERS = 0x1,
-  PT_NO_SINGLE_WITH_COMPUTERS = 0x2,
-  PT_SINGLE_NO_COMPUTERS = 0x3,
-  PT_SINGLE_WITH_COMPUTERS = 0x4,
-};
-
-struct UpdateFunction
-{
-  int index;
-  void (__fastcall *update_function)(CImage *);
-};
-static_assert(sizeof(UpdateFunction) == 8, "Incorrect size for type `UpdateFunction`. Expected: 8");
-
-enum GluAllTblEntry : __int16
-{
-  STAR_EDIT_NOT_FOUND = 0x0,
-  SPAWNED_BY = 0x1,
-  PRINT_FORMAT_S = 0x2,
-  UNITS = 0x3,
-  STRUCTURES = 0x4,
-  RESOURCES = 0x5,
-  PRODUCED = 0x6,
-  KILLED = 0x7,
-  LOST = 0x8,
-  CONSTRUCTED = 0x9,
-  RAZED = 0xA,
-  LOST2 = 0xB,
-  GAS_MINED = 0xC,
-  MINTERALS_MINED = 0xD,
-  TOTAL_SPENT = 0xE,
-  ELAPSED_TIME = 0xF,
-  DISCONNECTED = 0x13,
-  UNDECIDED = 0x14,
-  DELETE_SAVE_GAME = 0x15,
-  ENTER_CHARACTER_NAME = 0x16,
-  DELETE_CHARACTER = 0x17,
-  NAME_EXISTS = 0x18,
-  PLEASE_DELETE_CHARACTER = 0x19,
-  CHARACTER_CREATION_ERROR = 0x1A,
-  UP_ONE_LEVEL = 0x1B,
-  SAVE = 0x1C,
-  PRINT_FORMAT_U = 0x1D,
-  NUMBER_OF_PLAYERS = 0x1E,
-  PRINT_FORMAT_UX_U = 0x1F,
-  MAP_SIZE = 0x20,
-  TILESET = 0x21,
-  PRINT_FORMAT_U2 = 0x22,
-  COMPUTER_SLOTS = 0x23,
-  PRINT_FORMAT_U3 = 0x24,
-  HUMAN_SLOTS = 0x25,
-  BADLANDS = 0x26,
-  SPACE = 0x27,
-  INSTALLATION = 0x28,
-  ASHWORLD = 0x29,
-  JUNGLE = 0x2A,
-  DESERT = 0x2B,
-  ICE = 0x2C,
-  TWILIGHT = 0x2D,
-  SAVED_GAME = 0x2E,
-  MAP_NAME = 0x2F,
-  UNABLE_TO_LOAD_MAP = 0x30,
-  SELECT_LADDER_MAP = 0x31,
-  SELECTED_SCENARIO_NOT_VALID = 0x32,
-  ERROR_CREATING_GAME = 0x33,
-  NETWORK_GAME_EXISTS = 0x34,
-  UNSUPPORTED_GAME_TYPE_OPTIONS = 0x35,
-  TOO_MANY_GAMES_ON_NETWORK = 0x36,
-  GAME_NETWORK_INITIALIZATION_ERROR = 0x37,
-  OPPONENT_PLAYER_REQUIRED = 0x38,
-  HUMAN_PLAYER_REQUIRED = 0x39,
-  UMS_ONLY = 0x3A,
-  EXPANSION_ONLY = 0x3B,
-  INVALID_SCENARIO = 0x3C,
-  SCENARIO_FILENAME_TOO_LONG = 0x3D,
-  SCENARIO_INVALID_OR_CORRUPTED = 0x3E,
-  INVALID_SAVE_GAME = 0x3F,
-};
+static_assert(sizeof(point) == 8, "Incorrect size for type `point`. Expected: 8");
 
 struct bounds
 {
@@ -1052,70 +506,236 @@ struct bounds
 };
 static_assert(sizeof(bounds) == 12, "Incorrect size for type `bounds`. Expected: 12");
 
-enum ImageFlags : unsigned __int16
+struct ImagesDatExtraOverlayLO_Files
 {
-  IF_REDRAW = 0x1,
-  IF_HORIZONTALLY_FLIPPED = 0x2,
-  IF_Y_FROZEN = 0x4,
-  IF_HAS_DIRECTIONAL_FRAMES = 0x8,
-  IF_HAS_ISCRIPT_ANIMATIONS = 0x10,
-  IF_CLICKABLE = 0x20,
-  IF_HIDDEN = 0x40,
-  IF_USES_SPECIAL_OFFSET = 0x80,
+  LO_Header *overlays[5][999];
+};
+static_assert(sizeof(ImagesDatExtraOverlayLO_Files) == 19980, "Incorrect size for type `ImagesDatExtraOverlayLO_Files`. Expected: 19980");
+
+typedef __int8 s8;
+
+#pragma pack(push, 1)
+struct RTCI
+{
+  void *m_lpszClassName;
+  int m_nObjectSize;
+  int m_wSchema;
+  void *m_pfnCreateObject;
+  void *m_pfnGetBaseClass;
+  int m_pNextClass;
+  int m_pClassInit;
+};
+#pragma pack(pop)
+static_assert(sizeof(RTCI) == 28, "Incorrect size for type `RTCI`. Expected: 28");
+
+#pragma pack(push, 1)
+struct RTTIClassHierarchyDescriptor
+{
+  int signature;
+  int attributes;
+  int numBaseClasses;
+  void *pBaseClassArray;
+};
+#pragma pack(pop)
+static_assert(sizeof(RTTIClassHierarchyDescriptor) == 16, "Incorrect size for type `RTTIClassHierarchyDescriptor`. Expected: 16");
+
+struct _RTTIClassHierarchyDescriptor
+{
+  int signature;
+  int attributes;
+  int numBaseClasses;
+  void *baseClassArray;
+};
+static_assert(sizeof(_RTTIClassHierarchyDescriptor) == 16, "Incorrect size for type `_RTTIClassHierarchyDescriptor`. Expected: 16");
+
+enum DialogFlags
+{
+  CTRL_UPDATE = 0x1,
+  CTRL_DISABLED = 0x2,
+  CTRL_ACTIVE = 0x4,
+  CTRL_VISIBLE = 0x8,
+  CTRL_EVENTS = 0x10,
+  CTRL_UNKOWN1 = 0x20,
+  CTRL_BTN_CANCEL = 0x40,
+  CTRL_BTN_NO_SOUND = 0x80,
+  CTRL_BTN_VIRT_HOTKEY = 0x100,
+  CTRL_BTN_HOTKEY = 0x200,
+  CTRL_FONT_SMALLEST = 0x400,
+  CTRL_FONT_LARGE = 0x800,
+  CTRL_UNKOWN2 = 0x1000,
+  CTRL_TRANSPARENT = 0x2000,
+  CTRL_FONT_LARGEST = 0x4000,
+  CTRL_UNKOWN3 = 0x8000,
+  CTRL_FONT_SMALL = 0x10000,
+  CTRL_PLAIN = 0x20000,
+  CTRL_TRANSLUCENT = 0x40000,
+  CTRL_BTN_DEFAULT = 0x80000,
+  CTRL_TOP = 0x100000,
+  CTRL_HALIGN_LEFT = 0x200000,
+  CTRL_HALIGN_RIGHT = 0x400000,
+  CTRL_HALIGN_CENTER = 0x800000,
+  CTRL_VALIGN_TOP = 0x1000000,
+  CTRL_VALIGN_MIDDLE = 0x2000000,
+  CTRL_VALIGN_BOTTOM = 0x4000000,
+  CTRL_UNKOWN4 = 0x8000000,
+  CTRL_DLG_NOREDRAW = 0x10000000,
+  CTRL_REVERSE = 0x10000000,
+  CTRL_USELOCALGRAPHIC = 0x20000000,
+  CTRL_DLG_ACTIVE = 0x40000000,
+  CTRL_LBOX_NORECALC = 0x80000000,
 };
 
-struct ChunkListItem
+struct PlayerResources
 {
-  ChunkData *next;
-  ChunkData *previous;
+  int minerals[12];
+  int gas[12];
+  int cumulativeGas[12];
+  int cumulativeMinerals[12];
 };
-static_assert(sizeof(ChunkListItem) == 8, "Incorrect size for type `ChunkListItem`. Expected: 8");
+static_assert(sizeof(PlayerResources) == 192, "Incorrect size for type `PlayerResources`. Expected: 192");
 
-enum WeaponBehavior : __int8
+enum BulletState : unsigned __int8
 {
-  Fly_DoNotFollowTarget = 0x0,
-  Fly_FollowTarget = 0x1,
-  AppearOnTargetUnit = 0x2,
-  PersistOnTargetSite = 0x3,
-  AppearOnTargetSite = 0x4,
-  AppearOnAttacker = 0x5,
-  AttackAndSelfDestruct = 0x6,
-  AttackNearbyArea = 0x8,
-  GoToMaxRange = 0x9,
-};
-
-enum UnitStats : unsigned __int8
-{
-  US_MAP_DEFALUT = 0x0,
-  US_STANDARD = 0x1,
+  Init = 0x0,
+  MovingToPosition = 0x1,
+  MovingToUnit = 0x2,
+  Bounce = 0x3,
+  TargetGround = 0x4,
+  ReachedDestination = 0x5,
+  MovingNearUnit = 0x6,
 };
 
-struct ForceName
+struct __declspec(align(4)) GameActionDataBlock
 {
-  char name[30];
+  int field1;
+  int field2;
+  void *net_record_buffer;
+  int field4;
+  int net_record_size;
+  int field6;
+  int field7;
+  void *field8;
 };
-static_assert(sizeof(ForceName) == 30, "Incorrect size for type `ForceName`. Expected: 30");
+static_assert(sizeof(GameActionDataBlock) == 32, "Incorrect size for type `GameActionDataBlock`. Expected: 32");
 
-enum PrintFlags : __int8
+#pragma pack(push, 1)
+struct struct_2
 {
-  PF_HALIGN_LEFT = 0x1,
-  PF_HALIGN_CENTER = 0x2,
-  PF_HALIGN_RIGHT = 0x4,
-  PF_UNK = 0x8,
-  PF_VALIGN_TOP = 0x10,
-  PF_VALIGN_CENTER = 0x20,
-  PF_VALIGN_BOTTOM = 0x40,
+  int field_0;
 };
+#pragma pack(pop)
+static_assert(sizeof(struct_2) == 4, "Incorrect size for type `struct_2`. Expected: 4");
 
-typedef void *(__fastcall *FastFileRead)(char *filename, int default_value, int *bytes_read, char *, int);
-
-enum ForceFlags : unsigned __int8
+struct UnknownTilesetRelated2
 {
-  RANDOM_START_LOCATION = 0x1,
-  ALLIES = 0x2,
-  ALLIED_VICTORY = 0x4,
-  SHARED_VISION = 0x8,
+  _DWORD dword0;
+  unsigned __int8 has_next;
+  _BYTE byte5;
+  _BYTE byte6;
+  _BYTE byte7;
 };
+static_assert(sizeof(UnknownTilesetRelated2) == 8, "Incorrect size for type `UnknownTilesetRelated2`. Expected: 8");
+
+typedef unsigned __int32 u32;
+
+struct ScoreFormatRelated
+{
+  void (__fastcall *score_calc)(struc_59A0F0 *a1, int player_id);
+  char *format_string;
+  int x;
+  int y;
+  int z;
+};
+static_assert(sizeof(ScoreFormatRelated) == 20, "Incorrect size for type `ScoreFormatRelated`. Expected: 20");
+
+struct __declspec(align(4)) CharacterData
+{
+  int char0;
+  _BYTE has_ophelia_cheat;
+  _BYTE gap5[3];
+  _DWORD last_access_time;
+  char player_name[24];
+  int gap0;
+  int unlocked_campaign_mission[3];
+  int unlocked_expcampaign_mission[3];
+  _BYTE more_data[48];
+};
+static_assert(sizeof(CharacterData) == 112, "Incorrect size for type `CharacterData`. Expected: 112");
+
+enum EventNo : unsigned __int16
+{
+  EVN_KEYFIRST = 0x0,
+  EVN_KEYDOWN = 0x0,
+  EVN_KEYRPT = 0x1,
+  EVN_KEYREPEAT = 0x1,
+  EVN_KEYUP = 0x2,
+  EVN_MOUSEMOVE = 0x3,
+  EVN_MOUSEFIRST = 0x3,
+  EVN_LBUTTONDOWN = 0x4,
+  EVN_LBUTTONUP = 0x5,
+  EVN_LBUTTONDBLCLK = 0x6,
+  EVN_RBUTTONDOWN = 0x7,
+  EVN_RBUTTONUP = 0x8,
+  EVN_RBUTTONDBLCLK = 0x9,
+  EVN_MBUTTONDOWN = 0xA,
+  EVN_MBUTTONUP = 0xB,
+  EVN_MBUTTONDBLCLK = 0xC,
+  EVN_IDLE = 0xD,
+  EVN_USER = 0xE,
+  EVN_CHAR = 0xF,
+  EVN_SYSCHAR = 0x10,
+  EVN_WHEELUP = 0x11,
+  EVN_WHEELDWN = 0x12,
+};
+
+typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
+
+#pragma pack(push, 1)
+struct __declspec(align(2)) AudioVideoInitializationError
+{
+  _DWORD error_code;
+  _DWORD dword4;
+  const char *function_name;
+};
+#pragma pack(pop)
+static_assert(sizeof(AudioVideoInitializationError) == 12, "Incorrect size for type `AudioVideoInitializationError`. Expected: 12");
+
+struct __declspec(align(4)) struct_v4
+{
+  int int0;
+  _DWORD dword4;
+  _DWORD dword8;
+  _DWORD dwordC;
+  _DWORD dword10;
+  _BYTE gap14[16];
+  _DWORD dword24;
+  _DWORD dword28;
+  _DWORD dword2C;
+  _DWORD dword30;
+};
+static_assert(sizeof(struct_v4) == 52, "Incorrect size for type `struct_v4`. Expected: 52");
+
+struct CUnitGhost
+{
+  CSprite *nukeDot;
+};
+static_assert(sizeof(CUnitGhost) == 4, "Incorrect size for type `CUnitGhost`. Expected: 4");
+
+struct __declspec(align(4)) struct_a3
+{
+  _DWORD unit_property_index;
+  _DWORD location_index;
+};
+static_assert(sizeof(struct_a3) == 8, "Incorrect size for type `struct_a3`. Expected: 8");
+
+#pragma pack(push, 1)
+struct activation_delays
+{
+  int anonymous_0;
+  dialog *anonymous_1;
+};
+#pragma pack(pop)
+static_assert(sizeof(activation_delays) == 8, "Incorrect size for type `activation_delays`. Expected: 8");
 
 enum IScriptOpcodes : unsigned __int8
 {
@@ -1190,17 +810,994 @@ enum IScriptOpcodes : unsigned __int8
   opc_dogrddamage = 0x44,
 };
 
-#pragma pack(push, 1)
-struct struct_2
+struct struct_a1_2
 {
-  int field_0;
+  _BYTE gap0[16];
+  HANDLE pvoid10;
+};
+static_assert(sizeof(struct_a1_2) == 20, "Incorrect size for type `struct_a1_2`. Expected: 20");
+
+enum FlingyID : unsigned __int8
+{
+  FGY_Scourge = 0x0,
+  FGY_Broodling = 0x1,
+  FGY_Infested_Terran = 0x2,
+  FGY_Guardian_Cocoon = 0x3,
+  FGY_Defiler = 0x4,
+  FGY_Drone = 0x5,
+  FGY_Egg = 0x6,
+  FGY_Guardian = 0x7,
+  FGY_Hydralisk = 0x8,
+  FGY_Infested_Kerrigan = 0x9,
+  FGY_Larva = 0xA,
+  FGY_Mutalisk = 0xB,
+  FGY_Overlord = 0xC,
+  FGY_Queen = 0xD,
+  FGY_Ultralisk = 0xE,
+  FGY_Zergling = 0xF,
+  FGY_Cerebrate = 0x10,
+  FGY_Infested_Command_Center = 0x11,
+  FGY_Spawning_Pool = 0x12,
+  FGY_Mature_Chrysalis = 0x13,
+  FGY_Evolution_Chamber = 0x14,
+  FGY_Creep_Colony = 0x15,
+  FGY_Hatchery = 0x16,
+  FGY_Hive = 0x17,
+  FGY_Lair = 0x18,
+  FGY_Sunken_Colony = 0x19,
+  FGY_Greater_Spire = 0x1A,
+  FGY_Defiler_Mound = 0x1B,
+  FGY_Queens_Nest = 0x1C,
+  FGY_Nydus_Canal = 0x1D,
+  FGY_Overmind_With_Shell = 0x1E,
+  FGY_Overmind_Without_Shell = 0x1F,
+  FGY_Ultralisk_Cavern = 0x20,
+  FGY_Extractor = 0x21,
+  FGY_Hydralisk_Den = 0x22,
+  FGY_Spire = 0x23,
+  FGY_Spore_Colony = 0x24,
+  FGY_Arbiter = 0x25,
+  FGY_Archon_Energy = 0x26,
+  FGY_Carrier = 0x27,
+  FGY_Dragoon = 0x28,
+  FGY_Interceptor = 0x29,
+  FGY_Probe = 0x2A,
+  FGY_Scout = 0x2B,
+  FGY_Shuttle = 0x2C,
+  FGY_High_Templar = 0x2D,
+  FGY_Dark_Templar_Hero = 0x2E,
+  FGY_Reaver = 0x2F,
+  FGY_Scarab = 0x30,
+  FGY_Zealot = 0x31,
+  FGY_Observer = 0x32,
+  FGY_Templar_Archives = 0x33,
+  FGY_Assimilator = 0x34,
+  FGY_Observatory = 0x35,
+  FGY_Citadel_of_Adun = 0x36,
+  FGY_Forge = 0x37,
+  FGY_Gateway = 0x38,
+  FGY_Cybernetics_Core = 0x39,
+  FGY_Khaydarin_Crystal_Formation = 0x3A,
+  FGY_Nexus = 0x3B,
+  FGY_Photon_Cannon = 0x3C,
+  FGY_Arbiter_Tribunal = 0x3D,
+  FGY_Pylon = 0x3E,
+  FGY_Robotics_Facility = 0x3F,
+  FGY_Shield_Battery = 0x40,
+  FGY_Stargate = 0x41,
+  FGY_Stasis_Cell_Prison = 0x42,
+  FGY_Robotics_Support_Bay = 0x43,
+  FGY_Protoss_Temple = 0x44,
+  FGY_Fleet_Beacon = 0x45,
+  FGY_Battlecruiser = 0x46,
+  FGY_Civilian = 0x47,
+  FGY_Dropship = 0x48,
+  FGY_Firebat = 0x49,
+  FGY_Ghost = 0x4A,
+  FGY_Goliath_Base = 0x4B,
+  FGY_Goliath_Turret = 0x4C,
+  FGY_Sarah_Kerrigan = 0x4D,
+  FGY_Marine = 0x4E,
+  FGY_Scanner_Sweep = 0x4F,
+  FGY_Wraith = 0x50,
+  FGY_SCV = 0x51,
+  FGY_Siege_Tank_Tank_Base = 0x52,
+  FGY_Siege_Tank_Tank_Turret = 0x53,
+  FGY_Siege_Tank_Siege_Base = 0x54,
+  FGY_Siege_Tank_Siege_Turret = 0x55,
+  FGY_Science_Vessel_Base = 0x56,
+  FGY_Science_Vessel_Turret = 0x57,
+  FGY_Vulture = 0x58,
+  FGY_Spider_Mine = 0x59,
+  FGY_Terran_Academy = 0x5A,
+  FGY_Barracks = 0x5B,
+  FGY_Armory = 0x5C,
+  FGY_Comsat_Station = 0x5D,
+  FGY_Command_Center = 0x5E,
+  FGY_Supply_Depot = 0x5F,
+  FGY_Control_Tower = 0x60,
+  FGY_Factory = 0x61,
+  FGY_Covert_Ops = 0x62,
+  FGY_Ion_Cannon = 0x63,
+  FGY_Machine_Shop = 0x64,
+  FGY_Missile_Turret_Base = 0x65,
+  FGY_Crashed_Battlecruiser = 0x66,
+  FGY_Physics_Lab = 0x67,
+  FGY_Bunker = 0x68,
+  FGY_Refinery = 0x69,
+  FGY_Immobile_Barracks = 0x6A,
+  FGY_Science_Facility = 0x6B,
+  FGY_Nuke_Silo = 0x6C,
+  FGY_Nuclear_Missile = 0x6D,
+  FGY_Starport = 0x6E,
+  FGY_Engineering_Bay = 0x6F,
+  FGY_Terran_Construction_Large = 0x70,
+  FGY_Terran_Construction_Small = 0x71,
+  FGY_Ragnasaur_Ashworld = 0x72,
+  FGY_Rhynadon_Badlands = 0x73,
+  FGY_Bengalaas_Jungle = 0x74,
+  FGY_Vespene_Geyser = 0x75,
+  FGY_Mineral_Field_Type1 = 0x76,
+  FGY_Mineral_Field_Type2 = 0x77,
+  FGY_Mineral_Field_Type3 = 0x78,
+  FGY_Independent_Starport_Unused = 0x79,
+  FGY_Zerg_Beacon = 0x7A,
+  FGY_Terran_Beacon = 0x7B,
+  FGY_Protoss_Beacon = 0x7C,
+  FGY_Dark_Swarm = 0x7D,
+  FGY_Flag = 0x7E,
+  FGY_Young_Chrysalis = 0x7F,
+  FGY_Psi_Emitter = 0x80,
+  FGY_Data_Disc = 0x81,
+  FGY_Khaydarin_Crystal = 0x82,
+  FGY_Mineral_Chunk_Type1 = 0x83,
+  FGY_Mineral_Chunk_Type2 = 0x84,
+  FGY_Protoss_Gas_Orb_Type1 = 0x85,
+  FGY_Protoss_Gas_Orb_Type2 = 0x86,
+  FGY_Zerg_Gas_Sac_Type1 = 0x87,
+  FGY_Zerg_Gas_Sac_Type2 = 0x88,
+  FGY_Terran_Gas_Tank_Type1 = 0x89,
+  FGY_Terran_Gas_Tank_Type2 = 0x8A,
+  FGY_Map_Revealer = 0x8B,
+  FGY_Start_Location = 0x8C,
+  FGY_Fusion_Cutter_Hit = 0x8D,
+  FGY_Gauss_Rifle_Hit = 0x8E,
+  FGY_C_10_Canister_Rifle_Hit = 0x8F,
+  FGY_Gemini_Missiles = 0x90,
+  FGY_Fragmentation_Grenade = 0x91,
+  FGY_Hellfire_Missile = 0x92,
+  FGY_Unknown147 = 0x93,
+  FGY_ATS_ATA_Laser_Battery = 0x94,
+  FGY_Burst_Lasers = 0x95,
+  FGY_Arclite_Shock_Cannon_Hit = 0x96,
+  FGY_EMP_Missile = 0x97,
+  FGY_Dual_Photon_Blasters_Hit = 0x98,
+  FGY_Particle_Beam_Hit = 0x99,
+  FGY_Anti_Matter_Missile = 0x9A,
+  FGY_Pulse_Cannon = 0x9B,
+  FGY_Psionic_Shockwave_Hit = 0x9C,
+  FGY_Psionic_Storm = 0x9D,
+  FGY_Yamato_Gun = 0x9E,
+  FGY_Phase_Disruptor = 0x9F,
+  FGY_STA_STS_Cannon_Overlay = 0xA0,
+  FGY_Sunken_Colony_Tentacle = 0xA1,
+  FGY_Venom_Unused_Zerg_Weapon = 0xA2,
+  FGY_Acid_Spore = 0xA3,
+  FGY_Unknown164 = 0xA4,
+  FGY_Glave_Wurm = 0xA5,
+  FGY_Seeker_Spores = 0xA6,
+  FGY_Queen_Spell_Carrier = 0xA7,
+  FGY_Plague_Cloud = 0xA8,
+  FGY_Consume = 0xA9,
+  FGY_Ensnare = 0xAA,
+  FGY_Needle_Spine_Hit = 0xAB,
+  FGY_White_Circle_Invisible = 0xAC,
+  FGY_Left_Upper_Level_Door = 0xAD,
+  FGY_Right_Upper_Level_Door = 0xAE,
+  FGY_Substructure_Left_Door = 0xAF,
+  FGY_Substructure_Right_Door = 0xB0,
+  FGY_Substructure_Opening_Hole = 0xB1,
+  FGY_Floor_Gun_Trap = 0xB2,
+  FGY_Floor_Missile_Trap = 0xB3,
+  FGY_Wall_Missile_Trap = 0xB4,
+  FGY_Wall_Missile_Trap2 = 0xB5,
+  FGY_Wall_Flame_Trap = 0xB6,
+  FGY_Wall_Flame_Trap2 = 0xB7,
+  FGY_Lurker_Egg = 0xB8,
+  FGY_Devourer = 0xB9,
+  FGY_Lurker = 0xBA,
+  FGY_Dark_Archon_Energy = 0xBB,
+  FGY_Dark_Templar_Unit = 0xBC,
+  FGY_Medic = 0xBD,
+  FGY_Valkyrie = 0xBE,
+  FGY_Corsair = 0xBF,
+  FGY_Disruption_Web = 0xC0,
+  FGY_Overmind_Cocoon = 0xC1,
+  FGY_Psi_Disrupter = 0xC2,
+  FGY_Warp_Gate = 0xC3,
+  FGY_Power_Generator = 0xC4,
+  FGY_XelNaga_Temple = 0xC5,
+  FGY_Scantid_Desert = 0xC6,
+  FGY_Kakaru_Twilight = 0xC7,
+  FGY_Ursadon_Ice = 0xC8,
+  FGY_Optical_Flare_Grenade = 0xC9,
+  FGY_Halo_Rockets = 0xCA,
+  FGY_Subterranean_Spines = 0xCB,
+  FGY_Corrosive_Acid_Shot = 0xCC,
+  FGY_Corrosive_Acid_Hit = 0xCD,
+  FGY_Neutron_Flare = 0xCE,
+  FGY_Uraj = 0xCF,
+  FGY_Khalis = 0xD0,
+  FGY_None = 0xD1,
+};
+
+struct ListNode
+{
+  ListNode *previous;
+  ListNode *next;
+};
+static_assert(sizeof(ListNode) == 8, "Incorrect size for type `ListNode`. Expected: 8");
+
+#pragma pack(push, 1)
+struct PMD
+{
+  int mdisp;
+  int pdisp;
+  int vdisp;
 };
 #pragma pack(pop)
-static_assert(sizeof(struct_2) == 4, "Incorrect size for type `struct_2`. Expected: 4");
+static_assert(sizeof(PMD) == 12, "Incorrect size for type `PMD`. Expected: 12");
 
-typedef __int32 s32;
+struct __declspec(align(4)) SNETPROGRAMDATA
+{
+  DWORD size;
+  LPCSTR programname;
+  LPCSTR programdescription;
+  DWORD programid;
+  DWORD versionid;
+  DWORD reserved1;
+  DWORD maxplayers;
+  LPVOID initdata;
+  DWORD initdatabytes;
+  LPVOID reserved2;
+  DWORD optcategorybits;
+  DWORD key_owner;
+  DWORD key;
+  DWORD is_spawn;
+  DWORD lang;
+};
+static_assert(sizeof(SNETPROGRAMDATA) == 60, "Incorrect size for type `SNETPROGRAMDATA`. Expected: 60");
 
-typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
+typedef __int16 s16;
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) struct_v2
+{
+  char unknown;
+  int initial_seed;
+  char player_bytes1[3];
+  int player_bytes2;
+  char player_bytes3;
+};
+#pragma pack(pop)
+static_assert(sizeof(struct_v2) == 13, "Incorrect size for type `struct_v2`. Expected: 13");
+
+struct SNETCAPS
+{
+  DWORD size;
+  DWORD flags;
+  DWORD maxmessagesize;
+  DWORD maxqueuesize;
+  DWORD maxplayers;
+  DWORD bytessec;
+  DWORD latencyms;
+  DWORD defaultturnssec;
+  DWORD defaultturnsintransit;
+};
+static_assert(sizeof(SNETCAPS) == 36, "Incorrect size for type `SNETCAPS`. Expected: 36");
+
+struct __declspec(align(4)) SNETUIDATA
+{
+  DWORD dwSize;
+  DWORD dwUnkType;
+  HWND hFrameWnd;
+  void *pfnBattleGetResource;
+  void *pfnBattleGetErrorString;
+  void *pfnBattleMakeCreateGameDialog;
+  void *pfnBattleUpdateIcons;
+  DWORD dwUnk_07;
+  void *pfnBattleErrorDialog;
+  void *pfnBattlePlaySound;
+  DWORD dwUnk_10;
+  void *pfnBattleGetCursorLink;
+  DWORD dwUnk_12;
+  void *pfnUnk_13;
+  DWORD dwUnk_14;
+  void *pfnBattleMakeProfileDialog;
+  char *pszProfileStrings;
+  void *pfnBattleDrawProfileInfo;
+  void *pfnUnk_18;
+  DWORD dwUnk_19;
+  void *pfnUnk_20;
+  void *pfnUnk_21;
+  void *pfnBattleSetLeagueName;
+};
+static_assert(sizeof(SNETUIDATA) == 92, "Incorrect size for type `SNETUIDATA`. Expected: 92");
+
+struct __declspec(align(4)) BNetGateways
+{
+  _BYTE byte0;
+  _DWORD dword4;
+  _DWORD gateway_count;
+  _DWORD dwordC;
+  const char *configuration;
+  _DWORD configuration_length;
+  _DWORD dword18;
+  _DWORD dword1C;
+};
+static_assert(sizeof(BNetGateways) == 32, "Incorrect size for type `BNetGateways`. Expected: 32");
+
+struct Chat_TextLine
+{
+  char chars[218];
+};
+static_assert(sizeof(Chat_TextLine) == 218, "Incorrect size for type `Chat_TextLine`. Expected: 218");
+
+struct TileID
+{
+  unsigned __int16 tile : 4;
+  unsigned __int16 group : 12;
+};
+static_assert(sizeof(TileID) == 2, "Incorrect size for type `TileID`. Expected: 2");
+
+struct __unaligned __declspec(align(1)) struct_v0
+{
+  char char0[25];
+  char char19[30];
+  _BYTE gap1A;
+  _DWORD dword38;
+  _DWORD dword3C;
+  _DWORD dword40;
+  _BYTE byte44;
+  _BYTE byte45[3];
+};
+static_assert(sizeof(struct_v0) == 72, "Incorrect size for type `struct_v0`. Expected: 72");
+
+struct TransVectorEntry
+{
+  HANDLE hTrans;
+  RECT info;
+  DWORD dwReserved;
+};
+static_assert(sizeof(TransVectorEntry) == 24, "Incorrect size for type `TransVectorEntry`. Expected: 24");
+
+#pragma pack(push, 1)
+struct RightClickCommand
+{
+  char command_id;
+  __int16 x;
+  __int16 y;
+  __int16 var_F;
+  __int16 var_D;
+  char is_shift_used;
+};
+#pragma pack(pop)
+static_assert(sizeof(RightClickCommand) == 10, "Incorrect size for type `RightClickCommand`. Expected: 10");
+
+enum GameType : __int8
+{
+  GT_Melee = 0x2,
+  GT_FreeForAll = 0x3,
+  GT_OneOnOne = 0x4,
+  GT_CaptureTheFlag = 0x5,
+  GT_Greed = 0x6,
+  GT_Slaughter = 0x7,
+  GT_SuddenDeath = 0x8,
+  GT_Ladder = 0x9,
+  GT_UseMapSettings = 0xA,
+  GT_TeamMelee = 0xB,
+  GT_TeamFreeForAll = 0xC,
+  GT_TeamCTF = 0xD,
+  GT_TopVsBottom = 0xF,
+};
+
+struct GameSpeeds
+{
+  unsigned __int32 gameSpeedModifiers[7];
+  unsigned __int32 altSpeedModifiers[7];
+};
+static_assert(sizeof(GameSpeeds) == 56, "Incorrect size for type `GameSpeeds`. Expected: 56");
+
+struct ButtonSet
+{
+  int button_count;
+  ButtonOrder *button_order;
+  __int16 f3;
+  __int16 f4;
+};
+static_assert(sizeof(ButtonSet) == 12, "Incorrect size for type `ButtonSet`. Expected: 12");
+
+enum Cinematic : __int8
+{
+  C_BLIZZARD_LOGO = 0x0,
+  C_INTRO = 0x1,
+  C_WASTELAND_PATROL_INTRO = 0x2,
+  C_THE_DOWNING_OF_NORAD_II_INTRO = 0x3,
+  C_OPEN_REBELION_INTRO = 0x4,
+  C_THE_INAUGURATION_INTRO = 0x5,
+  C_WASTELAND_PATROL = 0x6,
+  C_THE_DOWNING_OF_NORAD_II = 0x7,
+  C_OPEN_REBELION = 0x8,
+  C_THE_INAUGURATION = 0x9,
+  C_BATTLE_ON_THE_AMERIGO_INTRO = 0xA,
+  C_THE_WARP_INTRO = 0xB,
+  C_THE_INVASION_OF_AIUR_INTRO = 0xC,
+  C_THE_DREAM = 0xD,
+  C_BATTLE_ON_THE_AMERIGO = 0xE,
+  C_THE_WARP = 0xF,
+  C_THE_INVASION_OF_AIUR = 0x10,
+  C_THE_FALL_OF_FENIX_INTRO = 0x11,
+  C_THE_AMBUSH_INTRO = 0x12,
+  C_THE_RETURN_TO_AIUR_INTRO = 0x13,
+  C_THE_FALL_OF_FENIX = 0x14,
+  C_THE_AMBUSH = 0x15,
+  C_THE_RETURN_TO_AIUR = 0x16,
+  C_THE_DEATH_OF_THE_OVERMIND = 0x17,
+  C_EXPANSION_INTRO = 0x18,
+  C_FURY_OF_THE_XEL_NAGA = 0x19,
+  C_UED_VICTORY_REPORT = 0x1A,
+  C_THE_ASCENTION = 0x1B,
+  C_NONE = 0x19,
+};
+
+enum DamageType : __int8
+{
+  Independent = 0x0,
+  Explosive = 0x1,
+  Concussive = 0x2,
+  Normal = 0x3,
+  Ignore_Armor = 0x4,
+  DT_None = 0x5,
+  DT_Unknown = 0x6,
+  DT_MAX = 0x7,
+};
+
+struct Char4_characters
+{
+  char _0;
+  char _1;
+  char _2;
+  char _3;
+};
+static_assert(sizeof(Char4_characters) == 4, "Incorrect size for type `Char4_characters`. Expected: 4");
+
+struct UnitStat
+{
+  int anonymous_0;
+  bool (__cdecl *condition)();
+  void (__fastcall *action)(dialog *);
+};
+static_assert(sizeof(UnitStat) == 12, "Incorrect size for type `UnitStat`. Expected: 12");
+
+enum ImageFlags : unsigned __int16
+{
+  IF_REDRAW = 0x1,
+  IF_HORIZONTALLY_FLIPPED = 0x2,
+  IF_Y_FROZEN = 0x4,
+  IF_HAS_DIRECTIONAL_FRAMES = 0x8,
+  IF_HAS_ISCRIPT_ANIMATIONS = 0x10,
+  IF_CLICKABLE = 0x20,
+  IF_HIDDEN = 0x40,
+  IF_USES_SPECIAL_OFFSET = 0x80,
+};
+
+enum StartingUnits : unsigned __int8
+{
+  SU_MAP_DEFAULT = 0x0,
+  SU_WORKER_ONLY = 0x1,
+  SU_WORKER_AND_CENTER = 0x2,
+};
+
+struct dialog_ctrl
+{
+  dialog *pDlg;
+};
+static_assert(sizeof(dialog_ctrl) == 4, "Incorrect size for type `dialog_ctrl`. Expected: 4");
+
+struct struct_0
+{
+  void *field_0;
+  int field_4;
+};
+static_assert(sizeof(struct_0) == 8, "Incorrect size for type `struct_0`. Expected: 8");
+
+struct SNETPLAYERDATA
+{
+  DWORD dwSize;
+  char *pszPlayerName;
+  char *pszUnknown;
+  DWORD dwUnknown;
+};
+static_assert(sizeof(SNETPLAYERDATA) == 16, "Incorrect size for type `SNETPLAYERDATA`. Expected: 16");
+
+typedef unsigned __int8 BYTE;
+
+enum StatusFlags : unsigned __int32
+{
+  Completed = 0x1,
+  GoundedBuilding = 0x2,
+  InAir = 0x4,
+  Disabled = 0x8,
+  Burrowed = 0x10,
+  InBuilding = 0x20,
+  InTransport = 0x40,
+  UNKNOWN1 = 0x80,
+  RequiresDetection = 0x100,
+  Cloaked = 0x200,
+  DoodadStatesThing = 0x400,
+  CloakingForFree = 0x800,
+  CanNotReceiveOrders = 0x1000,
+  NoBrkCodeStart = 0x2000,
+  UNKNOWN2 = 0x4000,
+  CanNotAttack = 0x8000,
+  IsAUnit = 0x10000,
+  IsABuilding = 0x20000,
+  IgnoreTileCollision = 0x40000,
+  UNKNOWN4 = 0x80000,
+  IsNormal = 0x100000,
+  NoCollide = 0x200000,
+  UNKNOWN5 = 0x400000,
+  IsGathering = 0x800000,
+  UNKNOWN6 = 0x1000000,
+  UNKNOWN7 = 0x2000000,
+  Invincible = 0x4000000,
+  HoldingPosition = 0x8000000,
+  SpeedUpgrade = 0x10000000,
+  CooldownUpgrade = 0x20000000,
+  IsHallucination = 0x40000000,
+  IsSelfDestructing = 0x80000000,
+};
+
+typedef unsigned __int16 u16;
+
+struct MapDownload
+{
+  int u1;
+  int u2;
+  int net_players;
+  int map_size;
+  int checksum;
+  int u3;
+  char map_path[260];
+  char unknown[4];
+  int u4;
+  int u5;
+};
+static_assert(sizeof(MapDownload) == 296, "Incorrect size for type `MapDownload`. Expected: 296");
+
+struct SNETVERSIONDATA
+{
+  unsigned int size;
+  char *versionstring;
+  char *executablefile;
+  char *originalarchivefile;
+  char *patcharchivefile;
+};
+static_assert(sizeof(SNETVERSIONDATA) == 20, "Incorrect size for type `SNETVERSIONDATA`. Expected: 20");
+
+enum MenuPosition : __int32
+{
+  GLUE_MAIN_MENU = 0x0,
+  GLUE_SIMULATE = 0x1,
+  GLUE_CONNECT = 0x2,
+  GLUE_CHAT = 0x3,
+  GLUE_BATTLE = 0x4,
+  GLUE_LOGIN = 0x5,
+  GLUE_CAMPAIGN = 0x6,
+  GLUE_READY_T = 0x7,
+  GLUE_READY_Z = 0x8,
+  GLUE_READY_P = 0x9,
+  GLUE_GAME_SELECT = 0xA,
+  GLUE_CREATE = 0xB,
+  GLUE_CREATE_MULTI = 0xC,
+  GLUE_LOAD = 0xD,
+  GLUE_SCORE_Z_DEFEAT = 0xE,
+  GLUE_SCORE_Z_VICTORY = 0xF,
+  GLUE_SCORE_T_DEFEAT = 0x10,
+  GLUE_SCORE_T_VICTORY = 0x11,
+  GLUE_SCORE_P_DEFEAT = 0x12,
+  GLUE_SCORE_P_VICTORY = 0x13,
+  GLUE_MODEM = 0x14,
+  GLUE_DIRECT = 0x15,
+  GLUE_EX_CAMPAIGN = 0x16,
+  GLUE_GAME_MODE = 0x17,
+  GLUE_EX_GAME_MODE = 0x18,
+  GLUE_GENERIC = 0x19,
+  GLUE_MAX = 0x1A,
+};
+
+struct BltMask
+{
+  void *pvoid0;
+  _BYTE gap4[4];
+  _DWORD dword8;
+  _DWORD dwordC;
+  _DWORD dword10;
+  _DWORD dword14;
+  _DWORD dword18;
+};
+static_assert(sizeof(BltMask) == 28, "Incorrect size for type `BltMask`. Expected: 28");
+
+enum UnitType : unsigned __int16
+{
+  Terran_Marine = 0x0,
+  Terran_Ghost = 0x1,
+  Terran_Vulture = 0x2,
+  Terran_Goliath = 0x3,
+  Terran_Goliath_Turret = 0x4,
+  Terran_Siege_Tank_Tank_Mode = 0x5,
+  Terran_Siege_Tank_Tank_Mode_Turret = 0x6,
+  Terran_SCV = 0x7,
+  Terran_Wraith = 0x8,
+  Terran_Science_Vessel = 0x9,
+  Hero_Gui_Montag = 0xA,
+  Terran_Dropship = 0xB,
+  Terran_Battlecruiser = 0xC,
+  Terran_Vulture_Spider_Mine = 0xD,
+  Terran_Nuclear_Missile = 0xE,
+  Terran_Civilian = 0xF,
+  Hero_Sarah_Kerrigan = 0x10,
+  Hero_Alan_Schezar = 0x11,
+  Hero_Alan_Schezar_Turret = 0x12,
+  Hero_Jim_Raynor_Vulture = 0x13,
+  Hero_Jim_Raynor_Marine = 0x14,
+  Hero_Tom_Kazansky = 0x15,
+  Hero_Magellan = 0x16,
+  Hero_Edmund_Duke_Tank_Mode = 0x17,
+  Hero_Edmund_Duke_Tank_Mode_Turret = 0x18,
+  Hero_Edmund_Duke_Siege_Mode = 0x19,
+  Hero_Edmund_Duke_Siege_Mode_Turret = 0x1A,
+  Hero_Arcturus_Mengsk = 0x1B,
+  Hero_Hyperion = 0x1C,
+  Hero_Norad_II = 0x1D,
+  Terran_Siege_Tank_Siege_Mode = 0x1E,
+  Terran_Siege_Tank_Siege_Mode_Turret = 0x1F,
+  Terran_Firebat = 0x20,
+  Spell_Scanner_Sweep = 0x21,
+  Terran_Medic = 0x22,
+  Zerg_Larva = 0x23,
+  Zerg_Egg = 0x24,
+  Zerg_Zergling = 0x25,
+  Zerg_Hydralisk = 0x26,
+  Zerg_Ultralisk = 0x27,
+  Zerg_Broodling = 0x28,
+  Zerg_Drone = 0x29,
+  Zerg_Overlord = 0x2A,
+  Zerg_Mutalisk = 0x2B,
+  Zerg_Guardian = 0x2C,
+  Zerg_Queen = 0x2D,
+  Zerg_Defiler = 0x2E,
+  Zerg_Scourge = 0x2F,
+  Hero_Torrasque = 0x30,
+  Hero_Matriarch = 0x31,
+  Zerg_Infested_Terran = 0x32,
+  Hero_Infested_Kerrigan = 0x33,
+  Hero_Unclean_One = 0x34,
+  Hero_Hunter_Killer = 0x35,
+  Hero_Devouring_One = 0x36,
+  Hero_Kukulza_Mutalisk = 0x37,
+  Hero_Kukulza_Guardian = 0x38,
+  Hero_Yggdrasill = 0x39,
+  Terran_Valkyrie = 0x3A,
+  Zerg_Cocoon = 0x3B,
+  Protoss_Corsair = 0x3C,
+  Protoss_Dark_Templar = 0x3D,
+  Zerg_Devourer = 0x3E,
+  Protoss_Dark_Archon = 0x3F,
+  Protoss_Probe = 0x40,
+  Protoss_Zealot = 0x41,
+  Protoss_Dragoon = 0x42,
+  Protoss_High_Templar = 0x43,
+  Protoss_Archon = 0x44,
+  Protoss_Shuttle = 0x45,
+  Protoss_Scout = 0x46,
+  Protoss_Arbiter = 0x47,
+  Protoss_Carrier = 0x48,
+  Protoss_Interceptor = 0x49,
+  Hero_Dark_Templar = 0x4A,
+  Hero_Zeratul = 0x4B,
+  Hero_Tassadar_Zeratul_Archon = 0x4C,
+  Hero_Fenix_Zealot = 0x4D,
+  Hero_Fenix_Dragoon = 0x4E,
+  Hero_Tassadar = 0x4F,
+  Hero_Mojo = 0x50,
+  Hero_Warbringer = 0x51,
+  Hero_Gantrithor = 0x52,
+  Protoss_Reaver = 0x53,
+  Protoss_Observer = 0x54,
+  Protoss_Scarab = 0x55,
+  Hero_Danimoth = 0x56,
+  Hero_Aldaris = 0x57,
+  Hero_Artanis = 0x58,
+  Critter_Rhynadon = 0x59,
+  Critter_Bengalaas = 0x5A,
+  Special_Cargo_Ship = 0x5B,
+  Special_Mercenary_Gunship = 0x5C,
+  Critter_Scantid = 0x5D,
+  Critter_Kakaru = 0x5E,
+  Critter_Ragnasaur = 0x5F,
+  Critter_Ursadon = 0x60,
+  Zerg_Lurker_Egg = 0x61,
+  Hero_Raszagal = 0x62,
+  Hero_Samir_Duran = 0x63,
+  Hero_Alexei_Stukov = 0x64,
+  Special_Map_Revealer = 0x65,
+  Hero_Gerard_DuGalle = 0x66,
+  Zerg_Lurker = 0x67,
+  Hero_Infested_Duran = 0x68,
+  Spell_Disruption_Web = 0x69,
+  Terran_Command_Center = 0x6A,
+  Terran_Comsat_Station = 0x6B,
+  Terran_Nuclear_Silo = 0x6C,
+  Terran_Supply_Depot = 0x6D,
+  Terran_Refinery = 0x6E,
+  Terran_Barracks = 0x6F,
+  Terran_Academy = 0x70,
+  Terran_Factory = 0x71,
+  Terran_Starport = 0x72,
+  Terran_Control_Tower = 0x73,
+  Terran_Science_Facility = 0x74,
+  Terran_Covert_Ops = 0x75,
+  Terran_Physics_Lab = 0x76,
+  Unused_Terran1 = 0x77,
+  Terran_Machine_Shop = 0x78,
+  Unused_Terran2 = 0x79,
+  Terran_Engineering_Bay = 0x7A,
+  Terran_Armory = 0x7B,
+  Terran_Missile_Turret = 0x7C,
+  Terran_Bunker = 0x7D,
+  Special_Crashed_Norad_II = 0x7E,
+  Special_Ion_Cannon = 0x7F,
+  Powerup_Uraj_Crystal = 0x80,
+  Powerup_Khalis_Crystal = 0x81,
+  Zerg_Infested_Command_Center = 0x82,
+  Zerg_Hatchery = 0x83,
+  Zerg_Lair = 0x84,
+  Zerg_Hive = 0x85,
+  Zerg_Nydus_Canal = 0x86,
+  Zerg_Hydralisk_Den = 0x87,
+  Zerg_Defiler_Mound = 0x88,
+  Zerg_Greater_Spire = 0x89,
+  Zerg_Queens_Nest = 0x8A,
+  Zerg_Evolution_Chamber = 0x8B,
+  Zerg_Ultralisk_Cavern = 0x8C,
+  Zerg_Spire = 0x8D,
+  Zerg_Spawning_Pool = 0x8E,
+  Zerg_Creep_Colony = 0x8F,
+  Zerg_Spore_Colony = 0x90,
+  Unused_Zerg1 = 0x91,
+  Zerg_Sunken_Colony = 0x92,
+  Special_Overmind_With_Shell = 0x93,
+  Special_Overmind = 0x94,
+  Zerg_Extractor = 0x95,
+  Special_Mature_Chrysalis = 0x96,
+  Special_Cerebrate = 0x97,
+  Special_Cerebrate_Daggoth = 0x98,
+  Unused_Zerg2 = 0x99,
+  Protoss_Nexus = 0x9A,
+  Protoss_Robotics_Facility = 0x9B,
+  Protoss_Pylon = 0x9C,
+  Protoss_Assimilator = 0x9D,
+  Unused_Protoss1 = 0x9E,
+  Protoss_Observatory = 0x9F,
+  Protoss_Gateway = 0xA0,
+  Unused_Protoss2 = 0xA1,
+  Protoss_Photon_Cannon = 0xA2,
+  Protoss_Citadel_of_Adun = 0xA3,
+  Protoss_Cybernetics_Core = 0xA4,
+  Protoss_Templar_Archives = 0xA5,
+  Protoss_Forge = 0xA6,
+  Protoss_Stargate = 0xA7,
+  Special_Stasis_Cell_Prison = 0xA8,
+  Protoss_Fleet_Beacon = 0xA9,
+  Protoss_Arbiter_Tribunal = 0xAA,
+  Protoss_Robotics_Support_Bay = 0xAB,
+  Protoss_Shield_Battery = 0xAC,
+  Special_Khaydarin_Crystal_Form = 0xAD,
+  Special_Protoss_Temple = 0xAE,
+  Special_XelNaga_Temple = 0xAF,
+  Resource_Mineral_Field = 0xB0,
+  Resource_Mineral_Field_Type_2 = 0xB1,
+  Resource_Mineral_Field_Type_3 = 0xB2,
+  Unused_Cave = 0xB3,
+  Unused_Cave_In = 0xB4,
+  Unused_Cantina = 0xB5,
+  Unused_Mining_Platform = 0xB6,
+  Unused_Independant_Command_Center = 0xB7,
+  Special_Independant_Starport = 0xB8,
+  Unused_Independant_Jump_Gate = 0xB9,
+  Unused_Ruins = 0xBA,
+  Unused_Khaydarin_Crystal_Formation = 0xBB,
+  Resource_Vespene_Geyser = 0xBC,
+  Special_Warp_Gate = 0xBD,
+  Special_Psi_Disrupter = 0xBE,
+  Unused_Zerg_Marker = 0xBF,
+  Unused_Terran_Marker = 0xC0,
+  Unused_Protoss_Marker = 0xC1,
+  Special_Zerg_Beacon = 0xC2,
+  Special_Terran_Beacon = 0xC3,
+  Special_Protoss_Beacon = 0xC4,
+  Special_Zerg_Flag_Beacon = 0xC5,
+  Special_Terran_Flag_Beacon = 0xC6,
+  Special_Protoss_Flag_Beacon = 0xC7,
+  Special_Power_Generator = 0xC8,
+  Special_Overmind_Cocoon = 0xC9,
+  Spell_Dark_Swarm = 0xCA,
+  Special_Floor_Missile_Trap = 0xCB,
+  Special_Floor_Hatch = 0xCC,
+  Special_Upper_Level_Door = 0xCD,
+  Special_Right_Upper_Level_Door = 0xCE,
+  Special_Pit_Door = 0xCF,
+  Special_Right_Pit_Door = 0xD0,
+  Special_Floor_Gun_Trap = 0xD1,
+  Special_Wall_Missile_Trap = 0xD2,
+  Special_Wall_Flame_Trap = 0xD3,
+  Special_Right_Wall_Missile_Trap = 0xD4,
+  Special_Right_Wall_Flame_Trap = 0xD5,
+  Special_Start_Location = 0xD6,
+  Powerup_Flag = 0xD7,
+  Powerup_Young_Chrysalis = 0xD8,
+  Powerup_Psi_Emitter = 0xD9,
+  Powerup_Data_Disk = 0xDA,
+  Powerup_Khaydarin_Crystal = 0xDB,
+  Powerup_Mineral_Cluster_Type_1 = 0xDC,
+  Powerup_Mineral_Cluster_Type_2 = 0xDD,
+  Powerup_Protoss_Gas_Orb_Type_1 = 0xDE,
+  Powerup_Protoss_Gas_Orb_Type_2 = 0xDF,
+  Powerup_Zerg_Gas_Sac_Type_1 = 0xE0,
+  Powerup_Zerg_Gas_Sac_Type_2 = 0xE1,
+  Powerup_Terran_Gas_Tank_Type_1 = 0xE2,
+  Powerup_Terran_Gas_Tank_Type_2 = 0xE3,
+};
+
+struct DlgGrp
+{
+  _BYTE gap0[268];
+  _DWORD dword10C;
+  _WORD word110;
+  _WORD word112;
+  _WORD word114;
+  _WORD word116;
+  _WORD word118;
+  _WORD word11A;
+  _WORD word11C;
+  _WORD word11E;
+  _WORD word120;
+  _WORD word122;
+  _WORD word124;
+  _WORD word126;
+  _WORD word128;
+  _WORD word12A;
+  _WORD word12C;
+  _WORD word12E;
+  _WORD word130;
+  _WORD word132;
+  _WORD word134;
+  _WORD word136;
+  _WORD word138;
+  _WORD word13A;
+  _WORD word13C;
+  _WORD word13E;
+  _WORD word140;
+  _WORD word142;
+  _WORD word144;
+  _WORD word146;
+  _WORD word148;
+  _WORD word14A;
+};
+static_assert(sizeof(DlgGrp) == 332, "Incorrect size for type `DlgGrp`. Expected: 332");
+
+enum ResourceType : unsigned __int8
+{
+  RT_MAP_DEFALUT = 0x0,
+  RT_FIXED_VALUE = 0x1,
+  RT_LOW = 0x2,
+  RT_MEDIUM = 0x3,
+  RT_HIGH = 0x4,
+  RT_INCOME = 0x5,
+};
+
+typedef int (__fastcall *BriefingAction)(int arg1, int arg2);
+
+enum CursorType
+{
+  CUR_ARROW = 0x0,
+  CUR_ILLEGAL = 0x1,
+  CUR_TARG_Y = 0x2,
+  CUR_TARG_R = 0x3,
+  CUR_TARG_G = 0x4,
+  CUR_TARG_N = 0x5,
+  CUR_MAG_G = 0x6,
+  CUR_MAG_R = 0x7,
+  CUR_MAG_Y = 0x8,
+  CUR_DRAG = 0x9,
+  CUR_TIME = 0xA,
+  CUR_SCROLL_U = 0xB,
+  CUR_SCROLL_UR = 0xC,
+  CUR_SCROLL_R = 0xD,
+  CUR_SCROLL_DR = 0xE,
+  CUR_SCROLL_D = 0xF,
+  CUR_SCROLL_DL = 0x10,
+  CUR_SCROLL_L = 0x11,
+  CUR_SCROLL_UL = 0x12,
+  CUR_MAX = 0x13,
+};
+
+#pragma pack(push, 1)
+struct struct_1
+{
+  struct_1 *field_0;
+  char gap_4[28];
+  __int16 field_4;
+  char gap_22[36];
+  char field_5;
+  char gap_47[1];
+  char field_6;
+};
+#pragma pack(pop)
+static_assert(sizeof(struct_1) == 73, "Incorrect size for type `struct_1`. Expected: 73");
+
+typedef int (__fastcall *ActionPointer)(Action *);
+
+struct struc_659B10
+{
+  int field_0;
+  int field_4;
+  int field_8;
+  int field_C;
+  __int16 field_10;
+  __int16 field_12;
+};
+static_assert(sizeof(struc_659B10) == 20, "Incorrect size for type `struc_659B10`. Expected: 20");
+
+enum EventUser
+{
+  USER_CREATE = 0x0,
+  USER_DESTROY = 0x1,
+  USER_ACTIVATE = 0x2,
+  USER_HOTKEY = 0x3,
+  USER_MOUSEMOVE = 0x4,
+  USER_PREV = 0x5,
+  USER_NEXT = 0x6,
+  USER_UNK_7 = 0x7,
+  USER_UNK_8 = 0x8,
+  USER_MOUSEENTER = 0x9,
+  USER_INIT = 0xA,
+  USER_SELECT = 0xB,
+  USER_UNK_12 = 0xC,
+  USER_SHOW = 0xD,
+  USER_HIDE = 0xE,
+  USER_SCROLLUP = 0xF,
+  USER_SCROLLDOWN = 0x10,
+};
+
+typedef unsigned __int8 u8;
+
+struct STREAMED
+{
+  STREAMED *previous_maybe;
+  STREAMED *next_maybe;
+  HANDLE pvoid8;
+};
+static_assert(sizeof(STREAMED) == 12, "Incorrect size for type `STREAMED`. Expected: 12");
+
+struct __declspec(align(4)) ChunkNode
+{
+  ChunkNode *count;
+  ChunkData *f1;
+  ChunkData *f2;
+};
+static_assert(sizeof(ChunkNode) == 12, "Incorrect size for type `ChunkNode`. Expected: 12");
 
 enum Race : __int8
 {
@@ -1215,27 +1812,539 @@ enum Race : __int8
   RACE_Unknown = 0x8,
 };
 
-#pragma pack(push, 1)
-struct PMD
+enum DialogType : unsigned __int16
 {
-  int mdisp;
-  int pdisp;
-  int vdisp;
+  cDLG = 0x0,
+  cDFLTBTN = 0x1,
+  cBUTTON = 0x2,
+  cOPTION = 0x3,
+  cCHKBOX = 0x4,
+  cIMAGE = 0x5,
+  cHSCROLL = 0x6,
+  cVSCROLL = 0x7,
+  cEDIT = 0x8,
+  cLSTATIC = 0x9,
+  cRSTATIC = 0xA,
+  cCSTATIC = 0xB,
+  cLIST = 0xC,
+  cCOMBO = 0xD,
+  cFLCBTN = 0xE,
 };
-#pragma pack(pop)
-static_assert(sizeof(PMD) == 12, "Incorrect size for type `PMD`. Expected: 12");
 
-typedef __int16 s16;
-
-struct UnknownTilesetRelated2
+struct PlayerAlliance
 {
-  _DWORD dword0;
-  unsigned __int8 has_next;
-  _BYTE byte5;
-  _BYTE byte6;
-  _BYTE byte7;
+  unsigned __int8 player[12];
 };
-static_assert(sizeof(UnknownTilesetRelated2) == 8, "Incorrect size for type `UnknownTilesetRelated2`. Expected: 8");
+static_assert(sizeof(PlayerAlliance) == 12, "Incorrect size for type `PlayerAlliance`. Expected: 12");
+
+struct Timer
+{
+  struct Timer *next;
+  dialog *parent;
+  void (__fastcall *callback)(dialog *dlg, __int16 timer_id);
+  int start_tick;
+  int finish_tick;
+  __int16 id;
+  int unknown;
+};
+static_assert(sizeof(Timer) == 28, "Incorrect size for type `Timer`. Expected: 28");
+
+enum MegatileFlags
+{
+  VISIBLE_PLAYER_1 = 0x1,
+  VISIBLE_PLAYER_2 = 0x2,
+  VISIBLE_PLAYER_3 = 0x4,
+  VISIBLE_PLAYER_4 = 0x8,
+  VISIBLE_PLAYER_5 = 0x10,
+  VISIBLE_PLAYER_6 = 0x20,
+  VISIBLE_PLAYER_7 = 0x40,
+  VISIBLE_PLAYER_8 = 0x80,
+  EXPLORED_PLAYER_1 = 0x100,
+  EXPLORED_PLAYER_2 = 0x200,
+  EXPLORED_PLAYER_3 = 0x400,
+  EXPLORED_PLAYER_4 = 0x800,
+  EXPLORED_PLAYER_5 = 0x1000,
+  EXPLORED_PLAYER_6 = 0x2000,
+  EXPLORED_PLAYER_7 = 0x4000,
+  EXPLORED_PLAYER_8 = 0x8000,
+  MORE_THAN_12_WALKABLE = 0x10000,
+  LESS_THAN_13_WALKABLE = 0x40000,
+  CAN_MISS = 0x100000,
+  REAL_CREEP = 0x400000,
+  ALWAYS_UNBUILDABLE = 0x800000,
+  HAS_RAMP = 0x1000000,
+  MORE_THAN_12_MEDIUM_HEIGHT = 0x2000000,
+  MORE_THAN_12_HIGH_HEIGHT = 0x4000000,
+  CURRENTLY_OCCUPIED = 0x8000000,
+  CREEP_RECEEDING = 0x10000000,
+  CLIFF_EDGE = 0x20000000,
+  LOCAL_CREEP = 0x40000000,
+};
+
+struct UnitDimentions
+{
+  __int16 a;
+  __int16 b;
+  __int16 c;
+  __int16 d;
+};
+static_assert(sizeof(UnitDimentions) == 8, "Incorrect size for type `UnitDimentions`. Expected: 8");
+
+struct AI_Flags
+{
+  unsigned __int16 isSecureFinished : 1;
+  unsigned __int16 isTownStarted : 1;
+  unsigned __int16 isDefaultBuildOff : 1;
+  unsigned __int16 isTransportsOff : 1;
+  unsigned __int16 isFarmsNotimingOn : 1;
+  unsigned __int16 isUseMapSettings : 1;
+  unsigned __int16 flag_0x40 : 1;
+  unsigned __int16 spreadCreep : 1;
+  unsigned __int16 flag_0x100 : 1;
+  unsigned __int16 hasStrongestGndArmy : 1;
+  unsigned __int16 bUpgradesFinished : 1;
+  unsigned __int16 bTargetExpansion : 1;
+};
+static_assert(sizeof(AI_Flags) == 2, "Incorrect size for type `AI_Flags`. Expected: 2");
+
+enum GluAllTblEntry : __int16
+{
+  STAR_EDIT_NOT_FOUND = 0x0,
+  SPAWNED_BY = 0x1,
+  PRINT_FORMAT_S = 0x2,
+  UNITS = 0x3,
+  STRUCTURES = 0x4,
+  RESOURCES = 0x5,
+  PRODUCED = 0x6,
+  KILLED = 0x7,
+  LOST = 0x8,
+  CONSTRUCTED = 0x9,
+  RAZED = 0xA,
+  LOST2 = 0xB,
+  GAS_MINED = 0xC,
+  MINTERALS_MINED = 0xD,
+  TOTAL_SPENT = 0xE,
+  ELAPSED_TIME = 0xF,
+  DISCONNECTED = 0x13,
+  UNDECIDED = 0x14,
+  DELETE_SAVE_GAME = 0x15,
+  ENTER_CHARACTER_NAME = 0x16,
+  DELETE_CHARACTER = 0x17,
+  NAME_EXISTS = 0x18,
+  PLEASE_DELETE_CHARACTER = 0x19,
+  CHARACTER_CREATION_ERROR = 0x1A,
+  UP_ONE_LEVEL = 0x1B,
+  SAVE = 0x1C,
+  PRINT_FORMAT_U = 0x1D,
+  NUMBER_OF_PLAYERS = 0x1E,
+  PRINT_FORMAT_UX_U = 0x1F,
+  MAP_SIZE = 0x20,
+  TILESET = 0x21,
+  PRINT_FORMAT_U2 = 0x22,
+  COMPUTER_SLOTS = 0x23,
+  PRINT_FORMAT_U3 = 0x24,
+  HUMAN_SLOTS = 0x25,
+  BADLANDS = 0x26,
+  SPACE = 0x27,
+  INSTALLATION = 0x28,
+  ASHWORLD = 0x29,
+  JUNGLE = 0x2A,
+  DESERT = 0x2B,
+  ICE = 0x2C,
+  TWILIGHT = 0x2D,
+  SAVED_GAME = 0x2E,
+  MAP_NAME = 0x2F,
+  UNABLE_TO_LOAD_MAP = 0x30,
+  SELECT_LADDER_MAP = 0x31,
+  SELECTED_SCENARIO_NOT_VALID = 0x32,
+  ERROR_CREATING_GAME = 0x33,
+  NETWORK_GAME_EXISTS = 0x34,
+  UNSUPPORTED_GAME_TYPE_OPTIONS = 0x35,
+  TOO_MANY_GAMES_ON_NETWORK = 0x36,
+  GAME_NETWORK_INITIALIZATION_ERROR = 0x37,
+  OPPONENT_PLAYER_REQUIRED = 0x38,
+  HUMAN_PLAYER_REQUIRED = 0x39,
+  UMS_ONLY = 0x3A,
+  EXPANSION_ONLY = 0x3B,
+  INVALID_SCENARIO = 0x3C,
+  SCENARIO_FILENAME_TOO_LONG = 0x3D,
+  SCENARIO_INVALID_OR_CORRUPTED = 0x3E,
+  INVALID_SAVE_GAME = 0x3F,
+};
+
+enum Color : unsigned __int8
+{
+  COLOR_CYAN1 = 0x1,
+  COLOR_CYAN2 = 0x2,
+  COLOR_YELLOW1 = 0x3,
+  COLOR_WHITE1 = 0x4,
+  COLOR_GREY = 0x5,
+  COLOR_RED1 = 0x6,
+  COLOR_GREEN1 = 0x7,
+  COLOR_RED2 = 0x8,
+  COLOR_UNK1 = 0x9,
+  COLOR_UNK2 = 0xA,
+  COLOR_INVISIBLE1 = 0xB,
+  COLOR_TRUNCATE = 0xC,
+  COLOR_UNK3 = 0xD,
+  COLOR_BLUE = 0xE,
+  COLOR_TEAL = 0xF,
+  COLOR_PURPLE = 0x10,
+  COLOR_ORANGE = 0x11,
+  COLOR_UNK4 = 0x12,
+  COLOR_UNK5 = 0x13,
+  COLOR_INVISIBLE2 = 0x14,
+  COLOR_BROWN = 0x15,
+  COLOR_WHITE2 = 0x16,
+  COLOR_YELLOW2 = 0x17,
+  COLOR_GREEN2 = 0x18,
+  COLOR_BRIGHTER_YELLOW = 0x19,
+  COLOR_CYAN = 0x1A,
+  COLOR_PINKISH = 0x1B,
+  COLOR_DARK_CYAN = 0x1C,
+  COLOR_GREYGREEN = 0x1D,
+  COLOR_BLUEGREY = 0x1E,
+  COLOR_TURQUIOSE = 0x1F,
+  COLOR_UNK6 = 0x20,
+};
+
+typedef int (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
+
+enum PlayerGroups
+{
+  Player1 = 0x0,
+  Player2 = 0x1,
+  Player3 = 0x2,
+  Player4 = 0x3,
+  Player5 = 0x4,
+  Player6 = 0x5,
+  Player7 = 0x6,
+  Player8 = 0x7,
+  Player9 = 0x8,
+  Player10 = 0x9,
+  Player11 = 0xA,
+  Player12 = 0xB,
+  PG_None = 0xC,
+  PG_CurrentPlayer = 0xD,
+  PG_Foes = 0xE,
+  PG_Allies = 0xF,
+  PG_NeutralPlayers = 0x10,
+  PG_AllPlayers = 0x11,
+  PG_Force1 = 0x12,
+  PG_Force2 = 0x13,
+  PG_Force3 = 0x14,
+  PG_Force4 = 0x15,
+  PG_Unused1 = 0x16,
+  PG_Unused2 = 0x17,
+  PG_Unused3 = 0x18,
+  PG_Unused4 = 0x19,
+  PG_NonAlliedVictoryPlayers = 0x1A,
+  PG_Max = 0x1B,
+};
+
+enum ImageOrder
+{
+  IMGORD_BELOW = 0x0,
+  IMGORD_ABOVE = 0x1,
+};
+
+enum SaiAccessabilityFlags : __int16
+{
+  SAF_UNK = 0x2,
+  SAF_HighGround = 0x1FF9,
+  SAF_LowGround = 0x1FFB,
+  SAF_Inaccessible = 0x1FFD,
+};
+
+enum Anims : __int8
+{
+  AE_Init = 0x0,
+  AE_Death = 0x1,
+  AE_GndAttkInit = 0x2,
+  AE_AirAttkInit = 0x3,
+  AE_Unused1 = 0x4,
+  AE_GndAttkRpt = 0x5,
+  AE_AirAttkRpt = 0x6,
+  AE_CastSpell = 0x7,
+  AE_GndAttkToIdle = 0x8,
+  AE_AirAttkToIdle = 0x9,
+  AE_Unused2 = 0xA,
+  AE_Walking = 0xB,
+  AE_WalkingToIdle = 0xC,
+  AE_SpecialState1 = 0xD,
+  AE_SpecialState2 = 0xE,
+  AE_AlmostBuilt = 0xF,
+  AE_Built = 0x10,
+  AE_Landing = 0x11,
+  AE_LiftOff = 0x12,
+  AE_IsWorking = 0x13,
+  AE_WorkingToIdle = 0x14,
+  AE_WarpIn = 0x15,
+  AE_Unused3 = 0x16,
+  AE_StarEditInit = 0x17,
+  AE_Disable = 0x18,
+  AE_Burrow = 0x19,
+  AE_UnBurrow = 0x1A,
+  AE_Enable = 0x1B,
+};
+
+enum WeaponTargetFlags : __int16
+{
+  WTF_Air = 0x1,
+  WTF_Ground = 0x2,
+  WTF_Mechanical = 0x4,
+  WTF_Organic = 0x8,
+  WTF_NonBuilding = 0x10,
+  WTF_NonRobotic = 0x20,
+  WTF_Terrain = 0x40,
+  WTF_OrgOrMech = 0x80,
+  WTF_Own = 0x100,
+};
+
+enum Tech2 : __int16
+{
+  TECH2_stim_packs = 0x0,
+  TECH2_lockdown = 0x1,
+  TECH2_emp_shockwave = 0x2,
+  TECH2_spider_mines = 0x3,
+  TECH2_scanner_sweep = 0x4,
+  TECH2_tank_siege_mode = 0x5,
+  TECH2_defensive_matrix = 0x6,
+  TECH2_irradiate = 0x7,
+  TECH2_yamato_gun = 0x8,
+  TECH2_cloaking_field = 0x9,
+  TECH2_personnel_cloaking = 0xA,
+  TECH2_burrowing = 0xB,
+  TECH2_infestation = 0xC,
+  TECH2_spawn_broodlings = 0xD,
+  TECH2_dark_swarm = 0xE,
+  TECH2_plague = 0xF,
+  TECH2_consume = 0x10,
+  TECH2_ensnare = 0x11,
+  TECH2_parasite = 0x12,
+  TECH2_psionic_storm = 0x13,
+  TECH2_hallucination = 0x14,
+  TECH2_recall = 0x15,
+  TECH2_stasis_field = 0x16,
+  TECH2_archon_warp = 0x17,
+  TECH2_restoration = 0x18,
+  TECH2_disruption_web = 0x19,
+  TECH2_unknown_tech26 = 0x1A,
+  TECH2_mind_control = 0x1B,
+  TECH2_dark_archon_meld = 0x1C,
+  TECH2_feedback = 0x1D,
+  TECH2_optical_flare = 0x1E,
+  TECH2_maelstorm = 0x1F,
+  TECH2_lurker_aspect = 0x20,
+  TECH2_unknown_tech33 = 0x21,
+  TECH2_healing = 0x22,
+  TECH2_unknown_tech35 = 0x23,
+  TECH2_unknown_tech36 = 0x24,
+  TECH2_unknown_tech37 = 0x25,
+  TECH2_unknown_tech38 = 0x26,
+  TECH2_unknown_tech39 = 0x27,
+  TECH2_unknown_tech40 = 0x28,
+  TECH2_unknown_tech41 = 0x29,
+  TECH2_unknown_tech42 = 0x2A,
+  TECH2_unknown_tech43 = 0x2B,
+  TECH2_none = 0x2C,
+};
+
+struct __declspec(align(4)) EstablishingShotPosition
+{
+  int index;
+  const char *tag;
+};
+static_assert(sizeof(EstablishingShotPosition) == 8, "Incorrect size for type `EstablishingShotPosition`. Expected: 8");
+
+struct __declspec(align(2)) struc_66FE20
+{
+  char field_0;
+  char field_1;
+  __int16 field_2;
+  __int16 field_3;
+  __int16 field_4;
+  char player_name[26];
+};
+static_assert(sizeof(struc_66FE20) == 34, "Incorrect size for type `struc_66FE20`. Expected: 34");
+
+enum MapData4 : __int32
+{
+  MD4_none = 0x0,
+  MD4_tutorial = 0x1,
+  MD4_terran01 = 0x2,
+  MD4_terran02 = 0x3,
+  MD4_terran03 = 0x4,
+  MD4_terran04 = 0x5,
+  MD4_terran05 = 0x6,
+  MD4_terran06 = 0x7,
+  MD4_terran08 = 0x8,
+  MD4_terran09 = 0x9,
+  MD4_terran11 = 0xA,
+  MD4_terran12 = 0xB,
+  MD4_zerg01 = 0xC,
+  MD4_zerg02 = 0xD,
+  MD4_zerg03 = 0xE,
+  MD4_zerg04 = 0xF,
+  MD4_zerg05 = 0x10,
+  MD4_zerg06 = 0x11,
+  MD4_zerg07 = 0x12,
+  MD4_zerg08 = 0x13,
+  MD4_zerg09 = 0x14,
+  MD4_zerg10 = 0x15,
+  MD4_protoss01 = 0x16,
+  MD4_protoss02 = 0x17,
+  MD4_protoss03 = 0x18,
+  MD4_protoss04 = 0x19,
+  MD4_protoss05 = 0x1A,
+  MD4_protoss06 = 0x1B,
+  MD4_protoss07 = 0x1C,
+  MD4_protoss08 = 0x1D,
+  MD4_protoss09 = 0x1E,
+  MD4_protoss10 = 0x1F,
+  MD4_xprotoss01 = 0x20,
+  MD4_xprotoss02 = 0x21,
+  MD4_xprotoss03 = 0x22,
+  MD4_xprotoss04 = 0x23,
+  MD4_xprotoss05 = 0x24,
+  MD4_xprotoss06 = 0x25,
+  MD4_xprotoss07 = 0x26,
+  MD4_xprotoss08 = 0x27,
+  MD4_xterran01 = 0x28,
+  MD4_xterran02 = 0x29,
+  MD4_xterran03 = 0x2A,
+  MD4_xterran04 = 0x2B,
+  MD4_xterran05a = 0x2C,
+  MD4_xterran05b = 0x2D,
+  MD4_xterran06 = 0x2E,
+  MD4_xterran07 = 0x2F,
+  MD4_xterran08 = 0x30,
+  MD4_xzerg01 = 0x31,
+  MD4_xzerg02 = 0x32,
+  MD4_xzerg03 = 0x33,
+  MD4_xzerg04a = 0x34,
+  MD4_xzerg04b = 0x35,
+  MD4_xzerg04c = 0x36,
+  MD4_xzerg04d = 0x37,
+  MD4_xzerg04e = 0x38,
+  MD4_xzerg04f = 0x39,
+  MD4_xzerg05 = 0x3A,
+  MD4_xzerg06 = 0x3B,
+  MD4_xzerg07 = 0x3C,
+  MD4_xzerg08 = 0x3D,
+  MD4_xzerg09 = 0x3E,
+  MD4_xbonus = 0x3F,
+  MD4_xzerg10 = 0x40,
+  MD4_Unknown = 0x41,
+};
+
+enum WeaponType : unsigned __int8
+{
+  Gauss_Rifle = 0x0,
+  Gauss_Rifle_Jim_Raynor = 0x1,
+  C_10_Canister_Rifle = 0x2,
+  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
+  Fragmentation_Grenade = 0x4,
+  Fragmentation_Grenade_Jim_Raynor = 0x5,
+  Spider_Mines = 0x6,
+  Twin_Autocannons = 0x7,
+  Hellfire_Missile_Pack = 0x8,
+  Twin_Autocannons_Alan_Schezar = 0x9,
+  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
+  Arclite_Cannon = 0xB,
+  Arclite_Cannon_Edmund_Duke = 0xC,
+  Fusion_Cutter = 0xD,
+  Gemini_Missiles = 0xF,
+  Burst_Lasers = 0x10,
+  Gemini_Missiles_Tom_Kazansky = 0x11,
+  Burst_Lasers_Tom_Kazansky = 0x12,
+  ATS_Laser_Battery = 0x13,
+  ATA_Laser_Battery = 0x14,
+  ATS_Laser_Battery_Hero = 0x15,
+  ATA_Laser_Battery_Hero = 0x16,
+  ATS_Laser_Battery_Hyperion = 0x17,
+  ATA_Laser_Battery_Hyperion = 0x18,
+  Flame_Thrower = 0x19,
+  Flame_Thrower_Gui_Montag = 0x1A,
+  Arclite_Shock_Cannon = 0x1B,
+  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
+  Longbolt_Missile = 0x1D,
+  Yamato_Gun = 0x1E,
+  Nuclear_Strike = 0x1F,
+  Lockdown = 0x20,
+  EMP_Shockwave = 0x21,
+  Irradiate = 0x22,
+  Claws = 0x23,
+  Claws_Devouring_One = 0x24,
+  Claws_Infested_Kerrigan = 0x25,
+  Needle_Spines = 0x26,
+  Needle_Spines_Hunter_Killer = 0x27,
+  Kaiser_Blades = 0x28,
+  Kaiser_Blades_Torrasque = 0x29,
+  Toxic_Spores = 0x2A,
+  Spines = 0x2B,
+  Acid_Spore = 0x2E,
+  Acid_Spore_Kukulza = 0x2F,
+  Glave_Wurm = 0x30,
+  Glave_Wurm_Kukulza = 0x31,
+  Seeker_Spores = 0x34,
+  Subterranean_Tentacle = 0x35,
+  Suicide_Infested_Terran = 0x36,
+  Suicide_Scourge = 0x37,
+  Parasite = 0x38,
+  Spawn_Broodlings = 0x39,
+  Ensnare = 0x3A,
+  Dark_Swarm = 0x3B,
+  Plague = 0x3C,
+  Consume = 0x3D,
+  Particle_Beam = 0x3E,
+  Psi_Blades = 0x40,
+  Psi_Blades_Fenix = 0x41,
+  Phase_Disruptor = 0x42,
+  Phase_Disruptor_Fenix = 0x43,
+  Psi_Assault = 0x45,
+  Psionic_Shockwave = 0x46,
+  Psionic_Shockwave_TZ_Archon = 0x47,
+  Dual_Photon_Blasters = 0x49,
+  Anti_Matter_Missiles = 0x4A,
+  Dual_Photon_Blasters_Mojo = 0x4B,
+  Anti_Matter_Missiles_Mojo = 0x4C,
+  Phase_Disruptor_Cannon = 0x4D,
+  Phase_Disruptor_Cannon_Danimoth = 0x4E,
+  Pulse_Cannon = 0x4F,
+  STS_Photon_Cannon = 0x50,
+  STA_Photon_Cannon = 0x51,
+  Scarab = 0x52,
+  Stasis_Field = 0x53,
+  Psionic_Storm = 0x54,
+  Warp_Blades_Zeratul = 0x55,
+  Warp_Blades_Hero = 0x56,
+  Platform_Laser_Battery = 0x5C,
+  Independant_Laser_Battery = 0x5D,
+  Twin_Autocannons_Floor_Trap = 0x60,
+  Hellfire_Missile_Pack_Wall_Trap = 0x61,
+  Flame_Thrower_Wall_Trap = 0x62,
+  Hellfire_Missile_Pack_Floor_Trap = 0x63,
+  Neutron_Flare = 0x64,
+  Disruption_Web = 0x65,
+  Restoration = 0x66,
+  Halo_Rockets = 0x67,
+  Corrosive_Acid = 0x68,
+  Mind_Control = 0x69,
+  Feedback = 0x6A,
+  Optical_Flare = 0x6B,
+  Maelstrom = 0x6C,
+  Subterranean_Spines = 0x6D,
+  Warp_Blades = 0x6F,
+  C_10_Canister_Rifle_Samir_Duran = 0x70,
+  C_10_Canister_Rifle_Infested_Duran = 0x71,
+  Dual_Photon_Blasters_Artanis = 0x72,
+  Anti_Matter_Missiles_Artanis = 0x73,
+  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
+  WT_None = 0x82,
+  WT_Unknown = 0x83,
+  WT_MAX = 0x84,
+};
 
 enum SfxData
 {
@@ -2386,494 +3495,241 @@ enum SfxData
   SFX_MAX = 0x478,
 };
 
-#pragma pack(push, 1)
-struct RTCI
+struct __declspec(align(4)) UnitRelated20
 {
-  void *m_lpszClassName;
-  int m_nObjectSize;
-  int m_wSchema;
-  void *m_pfnCreateObject;
-  void *m_pfnGetBaseClass;
-  int m_pNextClass;
-  int m_pClassInit;
+  _DWORD unit_id;
+  _DWORD dword4;
+  CUnit *unit;
+  UnitRelated20 *dwordC;
+  UnitRelated20 *dword10;
 };
-#pragma pack(pop)
-static_assert(sizeof(RTCI) == 28, "Incorrect size for type `RTCI`. Expected: 28");
+static_assert(sizeof(UnitRelated20) == 20, "Incorrect size for type `UnitRelated20`. Expected: 20");
 
-struct struct_a1_2
+typedef void (__fastcall *InputProcedure)(dlgEvent *);
+
+struct UpdateFunction
 {
-  _BYTE gap0[16];
-  HANDLE pvoid10;
+  int index;
+  void (__fastcall *update_function)(CImage *);
 };
-static_assert(sizeof(struct_a1_2) == 20, "Incorrect size for type `struct_a1_2`. Expected: 20");
+static_assert(sizeof(UpdateFunction) == 8, "Incorrect size for type `UpdateFunction`. Expected: 8");
 
-struct point
+enum PrintFlags : __int8
 {
-  __int32 x;
-  __int32 y;
-};
-static_assert(sizeof(point) == 8, "Incorrect size for type `point`. Expected: 8");
-
-enum MenuPosition : __int32
-{
-  GLUE_MAIN_MENU = 0x0,
-  GLUE_SIMULATE = 0x1,
-  GLUE_CONNECT = 0x2,
-  GLUE_CHAT = 0x3,
-  GLUE_BATTLE = 0x4,
-  GLUE_LOGIN = 0x5,
-  GLUE_CAMPAIGN = 0x6,
-  GLUE_READY_T = 0x7,
-  GLUE_READY_Z = 0x8,
-  GLUE_READY_P = 0x9,
-  GLUE_GAME_SELECT = 0xA,
-  GLUE_CREATE = 0xB,
-  GLUE_CREATE_MULTI = 0xC,
-  GLUE_LOAD = 0xD,
-  GLUE_SCORE_Z_DEFEAT = 0xE,
-  GLUE_SCORE_Z_VICTORY = 0xF,
-  GLUE_SCORE_T_DEFEAT = 0x10,
-  GLUE_SCORE_T_VICTORY = 0x11,
-  GLUE_SCORE_P_DEFEAT = 0x12,
-  GLUE_SCORE_P_VICTORY = 0x13,
-  GLUE_MODEM = 0x14,
-  GLUE_DIRECT = 0x15,
-  GLUE_EX_CAMPAIGN = 0x16,
-  GLUE_GAME_MODE = 0x17,
-  GLUE_EX_GAME_MODE = 0x18,
-  GLUE_GENERIC = 0x19,
-  GLUE_MAX = 0x1A,
+  PF_HALIGN_LEFT = 0x1,
+  PF_HALIGN_CENTER = 0x2,
+  PF_HALIGN_RIGHT = 0x4,
+  PF_UNK = 0x8,
+  PF_VALIGN_TOP = 0x10,
+  PF_VALIGN_CENTER = 0x20,
+  PF_VALIGN_BOTTOM = 0x40,
 };
 
-struct ChkLoader
+enum SnetInfoType
 {
-  int version;
-  ChkSectionLoader *lobby_loaders;
-  int lobby_loader_count;
-  ChkSectionLoader *briefing_loaders;
-  int briefing_loader_count;
-  ChkSectionLoader *melee_loaders;
-  int melee_loader_count;
-  ChkSectionLoader *ums_loaders;
-  int ums_loader_count;
-  int requires_expansion;
-};
-static_assert(sizeof(ChkLoader) == 40, "Incorrect size for type `ChkLoader`. Expected: 40");
-
-enum WeaponType : unsigned __int8
-{
-  Gauss_Rifle = 0x0,
-  Gauss_Rifle_Jim_Raynor = 0x1,
-  C_10_Canister_Rifle = 0x2,
-  C_10_Canister_Rifle_Sarah_Kerrigan = 0x3,
-  Fragmentation_Grenade = 0x4,
-  Fragmentation_Grenade_Jim_Raynor = 0x5,
-  Spider_Mines = 0x6,
-  Twin_Autocannons = 0x7,
-  Hellfire_Missile_Pack = 0x8,
-  Twin_Autocannons_Alan_Schezar = 0x9,
-  Hellfire_Missile_Pack_Alan_Schezar = 0xA,
-  Arclite_Cannon = 0xB,
-  Arclite_Cannon_Edmund_Duke = 0xC,
-  Fusion_Cutter = 0xD,
-  Gemini_Missiles = 0xF,
-  Burst_Lasers = 0x10,
-  Gemini_Missiles_Tom_Kazansky = 0x11,
-  Burst_Lasers_Tom_Kazansky = 0x12,
-  ATS_Laser_Battery = 0x13,
-  ATA_Laser_Battery = 0x14,
-  ATS_Laser_Battery_Hero = 0x15,
-  ATA_Laser_Battery_Hero = 0x16,
-  ATS_Laser_Battery_Hyperion = 0x17,
-  ATA_Laser_Battery_Hyperion = 0x18,
-  Flame_Thrower = 0x19,
-  Flame_Thrower_Gui_Montag = 0x1A,
-  Arclite_Shock_Cannon = 0x1B,
-  Arclite_Shock_Cannon_Edmund_Duke = 0x1C,
-  Longbolt_Missile = 0x1D,
-  Yamato_Gun = 0x1E,
-  Nuclear_Strike = 0x1F,
-  Lockdown = 0x20,
-  EMP_Shockwave = 0x21,
-  Irradiate = 0x22,
-  Claws = 0x23,
-  Claws_Devouring_One = 0x24,
-  Claws_Infested_Kerrigan = 0x25,
-  Needle_Spines = 0x26,
-  Needle_Spines_Hunter_Killer = 0x27,
-  Kaiser_Blades = 0x28,
-  Kaiser_Blades_Torrasque = 0x29,
-  Toxic_Spores = 0x2A,
-  Spines = 0x2B,
-  Acid_Spore = 0x2E,
-  Acid_Spore_Kukulza = 0x2F,
-  Glave_Wurm = 0x30,
-  Glave_Wurm_Kukulza = 0x31,
-  Seeker_Spores = 0x34,
-  Subterranean_Tentacle = 0x35,
-  Suicide_Infested_Terran = 0x36,
-  Suicide_Scourge = 0x37,
-  Parasite = 0x38,
-  Spawn_Broodlings = 0x39,
-  Ensnare = 0x3A,
-  Dark_Swarm = 0x3B,
-  Plague = 0x3C,
-  Consume = 0x3D,
-  Particle_Beam = 0x3E,
-  Psi_Blades = 0x40,
-  Psi_Blades_Fenix = 0x41,
-  Phase_Disruptor = 0x42,
-  Phase_Disruptor_Fenix = 0x43,
-  Psi_Assault = 0x45,
-  Psionic_Shockwave = 0x46,
-  Psionic_Shockwave_TZ_Archon = 0x47,
-  Dual_Photon_Blasters = 0x49,
-  Anti_Matter_Missiles = 0x4A,
-  Dual_Photon_Blasters_Mojo = 0x4B,
-  Anti_Matter_Missiles_Mojo = 0x4C,
-  Phase_Disruptor_Cannon = 0x4D,
-  Phase_Disruptor_Cannon_Danimoth = 0x4E,
-  Pulse_Cannon = 0x4F,
-  STS_Photon_Cannon = 0x50,
-  STA_Photon_Cannon = 0x51,
-  Scarab = 0x52,
-  Stasis_Field = 0x53,
-  Psionic_Storm = 0x54,
-  Warp_Blades_Zeratul = 0x55,
-  Warp_Blades_Hero = 0x56,
-  Platform_Laser_Battery = 0x5C,
-  Independant_Laser_Battery = 0x5D,
-  Twin_Autocannons_Floor_Trap = 0x60,
-  Hellfire_Missile_Pack_Wall_Trap = 0x61,
-  Flame_Thrower_Wall_Trap = 0x62,
-  Hellfire_Missile_Pack_Floor_Trap = 0x63,
-  Neutron_Flare = 0x64,
-  Disruption_Web = 0x65,
-  Restoration = 0x66,
-  Halo_Rockets = 0x67,
-  Corrosive_Acid = 0x68,
-  Mind_Control = 0x69,
-  Feedback = 0x6A,
-  Optical_Flare = 0x6B,
-  Maelstrom = 0x6C,
-  Subterranean_Spines = 0x6D,
-  Warp_Blades = 0x6F,
-  C_10_Canister_Rifle_Samir_Duran = 0x70,
-  C_10_Canister_Rifle_Infested_Duran = 0x71,
-  Dual_Photon_Blasters_Artanis = 0x72,
-  Anti_Matter_Missiles_Artanis = 0x73,
-  C_10_Canister_Rifle_Alexei_Stukov = 0x74,
-  WT_None = 0x82,
-  WT_Unknown = 0x83,
-  WT_MAX = 0x84,
+  SNET_INFO_GAMENAME = 0x1,
+  SNET_INFO_GAMEPASSWORD = 0x2,
+  SNET_INFO_GAMEDESCRIPTION = 0x3,
+  SNET_INFO_GAMEMODE = 0x4,
+  SNET_INFO_INITDATA = 0x5,
+  SNET_INFO_MAXPLAYERS = 0x6,
 };
 
-enum Anims : __int8
+struct vx4entry
 {
-  AE_Init = 0x0,
-  AE_Death = 0x1,
-  AE_GndAttkInit = 0x2,
-  AE_AirAttkInit = 0x3,
-  AE_Unused1 = 0x4,
-  AE_GndAttkRpt = 0x5,
-  AE_AirAttkRpt = 0x6,
-  AE_CastSpell = 0x7,
-  AE_GndAttkToIdle = 0x8,
-  AE_AirAttkToIdle = 0x9,
-  AE_Unused2 = 0xA,
-  AE_Walking = 0xB,
-  AE_WalkingToIdle = 0xC,
-  AE_SpecialState1 = 0xD,
-  AE_SpecialState2 = 0xE,
-  AE_AlmostBuilt = 0xF,
-  AE_Built = 0x10,
-  AE_Landing = 0x11,
-  AE_LiftOff = 0x12,
-  AE_IsWorking = 0x13,
-  AE_WorkingToIdle = 0x14,
-  AE_WarpIn = 0x15,
-  AE_Unused3 = 0x16,
-  AE_StarEditInit = 0x17,
-  AE_Disable = 0x18,
-  AE_Burrow = 0x19,
-  AE_UnBurrow = 0x1A,
-  AE_Enable = 0x1B,
+  WORD wImageRef[4][4];
+};
+static_assert(sizeof(vx4entry) == 32, "Incorrect size for type `vx4entry`. Expected: 32");
+
+typedef struct _GUID GUID;
+
+enum Tech : __int8
+{
+  TECH_stim_packs = 0x0,
+  TECH_lockdown = 0x1,
+  TECH_emp_shockwave = 0x2,
+  TECH_spider_mines = 0x3,
+  TECH_scanner_sweep = 0x4,
+  TECH_tank_siege_mode = 0x5,
+  TECH_defensive_matrix = 0x6,
+  TECH_irradiate = 0x7,
+  TECH_yamato_gun = 0x8,
+  TECH_cloaking_field = 0x9,
+  TECH_personnel_cloaking = 0xA,
+  TECH_burrowing = 0xB,
+  TECH_infestation = 0xC,
+  TECH_spawn_broodlings = 0xD,
+  TECH_dark_swarm = 0xE,
+  TECH_plague = 0xF,
+  TECH_consume = 0x10,
+  TECH_ensnare = 0x11,
+  TECH_parasite = 0x12,
+  TECH_psionic_storm = 0x13,
+  TECH_hallucination = 0x14,
+  TECH_recall = 0x15,
+  TECH_stasis_field = 0x16,
+  TECH_archon_warp = 0x17,
+  TECH_restoration = 0x18,
+  TECH_disruption_web = 0x19,
+  TECH_unknown_tech26 = 0x1A,
+  TECH_mind_control = 0x1B,
+  TECH_dark_archon_meld = 0x1C,
+  TECH_feedback = 0x1D,
+  TECH_optical_flare = 0x1E,
+  TECH_maelstorm = 0x1F,
+  TECH_lurker_aspect = 0x20,
+  TECH_unknown_tech33 = 0x21,
+  TECH_healing = 0x22,
+  TECH_unknown_tech35 = 0x23,
+  TECH_unknown_tech36 = 0x24,
+  TECH_unknown_tech37 = 0x25,
+  TECH_unknown_tech38 = 0x26,
+  TECH_unknown_tech39 = 0x27,
+  TECH_unknown_tech40 = 0x28,
+  TECH_unknown_tech41 = 0x29,
+  TECH_unknown_tech42 = 0x2A,
+  TECH_unknown_tech43 = 0x2B,
+  TECH_none = 0x2C,
 };
 
-enum StartingPositions : unsigned __int8
+enum PlayerTypes : unsigned __int8
 {
-  SP_RANDOM = 0x0,
-  SP_FIXED = 0x1,
+  PT_NO_SINGLE = 0x0,
+  PT_NO_COMPUTERS = 0x1,
+  PT_NO_SINGLE_WITH_COMPUTERS = 0x2,
+  PT_SINGLE_NO_COMPUTERS = 0x3,
+  PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
 
-enum UnitType : unsigned __int16
+enum OverlayType : unsigned __int8
 {
-  Terran_Marine = 0x0,
-  Terran_Ghost = 0x1,
-  Terran_Vulture = 0x2,
-  Terran_Goliath = 0x3,
-  Terran_Goliath_Turret = 0x4,
-  Terran_Siege_Tank_Tank_Mode = 0x5,
-  Terran_Siege_Tank_Tank_Mode_Turret = 0x6,
-  Terran_SCV = 0x7,
-  Terran_Wraith = 0x8,
-  Terran_Science_Vessel = 0x9,
-  Hero_Gui_Montag = 0xA,
-  Terran_Dropship = 0xB,
-  Terran_Battlecruiser = 0xC,
-  Terran_Vulture_Spider_Mine = 0xD,
-  Terran_Nuclear_Missile = 0xE,
-  Terran_Civilian = 0xF,
-  Hero_Sarah_Kerrigan = 0x10,
-  Hero_Alan_Schezar = 0x11,
-  Hero_Alan_Schezar_Turret = 0x12,
-  Hero_Jim_Raynor_Vulture = 0x13,
-  Hero_Jim_Raynor_Marine = 0x14,
-  Hero_Tom_Kazansky = 0x15,
-  Hero_Magellan = 0x16,
-  Hero_Edmund_Duke_Tank_Mode = 0x17,
-  Hero_Edmund_Duke_Tank_Mode_Turret = 0x18,
-  Hero_Edmund_Duke_Siege_Mode = 0x19,
-  Hero_Edmund_Duke_Siege_Mode_Turret = 0x1A,
-  Hero_Arcturus_Mengsk = 0x1B,
-  Hero_Hyperion = 0x1C,
-  Hero_Norad_II = 0x1D,
-  Terran_Siege_Tank_Siege_Mode = 0x1E,
-  Terran_Siege_Tank_Siege_Mode_Turret = 0x1F,
-  Terran_Firebat = 0x20,
-  Spell_Scanner_Sweep = 0x21,
-  Terran_Medic = 0x22,
-  Zerg_Larva = 0x23,
-  Zerg_Egg = 0x24,
-  Zerg_Zergling = 0x25,
-  Zerg_Hydralisk = 0x26,
-  Zerg_Ultralisk = 0x27,
-  Zerg_Broodling = 0x28,
-  Zerg_Drone = 0x29,
-  Zerg_Overlord = 0x2A,
-  Zerg_Mutalisk = 0x2B,
-  Zerg_Guardian = 0x2C,
-  Zerg_Queen = 0x2D,
-  Zerg_Defiler = 0x2E,
-  Zerg_Scourge = 0x2F,
-  Hero_Torrasque = 0x30,
-  Hero_Matriarch = 0x31,
-  Zerg_Infested_Terran = 0x32,
-  Hero_Infested_Kerrigan = 0x33,
-  Hero_Unclean_One = 0x34,
-  Hero_Hunter_Killer = 0x35,
-  Hero_Devouring_One = 0x36,
-  Hero_Kukulza_Mutalisk = 0x37,
-  Hero_Kukulza_Guardian = 0x38,
-  Hero_Yggdrasill = 0x39,
-  Terran_Valkyrie = 0x3A,
-  Zerg_Cocoon = 0x3B,
-  Protoss_Corsair = 0x3C,
-  Protoss_Dark_Templar = 0x3D,
-  Zerg_Devourer = 0x3E,
-  Protoss_Dark_Archon = 0x3F,
-  Protoss_Probe = 0x40,
-  Protoss_Zealot = 0x41,
-  Protoss_Dragoon = 0x42,
-  Protoss_High_Templar = 0x43,
-  Protoss_Archon = 0x44,
-  Protoss_Shuttle = 0x45,
-  Protoss_Scout = 0x46,
-  Protoss_Arbiter = 0x47,
-  Protoss_Carrier = 0x48,
-  Protoss_Interceptor = 0x49,
-  Hero_Dark_Templar = 0x4A,
-  Hero_Zeratul = 0x4B,
-  Hero_Tassadar_Zeratul_Archon = 0x4C,
-  Hero_Fenix_Zealot = 0x4D,
-  Hero_Fenix_Dragoon = 0x4E,
-  Hero_Tassadar = 0x4F,
-  Hero_Mojo = 0x50,
-  Hero_Warbringer = 0x51,
-  Hero_Gantrithor = 0x52,
-  Protoss_Reaver = 0x53,
-  Protoss_Observer = 0x54,
-  Protoss_Scarab = 0x55,
-  Hero_Danimoth = 0x56,
-  Hero_Aldaris = 0x57,
-  Hero_Artanis = 0x58,
-  Critter_Rhynadon = 0x59,
-  Critter_Bengalaas = 0x5A,
-  Special_Cargo_Ship = 0x5B,
-  Special_Mercenary_Gunship = 0x5C,
-  Critter_Scantid = 0x5D,
-  Critter_Kakaru = 0x5E,
-  Critter_Ragnasaur = 0x5F,
-  Critter_Ursadon = 0x60,
-  Zerg_Lurker_Egg = 0x61,
-  Hero_Raszagal = 0x62,
-  Hero_Samir_Duran = 0x63,
-  Hero_Alexei_Stukov = 0x64,
-  Special_Map_Revealer = 0x65,
-  Hero_Gerard_DuGalle = 0x66,
-  Zerg_Lurker = 0x67,
-  Hero_Infested_Duran = 0x68,
-  Spell_Disruption_Web = 0x69,
-  Terran_Command_Center = 0x6A,
-  Terran_Comsat_Station = 0x6B,
-  Terran_Nuclear_Silo = 0x6C,
-  Terran_Supply_Depot = 0x6D,
-  Terran_Refinery = 0x6E,
-  Terran_Barracks = 0x6F,
-  Terran_Academy = 0x70,
-  Terran_Factory = 0x71,
-  Terran_Starport = 0x72,
-  Terran_Control_Tower = 0x73,
-  Terran_Science_Facility = 0x74,
-  Terran_Covert_Ops = 0x75,
-  Terran_Physics_Lab = 0x76,
-  Unused_Terran1 = 0x77,
-  Terran_Machine_Shop = 0x78,
-  Unused_Terran2 = 0x79,
-  Terran_Engineering_Bay = 0x7A,
-  Terran_Armory = 0x7B,
-  Terran_Missile_Turret = 0x7C,
-  Terran_Bunker = 0x7D,
-  Special_Crashed_Norad_II = 0x7E,
-  Special_Ion_Cannon = 0x7F,
-  Powerup_Uraj_Crystal = 0x80,
-  Powerup_Khalis_Crystal = 0x81,
-  Zerg_Infested_Command_Center = 0x82,
-  Zerg_Hatchery = 0x83,
-  Zerg_Lair = 0x84,
-  Zerg_Hive = 0x85,
-  Zerg_Nydus_Canal = 0x86,
-  Zerg_Hydralisk_Den = 0x87,
-  Zerg_Defiler_Mound = 0x88,
-  Zerg_Greater_Spire = 0x89,
-  Zerg_Queens_Nest = 0x8A,
-  Zerg_Evolution_Chamber = 0x8B,
-  Zerg_Ultralisk_Cavern = 0x8C,
-  Zerg_Spire = 0x8D,
-  Zerg_Spawning_Pool = 0x8E,
-  Zerg_Creep_Colony = 0x8F,
-  Zerg_Spore_Colony = 0x90,
-  Unused_Zerg1 = 0x91,
-  Zerg_Sunken_Colony = 0x92,
-  Special_Overmind_With_Shell = 0x93,
-  Special_Overmind = 0x94,
-  Zerg_Extractor = 0x95,
-  Special_Mature_Chrysalis = 0x96,
-  Special_Cerebrate = 0x97,
-  Special_Cerebrate_Daggoth = 0x98,
-  Unused_Zerg2 = 0x99,
-  Protoss_Nexus = 0x9A,
-  Protoss_Robotics_Facility = 0x9B,
-  Protoss_Pylon = 0x9C,
-  Protoss_Assimilator = 0x9D,
-  Unused_Protoss1 = 0x9E,
-  Protoss_Observatory = 0x9F,
-  Protoss_Gateway = 0xA0,
-  Unused_Protoss2 = 0xA1,
-  Protoss_Photon_Cannon = 0xA2,
-  Protoss_Citadel_of_Adun = 0xA3,
-  Protoss_Cybernetics_Core = 0xA4,
-  Protoss_Templar_Archives = 0xA5,
-  Protoss_Forge = 0xA6,
-  Protoss_Stargate = 0xA7,
-  Special_Stasis_Cell_Prison = 0xA8,
-  Protoss_Fleet_Beacon = 0xA9,
-  Protoss_Arbiter_Tribunal = 0xAA,
-  Protoss_Robotics_Support_Bay = 0xAB,
-  Protoss_Shield_Battery = 0xAC,
-  Special_Khaydarin_Crystal_Form = 0xAD,
-  Special_Protoss_Temple = 0xAE,
-  Special_XelNaga_Temple = 0xAF,
-  Resource_Mineral_Field = 0xB0,
-  Resource_Mineral_Field_Type_2 = 0xB1,
-  Resource_Mineral_Field_Type_3 = 0xB2,
-  Unused_Cave = 0xB3,
-  Unused_Cave_In = 0xB4,
-  Unused_Cantina = 0xB5,
-  Unused_Mining_Platform = 0xB6,
-  Unused_Independant_Command_Center = 0xB7,
-  Special_Independant_Starport = 0xB8,
-  Unused_Independant_Jump_Gate = 0xB9,
-  Unused_Ruins = 0xBA,
-  Unused_Khaydarin_Crystal_Formation = 0xBB,
-  Resource_Vespene_Geyser = 0xBC,
-  Special_Warp_Gate = 0xBD,
-  Special_Psi_Disrupter = 0xBE,
-  Unused_Zerg_Marker = 0xBF,
-  Unused_Terran_Marker = 0xC0,
-  Unused_Protoss_Marker = 0xC1,
-  Special_Zerg_Beacon = 0xC2,
-  Special_Terran_Beacon = 0xC3,
-  Special_Protoss_Beacon = 0xC4,
-  Special_Zerg_Flag_Beacon = 0xC5,
-  Special_Terran_Flag_Beacon = 0xC6,
-  Special_Protoss_Flag_Beacon = 0xC7,
-  Special_Power_Generator = 0xC8,
-  Special_Overmind_Cocoon = 0xC9,
-  Spell_Dark_Swarm = 0xCA,
-  Special_Floor_Missile_Trap = 0xCB,
-  Special_Floor_Hatch = 0xCC,
-  Special_Upper_Level_Door = 0xCD,
-  Special_Right_Upper_Level_Door = 0xCE,
-  Special_Pit_Door = 0xCF,
-  Special_Right_Pit_Door = 0xD0,
-  Special_Floor_Gun_Trap = 0xD1,
-  Special_Wall_Missile_Trap = 0xD2,
-  Special_Wall_Flame_Trap = 0xD3,
-  Special_Right_Wall_Missile_Trap = 0xD4,
-  Special_Right_Wall_Flame_Trap = 0xD5,
-  Special_Start_Location = 0xD6,
-  Powerup_Flag = 0xD7,
-  Powerup_Young_Chrysalis = 0xD8,
-  Powerup_Psi_Emitter = 0xD9,
-  Powerup_Data_Disk = 0xDA,
-  Powerup_Khaydarin_Crystal = 0xDB,
-  Powerup_Mineral_Cluster_Type_1 = 0xDC,
-  Powerup_Mineral_Cluster_Type_2 = 0xDD,
-  Powerup_Protoss_Gas_Orb_Type_1 = 0xDE,
-  Powerup_Protoss_Gas_Orb_Type_2 = 0xDF,
-  Powerup_Zerg_Gas_Sac_Type_1 = 0xE0,
-  Powerup_Zerg_Gas_Sac_Type_2 = 0xE1,
-  Powerup_Terran_Gas_Tank_Type_1 = 0xE2,
-  Powerup_Terran_Gas_Tank_Type_2 = 0xE3,
+  OT_ATTACK = 0x0,
+  OT_DAMAGE = 0x1,
+  OT_SPECIAL = 0x2,
+  OT_LANDING = 0x3,
+  OT_LIFTOFF = 0x4,
 };
 
-struct struc_64DEC8
+struct ShaState
 {
-  int field_0;
-  int field_4;
-  int field_8;
-  int field_C;
-  int field_10;
-  int field_14;
-  int field_18;
-  int field_1C;
-  int field_20;
-  int field_24;
-  int field_28;
-  int field_2C;
-  int field_30;
-  int field_34;
-  int field_38;
-  int field_3C;
-  int field_40;
-  int field_44;
-  int field_48;
-  int field_4C;
-  int field_50;
-  int field_54;
-  int field_58;
-  int field_5C;
-  int field_60;
-  int field_64;
-  int field_68;
-  int field_6C;
-  int field_70;
-  int field_74;
-  int field_78;
-  int field_7C;
+  int h[5];
+  int bit_count_low_maybe;
+  int bit_count_high_maybe;
+  int unk;
 };
-static_assert(sizeof(struc_64DEC8) == 128, "Incorrect size for type `struc_64DEC8`. Expected: 128");
+static_assert(sizeof(ShaState) == 32, "Incorrect size for type `ShaState`. Expected: 32");
+
+enum PlayerType : __int8
+{
+  PT_NotUsed = 0x0,
+  PT_Computer = 0x1,
+  PT_Human = 0x2,
+  PT_Rescuable = 0x3,
+  PT_Unknown0 = 0x4,
+  PT_ComputerSlot = 0x5,
+  PT_OpenSlot = 0x6,
+  PT_Neutral = 0x7,
+  PT_ClosedSlot = 0x8,
+  PT_Unknown1 = 0x9,
+  PT_HumanDefeated = 0xA,
+  PT_ComputerDefeated = 0xB,
+};
+
+enum UnitStats : unsigned __int8
+{
+  US_MAP_DEFALUT = 0x0,
+  US_STANDARD = 0x1,
+};
+
+struct ChunkListItem
+{
+  ChunkData *next;
+  ChunkData *previous;
+};
+static_assert(sizeof(ChunkListItem) == 8, "Incorrect size for type `ChunkListItem`. Expected: 8");
+
+enum MapData : __int16
+{
+  MD_none = 0x0,
+  MD_tutorial = 0x1,
+  MD_terran01 = 0x2,
+  MD_terran02 = 0x3,
+  MD_terran03 = 0x4,
+  MD_terran04 = 0x5,
+  MD_terran05 = 0x6,
+  MD_terran06 = 0x7,
+  MD_terran08 = 0x8,
+  MD_terran09 = 0x9,
+  MD_terran11 = 0xA,
+  MD_terran12 = 0xB,
+  MD_zerg01 = 0xC,
+  MD_zerg02 = 0xD,
+  MD_zerg03 = 0xE,
+  MD_zerg04 = 0xF,
+  MD_zerg05 = 0x10,
+  MD_zerg06 = 0x11,
+  MD_zerg07 = 0x12,
+  MD_zerg08 = 0x13,
+  MD_zerg09 = 0x14,
+  MD_zerg10 = 0x15,
+  MD_protoss01 = 0x16,
+  MD_protoss02 = 0x17,
+  MD_protoss03 = 0x18,
+  MD_protoss04 = 0x19,
+  MD_protoss05 = 0x1A,
+  MD_protoss06 = 0x1B,
+  MD_protoss07 = 0x1C,
+  MD_protoss08 = 0x1D,
+  MD_protoss09 = 0x1E,
+  MD_protoss10 = 0x1F,
+  MD_xprotoss01 = 0x20,
+  MD_xprotoss02 = 0x21,
+  MD_xprotoss03 = 0x22,
+  MD_xprotoss04 = 0x23,
+  MD_xprotoss05 = 0x24,
+  MD_xprotoss06 = 0x25,
+  MD_xprotoss07 = 0x26,
+  MD_xprotoss08 = 0x27,
+  MD_xterran01 = 0x28,
+  MD_xterran02 = 0x29,
+  MD_xterran03 = 0x2A,
+  MD_xterran04 = 0x2B,
+  MD_xterran05a = 0x2C,
+  MD_xterran05b = 0x2D,
+  MD_xterran06 = 0x2E,
+  MD_xterran07 = 0x2F,
+  MD_xterran08 = 0x30,
+  MD_xzerg01 = 0x31,
+  MD_xzerg02 = 0x32,
+  MD_xzerg03 = 0x33,
+  MD_xzerg04a = 0x34,
+  MD_xzerg04b = 0x35,
+  MD_xzerg04c = 0x36,
+  MD_xzerg04d = 0x37,
+  MD_xzerg04e = 0x38,
+  MD_xzerg04f = 0x39,
+  MD_xzerg05 = 0x3A,
+  MD_xzerg06 = 0x3B,
+  MD_xzerg07 = 0x3C,
+  MD_xzerg08 = 0x3D,
+  MD_xzerg09 = 0x3E,
+  MD_xbonus = 0x3F,
+  MD_xzerg10 = 0x40,
+  MD_Unknown = 0x41,
+};
+
+enum ButtonState
+{
+  BTNST_DISABLED = 0xFFFFFFFF,
+  BTNST_HIDDEN = 0x0,
+  BTNST_ENABLED = 0x1,
+};
+
+struct ForceName
+{
+  char name[30];
+};
+static_assert(sizeof(ForceName) == 30, "Incorrect size for type `ForceName`. Expected: 30");
 
 enum VictoryConditions : unsigned __int8
 {
@@ -2887,425 +3743,27 @@ enum VictoryConditions : unsigned __int8
   VC_ONE_ON_ONE = 0x7,
 };
 
-enum PlayerGroups
+struct struc_51B1E8
 {
-  Player1 = 0x0,
-  Player2 = 0x1,
-  Player3 = 0x2,
-  Player4 = 0x3,
-  Player5 = 0x4,
-  Player6 = 0x5,
-  Player7 = 0x6,
-  Player8 = 0x7,
-  Player9 = 0x8,
-  Player10 = 0x9,
-  Player11 = 0xA,
-  Player12 = 0xB,
-  PG_None = 0xC,
-  PG_CurrentPlayer = 0xD,
-  PG_Foes = 0xE,
-  PG_Allies = 0xF,
-  PG_NeutralPlayers = 0x10,
-  PG_AllPlayers = 0x11,
-  PG_Force1 = 0x12,
-  PG_Force2 = 0x13,
-  PG_Force3 = 0x14,
-  PG_Force4 = 0x15,
-  PG_Unused1 = 0x16,
-  PG_Unused2 = 0x17,
-  PG_Unused3 = 0x18,
-  PG_Unused4 = 0x19,
-  PG_NonAlliedVictoryPlayers = 0x1A,
-  PG_Max = 0x1B,
-};
-
-struct STREAMED
-{
-  STREAMED *previous_maybe;
-  STREAMED *next_maybe;
-  HANDLE pvoid8;
-};
-static_assert(sizeof(STREAMED) == 12, "Incorrect size for type `STREAMED`. Expected: 12");
-
-struct ButtonSet
-{
-  int button_count;
-  ButtonOrder *button_order;
-  __int16 f3;
-  __int16 f4;
-};
-static_assert(sizeof(ButtonSet) == 12, "Incorrect size for type `ButtonSet`. Expected: 12");
-
-struct TileID
-{
-  unsigned __int16 tile : 4;
-  unsigned __int16 group : 12;
-};
-static_assert(sizeof(TileID) == 2, "Incorrect size for type `TileID`. Expected: 2");
-
-struct __declspec(align(4)) struct_v4
-{
-  int int0;
-  _DWORD dword4;
-  _DWORD dword8;
-  _DWORD dwordC;
-  _DWORD dword10;
-  _BYTE gap14[16];
-  _DWORD dword24;
-  _DWORD dword28;
-  _DWORD dword2C;
-  _DWORD dword30;
-};
-static_assert(sizeof(struct_v4) == 52, "Incorrect size for type `struct_v4`. Expected: 52");
-
-struct ImagesDatExtraOverlayLO_Files
-{
-  LO_Header *overlays[5][999];
-};
-static_assert(sizeof(ImagesDatExtraOverlayLO_Files) == 19980, "Incorrect size for type `ImagesDatExtraOverlayLO_Files`. Expected: 19980");
-
-enum StatusFlags : unsigned __int32
-{
-  Completed = 0x1,
-  GoundedBuilding = 0x2,
-  InAir = 0x4,
-  Disabled = 0x8,
-  Burrowed = 0x10,
-  InBuilding = 0x20,
-  InTransport = 0x40,
-  UNKNOWN1 = 0x80,
-  RequiresDetection = 0x100,
-  Cloaked = 0x200,
-  DoodadStatesThing = 0x400,
-  CloakingForFree = 0x800,
-  CanNotReceiveOrders = 0x1000,
-  NoBrkCodeStart = 0x2000,
-  UNKNOWN2 = 0x4000,
-  CanNotAttack = 0x8000,
-  IsAUnit = 0x10000,
-  IsABuilding = 0x20000,
-  IgnoreTileCollision = 0x40000,
-  UNKNOWN4 = 0x80000,
-  IsNormal = 0x100000,
-  NoCollide = 0x200000,
-  UNKNOWN5 = 0x400000,
-  IsGathering = 0x800000,
-  UNKNOWN6 = 0x1000000,
-  UNKNOWN7 = 0x2000000,
-  Invincible = 0x4000000,
-  HoldingPosition = 0x8000000,
-  SpeedUpgrade = 0x10000000,
-  CooldownUpgrade = 0x20000000,
-  IsHallucination = 0x40000000,
-  IsSelfDestructing = 0x80000000,
-};
-
-struct SNETPLAYERDATA
-{
-  DWORD dwSize;
-  char *pszPlayerName;
-  char *pszUnknown;
-  DWORD dwUnknown;
-};
-static_assert(sizeof(SNETPLAYERDATA) == 16, "Incorrect size for type `SNETPLAYERDATA`. Expected: 16");
-
-#pragma pack(push, 1)
-struct RightClickCommand
-{
-  char command_id;
-  __int16 x;
-  __int16 y;
-  __int16 var_F;
-  __int16 var_D;
-  char is_shift_used;
-};
-#pragma pack(pop)
-static_assert(sizeof(RightClickCommand) == 10, "Incorrect size for type `RightClickCommand`. Expected: 10");
-
-struct GameSpeeds
-{
-  unsigned __int32 gameSpeedModifiers[7];
-  unsigned __int32 altSpeedModifiers[7];
-};
-static_assert(sizeof(GameSpeeds) == 56, "Incorrect size for type `GameSpeeds`. Expected: 56");
-
-enum EventNo : unsigned __int16
-{
-  EVN_KEYFIRST = 0x0,
-  EVN_KEYDOWN = 0x0,
-  EVN_KEYRPT = 0x1,
-  EVN_KEYREPEAT = 0x1,
-  EVN_KEYUP = 0x2,
-  EVN_MOUSEMOVE = 0x3,
-  EVN_MOUSEFIRST = 0x3,
-  EVN_LBUTTONDOWN = 0x4,
-  EVN_LBUTTONUP = 0x5,
-  EVN_LBUTTONDBLCLK = 0x6,
-  EVN_RBUTTONDOWN = 0x7,
-  EVN_RBUTTONUP = 0x8,
-  EVN_RBUTTONDBLCLK = 0x9,
-  EVN_MBUTTONDOWN = 0xA,
-  EVN_MBUTTONUP = 0xB,
-  EVN_MBUTTONDBLCLK = 0xC,
-  EVN_IDLE = 0xD,
-  EVN_USER = 0xE,
-  EVN_CHAR = 0xF,
-  EVN_SYSCHAR = 0x10,
-  EVN_WHEELUP = 0x11,
-  EVN_WHEELDWN = 0x12,
-};
-
-struct vx4entry
-{
-  WORD wImageRef[4][4];
-};
-static_assert(sizeof(vx4entry) == 32, "Incorrect size for type `vx4entry`. Expected: 32");
-
-enum ImageOrder
-{
-  IMGORD_BELOW = 0x0,
-  IMGORD_ABOVE = 0x1,
-};
-
-struct CThingy
-{
-  CThingy *prev;
-  CThingy *next;
-  int hitPoints;
-  CSprite *sprite;
-};
-static_assert(sizeof(CThingy) == 16, "Incorrect size for type `CThingy`. Expected: 16");
-
-enum Tech2 : __int16
-{
-  TECH2_stim_packs = 0x0,
-  TECH2_lockdown = 0x1,
-  TECH2_emp_shockwave = 0x2,
-  TECH2_spider_mines = 0x3,
-  TECH2_scanner_sweep = 0x4,
-  TECH2_tank_siege_mode = 0x5,
-  TECH2_defensive_matrix = 0x6,
-  TECH2_irradiate = 0x7,
-  TECH2_yamato_gun = 0x8,
-  TECH2_cloaking_field = 0x9,
-  TECH2_personnel_cloaking = 0xA,
-  TECH2_burrowing = 0xB,
-  TECH2_infestation = 0xC,
-  TECH2_spawn_broodlings = 0xD,
-  TECH2_dark_swarm = 0xE,
-  TECH2_plague = 0xF,
-  TECH2_consume = 0x10,
-  TECH2_ensnare = 0x11,
-  TECH2_parasite = 0x12,
-  TECH2_psionic_storm = 0x13,
-  TECH2_hallucination = 0x14,
-  TECH2_recall = 0x15,
-  TECH2_stasis_field = 0x16,
-  TECH2_archon_warp = 0x17,
-  TECH2_restoration = 0x18,
-  TECH2_disruption_web = 0x19,
-  TECH2_unknown_tech26 = 0x1A,
-  TECH2_mind_control = 0x1B,
-  TECH2_dark_archon_meld = 0x1C,
-  TECH2_feedback = 0x1D,
-  TECH2_optical_flare = 0x1E,
-  TECH2_maelstorm = 0x1F,
-  TECH2_lurker_aspect = 0x20,
-  TECH2_unknown_tech33 = 0x21,
-  TECH2_healing = 0x22,
-  TECH2_unknown_tech35 = 0x23,
-  TECH2_unknown_tech36 = 0x24,
-  TECH2_unknown_tech37 = 0x25,
-  TECH2_unknown_tech38 = 0x26,
-  TECH2_unknown_tech39 = 0x27,
-  TECH2_unknown_tech40 = 0x28,
-  TECH2_unknown_tech41 = 0x29,
-  TECH2_unknown_tech42 = 0x2A,
-  TECH2_unknown_tech43 = 0x2B,
-  TECH2_none = 0x2C,
-};
-
-enum GamePosition : __int16
-{
-  GAME_INTRO = 0x0,
-  GAME_RUNINIT = 0x1,
-  GAME_EXIT = 0x2,
-  GAME_RUN = 0x3,
-  GAME_GLUES = 0x4,
-  GAME_RESTART = 0x5,
-  GAME_WIN = 0x6,
-  GAME_LOSE = 0x7,
-  GAME_CREDITS = 0x8,
-  GAME_EPILOG = 0x9,
-  GAME_CINEMATIC = 0xA,
-  GAME_MAX = 0xB,
-};
-
-struct struct_0
-{
-  void *field_0;
+  int field_0[1];
   int field_4;
+  int field_8;
+  int field_C;
+  int field_10;
+  int field_14;
+  int field_18;
+  int field_1C;
+  int field_20;
+  int field_24;
 };
-static_assert(sizeof(struct_0) == 8, "Incorrect size for type `struct_0`. Expected: 8");
+static_assert(sizeof(struc_51B1E8) == 40, "Incorrect size for type `struc_51B1E8`. Expected: 40");
 
-enum MapData4 : __int32
+struct SpriteTileData
 {
-  MD4_none = 0x0,
-  MD4_tutorial = 0x1,
-  MD4_terran01 = 0x2,
-  MD4_terran02 = 0x3,
-  MD4_terran03 = 0x4,
-  MD4_terran04 = 0x5,
-  MD4_terran05 = 0x6,
-  MD4_terran06 = 0x7,
-  MD4_terran08 = 0x8,
-  MD4_terran09 = 0x9,
-  MD4_terran11 = 0xA,
-  MD4_terran12 = 0xB,
-  MD4_zerg01 = 0xC,
-  MD4_zerg02 = 0xD,
-  MD4_zerg03 = 0xE,
-  MD4_zerg04 = 0xF,
-  MD4_zerg05 = 0x10,
-  MD4_zerg06 = 0x11,
-  MD4_zerg07 = 0x12,
-  MD4_zerg08 = 0x13,
-  MD4_zerg09 = 0x14,
-  MD4_zerg10 = 0x15,
-  MD4_protoss01 = 0x16,
-  MD4_protoss02 = 0x17,
-  MD4_protoss03 = 0x18,
-  MD4_protoss04 = 0x19,
-  MD4_protoss05 = 0x1A,
-  MD4_protoss06 = 0x1B,
-  MD4_protoss07 = 0x1C,
-  MD4_protoss08 = 0x1D,
-  MD4_protoss09 = 0x1E,
-  MD4_protoss10 = 0x1F,
-  MD4_xprotoss01 = 0x20,
-  MD4_xprotoss02 = 0x21,
-  MD4_xprotoss03 = 0x22,
-  MD4_xprotoss04 = 0x23,
-  MD4_xprotoss05 = 0x24,
-  MD4_xprotoss06 = 0x25,
-  MD4_xprotoss07 = 0x26,
-  MD4_xprotoss08 = 0x27,
-  MD4_xterran01 = 0x28,
-  MD4_xterran02 = 0x29,
-  MD4_xterran03 = 0x2A,
-  MD4_xterran04 = 0x2B,
-  MD4_xterran05a = 0x2C,
-  MD4_xterran05b = 0x2D,
-  MD4_xterran06 = 0x2E,
-  MD4_xterran07 = 0x2F,
-  MD4_xterran08 = 0x30,
-  MD4_xzerg01 = 0x31,
-  MD4_xzerg02 = 0x32,
-  MD4_xzerg03 = 0x33,
-  MD4_xzerg04a = 0x34,
-  MD4_xzerg04b = 0x35,
-  MD4_xzerg04c = 0x36,
-  MD4_xzerg04d = 0x37,
-  MD4_xzerg04e = 0x38,
-  MD4_xzerg04f = 0x39,
-  MD4_xzerg05 = 0x3A,
-  MD4_xzerg06 = 0x3B,
-  MD4_xzerg07 = 0x3C,
-  MD4_xzerg08 = 0x3D,
-  MD4_xzerg09 = 0x3E,
-  MD4_xbonus = 0x3F,
-  MD4_xzerg10 = 0x40,
-  MD4_Unknown = 0x41,
+  CSprite *tails[256];
+  CSprite *heads[256];
 };
-
-struct CUnitSilo
-{
-  CUnit *pNuke;
-  bool bReady;
-};
-static_assert(sizeof(CUnitSilo) == 8, "Incorrect size for type `CUnitSilo`. Expected: 8");
-
-enum ButtonState
-{
-  BTNST_DISABLED = 0xFFFFFFFF,
-  BTNST_HIDDEN = 0x0,
-  BTNST_ENABLED = 0x1,
-};
-
-#pragma pack(push, 1)
-struct RTTIClassHierarchyDescriptor
-{
-  int signature;
-  int attributes;
-  int numBaseClasses;
-  void *pBaseClassArray;
-};
-#pragma pack(pop)
-static_assert(sizeof(RTTIClassHierarchyDescriptor) == 16, "Incorrect size for type `RTTIClassHierarchyDescriptor`. Expected: 16");
-
-struct struct_a4
-{
-  char char0[260];
-  char char104[32];
-  _DWORD dword124;
-};
-static_assert(sizeof(struct_a4) == 296, "Incorrect size for type `struct_a4`. Expected: 296");
-
-enum MusicTrack
-{
-  MT_NONE = 0x0,
-  MT_ZERG1 = 0x1,
-  MT_ZERG2 = 0x2,
-  MT_ZERG3 = 0x3,
-  MT_TERRAN1 = 0x4,
-  MT_TERRAN2 = 0x5,
-  MT_TERRAN3 = 0x6,
-  MT_PROTOSS1 = 0x7,
-  MT_PROTOSS2 = 0x8,
-  MT_PROTOSS3 = 0x9,
-  MT_ZERG_READY = 0xA,
-  MT_TERRAN_READY = 0xB,
-  MT_PROTOSS_READY = 0xC,
-  MT_ZERG_DEFEAT = 0xD,
-  MT_TERRAN_DEFEAT = 0xE,
-  MT_PROTOSS_DEFEAT = 0xF,
-  MT_ZERG_VICTORY = 0x10,
-  MT_TERRAN_VICTORY = 0x11,
-  MT_PROTOSS_VICTORY = 0x12,
-  MT_ZERG_VICTORY2 = 0x13,
-  MT_TERRAN_VICTORY2 = 0x14,
-  MT_PROTOSS_VICTORY2 = 0x15,
-  MT_TITLE = 0x16,
-  MT_TERRAN2_DUPLICATE = 0x17,
-  MT_RADIO_FREE_ZERG = 0x18,
-};
-
-struct __declspec(align(4)) TriggerOrderRelated
-{
-  int player;
-  _DWORD unit_type;
-  _WORD location_flags;
-  _DWORD x;
-  _DWORD y;
-  _DWORD dword14;
-};
-static_assert(sizeof(TriggerOrderRelated) == 24, "Incorrect size for type `TriggerOrderRelated`. Expected: 24");
-
-#pragma pack(push, 1)
-struct __declspec(align(2)) AudioVideoInitializationError
-{
-  _DWORD error_code;
-  _DWORD dword4;
-  const char *function_name;
-};
-#pragma pack(pop)
-static_assert(sizeof(AudioVideoInitializationError) == 12, "Incorrect size for type `AudioVideoInitializationError`. Expected: 12");
-
-struct Chat_TextLine
-{
-  char chars[218];
-};
-static_assert(sizeof(Chat_TextLine) == 218, "Incorrect size for type `Chat_TextLine`. Expected: 218");
+static_assert(sizeof(SpriteTileData) == 2048, "Incorrect size for type `SpriteTileData`. Expected: 2048");
 
 struct __declspec(align(4)) struct_a2
 {
@@ -3323,16 +3781,120 @@ struct __declspec(align(4)) struct_a2
 };
 static_assert(sizeof(struct_a2) == 40, "Incorrect size for type `struct_a2`. Expected: 40");
 
-typedef tagPALETTEENTRY PALETTEENTRY;
-
-struct UnitDimentions
+union SaiRegionUser
 {
-  __int16 a;
-  __int16 b;
-  __int16 c;
-  __int16 d;
+  void *node;
+  int relation;
 };
-static_assert(sizeof(UnitDimentions) == 8, "Incorrect size for type `UnitDimentions`. Expected: 8");
+static_assert(sizeof(SaiRegionUser) == 4, "Incorrect size for type `SaiRegionUser`. Expected: 4");
+
+#pragma pack(push, 1)
+struct CndSignature
+{
+  int field_0;
+  char filename[20];
+};
+#pragma pack(pop)
+static_assert(sizeof(CndSignature) == 24, "Incorrect size for type `CndSignature`. Expected: 24");
+
+struct CUnitSilo
+{
+  CUnit *pNuke;
+  bool bReady;
+};
+static_assert(sizeof(CUnitSilo) == 8, "Incorrect size for type `CUnitSilo`. Expected: 8");
+
+enum StartingPositions : unsigned __int8
+{
+  SP_RANDOM = 0x0,
+  SP_FIXED = 0x1,
+};
+
+struct CUnitPylon
+{
+  CSprite *pPowerTemplate;
+};
+static_assert(sizeof(CUnitPylon) == 4, "Incorrect size for type `CUnitPylon`. Expected: 4");
+
+enum MapDirEntryFlags : unsigned __int8
+{
+  MDEF_SAVEGAME = 0x1,
+  MDEF_SCENARIO = 0x4,
+  MDEF_DIRECTORY = 0x8,
+  MDEF_10 = 0x10,
+  MDEF_20 = 0x20,
+  MDEF_40 = 0x40,
+  MDEF_REPLAY = 0x80,
+};
+
+enum EndgameState : unsigned __int8
+{
+  INITIAL = 0x0,
+  DEFEAT = 0x2,
+  VICTORY = 0x3,
+  UNKNOWN = 0x4,
+  DRAW = 0x5,
+};
+
+enum UnitPrototypeFlags
+{
+  Building = 0x1,
+  Addon = 0x2,
+  Flyer = 0x4,
+  Worker = 0x8,
+  Subunit = 0x10,
+  FlyingBuilding = 0x20,
+  Hero = 0x40,
+  RegeneratesHP = 0x80,
+  AnimatedIdle = 0x100,
+  Cloakable = 0x200,
+  TwoUnitsIn1Egg = 0x400,
+  NeutralAccessories = 0x800,
+  ResourceDepot = 0x1000,
+  ResourceContainer = 0x2000,
+  RoboticUnit = 0x4000,
+  Detector = 0x8000,
+  OrganicUnit = 0x10000,
+  CreepBuilding = 0x20000,
+  Unused = 0x40000,
+  RequiresPsi = 0x80000,
+  Burrowable = 0x100000,
+  Spellcaster = 0x200000,
+  PermanentCloak = 0x400000,
+  NPCOrAccessories = 0x800000,
+  MorphFromOtherUnit = 0x1000000,
+  LargeUnit = 0x2000000,
+  HugeUnit = 0x4000000,
+  AutoAttackAndMove = 0x8000000,
+  Attack = 0x10000000,
+  Invincible_ = 0x20000000,
+  Mechanical = 0x40000000,
+  ProducesUnits = 0x80000000,
+};
+
+struct CThingy
+{
+  CThingy *prev;
+  CThingy *next;
+  int hitPoints;
+  CSprite *sprite;
+};
+static_assert(sizeof(CThingy) == 16, "Incorrect size for type `CThingy`. Expected: 16");
+
+struct ChkLoader
+{
+  int version;
+  ChkSectionLoader *lobby_loaders;
+  int lobby_loader_count;
+  ChkSectionLoader *briefing_loaders;
+  int briefing_loader_count;
+  ChkSectionLoader *melee_loaders;
+  int melee_loader_count;
+  ChkSectionLoader *ums_loaders;
+  int ums_loader_count;
+  int requires_expansion;
+};
+static_assert(sizeof(ChkLoader) == 40, "Incorrect size for type `ChkLoader`. Expected: 40");
 
 enum Order : unsigned __int8
 {
@@ -3510,90 +4072,25 @@ enum Order : unsigned __int8
   ORD_MAX = 0xAB,
 };
 
-enum PlayerType : __int8
+struct struct_v6
 {
-  PT_NotUsed = 0x0,
-  PT_Computer = 0x1,
-  PT_Human = 0x2,
-  PT_Rescuable = 0x3,
-  PT_Unknown0 = 0x4,
-  PT_ComputerSlot = 0x5,
-  PT_OpenSlot = 0x6,
-  PT_Neutral = 0x7,
-  PT_ClosedSlot = 0x8,
-  PT_Unknown1 = 0x9,
-  PT_HumanDefeated = 0xA,
-  PT_ComputerDefeated = 0xB,
+  _DWORD dword0;
+  _DWORD dword4;
+  _BYTE byte8;
+  _BYTE byte9;
+  _BYTE byteA;
+  _BYTE byteB;
+  _DWORD dwordC;
 };
+static_assert(sizeof(struct_v6) == 16, "Incorrect size for type `struct_v6`. Expected: 16");
 
-struct __declspec(align(4)) ChunkNode
+struct TemplateList
 {
-  ChunkNode *count;
-  ChunkData *f1;
-  ChunkData *f2;
+  int field_0;
+  TemplateListEntry *end;
+  TemplateListEntry *begin;
 };
-static_assert(sizeof(ChunkNode) == 12, "Incorrect size for type `ChunkNode`. Expected: 12");
-
-typedef unsigned __int8 BYTE;
-
-struct SNETCAPS
-{
-  DWORD size;
-  DWORD flags;
-  DWORD maxmessagesize;
-  DWORD maxqueuesize;
-  DWORD maxplayers;
-  DWORD bytessec;
-  DWORD latencyms;
-  DWORD defaultturnssec;
-  DWORD defaultturnsintransit;
-};
-static_assert(sizeof(SNETCAPS) == 36, "Incorrect size for type `SNETCAPS`. Expected: 36");
-
-struct ScoreFormatRelated
-{
-  void (__fastcall *score_calc)(struc_59A0F0 *a1, int player_id);
-  char *format_string;
-  int x;
-  int y;
-  int z;
-};
-static_assert(sizeof(ScoreFormatRelated) == 20, "Incorrect size for type `ScoreFormatRelated`. Expected: 20");
-
-struct _RTTICompleteObjectLocator
-{
-  int signature;
-  int offset;
-  int cdOffset;
-  void *typeDescriptor;
-  void *classDescriptor;
-};
-static_assert(sizeof(_RTTICompleteObjectLocator) == 20, "Incorrect size for type `_RTTICompleteObjectLocator`. Expected: 20");
-
-struct AI_Flags
-{
-  unsigned __int16 isSecureFinished : 1;
-  unsigned __int16 isTownStarted : 1;
-  unsigned __int16 isDefaultBuildOff : 1;
-  unsigned __int16 isTransportsOff : 1;
-  unsigned __int16 isFarmsNotimingOn : 1;
-  unsigned __int16 isUseMapSettings : 1;
-  unsigned __int16 flag_0x40 : 1;
-  unsigned __int16 spreadCreep : 1;
-  unsigned __int16 flag_0x100 : 1;
-  unsigned __int16 hasStrongestGndArmy : 1;
-  unsigned __int16 bUpgradesFinished : 1;
-  unsigned __int16 bTargetExpansion : 1;
-};
-static_assert(sizeof(AI_Flags) == 2, "Incorrect size for type `AI_Flags`. Expected: 2");
-
-struct RenderFunction
-{
-  int index;
-  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
-  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
-};
-static_assert(sizeof(RenderFunction) == 12, "Incorrect size for type `RenderFunction`. Expected: 12");
+static_assert(sizeof(TemplateList) == 12, "Incorrect size for type `TemplateList`. Expected: 12");
 
 enum Icon : unsigned __int16
 {
@@ -3989,661 +4486,34 @@ enum Icon : unsigned __int16
   ICON_SLOW_DOWN_REPLAY = 0x185,
 };
 
-enum ResourceType : unsigned __int8
+enum WeaponBehavior : __int8
 {
-  RT_MAP_DEFALUT = 0x0,
-  RT_FIXED_VALUE = 0x1,
-  RT_LOW = 0x2,
-  RT_MEDIUM = 0x3,
-  RT_HIGH = 0x4,
-  RT_INCOME = 0x5,
+  Fly_DoNotFollowTarget = 0x0,
+  Fly_FollowTarget = 0x1,
+  AppearOnTargetUnit = 0x2,
+  PersistOnTargetSite = 0x3,
+  AppearOnTargetSite = 0x4,
+  AppearOnAttacker = 0x5,
+  AttackAndSelfDestruct = 0x6,
+  AttackNearbyArea = 0x8,
+  GoToMaxRange = 0x9,
 };
 
-enum CursorType
+typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
+
+enum Tileset : unsigned __int16
 {
-  CUR_ARROW = 0x0,
-  CUR_ILLEGAL = 0x1,
-  CUR_TARG_Y = 0x2,
-  CUR_TARG_R = 0x3,
-  CUR_TARG_G = 0x4,
-  CUR_TARG_N = 0x5,
-  CUR_MAG_G = 0x6,
-  CUR_MAG_R = 0x7,
-  CUR_MAG_Y = 0x8,
-  CUR_DRAG = 0x9,
-  CUR_TIME = 0xA,
-  CUR_SCROLL_U = 0xB,
-  CUR_SCROLL_UR = 0xC,
-  CUR_SCROLL_R = 0xD,
-  CUR_SCROLL_DR = 0xE,
-  CUR_SCROLL_D = 0xF,
-  CUR_SCROLL_DL = 0x10,
-  CUR_SCROLL_L = 0x11,
-  CUR_SCROLL_UL = 0x12,
-  CUR_MAX = 0x13,
+  Badlands = 0x0,
+  Platform = 0x1,
+  Install = 0x2,
+  Ashworld = 0x3,
+  Jungle = 0x4,
+  Desert = 0x5,
+  Ice = 0x6,
+  Twilight = 0x7,
 };
 
-typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
-
-struct __declspec(align(4)) GameActionDataBlock
-{
-  int field1;
-  int field2;
-  void *net_record_buffer;
-  int field4;
-  int net_record_size;
-  int field6;
-  int field7;
-  void *field8;
-};
-static_assert(sizeof(GameActionDataBlock) == 32, "Incorrect size for type `GameActionDataBlock`. Expected: 32");
-
-enum DamageType : __int8
-{
-  Independent = 0x0,
-  Explosive = 0x1,
-  Concussive = 0x2,
-  Normal = 0x3,
-  Ignore_Armor = 0x4,
-  DT_None = 0x5,
-  DT_Unknown = 0x6,
-  DT_MAX = 0x7,
-};
-
-enum StartingUnits : unsigned __int8
-{
-  SU_MAP_DEFAULT = 0x0,
-  SU_WORKER_ONLY = 0x1,
-  SU_WORKER_AND_CENTER = 0x2,
-};
-
-enum MegatileFlags
-{
-  VISIBLE_PLAYER_1 = 0x1,
-  VISIBLE_PLAYER_2 = 0x2,
-  VISIBLE_PLAYER_3 = 0x4,
-  VISIBLE_PLAYER_4 = 0x8,
-  VISIBLE_PLAYER_5 = 0x10,
-  VISIBLE_PLAYER_6 = 0x20,
-  VISIBLE_PLAYER_7 = 0x40,
-  VISIBLE_PLAYER_8 = 0x80,
-  EXPLORED_PLAYER_1 = 0x100,
-  EXPLORED_PLAYER_2 = 0x200,
-  EXPLORED_PLAYER_3 = 0x400,
-  EXPLORED_PLAYER_4 = 0x800,
-  EXPLORED_PLAYER_5 = 0x1000,
-  EXPLORED_PLAYER_6 = 0x2000,
-  EXPLORED_PLAYER_7 = 0x4000,
-  EXPLORED_PLAYER_8 = 0x8000,
-  MORE_THAN_12_WALKABLE = 0x10000,
-  LESS_THAN_13_WALKABLE = 0x40000,
-  CAN_MISS = 0x100000,
-  REAL_CREEP = 0x400000,
-  ALWAYS_UNBUILDABLE = 0x800000,
-  HAS_RAMP = 0x1000000,
-  MORE_THAN_12_MEDIUM_HEIGHT = 0x2000000,
-  MORE_THAN_12_HIGH_HEIGHT = 0x4000000,
-  CURRENTLY_OCCUPIED = 0x8000000,
-  CREEP_RECEEDING = 0x10000000,
-  CLIFF_EDGE = 0x20000000,
-  LOCAL_CREEP = 0x40000000,
-};
-
-enum FlingyID : unsigned __int8
-{
-  FGY_Scourge = 0x0,
-  FGY_Broodling = 0x1,
-  FGY_Infested_Terran = 0x2,
-  FGY_Guardian_Cocoon = 0x3,
-  FGY_Defiler = 0x4,
-  FGY_Drone = 0x5,
-  FGY_Egg = 0x6,
-  FGY_Guardian = 0x7,
-  FGY_Hydralisk = 0x8,
-  FGY_Infested_Kerrigan = 0x9,
-  FGY_Larva = 0xA,
-  FGY_Mutalisk = 0xB,
-  FGY_Overlord = 0xC,
-  FGY_Queen = 0xD,
-  FGY_Ultralisk = 0xE,
-  FGY_Zergling = 0xF,
-  FGY_Cerebrate = 0x10,
-  FGY_Infested_Command_Center = 0x11,
-  FGY_Spawning_Pool = 0x12,
-  FGY_Mature_Chrysalis = 0x13,
-  FGY_Evolution_Chamber = 0x14,
-  FGY_Creep_Colony = 0x15,
-  FGY_Hatchery = 0x16,
-  FGY_Hive = 0x17,
-  FGY_Lair = 0x18,
-  FGY_Sunken_Colony = 0x19,
-  FGY_Greater_Spire = 0x1A,
-  FGY_Defiler_Mound = 0x1B,
-  FGY_Queens_Nest = 0x1C,
-  FGY_Nydus_Canal = 0x1D,
-  FGY_Overmind_With_Shell = 0x1E,
-  FGY_Overmind_Without_Shell = 0x1F,
-  FGY_Ultralisk_Cavern = 0x20,
-  FGY_Extractor = 0x21,
-  FGY_Hydralisk_Den = 0x22,
-  FGY_Spire = 0x23,
-  FGY_Spore_Colony = 0x24,
-  FGY_Arbiter = 0x25,
-  FGY_Archon_Energy = 0x26,
-  FGY_Carrier = 0x27,
-  FGY_Dragoon = 0x28,
-  FGY_Interceptor = 0x29,
-  FGY_Probe = 0x2A,
-  FGY_Scout = 0x2B,
-  FGY_Shuttle = 0x2C,
-  FGY_High_Templar = 0x2D,
-  FGY_Dark_Templar_Hero = 0x2E,
-  FGY_Reaver = 0x2F,
-  FGY_Scarab = 0x30,
-  FGY_Zealot = 0x31,
-  FGY_Observer = 0x32,
-  FGY_Templar_Archives = 0x33,
-  FGY_Assimilator = 0x34,
-  FGY_Observatory = 0x35,
-  FGY_Citadel_of_Adun = 0x36,
-  FGY_Forge = 0x37,
-  FGY_Gateway = 0x38,
-  FGY_Cybernetics_Core = 0x39,
-  FGY_Khaydarin_Crystal_Formation = 0x3A,
-  FGY_Nexus = 0x3B,
-  FGY_Photon_Cannon = 0x3C,
-  FGY_Arbiter_Tribunal = 0x3D,
-  FGY_Pylon = 0x3E,
-  FGY_Robotics_Facility = 0x3F,
-  FGY_Shield_Battery = 0x40,
-  FGY_Stargate = 0x41,
-  FGY_Stasis_Cell_Prison = 0x42,
-  FGY_Robotics_Support_Bay = 0x43,
-  FGY_Protoss_Temple = 0x44,
-  FGY_Fleet_Beacon = 0x45,
-  FGY_Battlecruiser = 0x46,
-  FGY_Civilian = 0x47,
-  FGY_Dropship = 0x48,
-  FGY_Firebat = 0x49,
-  FGY_Ghost = 0x4A,
-  FGY_Goliath_Base = 0x4B,
-  FGY_Goliath_Turret = 0x4C,
-  FGY_Sarah_Kerrigan = 0x4D,
-  FGY_Marine = 0x4E,
-  FGY_Scanner_Sweep = 0x4F,
-  FGY_Wraith = 0x50,
-  FGY_SCV = 0x51,
-  FGY_Siege_Tank_Tank_Base = 0x52,
-  FGY_Siege_Tank_Tank_Turret = 0x53,
-  FGY_Siege_Tank_Siege_Base = 0x54,
-  FGY_Siege_Tank_Siege_Turret = 0x55,
-  FGY_Science_Vessel_Base = 0x56,
-  FGY_Science_Vessel_Turret = 0x57,
-  FGY_Vulture = 0x58,
-  FGY_Spider_Mine = 0x59,
-  FGY_Terran_Academy = 0x5A,
-  FGY_Barracks = 0x5B,
-  FGY_Armory = 0x5C,
-  FGY_Comsat_Station = 0x5D,
-  FGY_Command_Center = 0x5E,
-  FGY_Supply_Depot = 0x5F,
-  FGY_Control_Tower = 0x60,
-  FGY_Factory = 0x61,
-  FGY_Covert_Ops = 0x62,
-  FGY_Ion_Cannon = 0x63,
-  FGY_Machine_Shop = 0x64,
-  FGY_Missile_Turret_Base = 0x65,
-  FGY_Crashed_Battlecruiser = 0x66,
-  FGY_Physics_Lab = 0x67,
-  FGY_Bunker = 0x68,
-  FGY_Refinery = 0x69,
-  FGY_Immobile_Barracks = 0x6A,
-  FGY_Science_Facility = 0x6B,
-  FGY_Nuke_Silo = 0x6C,
-  FGY_Nuclear_Missile = 0x6D,
-  FGY_Starport = 0x6E,
-  FGY_Engineering_Bay = 0x6F,
-  FGY_Terran_Construction_Large = 0x70,
-  FGY_Terran_Construction_Small = 0x71,
-  FGY_Ragnasaur_Ashworld = 0x72,
-  FGY_Rhynadon_Badlands = 0x73,
-  FGY_Bengalaas_Jungle = 0x74,
-  FGY_Vespene_Geyser = 0x75,
-  FGY_Mineral_Field_Type1 = 0x76,
-  FGY_Mineral_Field_Type2 = 0x77,
-  FGY_Mineral_Field_Type3 = 0x78,
-  FGY_Independent_Starport_Unused = 0x79,
-  FGY_Zerg_Beacon = 0x7A,
-  FGY_Terran_Beacon = 0x7B,
-  FGY_Protoss_Beacon = 0x7C,
-  FGY_Dark_Swarm = 0x7D,
-  FGY_Flag = 0x7E,
-  FGY_Young_Chrysalis = 0x7F,
-  FGY_Psi_Emitter = 0x80,
-  FGY_Data_Disc = 0x81,
-  FGY_Khaydarin_Crystal = 0x82,
-  FGY_Mineral_Chunk_Type1 = 0x83,
-  FGY_Mineral_Chunk_Type2 = 0x84,
-  FGY_Protoss_Gas_Orb_Type1 = 0x85,
-  FGY_Protoss_Gas_Orb_Type2 = 0x86,
-  FGY_Zerg_Gas_Sac_Type1 = 0x87,
-  FGY_Zerg_Gas_Sac_Type2 = 0x88,
-  FGY_Terran_Gas_Tank_Type1 = 0x89,
-  FGY_Terran_Gas_Tank_Type2 = 0x8A,
-  FGY_Map_Revealer = 0x8B,
-  FGY_Start_Location = 0x8C,
-  FGY_Fusion_Cutter_Hit = 0x8D,
-  FGY_Gauss_Rifle_Hit = 0x8E,
-  FGY_C_10_Canister_Rifle_Hit = 0x8F,
-  FGY_Gemini_Missiles = 0x90,
-  FGY_Fragmentation_Grenade = 0x91,
-  FGY_Hellfire_Missile = 0x92,
-  FGY_Unknown147 = 0x93,
-  FGY_ATS_ATA_Laser_Battery = 0x94,
-  FGY_Burst_Lasers = 0x95,
-  FGY_Arclite_Shock_Cannon_Hit = 0x96,
-  FGY_EMP_Missile = 0x97,
-  FGY_Dual_Photon_Blasters_Hit = 0x98,
-  FGY_Particle_Beam_Hit = 0x99,
-  FGY_Anti_Matter_Missile = 0x9A,
-  FGY_Pulse_Cannon = 0x9B,
-  FGY_Psionic_Shockwave_Hit = 0x9C,
-  FGY_Psionic_Storm = 0x9D,
-  FGY_Yamato_Gun = 0x9E,
-  FGY_Phase_Disruptor = 0x9F,
-  FGY_STA_STS_Cannon_Overlay = 0xA0,
-  FGY_Sunken_Colony_Tentacle = 0xA1,
-  FGY_Venom_Unused_Zerg_Weapon = 0xA2,
-  FGY_Acid_Spore = 0xA3,
-  FGY_Unknown164 = 0xA4,
-  FGY_Glave_Wurm = 0xA5,
-  FGY_Seeker_Spores = 0xA6,
-  FGY_Queen_Spell_Carrier = 0xA7,
-  FGY_Plague_Cloud = 0xA8,
-  FGY_Consume = 0xA9,
-  FGY_Ensnare = 0xAA,
-  FGY_Needle_Spine_Hit = 0xAB,
-  FGY_White_Circle_Invisible = 0xAC,
-  FGY_Left_Upper_Level_Door = 0xAD,
-  FGY_Right_Upper_Level_Door = 0xAE,
-  FGY_Substructure_Left_Door = 0xAF,
-  FGY_Substructure_Right_Door = 0xB0,
-  FGY_Substructure_Opening_Hole = 0xB1,
-  FGY_Floor_Gun_Trap = 0xB2,
-  FGY_Floor_Missile_Trap = 0xB3,
-  FGY_Wall_Missile_Trap = 0xB4,
-  FGY_Wall_Missile_Trap2 = 0xB5,
-  FGY_Wall_Flame_Trap = 0xB6,
-  FGY_Wall_Flame_Trap2 = 0xB7,
-  FGY_Lurker_Egg = 0xB8,
-  FGY_Devourer = 0xB9,
-  FGY_Lurker = 0xBA,
-  FGY_Dark_Archon_Energy = 0xBB,
-  FGY_Dark_Templar_Unit = 0xBC,
-  FGY_Medic = 0xBD,
-  FGY_Valkyrie = 0xBE,
-  FGY_Corsair = 0xBF,
-  FGY_Disruption_Web = 0xC0,
-  FGY_Overmind_Cocoon = 0xC1,
-  FGY_Psi_Disrupter = 0xC2,
-  FGY_Warp_Gate = 0xC3,
-  FGY_Power_Generator = 0xC4,
-  FGY_XelNaga_Temple = 0xC5,
-  FGY_Scantid_Desert = 0xC6,
-  FGY_Kakaru_Twilight = 0xC7,
-  FGY_Ursadon_Ice = 0xC8,
-  FGY_Optical_Flare_Grenade = 0xC9,
-  FGY_Halo_Rockets = 0xCA,
-  FGY_Subterranean_Spines = 0xCB,
-  FGY_Corrosive_Acid_Shot = 0xCC,
-  FGY_Corrosive_Acid_Hit = 0xCD,
-  FGY_Neutron_Flare = 0xCE,
-  FGY_Uraj = 0xCF,
-  FGY_Khalis = 0xD0,
-  FGY_None = 0xD1,
-};
-
-#pragma pack(push, 1)
-struct CndSignature
-{
-  int field_0;
-  char filename[20];
-};
-#pragma pack(pop)
-static_assert(sizeof(CndSignature) == 24, "Incorrect size for type `CndSignature`. Expected: 24");
-
-enum GameType : __int8
-{
-  GT_Melee = 0x2,
-  GT_FreeForAll = 0x3,
-  GT_OneOnOne = 0x4,
-  GT_CaptureTheFlag = 0x5,
-  GT_Greed = 0x6,
-  GT_Slaughter = 0x7,
-  GT_SuddenDeath = 0x8,
-  GT_Ladder = 0x9,
-  GT_UseMapSettings = 0xA,
-  GT_TeamMelee = 0xB,
-  GT_TeamFreeForAll = 0xC,
-  GT_TeamCTF = 0xD,
-  GT_TopVsBottom = 0xF,
-};
-
-struct BltMask
-{
-  void *pvoid0;
-  _BYTE gap4[4];
-  _DWORD dword8;
-  _DWORD dwordC;
-  _DWORD dword10;
-  _DWORD dword14;
-  _DWORD dword18;
-};
-static_assert(sizeof(BltMask) == 28, "Incorrect size for type `BltMask`. Expected: 28");
-
-typedef struct _GUID GUID;
-
-struct ListNode
-{
-  ListNode *previous;
-  ListNode *next;
-};
-static_assert(sizeof(ListNode) == 8, "Incorrect size for type `ListNode`. Expected: 8");
-
-typedef unsigned __int8 u8;
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) struct_v2
-{
-  char unknown;
-  int initial_seed;
-  char player_bytes1[3];
-  int player_bytes2;
-  char player_bytes3;
-};
-#pragma pack(pop)
-static_assert(sizeof(struct_v2) == 13, "Incorrect size for type `struct_v2`. Expected: 13");
-
-struct PlayerAlliance
-{
-  unsigned __int8 player[12];
-};
-static_assert(sizeof(PlayerAlliance) == 12, "Incorrect size for type `PlayerAlliance`. Expected: 12");
-
-struct points
-{
-  __int16 x;
-  __int16 y;
-};
-static_assert(sizeof(points) == 4, "Incorrect size for type `points`. Expected: 4");
-
-struct struct_v6
-{
-  _DWORD dword0;
-  _DWORD dword4;
-  _BYTE byte8;
-  _BYTE byte9;
-  _BYTE byteA;
-  _BYTE byteB;
-  _DWORD dwordC;
-};
-static_assert(sizeof(struct_v6) == 16, "Incorrect size for type `struct_v6`. Expected: 16");
-
-struct __declspec(align(2)) struc_66FE20
-{
-  char field_0;
-  char field_1;
-  __int16 field_2;
-  __int16 field_3;
-  __int16 field_4;
-  char player_name[26];
-};
-static_assert(sizeof(struc_66FE20) == 34, "Incorrect size for type `struc_66FE20`. Expected: 34");
-
-typedef int (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) swishTimer
-{
-  unsigned __int16 wIndex;
-  unsigned __int16 wType;
-};
-#pragma pack(pop)
-static_assert(sizeof(swishTimer) == 4, "Incorrect size for type `swishTimer`. Expected: 4");
-
-enum BulletState : unsigned __int8
-{
-  Init = 0x0,
-  MovingToPosition = 0x1,
-  MovingToUnit = 0x2,
-  Bounce = 0x3,
-  TargetGround = 0x4,
-  ReachedDestination = 0x5,
-  MovingNearUnit = 0x6,
-};
-
-struct LO_Overlays
-{
-  LO_Header *overlays[999];
-};
-static_assert(sizeof(LO_Overlays) == 3996, "Incorrect size for type `LO_Overlays`. Expected: 3996");
-
-enum EndgameState : unsigned __int8
-{
-  INITIAL = 0x0,
-  DEFEAT = 0x2,
-  VICTORY = 0x3,
-  UNKNOWN = 0x4,
-  DRAW = 0x5,
-};
-
-struct __declspec(align(2)) ChkSectionLoader
-{
-  const char name[4];
-  bool (__stdcall *func)(SectionData *, int, MapChunks *);
-  int flags;
-};
-static_assert(sizeof(ChkSectionLoader) == 12, "Incorrect size for type `ChkSectionLoader`. Expected: 12");
-
-enum WeaponTargetFlags : __int16
-{
-  WTF_Air = 0x1,
-  WTF_Ground = 0x2,
-  WTF_Mechanical = 0x4,
-  WTF_Organic = 0x8,
-  WTF_NonBuilding = 0x10,
-  WTF_NonRobotic = 0x20,
-  WTF_Terrain = 0x40,
-  WTF_OrgOrMech = 0x80,
-  WTF_Own = 0x100,
-};
-
-typedef __int8 s8;
-
-enum Tech : __int8
-{
-  TECH_stim_packs = 0x0,
-  TECH_lockdown = 0x1,
-  TECH_emp_shockwave = 0x2,
-  TECH_spider_mines = 0x3,
-  TECH_scanner_sweep = 0x4,
-  TECH_tank_siege_mode = 0x5,
-  TECH_defensive_matrix = 0x6,
-  TECH_irradiate = 0x7,
-  TECH_yamato_gun = 0x8,
-  TECH_cloaking_field = 0x9,
-  TECH_personnel_cloaking = 0xA,
-  TECH_burrowing = 0xB,
-  TECH_infestation = 0xC,
-  TECH_spawn_broodlings = 0xD,
-  TECH_dark_swarm = 0xE,
-  TECH_plague = 0xF,
-  TECH_consume = 0x10,
-  TECH_ensnare = 0x11,
-  TECH_parasite = 0x12,
-  TECH_psionic_storm = 0x13,
-  TECH_hallucination = 0x14,
-  TECH_recall = 0x15,
-  TECH_stasis_field = 0x16,
-  TECH_archon_warp = 0x17,
-  TECH_restoration = 0x18,
-  TECH_disruption_web = 0x19,
-  TECH_unknown_tech26 = 0x1A,
-  TECH_mind_control = 0x1B,
-  TECH_dark_archon_meld = 0x1C,
-  TECH_feedback = 0x1D,
-  TECH_optical_flare = 0x1E,
-  TECH_maelstorm = 0x1F,
-  TECH_lurker_aspect = 0x20,
-  TECH_unknown_tech33 = 0x21,
-  TECH_healing = 0x22,
-  TECH_unknown_tech35 = 0x23,
-  TECH_unknown_tech36 = 0x24,
-  TECH_unknown_tech37 = 0x25,
-  TECH_unknown_tech38 = 0x26,
-  TECH_unknown_tech39 = 0x27,
-  TECH_unknown_tech40 = 0x28,
-  TECH_unknown_tech41 = 0x29,
-  TECH_unknown_tech42 = 0x2A,
-  TECH_unknown_tech43 = 0x2B,
-  TECH_none = 0x2C,
-};
-
-struct __declspec(align(4)) struct_a3
-{
-  _DWORD unit_property_index;
-  _DWORD location_index;
-};
-static_assert(sizeof(struct_a3) == 8, "Incorrect size for type `struct_a3`. Expected: 8");
-
-struct __declspec(align(4)) SNETUIDATA
-{
-  DWORD dwSize;
-  DWORD dwUnkType;
-  HWND hFrameWnd;
-  void *pfnBattleGetResource;
-  void *pfnBattleGetErrorString;
-  void *pfnBattleMakeCreateGameDialog;
-  void *pfnBattleUpdateIcons;
-  DWORD dwUnk_07;
-  void *pfnBattleErrorDialog;
-  void *pfnBattlePlaySound;
-  DWORD dwUnk_10;
-  void *pfnBattleGetCursorLink;
-  DWORD dwUnk_12;
-  void *pfnUnk_13;
-  DWORD dwUnk_14;
-  void *pfnBattleMakeProfileDialog;
-  char *pszProfileStrings;
-  void *pfnBattleDrawProfileInfo;
-  void *pfnUnk_18;
-  DWORD dwUnk_19;
-  void *pfnUnk_20;
-  void *pfnUnk_21;
-  void *pfnBattleSetLeagueName;
-};
-static_assert(sizeof(SNETUIDATA) == 92, "Incorrect size for type `SNETUIDATA`. Expected: 92");
-
-struct __declspec(align(4)) CharacterData
-{
-  int char0;
-  _BYTE has_ophelia_cheat;
-  _BYTE gap5[3];
-  _DWORD last_access_time;
-  char player_name[24];
-  int gap0;
-  int unlocked_campaign_mission[3];
-  int unlocked_expcampaign_mission[3];
-  _BYTE more_data[48];
-};
-static_assert(sizeof(CharacterData) == 112, "Incorrect size for type `CharacterData`. Expected: 112");
-
-struct CUnitGatherer
-{
-  CUnit *harvestTarget;
-  CUnit *prevHarvestUnit;
-  CUnit *nextHarvestUnit;
-};
-static_assert(sizeof(CUnitGatherer) == 12, "Incorrect size for type `CUnitGatherer`. Expected: 12");
-
-struct __declspec(align(4)) SNETPROGRAMDATA
-{
-  DWORD size;
-  LPCSTR programname;
-  LPCSTR programdescription;
-  DWORD programid;
-  DWORD versionid;
-  DWORD reserved1;
-  DWORD maxplayers;
-  LPVOID initdata;
-  DWORD initdatabytes;
-  LPVOID reserved2;
-  DWORD optcategorybits;
-  DWORD key_owner;
-  DWORD key;
-  DWORD is_spawn;
-  DWORD lang;
-};
-static_assert(sizeof(SNETPROGRAMDATA) == 60, "Incorrect size for type `SNETPROGRAMDATA`. Expected: 60");
-
-struct __declspec(align(4)) struc_59A0F0
-{
-  char field_0[12];
-  int field_C;
-  dialog *field_10;
-  int field_14;
-  int field_18;
-  char field_1C[384];
-  int score_field_0;
-  int score_field_1;
-  int score_field_2;
-  int field_1A8;
-  int field_1AC;
-  int field_1B0;
-  int field_1B4;
-  int field_1B8;
-  int field_1BC;
-  int field_1C0;
-  int field_1C4;
-  int field_1C8;
-  int gap1B4[32];
-  int total_score_field;
-  int unk0;
-  int unk1;
-  int unk2;
-};
-static_assert(sizeof(struc_59A0F0) == 604, "Incorrect size for type `struc_59A0F0`. Expected: 604");
-
-enum EventUser
-{
-  USER_CREATE = 0x0,
-  USER_DESTROY = 0x1,
-  USER_ACTIVATE = 0x2,
-  USER_HOTKEY = 0x3,
-  USER_MOUSEMOVE = 0x4,
-  USER_PREV = 0x5,
-  USER_NEXT = 0x6,
-  USER_UNK_7 = 0x7,
-  USER_UNK_8 = 0x8,
-  USER_MOUSEENTER = 0x9,
-  USER_INIT = 0xA,
-  USER_SELECT = 0xB,
-  USER_UNK_12 = 0xC,
-  USER_SHOW = 0xD,
-  USER_HIDE = 0xE,
-  USER_SCROLLUP = 0xF,
-  USER_SCROLLDOWN = 0x10,
-};
-
-struct TriggerList
-{
-  int field_0;
-  TriggerListEntry *end;
-  TriggerListEntry *begin;
-};
-static_assert(sizeof(TriggerList) == 12, "Incorrect size for type `TriggerList`. Expected: 12");
-
-typedef unsigned __int32 u32;
+typedef void *(__fastcall *FastFileRead)(char *filename, int default_value, int *bytes_read, char *, int);
 
 struct __declspec(align(8)) FontColorRelated
 {
@@ -4682,160 +4552,191 @@ struct __declspec(align(8)) FontColorRelated
 };
 static_assert(sizeof(FontColorRelated) == 192, "Incorrect size for type `FontColorRelated`. Expected: 192");
 
-struct _SCOPETABLE_ENTRY
+#pragma pack(push, 1)
+struct struct_5
 {
-  int EnclosingLevel;
-  void *FilterFunc;
-  void *HandlerFunc;
+  int sound_buffer_bytes;
+  int anonymous_1;
+  int anonymous_2;
+  IDirectSoundBuffer *sound_buffer;
 };
-static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPETABLE_ENTRY`. Expected: 12");
+#pragma pack(pop)
+static_assert(sizeof(struct_5) == 16, "Incorrect size for type `struct_5`. Expected: 16");
 
-enum Tileset : unsigned __int16
+struct RenderFunction
 {
-  Badlands = 0x0,
-  Platform = 0x1,
-  Install = 0x2,
-  Ashworld = 0x3,
-  Jungle = 0x4,
-  Desert = 0x5,
-  Ice = 0x6,
-  Twilight = 0x7,
+  int index;
+  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
+  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
 };
+static_assert(sizeof(RenderFunction) == 12, "Incorrect size for type `RenderFunction`. Expected: 12");
 
-struct __declspec(align(4)) ListNodeUnknown
+struct points
 {
-  ListNodeUnknown *previous;
-  ListNodeUnknown *next;
-  ListNodeUnknown *unknown;
+  __int16 x;
+  __int16 y;
 };
-static_assert(sizeof(ListNodeUnknown) == 12, "Incorrect size for type `ListNodeUnknown`. Expected: 12");
+static_assert(sizeof(points) == 4, "Incorrect size for type `points`. Expected: 4");
 
-struct CUnitPylon
+enum UnitGroupFlags : unsigned __int16
 {
-  CSprite *pPowerTemplate;
-};
-static_assert(sizeof(CUnitPylon) == 4, "Incorrect size for type `CUnitPylon`. Expected: 4");
-
-enum Color : unsigned __int8
-{
-  COLOR_CYAN1 = 0x1,
-  COLOR_CYAN2 = 0x2,
-  COLOR_YELLOW1 = 0x3,
-  COLOR_WHITE1 = 0x4,
-  COLOR_GREY = 0x5,
-  COLOR_RED1 = 0x6,
-  COLOR_GREEN1 = 0x7,
-  COLOR_RED2 = 0x8,
-  COLOR_UNK1 = 0x9,
-  COLOR_UNK2 = 0xA,
-  COLOR_INVISIBLE1 = 0xB,
-  COLOR_TRUNCATE = 0xC,
-  COLOR_UNK3 = 0xD,
-  COLOR_BLUE = 0xE,
-  COLOR_TEAL = 0xF,
-  COLOR_PURPLE = 0x10,
-  COLOR_ORANGE = 0x11,
-  COLOR_UNK4 = 0x12,
-  COLOR_UNK5 = 0x13,
-  COLOR_INVISIBLE2 = 0x14,
-  COLOR_BROWN = 0x15,
-  COLOR_WHITE2 = 0x16,
-  COLOR_YELLOW2 = 0x17,
-  COLOR_GREEN2 = 0x18,
-  COLOR_BRIGHTER_YELLOW = 0x19,
-  COLOR_CYAN = 0x1A,
-  COLOR_PINKISH = 0x1B,
-  COLOR_DARK_CYAN = 0x1C,
-  COLOR_GREYGREEN = 0x1D,
-  COLOR_BLUEGREY = 0x1E,
-  COLOR_TURQUIOSE = 0x1F,
-  COLOR_UNK6 = 0x20,
+  CLOAK = 0x1,
+  BURROW = 0x2,
+  IN_TRANSIT = 0x4,
+  HALLUCIONATED = 0x8,
+  INVINCIBLE = 0x10,
 };
 
-enum DialogFlags
+struct CUnitGatherer
 {
-  CTRL_UPDATE = 0x1,
-  CTRL_DISABLED = 0x2,
-  CTRL_ACTIVE = 0x4,
-  CTRL_VISIBLE = 0x8,
-  CTRL_EVENTS = 0x10,
-  CTRL_UNKOWN1 = 0x20,
-  CTRL_BTN_CANCEL = 0x40,
-  CTRL_BTN_NO_SOUND = 0x80,
-  CTRL_BTN_VIRT_HOTKEY = 0x100,
-  CTRL_BTN_HOTKEY = 0x200,
-  CTRL_FONT_SMALLEST = 0x400,
-  CTRL_FONT_LARGE = 0x800,
-  CTRL_UNKOWN2 = 0x1000,
-  CTRL_TRANSPARENT = 0x2000,
-  CTRL_FONT_LARGEST = 0x4000,
-  CTRL_UNKOWN3 = 0x8000,
-  CTRL_FONT_SMALL = 0x10000,
-  CTRL_PLAIN = 0x20000,
-  CTRL_TRANSLUCENT = 0x40000,
-  CTRL_BTN_DEFAULT = 0x80000,
-  CTRL_TOP = 0x100000,
-  CTRL_HALIGN_LEFT = 0x200000,
-  CTRL_HALIGN_RIGHT = 0x400000,
-  CTRL_HALIGN_CENTER = 0x800000,
-  CTRL_VALIGN_TOP = 0x1000000,
-  CTRL_VALIGN_MIDDLE = 0x2000000,
-  CTRL_VALIGN_BOTTOM = 0x4000000,
-  CTRL_UNKOWN4 = 0x8000000,
-  CTRL_DLG_NOREDRAW = 0x10000000,
-  CTRL_REVERSE = 0x10000000,
-  CTRL_USELOCALGRAPHIC = 0x20000000,
-  CTRL_DLG_ACTIVE = 0x40000000,
-  CTRL_LBOX_NORECALC = 0x80000000,
+  CUnit *harvestTarget;
+  CUnit *prevHarvestUnit;
+  CUnit *nextHarvestUnit;
 };
+static_assert(sizeof(CUnitGatherer) == 12, "Incorrect size for type `CUnitGatherer`. Expected: 12");
 
-struct CUnitGhost
-{
-  CSprite *nukeDot;
-};
-static_assert(sizeof(CUnitGhost) == 4, "Incorrect size for type `CUnitGhost`. Expected: 4");
-
-struct CUnitPsiProvider
-{
-  CUnit *prevPsiProvider;
-  CUnit *nextPsiProvider;
-};
-static_assert(sizeof(CUnitPsiProvider) == 8, "Incorrect size for type `CUnitPsiProvider`. Expected: 8");
-
-struct TransVectorEntry
-{
-  HANDLE hTrans;
-  RECT info;
-  DWORD dwReserved;
-};
-static_assert(sizeof(TransVectorEntry) == 24, "Incorrect size for type `TransVectorEntry`. Expected: 24");
-
-enum SaiAccessabilityFlags : __int16
-{
-  SAF_UNK = 0x2,
-  SAF_HighGround = 0x1FF9,
-  SAF_LowGround = 0x1FFB,
-  SAF_Inaccessible = 0x1FFD,
-};
-
-struct struc_659B10
+struct TriggerList
 {
   int field_0;
-  int field_4;
-  int field_8;
-  int field_C;
-  __int16 field_10;
-  __int16 field_12;
+  TriggerListEntry *end;
+  TriggerListEntry *begin;
 };
-static_assert(sizeof(struc_659B10) == 20, "Incorrect size for type `struc_659B10`. Expected: 20");
+static_assert(sizeof(TriggerList) == 12, "Incorrect size for type `TriggerList`. Expected: 12");
 
-struct UnitStat
+enum MusicTrack
 {
-  int anonymous_0;
-  bool (__cdecl *condition)();
-  void (__fastcall *action)(dialog *);
+  MT_NONE = 0x0,
+  MT_ZERG1 = 0x1,
+  MT_ZERG2 = 0x2,
+  MT_ZERG3 = 0x3,
+  MT_TERRAN1 = 0x4,
+  MT_TERRAN2 = 0x5,
+  MT_TERRAN3 = 0x6,
+  MT_PROTOSS1 = 0x7,
+  MT_PROTOSS2 = 0x8,
+  MT_PROTOSS3 = 0x9,
+  MT_ZERG_READY = 0xA,
+  MT_TERRAN_READY = 0xB,
+  MT_PROTOSS_READY = 0xC,
+  MT_ZERG_DEFEAT = 0xD,
+  MT_TERRAN_DEFEAT = 0xE,
+  MT_PROTOSS_DEFEAT = 0xF,
+  MT_ZERG_VICTORY = 0x10,
+  MT_TERRAN_VICTORY = 0x11,
+  MT_PROTOSS_VICTORY = 0x12,
+  MT_ZERG_VICTORY2 = 0x13,
+  MT_TERRAN_VICTORY2 = 0x14,
+  MT_PROTOSS_VICTORY2 = 0x15,
+  MT_TITLE = 0x16,
+  MT_TERRAN2_DUPLICATE = 0x17,
+  MT_RADIO_FREE_ZERG = 0x18,
 };
-static_assert(sizeof(UnitStat) == 12, "Incorrect size for type `UnitStat`. Expected: 12");
+
+struct CUnitNydus
+{
+  CUnit *exit;
+};
+static_assert(sizeof(CUnitNydus) == 4, "Incorrect size for type `CUnitNydus`. Expected: 4");
+
+enum GamePosition : __int16
+{
+  GAME_INTRO = 0x0,
+  GAME_RUNINIT = 0x1,
+  GAME_EXIT = 0x2,
+  GAME_RUN = 0x3,
+  GAME_GLUES = 0x4,
+  GAME_RESTART = 0x5,
+  GAME_WIN = 0x6,
+  GAME_LOSE = 0x7,
+  GAME_CREDITS = 0x8,
+  GAME_EPILOG = 0x9,
+  GAME_CINEMATIC = 0xA,
+  GAME_MAX = 0xB,
+};
+
+struct struct_a4
+{
+  char char0[260];
+  char char104[32];
+  _DWORD dword124;
+};
+static_assert(sizeof(struct_a4) == 296, "Incorrect size for type `struct_a4`. Expected: 296");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) swishTimer
+{
+  unsigned __int16 wIndex;
+  unsigned __int16 wType;
+};
+#pragma pack(pop)
+static_assert(sizeof(swishTimer) == 4, "Incorrect size for type `swishTimer`. Expected: 4");
+
+typedef tagPALETTEENTRY PALETTEENTRY;
+
+enum FogOfWar : unsigned __int8
+{
+  FOW_OFF = 0x0,
+  FOW_WARCRAFT1 = 0x1,
+  FOW_ON = 0x2,
+};
+
+#pragma pack(push, 1)
+struct __declspec(align(2)) DatLoad
+{
+  void *address;
+  int length;
+  int entries;
+};
+#pragma pack(pop)
+static_assert(sizeof(DatLoad) == 12, "Incorrect size for type `DatLoad`. Expected: 12");
+
+struct LO_Overlays
+{
+  LO_Header *overlays[999];
+};
+static_assert(sizeof(LO_Overlays) == 3996, "Incorrect size for type `LO_Overlays`. Expected: 3996");
+
+typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
+
+typedef void (__fastcall *AppExitHandle)(bool exit_code);
+
+enum CommandId : unsigned __int8
+{
+  CMD_RestarGame = 0x8,
+  CMD_PlaceBuilding = 0xC,
+  CMD_CancelConstruction = 0x18,
+  CMD_CancelGenericMaybe = 0x20,
+  CMD_CancelUnitMorph = 0x19,
+  CMD_Stop = 0x1A,
+  CMD_CarrierStop = 0x1B,
+  CMD_ReaverStop = 0x1C,
+  CMD_ReturnCargo = 0x1E,
+  CMD_Train = 0x1F,
+  CMD_CancelTrain = 0x20,
+  CMD_Cloak = 0x21,
+  CMD_Decloak = 0x22,
+  CMD_Morph = 0x23,
+  CMD_Unsiege = 0x25,
+  CMD_Siege = 0x26,
+  CMD_TrainFighter = 0x27,
+  CMD_UnloadAll = 0x28,
+  CMD_MergeArchon = 0x2A,
+  CMD_HoldPosition = 0x2B,
+  CMD_Unburrow = 0x2D,
+  CMD_CancelNuke = 0x2E,
+  CMD_Burrow = 0x2C,
+  CMD_Lift = 0x2F,
+  CMD_Research = 0x30,
+  CMD_CancelResearch = 0x31,
+  CMD_Upgrade = 0x32,
+  CMD_CancelUpgrade = 0x33,
+  CMD_CancelAddon = 0x34,
+  CMD_BuildingMorph = 0x35,
+  CMD_Stimpack = 0x36,
+  CMD_SetLatency = 0x55,
+  CMD_ReplaySpeed = 0x56,
+  CMD_MergeDarkArchon = 0x5A,
+};
 
 #pragma pack(push, 1)
 struct RTTICompleteObjectLocator
@@ -4849,12 +4750,131 @@ struct RTTICompleteObjectLocator
 #pragma pack(pop)
 static_assert(sizeof(RTTICompleteObjectLocator) == 20, "Incorrect size for type `RTTICompleteObjectLocator`. Expected: 20");
 
-struct ReturnCargoCommand
+struct CUnitPsiProvider
 {
-  CommandId command_id;
-  bool is_shift_used;
+  CUnit *prevPsiProvider;
+  CUnit *nextPsiProvider;
 };
-static_assert(sizeof(ReturnCargoCommand) == 2, "Incorrect size for type `ReturnCargoCommand`. Expected: 2");
+static_assert(sizeof(CUnitPsiProvider) == 8, "Incorrect size for type `CUnitPsiProvider`. Expected: 8");
+
+typedef __int32 s32;
+
+enum UnitMovementState : __int8
+{
+  UM_Init = 0x0,
+  UM_InitSeq = 0x1,
+  UM_Lump = 0x2,
+  UM_Turret = 0x3,
+  UM_Bunker = 0x4,
+  UM_BldgTurret = 0x5,
+  UM_Hidden = 0x6,
+  UM_Flyer = 0x7,
+  UM_FakeFlyer = 0x8,
+  UM_AtRest = 0x9,
+  UM_Dormant = 0xA,
+  UM_AtMoveTarget = 0xB,
+  UM_CheckIllegal = 0xC,
+  UM_MoveToLegal = 0xD,
+  UM_LumpWannabe = 0xE,
+  UM_FailedPath = 0xF,
+  UM_RetryPath = 0x10,
+  UM_StartPath = 0x11,
+  UM_UIOrderDelay = 0x12,
+  UM_TurnAndStart = 0x13,
+  UM_FaceTarget = 0x14,
+  UM_NewMoveTarget = 0x15,
+  UM_AnotherPath = 0x16,
+  UM_Repath = 0x17,
+  UM_RepathMovers = 0x18,
+  UM_FollowPath = 0x19,
+  UM_ScoutPath = 0x1A,
+  UM_ScoutFree = 0x1B,
+  UM_FixCollision = 0x1C,
+  UM_WaitFree = 0x1D,
+  UM_GetFree = 0x1E,
+  UM_SlidePrep = 0x1F,
+  UM_SlideFree = 0x20,
+  UM_ForceMoveFree = 0x21,
+  UM_FixTerrain = 0x22,
+  UM_TerrainSlide = 0x23,
+};
+
+struct CUnitFighter
+{
+  CUnit *parent;
+  CUnit *prev;
+  CUnit *next;
+  bool inHanger;
+};
+static_assert(sizeof(CUnitFighter) == 16, "Incorrect size for type `CUnitFighter`. Expected: 16");
+
+enum CheatFlags : unsigned __int32
+{
+  CHEAT_None = 0x0,
+  CHEAT_BlackSheepWall = 0x1,
+  CHEAT_OperationCwal = 0x2,
+  CHEAT_PowerOverwelming = 0x4,
+  CHEAT_SomethingForNothing = 0x8,
+  CHEAT_ShowMeTheMoney = 0x10,
+  CHEAT_GameOverMan = 0x40,
+  CHEAT_ThereIsNoCowLevel = 0x80,
+  CHEAT_StayingAlive = 0x100,
+  CHEAT_Ophelia = 0x200,
+  CHEAT_TheGathering = 0x800,
+  CHEAT_MedievalMan = 0x1000,
+  CHEAT_ModifyThePhaseVariance = 0x2000,
+  CHEAT_WarAintWhatItUsedToBe = 0x4000,
+  CHEAT_FoodForThought = 0x20000,
+  CHEAT_WhatsMineIsMine = 0x40000,
+  CHEAT_BreatheDeep = 0x80000,
+  CHEAT_NoGlues = 0x20000000,
+};
+
+struct _SCOPETABLE_ENTRY
+{
+  int EnclosingLevel;
+  void *FilterFunc;
+  void *HandlerFunc;
+};
+static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPETABLE_ENTRY`. Expected: 12");
+
+struct RegistryOption
+{
+  int field_0;
+  void *aSpeed;
+  int field_8;
+  int field_C;
+  int field_10;
+  RegistryOptions *field_14;
+};
+static_assert(sizeof(RegistryOption) == 24, "Incorrect size for type `RegistryOption`. Expected: 24");
+
+enum MusicTrackType : unsigned __int8
+{
+  NONE = 0x0,
+  MENU_MUSIC = 0x1,
+  IN_GAME_MUSIC = 0x2,
+};
+
+typedef void (__stdcall *TemplateConstructor)(char *, char *, GotFileValues *, struct_a4 *);
+
+struct _RTTICompleteObjectLocator
+{
+  int signature;
+  int offset;
+  int cdOffset;
+  void *typeDescriptor;
+  void *classDescriptor;
+};
+static_assert(sizeof(_RTTICompleteObjectLocator) == 20, "Incorrect size for type `_RTTICompleteObjectLocator`. Expected: 20");
+
+struct __declspec(align(4)) ListNodeUnknown
+{
+  ListNodeUnknown *previous;
+  ListNodeUnknown *next;
+  ListNodeUnknown *unknown;
+};
+static_assert(sizeof(ListNodeUnknown) == 12, "Incorrect size for type `ListNodeUnknown`. Expected: 12");
 
 struct MinimapSurfaceInfoRelated
 {
@@ -4869,69 +4889,41 @@ struct MinimapSurfaceInfoRelated
 };
 static_assert(sizeof(MinimapSurfaceInfoRelated) == 16, "Incorrect size for type `MinimapSurfaceInfoRelated`. Expected: 16");
 
-struct dialog_scroll
+struct PlayerInfo
 {
-  struct dialog *pDlg;
-  void *pfcnScrollerUpdate;
-  u16 nCurPos;
-  u16 nMin;
-  u16 nMax;
-  u16 wUnk_0x40;
-  u32 dwScrollFlags;
-  u8 bSliderSkip;
-  u8 bUpdateCounter;
-  u8 bSliderGraphic;
-  u8 bSliderSpacing;
-  u16 wUnk_0x4A;
-  u32 dwUnk_0x4C;
+  int dwPlayerID;
+  int dwStormId;
+  PlayerType nType;
+  Race nRace;
+  unsigned __int8 nTeam;
+  char szName[25];
 };
-static_assert(sizeof(dialog_scroll) == 32, "Incorrect size for type `dialog_scroll`. Expected: 32");
+static_assert(sizeof(PlayerInfo) == 36, "Incorrect size for type `PlayerInfo`. Expected: 36");
 
-struct CUnitPowerup
+struct CUnitResource
 {
-  points origin;
+  u16 resourceCount;
+  u8 resourceIscript;
+  u8 gatherQueueCount;
+  CUnit *nextGatherer;
+  u8 resourceGroup;
+  u8 resourceBelongsToAI;
 };
-static_assert(sizeof(CUnitPowerup) == 4, "Incorrect size for type `CUnitPowerup`. Expected: 4");
-
-struct TechSC
-{
-  u8 items[24];
-};
-static_assert(sizeof(TechSC) == 24, "Incorrect size for type `TechSC`. Expected: 24");
-
-struct CancelUpgradeCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelUpgradeCommand) == 1, "Incorrect size for type `CancelUpgradeCommand`. Expected: 1");
-
-struct struc_581D76
-{
-  u8 colors[8];
-};
-static_assert(sizeof(struc_581D76) == 8, "Incorrect size for type `struc_581D76`. Expected: 8");
-
-struct __declspec(align(4)) MapChunks
-{
-  int data0;
-  u8 player_force[8];
-  u16 tbl_index_force_name[4];
-  ForceFlags force_flags[4];
-  int version;
-  int data7;
-};
-static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
-
-typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
+static_assert(sizeof(CUnitResource) == 12, "Incorrect size for type `CUnitResource`. Expected: 12");
 
 #pragma pack(push, 1)
-struct __declspec(align(1)) Position
+struct __declspec(align(2)) SightStruct
 {
-  u16 x;
-  u16 y;
+  u32 tileSightWidth;
+  u32 tileSightHeight;
+  u32 unknown1;
+  u32 unknown2;
+  u32 unknown3;
+  u32 tile_count;
+  u32 tiles;
 };
 #pragma pack(pop)
-static_assert(sizeof(Position) == 4, "Incorrect size for type `Position`. Expected: 4");
+static_assert(sizeof(SightStruct) == 28, "Incorrect size for type `SightStruct`. Expected: 28");
 
 struct __declspec(align(2)) RegistryOptions
 {
@@ -4950,231 +4942,11 @@ struct __declspec(align(2)) RegistryOptions
 };
 static_assert(sizeof(RegistryOptions) == 40, "Incorrect size for type `RegistryOptions`. Expected: 40");
 
-struct PlayerInfo
-{
-  int dwPlayerID;
-  int dwStormId;
-  PlayerType nType;
-  Race nRace;
-  unsigned __int8 nTeam;
-  char szName[25];
-};
-static_assert(sizeof(PlayerInfo) == 36, "Incorrect size for type `PlayerInfo`. Expected: 36");
-
-struct UnsiegeCommand
-{
-  CommandId command_id;
-  bool is_shift_used;
-};
-static_assert(sizeof(UnsiegeCommand) == 2, "Incorrect size for type `UnsiegeCommand`. Expected: 2");
-
-#pragma pack(push, 1)
-struct RTTIBaseClassDescriptor
-{
-  void *pTypeDescriptor;
-  int numContainedBases;
-  PMD pmd;
-  int attributes;
-};
-#pragma pack(pop)
-static_assert(sizeof(RTTIBaseClassDescriptor) == 24, "Incorrect size for type `RTTIBaseClassDescriptor`. Expected: 24");
-
-struct __declspec(align(4)) MissionCheatRelated
-{
-  const char *campaign_id;
-  Race race;
-  _DWORD first_mission_index;
-  _DWORD is_expansion;
-};
-static_assert(sizeof(MissionCheatRelated) == 16, "Incorrect size for type `MissionCheatRelated`. Expected: 16");
-
-struct LO_Header
-{
-  u32 frameCount;
-  u32 overlayCount;
-  u32 frameOffsets[1];
-};
-static_assert(sizeof(LO_Header) == 12, "Incorrect size for type `LO_Header`. Expected: 12");
-
-struct MergeArchonCommand
+struct MergeDarkArchonCommand
 {
   CommandId command_id;
 };
-static_assert(sizeof(MergeArchonCommand) == 1, "Incorrect size for type `MergeArchonCommand`. Expected: 1");
-
-struct CancelUnitMorphCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelUnitMorphCommand) == 1, "Incorrect size for type `CancelUnitMorphCommand`. Expected: 1");
-
-struct Font
-{
-  u32 magic;
-  u8 low;
-  u8 high;
-  u8 Xmax;
-  u8 Ymax;
-  FontChar *chrs[1];
-};
-static_assert(sizeof(Font) == 12, "Incorrect size for type `Font`. Expected: 12");
-
-struct grpFrame
-{
-  u8 x;
-  u8 y;
-  u8 wid;
-  u8 hgt;
-  u32 dataOffset;
-};
-static_assert(sizeof(grpFrame) == 8, "Incorrect size for type `grpFrame`. Expected: 8");
-
-struct RestarGameCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(RestarGameCommand) == 1, "Incorrect size for type `RestarGameCommand`. Expected: 1");
-
-struct vr4entry
-{
-  BYTE cdata[8][8];
-};
-static_assert(sizeof(vr4entry) == 64, "Incorrect size for type `vr4entry`. Expected: 64");
-
-struct SetLatencyCommand
-{
-  CommandId command_id;
-  u8 latency;
-};
-static_assert(sizeof(SetLatencyCommand) == 2, "Incorrect size for type `SetLatencyCommand`. Expected: 2");
-
-struct CUnitBeacon
-{
-  u32 _unknown_00;
-  u32 _unknown_04;
-  u32 flagSpawnFrame;
-};
-static_assert(sizeof(CUnitBeacon) == 12, "Incorrect size for type `CUnitBeacon`. Expected: 12");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) TrainCommand
-{
-  CommandId command_id;
-  __int16 action_variable;
-};
-#pragma pack(pop)
-static_assert(sizeof(TrainCommand) == 3, "Incorrect size for type `TrainCommand`. Expected: 3");
-
-struct CinematicIntro
-{
-  Cinematic actual_cinematic;
-  Cinematic intro_cinematic;
-};
-static_assert(sizeof(CinematicIntro) == 2, "Incorrect size for type `CinematicIntro`. Expected: 2");
-
-struct Action
-{
-  u32 location;
-  u32 string;
-  u32 wavString;
-  u32 time;
-  u32 player;
-  u32 number;
-  u16 unit;
-  u8 action;
-  u8 number2;
-  u8 flags;
-};
-static_assert(sizeof(Action) == 32, "Incorrect size for type `Action`. Expected: 32");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) MorphCommand
-{
-  CommandId command_id;
-  UnitType unit_type;
-};
-#pragma pack(pop)
-static_assert(sizeof(MorphCommand) == 3, "Incorrect size for type `MorphCommand`. Expected: 3");
-
-struct CUnitWorker
-{
-  CUnit *pPowerup;
-  points targetResource;
-  CUnit *targetResourceUnit;
-  u16 repairResourceLossTimer;
-  bool isCarryingSomething;
-  u8 resourceCarryCount;
-};
-static_assert(sizeof(CUnitWorker) == 16, "Incorrect size for type `CUnitWorker`. Expected: 16");
-
-struct __declspec(align(4)) ButtonOrder
-{
-  u16 position;
-  Icon icon_id;
-  ButtonState (__fastcall *condition)(u16 variable, int player_id, CUnit *unit);
-  void (__fastcall *action)(int, bool);
-  u16 condition_variable;
-  u16 action_variable;
-  u16 condition_string_id;
-  u16 action_string_id;
-};
-static_assert(sizeof(ButtonOrder) == 20, "Incorrect size for type `ButtonOrder`. Expected: 20");
-
-struct FontChar
-{
-  u8 w;
-  u8 h;
-  u8 _x;
-  u8 _y;
-  u8 data[1];
-};
-static_assert(sizeof(FontChar) == 5, "Incorrect size for type `FontChar`. Expected: 5");
-
-struct UpgradeCommand
-{
-  CommandId command_id;
-  char action_variable;
-};
-static_assert(sizeof(UpgradeCommand) == 2, "Incorrect size for type `UpgradeCommand`. Expected: 2");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) CancelTrainCommand
-{
-  CommandId command_id;
-  __int16 action_variable;
-};
-#pragma pack(pop)
-static_assert(sizeof(CancelTrainCommand) == 3, "Incorrect size for type `CancelTrainCommand`. Expected: 3");
-
-struct __declspec(align(4)) Target_
-{
-  points pt;
-  struct CUnit *pUnit;
-};
-static_assert(sizeof(Target_) == 8, "Incorrect size for type `Target_`. Expected: 8");
-
-struct CancelResearchCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelResearchCommand) == 1, "Incorrect size for type `CancelResearchCommand`. Expected: 1");
-
-struct CancelNukeCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelNukeCommand) == 1, "Incorrect size for type `CancelNukeCommand`. Expected: 1");
-
-struct ReplayPlayer
-{
-  int identifier;
-  int slot;
-  PlayerType player_type;
-  Race race;
-  u8 force_id;
-  char name[25];
-};
-static_assert(sizeof(ReplayPlayer) == 36, "Incorrect size for type `ReplayPlayer`. Expected: 36");
+static_assert(sizeof(MergeDarkArchonCommand) == 1, "Incorrect size for type `MergeDarkArchonCommand`. Expected: 1");
 
 struct UpgradesBW
 {
@@ -5182,55 +4954,19 @@ struct UpgradesBW
 };
 static_assert(sizeof(UpgradesBW) == 15, "Incorrect size for type `UpgradesBW`. Expected: 15");
 
-struct CUnitFinder
-{
-  u32 left;
-  u32 right;
-  u32 top;
-  u32 bottom;
-};
-static_assert(sizeof(CUnitFinder) == 16, "Incorrect size for type `CUnitFinder`. Expected: 16");
-
-struct __declspec(align(4)) SaiContourHub
-{
-  SaiContour *contours[4];
-  s16 contourCount[4];
-  s16 contourMax[4];
-  s16 searchInner[4];
-  s16 a;
-  s16 b;
-  s16 c;
-  s16 d;
-  s16 searchOuter[4];
-};
-static_assert(sizeof(SaiContourHub) == 56, "Incorrect size for type `SaiContourHub`. Expected: 56");
-
-struct UnburrowCommand
+struct ReturnCargoCommand
 {
   CommandId command_id;
   bool is_shift_used;
 };
-static_assert(sizeof(UnburrowCommand) == 2, "Incorrect size for type `UnburrowCommand`. Expected: 2");
+static_assert(sizeof(ReturnCargoCommand) == 2, "Incorrect size for type `ReturnCargoCommand`. Expected: 2");
 
-struct __declspec(align(2)) CampaignMenuEntry
+struct StopCommand
 {
-  unsigned __int16 glu_hist_tbl_index;
-  MapData next_mission;
-  Cinematic cinematic;
-  char _padding0;
-  Race race;
-  bool hide;
+  CommandId command_id;
+  bool is_shift_used;
 };
-static_assert(sizeof(CampaignMenuEntry) == 8, "Incorrect size for type `CampaignMenuEntry`. Expected: 8");
-
-struct TimerRelated
-{
-  swishTimer *timers;
-  __int16 active_timers_count_maybe;
-  char field_6[2];
-  swishTimer active_timers_maybe[20];
-};
-static_assert(sizeof(TimerRelated) == 88, "Incorrect size for type `TimerRelated`. Expected: 88");
+static_assert(sizeof(StopCommand) == 2, "Incorrect size for type `StopCommand`. Expected: 2");
 
 struct TileType
 {
@@ -5249,27 +4985,50 @@ struct TileType
 };
 static_assert(sizeof(TileType) == 52, "Incorrect size for type `TileType`. Expected: 52");
 
-struct __declspec(align(4)) SFX_related
+struct TimerRelated
 {
-  int f1;
-  STREAMED head_maybe;
+  swishTimer *timers;
+  __int16 active_timers_count_maybe;
+  char field_6[2];
+  swishTimer active_timers_maybe[20];
 };
-static_assert(sizeof(SFX_related) == 16, "Incorrect size for type `SFX_related`. Expected: 16");
+static_assert(sizeof(TimerRelated) == 88, "Incorrect size for type `TimerRelated`. Expected: 88");
 
-struct __declspec(align(2)) TypeDropdownSelect
+struct BurrowCommand
 {
-  PlayerType player_type;
-  GluAllTblEntry tbl_entry;
+  CommandId command_id;
+  bool is_shift_used;
 };
-static_assert(sizeof(TypeDropdownSelect) == 4, "Incorrect size for type `TypeDropdownSelect`. Expected: 4");
+static_assert(sizeof(BurrowCommand) == 2, "Incorrect size for type `BurrowCommand`. Expected: 2");
 
-struct ID
+struct UnsiegeCommand
 {
-  ID *prev;
-  ID *next;
-  CharacterData data;
+  CommandId command_id;
+  bool is_shift_used;
 };
-static_assert(sizeof(ID) == 120, "Incorrect size for type `ID`. Expected: 120");
+static_assert(sizeof(UnsiegeCommand) == 2, "Incorrect size for type `UnsiegeCommand`. Expected: 2");
+
+struct Action
+{
+  u32 location;
+  u32 string;
+  u32 wavString;
+  u32 time;
+  u32 player;
+  u32 number;
+  u16 unit;
+  u8 action;
+  u8 number2;
+  u8 flags;
+};
+static_assert(sizeof(Action) == 32, "Incorrect size for type `Action`. Expected: 32");
+
+struct SetLatencyCommand
+{
+  CommandId command_id;
+  u8 latency;
+};
+static_assert(sizeof(SetLatencyCommand) == 2, "Incorrect size for type `SetLatencyCommand`. Expected: 2");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) ColorShiftData
@@ -5280,354 +5039,6 @@ struct __declspec(align(2)) ColorShiftData
 };
 #pragma pack(pop)
 static_assert(sizeof(ColorShiftData) == 20, "Incorrect size for type `ColorShiftData`. Expected: 20");
-
-struct UnitProperties
-{
-  UnitGroupFlags valid_group_flags;
-  unsigned __int16 can_be_owned : 1;
-  unsigned __int16 has_hp : 1;
-  unsigned __int16 has_shields : 1;
-  unsigned __int16 has_energy : 1;
-  unsigned __int16 has_resource_amount : 1;
-  unsigned __int16 has_hanger : 1;
-  unsigned __int16 unused2 : 10;
-  u8 player;
-  u8 hp_percentage;
-  u8 shield_percentage;
-  u8 energy_percentage;
-  u32 resource_amount;
-  u16 hangar_count;
-  UnitGroupFlags group_flags;
-  u32 unused4;
-};
-static_assert(sizeof(UnitProperties) == 20, "Incorrect size for type `UnitProperties`. Expected: 20");
-
-struct CarrierStopCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CarrierStopCommand) == 1, "Incorrect size for type `CarrierStopCommand`. Expected: 1");
-
-struct DecloakCommand
-{
-  CommandId command_id;
-  bool is_shift_used;
-};
-static_assert(sizeof(DecloakCommand) == 2, "Incorrect size for type `DecloakCommand`. Expected: 2");
-
-struct CUnitResource
-{
-  u16 resourceCount;
-  u8 resourceIscript;
-  u8 gatherQueueCount;
-  CUnit *nextGatherer;
-  u8 resourceGroup;
-  u8 resourceBelongsToAI;
-};
-static_assert(sizeof(CUnitResource) == 12, "Incorrect size for type `CUnitResource`. Expected: 12");
-
-struct CycleStruct
-{
-  BYTE active;
-  BYTE speed;
-  BYTE wait;
-  BYTE palette_entry_low;
-  BYTE adv_cycle_pos;
-  BYTE palette_entry_high;
-  PALETTEENTRY *advanced_cycle_data;
-  BYTE adv_cycle_count;
-};
-static_assert(sizeof(CycleStruct) == 16, "Incorrect size for type `CycleStruct`. Expected: 16");
-
-struct ReaverStopCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(ReaverStopCommand) == 1, "Incorrect size for type `ReaverStopCommand`. Expected: 1");
-
-struct MapSize
-{
-  u16 width;
-  u16 height;
-};
-static_assert(sizeof(MapSize) == 4, "Incorrect size for type `MapSize`. Expected: 4");
-
-struct SuppliesPerRace
-{
-  s32 available[12];
-  s32 used[12];
-  s32 max[12];
-};
-static_assert(sizeof(SuppliesPerRace) == 144, "Incorrect size for type `SuppliesPerRace`. Expected: 144");
-
-struct Box16
-{
-  u16 left;
-  u16 top;
-  u16 right;
-  u16 bottom;
-};
-static_assert(sizeof(Box16) == 8, "Incorrect size for type `Box16`. Expected: 8");
-
-struct Bitmap
-{
-  u16 wid;
-  u16 ht;
-  u8 *data;
-};
-static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
-
-struct Counts
-{
-  s32 all[228][12];
-  s32 completed[228][12];
-  s32 killed[228][12];
-  s32 dead[228][12];
-};
-static_assert(sizeof(Counts) == 43776, "Incorrect size for type `Counts`. Expected: 43776");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) BuildingMorphCommand
-{
-  CommandId command_id;
-  UnitType unit_type;
-};
-#pragma pack(pop)
-static_assert(sizeof(BuildingMorphCommand) == 3, "Incorrect size for type `BuildingMorphCommand`. Expected: 3");
-
-#pragma pack(push, 1)
-struct __declspec(align(2)) CUnitBuilding
-{
-  CUnit *addon;
-  UnitType addonBuildType;
-  u16 upgradeResearchTime;
-  Tech techType;
-  u8 upgradeType;
-  u8 larvaTimer;
-  u8 landingTimer;
-  u8 creepTimer;
-  u8 upgradeLevel;
-  u16 __E;
-};
-#pragma pack(pop)
-static_assert(sizeof(CUnitBuilding) == 16, "Incorrect size for type `CUnitBuilding`. Expected: 16");
-
-struct SaiSplit
-{
-  u16 minitileMask;
-  u16 rgn1;
-  u16 rgn2;
-};
-static_assert(sizeof(SaiSplit) == 6, "Incorrect size for type `SaiSplit`. Expected: 6");
-
-struct UnloadAllCommand
-{
-  CommandId command_id;
-  bool is_shift_used;
-};
-static_assert(sizeof(UnloadAllCommand) == 2, "Incorrect size for type `UnloadAllCommand`. Expected: 2");
-
-struct __declspec(align(2)) IScriptProgram
-{
-  u16 iscript_header;
-  u16 program_counter;
-  u16 return_address;
-  Anims anim;
-  u8 wait;
-};
-static_assert(sizeof(IScriptProgram) == 8, "Incorrect size for type `IScriptProgram`. Expected: 8");
-
-struct TrainFighterCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(TrainFighterCommand) == 1, "Incorrect size for type `TrainFighterCommand`. Expected: 1");
-
-struct CancelAddonCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelAddonCommand) == 1, "Incorrect size for type `CancelAddonCommand`. Expected: 1");
-
-struct HoldPositionCommand
-{
-  CommandId command_id;
-  bool is_shift_used;
-};
-static_assert(sizeof(HoldPositionCommand) == 2, "Incorrect size for type `HoldPositionCommand`. Expected: 2");
-
-struct CUnitCarrier
-{
-  CUnit *pInHanger;
-  CUnit *pOutHanger;
-  u8 inHangerCount;
-  u8 outHangerCount;
-};
-static_assert(sizeof(CUnitCarrier) == 12, "Incorrect size for type `CUnitCarrier`. Expected: 12");
-
-struct UnknownTilesetRelated1
-{
-  int x;
-  UnknownTilesetRelated2 y[];
-};
-static_assert(sizeof(UnknownTilesetRelated1) == 4, "Incorrect size for type `UnknownTilesetRelated1`. Expected: 4");
-
-struct UnitAvail
-{
-  u8 available[12][228];
-};
-static_assert(sizeof(UnitAvail) == 2736, "Incorrect size for type `UnitAvail`. Expected: 2736");
-
-struct EstablishingShot
-{
-  const char *establishing_shot_name;
-  MapData campaign_mission;
-};
-static_assert(sizeof(EstablishingShot) == 8, "Incorrect size for type `EstablishingShot`. Expected: 8");
-
-struct __declspec(align(2)) MusicTrackDescription
-{
-  char *wav_filename;
-  MusicTrackType track_type;
-  char fade_in_maybe;
-  u8 in_game_music_index;
-};
-static_assert(sizeof(MusicTrackDescription) == 8, "Incorrect size for type `MusicTrackDescription`. Expected: 8");
-
-union Char4
-{
-  unsigned __int32 as_number;
-  Char4_characters as_characters;
-};
-static_assert(sizeof(Char4) == 4, "Incorrect size for type `Char4`. Expected: 4");
-
-struct SiegeCommand
-{
-  CommandId command_id;
-  bool is_shift_used;
-};
-static_assert(sizeof(SiegeCommand) == 2, "Incorrect size for type `SiegeCommand`. Expected: 2");
-
-typedef void (__fastcall *FnAllocBackgroundImage)(const char *fileName, Bitmap *a2, PALETTEENTRY *palette, const char *source_filename, int source_line);
-
-struct __declspec(align(4)) GlueRelated
-{
-  int index;
-  MenuPosition menu_position;
-  char *path;
-};
-static_assert(sizeof(GlueRelated) == 12, "Incorrect size for type `GlueRelated`. Expected: 12");
-
-struct __declspec(align(2)) CheatHashMaybe
-{
-  u32 parts[4];
-};
-static_assert(sizeof(CheatHashMaybe) == 16, "Incorrect size for type `CheatHashMaybe`. Expected: 16");
-
-struct s_evt
-{
-  DWORD dwFlags;
-  DWORD dwPlayerId;
-  BYTE *pData;
-  DWORD dwSize;
-};
-static_assert(sizeof(s_evt) == 16, "Incorrect size for type `s_evt`. Expected: 16");
-
-struct MergeDarkArchonCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(MergeDarkArchonCommand) == 1, "Incorrect size for type `MergeDarkArchonCommand`. Expected: 1");
-
-struct SaiContour
-{
-  s16 v[3];
-  u8 type;
-  u8 unk_relation;
-};
-static_assert(sizeof(SaiContour) == 8, "Incorrect size for type `SaiContour`. Expected: 8");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) GotFileValues
-{
-  GameType template_id;
-  u8 unused1;
-  u16 variation_id;
-  int variation_value;
-  VictoryConditions victory_conditions;
-  ResourceType resource_type;
-  UnitStats unit_stats;
-  FogOfWar fog;
-  StartingUnits starting_units;
-  StartingPositions starting_positions;
-  PlayerTypes player_types;
-  u8 allies_allowed;
-  u8 team_mode;
-  u8 cheats;
-  u8 tournament_mode;
-  u32 victory_condition_value;
-  u32 resource_type_value;
-  u8 unused3[5];
-};
-#pragma pack(pop)
-static_assert(sizeof(GotFileValues) == 32, "Incorrect size for type `GotFileValues`. Expected: 32");
-
-struct _EH3_EXCEPTION_REGISTRATION
-{
-  struct _EH3_EXCEPTION_REGISTRATION *Next;
-  PVOID ExceptionHandler;
-  PSCOPETABLE_ENTRY ScopeTable;
-  DWORD TryLevel;
-};
-static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
-
-struct UnitFinderData
-{
-  s32 unitIndex;
-  s32 position;
-};
-static_assert(sizeof(UnitFinderData) == 8, "Incorrect size for type `UnitFinderData`. Expected: 8");
-
-struct StimpackCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(StimpackCommand) == 1, "Incorrect size for type `StimpackCommand`. Expected: 1");
-
-struct Condition
-{
-  DWORD dwLocation;
-  DWORD dwGroup;
-  DWORD dwCount;
-  WORD wUnitType;
-  BYTE bComparisonType;
-  BYTE bConditionType;
-  BYTE bExtraType;
-  BYTE bFlags;
-  BYTE __bAlign[2];
-};
-static_assert(sizeof(Condition) == 20, "Incorrect size for type `Condition`. Expected: 20");
-
-struct CUnitVulture
-{
-  u8 spiderMineCount;
-};
-static_assert(sizeof(CUnitVulture) == 1, "Incorrect size for type `CUnitVulture`. Expected: 1");
-
-struct UpgradesSC
-{
-  u8 items[46];
-};
-static_assert(sizeof(UpgradesSC) == 46, "Incorrect size for type `UpgradesSC`. Expected: 46");
-
-struct __declspec(align(2)) rect
-{
-  s16 left;
-  s16 top;
-  s16 right;
-  s16 bottom;
-};
-static_assert(sizeof(rect) == 8, "Incorrect size for type `rect`. Expected: 8");
 
 struct dialog_dlg
 {
@@ -5642,6 +5053,68 @@ struct dialog_dlg
 };
 static_assert(sizeof(dialog_dlg) == 28, "Incorrect size for type `dialog_dlg`. Expected: 28");
 
+struct __declspec(align(2)) MusicTrackDescription
+{
+  char *wav_filename;
+  MusicTrackType track_type;
+  char fade_in_maybe;
+  u8 in_game_music_index;
+};
+static_assert(sizeof(MusicTrackDescription) == 8, "Incorrect size for type `MusicTrackDescription`. Expected: 8");
+
+struct CancelNukeCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(CancelNukeCommand) == 1, "Incorrect size for type `CancelNukeCommand`. Expected: 1");
+
+struct RestarGameCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(RestarGameCommand) == 1, "Incorrect size for type `RestarGameCommand`. Expected: 1");
+
+struct _EH3_EXCEPTION_REGISTRATION
+{
+  struct _EH3_EXCEPTION_REGISTRATION *Next;
+  PVOID ExceptionHandler;
+  PSCOPETABLE_ENTRY ScopeTable;
+  DWORD TryLevel;
+};
+static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
+
+struct Font
+{
+  u32 magic;
+  u8 low;
+  u8 high;
+  u8 Xmax;
+  u8 Ymax;
+  FontChar *chrs[1];
+};
+static_assert(sizeof(Font) == 12, "Incorrect size for type `Font`. Expected: 12");
+
+struct EstablishingShot
+{
+  const char *establishing_shot_name;
+  MapData campaign_mission;
+};
+static_assert(sizeof(EstablishingShot) == 8, "Incorrect size for type `EstablishingShot`. Expected: 8");
+
+struct MapSize
+{
+  u16 width;
+  u16 height;
+};
+static_assert(sizeof(MapSize) == 4, "Incorrect size for type `MapSize`. Expected: 4");
+
+union Char4
+{
+  unsigned __int32 as_number;
+  Char4_characters as_characters;
+};
+static_assert(sizeof(Char4) == 4, "Incorrect size for type `Char4`. Expected: 4");
+
 struct layer
 {
   BYTE buffers;
@@ -5655,27 +5128,6 @@ struct layer
   void (__fastcall *pUpdate)(int a1, int a2, Bitmap *pSurface, bounds *pBounds);
 };
 static_assert(sizeof(layer) == 20, "Incorrect size for type `layer`. Expected: 20");
-
-struct ScrollSpeeds
-{
-  u8 scroll[7];
-};
-static_assert(sizeof(ScrollSpeeds) == 7, "Incorrect size for type `ScrollSpeeds`. Expected: 7");
-
-struct CancelConstructionCommand
-{
-  CommandId command_id;
-};
-static_assert(sizeof(CancelConstructionCommand) == 1, "Incorrect size for type `CancelConstructionCommand`. Expected: 1");
-
-struct Box32
-{
-  s32 left;
-  s32 top;
-  s32 right;
-  s32 bottom;
-};
-static_assert(sizeof(Box32) == 16, "Incorrect size for type `Box32`. Expected: 16");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) AiCaptain
@@ -5708,25 +5160,89 @@ struct __declspec(align(2)) AiCaptain
 #pragma pack(pop)
 static_assert(sizeof(AiCaptain) == 52, "Incorrect size for type `AiCaptain`. Expected: 52");
 
-struct CloakCommand
+struct CUnitFinder
+{
+  u32 left;
+  u32 right;
+  u32 top;
+  u32 bottom;
+};
+static_assert(sizeof(CUnitFinder) == 16, "Incorrect size for type `CUnitFinder`. Expected: 16");
+
+struct CancelAddonCommand
 {
   CommandId command_id;
-  bool is_shift_used;
 };
-static_assert(sizeof(CloakCommand) == 2, "Incorrect size for type `CloakCommand`. Expected: 2");
+static_assert(sizeof(CancelAddonCommand) == 1, "Incorrect size for type `CancelAddonCommand`. Expected: 1");
 
-struct BurrowCommand
+struct ReaverStopCommand
 {
   CommandId command_id;
-  bool is_shift_used;
 };
-static_assert(sizeof(BurrowCommand) == 2, "Incorrect size for type `BurrowCommand`. Expected: 2");
+static_assert(sizeof(ReaverStopCommand) == 1, "Incorrect size for type `ReaverStopCommand`. Expected: 1");
 
-struct MiniTileFlagArray
+#pragma pack(push, 1)
+struct RTTIBaseClassDescriptor
 {
-  u16 miniTile[16];
+  void *pTypeDescriptor;
+  int numContainedBases;
+  PMD pmd;
+  int attributes;
 };
-static_assert(sizeof(MiniTileFlagArray) == 32, "Incorrect size for type `MiniTileFlagArray`. Expected: 32");
+#pragma pack(pop)
+static_assert(sizeof(RTTIBaseClassDescriptor) == 24, "Incorrect size for type `RTTIBaseClassDescriptor`. Expected: 24");
+
+struct ReplayPlayer
+{
+  int identifier;
+  int slot;
+  PlayerType player_type;
+  Race race;
+  u8 force_id;
+  char name[25];
+};
+static_assert(sizeof(ReplayPlayer) == 36, "Incorrect size for type `ReplayPlayer`. Expected: 36");
+
+struct Condition
+{
+  DWORD dwLocation;
+  DWORD dwGroup;
+  DWORD dwCount;
+  WORD wUnitType;
+  BYTE bComparisonType;
+  BYTE bConditionType;
+  BYTE bExtraType;
+  BYTE bFlags;
+  BYTE __bAlign[2];
+};
+static_assert(sizeof(Condition) == 20, "Incorrect size for type `Condition`. Expected: 20");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) Position
+{
+  u16 x;
+  u16 y;
+};
+#pragma pack(pop)
+static_assert(sizeof(Position) == 4, "Incorrect size for type `Position`. Expected: 4");
+
+struct __declspec(align(4)) MapChunks
+{
+  int data0;
+  u8 player_force[8];
+  u16 tbl_index_force_name[4];
+  ForceFlags force_flags[4];
+  int version;
+  int data7;
+};
+static_assert(sizeof(MapChunks) == 32, "Incorrect size for type `MapChunks`. Expected: 32");
+
+struct UnitFinderData
+{
+  s32 unitIndex;
+  s32 position;
+};
+static_assert(sizeof(UnitFinderData) == 8, "Incorrect size for type `UnitFinderData`. Expected: 8");
 
 struct CUnitStatus
 {
@@ -5757,12 +5273,450 @@ struct CUnitStatus
 };
 static_assert(sizeof(CUnitStatus) == 44, "Incorrect size for type `CUnitStatus`. Expected: 44");
 
+struct UnitAvail
+{
+  u8 available[12][228];
+};
+static_assert(sizeof(UnitAvail) == 2736, "Incorrect size for type `UnitAvail`. Expected: 2736");
+
+struct UpgradeCommand
+{
+  CommandId command_id;
+  char action_variable;
+};
+static_assert(sizeof(UpgradeCommand) == 2, "Incorrect size for type `UpgradeCommand`. Expected: 2");
+
+struct LO_Header
+{
+  u32 frameCount;
+  u32 overlayCount;
+  u32 frameOffsets[1];
+};
+static_assert(sizeof(LO_Header) == 12, "Incorrect size for type `LO_Header`. Expected: 12");
+
+struct __declspec(align(4)) Target_
+{
+  points pt;
+  struct CUnit *pUnit;
+};
+static_assert(sizeof(Target_) == 8, "Incorrect size for type `Target_`. Expected: 8");
+
+struct Box32
+{
+  s32 left;
+  s32 top;
+  s32 right;
+  s32 bottom;
+};
+static_assert(sizeof(Box32) == 16, "Incorrect size for type `Box32`. Expected: 16");
+
+struct dialog_scroll
+{
+  struct dialog *pDlg;
+  void *pfcnScrollerUpdate;
+  u16 nCurPos;
+  u16 nMin;
+  u16 nMax;
+  u16 wUnk_0x40;
+  u32 dwScrollFlags;
+  u8 bSliderSkip;
+  u8 bUpdateCounter;
+  u8 bSliderGraphic;
+  u8 bSliderSpacing;
+  u16 wUnk_0x4A;
+  u32 dwUnk_0x4C;
+};
+static_assert(sizeof(dialog_scroll) == 32, "Incorrect size for type `dialog_scroll`. Expected: 32");
+
+struct s_evt
+{
+  DWORD dwFlags;
+  DWORD dwPlayerId;
+  BYTE *pData;
+  DWORD dwSize;
+};
+static_assert(sizeof(s_evt) == 16, "Incorrect size for type `s_evt`. Expected: 16");
+
+struct __declspec(align(4)) GlueRelated
+{
+  int index;
+  MenuPosition menu_position;
+  char *path;
+};
+static_assert(sizeof(GlueRelated) == 12, "Incorrect size for type `GlueRelated`. Expected: 12");
+
+struct ID
+{
+  ID *prev;
+  ID *next;
+  CharacterData data;
+};
+static_assert(sizeof(ID) == 120, "Incorrect size for type `ID`. Expected: 120");
+
 struct ResearchCommand
 {
   CommandId command_id;
   char action_variable;
 };
 static_assert(sizeof(ResearchCommand) == 2, "Incorrect size for type `ResearchCommand`. Expected: 2");
+
+struct CinematicIntro
+{
+  Cinematic actual_cinematic;
+  Cinematic intro_cinematic;
+};
+static_assert(sizeof(CinematicIntro) == 2, "Incorrect size for type `CinematicIntro`. Expected: 2");
+
+struct CarrierStopCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(CarrierStopCommand) == 1, "Incorrect size for type `CarrierStopCommand`. Expected: 1");
+
+struct dialog_optn
+{
+  dialog *pDlg;
+  u8 bEnabled;
+};
+static_assert(sizeof(dialog_optn) == 8, "Incorrect size for type `dialog_optn`. Expected: 8");
+
+struct __declspec(align(4)) SFX_related
+{
+  int f1;
+  STREAMED head_maybe;
+};
+static_assert(sizeof(SFX_related) == 16, "Incorrect size for type `SFX_related`. Expected: 16");
+
+struct grpFrame
+{
+  u8 x;
+  u8 y;
+  u8 wid;
+  u8 hgt;
+  u32 dataOffset;
+};
+static_assert(sizeof(grpFrame) == 8, "Incorrect size for type `grpFrame`. Expected: 8");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) TrainCommand
+{
+  CommandId command_id;
+  __int16 action_variable;
+};
+#pragma pack(pop)
+static_assert(sizeof(TrainCommand) == 3, "Incorrect size for type `TrainCommand`. Expected: 3");
+
+struct TechBW
+{
+  u8 items[20];
+};
+static_assert(sizeof(TechBW) == 20, "Incorrect size for type `TechBW`. Expected: 20");
+
+struct CUnitVulture
+{
+  u8 spiderMineCount;
+};
+static_assert(sizeof(CUnitVulture) == 1, "Incorrect size for type `CUnitVulture`. Expected: 1");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) CancelTrainCommand
+{
+  CommandId command_id;
+  __int16 action_variable;
+};
+#pragma pack(pop)
+static_assert(sizeof(CancelTrainCommand) == 3, "Incorrect size for type `CancelTrainCommand`. Expected: 3");
+
+struct __declspec(align(2)) CampaignMenuEntry
+{
+  unsigned __int16 glu_hist_tbl_index;
+  MapData next_mission;
+  Cinematic cinematic;
+  char _padding0;
+  Race race;
+  bool hide;
+};
+static_assert(sizeof(CampaignMenuEntry) == 8, "Incorrect size for type `CampaignMenuEntry`. Expected: 8");
+
+#pragma pack(push, 1)
+struct struct_6
+{
+  IDirectSoundBuffer *sound_buffer;
+  __int16 unit_type;
+  char sfxdata_flags_2;
+  char sfxdata_flags_1;
+  int field_8;
+  SfxData sfx_id;
+  int field_10;
+  int volume_related_maybe;
+};
+#pragma pack(pop)
+static_assert(sizeof(struct_6) == 24, "Incorrect size for type `struct_6`. Expected: 24");
+
+typedef void (__fastcall *FnAllocBackgroundImage)(const char *fileName, Bitmap *a2, PALETTEENTRY *palette, const char *source_filename, int source_line);
+
+struct fontMemStruct
+{
+  u32 tFontData;
+  u32 tFontUnknown;
+  u16 x1;
+  u16 y1;
+  u16 x2;
+  u16 y2;
+};
+static_assert(sizeof(fontMemStruct) == 16, "Incorrect size for type `fontMemStruct`. Expected: 16");
+
+struct CancelConstructionCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(CancelConstructionCommand) == 1, "Incorrect size for type `CancelConstructionCommand`. Expected: 1");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) ReplaySpeedCommand
+{
+  CommandId command_id;
+  byte is_paused;
+  int game_speed;
+  int replay_speed_multiplier;
+};
+#pragma pack(pop)
+static_assert(sizeof(ReplaySpeedCommand) == 10, "Incorrect size for type `ReplaySpeedCommand`. Expected: 10");
+
+struct UnloadAllCommand
+{
+  CommandId command_id;
+  bool is_shift_used;
+};
+static_assert(sizeof(UnloadAllCommand) == 2, "Incorrect size for type `UnloadAllCommand`. Expected: 2");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) BuildingMorphCommand
+{
+  CommandId command_id;
+  UnitType unit_type;
+};
+#pragma pack(pop)
+static_assert(sizeof(BuildingMorphCommand) == 3, "Incorrect size for type `BuildingMorphCommand`. Expected: 3");
+
+struct CloakCommand
+{
+  CommandId command_id;
+  bool is_shift_used;
+};
+static_assert(sizeof(CloakCommand) == 2, "Incorrect size for type `CloakCommand`. Expected: 2");
+
+struct __declspec(align(2)) CheatHashMaybe
+{
+  u32 parts[4];
+};
+static_assert(sizeof(CheatHashMaybe) == 16, "Incorrect size for type `CheatHashMaybe`. Expected: 16");
+
+struct ScrollSpeeds
+{
+  u8 scroll[7];
+};
+static_assert(sizeof(ScrollSpeeds) == 7, "Incorrect size for type `ScrollSpeeds`. Expected: 7");
+
+struct UnburrowCommand
+{
+  CommandId command_id;
+  bool is_shift_used;
+};
+static_assert(sizeof(UnburrowCommand) == 2, "Incorrect size for type `UnburrowCommand`. Expected: 2");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) MorphCommand
+{
+  CommandId command_id;
+  UnitType unit_type;
+};
+#pragma pack(pop)
+static_assert(sizeof(MorphCommand) == 3, "Incorrect size for type `MorphCommand`. Expected: 3");
+
+struct CancelResearchCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(CancelResearchCommand) == 1, "Incorrect size for type `CancelResearchCommand`. Expected: 1");
+
+struct __declspec(align(2)) IScriptProgram
+{
+  u16 iscript_header;
+  u16 program_counter;
+  u16 return_address;
+  Anims anim;
+  u8 wait;
+};
+static_assert(sizeof(IScriptProgram) == 8, "Incorrect size for type `IScriptProgram`. Expected: 8");
+
+struct __declspec(align(4)) struct_a1
+{
+  void (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, TileID, RECT *);
+  int (__stdcall *isCreepCovered)(_DWORD, _DWORD);
+  int (__stdcall *isTileVisible)(int, int);
+  int (__stdcall *pfuncC)(_DWORD);
+};
+static_assert(sizeof(struct_a1) == 16, "Incorrect size for type `struct_a1`. Expected: 16");
+
+struct Counts
+{
+  s32 all[228][12];
+  s32 completed[228][12];
+  s32 killed[228][12];
+  s32 dead[228][12];
+};
+static_assert(sizeof(Counts) == 43776, "Incorrect size for type `Counts`. Expected: 43776");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) SaveGameCommand
+{
+  u8 command_id;
+  int time;
+  char filename[28];
+};
+#pragma pack(pop)
+static_assert(sizeof(SaveGameCommand) == 33, "Incorrect size for type `SaveGameCommand`. Expected: 33");
+
+struct RaceDropdownSelect
+{
+  Race race;
+  u8 f2;
+};
+static_assert(sizeof(RaceDropdownSelect) == 2, "Incorrect size for type `RaceDropdownSelect`. Expected: 2");
+
+struct vr4entry
+{
+  BYTE cdata[8][8];
+};
+static_assert(sizeof(vr4entry) == 64, "Incorrect size for type `vr4entry`. Expected: 64");
+
+struct CancelUpgradeCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(CancelUpgradeCommand) == 1, "Incorrect size for type `CancelUpgradeCommand`. Expected: 1");
+
+struct StimpackCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(StimpackCommand) == 1, "Incorrect size for type `StimpackCommand`. Expected: 1");
+
+struct Bitmap
+{
+  u16 wid;
+  u16 ht;
+  u8 *data;
+};
+static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
+
+struct CUnitBeacon
+{
+  u32 _unknown_00;
+  u32 _unknown_04;
+  u32 flagSpawnFrame;
+};
+static_assert(sizeof(CUnitBeacon) == 12, "Incorrect size for type `CUnitBeacon`. Expected: 12");
+
+struct StringTbl
+{
+  u16 *buffer;
+};
+static_assert(sizeof(StringTbl) == 4, "Incorrect size for type `StringTbl`. Expected: 4");
+
+struct MergeArchonCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(MergeArchonCommand) == 1, "Incorrect size for type `MergeArchonCommand`. Expected: 1");
+
+struct UpgradesSC
+{
+  u8 items[46];
+};
+static_assert(sizeof(UpgradesSC) == 46, "Incorrect size for type `UpgradesSC`. Expected: 46");
+
+struct CUnitWorker
+{
+  CUnit *pPowerup;
+  points targetResource;
+  CUnit *targetResourceUnit;
+  u16 repairResourceLossTimer;
+  bool isCarryingSomething;
+  u8 resourceCarryCount;
+};
+static_assert(sizeof(CUnitWorker) == 16, "Incorrect size for type `CUnitWorker`. Expected: 16");
+
+struct SiegeCommand
+{
+  CommandId command_id;
+  bool is_shift_used;
+};
+static_assert(sizeof(SiegeCommand) == 2, "Incorrect size for type `SiegeCommand`. Expected: 2");
+
+struct HoldPositionCommand
+{
+  CommandId command_id;
+  bool is_shift_used;
+};
+static_assert(sizeof(HoldPositionCommand) == 2, "Incorrect size for type `HoldPositionCommand`. Expected: 2");
+
+struct SuppliesPerRace
+{
+  s32 available[12];
+  s32 used[12];
+  s32 max[12];
+};
+static_assert(sizeof(SuppliesPerRace) == 144, "Incorrect size for type `SuppliesPerRace`. Expected: 144");
+
+struct pt
+{
+  u16 x;
+  u16 y;
+};
+static_assert(sizeof(pt) == 4, "Incorrect size for type `pt`. Expected: 4");
+
+struct UnknownTilesetRelated1
+{
+  int x;
+  UnknownTilesetRelated2 y[];
+};
+static_assert(sizeof(UnknownTilesetRelated1) == 4, "Incorrect size for type `UnknownTilesetRelated1`. Expected: 4");
+
+struct __declspec(align(4)) SaiContourHub
+{
+  SaiContour *contours[4];
+  s16 contourCount[4];
+  s16 contourMax[4];
+  s16 searchInner[4];
+  s16 a;
+  s16 b;
+  s16 c;
+  s16 d;
+  s16 searchOuter[4];
+};
+static_assert(sizeof(SaiContourHub) == 56, "Incorrect size for type `SaiContourHub`. Expected: 56");
+
+struct CUnitRally
+{
+  points position;
+  CUnit *unit;
+};
+static_assert(sizeof(CUnitRally) == 8, "Incorrect size for type `CUnitRally`. Expected: 8");
+
+struct __declspec(align(2)) TypeDropdownSelect
+{
+  PlayerType player_type;
+  GluAllTblEntry tbl_entry;
+};
+static_assert(sizeof(TypeDropdownSelect) == 4, "Incorrect size for type `TypeDropdownSelect`. Expected: 4");
+
+struct TrainFighterCommand
+{
+  CommandId command_id;
+};
+static_assert(sizeof(TrainFighterCommand) == 1, "Incorrect size for type `TrainFighterCommand`. Expected: 1");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) LobbySlot
@@ -5823,100 +5777,129 @@ struct __declspec(align(2)) LobbySlot
 #pragma pack(pop)
 static_assert(sizeof(LobbySlot) == 176, "Incorrect size for type `LobbySlot`. Expected: 176");
 
-struct dialog_optn
-{
-  dialog *pDlg;
-  u8 bEnabled;
-};
-static_assert(sizeof(dialog_optn) == 8, "Incorrect size for type `dialog_optn`. Expected: 8");
-
-struct __declspec(align(4)) struct_a1
-{
-  void (__stdcall *pfunc0)(_DWORD, _DWORD, _DWORD, TileID, RECT *);
-  int (__stdcall *isCreepCovered)(_DWORD, _DWORD);
-  int (__stdcall *isTileVisible)(int, int);
-  int (__stdcall *pfuncC)(_DWORD);
-};
-static_assert(sizeof(struct_a1) == 16, "Incorrect size for type `struct_a1`. Expected: 16");
-
-struct fontMemStruct
-{
-  u32 tFontData;
-  u32 tFontUnknown;
-  u16 x1;
-  u16 y1;
-  u16 x2;
-  u16 y2;
-};
-static_assert(sizeof(fontMemStruct) == 16, "Incorrect size for type `fontMemStruct`. Expected: 16");
-
 #pragma pack(push, 1)
-struct __declspec(align(2)) SightStruct
+struct __declspec(align(2)) CUnitBuilding
 {
-  u32 tileSightWidth;
-  u32 tileSightHeight;
-  u32 unknown1;
-  u32 unknown2;
-  u32 unknown3;
-  u32 tile_count;
-  u32 tiles;
+  CUnit *addon;
+  UnitType addonBuildType;
+  u16 upgradeResearchTime;
+  Tech techType;
+  u8 upgradeType;
+  u8 larvaTimer;
+  u8 landingTimer;
+  u8 creepTimer;
+  u8 upgradeLevel;
+  u16 __E;
 };
 #pragma pack(pop)
-static_assert(sizeof(SightStruct) == 28, "Incorrect size for type `SightStruct`. Expected: 28");
+static_assert(sizeof(CUnitBuilding) == 16, "Incorrect size for type `CUnitBuilding`. Expected: 16");
 
-#pragma pack(push, 1)
-struct __declspec(align(1)) ReplaySpeedCommand
+struct MiniTileFlagArray
+{
+  u16 miniTile[16];
+};
+static_assert(sizeof(MiniTileFlagArray) == 32, "Incorrect size for type `MiniTileFlagArray`. Expected: 32");
+
+struct __declspec(align(4)) MissionCheatRelated
+{
+  const char *campaign_id;
+  Race race;
+  _DWORD first_mission_index;
+  _DWORD is_expansion;
+};
+static_assert(sizeof(MissionCheatRelated) == 16, "Incorrect size for type `MissionCheatRelated`. Expected: 16");
+
+struct CancelUnitMorphCommand
 {
   CommandId command_id;
-  byte is_paused;
-  int game_speed;
-  int replay_speed_multiplier;
 };
-#pragma pack(pop)
-static_assert(sizeof(ReplaySpeedCommand) == 10, "Incorrect size for type `ReplaySpeedCommand`. Expected: 10");
+static_assert(sizeof(CancelUnitMorphCommand) == 1, "Incorrect size for type `CancelUnitMorphCommand`. Expected: 1");
 
-struct TechBW
+struct CUnitCarrier
 {
-  u8 items[20];
+  CUnit *pInHanger;
+  CUnit *pOutHanger;
+  u8 inHangerCount;
+  u8 outHangerCount;
 };
-static_assert(sizeof(TechBW) == 20, "Incorrect size for type `TechBW`. Expected: 20");
+static_assert(sizeof(CUnitCarrier) == 12, "Incorrect size for type `CUnitCarrier`. Expected: 12");
 
-struct CUnitRally
+struct SaiSplit
 {
-  points position;
-  CUnit *unit;
+  u16 minitileMask;
+  u16 rgn1;
+  u16 rgn2;
 };
-static_assert(sizeof(CUnitRally) == 8, "Incorrect size for type `CUnitRally`. Expected: 8");
+static_assert(sizeof(SaiSplit) == 6, "Incorrect size for type `SaiSplit`. Expected: 6");
 
-struct RaceDropdownSelect
+struct FontChar
 {
-  Race race;
-  u8 f2;
+  u8 w;
+  u8 h;
+  u8 _x;
+  u8 _y;
+  u8 data[1];
 };
-static_assert(sizeof(RaceDropdownSelect) == 2, "Incorrect size for type `RaceDropdownSelect`. Expected: 2");
+static_assert(sizeof(FontChar) == 5, "Incorrect size for type `FontChar`. Expected: 5");
+
+struct UnitProperties
+{
+  UnitGroupFlags valid_group_flags;
+  unsigned __int16 can_be_owned : 1;
+  unsigned __int16 has_hp : 1;
+  unsigned __int16 has_shields : 1;
+  unsigned __int16 has_energy : 1;
+  unsigned __int16 has_resource_amount : 1;
+  unsigned __int16 has_hanger : 1;
+  unsigned __int16 unused2 : 10;
+  u8 player;
+  u8 hp_percentage;
+  u8 shield_percentage;
+  u8 energy_percentage;
+  u32 resource_amount;
+  u16 hangar_count;
+  UnitGroupFlags group_flags;
+  u32 unused4;
+};
+static_assert(sizeof(UnitProperties) == 20, "Incorrect size for type `UnitProperties`. Expected: 20");
+
+struct TechSC
+{
+  u8 items[24];
+};
+static_assert(sizeof(TechSC) == 24, "Incorrect size for type `TechSC`. Expected: 24");
+
+struct UnknownPathRelated
+{
+  __int16 f0[8];
+  BYTE f1[8];
+};
+static_assert(sizeof(UnknownPathRelated) == 24, "Incorrect size for type `UnknownPathRelated`. Expected: 24");
 
 #pragma pack(push, 1)
-struct __declspec(align(1)) SaveGameCommand
+struct __declspec(align(1)) GotFileValues
 {
-  u8 command_id;
-  int time;
-  char filename[28];
+  GameType template_id;
+  u8 unused1;
+  u16 variation_id;
+  int variation_value;
+  VictoryConditions victory_conditions;
+  ResourceType resource_type;
+  UnitStats unit_stats;
+  FogOfWar fog;
+  StartingUnits starting_units;
+  StartingPositions starting_positions;
+  PlayerTypes player_types;
+  u8 allies_allowed;
+  u8 team_mode;
+  u8 cheats;
+  u8 tournament_mode;
+  u32 victory_condition_value;
+  u32 resource_type_value;
+  u8 unused3[5];
 };
 #pragma pack(pop)
-static_assert(sizeof(SaveGameCommand) == 33, "Incorrect size for type `SaveGameCommand`. Expected: 33");
-
-struct pt
-{
-  u16 x;
-  u16 y;
-};
-static_assert(sizeof(pt) == 4, "Incorrect size for type `pt`. Expected: 4");
-
-struct StringTbl
-{
-  u16 *buffer;
-};
-static_assert(sizeof(StringTbl) == 4, "Incorrect size for type `StringTbl`. Expected: 4");
+static_assert(sizeof(GotFileValues) == 32, "Incorrect size for type `GotFileValues`. Expected: 32");
 
 struct dialog_edit
 {
@@ -5931,27 +5914,222 @@ struct dialog_edit
 };
 static_assert(sizeof(dialog_edit) == 16, "Incorrect size for type `dialog_edit`. Expected: 16");
 
-#pragma pack(push, 1)
-struct struct_6
-{
-  IDirectSoundBuffer *sound_buffer;
-  __int16 unit_type;
-  char sfxdata_flags_2;
-  char sfxdata_flags_1;
-  int field_8;
-  SfxData sfx_id;
-  int field_10;
-  int volume_related_maybe;
-};
-#pragma pack(pop)
-static_assert(sizeof(struct_6) == 24, "Incorrect size for type `struct_6`. Expected: 24");
+typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
 
-struct StopCommand
+struct DecloakCommand
 {
   CommandId command_id;
   bool is_shift_used;
 };
-static_assert(sizeof(StopCommand) == 2, "Incorrect size for type `StopCommand`. Expected: 2");
+static_assert(sizeof(DecloakCommand) == 2, "Incorrect size for type `DecloakCommand`. Expected: 2");
+
+struct CycleStruct
+{
+  BYTE active;
+  BYTE speed;
+  BYTE wait;
+  BYTE palette_entry_low;
+  BYTE adv_cycle_pos;
+  BYTE palette_entry_high;
+  PALETTEENTRY *advanced_cycle_data;
+  BYTE adv_cycle_count;
+};
+static_assert(sizeof(CycleStruct) == 16, "Incorrect size for type `CycleStruct`. Expected: 16");
+
+struct struc_581D76
+{
+  u8 colors[8];
+};
+static_assert(sizeof(struc_581D76) == 8, "Incorrect size for type `struc_581D76`. Expected: 8");
+
+struct SaiContour
+{
+  s16 v[3];
+  u8 type;
+  u8 unk_relation;
+};
+static_assert(sizeof(SaiContour) == 8, "Incorrect size for type `SaiContour`. Expected: 8");
+
+struct CUnitPowerup
+{
+  points origin;
+};
+static_assert(sizeof(CUnitPowerup) == 4, "Incorrect size for type `CUnitPowerup`. Expected: 4");
+
+struct __declspec(align(4)) ButtonOrder
+{
+  u16 position;
+  Icon icon_id;
+  ButtonState (__fastcall *condition)(u16 variable, int player_id, CUnit *unit);
+  void (__fastcall *action)(int, bool);
+  u16 condition_variable;
+  u16 action_variable;
+  u16 condition_string_id;
+  u16 action_string_id;
+};
+static_assert(sizeof(ButtonOrder) == 20, "Incorrect size for type `ButtonOrder`. Expected: 20");
+
+struct Box16
+{
+  u16 left;
+  u16 top;
+  u16 right;
+  u16 bottom;
+};
+static_assert(sizeof(Box16) == 8, "Incorrect size for type `Box16`. Expected: 8");
+
+struct __declspec(align(2)) rect
+{
+  s16 left;
+  s16 top;
+  s16 right;
+  s16 bottom;
+};
+static_assert(sizeof(rect) == 8, "Incorrect size for type `rect`. Expected: 8");
+
+struct COrder
+{
+  struct COrder *prev;
+  struct COrder *next;
+  u16 orderID;
+  u16 unitType;
+  Target_ target;
+};
+static_assert(sizeof(COrder) == 20, "Incorrect size for type `COrder`. Expected: 20");
+
+struct Chunk
+{
+  Char4 ID;
+  unsigned int size;
+  byte data[];
+};
+static_assert(sizeof(Chunk) == 8, "Incorrect size for type `Chunk`. Expected: 8");
+
+struct SaiRegion
+{
+  SaiAccessabilityFlags accessabilityFlags;
+  u16 groupIndex;
+  u16 tileCount;
+  u8 pathCount;
+  u8 neighborCount;
+  union SaiRegionUser user;
+  u16 *neighbors;
+  u32 rgnCenterX;
+  u32 rgnCenterY;
+  Box16 rgnBox;
+  u8 defencePriority;
+  u8 neighborProperty;
+  u16 unk_22;
+  u32 unk_24;
+  u32 unk_28;
+  u16 localBuffer[10];
+};
+static_assert(sizeof(SaiRegion) == 64, "Incorrect size for type `SaiRegion`. Expected: 64");
+
+struct __declspec(align(4)) CSprite
+{
+  CSprite *prev;
+  CSprite *next;
+  u16 spriteID;
+  u8 playerID;
+  u8 selectionIndex;
+  u8 visibilityFlags;
+  u8 elevationLevel;
+  u8 flags;
+  u8 selectionTimer;
+  u16 index;
+  u8 unkflags_12;
+  u8 unkflags_13;
+  Position position;
+  CImage *pImagePrimary;
+  CImage *pImageHead;
+  CImage *pImageTail;
+};
+static_assert(sizeof(CSprite) == 36, "Incorrect size for type `CSprite`. Expected: 36");
+
+struct TemplateListEntry
+{
+  TemplateListEntry *prev;
+  TemplateListEntry *next;
+  char template_name[32];
+  char template_label[32];
+  GotFileValues got_file_values;
+  struct_a4 unk;
+};
+static_assert(sizeof(TemplateListEntry) == 400, "Incorrect size for type `TemplateListEntry`. Expected: 400");
+
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+
+struct MiniTileMaps_type
+{
+  MiniTileFlagArray tile[65536];
+};
+static_assert(sizeof(MiniTileMaps_type) == 2097152, "Incorrect size for type `MiniTileMaps_type`. Expected: 2097152");
+
+struct __declspec(align(4)) SectionData
+{
+  byte *next_section;
+  byte *start_address;
+  Char4 chunk_name;
+  int size;
+};
+static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
+
+struct __declspec(align(4)) TPROVIDER
+{
+  TPROVIDER *previous;
+  TPROVIDER *next;
+  _DWORD dword8;
+  Char4 provider_id;
+  _DWORD dword10;
+  char name[84];
+  _BYTE gap94[44];
+  char description[128];
+  char *requirements;
+};
+static_assert(sizeof(TPROVIDER) == 280, "Incorrect size for type `TPROVIDER`. Expected: 280");
+
+struct __declspec(align(4)) CBullet
+{
+  CBullet *prev;
+  CBullet *next;
+  int exists;
+  CSprite *sprite;
+  Target_ moveTarget;
+  Position targetPosition;
+  Position targetPosition2;
+  u8 movementFlags;
+  u8 direction1;
+  u8 flingyTurnRadius;
+  u8 direction2;
+  u16 type;
+  u8 unknown_0x26;
+  u8 flingyMoveControl;
+  Position position;
+  point halt;
+  s32 flingyTopSpeed;
+  s32 unknown_0x38;
+  s32 unknown_0x3C;
+  point current_speed;
+  u16 flingyAcceleration;
+  u8 currentDirection;
+  u8 velocityDirection;
+  u8 srcPlayer;
+  BulletState behaviourTypeInternal;
+  u16 unknown_0x4E;
+  u16 someUnitType;
+  u16 unknown_0x52;
+  s32 unknown_0x54;
+  Target_ attackTarget;
+  WeaponType weaponType;
+  u8 time_remaining;
+  u8 hitFlags;
+  u8 remainingBounces;
+  CUnit *sourceUnit;
+  CUnit *nextBounceUnit;
+  u32 cyclicMissileIndex;
+};
+static_assert(sizeof(CBullet) == 112, "Incorrect size for type `CBullet`. Expected: 112");
 
 union CUnitFields3
 {
@@ -5960,12 +6138,14 @@ union CUnitFields3
 };
 static_assert(sizeof(CUnitFields3) == 8, "Incorrect size for type `CUnitFields3`. Expected: 8");
 
-struct CheatHashRelated
+struct __declspec(align(2)) PlaceBuildingCommand
 {
-  CheatHashMaybe f0;
-  int f2[9];
+  CommandId command_id;
+  char f2;
+  Position position;
+  UnitType unit_type;
 };
-static_assert(sizeof(CheatHashRelated) == 52, "Incorrect size for type `CheatHashRelated`. Expected: 52");
+static_assert(sizeof(PlaceBuildingCommand) == 8, "Incorrect size for type `PlaceBuildingCommand`. Expected: 8");
 
 struct dlgEvent
 {
@@ -5979,6 +6159,179 @@ struct dlgEvent
   u16 wUnk_0x12;
 };
 static_assert(sizeof(dlgEvent) == 20, "Incorrect size for type `dlgEvent`. Expected: 20");
+
+union CUnitFields1
+{
+  CUnitVulture vulture;
+  CUnitCarrier carrier;
+  CUnitFighter fighter;
+  CUnitBeacon beacon;
+  CUnitBuilding building;
+  CUnitWorker worker;
+};
+static_assert(sizeof(CUnitFields1) == 16, "Incorrect size for type `CUnitFields1`. Expected: 16");
+
+struct __declspec(align(4)) baseLocation
+{
+  Position position;
+  BYTE mineralClusters;
+  BYTE gasGeysers;
+  BYTE isStartLocation;
+  BYTE bFlags;
+  DWORD remainingMinerals;
+  DWORD remainingGas;
+  DWORD unk_10[8];
+};
+static_assert(sizeof(baseLocation) == 48, "Incorrect size for type `baseLocation`. Expected: 48");
+
+struct __declspec(align(1)) struct_path_related
+{
+  Position unk_pos1;
+  int dword4;
+  Position unk_pos2;
+  _DWORD dwordC;
+  u32 colliding_unit_id;
+  int speed;
+  _BYTE byte18;
+  _BYTE byte19;
+  _BYTE gap1A;
+  _BYTE byte1B;
+  char char1C;
+  _BYTE byte1D;
+  char char1E;
+  _BYTE byte1F;
+  int buffer[24];
+};
+static_assert(sizeof(struct_path_related) == 128, "Incorrect size for type `struct_path_related`. Expected: 128");
+
+struct AllScoresStruct
+{
+  s32 allUnitsTotal[12];
+  s32 allUnitsProduced[12];
+  s32 allUnitsOwned[12];
+  s32 allUnitsLost[12];
+  s32 allUnitsKilled[12];
+  s32 allUnitScore[12];
+  s32 allKillScore[12];
+  s32 allBuildingsTotal[12];
+  s32 allBuildingsConstructed[12];
+  s32 allBuildingsOwned[12];
+  s32 allBuildingsLost[12];
+  s32 allBuildingsRazed[12];
+  s32 allBuildingScore[12];
+  s32 allRazingScore[12];
+  s32 allFactoriesConstructed[12];
+  s32 allFactoriesOwned[12];
+  s32 allFactoriesLost[12];
+  s32 allFactoriesRazed[12];
+  SuppliesPerRace supplies[3];
+  s32 customScore[12];
+  Counts unitCounts;
+};
+static_assert(sizeof(AllScoresStruct) == 45120, "Incorrect size for type `AllScoresStruct`. Expected: 45120");
+
+#pragma pack(push, 1)
+struct __declspec(align(2)) PathCreateRelated
+{
+  Position position;
+  MapSize map_size;
+};
+#pragma pack(pop)
+static_assert(sizeof(PathCreateRelated) == 8, "Incorrect size for type `PathCreateRelated`. Expected: 8");
+
+#pragma pack(push, 2)
+struct __declspec(align(2)) grpHead
+{
+  u16 wFrames;
+  s16 width;
+  s16 height;
+  grpFrame frames[1];
+};
+#pragma pack(pop)
+static_assert(sizeof(grpHead) == 14, "Incorrect size for type `grpHead`. Expected: 14");
+
+struct CPPEH_RECORD
+{
+  DWORD old_esp;
+  EXCEPTION_POINTERS *exc_ptr;
+  struct _EH3_EXCEPTION_REGISTRATION registration;
+};
+static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
+
+struct __declspec(align(4)) Map
+{
+  MapChunks chunks;
+};
+static_assert(sizeof(Map) == 32, "Incorrect size for type `Map`. Expected: 32");
+
+struct CheatHashRelated
+{
+  CheatHashMaybe f0;
+  int f2[9];
+};
+static_assert(sizeof(CheatHashRelated) == 52, "Incorrect size for type `CheatHashRelated`. Expected: 52");
+
+struct StatFlufDialog
+{
+  rect position;
+  dialog *dialog;
+};
+static_assert(sizeof(StatFlufDialog) == 12, "Incorrect size for type `StatFlufDialog`. Expected: 12");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) dialog_list
+{
+  dialog *pDlg;
+  dialog *pScrlBar;
+  char **ppStrs;
+  u8 *pbStrFlags;
+  u32 *pdwData;
+  u8 bStrs;
+  u8 unknown_0x47;
+  u8 bCurrStr;
+  u8 bSpacing;
+  u8 bItemsPerPage;
+  u8 bUnknown_0x4B;
+  u8 bDirection;
+  u8 bOffset;
+  u8 bSelectedIndex;
+  u8 bUnknown_0x4F;
+  u16 wVerticalOffset;
+  FnDrawItem pDrawItemFcn;
+};
+#pragma pack(pop)
+static_assert(sizeof(dialog_list) == 36, "Incorrect size for type `dialog_list`. Expected: 36");
+
+struct __unaligned __declspec(align(1)) LiftCommand
+{
+  CommandId command_id;
+  Position position;
+};
+static_assert(sizeof(LiftCommand) == 5, "Incorrect size for type `LiftCommand`. Expected: 5");
+
+struct Trigger
+{
+  Condition conditions[16];
+  Action actions[64];
+  DWORD dwExecutionFlags;
+  BYTE bExecuteFor[27];
+  BYTE bCurrentActionIndex;
+};
+static_assert(sizeof(Trigger) == 2400, "Incorrect size for type `Trigger`. Expected: 2400");
+
+struct ChunkUnitEntry
+{
+  u32 id;
+  Position position;
+  UnitType unit_type;
+  unsigned __int16 unknown0 : 9;
+  unsigned __int16 is_nydus_link : 1;
+  unsigned __int16 is_addon_link : 1;
+  unsigned __int16 unknown1 : 5;
+  UnitProperties properties;
+  u32 linked_unit_id;
+};
+static_assert(sizeof(ChunkUnitEntry) == 36, "Incorrect size for type `ChunkUnitEntry`. Expected: 36");
 
 struct __declspec(align(4)) CImage
 {
@@ -6004,27 +6357,17 @@ struct __declspec(align(4)) CImage
 };
 static_assert(sizeof(CImage) == 64, "Incorrect size for type `CImage`. Expected: 64");
 
-#pragma pack(push, 2)
-struct __declspec(align(2)) grpHead
+struct dialog_btn
 {
-  u16 wFrames;
-  s16 width;
-  s16 height;
-  grpFrame frames[1];
+  dialog *pDlg;
+  rect responseRct;
+  u16 wHighlight;
+  u16 wUnknown_0x40;
+  void *pSmk;
+  rect textRct;
+  u16 wAlignment;
 };
-#pragma pack(pop)
-static_assert(sizeof(grpHead) == 14, "Incorrect size for type `grpHead`. Expected: 14");
-
-union CUnitFields1
-{
-  CUnitVulture vulture;
-  CUnitCarrier carrier;
-  CUnitFighter fighter;
-  CUnitBeacon beacon;
-  CUnitBuilding building;
-  CUnitWorker worker;
-};
-static_assert(sizeof(CUnitFields1) == 16, "Incorrect size for type `CUnitFields1`. Expected: 16");
+static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
 
 #pragma pack(push, 1)
 struct __declspec(align(2)) AI_Main
@@ -6082,50 +6425,20 @@ struct Location
 };
 static_assert(sizeof(Location) == 20, "Incorrect size for type `Location`. Expected: 20");
 
-struct StatFlufDialog
+struct CUnitHatchery
 {
-  rect position;
-  dialog *dialog;
+  rect harvestValue;
 };
-static_assert(sizeof(StatFlufDialog) == 12, "Incorrect size for type `StatFlufDialog`. Expected: 12");
+static_assert(sizeof(CUnitHatchery) == 8, "Incorrect size for type `CUnitHatchery`. Expected: 8");
 
-struct Chunk
+struct GotFile
 {
-  Char4 ID;
-  unsigned int size;
-  byte data[];
+  u8 version;
+  char name[32];
+  char label[32];
+  GotFileValues values;
 };
-static_assert(sizeof(Chunk) == 8, "Incorrect size for type `Chunk`. Expected: 8");
-
-struct BriefingEntry
-{
-  Condition conditions[16];
-  Action actions[64];
-  DWORD dwExecutionFlags;
-  BYTE bExecuteFor[27];
-  BYTE bCurrentActionIndex;
-};
-static_assert(sizeof(BriefingEntry) == 2400, "Incorrect size for type `BriefingEntry`. Expected: 2400");
-
-struct __declspec(align(1)) struct_path_related
-{
-  Position unk_pos1;
-  int dword4;
-  Position unk_pos2;
-  _DWORD dwordC;
-  u32 colliding_unit_id;
-  int speed;
-  _BYTE byte18;
-  _BYTE byte19;
-  _BYTE gap1A;
-  _BYTE byte1B;
-  char char1C;
-  _BYTE byte1D;
-  char char1E;
-  _BYTE byte1F;
-  int buffer[24];
-};
-static_assert(sizeof(struct_path_related) == 128, "Incorrect size for type `struct_path_related`. Expected: 128");
+static_assert(sizeof(GotFile) == 97, "Incorrect size for type `GotFile`. Expected: 97");
 
 #pragma pack(push, 1)
 struct __declspec(align(1)) GameData
@@ -6153,27 +6466,7 @@ struct __declspec(align(1)) GameData
 #pragma pack(pop)
 static_assert(sizeof(GameData) == 141, "Incorrect size for type `GameData`. Expected: 141");
 
-struct TemplateListEntry
-{
-  TemplateListEntry *prev;
-  TemplateListEntry *next;
-  char template_name[32];
-  char template_label[32];
-  GotFileValues got_file_values;
-  struct_a4 unk;
-};
-static_assert(sizeof(TemplateListEntry) == 400, "Incorrect size for type `TemplateListEntry`. Expected: 400");
-
-struct __declspec(align(4)) SectionData
-{
-  byte *next_section;
-  byte *start_address;
-  Char4 chunk_name;
-  int size;
-};
-static_assert(sizeof(SectionData) == 16, "Incorrect size for type `SectionData`. Expected: 16");
-
-struct Trigger
+struct BriefingEntry
 {
   Condition conditions[16];
   Action actions[64];
@@ -6181,271 +6474,7 @@ struct Trigger
   BYTE bExecuteFor[27];
   BYTE bCurrentActionIndex;
 };
-static_assert(sizeof(Trigger) == 2400, "Incorrect size for type `Trigger`. Expected: 2400");
-
-struct GotFile
-{
-  u8 version;
-  char name[32];
-  char label[32];
-  GotFileValues values;
-};
-static_assert(sizeof(GotFile) == 97, "Incorrect size for type `GotFile`. Expected: 97");
-
-struct __unaligned __declspec(align(1)) LiftCommand
-{
-  CommandId command_id;
-  Position position;
-};
-static_assert(sizeof(LiftCommand) == 5, "Incorrect size for type `LiftCommand`. Expected: 5");
-
-#pragma pack(push, 1)
-struct __declspec(align(1)) dialog_list
-{
-  dialog *pDlg;
-  dialog *pScrlBar;
-  char **ppStrs;
-  u8 *pbStrFlags;
-  u32 *pdwData;
-  u8 bStrs;
-  u8 unknown_0x47;
-  u8 bCurrStr;
-  u8 bSpacing;
-  u8 bItemsPerPage;
-  u8 bUnknown_0x4B;
-  u8 bDirection;
-  u8 bOffset;
-  u8 bSelectedIndex;
-  u8 bUnknown_0x4F;
-  u16 wVerticalOffset;
-  FnDrawItem pDrawItemFcn;
-};
-#pragma pack(pop)
-static_assert(sizeof(dialog_list) == 36, "Incorrect size for type `dialog_list`. Expected: 36");
-
-struct ChunkUnitEntry
-{
-  u32 id;
-  Position position;
-  UnitType unit_type;
-  unsigned __int16 unknown0 : 9;
-  unsigned __int16 is_nydus_link : 1;
-  unsigned __int16 is_addon_link : 1;
-  unsigned __int16 unknown1 : 5;
-  UnitProperties properties;
-  u32 linked_unit_id;
-};
-static_assert(sizeof(ChunkUnitEntry) == 36, "Incorrect size for type `ChunkUnitEntry`. Expected: 36");
-
-struct CPPEH_RECORD
-{
-  DWORD old_esp;
-  EXCEPTION_POINTERS *exc_ptr;
-  struct _EH3_EXCEPTION_REGISTRATION registration;
-};
-static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
-
-struct COrder
-{
-  struct COrder *prev;
-  struct COrder *next;
-  u16 orderID;
-  u16 unitType;
-  Target_ target;
-};
-static_assert(sizeof(COrder) == 20, "Incorrect size for type `COrder`. Expected: 20");
-
-struct __declspec(align(4)) baseLocation
-{
-  Position position;
-  BYTE mineralClusters;
-  BYTE gasGeysers;
-  BYTE isStartLocation;
-  BYTE bFlags;
-  DWORD remainingMinerals;
-  DWORD remainingGas;
-  DWORD unk_10[8];
-};
-static_assert(sizeof(baseLocation) == 48, "Incorrect size for type `baseLocation`. Expected: 48");
-
-struct __declspec(align(4)) CBullet
-{
-  CBullet *prev;
-  CBullet *next;
-  int exists;
-  CSprite *sprite;
-  Target_ moveTarget;
-  Position targetPosition;
-  Position targetPosition2;
-  u8 movementFlags;
-  u8 direction1;
-  u8 flingyTurnRadius;
-  u8 direction2;
-  u16 type;
-  u8 unknown_0x26;
-  u8 flingyMoveControl;
-  Position position;
-  point halt;
-  s32 flingyTopSpeed;
-  s32 unknown_0x38;
-  s32 unknown_0x3C;
-  point current_speed;
-  u16 flingyAcceleration;
-  u8 currentDirection;
-  u8 velocityDirection;
-  u8 srcPlayer;
-  BulletState behaviourTypeInternal;
-  u16 unknown_0x4E;
-  u16 someUnitType;
-  u16 unknown_0x52;
-  s32 unknown_0x54;
-  Target_ attackTarget;
-  WeaponType weaponType;
-  u8 time_remaining;
-  u8 hitFlags;
-  u8 remainingBounces;
-  CUnit *sourceUnit;
-  CUnit *nextBounceUnit;
-  u32 cyclicMissileIndex;
-};
-static_assert(sizeof(CBullet) == 112, "Incorrect size for type `CBullet`. Expected: 112");
-
-struct __declspec(align(4)) TPROVIDER
-{
-  TPROVIDER *previous;
-  TPROVIDER *next;
-  _DWORD dword8;
-  Char4 provider_id;
-  _DWORD dword10;
-  char name[84];
-  _BYTE gap94[44];
-  char description[128];
-  char *requirements;
-};
-static_assert(sizeof(TPROVIDER) == 280, "Incorrect size for type `TPROVIDER`. Expected: 280");
-
-struct SaiRegion
-{
-  SaiAccessabilityFlags accessabilityFlags;
-  u16 groupIndex;
-  u16 tileCount;
-  u8 pathCount;
-  u8 neighborCount;
-  union SaiRegionUser user;
-  u16 *neighbors;
-  u32 rgnCenterX;
-  u32 rgnCenterY;
-  Box16 rgnBox;
-  u8 defencePriority;
-  u8 neighborProperty;
-  u16 unk_22;
-  u32 unk_24;
-  u32 unk_28;
-  u16 localBuffer[10];
-};
-static_assert(sizeof(SaiRegion) == 64, "Incorrect size for type `SaiRegion`. Expected: 64");
-
-struct AllScoresStruct
-{
-  s32 allUnitsTotal[12];
-  s32 allUnitsProduced[12];
-  s32 allUnitsOwned[12];
-  s32 allUnitsLost[12];
-  s32 allUnitsKilled[12];
-  s32 allUnitScore[12];
-  s32 allKillScore[12];
-  s32 allBuildingsTotal[12];
-  s32 allBuildingsConstructed[12];
-  s32 allBuildingsOwned[12];
-  s32 allBuildingsLost[12];
-  s32 allBuildingsRazed[12];
-  s32 allBuildingScore[12];
-  s32 allRazingScore[12];
-  s32 allFactoriesConstructed[12];
-  s32 allFactoriesOwned[12];
-  s32 allFactoriesLost[12];
-  s32 allFactoriesRazed[12];
-  SuppliesPerRace supplies[3];
-  s32 customScore[12];
-  Counts unitCounts;
-};
-static_assert(sizeof(AllScoresStruct) == 45120, "Incorrect size for type `AllScoresStruct`. Expected: 45120");
-
-struct __declspec(align(4)) CFlingy
-{
-  CUnit *prev;
-  CUnit *next;
-  int hitPoints;
-  CSprite *sprite;
-  Target_ moveTarget;
-  Position nextMovementWaypoint;
-  Position nextTargetWaypoint;
-  u8 movementFlags;
-  u8 currentDirection1;
-  u8 flingyTurnRadius;
-  u8 velocityDirection1;
-  u16 flingyID;
-  u8 _unknown_0x026;
-  u8 flingyMovementType;
-  Position position;
-  point halt;
-  u32 flingyTopSpeed;
-  s32 current_speed1;
-  s32 current_speed2;
-  point current_speed;
-  u16 flingyAcceleration;
-  u8 currentDirection2;
-  u8 velocityDirection2;
-};
-static_assert(sizeof(CFlingy) == 76, "Incorrect size for type `CFlingy`. Expected: 76");
-
-struct dialog_btn
-{
-  dialog *pDlg;
-  rect responseRct;
-  u16 wHighlight;
-  u16 wUnknown_0x40;
-  void *pSmk;
-  rect textRct;
-  u16 wAlignment;
-};
-static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
-
-struct __declspec(align(4)) CSprite
-{
-  CSprite *prev;
-  CSprite *next;
-  u16 spriteID;
-  u8 playerID;
-  u8 selectionIndex;
-  u8 visibilityFlags;
-  u8 elevationLevel;
-  u8 flags;
-  u8 selectionTimer;
-  u16 index;
-  u8 unkflags_12;
-  u8 unkflags_13;
-  Position position;
-  CImage *pImagePrimary;
-  CImage *pImageHead;
-  CImage *pImageTail;
-};
-static_assert(sizeof(CSprite) == 36, "Incorrect size for type `CSprite`. Expected: 36");
-
-#pragma pack(push, 1)
-struct __declspec(align(2)) PathCreateRelated
-{
-  Position position;
-  MapSize map_size;
-};
-#pragma pack(pop)
-static_assert(sizeof(PathCreateRelated) == 8, "Incorrect size for type `PathCreateRelated`. Expected: 8");
-
-struct CUnitHatchery
-{
-  rect harvestValue;
-};
-static_assert(sizeof(CUnitHatchery) == 8, "Incorrect size for type `CUnitHatchery`. Expected: 8");
+static_assert(sizeof(BriefingEntry) == 2400, "Incorrect size for type `BriefingEntry`. Expected: 2400");
 
 struct __declspec(align(4)) struct_a1_1
 {
@@ -6479,19 +6508,51 @@ struct __declspec(align(4)) struct_a1_1
 };
 static_assert(sizeof(struct_a1_1) == 364, "Incorrect size for type `struct_a1_1`. Expected: 364");
 
-struct __declspec(align(4)) Map
+struct __declspec(align(4)) CFlingy
 {
-  MapChunks chunks;
+  CUnit *prev;
+  CUnit *next;
+  int hitPoints;
+  CSprite *sprite;
+  Target_ moveTarget;
+  Position nextMovementWaypoint;
+  Position nextTargetWaypoint;
+  u8 movementFlags;
+  u8 currentDirection1;
+  u8 flingyTurnRadius;
+  u8 velocityDirection1;
+  u16 flingyID;
+  u8 _unknown_0x026;
+  u8 flingyMovementType;
+  Position position;
+  point halt;
+  u32 flingyTopSpeed;
+  s32 current_speed1;
+  s32 current_speed2;
+  point current_speed;
+  u16 flingyAcceleration;
+  u8 currentDirection2;
+  u8 velocityDirection2;
 };
-static_assert(sizeof(Map) == 32, "Incorrect size for type `Map`. Expected: 32");
+static_assert(sizeof(CFlingy) == 76, "Incorrect size for type `CFlingy`. Expected: 76");
 
-struct MiniTileMaps_type
+struct TriggerListEntry
 {
-  MiniTileFlagArray tile[65536];
+  struct TriggerListEntry *prev;
+  struct TriggerListEntry *next;
+  Trigger container;
 };
-static_assert(sizeof(MiniTileMaps_type) == 2097152, "Incorrect size for type `MiniTileMaps_type`. Expected: 2097152");
+static_assert(sizeof(TriggerListEntry) == 2408, "Incorrect size for type `TriggerListEntry`. Expected: 2408");
 
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+#pragma pack(push, 1)
+struct __declspec(align(2)) ChunkData
+{
+  ChunkData *previous;
+  ChunkData *next;
+  SectionData section_data;
+};
+#pragma pack(pop)
+static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
 
 struct __declspec(align(4)) MapDirEntry
 {
@@ -6551,24 +6612,6 @@ struct __unaligned __declspec(align(1)) ReplayHeader
 #pragma pack(pop)
 static_assert(sizeof(ReplayHeader) == 633, "Incorrect size for type `ReplayHeader`. Expected: 633");
 
-struct TriggerListEntry
-{
-  struct TriggerListEntry *prev;
-  struct TriggerListEntry *next;
-  Trigger container;
-};
-static_assert(sizeof(TriggerListEntry) == 2408, "Incorrect size for type `TriggerListEntry`. Expected: 2408");
-
-#pragma pack(push, 1)
-struct __declspec(align(2)) ChunkData
-{
-  ChunkData *previous;
-  ChunkData *next;
-  SectionData section_data;
-};
-#pragma pack(pop)
-static_assert(sizeof(ChunkData) == 24, "Incorrect size for type `ChunkData`. Expected: 24");
-
 union dialog_fields
 {
   dialog_ctrl ctrl;
@@ -6581,7 +6624,7 @@ union dialog_fields
 };
 static_assert(sizeof(dialog_fields) == 36, "Incorrect size for type `dialog_fields`. Expected: 36");
 
-struct __declspec(align(4)) SAI_Paths
+struct SAI_Paths
 {
   __int16 regionCount;
   u16 unknown;

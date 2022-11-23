@@ -6420,8 +6420,8 @@ int LoadGameCore_()
 	memset(PlayerSelection, 0, sizeof(PlayerSelection));
 	memset(playersSelections, 0, sizeof(playersSelections));
 	dword_59724C[0] = 0;
-	dword_597250[0] = 0;
-	dword_597254[0] = 0;
+	dword_59724C[1] = 0;
+	dword_59724C[2] = 0;
 	setAlliance();
 	if (!loadGameFileHandle || loadGameFull())
 	{

@@ -118,7 +118,7 @@ BOOL __stdcall STransPointInMask(int a1, int a2, int a3, char* a4, size_t a5);
 BOOL __stdcall STransBlt(int handle, int a2, int a3, int a4, int a5);
 BOOL __stdcall STransDelete(int handle);
 BOOL __stdcall STransCreateE(int a1, int a2, int a3, int bpp, int a5, int bufferSize, int a7);
-BOOL __stdcall STransIntersectDirtyArray(int handle, int dirtyarraymask, unsigned __int8 dirtyarray, int sourcemask);
+BOOL __stdcall STransIntersectDirtyArray(HANDLE handle, int dirtyarraymask, unsigned __int8 dirtyarray, int sourcemask);
 BOOL __stdcall STransSetDirtyArrayInfo(int width, int height, int depth, int bits);
 BOOL __stdcall STransInvertMask(int handle, int sourcemask);
 BOOL __stdcall STransDuplicate(int handle, int source);
