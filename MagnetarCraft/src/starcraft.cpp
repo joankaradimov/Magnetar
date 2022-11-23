@@ -9847,6 +9847,66 @@ void RecvMessage_()
 
 FAIL_STUB_PATCH(RecvMessage);
 
+void sub_4C4A80_(int a1, int a2)
+{
+	stru_66FE20[a1].field_0 = 2;
+	if (isHost && map_download)
+	{
+		map_download->map_size &= ~(1 << a1);
+		sub_472BA0(map_download, a1);
+	}
+	sub_45A0B0(a1);
+
+	unsigned player_id = dword_57EEC0[a1];
+	if (player_id >= 8)
+	{
+		if (!a1)
+		{
+			bootReason(3);
+		}
+		return;
+	}
+	if (glGluesMode == GLUE_CHAT)
+	{
+		if (!a1)
+		{
+			bootReason(3);
+			return;
+		}
+		if (stru_66FE20[a1].field_0 && stru_66FE20[a1].player_name)
+		{
+			_snprintf(buff, sizeof(buff), GetNetworkTblString_(a2 == 0x40000006 ? 76 : 75), getPlayerName(a1));
+			printLobbyString(8, buff);
+		}
+	}
+
+	PlayerType v8 = Players[player_id].nType;
+	Race v13 = Players[player_id].nRace;
+	u8 v12 = Players[player_id].nTeam;
+	memcpy(&Players[player_id], &LobbyPlayers[player_id], sizeof(PlayerInfo));
+	if (v8 == PT_ClosedSlot || v8 == PT_ComputerSlot)
+	{
+		Players[player_id].nType = v8;
+	}
+	Players[player_id].nRace = v13;
+	Players[player_id].nTeam = v12;
+	dword_57EEC0[a1] = 8;
+	if (glGluesMode == GLUE_CHAT)
+	{
+		update_lobby_glue = 1;
+		if (loadGameFileHandle)
+		{
+			byte_66FF34[player_id] = 8;
+		}
+		if (isHost)
+		{
+			UpdateGameMode(getOpenSlotCount());
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4C4A80);
+
 void sub_4C4FA0_()
 {
 	if (multiPlayerMode)
@@ -9857,7 +9917,7 @@ void sub_4C4FA0_()
 			{
 				if (gwGameMode == GAME_GLUES)
 				{
-					sub_4C4A80(i, player_left[i]);
+					sub_4C4A80_(i, player_left[i]);
 				}
 				else if (gwGameMode == GAME_RUN)
 				{
