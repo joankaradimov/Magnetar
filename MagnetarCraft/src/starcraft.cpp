@@ -210,6 +210,37 @@ FAIL_STUB_PATCH(input_targetOrder_RightMouseClick);
 
 void setCursorType_(CursorType cursor_type);
 
+void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
+{
+	input_dragSelect_MouseMove(a1);
+	SetInGameInputProcs();
+	setCursorType_(getCursorType());
+	stru_66FF50.left += MoveToX;
+	stru_66FF50.right += MoveToX;
+	__int16 v3 = MoveToY + stru_66FF50.bottom;
+	stru_66FF50.top += MoveToY;
+	byte_66FF5C = 0;
+	stru_66FF50.bottom += MoveToY;
+	if ((__int16)stru_66FF50.top < (int)(unsigned __int16)map_height_pixels)
+	{
+		if (v3 >= (int)(unsigned __int16)map_height_pixels)
+		{
+			v3 = map_height_pixels - 1;
+			stru_66FF50.bottom = map_height_pixels - 1;
+		}
+		if ((__int16)stru_66FF50.right - (__int16)stru_66FF50.left > 4 || v3 - (__int16)stru_66FF50.top > 4)
+		{
+			getSelectedUnitsInBox(&stru_66FF50);
+		}
+		else
+		{
+			getSelectedUnitsAtPoint((__int16)stru_66FF50.top, (__int16)stru_66FF50.left);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(input_dragSelect_MouseBtnUp);
+
 void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
 {
 	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
@@ -224,8 +255,8 @@ void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
 			refreshPlaceBuildingLocation();
 		}
 		ClipCursor(&game_screen_pos);
-		input_procedures[EventNo::EVN_LBUTTONUP] = input_dragSelect_MouseBtnUp;
-		input_procedures[EventNo::EVN_RBUTTONUP] = input_dragSelect_MouseBtnUp;
+		input_procedures[EventNo::EVN_LBUTTONUP] = input_dragSelect_MouseBtnUp_;
+		input_procedures[EventNo::EVN_RBUTTONUP] = input_dragSelect_MouseBtnUp_;
 		input_procedures[EventNo::EVN_MOUSEMOVE] = input_dragSelect_MouseMove;
 		dword_6D1208 = refreshDragSelectBox;
 		setCursorType_(CursorType::CUR_DRAG);
