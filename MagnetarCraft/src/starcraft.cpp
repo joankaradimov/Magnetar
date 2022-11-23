@@ -5223,15 +5223,7 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 		{
 			cursor_type = getCursorType_();
 		}
-		if (last_cursor_type != cursor_type)
-		{
-			last_cursor_type = cursor_type;
-			if (last_cursor != cursor_graphics[cursor_type])
-			{
-				last_cursor = cursor_graphics[cursor_type];
-				drawCursor();
-			}
-		}
+		setCursorType_(cursor_type);
 	}
 	if (last_cursor && last_cursor->wFrames != 1)
 	{
@@ -5281,15 +5273,7 @@ void sub_4E4820_(dialog* dlg)
 		}
 	}
 
-	if (last_cursor_type != CursorType::CUR_ARROW)
-	{
-		last_cursor_type = CursorType::CUR_ARROW;
-		if (last_cursor != cursor_graphics[CursorType::CUR_ARROW])
-		{
-			last_cursor = cursor_graphics[CursorType::CUR_ARROW];
-			drawCursor();
-		}
-	}
+	setCursorType_(CursorType::CUR_ARROW);
 	byte_6D1214 = 1;
 	ScreenLayers[0].buffers = 1;
 	ScreenLayers[0].bits |= 1;
