@@ -5232,7 +5232,7 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 		{
 			dword_597398 = v2 + 100;
 			++dword_597390;
-			drawCursor();
+			drawCursor_();
 		}
 	}
 }
