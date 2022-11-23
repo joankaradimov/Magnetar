@@ -8594,7 +8594,7 @@ extern void (__fastcall *&GameScreenLClickEvent)(dlgEvent *);
 extern void (__fastcall *&GameScreenRClickEvent)(dlgEvent *);
 extern int& dword_6556F4;
 extern int& dword_6556F8;
-extern __int16& word_6556FC;
+extern CursorType& word_6556FC;
 extern char(&Upgrade_MaxRepeats)[61];
 extern __int16(&Upgrade_MineralCostBase)[61];
 extern __int16(&Upgrade_GasCostFactor)[61];

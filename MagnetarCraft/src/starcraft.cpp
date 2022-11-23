@@ -13160,7 +13160,7 @@ void initMapData_()
 	char filename[MAX_PATH];
 	int bytes_read;
 
-	word_6556FC = 0;
+	word_6556FC = CursorType::CUR_ARROW;
 	byte_66FF5C = 0;
 	MapTileArray = (TileID *)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(TileID), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 603, 0);
 	CellMap = (__int16*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*CellMap), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 604, 0);
