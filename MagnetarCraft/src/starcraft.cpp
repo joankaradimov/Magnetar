@@ -145,6 +145,155 @@ void InitializeInputProcs_()
 
 FAIL_STUB_PATCH(InitializeInputProcs);
 
+template <typename T> void BWFXN_QueueCommand__(const T& buffer);
+
+void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
+{
+	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	{
+		refreshScreen();
+
+		BYTE v1 = 0;
+		UnitType v3 = UnitType(0);
+		input_placeBuilding_Click_Notify(&v1, &v3, 0);
+
+		if (v3 != 228)
+		{
+			PlaceBuildingCommand command;
+			command.command_id = CommandId::CMD_PlaceBuilding;
+			command.position = placeBuilding;
+			command.f2 = v1;
+			command.unit_type = v3;
+			BWFXN_QueueCommand__(command);
+			resetGameInputProcs(CUR_ARROW);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(input_placeBuilding_LeftMouseClick);
+
+void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
+{
+	if (is_placing_building)
+	{
+		refreshLayer3And4();
+		refreshPlaceBuildingLocation();
+	}
+}
+
+FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
+
+void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
+{
+	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	{
+		int x = MoveToX + (__int16)event->cursor.x;
+		int y = MoveToY + (__int16)event->cursor.y;
+		CUnit* v5 = FindUnitAtPoint(x, y);
+		CThingy* v6 = sub_456490(x, y, v5);
+		sub_46F5B0(x, y, v5, v6 ? LOWORD(v6->hitPoints) : 228);
+		resetGameInputProcs(CursorType::CUR_ARROW);
+	}
+}
+
+FAIL_STUB_PATCH(input_targetOrder_LeftMouseClick);
+
+void __fastcall input_targetOrder_RightMouseClick_(dlgEvent* event)
+{
+	if (is_placing_order)
+	{
+		CancelTargetOrder();
+	}
+}
+
+FAIL_STUB_PATCH(input_targetOrder_RightMouseClick);
+
+void setCursorType_(CursorType cursor_type);
+
+void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
+{
+	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	{
+		if (is_placing_order)
+		{
+			CancelTargetOrder();
+		}
+		if (is_placing_building)
+		{
+			refreshLayer3And4();
+			refreshPlaceBuildingLocation();
+		}
+		ClipCursor(&game_screen_pos);
+		input_procedures[EventNo::EVN_LBUTTONUP] = input_dragSelect_MouseBtnUp;
+		input_procedures[EventNo::EVN_RBUTTONUP] = input_dragSelect_MouseBtnUp;
+		input_procedures[EventNo::EVN_MOUSEMOVE] = input_dragSelect_MouseMove;
+		dword_6D1208 = refreshDragSelectBox;
+		setCursorType_(CursorType::CUR_DRAG);
+		stru_66FF4C = event->cursor;
+
+		if (event->wNo != EventNo::EVN_MOUSEMOVE && event->wNo != EventNo::EVN_LBUTTONUP)
+		{
+			dword_66FF58 = (event->wNo == EventNo::EVN_LBUTTONDBLCLK);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(input_Game_LeftMouseClick);
+
+BYTE sub_4BFA40_()
+{
+	return dword_59724C[0] ? dword_59724C[0]->playerID : -1;
+}
+
+FAIL_STUB_PATCH(sub_4BFA40);
+
+void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
+{
+	if (!IsOutsideGameScreen((__int16)event->cursor.x, (__int16)event->cursor.y))
+	{
+		if (sub_4BFA40_() == g_LocalNationID && ActivePortraitUnit && unitIsOwnerByCurrentPlayer(ActivePortraitUnit))
+		{
+			for (int v4 = 0; v4 < 12; v4++)
+			{
+				if (CUnit* v5 = ClientSelectionGroup[v4])
+				{
+					if (DoesAcceptRclickCommands(v5))
+					{
+						break;
+					}
+				}
+			}
+			int v6 = MoveToX + (__int16)event->cursor.x;
+			int v7 = MoveToY + (__int16)event->cursor.y;
+			CUnit* v8 = FindUnitAtPoint(v6, v7);
+			if (ClientSelectionCount != 1 || ActivePortraitUnit != v8 || v8 && (v8->statusFlags & GoundedBuilding) != 0 && Unit_IsFactoryBuilding(v8))
+			{
+				if (!v8)
+				{
+					for (int v10 = 0; v10 < 12; v10++)
+					{
+						if (CUnit* v11 = ClientSelectionGroup[v10])
+						{
+							if (CanRClickGround_maybe(v11))
+							{
+								break;
+							}
+						}
+					}
+				}
+				CThingy* v12 = sub_456490(v6, v7, v8);
+				CMDACT_RightClickOrder(v8, v6, v7, v12 ? v12->hitPoints : 228, is_keycode_used[VK_SHIFT]);
+				if (ShowRClickErrorIfNeeded(v8))
+				{
+					PlayWorkerActionSound(ActivePortraitUnit);
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(input_Game_RightMouseClick);
+
 void SetInGameInputProcs_()
 {
 	InitializeInputProcs_();
@@ -166,18 +315,18 @@ void SetInGameInputProcs_()
 
 	if (is_placing_building)
 	{
-		GameScreenLClickEvent = input_placeBuilding_LeftMouseClick;
-		GameScreenRClickEvent = input_placeBuilding_RightMouseClick;
+		GameScreenLClickEvent = input_placeBuilding_LeftMouseClick_;
+		GameScreenRClickEvent = input_placeBuilding_RightMouseClick_;
 	}
 	else if (is_placing_order)
 	{
-		GameScreenLClickEvent = input_targetOrder_LeftMouseClick;
-		GameScreenRClickEvent = input_targetOrder_RightMouseClick;
+		GameScreenLClickEvent = input_targetOrder_LeftMouseClick_;
+		GameScreenRClickEvent = input_targetOrder_RightMouseClick_;
 	}
 	else
 	{
-		GameScreenLClickEvent = input_Game_LeftMouseClick;
-		GameScreenRClickEvent = input_Game_RightMouseClick;
+		GameScreenLClickEvent = input_Game_LeftMouseClick_;
+		GameScreenRClickEvent = input_Game_RightMouseClick_;
 	}
 }
 
