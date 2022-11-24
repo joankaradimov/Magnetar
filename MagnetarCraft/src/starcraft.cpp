@@ -12777,7 +12777,6 @@ FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
 void SAI_PathCreate_Sub3_2_(SAI_Paths* a1)
 {
 	int v17 = 0;
-
 	int v24 = 4;
 	do
 	{
@@ -12858,7 +12857,7 @@ void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 		}
 	}
 
-	SaiRegion* a1a = a1->regions;
+	int region_with_tiles_index = 0;
 	for (int region_index = 0; region_index < a1->regionCount; region_index++)
 	{
 		SaiRegion* region = &a1->regions[region_index];
@@ -12866,10 +12865,11 @@ void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 		{
 			for (int v8 = 0; v8 < region->neighborCount; v8++)
 			{
-				u16* v9 = region->neighbors + v8;
+				u16* v9 = &region->neighbors[v8];
 				*v9 = v16[*v9];
 			}
-			memcpy(a1a++, region, sizeof(SaiRegion));
+			memcpy(&a1->regions[region_with_tiles_index], region, sizeof(SaiRegion));
+			region_with_tiles_index++;
 		}
 	}
 
