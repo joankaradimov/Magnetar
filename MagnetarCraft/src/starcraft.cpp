@@ -12365,7 +12365,7 @@ FAIL_STUB_PATCH(CopySectionData);
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
 	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
-	if (region_id >= 0x2000u)
+	if (region_id >= 0x2000)
 	{
 		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
 	}
@@ -12427,7 +12427,7 @@ FUNCTION_PATCH(sub_422FA0, sub_422FA0_);
 u16 GetRegionIdAtPosEx_(int y, int x)
 {
 	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
-	if (region_id >= 0x2000u)
+	if (region_id >= 0x2000)
 	{
 		if ((1 << (((x / 8) & 3) + 4 * ((y / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
 		{
@@ -12481,7 +12481,7 @@ int sub_422A90_(struct_a1_1* a1, Position* a2)
 						for (int v11 = v8 / 32 - v5 / 32; v11 >= 0; --v11)
 						{
 							u16 region_id = SAIPathing->mapTileRegionId[v6 / 32 + i][v5 / 32 + v11];
-							if (region_id < 0x2000u && SAIPathing->regions[region_id].accessabilityFlags == SAF_Inaccessible)
+							if (region_id < 0x2000 && SAIPathing->regions[region_id].accessabilityFlags == SAF_Inaccessible)
 							{
 								v9 = 0;
 								break;
@@ -12560,7 +12560,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 		u16* v20 = &a1->mapTileRegionId[y][x];
 		while (1)
 		{
-			if (a1->mapTileRegionId[y][x] >= 5000u)
+			if (a1->mapTileRegionId[y][x] >= 5000)
 			{
 				rect a4;
 				SAI_PathCreate_Sub3_0_0(y, x, a1, &a4, a1->mapTileRegionId[y][x]);
