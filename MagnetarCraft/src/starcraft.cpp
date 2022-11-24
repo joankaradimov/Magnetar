@@ -12369,8 +12369,9 @@ FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
 
 int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 {
-	u16 x = std::clamp(a1->unk_posintion3.x, SAIPathing->regions[a2].rgnBox.left, SAIPathing->regions[a2].rgnBox.right) / 32;
-	u16 y = std::clamp(a1->unk_posintion3.y, SAIPathing->regions[a2].rgnBox.top, SAIPathing->regions[a2].rgnBox.bottom) / 32;
+	u16 v2 = u16(a2 << 6) >> 6;
+	u16 x = std::clamp(a1->unk_posintion3.x, SAIPathing->regions[v2].rgnBox.left, SAIPathing->regions[v2].rgnBox.right) / 32;
+	u16 y = std::clamp(a1->unk_posintion3.y, SAIPathing->regions[v2].rgnBox.top, SAIPathing->regions[v2].rgnBox.bottom) / 32;
 
 	for (int v19 = 1; v19 < 16; v19 += 2)
 	{
@@ -12398,8 +12399,8 @@ int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 		--y;
 	}
 
-	a1->unk_posintion3.x = SAIPathing->regions[a2].rgnCenterX >> 8;
-	a1->unk_posintion3.y = SAIPathing->regions[a2].rgnCenterY >> 8;
+	a1->unk_posintion3.x = SAIPathing->regions[v2].rgnCenterX >> 8;
+	a1->unk_posintion3.y = SAIPathing->regions[v2].rgnCenterY >> 8;
 	a1->byte1F = 1;
 
 	return 1;
