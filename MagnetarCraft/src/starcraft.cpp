@@ -5497,7 +5497,33 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
-int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt);
+int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B6810(dlg);
+			break;
+		case USER_DESTROY:
+			DestroyChildren(dlg);
+			dword_6D5A3C = 0;
+			dword_6D5A54 = 0;
+			break;
+		case USER_UNK_7:
+			sub_4CD9C0(dlg);
+			break;
+		case USER_INIT:
+			sub_4B6C70(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(Popup_Main, Popup_Main_);
 
 void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 {
@@ -13888,34 +13914,6 @@ void gluHist_Activate_(dialog* dlg)
 }
 
 FAIL_STUB_PATCH(gluHist_Activate);
-
-int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
-{
-	if (evt->wNo == EVN_USER)
-	{
-		switch (evt->dwUser)
-		{
-		case USER_CREATE:
-			sub_4B6810(dlg);
-			break;
-		case USER_DESTROY:
-			DestroyChildren(dlg);
-			dword_6D5A3C = 0;
-			dword_6D5A54 = 0;
-			break;
-		case USER_UNK_7:
-			sub_4CD9C0(dlg);
-			break;
-		case USER_INIT:
-			sub_4B6C70(dlg);
-			break;
-		}
-	}
-
-	return genericDlgInteract(dlg, evt);
-}
-
-FUNCTION_PATCH(Popup_Main, Popup_Main_);
 
 int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
