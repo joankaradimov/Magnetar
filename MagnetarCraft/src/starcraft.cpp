@@ -13000,6 +13000,33 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
 
+void CreateUIUnreachableRegion_(SAI_Paths* paths)
+{
+	short original_region_count = paths->regionCount;
+
+	SaiRegion* v2 = &paths->regions[paths->regionCount++];
+	v2->accessabilityFlags = SAF_Inaccessible;
+	v2->rgnCenterX = (32 * map_size.width / 2 + 16) << 8;
+	v2->rgnCenterY = (map_size.height << 13) - 4096;
+	v2->rgnBox.left = 0;
+	v2->rgnBox.right = 32 * map_size.width;
+	v2->rgnBox.top = 32 * map_size.height - 32;
+	v2->rgnBox.bottom = 32 * map_size.height;
+
+	for (int v3 = map_size.height - 1; v3 < map_size.height; v3++)
+	{
+		for (int v6 = 0; v6 < map_size.width; v6++)
+		{
+			paths->mapTileRegionId[v3][v6] = original_region_count;
+		}
+	}
+
+	v2->tileCount = map_size.width;
+	v2->groupIndex = 0x4000;
+}
+
+FAIL_STUB_PATCH(CreateUIUnreachableRegion);
+
 void SAI_PathCreate_Sub4_(SAI_Paths* a1)
 {
 	a1->contours = (SaiContourHub*)SMemAlloc(56, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 129, 0);
@@ -13023,7 +13050,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	v5.position.x = 0;
 	v5.position.y = 0;
 	v5.map_size = map_size;
-	CreateUIUnreachableRegion(SAIPathing);
+	CreateUIUnreachableRegion_(SAIPathing);
 
 	if (!SAI_PathCreate_Sub3_(&v5, SAIPathing))
 	{
