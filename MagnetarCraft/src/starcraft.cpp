@@ -5305,10 +5305,10 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 	}
 	if (last_cursor && last_cursor->wFrames != 1)
 	{
-		DWORD v2 = GetTickCount();
-		if ((int)(v2 - dword_597398) >= 0)
+		DWORD tick_count = GetTickCount();
+		if (tick_count >= dword_597398)
 		{
-			dword_597398 = v2 + 100;
+			dword_597398 = tick_count + 100;
 			++dword_597390;
 			drawCursor_();
 		}
