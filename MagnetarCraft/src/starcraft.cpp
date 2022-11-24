@@ -4365,6 +4365,22 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void MinimapGameTargetOrder_(dlgEvent* event)
+{
+	point p;
+	p.x = event->cursor.x;
+	p.y = event->cursor.y;
+
+	getMinimapCursorPos(&p.x, &p.y);
+	resetGameInputProcs(CursorType::CUR_ARROW);
+	__int16 x = p.x;
+	__int16 y = p.y;
+	sub_46F5B0(LOWORD(p.x), LOWORD(p.y), 0, 228);
+	GroundAttackInit(x, y);
+}
+
+FAIL_STUB_PATCH(MinimapGameTargetOrder);
+
 void minimapGameResetMouseInput_(dialog* dlg)
 {
 	removeDlgFromTimerTracking(dlg);
@@ -4478,7 +4494,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		}
 		else if (is_placing_order)
 		{
-			MinimapGameTargetOrder(evt);
+			MinimapGameTargetOrder_(evt);
 			return 1;
 		}
 		else
