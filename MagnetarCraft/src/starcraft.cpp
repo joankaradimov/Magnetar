@@ -12532,6 +12532,19 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
+void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_Paths* a3)
+{
+	for (int v8 = a2->top; v8 < a2->bottom; v8++)
+	{
+		for (int v6 = a2->left; v6 < a2->right; v6++)
+		{
+			a3->mapTileRegionId[v8][v6] = a1;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_1);
+
 void SAI_PathCreate_Sub3_0_2_(int a2, SAI_Paths* a3, rect* a4, SaiAccessabilityFlags a5)
 {
 	for (int y = a4->top; y < a4->bottom; ++y)
@@ -12681,7 +12694,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			return 1;
 		}
 
-		SAI_PathCreate_Sub3_0_1(a1->regionCount, &v19, a1);
+		SAI_PathCreate_Sub3_0_1_(a1->regionCount, &v19, a1);
 		a1->regions[a1->regionCount].rgnCenterX = (v19.left + v19.right) / 2;
 		a1->regions[a1->regionCount].rgnCenterY = (v19.top + v19.bottom) / 2;
 		if (v19.left > 0)
