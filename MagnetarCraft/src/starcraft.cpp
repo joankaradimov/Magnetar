@@ -12532,6 +12532,45 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
+void SAI_PathCreate_Sub3_0_2_(int a2, SAI_Paths* a3, rect* a4, SaiAccessabilityFlags a5)
+{
+	for (int y = a4->top; y < a4->bottom; ++y)
+	{
+		for (int x = a4->left; x < a4->right; x++)
+		{
+			if (a3->mapTileRegionId[y][x] == a5)
+			{
+				if (y > 0 && a2 == a3->mapTileRegionId[y - 1][x] ||
+					x > 0 && a2 == a3->mapTileRegionId[y][x - 1] ||
+					x + 1 < map_size.width && a2 == a3->mapTileRegionId[y][x + 1] ||
+					y + 1 < map_size.height && a2 == a3->mapTileRegionId[y + 1][x])
+				{
+					a3->mapTileRegionId[y][x] = a2;
+				}
+			}
+		}
+	}
+
+	for (int y = a4->top; y < a4->bottom; ++y)
+	{
+		for (int x = a4->left; x < a4->right; x++)
+		{
+			if (a3->mapTileRegionId[y][x] == a5)
+			{
+				if (y > 0 && a2 == a3->mapTileRegionId[y - 1][x] ||
+					x > 0 && a2 == a3->mapTileRegionId[y][x - 1] ||
+					x + 1 < map_size.width && a2 == a3->mapTileRegionId[y][x + 1] ||
+					y + 1 < map_size.height && a2 == a3->mapTileRegionId[y + 1][x])
+				{
+					a3->mapTileRegionId[y][x] = a2;
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_2);
+
 int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 {
 	int x = a2.x;
@@ -12662,7 +12701,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			++v19.bottom;
 		}
 
-		SAI_PathCreate_Sub3_0_2(a1->regionCount, a1, &v19, a5);
+		SAI_PathCreate_Sub3_0_2_(a1->regionCount, a1, &v19, a5);
 		a1->regions[a1->regionCount].rgnBox.left = v19.left;
 		a1->regions[a1->regionCount].rgnBox.top = v19.top;
 		a1->regions[a1->regionCount].rgnBox.right = v19.right;
@@ -12690,7 +12729,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 				{
 					a1->regions[v12].rgnBox.bottom += 1;
 				}
-				SAI_PathCreate_Sub3_0_2(v12, a1, (rect*)&a1->regions[v12].rgnBox, a1->regions[v12].accessabilityFlags);
+				SAI_PathCreate_Sub3_0_2_(v12, a1, (rect*)&a1->regions[v12].rgnBox, a1->regions[v12].accessabilityFlags);
 			}
 		}
 	}
