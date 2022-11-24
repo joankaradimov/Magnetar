@@ -938,7 +938,7 @@ const char* GetNetworkTblString_(__int16 network_tbl_entry)
 	return GetTblString(networkTable, network_tbl_entry);
 }
 
-// TODO: patch GetNetworkTblString in StarCraft.exe
+FAIL_STUB_PATCH(GetNetworkTblString);
 
 const char* GetMapTblString(__int16 map_tbl_entry)
 {
