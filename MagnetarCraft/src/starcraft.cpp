@@ -167,6 +167,33 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen);
 
+void keyPress_Escape_()
+{
+	if (!multiPlayerMode && CampaignIndex < MapData::MD_xprotoss01)
+	{
+		for (TriggerListEntry* i = (int)stru_51A280[g_LocalNationID].begin <= 0 ? 0 : stru_51A280[g_LocalNationID].begin; (int)i > 0; i = i->next)
+		{
+			if ((i->container.dwExecutionFlags & 1) != 0 && (i->container.dwExecutionFlags & 0x40) == 0)
+			{
+				i->container.dwExecutionFlags |= 0x10;
+				byte_6509B8[g_LocalNationID] = 0;
+				dword_650980[g_LocalNationID] = 0;
+				word_6509A0 = 1;
+				Streamed_SFX_FullDestructor(&soundFXList);
+				if (dword_68AC4C)
+				{
+					dword_68AC4C = 0;
+					waitLoopCntd(4, dword_68AC98);
+					sub_45EC40(dword_68AC98, 3);
+				}
+				refreshGameTextIfFlagIsSet();
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(keyPress_Escape);
+
 void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
 {
 	if (event->wVirtKey >= '0' && event->wVirtKey <= '9')
@@ -175,7 +202,7 @@ void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
 	}
 	else if (event->wVirtKey == VK_ESCAPE)
 	{
-		keyPress_Escape();
+		keyPress_Escape_();
 	}
 }
 
@@ -11785,7 +11812,7 @@ int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 		{
 			if (evt->wVirtKey == VK_ESCAPE)
 			{
-				keyPress_Escape();
+				keyPress_Escape_();
 			}
 			return 1;
 		}
