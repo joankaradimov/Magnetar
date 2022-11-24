@@ -21493,7 +21493,7 @@ void CMDACT_SetReplaySpeed_()
 	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = !is_replay_paused;
 
-	BWFXN_QueueCommand(&command, sizeof(command));
+	BWFXN_QueueCommand__(command);
 }
 
 FUNCTION_PATCH(CMDACT_SetReplaySpeed, CMDACT_SetReplaySpeed_);
