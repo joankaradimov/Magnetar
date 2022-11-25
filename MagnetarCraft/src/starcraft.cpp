@@ -5364,7 +5364,7 @@ void sub_4E4820_(dialog* dlg)
 	AcceleratorTables = input_procedures[EventNo::EVN_SYSCHAR];
 	hAccTable = dword_5968F8;
 	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
-	refreshSelectionScreen();
+	refreshSelectionScreen_();
 }
 
 FAIL_STUB_PATCH(sub_4E4820);
