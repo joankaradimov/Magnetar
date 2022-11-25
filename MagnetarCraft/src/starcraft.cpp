@@ -7135,18 +7135,35 @@ void __cdecl freeChkFileMem_()
 
 FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
 
+#define MAX_MAP_DIMENTION 256
+
+struct SAI_PathsEx
+{
+	__int16 regionCount;
+	u16 unknown;
+	void* globalBuffer_ptr;
+	void* splitTiles_end;
+	u16 mapTileRegionId[MAX_MAP_DIMENTION][MAX_MAP_DIMENTION];
+	SaiSplit splitTiles[25000];
+	SaiRegion regions[5000];
+	u16 globalBuffer[10000];
+	SaiContourHub* contours;
+};
+
+SAI_PathsEx*& SAIPathingEx = *((decltype(&SAIPathingEx))0x6d5bfc);
+
 void AllocateSAI_Paths_()
 {
-	SAIPathing = (SAI_Paths*)SMemAlloc(sizeof(SAI_Paths), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
-	memset(SAIPathing, 0, sizeof(SAI_Paths));
+	SAIPathingEx = (SAI_PathsEx*)SMemAlloc(sizeof(SAI_PathsEx), "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 210, 0);
+	memset(SAIPathingEx, 0, sizeof(SAI_PathsEx));
 }
 
 FAIL_STUB_PATCH(AllocateSAI_Paths);
 
 void FreeSAI_Paths_()
 {
-	SMemFree(SAIPathing, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
-	SAIPathing = NULL;
+	SMemFree(SAIPathingEx, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 226, 0);
+	SAIPathingEx = NULL;
 }
 
 FAIL_STUB_PATCH(FreeSAI_Paths);
@@ -7815,14 +7832,14 @@ void DestroyGame_()
 		SMemFree(dword_6BEE8C, "Starcraft\\SWAR\\lang\\Sai_path.cpp", 792, 0);
 		dword_6BEE8C = 0;
 	}
-	if (SAIPathing)
+	if (SAIPathingEx)
 	{
-		SaiContourHub* v4 = SAIPathing->contours;
+		SaiContourHub* v4 = SAIPathingEx->contours;
 		if (v4)
 		{
 			sai_contoursCreate_Cleanup(v4->contours);
 			SMemFree(v4, "Starcraft\\SWAR\\lang\\sai_PathCreate.cpp", 333, 0);
-			SAIPathing->contours = 0;
+			SAIPathingEx->contours = 0;
 		}
 		FreeSAI_Paths_();
 	}
@@ -12360,14 +12377,12 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 FAIL_STUB_PATCH(ChkLoader_VCOD);
 FAIL_STUB_PATCH(CopySectionData);
 
-#define MAX_MAP_DIMENTION 256
-
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
+	u16 region_id = SAIPathingEx->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
 	if (region_id >= 0x2000)
 	{
-		return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+		return SAIPathingEx->splitTiles[region_id - 0x2000].rgn1;
 	}
 	return region_id;
 }
@@ -12386,8 +12401,8 @@ FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
 int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 {
 	u16 v2 = u16(a2 << 6) >> 6;
-	u16 x = std::clamp(a1->unk_posintion3.x, SAIPathing->regions[v2].rgnBox.left, SAIPathing->regions[v2].rgnBox.right) / 32;
-	u16 y = std::clamp(a1->unk_posintion3.y, SAIPathing->regions[v2].rgnBox.top, SAIPathing->regions[v2].rgnBox.bottom) / 32;
+	u16 x = std::clamp(a1->unk_posintion3.x, SAIPathingEx->regions[v2].rgnBox.left, SAIPathingEx->regions[v2].rgnBox.right) / 32;
+	u16 y = std::clamp(a1->unk_posintion3.y, SAIPathingEx->regions[v2].rgnBox.top, SAIPathingEx->regions[v2].rgnBox.bottom) / 32;
 
 	for (int v19 = 1; v19 < 16; v19 += 2)
 	{
@@ -12415,8 +12430,8 @@ int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 		--y;
 	}
 
-	a1->unk_posintion3.x = SAIPathing->regions[v2].rgnCenterX >> 8;
-	a1->unk_posintion3.y = SAIPathing->regions[v2].rgnCenterY >> 8;
+	a1->unk_posintion3.x = SAIPathingEx->regions[v2].rgnCenterX >> 8;
+	a1->unk_posintion3.y = SAIPathingEx->regions[v2].rgnCenterY >> 8;
 	a1->byte1F = 1;
 
 	return 1;
@@ -12426,16 +12441,16 @@ FUNCTION_PATCH(sub_422FA0, sub_422FA0_);
 
 u16 GetRegionIdAtPosEx_(int y, int x)
 {
-	u16 region_id = SAIPathing->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
+	u16 region_id = SAIPathingEx->mapTileRegionId[y / TILE_HEIGHT][x / TILE_WIDTH];
 	if (region_id >= 0x2000)
 	{
-		if ((1 << (((x / 8) & 3) + 4 * ((y / 8) & 3))) & SAIPathing->splitTiles[region_id - 0x2000].minitileMask)
+		if ((1 << (((x / 8) & 3) + 4 * ((y / 8) & 3))) & SAIPathingEx->splitTiles[region_id - 0x2000].minitileMask)
 		{
-			return SAIPathing->splitTiles[region_id - 0x2000].rgn2;
+			return SAIPathingEx->splitTiles[region_id - 0x2000].rgn2;
 		}
 		else
 		{
-			return SAIPathing->splitTiles[region_id - 0x2000].rgn1;
+			return SAIPathingEx->splitTiles[region_id - 0x2000].rgn1;
 		}
 	}
 	return region_id;
@@ -12480,8 +12495,8 @@ int sub_422A90_(struct_a1_1* a1, Position* a2)
 					{
 						for (int v11 = v8 / 32 - v5 / 32; v11 >= 0; --v11)
 						{
-							u16 region_id = SAIPathing->mapTileRegionId[v6 / 32 + i][v5 / 32 + v11];
-							if (region_id < 0x2000 && SAIPathing->regions[region_id].accessabilityFlags == SAF_Inaccessible)
+							u16 region_id = SAIPathingEx->mapTileRegionId[v6 / 32 + i][v5 / 32 + v11];
+							if (region_id < 0x2000 && SAIPathingEx->regions[region_id].accessabilityFlags == SAF_Inaccessible)
 							{
 								v9 = 0;
 								break;
@@ -12532,7 +12547,7 @@ int __stdcall sub_422A90__(Position* a2)
 
 FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
 
-void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_Paths* a3)
+void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_PathsEx* a3)
 {
 	for (int v8 = a2->top; v8 < a2->bottom; v8++)
 	{
@@ -12545,7 +12560,7 @@ void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_Paths* a3)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_1);
 
-void SAI_PathCreate_Sub3_0_2_(int a2, SAI_Paths* a3, rect* a4, SaiAccessabilityFlags a5)
+void SAI_PathCreate_Sub3_0_2_(int a2, SAI_PathsEx* a3, rect* a4, SaiAccessabilityFlags a5)
 {
 	for (int y = a4->top; y < a4->bottom; ++y)
 	{
@@ -12584,7 +12599,7 @@ void SAI_PathCreate_Sub3_0_2_(int a2, SAI_Paths* a3, rect* a4, SaiAccessabilityF
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_2);
 
-int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
+int SAI_PathCreate_Sub3_0_(SAI_PathsEx* a1, Position a2, MapSize size)
 {
 	int x = a2.x;
 	int y = a2.y;
@@ -12615,7 +12630,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 			if (a1->mapTileRegionId[y][x] >= 5000)
 			{
 				rect a4;
-				SAI_PathCreate_Sub3_0_0(y, x, a1, &a4, a1->mapTileRegionId[y][x]);
+				SAI_PathCreate_Sub3_0_0(y, x, (SAI_Paths*)a1, &a4, a1->mapTileRegionId[y][x]);
 				++v29;
 				if (v30 < (a4.right - a4.left) * (a4.bottom - a4.top))
 				{
@@ -12750,7 +12765,7 @@ int SAI_PathCreate_Sub3_0_(SAI_Paths* a1, Position a2, MapSize size)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
 
-void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
+void SAI_PathCreate_Sub3_1_0_(SAI_PathsEx* a1)
 {
 	for (int i = 0; i < a1->regionCount; i++)
 	{
@@ -12802,7 +12817,7 @@ void SAI_PathCreate_Sub3_1_0_(SAI_Paths* a1)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0);
 
-void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
+void SAI_PathCreate_Sub3_1_1_(SAI_PathsEx* a1)
 {
 	a1->globalBuffer_ptr = a1->globalBuffer;
 
@@ -12811,15 +12826,15 @@ void SAI_PathCreate_Sub3_1_1_(SAI_Paths* a1)
 		SaiRegion* sai_region = &a1->regions[i];
 		if (sai_region->tileCount)
 		{
-			SAI_PathCreate_Sub3_1_1_0(a1, i, sai_region);
-			SAI_PathCreate_Sub3_1_1_1(a1, sai_region);
+			SAI_PathCreate_Sub3_1_1_0((SAI_Paths*)a1, i, sai_region);
+			SAI_PathCreate_Sub3_1_1_1((SAI_Paths*)a1, sai_region);
 		}
 	}
 }
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
 
-void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
+void SAI_PathCreate_Sub3_1_(int a1, SAI_PathsEx* a2)
 {
 	a2->globalBuffer_ptr = a2->globalBuffer;
 	SAI_PathCreate_Sub3_1_0_(a2);
@@ -12837,12 +12852,12 @@ void SAI_PathCreate_Sub3_1_(int a1, SAI_Paths* a2)
 		}
 	}
 
-	SAI_CreateRegionGroupings(a2);
+	SAI_CreateRegionGroupings((SAI_Paths*) a2);
 }
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
 
-void SAI_PathCreate_Sub3_2_(SAI_Paths* a1)
+void SAI_PathCreate_Sub3_2_(SAI_PathsEx* a1)
 {
 	int v17 = 0;
 	int v24 = 4;
@@ -12912,7 +12927,7 @@ void SAI_PathCreate_Sub3_2_(SAI_Paths* a1)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_2);
 
-void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
+void SAI_PathCreate_Sub3_3_(SAI_PathsEx* a1)
 {
 	__int16 v16[5000];
 	int v18 = 0;
@@ -12955,7 +12970,7 @@ void SAI_PathCreate_Sub3_3_(SAI_Paths* a1)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3);
 
-int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
+int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_PathsEx* a2)
 {
 	int old_region_count = a2->regionCount;
 
@@ -12976,7 +12991,7 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_Paths* a2)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
 
-MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_Paths));
+MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_PathsEx));
 
 void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 {
@@ -12989,23 +13004,23 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 			MegatileFlags flags = megatile_flags[i * map_size.width + j];
 			if ((flags & (REAL_CREEP | MORE_THAN_12_WALKABLE)) == 0)
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+				SAIPathingEx->mapTileRegionId[i][j] = SAF_Inaccessible;
 			}
 			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == 0)
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_Inaccessible;
+				SAIPathingEx->mapTileRegionId[i][j] = SAF_Inaccessible;
 			}
 			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == (MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE))
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_HighGround;
+				SAIPathingEx->mapTileRegionId[i][j] = SAF_HighGround;
 			}
 			else if ((flags & (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_MEDIUM_HEIGHT | MORE_THAN_12_WALKABLE)) == (MORE_THAN_12_HIGH_HEIGHT | MORE_THAN_12_WALKABLE))
 			{
-				SAIPathing->mapTileRegionId[i][j] = 8186;
+				SAIPathingEx->mapTileRegionId[i][j] = 8186;
 			}
 			else
 			{
-				SAIPathing->mapTileRegionId[i][j] = SAF_LowGround;
+				SAIPathingEx->mapTileRegionId[i][j] = SAF_LowGround;
 			}
 		}
 	}
@@ -13013,7 +13028,7 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
 
-void CreateUIUnreachableRegion_(SAI_Paths* paths)
+void CreateUIUnreachableRegion_(SAI_PathsEx* paths)
 {
 	short original_region_count = paths->regionCount;
 
@@ -13040,7 +13055,7 @@ void CreateUIUnreachableRegion_(SAI_Paths* paths)
 
 FAIL_STUB_PATCH(CreateUIUnreachableRegion);
 
-void SAI_PathCreate_Sub4_(SAI_Paths* a1)
+void SAI_PathCreate_Sub4_(SAI_PathsEx* a1)
 {
 	a1->contours = (SaiContourHub*)SMemAlloc(56, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 129, 0);
 	memset(a1->contours, 0, sizeof(SaiContourHub));
@@ -13063,17 +13078,17 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	v5.position.x = 0;
 	v5.position.y = 0;
 	v5.map_size = map_size;
-	CreateUIUnreachableRegion_(SAIPathing);
+	CreateUIUnreachableRegion_(SAIPathingEx);
 
-	if (!SAI_PathCreate_Sub3_(&v5, SAIPathing))
+	if (!SAI_PathCreate_Sub3_(&v5, SAIPathingEx))
 	{
 		return false;
 	}
 
-	SAI_PathCreate_Sub4_(SAIPathing);
-	for (int i = 0; i < SAIPathing->regionCount; i++)
+	SAI_PathCreate_Sub4_(SAIPathingEx);
+	for (int i = 0; i < SAIPathingEx->regionCount; i++)
 	{
-		SaiRegion* sai_region = SAIPathing->regions + i;
+		SaiRegion* sai_region = SAIPathingEx->regions + i;
 		sai_region->defencePriority = SAI_PathCreate_Sub5(sai_region);
 	}
 	return true;
