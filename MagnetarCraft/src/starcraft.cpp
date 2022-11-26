@@ -544,6 +544,75 @@ int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char 
 
 FAIL_STUB_PATCH(initSpriteData);
 
+void SpriteDestructor_(CSprite* sprite)
+{
+	CImage* v2;
+	for (CImage* v1 = sprite->pImageHead; v1; v1 = v2)
+	{
+		v2 = v1->next;
+		ImageDestructor(v1);
+	}
+
+	int v3 = (__int16)sprite->position.y / 32;
+	if (v3 < 0)
+	{
+		v3 = 0;
+	}
+	else if (v3 >= map_size.height)
+	{
+		v3 = map_size.height - 1;
+	}
+
+	if (SpritesOnTileRow.heads[v3] == sprite)
+	{
+		SpritesOnTileRow.heads[v3] = sprite->next;
+	}
+	if (SpritesOnTileRow.tails[v3] == sprite)
+	{
+		SpritesOnTileRow.tails[v3] = sprite->prev;
+	}
+	if (sprite->prev)
+	{
+		sprite->prev->next = sprite->next;
+	}
+	if (sprite->next)
+	{
+		sprite->next->prev = sprite->prev;
+	}
+	sprite->prev = 0;
+	sprite->next = 0;
+	if (UnusedSprites)
+	{
+		if (dword_63FE34 == UnusedSprites)
+		{
+			dword_63FE34 = sprite;
+		}
+		sprite->prev = UnusedSprites;
+		sprite->next = UnusedSprites->next;
+		if (UnusedSprites->next)
+		{
+			UnusedSprites->next->prev = sprite;
+		}
+		UnusedSprites->next = sprite;
+	}
+	else
+	{
+		dword_63FE34 = sprite;
+		UnusedSprites = sprite;
+	}
+}
+
+void __cdecl SpriteDestructor__()
+{
+	CSprite* sprite;
+
+	__asm mov sprite, edi
+
+	SpriteDestructor_(sprite);
+}
+
+FUNCTION_PATCH((void*)0x497B40, SpriteDestructor__);
+
 CSprite* createSprite_(int sprite_id, int position_x, unsigned __int16 position_y, char player_id)
 {
 	CSprite* v4 = UnusedSprites;
@@ -8425,7 +8494,7 @@ void sub_4EB5E0_(CUnit* a1)
 {
 	if (a1->sprite && (a1->sprite->flags & 0x20))
 	{
-		SpriteDestructor(a1->sprite);
+		SpriteDestructor_(a1->sprite);
 		a1->sprite = nullptr;
 	}
 
@@ -9085,7 +9154,7 @@ void sub_488350_(CThingy* thingy)
 	if (!CThingyIsVisible(0, thingy))
 	{
 		removeSelectionCircle(thingy->sprite);
-		SpriteDestructor(thingy->sprite);
+		SpriteDestructor_(thingy->sprite);
 		thingy->sprite = 0;
 		if (dword_654868 == thingy)
 		{
