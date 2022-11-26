@@ -13055,6 +13055,168 @@ void CreateUIUnreachableRegion_(SAI_PathsEx* paths)
 
 FAIL_STUB_PATCH(CreateUIUnreachableRegion);
 
+void SAI_ContoursCreate_(SaiContourHub* a1)
+{
+	BYTE* v7;
+	char v10;
+	unsigned __int8 v17;
+	SaiContour* v26;
+	int v37;
+	int v44;
+	int v45;
+	char v47;
+
+	BYTE(*a1a)[1024] = (BYTE(*)[1024])dword_6CA54C;
+	a1->contourMax[0] = 5000;
+	a1->contourMax[1] = 5000;
+	a1->contourMax[2] = 5000;
+	a1->contourMax[3] = 5000;
+	a1->contours[0] = (SaiContour*)SMemAlloc(sizeof(SaiContour) * a1->contourMax[0], "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 198, 0);
+	a1->contours[1] = (SaiContour*)SMemAlloc(sizeof(SaiContour) * a1->contourMax[1], "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 199, 0);
+	a1->contours[2] = (SaiContour*)SMemAlloc(sizeof(SaiContour) * a1->contourMax[2], "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 200, 0);
+	a1->contours[3] = (SaiContour*)SMemAlloc(sizeof(SaiContour) * a1->contourMax[3], "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 201, 0);
+	memset(a1->contours[0], 0, 8 * a1->contourMax[0]);
+	memset(a1->contours[1], 0, 8 * a1->contourMax[1]);
+	memset(a1->contours[2], 0, 8 * a1->contourMax[2]);
+	memset(a1->contours[3], 0, 8 * a1->contourMax[3]);
+	a1->contourCount[0] = 0;
+	a1->contourCount[1] = 0;
+	a1->contourCount[2] = 0;
+	a1->contourCount[3] = 0;
+
+	int a2 = 0;
+	int a3 = 0;
+	while (SAI_ContoursCreate_1(a1a, &a2, &a3))
+	{
+		int v42 = a2;
+		int v43 = a3;
+		v7 = &a1a[a2][a3];
+		char v9 = byte_515AF8[*v7 & 0xF];
+		v10 = byte_515B08[*v7 & 0xF];
+		if (v9 == 2)
+		{
+			v42 += 1;
+			v43 -= 1;
+			v7 = &a1a[v42][v43];
+			v9 = byte_515AF8[*v7 & 0xF];
+			v10 = byte_515B08[*v7 & 0xF];
+		}
+		v47 = v10;
+		int v15 = 2 * (v9 + 4 * (v10 & 1));
+		LOWORD(v45) = word_515B18[v15] + 8 * v43;
+		HIWORD(v45) = word_515B1A[v15] + 8 * v42;
+		v37 = v45;
+		*v7 ^= 1 << v9;
+		while (1)
+		{
+			char v16 = (v9 + 1) & 3;
+			int v36 = word_515B58[v16];
+			int v35 = byte_515B61[2 * v16];
+			int v34 = byte_515B60[2 * v16];
+			v17 = 1 << v9;
+			*v7 ^= v17;
+			u8 v48 = 1 << v16;
+			if ((*v7 & v48) == 0)
+			{
+				while (v17 & v7[v36])
+				{
+					v7 += v36;
+					v42 += v35;
+					v43 += v34;
+					*v7 ^= v17;
+					if (v48 & *v7)
+					{
+						goto LABEL_10;
+					}
+				}
+				v48 = 1;
+			}
+			else
+			{
+			LABEL_10:
+				v48 = 0;
+			}
+			int v21 = 2 * (v9 + 4 * (v48 & 1));
+			LOWORD(v44) = word_515B38[v21] + 8 * v43;
+			HIWORD(v44) = word_515B3A[v21] + 8 * v42;
+			if (a1->contourCount[0] == a1->contourMax[0] ||
+				a1->contourCount[1] == a1->contourMax[1] ||
+				a1->contourCount[2] == a1->contourMax[2] ||
+				a1->contourCount[3] == a1->contourMax[3])
+			{
+				SAI_ContoursCreate_2(a1);
+				v10 = v47;
+			}
+			char v23 = v9 ^ (2 * v10) ^ ~(2 * v9) & 3;
+			v47 = v9 ^ (2 * (v48 ^ v9 & 1)) ^ 1;
+			if (v9 == 0)
+			{
+				v26 = &a1->contours[0][a1->contourCount[0]++];
+				v26->v[0] = HIWORD(v45);
+				v26->v[1] = v45;
+				v26->v[2] = v44;
+				v26->unk_relation = v23 & 3 | v26->unk_relation & 0xC0 | (4 * (v47 & 3 | (4 * (v10 & 1 | (2 * (v48 & 1))))));
+			}
+			else if (v9 == 1)
+			{
+				v26 = &a1->contours[1][a1->contourCount[1]++];
+				*(_DWORD*)v26->v = v45;
+				v26->v[2] = HIWORD(v44);
+				v26->unk_relation = v23 & 3 | v26->unk_relation & 0xC0 | (4 * (v47 & 3 | (4 * (v10 & 1 | (2 * (v48 & 1))))));
+			}
+			else if (v9 == 2)
+			{
+				v26 = &a1->contours[2][a1->contourCount[2]++];
+				v26->v[0] = HIWORD(v45);
+				v26->v[1] = v44;
+				v26->v[2] = v45;
+				v26->unk_relation = v47 & 3 | v26->unk_relation & 0xC0 | (4 * ((v23 & 3) | (4 * (v48 & 1 | (2 * (v10 & 1))))));
+			}
+			else
+			{
+				v26 = &a1->contours[3][a1->contourCount[3]++];
+				v26->v[0] = v45;
+				v26->v[1] = HIWORD(v44);
+				v26->v[2] = HIWORD(v45);
+				v26->unk_relation = v47 & 3 | v26->unk_relation & 0xC0 | (4 * ((v23 & 3) | (4 * (v48 & 1 | (2 * (v10 & 1))))));
+			}
+
+			v26->type = v9;
+			if (v48 == 0)
+			{
+				v9 = v16;
+			}
+			else if (v48 == 1)
+			{
+				v43 += byte_515B68[2 * v9];
+				v42 += byte_515B69[2 * v9];
+				v7 = &a1a[v42][v43];
+				v9 = (v9 - 1) & 3;
+			}
+			else
+			{
+				FatalError("write me!");
+			}
+			v45 = v44;
+			v47 = v48;
+			if (v44 == v37)
+			{
+				break;
+			}
+			v10 = v47;
+		}
+		*v7 ^= 1 << v9;
+	}
+	SMemFree(a1a, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 437, 0);
+	SAI_ContoursRealloc(a1);
+	qsort(a1->contours[0], a1->contourCount[0], sizeof(SaiContour), PtFuncCompare);
+	qsort(a1->contours[1], a1->contourCount[1], sizeof(SaiContour), PtFuncCompare);
+	qsort(a1->contours[2], a1->contourCount[2], sizeof(SaiContour), PtFuncCompare);
+	qsort(a1->contours[3], a1->contourCount[3], sizeof(SaiContour), PtFuncCompare);
+}
+
+FAIL_STUB_PATCH(SAI_ContoursCreate);
+
 void SAI_PathCreate_Sub4_(SAI_PathsEx* a1)
 {
 	a1->contours = (SaiContourHub*)SMemAlloc(56, "Starcraft\\SWAR\\lang\\sai_ContoursCreate.cpp", 129, 0);
@@ -13063,7 +13225,7 @@ void SAI_PathCreate_Sub4_(SAI_PathsEx* a1)
 	a1->contours->b = -1;
 	a1->contours->c = -1;
 	a1->contours->d = 1;
-	SAI_ContoursCreate(a1->contours);
+	SAI_ContoursCreate_(a1->contours);
 }
 
 FAIL_STUB_PATCH(SAI_PathCreate_Sub4);
