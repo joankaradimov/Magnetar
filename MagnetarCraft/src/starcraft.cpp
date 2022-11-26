@@ -1109,13 +1109,39 @@ void __stdcall BWFXN_videoLoop_(int flag)
 
 FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_);
 
+void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
+{
+	memset(byte_629C90, 0, sizeof(byte_629C90));
+	dword_6C4A2C = 0;
+
+	u8 v3 = InReplay ? ReplayVision : playerVisions;
+	for (unsigned i = top_row; i <= bottom_row; i++)
+	{
+		for (CSprite* sprite = SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
+		{
+			if ((v3 & sprite->visibilityFlags) || InReplay && replayShowEntireMap && sprite->playerID == 11)
+			{
+				sub_42D4C0(sprite);
+			}
+		}
+	}
+
+	if (dword_629D90)
+	{
+		dword_629D90 = 0;
+		UpdateVisibilityHash(top_row);
+	}
+}
+
+FAIL_STUB_PATCH(DoVisibilityUpdate);
+
 void sub_4BD3A0_()
 {
 	if (GameState)
 	{
 		dword_5993A4 = max(MoveToTile.y - 4, 0);
 		dword_5993C0 = min(MoveToTile.y + 404, map_size.height - 1);
-		DoVisibilityUpdate(dword_5993A4, dword_5993C0);
+		DoVisibilityUpdate_(dword_5993A4, dword_5993C0);
 	}
 }
 
