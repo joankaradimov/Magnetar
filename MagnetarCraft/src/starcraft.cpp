@@ -5410,7 +5410,7 @@ FAIL_STUB_PATCH(sub_4E4820);
 
 void sub_4E4590_(dialog* dlg)
 {
-	SetCursorClipBounds();
+	SetCursorClipBounds_();
 	dword_6D5DD4 = 0;
 	if (dword_6D5DD0)
 	{
