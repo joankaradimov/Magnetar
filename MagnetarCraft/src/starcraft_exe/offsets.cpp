@@ -3233,7 +3233,7 @@ DECL_FUNC(int(*sub_42B530)(), sub_42B530, 0x42b530);
 DECL_FUNC(int (__stdcall*sub_42B570)(int), sub_42B570, 0x42b570);
 DECL_FUNC(int(*sub_42B5D0)(), sub_42B5D0, 0x42b5d0);
 DECL_FUNC(int(*SAI_PathCreate_Sub1_1)(), SAI_PathCreate_Sub1_1, 0x42b620);
-DECL_FUNC(signed int (__stdcall*SAI_ContoursCreate_1)(BYTE (*a1)[1024], int *a2, int *a3), SAI_ContoursCreate_1, 0x42b760);
+DECL_FUNC(int (__stdcall*SAI_ContoursCreate_1)(BYTE (*a1)[1024], int *a2, int *a3), SAI_ContoursCreate_1, 0x42b760);
 DECL_FUNC(int (__cdecl*PtFuncCompare)(const void *, const void *), PtFuncCompare, 0x42b850);
 void SAI_ContoursRealloc(SaiContourHub *a1) {
     int address = 0x42b8a0;
@@ -3999,8 +3999,8 @@ DECL_FUNC(int(*sub_432240)(), sub_432240, 0x432240);
 DECL_FUNC(int (__stdcall*AI_RegionSize)(int, int), AI_RegionSize, 0x432260);
 DECL_FUNC(int(*AI_getNumOwnedMineralClusters)(), AI_getNumOwnedMineralClusters, 0x432320);
 DECL_FUNC(int(*playerHasAverageResources)(), playerHasAverageResources, 0x432360);
-DECL_FUNC(int (__fastcall*sub_4323B0)(__int16 a4), sub_4323B0, 0x4323b0);
-DECL_FUNC(int (__fastcall*sub_4323C0)(__int16 a4, char a3), sub_4323C0, 0x4323c0);
+DECL_FUNC(int (__fastcall*sub_4323B0)(UnitType unit_type), sub_4323B0, 0x4323b0);
+DECL_FUNC(int (__fastcall*sub_4323C0)(UnitType unit_type, char a3), sub_4323C0, 0x4323c0);
 unsigned int AI_Build(unsigned int result, char a2, unsigned int unit_type, int a4, char a5) {
     int address = 0x4323d0;
     unsigned result_;
@@ -4338,7 +4338,7 @@ void AI_TrainingNormal(CUnit *a1, CUnit *a2) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*AI_PlanDoMergeMorph)(int player_id, CUnit *, int), AI_PlanDoMergeMorph, 0x435f10);
+DECL_FUNC(signed int (__stdcall*AI_PlanDoMergeMorph)(int a1, CUnit *unit, int a3), AI_PlanDoMergeMorph, 0x435f10);
 DECL_FUNC(signed int (__thiscall*AI_PerformTask)(CUnit *this_), AI_PerformTask, 0x4361a0);
 DECL_FUNC(int (__stdcall*AI_UpgradesFinished)(int), AI_UpgradesFinished, 0x436320);
 DECL_FUNC(int(*sub_436880)(), sub_436880, 0x436880);
@@ -4472,8 +4472,7 @@ signed int GetBunkerPosition(int a1, Position *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*populateAttackRegions)(int, int, int, int, int), populateAttackRegions, 0x437770);
-DECL_FUNC(int (__stdcall*sub_4379B0)(int, int), sub_4379B0, 0x4379b0);
+DECL_FUNC(int (__stdcall*populateAttackRegions)(int, int x, int y, int, int), populateAttackRegions, 0x437770);
 DECL_FUNC(void (__stdcall*InitRegionCaptains)(int a1), InitRegionCaptains, 0x437a70);
 DECL_FUNC(int(*isCaptainTrackingNonCritter)(), isCaptainTrackingNonCritter, 0x437e00);
 DECL_FUNC(int(*isImportantRegionAccessible)(), isImportantRegionAccessible, 0x437e70);
@@ -5597,7 +5596,7 @@ DECL_FUNC(int (__stdcall*excludeNonAIOwnedSpots)(int, int), excludeNonAIOwnedSpo
 DECL_FUNC(int (__stdcall*excludePlacementSpotsOutsideRegion)(int a1, Position position), excludePlacementSpotsOutsideRegion, 0x443900);
 DECL_FUNC(int(*AI_GetNumWorkersForMinerals)(), AI_GetNumWorkersForMinerals, 0x4439b0);
 DECL_FUNC(int(*AI_AlliesWatchInit)(), AI_AlliesWatchInit, 0x443a00);
-DECL_FUNC(int (__stdcall*getClosestBaseFromStartLocation)(int, int), getClosestBaseFromStartLocation, 0x443a20);
+DECL_FUNC(int (__stdcall*getClosestBaseFromStartLocation)(int, int y), getClosestBaseFromStartLocation, 0x443a20);
 DECL_FUNC(unsigned int (__stdcall*reserveTurretPlacementPosition)(const void *a1, int a2, Position a3, __int16 a4, unsigned int a5), reserveTurretPlacementPosition, 0x443ac0);
 DECL_FUNC(unsigned int (__stdcall*excludeAddonBuildLocations)(unsigned __int16 a1, const void *a2, int a3, Position a4), excludeAddonBuildLocations, 0x443cc0);
 DECL_FUNC(unsigned int (__stdcall*reserveBuildingOnPlacemap)(unsigned __int16 a1, int a2, Position a3), reserveBuildingOnPlacemap, 0x443e30);
@@ -6784,7 +6783,7 @@ signed int OrderAcquire_genericRighClickHarvestProc(CUnit *a1, CUnit *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*OrderAcquire_genericReturnToIdleProc)(int, int, int), OrderAcquire_genericReturnToIdleProc, 0x455890);
+DECL_FUNC(signed int (__thiscall*OrderAcquire_genericReturnToIdleProc)(CUnit *unit, int a2, CUnit **a3, int a4), OrderAcquire_genericReturnToIdleProc, 0x455890);
 DECL_FUNC(signed int (__thiscall*OrderAcquire_genericIdleUnitProc)(CUnit *this_, int a2, int *a3, __int16 a4), OrderAcquire_genericIdleUnitProc, 0x455900);
 DECL_FUNC(int (__thiscall*OrderAcquire_genericRighClickHarvestIdleProc)(CUnit *this_, int a2, int *a3, __int16 a4), OrderAcquire_genericRighClickHarvestIdleProc, 0x4559c0);
 DECL_FUNC(signed int (__stdcall*ShowRClickErrorIfNeeded)(CUnit *a1), ShowRClickErrorIfNeeded, 0x455a00);
@@ -7817,7 +7816,6 @@ DECL_FUNC(int(*nullsub_26)(), nullsub_26, 0x4627b0);
 DECL_FUNC(int(*sub_4627C0)(), sub_4627C0, 0x4627c0);
 DECL_FUNC(int(*sub_4627D0)(), sub_4627D0, 0x4627d0);
 DECL_FUNC(int(*nullsub_27)(), nullsub_27, 0x4627e0);
-DECL_FUNC(int(*sub_4627F0)(), sub_4627F0, 0x4627f0);
 _WORD *SetDesiredAIControllerDestination(CUnit *unit, __int16 x, __int16 y) {
     int address = 0x462830;
     _WORD * result_;
@@ -8379,7 +8377,7 @@ int refundAllQueueSlots(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int (__thiscall*verifyResources)(int playerId, int), verifyResources, 0x466ee0);
-DECL_FUNC(int (__thiscall*orderNewUnitToFollowRallyDirective)(CUnit *a1), orderNewUnitToFollowRallyDirective, 0x466f50);
+DECL_FUNC(int (__thiscall*orderNewUnitToFollowRallyDirective)(CUnit *unit), orderNewUnitToFollowRallyDirective, 0x466f50);
 DECL_FUNC(int (__stdcall*ord_repair_subtract)(__int16), ord_repair_subtract, 0x466fb0);
 signed int sub_467030(CUnit *a1) {
     int address = 0x467030;
@@ -12603,6 +12601,14 @@ DECL_FUNC(int (__fastcall*AirSplashProc2)(_DWORD, _DWORD), AirSplashProc2, 0x48b
 DECL_FUNC(int (__fastcall*LurkerSplashProc)(_DWORD, _DWORD), LurkerSplashProc, 0x48b750);
 DECL_FUNC(void (__stdcall*CBullet_Damage)(CBullet *a1), CBullet_Damage, 0x48b770);
 DECL_FUNC(void (__thiscall*BulletBehaviour_Persist)(CBullet *this_), BulletBehaviour_Persist, 0x48bc70);
+void ProgressBulletState(CBullet *bullet) {
+    int address = 0x48bcf0;
+    __asm {
+        xor eax, eax
+        mov eax, bullet
+        call address
+    }
+}
 void BulletBehaviour_ReAssign(CBullet *a1) {
     int address = 0x48bd50;
     __asm {
@@ -13886,7 +13892,7 @@ void UpdateImage(CUnit *unit) {
     }
 }
 DECL_FUNC(void(*UpdateImages)(), UpdateImages, 0x496330);
-CSprite *sub_496360(int flingyID, __int16 a2, int position_y, CUnit *a4, char a5, char a6) {
+CSprite *sub_496360(int flingyID, __int16 a2, int position_y, CFlingy *a4, char a5, char a6) {
     int address = 0x496360;
     CSprite * result_;
     __asm {
@@ -14070,20 +14076,23 @@ void sub_497A10(CSprite *a1, __int16 a2, signed __int16 a3) {
     }
 }
 DECL_FUNC(int(*sub_497B20)(), sub_497B20, 0x497b20);
-int SpriteDestructor(CSprite *a1) {
+void SpriteDestructor(CSprite *sprite) {
     int address = 0x497b40;
-    int result_;
     __asm {
-        xor eax, eax
         xor edi, edi
-        mov edi, a1
+        mov edi, sprite
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_497C10)(), sub_497C10, 0x497c10);
-DECL_FUNC(int(*UpdateVisibilityHash)(), UpdateVisibilityHash, 0x497c30);
+void UpdateVisibilityHash(int a1) {
+    int address = 0x497c30;
+    __asm {
+        xor ebx, ebx
+        mov ebx, a1
+        call address
+    }
+}
 void drawImage(CImage *a1) {
     int address = 0x497ce0;
     __asm {
@@ -14184,7 +14193,7 @@ char sub_498170(CSprite *a1) {
 DECL_FUNC(int(*updateCarryableSpriteFlag)(), updateCarryableSpriteFlag, 0x4981b0);
 DECL_FUNC(int (__stdcall*sub_498220)(int, int), sub_498220, 0x498220);
 DECL_FUNC(int (__stdcall*sub_498260)(int), sub_498260, 0x498260);
-DECL_FUNC(int (__stdcall*DoVisibilityUpdate)(int, int), DoVisibilityUpdate, 0x4982d0);
+DECL_FUNC(void (__stdcall*DoVisibilityUpdate)(int a1, unsigned int a2), DoVisibilityUpdate, 0x4982d0);
 CSprite *refreshSpriteData(CSprite *result) {
     int address = 0x4983a0;
     CSprite * result_;
@@ -15370,7 +15379,7 @@ DECL_FUNC(int (__stdcall*AI_CreateUnit)(int a0, int a4), AI_CreateUnit, 0x4a0ad0
 DECL_FUNC(int(*sub_4A0E10)(), sub_4A0E10, 0x4a0e10);
 DECL_FUNC(int (__stdcall*AI_Alliance)(char), AI_Alliance, 0x4a0e20);
 DECL_FUNC(int(*sub_4A0EB0)(), sub_4A0EB0, 0x4a0eb0);
-DECL_FUNC(int (__stdcall*getClosestEnemyUnitToRegionPlayer)(int, int, int), getClosestEnemyUnitToRegionPlayer, 0x4a0ec0);
+DECL_FUNC(int (__stdcall*getClosestEnemyUnitToRegionPlayer)(int, int x, int y), getClosestEnemyUnitToRegionPlayer, 0x4a0ec0);
 DECL_FUNC(int (__stdcall*sub_4A1060)(__int16), sub_4A1060, 0x4a1060);
 DECL_FUNC(int(*sub_4A10A0)(), sub_4A10A0, 0x4a10a0);
 DECL_FUNC(int(*sub_4A10B0)(), sub_4A10B0, 0x4a10b0);
@@ -16279,6 +16288,14 @@ GotFileValues *readTemplate(char *template_name, char *got_template_name, char *
 DECL_FUNC(int(*InitUseMapSettingsTemplate)(), InitUseMapSettingsTemplate, 0x4ab840);
 DECL_FUNC(signed int (__stdcall*LoadGameTemplates)(TemplateConstructor template_constructor), LoadGameTemplates, 0x4ab860);
 DECL_FUNC(int(*sub_4AB970)(), sub_4AB970, 0x4ab970);
+void CTFCreateFlagBeacon(int a1) {
+    int address = 0x4ab980;
+    __asm {
+        xor edi, edi
+        mov edi, a1
+        call address
+    }
+}
 DECL_FUNC(void(*sub_4ABA20)(), sub_4ABA20, 0x4aba20);
 DECL_FUNC(int(*chooseTRGTemplate)(), chooseTRGTemplate, 0x4abaf0);
 DECL_FUNC(int (__stdcall*sub_4ABC90)(LPCSTR lpszString, int nFit, int), sub_4ABC90, 0x4abc90);
@@ -16809,7 +16826,6 @@ DECL_FUNC(void (__fastcall*unitScoreCalc)(struc_59A0F0 *a1, int player_id), unit
 DECL_FUNC(void (__fastcall*overallScoreCalc)(struc_59A0F0 *a1, int player_id), overallScoreCalc, 0x4b2b70);
 DECL_FUNC(int (__thiscall*sub_4B2BD0)(struc_59A0F0 *this_), sub_4B2BD0, 0x4b2bd0);
 DECL_FUNC(int(*sub_4B2D10)(), sub_4B2D10, 0x4b2d10);
-DECL_FUNC(int (__stdcall*sub_4B2D20)(__int16, __int16), sub_4B2D20, 0x4b2d20);
 DECL_FUNC(int(*sub_4B2D50)(), sub_4B2D50, 0x4b2d50);
 DECL_FUNC(int(*sub_4B2DA0)(), sub_4B2DA0, 0x4b2da0);
 DECL_FUNC(int (__stdcall*sub_4B2DE0)(char), sub_4B2DE0, 0x4b2de0);
@@ -17545,7 +17561,7 @@ int sub_4BB1A0(const char *string, int a2, const char *a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*sub_4BB260)(BYTE **data, int *senderplayerid), sub_4BB260, 0x4bb260);
+DECL_FUNC(int (__fastcall*sub_4BB260)(LPVOID *data, DWORD *senderplayerid), sub_4BB260, 0x4bb260);
 DECL_FUNC(int (__thiscall*sub_4BB2A0)(char *data), sub_4BB2A0, 0x4bb2a0);
 DECL_FUNC(int (__fastcall*sendMessage_Fast)(char *data, unsigned int playerID), sendMessage_Fast, 0x4bb2d0);
 void doNetTBLError(int a1, const char *error_message, char *file_name, int a4) {
@@ -18165,7 +18181,7 @@ DECL_FUNC(int(*CMDRECV_Build)(), CMDRECV_Build, 0x4c23c0);
 DECL_FUNC(int(*CMDRECV_Unload)(), CMDRECV_Unload, 0x4c24f0);
 DECL_FUNC(int (__stdcall*CMDRECV_ShiftSelect)(int), CMDRECV_ShiftSelect, 0x4c2560);
 DECL_FUNC(int (__stdcall*CMDRECV_Select)(int), CMDRECV_Select, 0x4c2750);
-DECL_FUNC(int(*CMDRECV_Hotkey)(), CMDRECV_Hotkey, 0x4c2870);
+DECL_FUNC(void (__thiscall*CMDRECV_Hotkey)(unsigned __int8 *this_), CMDRECV_Hotkey, 0x4c2870);
 DECL_FUNC(int (__stdcall*CMDRECV_Ally)(int), CMDRECV_Ally, 0x4c28a0);
 void CMDRECV_SaveGame(SaveGameCommand *command) {
     int address = 0x4c2910;
@@ -19853,12 +19869,12 @@ void ISCRIPT_UseLOFile(point *p, CImage *image, OverlayType overlay_type, int a4
         call address
     }
 }
-CImage *CImage__updateGraphicData(CImage *result) {
+CImage *CImage__updateGraphicData(CImage *image) {
     int address = 0x4d57b0;
     CImage * result_;
     __asm {
         xor eax, eax
-        mov eax, result
+        mov eax, image
         call address
         mov result_, eax
     }
@@ -25926,9 +25942,9 @@ MusicTrackDescription(&music_tracks)[25] = * ((decltype(&music_tracks)) 0x512bb8
 char(&aRegistration_block_1)[19] = * ((decltype(&aRegistration_block_1)) 0x512c80);
 RECT& stru_512D00 = * ((decltype(&stru_512D00)) 0x512d00);
 int(&dword_512D20)[] = * ((decltype(&dword_512D20)) 0x512d20);
-POINT& AngleDistance = * ((decltype(&AngleDistance)) 0x512d28);
+POINT(&AngleDistance)[256] = * ((decltype(&AngleDistance)) 0x512d28);
 int(&tangent_table)[64] = * ((decltype(&tangent_table)) 0x513528);
-u16 *(&off_513628)[3] = * ((decltype(&off_513628)) 0x513628);
+u16 *(&a1)[3] = * ((decltype(&a1)) 0x513628);
 __int16(&word_513634)[14] = * ((decltype(&word_513634)) 0x513634);
 POINT& bullet_random_offsets = * ((decltype(&bullet_random_offsets)) 0x513650);
 int& nextReplayCommandFrame = * ((decltype(&nextReplayCommandFrame)) 0x5136c8);
@@ -25957,7 +25973,7 @@ char(&byte_514108)[4] = * ((decltype(&byte_514108)) 0x514108);
 char(&byte_51410C)[4] = * ((decltype(&byte_51410C)) 0x51410c);
 char *(&ReservedDosFilenames)[25] = * ((decltype(&ReservedDosFilenames)) 0x514110);
 __int16(&word_514178)[] = * ((decltype(&word_514178)) 0x514178);
-__int16(&word_51417A)[547] = * ((decltype(&word_51417A)) 0x51417a);
+Tech2& tech = * ((decltype(&tech)) 0x51417a);
 __int16(&word_5145C0)[] = * ((decltype(&word_5145C0)) 0x5145c0);
 __int16(&word_5145C2)[419] = * ((decltype(&word_5145C2)) 0x5145c2);
 __int16(&word_514908)[] = * ((decltype(&word_514908)) 0x514908);
@@ -26033,8 +26049,7 @@ __int16(&word_515B1A)[] = * ((decltype(&word_515B1A)) 0x515b1a);
 __int16(&word_515B38)[] = * ((decltype(&word_515B38)) 0x515b38);
 __int16(&word_515B3A)[] = * ((decltype(&word_515B3A)) 0x515b3a);
 __int16(&word_515B58)[4] = * ((decltype(&word_515B58)) 0x515b58);
-char(&byte_515B60)[] = * ((decltype(&byte_515B60)) 0x515b60);
-char(&byte_515B61)[7] = * ((decltype(&byte_515B61)) 0x515b61);
+BytePair(&stru_515B60)[4] = * ((decltype(&stru_515B60)) 0x515b60);
 char(&byte_515B68)[] = * ((decltype(&byte_515B68)) 0x515b68);
 char(&byte_515B69)[31] = * ((decltype(&byte_515B69)) 0x515b69);
 int(&damage_type_multiplier)[5][5] = * ((decltype(&damage_type_multiplier)) 0x515b88);
@@ -26255,7 +26270,7 @@ char(&a_aulistentry)[16] = * ((decltype(&a_aulistentry)) 0x51aae8);
 FnInteract& off_51AAF8 = * ((decltype(&off_51AAF8)) 0x51aaf8);
 FnInteract(&off_51AAFC)[4] = * ((decltype(&off_51AAFC)) 0x51aafc);
 FnInteract(&off_51AB0C)[4] = * ((decltype(&off_51AB0C)) 0x51ab0c);
-FnInteract(&off_51AB20)[29] = * ((decltype(&off_51AB20)) 0x51ab20);
+FnInteract(&a3)[29] = * ((decltype(&a3)) 0x51ab20);
 char(&a_autriggernode)[18] = * ((decltype(&a_autriggernode)) 0x51ab9c);
 FnInteract(&off_51ABB0)[4] = * ((decltype(&off_51ABB0)) 0x51abb0);
 FnInteract(&off_51ABC0)[5] = * ((decltype(&off_51ABC0)) 0x51abc0);
@@ -26774,7 +26789,8 @@ char(&menuMapRelativePath)[260] = * ((decltype(&menuMapRelativePath)) 0x59b850);
 char(&byte_59B958)[260] = * ((decltype(&byte_59B958)) 0x59b958);
 __int16& selectedGameTypeParam = * ((decltype(&selectedGameTypeParam)) 0x59ba5c);
 void *& dword_59BA60 = * ((decltype(&dword_59BA60)) 0x59ba60);
-char(&selectedGameType)[] = * ((decltype(&selectedGameType)) 0x59ba64);
+GameType& selectedGameType = * ((decltype(&selectedGameType)) 0x59ba64);
+char& byte_59BA65 = * ((decltype(&byte_59BA65)) 0x59ba65);
 char(&byte_59BA68)[260] = * ((decltype(&byte_59BA68)) 0x59ba68);
 char& byte_59BB6C = * ((decltype(&byte_59BB6C)) 0x59bb6c);
 char(&CurrentMapFolder)[260] = * ((decltype(&CurrentMapFolder)) 0x59bb70);
@@ -26783,7 +26799,7 @@ dialog *& map_listbox = * ((decltype(&map_listbox)) 0x59bc7c);
 dialog *& custom_game_mode = * ((decltype(&custom_game_mode)) 0x59bc80);
 char(&menuMapFileName)[260] = * ((decltype(&menuMapFileName)) 0x59bc88);
 int& dword_59BD8C = * ((decltype(&dword_59BD8C)) 0x59bd8c);
-HGDIOBJ& dword_59BD90 = * ((decltype(&dword_59BD90)) 0x59bd90);
+HGDIOBJ& ho = * ((decltype(&ho)) 0x59bd90);
 int& dword_59BD94 = * ((decltype(&dword_59BD94)) 0x59bd94);
 HGDIOBJ& dword_59BD98 = * ((decltype(&dword_59BD98)) 0x59bd98);
 void *& dword_59BD9C = * ((decltype(&dword_59BD9C)) 0x59bd9c);
@@ -26884,6 +26900,7 @@ int(&dword_629D74)[] = * ((decltype(&dword_629D74)) 0x629d74);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
 int& dword_63FD28 = * ((decltype(&dword_63FD28)) 0x63fd28);
+char(&byte_63FD30)[250] = * ((decltype(&byte_63FD30)) 0x63fd30);
 __int16(&word_63FE2C)[] = * ((decltype(&word_63FE2C)) 0x63fe2c);
 CSprite *& UnusedSprites = * ((decltype(&UnusedSprites)) 0x63fe30);
 CSprite *& dword_63FE34 = * ((decltype(&dword_63FE34)) 0x63fe34);
@@ -27315,7 +27332,7 @@ char& byte_68AC9C = * ((decltype(&byte_68AC9C)) 0x68ac9c);
 int& dword_68ACA0 = * ((decltype(&dword_68ACA0)) 0x68aca0);
 _DWORD& seg_68ACA8 = * ((decltype(&seg_68ACA8)) 0x68aca8);
 int& dword_68C0FC = * ((decltype(&dword_68C0FC)) 0x68c0fc);
-int& dword_68C100 = * ((decltype(&dword_68C100)) 0x68c100);
+_DWORD& dword_68C100 = * ((decltype(&dword_68C100)) 0x68c100);
 void *& aiscript_bin_data = * ((decltype(&aiscript_bin_data)) 0x68c104);
 void *& aiscript_bin = * ((decltype(&aiscript_bin)) 0x68c108);
 char(&byte_68C10C)[52] = * ((decltype(&byte_68C10C)) 0x68c10c);
@@ -27473,7 +27490,7 @@ HWND& hWnd = * ((decltype(&hWnd)) 0x68fe94);
 HWND& dword_68FE98 = * ((decltype(&dword_68FE98)) 0x68fe98);
 char(&dword_68FE9C)[] = * ((decltype(&dword_68FE9C)) 0x68fe9c);
 int& dword_68FEA0 = * ((decltype(&dword_68FEA0)) 0x68fea0);
-char(&dword_68FEA4)[] = * ((decltype(&dword_68FEA4)) 0x68fea4);
+GameType& template_id = * ((decltype(&template_id)) 0x68fea4);
 void *& dword_68FEA8 = * ((decltype(&dword_68FEA8)) 0x68fea8);
 int& dword_68FEAC = * ((decltype(&dword_68FEAC)) 0x68feac);
 int& dword_68FEB0 = * ((decltype(&dword_68FEB0)) 0x68feb0);
@@ -27518,7 +27535,7 @@ int& dword_6955AC = * ((decltype(&dword_6955AC)) 0x6955ac);
 int& dword_6955B0 = * ((decltype(&dword_6955B0)) 0x6955b0);
 int& dword_6955B4 = * ((decltype(&dword_6955B4)) 0x6955b4);
 int(&dword_6955B8)[] = * ((decltype(&dword_6955B8)) 0x6955b8);
-int& dword_6955DC = * ((decltype(&dword_6955DC)) 0x6955dc);
+unsigned int& dword_6955DC = * ((decltype(&dword_6955DC)) 0x6955dc);
 __int16& word_6955E0 = * ((decltype(&word_6955E0)) 0x6955e0);
 __int16& word_6955E2 = * ((decltype(&word_6955E2)) 0x6955e2);
 CUnit *& dword_6955E4 = * ((decltype(&dword_6955E4)) 0x6955e4);
@@ -27538,7 +27555,7 @@ int& dword_695794 = * ((decltype(&dword_695794)) 0x695794);
 int& tempHPShields = * ((decltype(&tempHPShields)) 0x695798);
 Position& stru_69579C = * ((decltype(&stru_69579C)) 0x69579c);
 int& dword_6957A0 = * ((decltype(&dword_6957A0)) 0x6957a0);
-int& dword_6957A4 = * ((decltype(&dword_6957A4)) 0x6957a4);
+unsigned int& dword_6957A4 = * ((decltype(&dword_6957A4)) 0x6957a4);
 int& dword_6957A8 = * ((decltype(&dword_6957A8)) 0x6957a8);
 int& dword_6957AC = * ((decltype(&dword_6957AC)) 0x6957ac);
 int(&dword_6957B0)[8] = * ((decltype(&dword_6957B0)) 0x6957b0);
@@ -27635,11 +27652,11 @@ int(&AiSupplyReserved)[12] = * ((decltype(&AiSupplyReserved)) 0x6ca4bc);
 int(&dword_6CA4EC)[12] = * ((decltype(&dword_6CA4EC)) 0x6ca4ec);
 int(&dword_6CA51C)[12] = * ((decltype(&dword_6CA51C)) 0x6ca51c);
 BYTE *& dword_6CA54C = * ((decltype(&dword_6CA54C)) 0x6ca54c);
-int& seeds_maybe = * ((decltype(&seeds_maybe)) 0x6ca550);
-int& dword_6CA554 = * ((decltype(&dword_6CA554)) 0x6ca554);
-int& dword_6CA558 = * ((decltype(&dword_6CA558)) 0x6ca558);
-int& dword_6CA55C = * ((decltype(&dword_6CA55C)) 0x6ca55c);
-int& dword_6CA560 = * ((decltype(&dword_6CA560)) 0x6ca560);
+int(&seeds_maybe)[] = * ((decltype(&seeds_maybe)) 0x6ca550);
+int(&dword_6CA554)[] = * ((decltype(&dword_6CA554)) 0x6ca554);
+int(&dword_6CA558)[] = * ((decltype(&dword_6CA558)) 0x6ca558);
+int(&dword_6CA55C)[] = * ((decltype(&dword_6CA55C)) 0x6ca55c);
+int(&dword_6CA560)[] = * ((decltype(&dword_6CA560)) 0x6ca560);
 int& dword_6CA564 = * ((decltype(&dword_6CA564)) 0x6ca564);
 int& dword_6CA568 = * ((decltype(&dword_6CA568)) 0x6ca568);
 char& byte_6CA664 = * ((decltype(&byte_6CA664)) 0x6ca664);
@@ -27755,7 +27772,7 @@ int& dword_6D050C = * ((decltype(&dword_6D050C)) 0x6d050c);
 __int16& word_6D0510 = * ((decltype(&word_6D0510)) 0x6d0510);
 __int16& word_6D0514 = * ((decltype(&word_6D0514)) 0x6d0514);
 int& dword_6D0518 = * ((decltype(&dword_6D0518)) 0x6d0518);
-signed int& LastControlID = * ((decltype(&LastControlID)) 0x6d051c);
+int& LastControlID = * ((decltype(&LastControlID)) 0x6d051c);
 int& dword_6D0520 = * ((decltype(&dword_6D0520)) 0x6d0520);
 __int16& word_6D0524 = * ((decltype(&word_6D0524)) 0x6d0524);
 int& dword_6D0528 = * ((decltype(&dword_6D0528)) 0x6d0528);
@@ -27873,8 +27890,8 @@ int& dword_6D5A08 = * ((decltype(&dword_6D5A08)) 0x6d5a08);
 int& dword_6D5A0C = * ((decltype(&dword_6D5A0C)) 0x6d5a0c);
 char& outOfGame = * ((decltype(&outOfGame)) 0x6d5a10);
 int& dword_6D5A14 = * ((decltype(&dword_6D5A14)) 0x6d5a14);
-void *& dword_6D5A18 = * ((decltype(&dword_6D5A18)) 0x6d5a18);
-void *& dword_6D5A1C = * ((decltype(&dword_6D5A1C)) 0x6d5a1c);
+char *& dword_6D5A18 = * ((decltype(&dword_6D5A18)) 0x6d5a18);
+char *& dword_6D5A1C = * ((decltype(&dword_6D5A1C)) 0x6d5a1c);
 int& dword_6D5A20 = * ((decltype(&dword_6D5A20)) 0x6d5a20);
 dialog *& gluConn_Dlg = * ((decltype(&gluConn_Dlg)) 0x6d5a24);
 Char4& network_provider_id = * ((decltype(&network_provider_id)) 0x6d5a28);
@@ -27942,7 +27959,7 @@ void *& dword_6D5C10 = * ((decltype(&dword_6D5C10)) 0x6d5c10);
 void *& dword_6D5C14 = * ((decltype(&dword_6D5C14)) 0x6d5c14);
 void *& dword_6D5C18 = * ((decltype(&dword_6D5C18)) 0x6d5c18);
 int& dword_6D5C1C = * ((decltype(&dword_6D5C1C)) 0x6d5c1c);
-int& orderType4Position = * ((decltype(&orderType4Position)) 0x6d5c20);
+Position& orderType4Position = * ((decltype(&orderType4Position)) 0x6d5c20);
 CUnit *& orderType4Target = * ((decltype(&orderType4Target)) 0x6d5c24);
 int& dword_6D5C28 = * ((decltype(&dword_6D5C28)) 0x6d5c28);
 UINT_PTR& uIDEvent = * ((decltype(&uIDEvent)) 0x6d5c2c);

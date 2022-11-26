@@ -13111,8 +13111,8 @@ void SAI_ContoursCreate_(SaiContourHub* a1)
 		{
 			char v16 = (v9 + 1) & 3;
 			int v36 = word_515B58[v16];
-			int v35 = byte_515B61[2 * v16];
-			int v34 = byte_515B60[2 * v16];
+			int v35 = (char)stru_515B60[v16].y;
+			int v34 = (char)stru_515B60[v16].x;
 			v17 = 1 << v9;
 			*v7 ^= v17;
 			u8 v48 = 1 << v16;
@@ -15959,7 +15959,7 @@ int gluCustmLoadMapFromList_()
 		{
 			GluAllTblEntry error_tbl_entry;
 			MapDirEntry* directory_entry = (MapDirEntry*)map_listbox->fields.list.pdwData[v0];
-			auto flags = (unsigned __int8)selectedGameType[0] | ((((unsigned __int16)selectedGameTypeParam << 8) | (unsigned __int8)selectedGameType[1]) << 8);
+			auto flags = (unsigned __int8)selectedGameType | ((((unsigned __int16)selectedGameTypeParam << 8) | (unsigned __int8)byte_59BA65) << 8);
 			int error_code = sub_4A8050_(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
 
 			switch (error_code)
