@@ -2485,6 +2485,19 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles);
 
+void refreshImageRange_(int top_row, int bottom_row)
+{
+	for (int i = top_row; i <= bottom_row; ++i)
+	{
+		for (CSprite* sprite = SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
+		{
+			refreshSpriteData(sprite);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(refreshImageRange);
+
 void __fastcall BlitTerrainCacheToGameBitmap_(int a0, int a1, int a2, int a3)
 {
 	dword_50CEF0 = 16 * a2;
@@ -2695,7 +2708,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 	else
 	{
 		maskSomething1();
-		refreshImageRange(dword_5993A4, dword_5993C0);
+		refreshImageRange_(dword_5993A4, dword_5993C0);
 		maskSomething2();
 		BWFXN_drawMapTiles_();
 		blitTileCacheOnRefresh_();
