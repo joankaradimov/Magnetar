@@ -68,12 +68,44 @@ CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x,
 
 FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
 
+void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
+{
+    int y;
+    int x;
+
+    switch (Weapon_Behavior[weapon_id])
+    {
+    case WeaponBehavior::AppearOnTargetUnit:
+        if (!unit->orderTarget.pUnit)
+        {
+            return;
+        }
+        sub_4762C0(unit, &x, &y);
+        break;
+    case WeaponBehavior::AppearOnTargetSite:
+        x = unit->orderTarget.pt.x;
+        y = unit->orderTarget.pt.y;
+        break;
+    default:
+        x = (__int16)unit->sprite->position.x + ((Weapon_XOffset[weapon_id] * AngleDistance[unit->currentDirection1].x) >> 8);
+        y = (__int16)unit->sprite->position.y + ((Weapon_XOffset[weapon_id] * AngleDistance[unit->currentDirection1].y) >> 8) - Weapon_YOffset[weapon_id];
+        break;
+    }
+
+    if (Weapon_Graphic[weapon_id])
+    {
+        CreateBullet(unit, weapon_id, x, y, unit->playerID, unit->currentDirection1);
+    }
+}
+
+FAIL_STUB_PATCH(FireUnitWeapon);
+
 void ISCRIPT_CastSpell_(WeaponType weapon_id)
 {
-    FireUnitWeapon(iscript_unit, weapon_id);
+    FireUnitWeapon_(iscript_unit, weapon_id);
     if (Weapon_DamageFactor[weapon_id] == 2)
     {
-        FireUnitWeapon(iscript_unit, weapon_id);
+        FireUnitWeapon_(iscript_unit, weapon_id);
     }
 }
 
