@@ -14,6 +14,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/patching/FunctionPatch.cpp
 	src/patching/NopPatch.cpp
 	src/starcraft_exe/offsets.cpp
+	src/CBullet.cpp
 	src/iscript.cpp
 	src/file_info.cpp
 	src/MagnetarCraft.cpp

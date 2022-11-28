@@ -1,3 +1,4 @@
+#include "CBullet.h"
 #include "iscript.h"
 #include "starcraft.h"
 #include "patching.h"
@@ -94,7 +95,7 @@ void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
 
     if (Weapon_Graphic[weapon_id])
     {
-        CreateBullet(unit, weapon_id, x, y, unit->playerID, unit->currentDirection1);
+        CreateBullet_(unit, weapon_id, x, y, unit->playerID, unit->currentDirection1);
     }
 }
 
@@ -182,10 +183,10 @@ void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
 {
     if (Weapon_Graphic[weapon_type])
     {
-        CreateBullet(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+        CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
         if (Weapon_DamageFactor[weapon_type] == 2)
         {
-            CreateBullet(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+            CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
         }
     }
 }
