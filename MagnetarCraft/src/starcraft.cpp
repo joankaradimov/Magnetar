@@ -14881,19 +14881,21 @@ bool sub_4B2810_(dialog* a1)
 
 FAIL_STUB_PATCH(sub_4B2810);
 
-void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 a4)
+
+template <size_t TIMERS_COUNT>
+void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
 {
 	memset(&timer_related, 0, 0x90u);
-	timer_related.active_timers_count_maybe = timers_count;
+	timer_related.active_timers_count_maybe = TIMERS_COUNT;
 	int v6 = 0;
 	timer_related.timers = timers;
 	dword_51C4AC = (unsigned __int16)a4 / 20;
 	dword_51C4A8 = 0;
 	__int16 v20 = 0;
 	__int16 a1a = 0;
-	for (int v6 = 0; v6 < (unsigned __int16)timers_count; v6++)
+	for (int v6 = 0; v6 < TIMERS_COUNT; v6++)
 	{
-		dialog* v8 = getControlFromIndex_(a3, timers[v6].wIndex);
+		dialog* v8 = getControlFromIndex_(dlg, timers[v6].wIndex);
 		v8->lFlags |= CTRL_PLAIN;
 		__int16 v9 = 0;
 		switch (timers[v6].wType)
@@ -14950,7 +14952,7 @@ void DlgSwooshin_(__int16 timers_count, swishTimer* timers, dialog* a3, __int16 
 			dword_51C4B4 = 0;
 		}
 	}
-	SetCallbackTimer(7, a3, 20, DLG_SwishInLock);
+	SetCallbackTimer(7, dlg, 20, DLG_SwishInLock);
 	for (dialog* a1b = dword_51C4B0; a1b; a1b = a1b->pNext)
 	{
 		if (a1b->lFlags & 8)
@@ -15066,8 +15068,13 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
+	static swishTimer timers[] = {
+		{1, 0},
+		{3, 2},
+	};
+
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin_(2, gluCmpgnSwishController, dlg, 0);
+	DlgSwooshin_(dlg, timers, 0);
 }
 
 FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
@@ -15149,8 +15156,13 @@ void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
+	static swishTimer timers[] = {
+		{1, 0},
+		{3, 2},
+	};
+
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin_(2, &commonSwishControllers[40], dlg, 0);
+	DlgSwooshin_(dlg, timers, 0);
 }
 
 FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
@@ -15212,8 +15224,14 @@ void gluLogin_CustomCtrlID_(dialog* dlg)
 		genericLabelInteract,
 	};
 
+	static swishTimer timers[] = {
+		{1, 0},
+		{2, 3},
+		{3, 2},
+	};
+
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin_(3, &commonSwishControllers[5], dlg, 0);
+	DlgSwooshin_(dlg, timers, 0);
 }
 
 FAIL_STUB_PATCH(gluLogin_CustomCtrlID);
@@ -15454,7 +15472,14 @@ void gluJoin_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin_(4, &commonSwishControllers[18], dlg, 0);
+	static swishTimer timers[] = {
+		{1, 0},
+		{2, 2},
+		{3, 3},
+		{4, 2},
+	};
+
+	DlgSwooshin_(dlg, timers, 0);
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
@@ -15545,7 +15570,7 @@ void gluCustm_initSwish_(dialog* dlg)
 		{19, 0},
 	};
 
-	DlgSwooshin_(_countof(timers), timers, dlg, 0);
+	DlgSwooshin_(dlg, timers, 0);
 	getControlFromIndex_(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
@@ -16895,7 +16920,7 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin_(_countof(timers), timers, dlg, 80);
+	DlgSwooshin_(dlg, timers, 80);
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
@@ -17248,7 +17273,16 @@ void ConnSel_InitChildren_(dialog* a1)
 		0,
 	};
 
-	DlgSwooshin_(5, commonSwishControllers, a1, 0);
+	static swishTimer timers[] =
+	{
+		{1, 0},
+		{2, 2},
+		{3, 3},
+		{4, 2},
+		{11, 0},
+	};
+
+	DlgSwooshin_(a1, timers, 0);
 	registerMenuFunctions_(v2, a1, sizeof(v2));
 }
 
@@ -17379,8 +17413,15 @@ void gluModem_CustomCtrlID_(dialog* a1)
 		genericLabelInteract,
 	};
 
+	static swishTimer timers[] = {
+		{1, 0},
+		{2, 2},
+		{3, 3},
+		{4, 2},
+	};
+
 	registerMenuFunctions_(functions, a1, sizeof(functions));
-	DlgSwooshin_(4, stru_51A99C, a1, 0);
+	DlgSwooshin_(a1, timers, 0);
 }
 
 FAIL_STUB_PATCH(gluModem_CustomCtrlID);
@@ -17542,6 +17583,14 @@ FUNCTION_PATCH((void*)0x450AB0, CreateRaceDropdown__);
 
 void gluChat_init_(dialog* dlg)
 {
+	static swishTimer timers[] = {
+		{1, 3},
+		{2, 2},
+		{3, 0},
+		{4, 3},
+		{5, 2},
+	};
+
 	dword_5999D8 = isHost;
 
 	if (!isHost)
@@ -17550,7 +17599,7 @@ void gluChat_init_(dialog* dlg)
 		HideDialog_(getControlFromIndex_(dlg, 7));
 	}
 	sub_4B9480(dlg);
-	DlgSwooshin_(5, gluChatSwishController, dlg, 0);
+	DlgSwooshin_(dlg, timers, 0);
 }
 
 FAIL_STUB_PATCH(gluChat_init);
@@ -18146,7 +18195,13 @@ void gluLoad_CustomCtrlID_(dialog* a1)
 		Menu_Generic_Button,
 	};
 
-	DlgSwooshin_(3, &commonSwishControllers[23], a1, 0);
+	static swishTimer timers[] = {
+		{1, 0},
+		{2, 3},
+		{3, 2},
+	};
+
+	DlgSwooshin_(a1, timers, 0);
 	registerMenuFunctions_(functions, a1, sizeof(functions));
 }
 
@@ -18672,7 +18727,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 		gluScore_SaveReplay_,
 	};
 
-	DlgSwooshin_(_countof(timers), timers, dlg, 500);
+	DlgSwooshin_(dlg, timers, 500);
 	registerMenuFunctions_(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions));
 }
 
