@@ -12617,7 +12617,7 @@ void BulletBehaviour_ReAssign(CBullet *a1) {
         call address
     }
 }
-signed int InitializeBullet(CUnit *a1, __int16 a2, char player_id, CBullet *a4, int weapon_type, int a6, int a7) {
+signed int InitializeBullet(CUnit *a1, __int16 a2, char player_id, CBullet *bullet, int weapon_type, int a6, int a7) {
     int address = 0x48bec0;
     signed result_;
     __asm {
@@ -12630,7 +12630,7 @@ signed int InitializeBullet(CUnit *a1, __int16 a2, char player_id, CBullet *a4, 
         push dword ptr a7
         push dword ptr a6
         push dword ptr weapon_type
-        push dword ptr a4
+        push dword ptr bullet
         call address
         mov result_, eax
     }
@@ -13741,7 +13741,18 @@ char sub_495580(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_495590)(), sub_495590, 0x495590);
-DECL_FUNC(int (__fastcall*AppearOnTarget)(signed __int16 a3, __int16 a2), AppearOnTarget, 0x4955c0);
+void AppearOnTarget(signed __int16 y, __int16 x, CFlingy *flingy) {
+    int address = 0x4955c0;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov cx, y
+        mov dx, x
+        mov eax, flingy
+        call address
+    }
+}
 CFlingy *uflunstableRandomize(CFlingy *result) {
     int address = 0x4955f0;
     CFlingy * result_;
@@ -14063,15 +14074,15 @@ void spriteToIscriptLoop(CSprite *a1) {
         call address
     }
 }
-void sub_497A10(CSprite *a1, __int16 a2, signed __int16 a3) {
+void sub_497A10(CSprite *sprite, __int16 x, signed __int16 y) {
     int address = 0x497a10;
     __asm {
         xor ebx, ebx
         xor ecx, ecx
         xor edi, edi
-        mov ecx, a1
-        mov bx, a2
-        mov di, a3
+        mov ecx, sprite
+        mov bx, x
+        mov di, y
         call address
     }
 }
@@ -25929,7 +25940,17 @@ char(&aMdomd)[6] = * ((decltype(&aMdomd)) 0x5129c4);
 char(&aNxpif)[6] = * ((decltype(&aNxpif)) 0x5129cc);
 char(&aNpdu)[6] = * ((decltype(&aNpdu)) 0x5129d4);
 char(&aLbcse)[6] = * ((decltype(&aLbcse)) 0x5129dc);
-swishTimer(&commonSwishControllers)[43] = * ((decltype(&commonSwishControllers)) 0x5129ec);
+swishTimer(&commonSwishControllers)[5] = * ((decltype(&commonSwishControllers)) 0x5129ec);
+swishTimer(&stru_512A00)[3] = * ((decltype(&stru_512A00)) 0x512a00);
+__int16& word_512A0C = * ((decltype(&word_512A0C)) 0x512a0c);
+int& dword_512A10 = * ((decltype(&dword_512A10)) 0x512a10);
+swishTimer(&stru_512A14)[7] = * ((decltype(&stru_512A14)) 0x512a14);
+__int16& word_512A30 = * ((decltype(&word_512A30)) 0x512a30);
+swishTimer(&stru_512A34)[4] = * ((decltype(&stru_512A34)) 0x512a34);
+swishTimer(&stru_512A48)[3] = * ((decltype(&stru_512A48)) 0x512a48);
+swishTimer(&stru_512A54)[7] = * ((decltype(&stru_512A54)) 0x512a54);
+swishTimer(&stru_512A70)[7] = * ((decltype(&stru_512A70)) 0x512a70);
+swishTimer(&stru_512A8C)[2] = * ((decltype(&stru_512A8C)) 0x512a8c);
 char *(&score_screens)[6] = * ((decltype(&score_screens)) 0x512a98);
 MenuPosition(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
 MusicTrack(&score_music_track)[6] = * ((decltype(&score_music_track)) 0x512ac8);
@@ -25946,7 +25967,7 @@ POINT(&AngleDistance)[256] = * ((decltype(&AngleDistance)) 0x512d28);
 int(&tangent_table)[64] = * ((decltype(&tangent_table)) 0x513528);
 u16 *(&a1)[3] = * ((decltype(&a1)) 0x513628);
 __int16(&word_513634)[14] = * ((decltype(&word_513634)) 0x513634);
-POINT& bullet_random_offsets = * ((decltype(&bullet_random_offsets)) 0x513650);
+POINT(&bullet_random_offsets)[1] = * ((decltype(&bullet_random_offsets)) 0x513650);
 int& nextReplayCommandFrame = * ((decltype(&nextReplayCommandFrame)) 0x5136c8);
 RECT& command_card_pos = * ((decltype(&command_card_pos)) 0x5136cc);
 DatLoad(&upgradesDat)[12] = * ((decltype(&upgradesDat)) 0x5136e0);
@@ -26270,7 +26291,7 @@ char(&a_aulistentry)[16] = * ((decltype(&a_aulistentry)) 0x51aae8);
 FnInteract& off_51AAF8 = * ((decltype(&off_51AAF8)) 0x51aaf8);
 FnInteract(&off_51AAFC)[4] = * ((decltype(&off_51AAFC)) 0x51aafc);
 FnInteract(&off_51AB0C)[4] = * ((decltype(&off_51AB0C)) 0x51ab0c);
-FnInteract(&a3)[29] = * ((decltype(&a3)) 0x51ab20);
+FnInteract(&off_51AB20)[29] = * ((decltype(&off_51AB20)) 0x51ab20);
 char(&a_autriggernode)[18] = * ((decltype(&a_autriggernode)) 0x51ab9c);
 FnInteract(&off_51ABB0)[4] = * ((decltype(&off_51ABB0)) 0x51abb0);
 FnInteract(&off_51ABC0)[5] = * ((decltype(&off_51ABC0)) 0x51abc0);
