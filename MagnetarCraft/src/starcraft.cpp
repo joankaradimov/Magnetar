@@ -8738,6 +8738,28 @@ void updateUnitTimers_(CUnit* unit)
 
 FAIL_STUB_PATCH(updateUnitTimers);
 
+void playSpriteIscript_(CSprite* sprite, Anims animation, int a3)
+{
+	for (CImage* image = sprite->pImageHead; image; image = image->next)
+	{
+		if (a3 || (sprite->flags & 0x80u) == 0)
+		{
+			PlayIscriptAnim_(image, animation);
+		}
+	}
+}
+
+void __stdcall playSpriteIscript__(Anims animation, int a3)
+{
+	CSprite* sprite;
+
+	__asm mov sprite, ecx
+
+	playSpriteIscript_(sprite, animation, a3);
+}
+
+FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
