@@ -2,6 +2,63 @@
 #include "starcraft.h"
 #include "patching.h"
 
+void PlayIscriptAnim_(CImage* image, Anims new_animation);
+void playSpriteIscript_(CSprite* sprite, Anims animation, int a3);
+
+void ProgressBulletState_(CBullet* bullet);
+
+void BulletBehaviour_ReAssign_(CBullet* bullet)
+{
+    if (bullet->unknown_0x4F & 1)
+    {
+        bullet->unknown_0x4F &= 0xFE;
+        switch (Weapon_Behavior[bullet->weaponType])
+        {
+        case WeaponBehavior::WB_AppearOnTargetUnit:
+        case WeaponBehavior::WB_AppearOnTargetSite:
+        case WeaponBehavior::WB_AppearOnAttacker:
+        case WeaponBehavior::WB_AttackAndSelfDestruct:
+            bullet->behaviourTypeInternal = ReachedDestination;
+            if (CUnit* v7 = bullet->attackTarget.pUnit)
+            {
+                bullet->attackTarget.pt.x = v7->sprite->position.x;
+                bullet->attackTarget.pt.y = v7->sprite->position.y;
+            }
+            else
+            {
+                bullet->attackTarget.pUnit = 0;
+            }
+            bullet->unknown_0x4E = 0;
+            bullet->someUnitType = 228;
+            playSpriteIscript_(bullet->sprite, Anims::AE_Death, 1);
+            break;
+        case WeaponBehavior::WB_Fly_FollowTarget:
+            assignWpnData(bullet, MovingToUnit);
+            playSpriteIscript_(bullet->sprite, Anims::AE_GndAttkInit, 1);
+            break;
+        case WeaponBehavior::WB_Bounce:
+            assignWpnData(bullet, Bounce);
+            playSpriteIscript_(bullet->sprite, Anims::AE_GndAttkInit, 1);
+            break;
+        case WeaponBehavior::WB_PersistOnTargetSite:
+            assignWpnData(bullet, TargetGround);
+            playSpriteIscript_(bullet->sprite, Anims::AE_SpecialState2, 1);
+            break;
+        case WeaponBehavior::WB_AttackNearbyArea:
+            assignWpnData(bullet, MovingNearUnit);
+            playSpriteIscript_(bullet->sprite, Anims::AE_GndAttkInit, 1);
+            break;
+        default:
+            assignWpnData(bullet, MovingToPosition);
+            playSpriteIscript_(bullet->sprite, Anims::AE_GndAttkInit, 1);
+            break;
+        }
+        ProgressBulletState_(bullet);
+    }
+}
+
+FAIL_STUB_PATCH(BulletBehaviour_ReAssign);
+
 int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, WeaponType weapon_type, int a6, int a7)
 {
     if (sub_496360(Weapon_Graphic[weapon_type], a2, a6, (CFlingy*)bullet, player_id, a7))
@@ -26,7 +83,7 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
         bullet->attackTarget.pUnit = 0;
         bullet->attackTarget.pt.y = 0;
         bullet->attackTarget.pt.x = 0;
-        BulletBehaviour_ReAssign(bullet);
+        BulletBehaviour_ReAssign_(bullet);
         u8 v10 = Weapon_LaunchSpin[weapon_type];
         if (v10)
         {
@@ -225,6 +282,37 @@ void CreateBullet_(CUnit* a1, WeaponType weapon_id, int x, __int16 y, char a5, i
 
 FAIL_STUB_PATCH(CreateBullet);
 
+void ProgressBulletState_(CBullet* bullet)
+{
+    switch (bullet->behaviourTypeInternal)
+    {
+    case BulletState::Init:
+        BulletBehaviour_ReAssign_(bullet);
+        break;
+    case BulletState::MovingToPosition:
+        BulletBehaviour_Fly(bullet);
+        break;
+    case BulletState::MovingToUnit:
+        BulletBehaviour_Follow(bullet);
+        break;
+    case BulletState::Bounce:
+        BulletBehaviour_Bounce(bullet);
+        break;
+    case BulletState::TargetGround:
+        BulletBehaviour_Persist(bullet);
+        break;
+    case BulletState::ReachedDestination:
+        BulletBehaviour_Instant(bullet);
+        break;
+    case BulletState::MovingNearUnit:
+        BulletBehaviour_Area(bullet);
+    default:
+        return;
+    }
+}
+
+FAIL_STUB_PATCH(ProgressBulletState);
+
 void spriteToIscriptLoop_(CSprite* sprite);
 
 void ImageDrawingBulletDrawing_()
@@ -248,30 +336,7 @@ void ImageDrawingBulletDrawing_()
             }
         }
 
-        switch (bullet->behaviourTypeInternal)
-        {
-        case Init:
-            BulletBehaviour_ReAssign(bullet);
-            break;
-        case MovingToPosition:
-            BulletBehaviour_Fly(bullet);
-            break;
-        case MovingToUnit:
-            BulletBehaviour_Follow(bullet);
-            break;
-        case Bounce:
-            BulletBehaviour_Bounce(bullet);
-            break;
-        case TargetGround:
-            BulletBehaviour_Persist(bullet);
-            break;
-        case ReachedDestination:
-            BulletBehaviour_Instant(bullet);
-            break;
-        case MovingNearUnit:
-            BulletBehaviour_Area(bullet);
-            break;
-        }
+        ProgressBulletState_(bullet);
     }
 
     iscript_flingy = nullptr;
