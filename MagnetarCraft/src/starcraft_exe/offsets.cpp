@@ -3587,16 +3587,13 @@ int sub_42E0E0(CUnit *a1, int a2) {
 }
 DECL_FUNC(int (__stdcall*sub_42E170)(CUnit *a2), sub_42E170, 0x42e170);
 DECL_FUNC(int (__stdcall*sub_42E1D0)(CUnit *a1, int a2), sub_42E1D0, 0x42e1d0);
-int orders_ResetCollision2(CUnit *a1) {
+void orders_ResetCollision2(CUnit *unit) {
     int address = 0x42e320;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*nullsub_12)(), nullsub_12, 0x42e430);
 DECL_FUNC(void (__fastcall*nullsub_1)(bool exit_code), nullsub_1, 0x42e440);
@@ -4984,22 +4981,19 @@ CUnit *interceptorTargets(CUnit *a1) {
     }
     return result_;
 }
-CUnit *getMaelstromTarget(CUnit *result) {
+void getMaelstromTarget(CUnit *unit) {
     int address = 0x43ff00;
-    CUnit * result_;
     __asm {
         xor eax, eax
-        mov eax, result
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-void getTargetSomething(CUnit *a1) {
+void getTargetSomething(CUnit *unit) {
     int address = 0x43ff90;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -6559,27 +6553,21 @@ void ApplySpeedUpgradeFromUpgradeType(__int16 a1, CUnit *unit) {
         call address
     }
 }
-u8 orders_Upgrade(CUnit *a1) {
+void orders_Upgrade(CUnit *unit) {
     int address = 0x4546a0;
-    u8 result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-u8 orders_ResearchTech(CUnit *a1) {
+void orders_ResearchTech(CUnit *unit) {
     int address = 0x4548b0;
-    u8 result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*BeginUpgrade)(), BeginUpgrade, 0x454a80);
 signed int BeginResearch(Tech tech, CUnit *a2) {
@@ -6668,7 +6656,7 @@ void ApplyDefensiveMatrix(CUnit *a1) {
         call address
     }
 }
-DECL_FUNC(void(*orders_DefensiveMatrix)(CUnit *a1), orders_DefensiveMatrix, 0x4550a0);
+DECL_FUNC(void (__stdcall*orders_DefensiveMatrix)(CUnit *a1), orders_DefensiveMatrix, 0x4550a0);
 void OpticalFlareHit(CUnit *a1, char attacking_player) {
     int address = 0x455170;
     __asm {
@@ -7303,12 +7291,12 @@ BOOL isValidMorph(UnitType a1) {
     return result_;
 }
 DECL_FUNC(int(*isRectOutOfScreen_fixup)(), isRectOutOfScreen_fixup, 0x45cc90);
-int isMorphing(CUnit *a1) {
+BOOL isMorphing(CUnit *unit) {
     int address = 0x45cd00;
-    int result_;
+    BOOL result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
         mov result_, eax
     }
@@ -7379,29 +7367,23 @@ char orders_Build5(CUnit *a1) {
     }
     return result_;
 }
-char orders_ZergBirth(CUnit *a1) {
+void orders_ZergBirth(CUnit *unit) {
     int address = 0x45dd60;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_Morph1(CUnit *a1) {
+void orders_Morph1(CUnit *unit) {
     int address = 0x45dea0;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-DECL_FUNC(int (__stdcall*orders_DroneBuild)(CUnit *a1), orders_DroneBuild, 0x45e090);
+DECL_FUNC(void (__stdcall*orders_DroneBuild)(CUnit *unit), orders_DroneBuild, 0x45e090);
 DECL_FUNC(int(*sub_45E310)(), sub_45E310, 0x45e310);
 u16 setBuildingSelPortrait(UnitType a1) {
     int address = 0x45e320;
@@ -7947,17 +7929,21 @@ int AI_OrderHeal(CUnit *a1, CUnit *a2) {
     return result_;
 }
 DECL_FUNC(signed int (__fastcall*liftoffCheck)(CUnit *a1, CUnit *a2), liftoffCheck, 0x4635b0);
-int orders_MedicHeal2(CUnit *a1) {
-    int address = 0x463740;
-    int result_;
+void sub_463610(CUnit *unit) {
+    int address = 0x463610;
     __asm {
         xor eax, eax
-        xor edi, edi
-        mov edi, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
+}
+void orders_MedicHeal2(CUnit *unit) {
+    int address = 0x463740;
+    __asm {
+        xor edi, edi
+        mov edi, unit
+        call address
+    }
 }
 int orderReturnToIdle(CUnit *a1) {
     int address = 0x463770;
@@ -7971,7 +7957,7 @@ int orderReturnToIdle(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(char (__stdcall*orders_HealMove)(CUnit *a1), orders_HealMove, 0x4637b0);
+DECL_FUNC(void (__stdcall*orders_HealMove)(CUnit *unit), orders_HealMove, 0x4637b0);
 int orders_Medic(CUnit *a1) {
     int address = 0x463900;
     int result_;
@@ -7996,6 +7982,14 @@ BOOL sub_463A10(UnitType a1, CUnit *a2) {
     }
     return result_;
 }
+void sub_463AC0(CUnit *unit) {
+    int address = 0x463ac0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 char doMedicHeal(CUnit *a1, CUnit *a2) {
     int address = 0x463c40;
     char result_;
@@ -8007,6 +8001,14 @@ char doMedicHeal(CUnit *a1, CUnit *a2) {
         mov result_, al
     }
     return result_;
+}
+void sub_463D30(CUnit *unit) {
+    int address = 0x463d30;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 void completeAddon(CUnit *a1, CUnit *a2) {
     int address = 0x463d50;
@@ -8029,30 +8031,31 @@ char CheckCreateAddon(CUnit *a1) {
     }
     return result_;
 }
+void sub_463DF0(CUnit *unit) {
+    int address = 0x463df0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 DECL_FUNC(signed int (__fastcall*SiegeTank_SelfDestructProc)(CUnit *a1, CUnit *a2), SiegeTank_SelfDestructProc, 0x463f90);
 DECL_FUNC(int (__fastcall*Proc_UnitSelfDestructingCB)(CUnit *a1, CUnit *a2), Proc_UnitSelfDestructingCB, 0x463fc0);
-char orders_MedicHoldPosition(CUnit *a1) {
+void orders_MedicHoldPosition(CUnit *unit) {
     int address = 0x464050;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_MedicHeal1(CUnit *a1) {
+void orders_MedicHeal1(CUnit *unit) {
     int address = 0x464180;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 BOOL SiegeTank_UnderBuilding_GlitchPrevention(CUnit *a1) {
     int address = 0x464290;
@@ -8066,64 +8069,54 @@ BOOL SiegeTank_UnderBuilding_GlitchPrevention(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(CUnit *(__thiscall*DestroyUnitsUnderLandingSite)(CUnit *this_), DestroyUnitsUnderLandingSite, 0x464300);
-char orders_BuildingLand(CUnit *a1) {
+void orders_BuildingLand(CUnit *unit) {
     int address = 0x464360;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
+}
+void sub_464730(CUnit *unit) {
+    int address = 0x464730;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 DECL_FUNC(int(*bldgLiftoff)(), bldgLiftoff, 0x464930);
-int orders_BuildingLiftoff(CUnit *a1) {
+void orders_BuildingLiftoff(CUnit *unit) {
     int address = 0x4649b0;
-    int result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-char orders_TankMode(CUnit *a1) {
+void orders_TankMode(CUnit *unit) {
     int address = 0x464ae0;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_SiegeMode(CUnit *a1) {
+void orders_SiegeMode(CUnit *unit) {
     int address = 0x464bd0;
-    char result_;
     __asm {
-        xor eax, eax
         xor edi, edi
-        mov edi, a1
+        mov edi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_NukeTrack(CUnit *a1) {
+void orders_NukeTrack(CUnit *unit) {
     int address = 0x464d10;
-    char result_;
     __asm {
-        xor eax, eax
         xor ebx, ebx
-        mov ebx, a1
+        mov ebx, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_PlaceScanner(CUnit *a1) {
     int address = 0x464e40;
@@ -8194,6 +8187,14 @@ signed int returnInterceptorIfCannotAttack(CUnit *a1) {
     }
     return result_;
 }
+void sub_465910(CUnit *unit) {
+    int address = 0x465910;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 char orders_CarrierAttack1(CUnit *a1) {
     int address = 0x465950;
     char result_;
@@ -8220,16 +8221,13 @@ signed int carrierReaverIdle(CUnit *a1, CUnit *a2, int a3, int a4) {
     }
     return result_;
 }
-char orders_StrafeUnit2(CUnit *a1) {
+void orders_StrafeUnit2(CUnit *unit) {
     int address = 0x465e00;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_StrafeUnit(CUnit *a1) {
     int address = 0x465f60;
@@ -8267,6 +8265,14 @@ char sub_466270(CUnit *a1, CUnit *a2) {
     }
     return result_;
 }
+void sub_466350(CUnit *unit) {
+    int address = 0x466350;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 int sub_466440(CUnit *a1) {
     int address = 0x466440;
     int result_;
@@ -8292,6 +8298,14 @@ void orders_Carrier(CUnit *unit) {
     __asm {
         xor edi, edi
         mov edi, unit
+        call address
+    }
+}
+void sub_466720(CUnit *unit) {
+    int address = 0x466720;
+    __asm {
+        xor eax, eax
+        mov eax, unit
         call address
     }
 }
@@ -8390,16 +8404,13 @@ signed int sub_467030(CUnit *a1) {
     }
     return result_;
 }
-int orders_ResetCollision1(CUnit *a1) {
+void orders_ResetCollision1(CUnit *unit) {
     int address = 0x4671b0;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 signed int HasMoneyCanMake(int a1, CUnit *a2, UnitType a3) {
     int address = 0x467250;
@@ -8439,27 +8450,21 @@ char sub_4673C0(CUnit *a1, int a2) {
     }
     return result_;
 }
-char orders_Repair1(CUnit *a1) {
+void orders_Repair1(CUnit *unit) {
     int address = 0x4673d0;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_TerranBuildSelf(CUnit *a1) {
+void orders_TerranBuildSelf(CUnit *unit) {
     int address = 0x467760;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 CUnit *CreateUnitOnGeyser(CUnit *a1, unsigned __int8 a2) {
     int address = 0x4678a0;
@@ -8487,18 +8492,15 @@ int buildingAddon(CUnit *a1, int a2, int a3) {
     }
     return result_;
 }
-char orders_SCVBuild2(CUnit *a1) {
+void orders_SCVBuild2(CUnit *unit) {
     int address = 0x467a70;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-DECL_FUNC(void (__cdecl*orders_SCVBuild)(CUnit *a2), orders_SCVBuild, 0x467fd0);
+DECL_FUNC(void (__stdcall*orders_SCVBuild)(CUnit *unit), orders_SCVBuild, 0x467fd0);
 CUnit *attemptTrainHatchUnit(UnitType unit_type, CUnit *a2, int a3) {
     int address = 0x468200;
     CUnit * result_;
@@ -8564,16 +8566,13 @@ DECL_FUNC(BOOL (__thiscall*unit_isGeyserUnitEx)(CUnit *this_, CUnit *a2), unit_i
 DECL_FUNC(int(*sub_468970)(), sub_468970, 0x468970);
 DECL_FUNC(int(*sub_468A20)(), sub_468A20, 0x468a20);
 DECL_FUNC(CUnit *(__thiscall*sub_468A60)(CUnit *this_), sub_468A60, 0x468a60);
-char *setGatheringFlags(CUnit *a1) {
+void setGatheringFlags(CUnit *a1) {
     int address = 0x468aa0;
-    char * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(signed int (__stdcall*sub_468B00)(CUnit *a1, CUnit *a2, Position *a3, Position a4), sub_468B00, 0x468b00);
 signed int sub_468C70(CUnit *a1, CUnit *a2) {
@@ -8627,28 +8626,21 @@ CUnit *sub_468E40(CUnit *result, int a2) {
     }
     return result_;
 }
-int orders_HarvestOreInterrupted(CUnit *a1) {
+void orders_HarvestOreInterrupted(CUnit *unit) {
     int address = 0x468e80;
-    int result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-int orders_HarvestWTF(CUnit *a1) {
+void orders_HarvestWTF(CUnit *unit) {
     int address = 0x468ed0;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_468EF0)(), sub_468EF0, 0x468ef0);
 char orders_CanHarvestMinerals(CUnit *a1) {
@@ -8662,16 +8654,37 @@ char orders_CanHarvestMinerals(CUnit *a1) {
     }
     return result_;
 }
-char orders_MoveToHarvestMinerals(CUnit *a1) {
-    int address = 0x469240;
-    char result_;
+void sub_469000(CUnit *unit) {
+    int address = 0x469000;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
+}
+void sub_4690C0(CUnit *unit) {
+    int address = 0x4690c0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void orders_MoveToHarvestMinerals(CUnit *unit) {
+    int address = 0x469240;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_469500(CUnit *unit) {
+    int address = 0x469500;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 char CheckDepletedGas(CUnit *a1, char a2) {
     int address = 0x469650;
@@ -10749,6 +10762,14 @@ CUnit *getWeaponBeginIscript(CUnit *result, Anims a2) {
     }
     return result_;
 }
+void sub_476F50(CUnit *unit) {
+    int address = 0x476f50;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 int SetAttackTarget(CUnit *a1, CUnit *a2, int a3, int a4) {
     int address = 0x476fc0;
     int result_;
@@ -10776,6 +10797,14 @@ int sub_4770E0(CUnit *unit) {
     return result_;
 }
 DECL_FUNC(signed int (__thiscall*AI_AggressiveUnitTask)(CUnit *this_, int a2, int a3, signed int a4), AI_AggressiveUnitTask, 0x477160);
+void sub_4774A0(CUnit *unit) {
+    int address = 0x4774a0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 DECL_FUNC(void (__thiscall*holdPositionProc)(CUnit *this_, CUnit *a2), holdPositionProc, 0x477510);
 void ReactToHit(CUnit *attacker, CUnit *target) {
     int address = 0x4776c0;
@@ -10787,27 +10816,29 @@ void ReactToHit(CUnit *attacker, CUnit *target) {
         call address
     }
 }
-int orders_TurretGuard(CUnit *a1) {
+void orders_TurretGuard(CUnit *unit) {
     int address = 0x4777f0;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-char orders_TurretAttack(CUnit *a1) {
-    int address = 0x477980;
-    char result_;
+void sub_4778E0(CUnit *unit) {
+    int address = 0x4778e0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
+}
+void orders_TurretAttack(CUnit *unit) {
+    int address = 0x477980;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 void orders_AttackFixedRange(CUnit *unit) {
     int address = 0x477d00;
@@ -10846,6 +10877,14 @@ BOOL sub_478370(CUnit *a1, int a2, Order a3) {
         mov result_, eax
     }
     return result_;
+}
+void sub_478490(CUnit *unit) {
+    int address = 0x478490;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 signed int OrderAttackBehaviour(CUnit *unit) {
     int address = 0x478540;
@@ -10888,6 +10927,14 @@ bool attackApplyCooldown(CUnit *a1) {
     }
     return result_;
 }
+void sub_478D10(CUnit *unit) {
+    int address = 0x478d10;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 char orders_AttackMoveEP(CUnit *a1) {
     int address = 0x478de0;
     char result_;
@@ -10899,16 +10946,13 @@ char orders_AttackMoveEP(CUnit *a1) {
     }
     return result_;
 }
-char orders_HarassMove(CUnit *unit) {
+void orders_HarassMove(CUnit *unit) {
     int address = 0x478ec0;
-    char result_;
     __asm {
         xor eax, eax
         mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_AttackMove(CUnit *a1) {
     int address = 0x479040;
@@ -10922,8 +10966,24 @@ char orders_AttackMove(CUnit *a1) {
     }
     return result_;
 }
+void sub_479150(CUnit *unit) {
+    int address = 0x479150;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 DECL_FUNC(char (__stdcall*orders_NukeGround)(CUnit *a1), orders_NukeGround, 0x479200);
-DECL_FUNC(void (__stdcall*BWFXN_KillUnitTarget)(CUnit *a1), BWFXN_KillUnitTarget, 0x479480);
+void sub_479410(CUnit *unit) {
+    int address = 0x479410;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+DECL_FUNC(void (__stdcall*BWFXN_KillUnitTarget)(CUnit *unit), BWFXN_KillUnitTarget, 0x479480);
 void DoWeaponHit(CUnit *target, CUnit *attacker, int show_attacker) {
     int address = 0x4795d0;
     __asm {
@@ -11382,6 +11442,14 @@ int orders_WatchTarget(CUnit *a1) {
     }
     return result_;
 }
+void sub_47BBA0(CUnit *unit) {
+    int address = 0x47bba0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 void ToggleDoodadState(CUnit *a1) {
     int address = 0x47bc10;
     __asm {
@@ -11390,17 +11458,13 @@ void ToggleDoodadState(CUnit *a1) {
         call address
     }
 }
-char orders_CloseDoor(CUnit *a1) {
+void orders_CloseDoor(CUnit *a1) {
     int address = 0x47bc50;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_OpenDoor(CUnit *a1) {
     int address = 0x47bcd0;
@@ -11414,6 +11478,30 @@ char orders_OpenDoor(CUnit *a1) {
     }
     return result_;
 }
+void sub_47BD60(CUnit *unit) {
+    int address = 0x47bd60;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_47BE80(CUnit *unit) {
+    int address = 0x47be80;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_47BF80(CUnit *unit) {
+    int address = 0x47bf80;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 void orders_HideTrap(CUnit *unit) {
     int address = 0x47c0a0;
     __asm {
@@ -11422,27 +11510,29 @@ void orders_HideTrap(CUnit *unit) {
         call address
     }
 }
-char orders_JunkYardDog(CUnit *a1) {
-    int address = 0x47c210;
-    char result_;
+void sub_47C1B0(CUnit *unit) {
+    int address = 0x47c1b0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-int orders_Critter(CUnit *a1) {
-    int address = 0x47c3c0;
-    int result_;
+void orders_JunkYardDog(CUnit *a1) {
+    int address = 0x47c210;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
+}
+void orders_Critter(CUnit *unit) {
+    int address = 0x47c3c0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 char orders_StayInRange(CUnit *a1) {
     int address = 0x47c4f0;
@@ -11454,6 +11544,22 @@ char orders_StayInRange(CUnit *a1) {
         mov result_, al
     }
     return result_;
+}
+void sub_47C7B0(CUnit *unit) {
+    int address = 0x47c7b0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_47C950(CUnit *unit) {
+    int address = 0x47c950;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 void GiveAllUnitPropertiesToPlayerAndMakeIdle(CUnit *a1, int a2) {
     int address = 0x47c9f0;
@@ -12617,14 +12723,14 @@ void BulletBehaviour_ReAssign(CBullet *a1) {
         call address
     }
 }
-signed int InitializeBullet(CUnit *a1, __int16 a2, char player_id, CBullet *bullet, int weapon_type, int a6, int a7) {
+signed int InitializeBullet(CUnit *unit, __int16 a2, char player_id, CBullet *bullet, int weapon_type, int a6, int a7) {
     int address = 0x48bec0;
     signed result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         xor edx, edx
-        mov eax, a1
+        mov eax, unit
         mov dx, a2
         mov cl, player_id
         push dword ptr a7
@@ -13491,29 +13597,21 @@ char orders_RechargeShields2(CUnit *a1) {
     }
     return result_;
 }
-int orders_cloakNearbyUnits(CUnit *a1) {
+void orders_cloakNearbyUnits(CUnit *unit) {
     int address = 0x493a80;
-    int result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-char orders_CompletingArchonSummon(CUnit *a1) {
+void orders_CompletingArchonSummon(CUnit *unit) {
     int address = 0x493b10;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(signed int (__thiscall*sub_493BF0)(CUnit *this_), sub_493BF0, 0x493bf0);
 char PrepareUnitMoveClearRefs(CUnit *unit, bool hideUnit) {
@@ -13529,17 +13627,13 @@ char PrepareUnitMoveClearRefs(CUnit *unit, bool hideUnit) {
     }
     return result_;
 }
-char orders_RechargeShields1(CUnit *a1) {
+void orders_RechargeShields1(CUnit *unit) {
     int address = 0x493dd0;
-    char result_;
     __asm {
-        xor eax, eax
         xor edi, edi
-        mov edi, a1
+        mov edi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_InitPsiProvider(CUnit *a1) {
     int address = 0x493f70;
@@ -13573,27 +13667,21 @@ void doRecallMoveUnit(CUnit *unit, CUnit *a2) {
 }
 DECL_FUNC(int (__fastcall*recallUnitsCB)(CUnit *a1, CUnit *a2), recallUnitsCB, 0x494400);
 DECL_FUNC(void (__stdcall*orders_Recall)(CUnit *a1), orders_Recall, 0x494470);
-char orders_WarpingDarkArchon(CUnit *a1) {
+void orders_WarpingDarkArchon(CUnit *unit) {
     int address = 0x494690;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_WarpingArchon(CUnit *a1) {
+void orders_WarpingArchon(CUnit *unit) {
     int address = 0x4948b0;
-    char result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*nullsub_52)(), nullsub_52, 0x494ab0);
 DECL_FUNC(int(*sub_494AC0)(), sub_494AC0, 0x494ac0);
@@ -14104,11 +14192,11 @@ void UpdateVisibilityHash(int a1) {
         call address
     }
 }
-void drawImage(CImage *a1) {
+void drawImage(CImage *image) {
     int address = 0x497ce0;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, image
         call address
     }
 }
@@ -14162,9 +14250,8 @@ void makeSpriteVisible(CSprite *a1) {
 }
 DECL_FUNC(int(*sub_497F80)(), sub_497F80, 0x497f80);
 DECL_FUNC(int(*sub_497FA0)(), sub_497FA0, 0x497fa0);
-int sub_497FD0(char a1, CSprite *a2, unsigned __int8 a3, char a4) {
+void sub_497FD0(char a1, CSprite *a2, unsigned __int8 a3, char a4) {
     int address = 0x497fd0;
-    int result_;
     __asm {
         xor eax, eax
         xor esi, esi
@@ -14173,9 +14260,8 @@ int sub_497FD0(char a1, CSprite *a2, unsigned __int8 a3, char a4) {
         push dword ptr a4
         push dword ptr a3
         call address
-        mov result_, eax
+        add esp, 8
     }
-    return result_;
 }
 int sub_4980F0(CSprite *a1) {
     int address = 0x4980f0;
@@ -14189,7 +14275,16 @@ int sub_4980F0(CSprite *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*Sprite_SetVerticalOffset)(), Sprite_SetVerticalOffset, 0x498150);
+void Sprite_SetVerticalOffset(CSprite *sprite, char a2) {
+    int address = 0x498150;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, sprite
+        mov cl, a2
+        call address
+    }
+}
 char sub_498170(CSprite *a1) {
     int address = 0x498170;
     char result_;
@@ -14201,7 +14296,17 @@ char sub_498170(CSprite *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*updateCarryableSpriteFlag)(), updateCarryableSpriteFlag, 0x4981b0);
+int updateCarryableSpriteFlag(CSprite *a1) {
+    int address = 0x4981b0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_498220)(int, int), sub_498220, 0x498220);
 DECL_FUNC(int (__stdcall*sub_498260)(int), sub_498260, 0x498260);
 DECL_FUNC(void (__stdcall*DoVisibilityUpdate)(int a1, unsigned int a2), DoVisibilityUpdate, 0x4982d0);
@@ -14464,18 +14569,15 @@ int CreateLiftoffDustOverlays(CSprite *a1) {
     }
     return result_;
 }
-char sub_499860(CImage *a1, CSprite *a2) {
+void sub_499860(CImage *a1, CSprite *a2) {
     int address = 0x499860;
-    char result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, a1
         mov ecx, a2
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(void (__cdecl*InitializeSpriteArray)(), InitializeSpriteArray, 0x499900);
 DECL_FUNC(void (__cdecl*CreateAllSelectionCircles)(), CreateAllSelectionCircles, 0x499a60);
@@ -14490,7 +14592,7 @@ void ReplaceSpriteOverlayImage(CSprite *a1, int a2, char a3) {
         add esp, 8
     }
 }
-DECL_FUNC(void (__thiscall*playSpriteIscript)(CSprite *this_, Anims a2, int a3), playSpriteIscript, 0x499d00);
+DECL_FUNC(void (__thiscall*playSpriteIscript)(CSprite *sprite, Anims animation, int a3), playSpriteIscript, 0x499d00);
 DECL_FUNC(int(*sub_499D40)(), sub_499D40, 0x499d40);
 size_t GameResultText(int *a1, char **player_names, const char *a3, const char *a4) {
     int address = 0x499d50;
@@ -15471,6 +15573,22 @@ bool AiCastSpellOrder(CUnit *unit, CUnit *target, Order order, u8 aiActionFlag) 
     }
     return result_;
 }
+void sub_4A12C0(CUnit *unit) {
+    int address = 0x4a12c0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_4A1340(CUnit *unit) {
+    int address = 0x4a1340;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4A13B0)(), sub_4A13B0, 0x4a13b0);
 signed int AI_CastSpellBehaviour(CUnit *a1, int unknown_flag) {
     int address = 0x4a13c0;
@@ -15492,30 +15610,23 @@ void orders_Neutral(CUnit *a1) {
         call address
     }
 }
-char orders_AIPatrol(CUnit *a1) {
+void orders_AIPatrol(CUnit *a1) {
     int address = 0x4a1d80;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int (__fastcall*RemoveAIControl)(CUnit *a2, int), RemoveAIControl, 0x4a1e50);
 DECL_FUNC(void (__cdecl*GameInitAI)(), GameInitAI, 0x4a1ea0);
-char orders_RescuePassive(CUnit *a1) {
+void orders_RescuePassive(CUnit *a1) {
     int address = 0x4a1ef0;
-    char result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(int(*AI_SwitchRescue)(), AI_SwitchRescue, 0x4a2130);
 DECL_FUNC(int(*sub_4A2370)(), sub_4A2370, 0x4a2370);
@@ -15538,6 +15649,14 @@ void AI_TrainingUnit(CUnit *a1, CUnit *a2) {
         xor ecx, ecx
         mov eax, a1
         mov ecx, a2
+        call address
+    }
+}
+void sub_4A28B0(CUnit *unit) {
+    int address = 0x4a28b0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
         call address
     }
 }
@@ -21553,17 +21672,21 @@ char orders_CTFCOP2(CUnit *unit) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*CTFCOP_CheckForFlagCapture)(CUnit *unit, CUnit *a2), CTFCOP_CheckForFlagCapture, 0x4e4130);
-CUnit *orders_CTFCOP1(CUnit *a1) {
+void orders_CTFCOP1(CUnit *a1) {
     int address = 0x4e41a0;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
+}
+void sub_4E4210(CUnit *unit) {
+    int address = 0x4e4210;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
 }
 int toggleUnitPath(CUnit *a1) {
     int address = 0x4e42a0;
@@ -21649,35 +21772,35 @@ int isAttemptingProtossBuild(CUnit *a1) {
     }
     return result_;
 }
-char orders_Warpin(CUnit *a1) {
+void orders_Warpin(CUnit *unit) {
     int address = 0x4e4c70;
-    char result_;
     __asm {
-        xor eax, eax
         xor edi, edi
-        mov edi, a1
+        mov edi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-char orders_ProbeBuild(CUnit *a1) {
+void orders_ProbeBuild(CUnit *unit) {
     int address = 0x4e4d00;
-    char result_;
+    __asm {
+        xor edi, edi
+        mov edi, unit
+        call address
+    }
+}
+void sub_4E4F20(CUnit *unit) {
+    int address = 0x4e4f20;
     __asm {
         xor eax, eax
-        xor edi, edi
-        mov edi, a1
+        mov eax, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
-void orders_bldgUnderConstruction_Protoss(CUnit *a1) {
+void orders_bldgUnderConstruction_Protoss(CUnit *unit) {
     int address = 0x4e4f40;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -21734,9 +21857,9 @@ BOOL sub_4E5AD0(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_4E5B30)(), sub_4E5B30, 0x4e5b30);
-signed int getUpdatedSightRange(CUnit *unit, int a3) {
+int getUpdatedSightRange(CUnit *unit, int a3) {
     int address = 0x4e5b40;
-    signed result_;
+    int result_;
     __asm {
         xor eax, eax
         xor edx, edx
@@ -21968,18 +22091,15 @@ int isConstructingAddon(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(int(*CancelAddon_Direct)(), CancelAddon_Direct, 0x4e66e0);
-int orders_NukeTrain(CUnit *a1) {
+void orders_NukeTrain(CUnit *unit) {
     int address = 0x4e6700;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(void(*orders_PlaceAddon)(CUnit *a1), orders_PlaceAddon, 0x4e6880);
+DECL_FUNC(void (__stdcall*orders_PlaceAddon)(CUnit *unit), orders_PlaceAddon, 0x4e6880);
 DECL_FUNC(int (__thiscall*unitIsActiveTransport)(CUnit *this_), unitIsActiveTransport, 0x4e6ba0);
 BOOL sub_4E6BE0(CUnit *a1, CUnit *a2) {
     int address = 0x4e6be0;
@@ -22435,16 +22555,13 @@ signed int ChkLarvaStray(CUnit *a1, unsigned int a2, unsigned int a3) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*ChkLarvaStray_0)(CUnit *a1, int a2, int a3), ChkLarvaStray_0, 0x4e94b0);
-char orders_StopCreepGrowth(CUnit *a1) {
+void orders_StopCreepGrowth(CUnit *a1) {
     int address = 0x4e95e0;
-    char result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 char orders_InitCreepGrowth(CUnit *a1) {
     int address = 0x4e96d0;
@@ -22462,6 +22579,22 @@ void Unburrow(CUnit *a1) {
     __asm {
         xor eax, eax
         mov eax, a1
+        call address
+    }
+}
+void sub_4E9860(CUnit *unit) {
+    int address = 0x4e9860;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_4E98E0(CUnit *unit) {
+    int address = 0x4e98e0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
         call address
     }
 }
@@ -22483,6 +22616,14 @@ void sub_4E9A30(CUnit *unit) {
 }
 void orders_DroneLand(CUnit *unit) {
     int address = 0x4e9aa0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_4E9E60(CUnit *unit) {
+    int address = 0x4e9e60;
     __asm {
         xor eax, eax
         mov eax, unit
@@ -22531,6 +22672,14 @@ void orders_EnterNydusCanal(CUnit *a1) {
 }
 void orders_InfestMine1(CUnit *unit) {
     int address = 0x4ea4c0;
+    __asm {
+        xor eax, eax
+        mov eax, unit
+        call address
+    }
+}
+void sub_4EA670(CUnit *unit) {
+    int address = 0x4ea670;
     __asm {
         xor eax, eax
         mov eax, unit
@@ -22599,12 +22748,12 @@ CUnit *setNextWaypoint(CUnit *result, int a2, int a3) {
 }
 DECL_FUNC(int (__thiscall*SetUnitUnderDisruptionWeb)(CUnit *this_), SetUnitUnderDisruptionWeb, 0x4eb170);
 DECL_FUNC(char (__fastcall*sub_4EB240)(int a1, CUnit *a2), sub_4EB240, 0x4eb240);
-int setResourceTarget(CUnit *a1) {
+points setResourceTarget(CUnit *unit) {
     int address = 0x4eb290;
-    int result_;
+    points result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
         mov result_, eax
     }
@@ -23286,16 +23435,13 @@ void killPowerup(CUnit *a3) {
     }
 }
 DECL_FUNC(char (__stdcall*sub_4F3CA0)(CUnit *a3, CUnit *a4), sub_4F3CA0, 0x4f3ca0);
-CUnit *orders_Powerup2(CUnit *a1) {
+void orders_Powerup2(CUnit *a1) {
     int address = 0x4f3e10;
-    CUnit * result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void orders_Powerup1(CUnit *unit) {
     int address = 0x4f3ea0;
@@ -25967,7 +26113,7 @@ POINT(&AngleDistance)[256] = * ((decltype(&AngleDistance)) 0x512d28);
 int(&tangent_table)[64] = * ((decltype(&tangent_table)) 0x513528);
 u16 *(&a1)[3] = * ((decltype(&a1)) 0x513628);
 __int16(&word_513634)[14] = * ((decltype(&word_513634)) 0x513634);
-POINT(&bullet_random_offsets)[1] = * ((decltype(&bullet_random_offsets)) 0x513650);
+point(&bullet_random_offsets)[15] = * ((decltype(&bullet_random_offsets)) 0x513650);
 int& nextReplayCommandFrame = * ((decltype(&nextReplayCommandFrame)) 0x5136c8);
 RECT& command_card_pos = * ((decltype(&command_card_pos)) 0x5136cc);
 DatLoad(&upgradesDat)[12] = * ((decltype(&upgradesDat)) 0x5136e0);

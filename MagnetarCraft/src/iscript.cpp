@@ -76,14 +76,14 @@ void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
 
     switch (Weapon_Behavior[weapon_id])
     {
-    case WeaponBehavior::AppearOnTargetUnit:
+    case WeaponBehavior::WB_AppearOnTargetUnit:
         if (!unit->orderTarget.pUnit)
         {
             return;
         }
         sub_4762C0(unit, &x, &y);
         break;
-    case WeaponBehavior::AppearOnTargetSite:
+    case WeaponBehavior::WB_AppearOnTargetSite:
         x = unit->orderTarget.pt.x;
         y = unit->orderTarget.pt.y;
         break;

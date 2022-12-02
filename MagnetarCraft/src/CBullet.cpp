@@ -10,8 +10,8 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
         int v16;
 
         bullet->srcPlayer = player_id;
-        HIBYTE(bullet->unknown_0x4E) = 0;
-        LOBYTE(bullet->unknown_0x4E) = 0;
+        bullet->unknown_0x4E = 0;
+        bullet->unknown_0x4F = 0;
         bullet->attackTarget.pUnit = 0;
         bullet->attackTarget.pt.y = 0;
         bullet->attackTarget.pt.x = 0;
@@ -68,8 +68,8 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
         }
         switch (Weapon_Behavior[weapon_type])
         {
-        case WeaponBehavior::AppearOnTargetUnit:
-        case WeaponBehavior::AppearOnTargetSite:
+        case WeaponBehavior::WB_AppearOnTargetUnit:
+        case WeaponBehavior::WB_AppearOnTargetSite:
             if (target_unit)
             {
                 if (CUnit* source_unit = bullet->sourceUnit)
@@ -86,12 +86,12 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
                 }
             }
             return 1;
-        case WeaponBehavior::PersistOnTargetSite:
+        case WeaponBehavior::WB_PersistOnTargetSite:
             AppearOnTarget(bullet->attackTarget.pt.y, bullet->attackTarget.pt.x, (CFlingy*)bullet);
             return 1;
-        case WeaponBehavior::AppearOnAttacker:
+        case WeaponBehavior::WB_AppearOnAttacker:
             return 1;
-        case WeaponBehavior::AttackAndSelfDestruct:
+        case WeaponBehavior::WB_AttackAndSelfDestruct:
             if (CUnit* source_unit = bullet->sourceUnit)
             {
                 source_unit->statusFlags |= StatusFlags::IsSelfDestructing;
@@ -99,11 +99,11 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
                 RemoveUnit(source_unit);
             }
             return 1;
-        case WeaponBehavior::AttackAndSelfDestruct | Fly_FollowTarget:
+        case WeaponBehavior::WB_Bounce:
             bullet->remainingBounces = 3;
             [[fallthrough]];
-        case WeaponBehavior::Fly_DoNotFollowTarget:
-        case WeaponBehavior::Fly_FollowTarget:
+        case WeaponBehavior::WB_Fly_DoNotFollowTarget:
+        case WeaponBehavior::WB_Fly_FollowTarget:
             if (target_unit)
             {
                 if (CUnit* source_unit = bullet->sourceUnit)
@@ -118,7 +118,7 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
             }
             AttackFlyToTarget(bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
             return 1;
-        case WeaponBehavior::AttackNearbyArea:
+        case WeaponBehavior::WB_AttackNearbyArea:
             v15 = unit->status.bulletBehaviour3by3AttackSequence;
             v16 = (unsigned __int8)v15;
             LOBYTE(bullet->cyclicMissileIndex) = v15;
@@ -127,7 +127,7 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
             AttackFlyToTarget(bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
             unit->status.bulletBehaviour3by3AttackSequence = bullet_random_offsets[v15 + 1].x ? v15 + 1 : 0;
             return 1;
-        case WeaponBehavior::GoToMaxRange:
+        case WeaponBehavior::WB_GoToMaxRange:
             bullet->attackTarget.pt.x = unit->sprite->position.x + ((unsigned int)((Weapon_MaxRange[bullet->weaponType] + 20) * 256 * AngleDistance[bullet->direction1].x) >> 16);
             bullet->attackTarget.pt.y = unit->sprite->position.y + ((unsigned int)((Weapon_MaxRange[bullet->weaponType] + 20) * 256 * AngleDistance[bullet->direction1].y) >> 16);
             AttackFlyToTarget(bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
