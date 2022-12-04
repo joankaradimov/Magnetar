@@ -13128,6 +13128,44 @@ void CreateUIUnreachableRegion_(SAI_PathsEx* paths)
 
 FAIL_STUB_PATCH(CreateUIUnreachableRegion);
 
+int SAI_ContoursCreate_1_(BYTE(*a1)[4 * MAX_MAP_DIMENTION], int* a2, int* a3)
+{
+	int x = *a3;
+	int y = *a2;
+
+	if (x >= 4 * map_size.width)
+	{
+		x = 0;
+		y = (y + 1) % (4 * map_size.height);
+	}
+	x = x & ~3;
+
+	BYTE* v11 = &a1[y][x];
+	while ((*(_DWORD*)&a1[y][x] & 0x7F7F7F7F) == 0)
+	{
+		x += 4;
+		if (x == 4 * map_size.width)
+		{
+			x = 0;
+			y = (y + 1) % (4 * map_size.height);
+		}
+		if (&a1[y][x] == v11)
+		{
+			return 0;
+		}
+	}
+
+	while ((char)a1[y][x] <= 0)
+	{
+		++x;
+	}
+	*a3 = x;
+	*a2 = y;
+	return 1;
+}
+
+FAIL_STUB_PATCH(SAI_ContoursCreate_1);
+
 void SAI_ContoursCreate_(SaiContourHub* a1)
 {
 	BYTE* v7;
@@ -13159,7 +13197,7 @@ void SAI_ContoursCreate_(SaiContourHub* a1)
 
 	int a2 = 0;
 	int a3 = 0;
-	while (SAI_ContoursCreate_1(a1a, &a2, &a3))
+	while (SAI_ContoursCreate_1_(a1a, &a2, &a3))
 	{
 		int v42 = a2;
 		int v43 = a3;
