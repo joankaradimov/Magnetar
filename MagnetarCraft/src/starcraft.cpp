@@ -6078,9 +6078,6 @@ FAIL_STUB_PATCH(sub_4CCAC0);
 
 int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
-	const char* v8;
-	const char* v13;
-
 	CurrentMapFileName[0] = 0;
 	if (!is_campaign)
 		CampaignIndex = MD_none;
@@ -6098,14 +6095,12 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		{
 			return 0;
 		}
-		v8 = source;
 	}
-	else
+	else if (source[0] == 0 || !sub_4CCAC0_(source, a4))
 	{
-		v8 = source;
-		if (!*source || !sub_4CCAC0_(source, a4))
-			return 0;
+		return 0;
 	}
+	const char* v8 = source;
 	int v9 = 12;
 	do
 	{
@@ -6136,7 +6131,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	}
 	__int16 v12 = LOWORD(a4->data0);
 	dword_5994DC = 1;
-	v13 = GetMapTblString(v12);
+	const char* v13 = GetMapTblString(v12);
 
 	strcpy_s(CurrentMapName, v13);
 	return 1;
