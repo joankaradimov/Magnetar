@@ -64,7 +64,6 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
     if (sub_496360(Weapon_Graphic[weapon_type], a2, a6, (CFlingy*)bullet, player_id, a7))
     {
         u16 v15;
-        int v16;
 
         bullet->srcPlayer = player_id;
         bullet->unknown_0x4E = 0;
@@ -177,16 +176,15 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
             return 1;
         case WeaponBehavior::WB_AttackNearbyArea:
             v15 = unit->status.bulletBehaviour3by3AttackSequence;
-            v16 = (unsigned __int8)v15;
             LOBYTE(bullet->cyclicMissileIndex) = v15;
-            bullet->attackTarget.pt.x -= LOWORD(bullet_random_offsets[v16].x);
-            bullet->attackTarget.pt.y -= LOWORD(bullet_random_offsets[v16].y);
+            bullet->attackTarget.pt.x -= LOWORD(bullet_random_offsets[v15].x);
+            bullet->attackTarget.pt.y -= LOWORD(bullet_random_offsets[v15].y);
             AttackFlyToTarget(bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
             unit->status.bulletBehaviour3by3AttackSequence = bullet_random_offsets[v15 + 1].x ? v15 + 1 : 0;
             return 1;
         case WeaponBehavior::WB_GoToMaxRange:
-            bullet->attackTarget.pt.x = unit->sprite->position.x + ((unsigned int)((Weapon_MaxRange[bullet->weaponType] + 20) * 256 * AngleDistance[bullet->direction1].x) >> 16);
-            bullet->attackTarget.pt.y = unit->sprite->position.y + ((unsigned int)((Weapon_MaxRange[bullet->weaponType] + 20) * 256 * AngleDistance[bullet->direction1].y) >> 16);
+            bullet->attackTarget.pt.x = unit->sprite->position.x + (unsigned)(Weapon_MaxRange[bullet->weaponType] + 20) * AngleDistance[bullet->direction1].x / 256;
+            bullet->attackTarget.pt.y = unit->sprite->position.y + (unsigned)(Weapon_MaxRange[bullet->weaponType] + 20) * AngleDistance[bullet->direction1].y / 256;
             AttackFlyToTarget(bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
             return 1;
         }
