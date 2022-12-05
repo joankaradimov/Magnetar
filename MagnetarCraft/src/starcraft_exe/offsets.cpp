@@ -60,7 +60,7 @@ void setAllOverlayDirectionsGeneric(CThingy *thingy, unsigned __int8 direction) 
         call address
     }
 }
-DECL_FUNC(BOOL (__stdcall*unitIsOwnerByCurrentPlayer)(CUnit *a1), unitIsOwnerByCurrentPlayer, 0x401170);
+DECL_FUNC(BOOL (__stdcall*unitIsOwnerByCurrentPlayer)(CUnit *unit), unitIsOwnerByCurrentPlayer, 0x401170);
 int unitSetRetreatPoint(unsigned __int8 a1, CUnit *a2) {
     int address = 0x4011a0;
     int result_;
@@ -3743,7 +3743,7 @@ DECL_FUNC(int(*getAllUnitsInBounds)(), getAllUnitsInBounds, 0x42ff80);
 DECL_FUNC(int (__stdcall*getUnitsAtPoint)(int), getUnitsAtPoint, 0x4300e0);
 DECL_FUNC(s32 *(__thiscall*UnitRelManyFinderUMScoutPath)(CUnit *this_, __int16 a2, __int16 a3), UnitRelManyFinderUMScoutPath, 0x430190);
 DECL_FUNC(int (__stdcall*unkUnitRelManyFinderEx)(int), unkUnitRelManyFinderEx, 0x4304d0);
-DECL_FUNC(int (__stdcall*FindAllUnits)(Box16 *a1), FindAllUnits, 0x4308a0);
+DECL_FUNC(CUnit **(__stdcall*FindAllUnits)(Box16 *box), FindAllUnits, 0x4308a0);
 DECL_FUNC(int (__stdcall*findAllUnitsInBoundsUsing)(int, int), findAllUnitsInBoundsUsing, 0x430b00);
 DECL_FUNC(int (__stdcall*getAllUnitsInRegion)(__int16), getAllUnitsInRegion, 0x430b50);
 DECL_FUNC(int (__stdcall*getClosestReachableUnit)(CUnit *a1, signed __int16 a2, __int16 a3), getClosestReachableUnit, 0x430be0);
@@ -9553,7 +9553,21 @@ void getTargettingErrorString(int a1, int a2, CUnit *a3) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*sub_46F040)(int, int), sub_46F040, 0x46f040);
+CUnit *sub_46F040(int a1, CUnit **a2, CUnit *a3, CUnit *a4) {
+    int address = 0x46f040;
+    CUnit * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        push dword ptr a4
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(signed int (__stdcall*SortAllUnits)(CUnit **a1, CUnit **a2, CUnit *a3), SortAllUnits, 0x46f0f0);
 int sub_46F290(CUnit **a1, CUnit **a2, int a3, CUnit *a4) {
     int address = 0x46f290;
@@ -9582,11 +9596,9 @@ void sub_46F5B0(int x, int y, CUnit *unit, signed int a4) {
         call address
     }
 }
-signed int UI_doSelectUnits_IfAltNotHeld(CUnit **a2, int a3, char a4, int a5) {
+void UI_doSelectUnits_IfAltNotHeld(CUnit **a2, int a3, char a4, int a5) {
     int address = 0x46fa00;
-    signed result_;
     __asm {
-        xor eax, eax
         xor ebx, ebx
         xor edi, edi
         mov ebx, a2
@@ -9594,11 +9606,9 @@ signed int UI_doSelectUnits_IfAltNotHeld(CUnit **a2, int a3, char a4, int a5) {
         push dword ptr a5
         push dword ptr a4
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(void (__stdcall*getSelectedUnitsInBox)(Box16 *a1), getSelectedUnitsInBox, 0x46fa40);
+DECL_FUNC(void (__stdcall*getSelectedUnitsInBox)(Box16 *box), getSelectedUnitsInBox, 0x46fa40);
 DECL_FUNC(void (__fastcall*getSelectedUnitsAtPoint)(int a1, int a2), getSelectedUnitsAtPoint, 0x46fb40);
 DECL_FUNC(void (__fastcall*input_dragSelect_MouseBtnUp)(dlgEvent *), input_dragSelect_MouseBtnUp, 0x46fea0);
 DECL_FUNC(void (__fastcall*input_Game_LeftMouseClick)(dlgEvent *), input_Game_LeftMouseClick, 0x46ff70);
@@ -11376,7 +11386,7 @@ char hasOverlay(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(BOOL (__fastcall*unitIsEnemy)(CUnit *a1, int a2), unitIsEnemy, 0x47b740);
-DECL_FUNC(BOOL (__thiscall*unit_IsStandardAndMovable)(CUnit *this_), unit_IsStandardAndMovable, 0x47b770);
+DECL_FUNC(BOOL (__thiscall*unit_IsStandardAndMovable)(CUnit *unit), unit_IsStandardAndMovable, 0x47b770);
 int unitLurkerIsNotIdle(CUnit *a1) {
     int address = 0x47b810;
     int result_;
@@ -12347,7 +12357,7 @@ void sub_487D90(CThingy *a1) {
         call address
     }
 }
-DECL_FUNC(int (__fastcall*readThingyArray)(int a1, int a2, FILE *a3, CThingy *a4, int a5), readThingyArray, 0x487db0);
+DECL_FUNC(int(*readThingyArray)(FILE *file, CThingy *a4, int a5), readThingyArray, 0x487db0);
 DECL_FUNC(BOOL (__stdcall*writeThingys)(FILE *file, CThingy *a2, __int16 a3), writeThingys, 0x487ec0);
 DECL_FUNC(int (__stdcall*sub_487FD0)(__int16), sub_487FD0, 0x487fd0);
 void sub_488020(CThingy *a1) {
@@ -12358,8 +12368,20 @@ void sub_488020(CThingy *a1) {
         call address
     }
 }
+signed int ReadThingyArrays(FILE *file) {
+    int address = 0x488100;
+    signed result_;
+    __asm {
+        xor eax, eax
+        xor esi, esi
+        mov esi, file
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__cdecl*BWFXN_drawAllThingys)(), BWFXN_drawAllThingys, 0x488180);
-BOOL sub_4881E0(char player_id, int a2, int position_x, int a4, unsigned __int16 position_y) {
+BOOL sub_4881E0(char player_id, int a2, int position_x, CThingy *a4, unsigned __int16 position_y) {
     int address = 0x4881e0;
     BOOL result_;
     __asm {
@@ -12653,19 +12675,27 @@ CUnit *FindNextBounceTarget(CBullet *a1) {
     }
     return result_;
 }
-void BulletBehaviour_Bounce(CBullet *a1) {
-    int address = 0x48b2d0;
+void ProgressBulletMovement(CBullet *bullet) {
+    int address = 0x48b250;
     __asm {
-        xor edi, edi
-        mov edi, a1
+        xor eax, eax
+        mov eax, bullet
         call address
     }
 }
-void BulletBehaviour_Fly(CBullet *a1) {
+void BulletBehaviour_Bounce(CBullet *bullet) {
+    int address = 0x48b2d0;
+    __asm {
+        xor edi, edi
+        mov edi, bullet
+        call address
+    }
+}
+void BulletBehaviour_Fly(CBullet *bullet) {
     int address = 0x48b3b0;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, bullet
         call address
     }
 }
@@ -13828,7 +13858,18 @@ char sub_495580(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_495590)(), sub_495590, 0x495590);
+void sub_495590(CFlingy *a1, int x, int y) {
+    int address = 0x495590;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, a1
+        mov edx, x
+        mov ecx, y
+        call address
+    }
+}
 void AppearOnTarget(signed __int16 y, __int16 x, CFlingy *flingy) {
     int address = 0x4955c0;
     __asm {
@@ -13876,11 +13917,11 @@ int Unit_AssignNextWP(CUnit *a1) {
     }
     return result_;
 }
-void sub_4958C0(CBullet *a1) {
+void sub_4958C0(CFlingy *flingy) {
     int address = 0x4958c0;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, flingy
         call address
     }
 }
@@ -14059,7 +14100,17 @@ DECL_FUNC(int(*refreshImage)(), refreshImage, 0x4970a0);
 DECL_FUNC(int (__stdcall*sub_4970F0)(int), sub_4970F0, 0x4970f0);
 DECL_FUNC(void (__cdecl*createUnitBuildingSpriteValidityArray)(), createUnitBuildingSpriteValidityArray, 0x497110);
 DECL_FUNC(int(*initializeSpriteArray)(), initializeSpriteArray, 0x497230);
-DECL_FUNC(int(*unpackSpriteData)(), unpackSpriteData, 0x497310);
+CSprite *unpackSpriteData(CSprite *sprite) {
+    int address = 0x497310;
+    CSprite * result_;
+    __asm {
+        xor eax, eax
+        mov eax, sprite
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__thiscall*packSpriteData)(CSprite *this_), packSpriteData, 0x497380);
 DECL_FUNC(int(*sub_497400)(), sub_497400, 0x497400);
 void setAllImageGroupFlagsPal11(CSprite *sprite) {
@@ -14162,7 +14213,7 @@ void spriteToIscriptLoop(CSprite *a1) {
         call address
     }
 }
-void sub_497A10(CSprite *sprite, __int16 x, signed __int16 y) {
+void sub_497A10(CSprite *sprite, __int16 x, __int16 y) {
     int address = 0x497a10;
     __asm {
         xor ebx, ebx
@@ -27067,12 +27118,12 @@ int(&dword_629D74)[] = * ((decltype(&dword_629D74)) 0x629d74);
 int& dword_629D90 = * ((decltype(&dword_629D90)) 0x629d90);
 CSprite(&SpriteTable)[2500] = * ((decltype(&SpriteTable)) 0x629d98);
 int& dword_63FD28 = * ((decltype(&dword_63FD28)) 0x63fd28);
-char(&byte_63FD30)[250] = * ((decltype(&byte_63FD30)) 0x63fd30);
+char(&byte_63FD30)[256] = * ((decltype(&byte_63FD30)) 0x63fd30);
 __int16(&word_63FE2C)[] = * ((decltype(&word_63FE2C)) 0x63fe2c);
 CSprite *& UnusedSprites = * ((decltype(&UnusedSprites)) 0x63fe30);
 CSprite *& dword_63FE34 = * ((decltype(&dword_63FE34)) 0x63fe34);
 char& byte_63FE38 = * ((decltype(&byte_63FE38)) 0x63fe38);
-__int16(&word_63FE40)[] = * ((decltype(&word_63FE40)) 0x63fe40);
+__int16(&word_63FE40)[8] = * ((decltype(&word_63FE40)) 0x63fe40);
 char& byte_63FEC0 = * ((decltype(&byte_63FEC0)) 0x63fec0);
 char& byte_63FEC1 = * ((decltype(&byte_63FEC1)) 0x63fec1);
 char& byte_63FEC2 = * ((decltype(&byte_63FEC2)) 0x63fec2);
