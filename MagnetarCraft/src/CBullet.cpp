@@ -1,4 +1,5 @@
 #include "CBullet.h"
+#include "CFlingy.h"
 #include "starcraft.h"
 #include "patching.h"
 
@@ -134,16 +135,16 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
                     {
                         return 1;
                     }
-                    AppearOnTarget(
-                        bullet->sprite->position.y - ((30 * AngleDistance[a7].y) >> 8),
+                    AppearOnTarget_(
+                        (CFlingy*)bullet,
                         bullet->sprite->position.x - ((30 * AngleDistance[a7].x) >> 8),
-                        (CFlingy*)bullet);
+                        bullet->sprite->position.y - ((30 * AngleDistance[a7].y) >> 8));
                     bullet->hitFlags |= 1;
                 }
             }
             return 1;
         case WeaponBehavior::WB_PersistOnTargetSite:
-            AppearOnTarget(bullet->attackTarget.pt.y, bullet->attackTarget.pt.x, (CFlingy*)bullet);
+            AppearOnTarget_((CFlingy*)bullet, bullet->attackTarget.pt.x, bullet->attackTarget.pt.y);
             return 1;
         case WeaponBehavior::WB_AppearOnAttacker:
             return 1;
