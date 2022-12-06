@@ -12,3 +12,26 @@ void AppearOnTarget_(CFlingy* flingy, __int16 x, __int16 y)
 }
 
 FAIL_STUB_PATCH(AppearOnTarget);
+
+void sub_4958C0_(CFlingy* flingy)
+{
+    if ((__int16) flingy->position.x < 0)
+    {
+        AppearOnTarget_(flingy, 0, flingy->position.y);
+    }
+    else if ((__int16)flingy->position.x >= (int)(unsigned __int16)map_width_pixels)
+    {
+        AppearOnTarget_(flingy, map_width_pixels - 1, flingy->position.y);
+    }
+
+    if ((__int16)flingy->position.y < 0)
+    {
+        AppearOnTarget_(flingy, flingy->position.x, 0);
+    }
+    else if ((__int16)flingy->position.y >= (unsigned __int16)map_height_pixels)
+    {
+        AppearOnTarget_(flingy, flingy->position.x, map_height_pixels - 1);
+    }
+}
+
+FAIL_STUB_PATCH(sub_4958C0);

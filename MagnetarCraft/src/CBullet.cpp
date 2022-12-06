@@ -20,7 +20,7 @@ void ProgressBulletMovement_(CBullet* bullet)
     {
         bullet->time_remaining = 0;
     }
-    sub_4958C0((CFlingy*) bullet);
+    sub_4958C0_((CFlingy*) bullet);
 }
 
 FAIL_STUB_PATCH(ProgressBulletMovement);
