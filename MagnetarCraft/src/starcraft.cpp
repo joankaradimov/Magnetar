@@ -266,18 +266,7 @@ void GroundAttackInit_(__int16 x, __int16 y)
 	wantThingyUpdate = 1;
 }
 
-void __cdecl GroundAttackInit__()
-{
-	__int16 x;
-	__int16 y;
-
-	__asm mov x, cx
-	__asm mov y, ax
-
-	return GroundAttackInit_(x, y);
-}
-
-FUNCTION_PATCH((void*)0x488660, GroundAttackInit__);
+FAIL_STUB_PATCH(GroundAttackInit);
 
 CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
 {
@@ -366,6 +355,33 @@ CursorType getCursorType_()
 }
 
 FAIL_STUB_PATCH(getCursorType);
+
+void sub_468670_(CUnit* unit)
+{
+	const points& rally_point = unit->fields3.rally.position;
+	if ((rally_point.x || rally_point.y) && (rally_point.x != unit->position.x || rally_point.y != unit->position.y))
+	{
+		if (CThingy* v4 = sub_487A10(rally_point.x, rally_point.y))
+		{
+			v4->sprite->selectionTimer = 31;
+		}
+		else
+		{
+			GroundAttackInit_(rally_point.x, rally_point.y);
+		}
+	}
+}
+
+void __cdecl sub_468670__()
+{
+	CUnit* unit;
+
+	__asm mov unit, eax
+
+	sub_468670_(unit);
+}
+
+FUNCTION_PATCH((void*)0x468670, sub_468670__);
 
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
