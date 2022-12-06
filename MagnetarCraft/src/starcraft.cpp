@@ -1211,6 +1211,34 @@ void __stdcall BWFXN_videoLoop_(int flag)
 
 FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_);
 
+#define MAX_MAP_DIMENTION 256
+
+void UpdateVisibilityHash_(int a1)
+{
+	memset(byte_63FD30, 0, sizeof(byte_63FD30));
+	for (int i = 0; i < _countof(byte_63FD30); ++i)
+	{
+		for (CSprite* j = SpritesOnTileRow.heads[i]; j; j = j->next)
+		{
+			if (byte_629A88[j->spriteID])
+			{
+				byte_63FD30[i] ^= j->visibilityFlags;
+			}
+		}
+	}
+
+	int v4 = min(a1 + 13, MAX_MAP_DIMENTION - 1);
+	int v5 = 0;
+	for (int k = a1; k <= v4; ++k)
+	{
+		v5 = (((unsigned __int8)byte_629C90[k] ^ v5) >> 31) | (2 * ((unsigned __int8)byte_629C90[k] ^ v5));
+	}
+	byte_63FE38 = BYTE2(v5) ^ v5 ^ ((unsigned __int16)(HIWORD(v5) ^ v5) >> 8);
+	dword_63FD28 = a1;
+}
+
+FAIL_STUB_PATCH(UpdateVisibilityHash);
+
 void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
 {
 	memset(byte_629C90, 0, sizeof(byte_629C90));
@@ -1231,7 +1259,7 @@ void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
 	if (dword_629D90)
 	{
 		dword_629D90 = 0;
-		UpdateVisibilityHash(top_row);
+		UpdateVisibilityHash_(top_row);
 	}
 }
 
@@ -7270,8 +7298,6 @@ void __cdecl freeChkFileMem_()
 }
 
 FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
-
-#define MAX_MAP_DIMENTION 256
 
 struct SAI_PathsEx
 {
