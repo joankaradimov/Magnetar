@@ -60,6 +60,68 @@ void BulletBehaviour_ReAssign_(CBullet* bullet)
 
 FAIL_STUB_PATCH(BulletBehaviour_ReAssign);
 
+void BulletBehaviour_Fly_(CBullet* bullet)
+{
+    ProgressBulletMovement(bullet);
+    u8 v2 = bullet->time_remaining;
+    bullet->time_remaining = v2 - 1;
+    if (!v2 || bullet->moveTarget.pt.x == bullet->position.x && bullet->moveTarget.pt.y == bullet->position.y)
+    {
+        bullet->behaviourTypeInternal = BulletState::ReachedDestination;
+        if (CUnit* target_unit = bullet->attackTarget.pUnit)
+        {
+            bullet->attackTarget.pt.x = target_unit->sprite->position.x;
+            bullet->attackTarget.pt.y = target_unit->sprite->position.y;
+        }
+        else
+        {
+            bullet->attackTarget.pUnit = 0;
+        }
+        bullet->unknown_0x4E = 0;
+        bullet->someUnitType = 228;
+        playSpriteIscript_(bullet->sprite, Anims::AE_Death, 1);
+    }
+}
+
+FAIL_STUB_PATCH(BulletBehaviour_Fly);
+
+void BulletBehaviour_Bounce_(CBullet* bullet)
+{
+    CUnit* v1 = bullet->attackTarget.pUnit;
+    if (v1 && (bullet->hitFlags & 1) == 0)
+    {
+        ChangeMovePos(bullet, (__int16)v1->sprite->position.y, (__int16)v1->sprite->position.x);
+    }
+    ProgressBulletMovement(bullet);
+    if (bullet->moveTarget.pt.x == bullet->position.x && bullet->moveTarget.pt.y == bullet->position.y)
+    {
+        CUnit* v3;
+        if (--bullet->remainingBounces && (v3 = FindNextBounceTarget(bullet), bullet->nextBounceUnit = bullet->attackTarget.pUnit, v3))
+        {
+            playSpriteIscript_(bullet->sprite, Anims::AE_SpecialState1, 1);
+            bullet->attackTarget.pUnit = v3;
+        }
+        else
+        {
+            bullet->behaviourTypeInternal = ReachedDestination;
+            if (CUnit* v5 = bullet->attackTarget.pUnit)
+            {
+                bullet->attackTarget.pt.x = v5->sprite->position.x;
+                bullet->attackTarget.pt.y = v5->sprite->position.y;
+            }
+            else
+            {
+                bullet->attackTarget.pUnit = 0;
+            }
+            bullet->unknown_0x4E = 0;
+            bullet->someUnitType = 228;
+            playSpriteIscript_(bullet->sprite, Anims::AE_Death, 1);
+        }
+    }
+}
+
+FAIL_STUB_PATCH(BulletBehaviour_Bounce);
+
 int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, WeaponType weapon_type, int a6, int a7)
 {
     if (sub_496360(Weapon_Graphic[weapon_type], a2, a6, (CFlingy*)bullet, player_id, a7))
@@ -289,13 +351,13 @@ void ProgressBulletState_(CBullet* bullet)
         BulletBehaviour_ReAssign_(bullet);
         break;
     case BulletState::MovingToPosition:
-        BulletBehaviour_Fly(bullet);
+        BulletBehaviour_Fly_(bullet);
         break;
     case BulletState::MovingToUnit:
         BulletBehaviour_Follow(bullet);
         break;
     case BulletState::Bounce:
-        BulletBehaviour_Bounce(bullet);
+        BulletBehaviour_Bounce_(bullet);
         break;
     case BulletState::TargetGround:
         BulletBehaviour_Persist(bullet);
