@@ -6,6 +6,25 @@
 void PlayIscriptAnim_(CImage* image, Anims new_animation);
 void playSpriteIscript_(CSprite* sprite, Anims animation, int a3);
 
+void ProgressBulletMovement_(CBullet* bullet)
+{
+    byte_63FEC2 = bullet->movementFlags;
+    Unit_AssignNextWP((CUnit*)bullet);
+    sub_495CB0((CFlingy*)bullet);
+    ProgressMovementFlag((CUnit*)bullet);
+    sub_4956C0((CUnit*)bullet);
+    byte_63FEC0 = bullet->movementFlags;
+    bullet->movementFlags = byte_63FEC2;
+    sub_496030((CUnit*)bullet);
+    if ((__int16)bullet->position.x < 0 || (__int16)bullet->position.x >= (int)(u16)map_width_pixels || (__int16)bullet->position.y < 0 || (__int16)bullet->position.y >= (int)(u16)map_height_pixels)
+    {
+        bullet->time_remaining = 0;
+    }
+    sub_4958C0((CFlingy*) bullet);
+}
+
+FAIL_STUB_PATCH(ProgressBulletMovement);
+
 void ProgressBulletState_(CBullet* bullet);
 
 void BulletBehaviour_ReAssign_(CBullet* bullet)
@@ -62,7 +81,7 @@ FAIL_STUB_PATCH(BulletBehaviour_ReAssign);
 
 void BulletBehaviour_Fly_(CBullet* bullet)
 {
-    ProgressBulletMovement(bullet);
+    ProgressBulletMovement_(bullet);
     u8 v2 = bullet->time_remaining;
     bullet->time_remaining = v2 - 1;
     if (!v2 || bullet->moveTarget.pt.x == bullet->position.x && bullet->moveTarget.pt.y == bullet->position.y)
@@ -92,7 +111,7 @@ void BulletBehaviour_Bounce_(CBullet* bullet)
     {
         ChangeMovePos(bullet, (__int16)v1->sprite->position.y, (__int16)v1->sprite->position.x);
     }
-    ProgressBulletMovement(bullet);
+    ProgressBulletMovement_(bullet);
     if (bullet->moveTarget.pt.x == bullet->position.x && bullet->moveTarget.pt.y == bullet->position.y)
     {
         CUnit* v3;
