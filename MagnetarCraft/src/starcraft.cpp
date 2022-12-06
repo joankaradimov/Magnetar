@@ -247,6 +247,38 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
+void GroundAttackInit_(__int16 x, __int16 y)
+{
+	wantThingyUpdate = 0;
+	sub_497A10(ThingyList_UsedFirst->sprite, x + 1, y + 1);
+	for (CImage* i = ThingyList_UsedFirst->sprite->pImageHead; i; i = i->next)
+	{
+		if ((i->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) != 0)
+		{
+			i->iscript_program.anim = Anims::AE_GndAttkInit;
+			char* v7 = (char*)iscript_data;
+			i->iscript_program.program_counter = *(_WORD*)&v7[i->iscript_program.iscript_header + 12];
+			i->iscript_program.wait = 0;
+			i->iscript_program.return_address = 0;
+			BWFXN_PlayIscript_(i, &i->iscript_program, 0, 0);
+		}
+	}
+	wantThingyUpdate = 1;
+}
+
+void __cdecl GroundAttackInit__()
+{
+	__int16 x;
+	__int16 y;
+
+	__asm mov x, cx
+	__asm mov y, ax
+
+	return GroundAttackInit_(x, y);
+}
+
+FUNCTION_PATCH((void*)0x488660, GroundAttackInit__);
+
 CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
 {
 	if (CThingy* result = sub_487A10(x, y))
@@ -261,7 +293,7 @@ CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
 	}
 	else
 	{
-		GroundAttackInit(x, y);
+		GroundAttackInit_(x, y);
 		return nullptr;
 	}
 }
@@ -4485,7 +4517,7 @@ void MinimapGameTargetOrder_(dlgEvent* event)
 	__int16 x = p.x;
 	__int16 y = p.y;
 	sub_46F5B0(LOWORD(p.x), LOWORD(p.y), 0, 228);
-	GroundAttackInit(x, y);
+	GroundAttackInit_(x, y);
 }
 
 FAIL_STUB_PATCH(MinimapGameTargetOrder);
@@ -21887,7 +21919,7 @@ void CMDACT_RightClick_(dlgEvent* dlg)
 		command.is_shift_used = is_keycode_used[VK_SHIFT];
 		BWFXN_QueueCommand__(command);
 		PlayWorkerActionSound(ActivePortraitUnit);
-		GroundAttackInit(x, y);
+		GroundAttackInit_(x, y);
 	}
 }
 
