@@ -16,6 +16,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/starcraft_exe/offsets.cpp
 	src/CBullet.cpp
 	src/CFlingy.cpp
+	src/CSprite.cpp
 	src/iscript.cpp
 	src/file_info.cpp
 	src/MagnetarCraft.cpp
