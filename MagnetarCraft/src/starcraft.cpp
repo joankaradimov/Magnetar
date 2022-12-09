@@ -13965,6 +13965,27 @@ void GenerateMegatileDefaultFlags_()
 
 FAIL_STUB_PATCH(GenerateMegatileDefaultFlags);
 
+void sub_4BDDD0_(const char* tileset_name)
+{
+	char buff[MAX_PATH];
+
+	for (int i = 0; i < _countof(byte_50CDC1); ++i)
+	{
+		byte_50CDC1[i] = i;
+	}
+	_snprintf(buff, sizeof(buff), "Tileset\\%s\\dark.pcx", tileset_name);
+	if (!SBmpLoadImage(buff, 0, byte_5973A0, 0x2000, 0, 0, 0))
+	{
+		SysWarn_FileNotFound(buff, SErrGetLastError());
+	}
+	for (int i = 0; i < _countof(byte_5992A0); ++i)
+	{
+		byte_5992A0[i] = i;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4BDDD0);
+
 void initMapData_()
 {
 	char filename[MAX_PATH];
@@ -14013,7 +14034,7 @@ void initMapData_()
 		sub_4BDD60();
 	}
 	loadColorShiftTilesetImages(TILESET_NAMES[CurrentTileSet]);
-	sub_4BDDD0(TILESET_NAMES[CurrentTileSet]);
+	sub_4BDDD0_(TILESET_NAMES[CurrentTileSet]);
 	if (!dword_5993AC)
 	{
 		ScreenLayers[5].buffers = 1;
