@@ -247,10 +247,85 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
+void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
+{
+	if (sprite->position.x != x || sprite->position.y != y)
+	{
+		int v4 = std::clamp(sprite->position.y / 32, 0, map_size.height - 1);
+		int v5 = std::clamp(y / 32, 0, map_size.height - 1);
+		sprite->position.x = x;
+		sprite->position.y = y;
+
+		if (v4 != v5)
+		{
+			if (SpritesOnTileRow.heads[v4] == sprite)
+			{
+				SpritesOnTileRow.heads[v4] = sprite->next;
+			}
+			if (SpritesOnTileRow.tails[v4] == sprite)
+			{
+				SpritesOnTileRow.tails[v4] = sprite->prev;
+			}
+			if (sprite->prev)
+			{
+				sprite->prev->next = sprite->next;
+			}
+			CSprite* v6 = sprite->next;
+			if (v6)
+			{
+				v6->prev = sprite->prev;
+			}
+			sprite->prev = 0;
+			sprite->next = 0;
+			if (CSprite* v7 = SpritesOnTileRow.heads[v5])
+			{
+				if (SpritesOnTileRow.tails[v5] == v7)
+				{
+					SpritesOnTileRow.tails[v5] = sprite;
+				}
+				sprite->prev = v7;
+				sprite->next = v7->next;
+				CSprite* v8 = v7->next;
+				if (v8)
+				{
+					v8->prev = sprite;
+				}
+				v7->next = sprite;
+			}
+			else
+			{
+				SpritesOnTileRow.tails[v5] = sprite;
+				SpritesOnTileRow.heads[v5] = sprite;
+			}
+		}
+		for (CImage* image = sprite->pImageHead; image; image = image->next)
+		{
+			image->flags |= ImageFlags::IF_REDRAW;
+		}
+	}
+}
+
+void __cdecl sub_497A10__()
+{
+	CSprite* sprite;
+	__int16 x;
+	__int16 y;
+
+	__asm {
+		mov sprite, ecx
+		mov x, bx
+		mov y, di
+	}
+
+	sub_497A10_(sprite, x, y);
+}
+
+FUNCTION_PATCH((void*)0x497A10, sub_497A10__);
+
 void GroundAttackInit_(__int16 x, __int16 y)
 {
 	wantThingyUpdate = 0;
-	sub_497A10(ThingyList_UsedFirst->sprite, x + 1, y + 1);
+	sub_497A10_(ThingyList_UsedFirst->sprite, x + 1, y + 1);
 	for (CImage* i = ThingyList_UsedFirst->sprite->pImageHead; i; i = i->next)
 	{
 		if ((i->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) != 0)
@@ -8440,7 +8515,7 @@ void sub_4EBC30_(CUnit* unit)
 		subunit->halt.y = y;
 		subunit->position.x = x >> 8;
 		subunit->position.y = y >> 8;
-		sub_497A10(subunit->sprite, subunit->position.x, subunit->position.y);
+		sub_497A10_(subunit->sprite, subunit->position.x, subunit->position.y);
 		ISCRIPT_setPosition_(subunit->sprite->pImagePrimary, LOBYTE(p.x), LOBYTE(p.y));
 		iscript_unit = subunit;
 		if ((unit->movementFlags & 2) == 0 && (subunit->statusFlags & StatusFlags::UNKNOWN6))
