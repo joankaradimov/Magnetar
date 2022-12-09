@@ -38,29 +38,30 @@ int __stdcall ReadSpritesArray_(FILE* a1)
         unpackSpriteData(SpriteTable + i);
     }
     initializeSpriteArray();
-    if (fread(SpritesOnTileRow.heads, 0x400, 1, a1) != 1)
+    if (fread(SpritesOnTileRow.heads, sizeof(SpritesOnTileRow.heads), 1, a1) != 1)
     {
         return 0;
     }
     int v11 = map_size.height;
     while (v11)
     {
-        CSprite* v12 = SpritesOnTileRow.tails[v11-- + 255];
+        CSprite* v12 = SpritesOnTileRow.heads[v11];
+        v11--;
         if (v12)
         {
             v12 = (CSprite*)&dword_629D74[9 * (_DWORD)v12];
         }
         SpritesOnTileRow.heads[v11] = v12;
     }
-    if (fread(&SpritesOnTileRow, 0x400, 1, a1) != 1)
+    if (fread(SpritesOnTileRow.tails, sizeof(SpritesOnTileRow.tails), 1, a1) != 1)
     {
         return 0;
     }
     int v13 = map_size.height;
     while (v13)
     {
-        CSprite* v14 = dword_629284[v13];
         v13--;
+        CSprite* v14 = _SpritesOnTileRow.tails[v13];
         if (v14)
         {
             v14 = (CSprite*)&dword_629D74[9 * (_DWORD)v14];
@@ -140,8 +141,8 @@ BOOL __stdcall writeSprites_(FILE* file)
     int v15 = map_size.height;
     while (v15)
     {
-        CSprite* v16 = SpritesOnTileRow.tails[v15 + 255];
         v15--;
+        CSprite* v16 = SpritesOnTileRow.heads[v15];
         CSprite* v17;
         if (v16)
         {
@@ -153,14 +154,14 @@ BOOL __stdcall writeSprites_(FILE* file)
         }
         SpritesOnTileRow.heads[v15] = v17;
     }
-    size_t v18 = fwrite(SpritesOnTileRow.heads, 0x400, 1, file);
+    size_t v18 = fwrite(SpritesOnTileRow.heads, sizeof(SpritesOnTileRow.heads), 1, file);
     int v19 = map_size.height;
     int v20 = map_size.height;
     BOOL result = v18 == 1;
     while (v20)
     {
-        CSprite* v22 = SpritesOnTileRow.tails[v20 + 255];
         v20--;
+        CSprite* v22 = SpritesOnTileRow.heads[v20];
         if (v22)
         {
             v22 = (CSprite*)&dword_629D74[9 * (_DWORD)v22];
@@ -171,8 +172,8 @@ BOOL __stdcall writeSprites_(FILE* file)
     {
         for (; v19;)
         {
-            CSprite* v23 = dword_629284[v19];
             v19--;
+            CSprite* v23 = SpritesOnTileRow.tails[v19];
             if (v23)
             {
                 SpritesOnTileRow.tails[v19] = (CSprite*)(v23 - SpriteTable + 1);
@@ -182,13 +183,13 @@ BOOL __stdcall writeSprites_(FILE* file)
                 SpritesOnTileRow.tails[v19] = 0;
             }
         }
-        size_t v25 = fwrite(&SpritesOnTileRow, 0x400, 1, file);
+        size_t v25 = fwrite(SpritesOnTileRow.tails, sizeof(SpritesOnTileRow.tails), 1, file);
         int v26 = map_size.height;
         result = v25 == 1;
         while (v26)
         {
-            CSprite* v27 = dword_629284[v26];
             v26--;
+            CSprite* v27 = SpritesOnTileRow.tails[v26];
             if (v27)
             {
                 v27 = (CSprite*)&dword_629D74[9 * (_DWORD)v27];
