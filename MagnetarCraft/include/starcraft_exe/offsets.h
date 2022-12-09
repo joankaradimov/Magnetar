@@ -8494,7 +8494,7 @@ extern CUnit *(&PlayerSelection)[12];
 extern CUnit *(&playersSelections)[8][12];
 extern char(&validation_replay_path)[3072];
 extern char& league_maybe;
-extern int(&dword_629284)[];
+extern CSprite *(&dword_629284)[];
 extern SpriteTileData& SpritesOnTileRow;
 extern char(&byte_629A88)[520];
 extern char(&byte_629C90)[256];

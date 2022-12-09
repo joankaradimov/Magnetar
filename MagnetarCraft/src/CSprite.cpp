@@ -59,7 +59,8 @@ int __stdcall ReadSpritesArray_(FILE* a1)
     int v13 = map_size.height;
     while (v13)
     {
-        CSprite* v14 = (CSprite*)dword_629284[v13--];
+        CSprite* v14 = dword_629284[v13];
+        v13--;
         if (v14)
         {
             v14 = (CSprite*)&dword_629D74[9 * (_DWORD)v14];
@@ -170,11 +171,11 @@ BOOL __stdcall writeSprites_(FILE* file)
     {
         for (; v19;)
         {
-            int v23 = dword_629284[v19];
+            CSprite* v23 = dword_629284[v19];
             v19--;
             if (v23)
             {
-                SpritesOnTileRow.tails[v19] = (CSprite*)((v23 - (int)SpriteTable) / 0x24u + 1);
+                SpritesOnTileRow.tails[v19] = (CSprite*)(v23 - SpriteTable + 1);
             }
             else
             {
@@ -186,7 +187,8 @@ BOOL __stdcall writeSprites_(FILE* file)
         result = v25 == 1;
         while (v26)
         {
-            CSprite* v27 = (CSprite*)dword_629284[v26--];
+            CSprite* v27 = dword_629284[v26];
+            v26--;
             if (v27)
             {
                 v27 = (CSprite*)&dword_629D74[9 * (_DWORD)v27];
