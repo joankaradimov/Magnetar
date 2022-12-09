@@ -4655,6 +4655,34 @@ void minimapGameResetMouseInput_(dialog* dlg)
 
 FAIL_STUB_PATCH(minimapGameResetMouseInput);
 
+void sub_4A3A00_()
+{
+	for (int i = 0; i < 256; ++i)
+	{
+		byte_59C2C0[i] = HIBYTE(dword_6CEB2C);
+		byte_59C3C0[i] = byte_5982A0[i];
+		byte_59C4C0[i] = i;
+		byte_59C5C0[i] = i;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4A3A00);
+
+void sub_4A4150_()
+{
+	if (dword_5993AC == 1 || !byte_6D5BBF)
+	{
+		sub_4A3A00_();
+		minimapVisionUpdate();
+	}
+	else
+	{
+		memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4A4150);
+
 void drawAllMinimapBoxes_()
 {
 	Bitmap* v0 = dword_6CF4A8;
@@ -4724,7 +4752,7 @@ void minimapGameUpdate_(dialog* a1)
 	if (dword_5993AC == 0)
 	{
 		minimapSurfaceUpdate();
-		sub_4A4150();
+		sub_4A4150_();
 		drawAllMinimapBoxes_();
 	}
 	if ((a1->lFlags & CTRL_UPDATE) == 0)
@@ -4810,7 +4838,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 	case 2:
 		byte_6D5BBF ^= 1;
 		dword_59C1A4 = 0;
-		sub_4A4150();
+		sub_4A4150_();
 		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
@@ -4894,7 +4922,7 @@ void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
 	{
 		minimapSurfaceUpdate();
 	}
-	sub_4A4150();
+	sub_4A4150_();
 	drawAllMinimapBoxes_();
 	sub_4A3870();
 
@@ -4923,15 +4951,7 @@ void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 				{
 					minimapSurfaceUpdate();
 				}
-				if (dword_5993AC == 1 || !byte_6D5BBF)
-				{
-					sub_4A3A00();
-					minimapVisionUpdate();
-				}
-				else
-				{
-					memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
-				}
+				sub_4A4150_();
 				drawAllMinimapBoxes_();
 				sub_4A3870();
 				if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
@@ -4972,15 +4992,7 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 		{
 			minimapSurfaceUpdate();
 		}
-		if (dword_5993AC == 1 || !byte_6D5BBF)
-		{
-			sub_4A3A00();
-			minimapVisionUpdate();
-		}
-		else
-		{
-			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
-		}
+		sub_4A4150_();
 		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
@@ -5128,7 +5140,7 @@ FAIL_STUB_PATCH(updateMinimapPreviewDlg);
 
 void minimapPreviewUpdateState_()
 {
-	sub_4A4150();
+	sub_4A4150_();
 	drawAllMinimapBoxes_();
 	sub_4A3870();
 	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
@@ -5269,15 +5281,7 @@ void load_gluMinimap_()
 		setMinimapConstants();
 		setMapSizeConstants_();
 		minimapSurfaceUpdate();
-		if (dword_5993AC == 1 || !byte_6D5BBF)
-		{
-			sub_4A3A00();
-			minimapVisionUpdate();
-		}
-		else
-		{
-			memset(minimap_surface.data, 0, minimap_surface.ht * minimap_surface.wid);
-		}
+		sub_4A4150_();
 		drawAllMinimapBoxes_();
 		sub_4A3870();
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
