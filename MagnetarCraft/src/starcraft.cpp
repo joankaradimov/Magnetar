@@ -4,6 +4,7 @@
 #include <process.h>
 #include <time.h>
 #include "CBullet.h"
+#include "CSprite.h"
 #include "iscript.h"
 #include "starcraft.h"
 #include "magnetorm.h"
@@ -258,13 +259,13 @@ void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 
 		if (v4 != v5)
 		{
-			if (SpritesOnTileRow.heads[v4] == sprite)
+			if (_SpritesOnTileRow.heads[v4] == sprite)
 			{
-				SpritesOnTileRow.heads[v4] = sprite->next;
+				_SpritesOnTileRow.heads[v4] = sprite->next;
 			}
-			if (SpritesOnTileRow.tails[v4] == sprite)
+			if (_SpritesOnTileRow.tails[v4] == sprite)
 			{
-				SpritesOnTileRow.tails[v4] = sprite->prev;
+				_SpritesOnTileRow.tails[v4] = sprite->prev;
 			}
 			if (sprite->prev)
 			{
@@ -277,11 +278,11 @@ void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 			}
 			sprite->prev = 0;
 			sprite->next = 0;
-			if (CSprite* v7 = SpritesOnTileRow.heads[v5])
+			if (CSprite* v7 = _SpritesOnTileRow.heads[v5])
 			{
-				if (SpritesOnTileRow.tails[v5] == v7)
+				if (_SpritesOnTileRow.tails[v5] == v7)
 				{
-					SpritesOnTileRow.tails[v5] = sprite;
+					_SpritesOnTileRow.tails[v5] = sprite;
 				}
 				sprite->prev = v7;
 				sprite->next = v7->next;
@@ -294,8 +295,8 @@ void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 			}
 			else
 			{
-				SpritesOnTileRow.tails[v5] = sprite;
-				SpritesOnTileRow.heads[v5] = sprite;
+				_SpritesOnTileRow.tails[v5] = sprite;
+				_SpritesOnTileRow.heads[v5] = sprite;
 			}
 		}
 		for (CImage* image = sprite->pImageHead; image; image = image->next)
@@ -687,13 +688,13 @@ void SpriteDestructor_(CSprite* sprite)
 		v3 = map_size.height - 1;
 	}
 
-	if (SpritesOnTileRow.heads[v3] == sprite)
+	if (_SpritesOnTileRow.heads[v3] == sprite)
 	{
-		SpritesOnTileRow.heads[v3] = sprite->next;
+		_SpritesOnTileRow.heads[v3] = sprite->next;
 	}
-	if (SpritesOnTileRow.tails[v3] == sprite)
+	if (_SpritesOnTileRow.tails[v3] == sprite)
 	{
-		SpritesOnTileRow.tails[v3] = sprite->prev;
+		_SpritesOnTileRow.tails[v3] = sprite->prev;
 	}
 	if (sprite->prev)
 	{
@@ -764,12 +765,12 @@ CSprite* createSprite_(int sprite_id, int position_x, unsigned __int16 position_
 	{
 		int v10 = std::clamp(v4->position.y / 32, 0, map_size.height - 1);
 
-		CSprite* v11 = SpritesOnTileRow.heads[v10];
+		CSprite* v11 = _SpritesOnTileRow.heads[v10];
 		if (v11)
 		{
-			if (SpritesOnTileRow.tails[v10] == v11)
+			if (_SpritesOnTileRow.tails[v10] == v11)
 			{
-				SpritesOnTileRow.tails[v10] = v4;
+				_SpritesOnTileRow.tails[v10] = v4;
 			}
 			v4->prev = v11;
 			*v6 = v11->next;
@@ -782,8 +783,8 @@ CSprite* createSprite_(int sprite_id, int position_x, unsigned __int16 position_
 		}
 		else
 		{
-			SpritesOnTileRow.tails[v10] = v4;
-			SpritesOnTileRow.heads[v10] = v4;
+			_SpritesOnTileRow.tails[v10] = v4;
+			_SpritesOnTileRow.heads[v10] = v4;
 		}
 		return v4;
 	}
@@ -1302,14 +1303,12 @@ void __stdcall BWFXN_videoLoop_(int flag)
 
 FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_);
 
-#define MAX_MAP_DIMENTION 256
-
 void UpdateVisibilityHash_(int a1)
 {
 	memset(byte_63FD30, 0, sizeof(byte_63FD30));
 	for (int i = 0; i < _countof(byte_63FD30); ++i)
 	{
-		for (CSprite* j = SpritesOnTileRow.heads[i]; j; j = j->next)
+		for (CSprite* j = _SpritesOnTileRow.heads[i]; j; j = j->next)
 		{
 			if (byte_629A88[j->spriteID])
 			{
@@ -1338,7 +1337,7 @@ void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
 	u8 v3 = InReplay ? ReplayVision : playerVisions;
 	for (unsigned i = top_row; i <= bottom_row; i++)
 	{
-		for (CSprite* sprite = SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
+		for (CSprite* sprite = _SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
 		{
 			if ((v3 & sprite->visibilityFlags) || InReplay && replayShowEntireMap && sprite->playerID == 11)
 			{
@@ -2488,7 +2487,7 @@ void BWFXN_updateImageData_()
 {
 	for (int i = 0; i < map_size.height; ++i)
 	{
-		for (CSprite* sprites = SpritesOnTileRow.heads[i]; sprites; sprites = sprites->next)
+		for (CSprite* sprites = _SpritesOnTileRow.heads[i]; sprites; sprites = sprites->next)
 		{
 			for (CImage* image = sprites->pImageHead; image; image = CImage__updateGraphicData(image)->next);
 		}
@@ -2736,7 +2735,7 @@ void refreshImageRange_(int top_row, int bottom_row)
 {
 	for (int i = top_row; i <= bottom_row; ++i)
 	{
-		for (CSprite* sprite = SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
+		for (CSprite* sprite = _SpritesOnTileRow.heads[i]; sprite; sprite = sprite->next)
 		{
 			refreshSpriteData(sprite);
 		}
@@ -5312,8 +5311,8 @@ void InitializeSpriteArray_()
 
 	LoadGameData_(spritesDat_, "arr\\sprites.dat");
 	memset(SpriteTable, 0, sizeof(SpriteTable));
-	memset(SpritesOnTileRow.heads, 0, sizeof(SpritesOnTileRow.heads));
-	memset(&SpritesOnTileRow, 0, 0x400u);
+	memset(_SpritesOnTileRow.heads, 0, sizeof(_SpritesOnTileRow.heads));
+	memset(_SpritesOnTileRow.tails, 0, sizeof(_SpritesOnTileRow.tails));
 
 	SpriteTable[0].index = 0;
 	dword_63FE34 = SpriteTable;
@@ -8579,13 +8578,13 @@ void spriteToIscriptLoop_(CSprite* sprite)
 				v2 = map_size.height - 1;
 			}
 
-			if (SpritesOnTileRow.heads[v2] == sprite)
+			if (_SpritesOnTileRow.heads[v2] == sprite)
 			{
-				SpritesOnTileRow.heads[v2] = sprite->next;
+				_SpritesOnTileRow.heads[v2] = sprite->next;
 			}
-			if (SpritesOnTileRow.tails[v2] == sprite)
+			if (_SpritesOnTileRow.tails[v2] == sprite)
 			{
-				SpritesOnTileRow.tails[v2] = sprite->prev;
+				_SpritesOnTileRow.tails[v2] = sprite->prev;
 			}
 			if (sprite->prev)
 			{

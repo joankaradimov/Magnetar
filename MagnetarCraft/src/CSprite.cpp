@@ -3,6 +3,8 @@
 #include "patching.h"
 #include "magnetorm.h"
 
+SpriteTileDataEx _SpritesOnTileRow;
+
 int __stdcall ReadSpritesArray_(FILE* a1)
 {
     u16 v19;
@@ -38,22 +40,22 @@ int __stdcall ReadSpritesArray_(FILE* a1)
         unpackSpriteData(SpriteTable + i);
     }
     initializeSpriteArray();
-    if (fread(SpritesOnTileRow.heads, sizeof(SpritesOnTileRow.heads), 1, a1) != 1)
+    if (fread(_SpritesOnTileRow.heads, sizeof(_SpritesOnTileRow.heads), 1, a1) != 1)
     {
         return 0;
     }
     int v11 = map_size.height;
     while (v11)
     {
-        CSprite* v12 = SpritesOnTileRow.heads[v11];
+        CSprite* v12 = _SpritesOnTileRow.heads[v11];
         v11--;
         if (v12)
         {
             v12 = (CSprite*)&dword_629D74[9 * (_DWORD)v12];
         }
-        SpritesOnTileRow.heads[v11] = v12;
+        _SpritesOnTileRow.heads[v11] = v12;
     }
-    if (fread(SpritesOnTileRow.tails, sizeof(SpritesOnTileRow.tails), 1, a1) != 1)
+    if (fread(_SpritesOnTileRow.tails, sizeof(_SpritesOnTileRow.tails), 1, a1) != 1)
     {
         return 0;
     }
@@ -66,7 +68,7 @@ int __stdcall ReadSpritesArray_(FILE* a1)
         {
             v14 = (CSprite*)&dword_629D74[9 * (_DWORD)v14];
         }
-        SpritesOnTileRow.tails[v13] = v14;
+        _SpritesOnTileRow.tails[v13] = v14;
     }
     int v15 = 0;
     for (int i = 0; i < _countof(SpriteTable); ++i)
@@ -142,7 +144,7 @@ BOOL __stdcall writeSprites_(FILE* file)
     while (v15)
     {
         v15--;
-        CSprite* v16 = SpritesOnTileRow.heads[v15];
+        CSprite* v16 = _SpritesOnTileRow.heads[v15];
         CSprite* v17;
         if (v16)
         {
@@ -152,49 +154,49 @@ BOOL __stdcall writeSprites_(FILE* file)
         {
             v17 = 0;
         }
-        SpritesOnTileRow.heads[v15] = v17;
+        _SpritesOnTileRow.heads[v15] = v17;
     }
-    size_t v18 = fwrite(SpritesOnTileRow.heads, sizeof(SpritesOnTileRow.heads), 1, file);
+    size_t v18 = fwrite(_SpritesOnTileRow.heads, sizeof(_SpritesOnTileRow.heads), 1, file);
     int v19 = map_size.height;
     int v20 = map_size.height;
     BOOL result = v18 == 1;
     while (v20)
     {
         v20--;
-        CSprite* v22 = SpritesOnTileRow.heads[v20];
+        CSprite* v22 = _SpritesOnTileRow.heads[v20];
         if (v22)
         {
             v22 = (CSprite*)&dword_629D74[9 * (_DWORD)v22];
         }
-        SpritesOnTileRow.heads[v20] = v22;
+        _SpritesOnTileRow.heads[v20] = v22;
     }
     if (result)
     {
         for (; v19;)
         {
             v19--;
-            CSprite* v23 = SpritesOnTileRow.tails[v19];
+            CSprite* v23 = _SpritesOnTileRow.tails[v19];
             if (v23)
             {
-                SpritesOnTileRow.tails[v19] = (CSprite*)(v23 - SpriteTable + 1);
+                _SpritesOnTileRow.tails[v19] = (CSprite*)(v23 - SpriteTable + 1);
             }
             else
             {
-                SpritesOnTileRow.tails[v19] = 0;
+                _SpritesOnTileRow.tails[v19] = 0;
             }
         }
-        size_t v25 = fwrite(SpritesOnTileRow.tails, sizeof(SpritesOnTileRow.tails), 1, file);
+        size_t v25 = fwrite(_SpritesOnTileRow.tails, sizeof(_SpritesOnTileRow.tails), 1, file);
         int v26 = map_size.height;
         result = v25 == 1;
         while (v26)
         {
             v26--;
-            CSprite* v27 = SpritesOnTileRow.tails[v26];
+            CSprite* v27 = _SpritesOnTileRow.tails[v26];
             if (v27)
             {
                 v27 = (CSprite*)&dword_629D74[9 * (_DWORD)v27];
             }
-            SpritesOnTileRow.tails[v26] = v27;
+            _SpritesOnTileRow.tails[v26] = v27;
         }
     }
     return result;

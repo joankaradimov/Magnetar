@@ -8,6 +8,8 @@
 
 #include "starcraft_exe/offsets.h"
 
+#define MAX_MAP_DIMENTION 256
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
 const int INTERFACE_HEIGHT = 96;
