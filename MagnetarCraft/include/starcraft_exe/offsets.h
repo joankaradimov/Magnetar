@@ -4764,7 +4764,7 @@ extern int(*LoadInitIscriptBIN)();
 extern void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgramState *program_state, int noop, _DWORD *distance_moved);
 void PlayIscriptAnim(CImage *image, Anims new_animation);
 void PlayWarpInOverlay(CImage *image);
-extern int (__thiscall*iscriptSomething_Death)(CImage *this_);
+extern void (__fastcall*iscriptSomething_Death)(CImage *image);
 BOOL sub_4D8600(_BYTE a1);
 unsigned __int32 creditsSetDisplayTime(const char *a1);
 unsigned __int32 creditsSetFadeSpeed(const char *a1);

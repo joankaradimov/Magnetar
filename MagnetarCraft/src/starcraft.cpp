@@ -255,6 +255,39 @@ IScriptProgram* sub_4D4D70_(int a1)
 
 FAIL_STUB_PATCH(sub_4D4D70);
 
+void __fastcall iscriptSomething_Death_(CImage* image)
+{
+	char v2 = BYTE1(image->coloringData);
+	if (v2)
+	{
+		BYTE1(image->coloringData) = v2 - 1;
+	}
+	else
+	{
+		u8 v3 = (unsigned __int8)image->coloringData;
+		BYTE1(image->coloringData) = 2;
+		if (v3 >= 0x3Fu)
+		{
+			if (image->iscript_program.anim != Anims::AE_Death)
+			{
+				image->iscript_program.anim = Anims::AE_Death;
+				image->iscript_program.wait = 0;
+				image->iscript_program.return_address = 0;
+				image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Death];
+				BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+			}
+			iscript_flingy->orderSignal |= 1u;
+		}
+		else
+		{
+			LOBYTE(image->coloringData) = v3 + 1;
+		}
+		image->flags |= ImageFlags::IF_REDRAW;
+	}
+}
+
+FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_);
+
 void PlayWarpInOverlay_(CImage* image)
 {
 	isValidScript(image, 193);

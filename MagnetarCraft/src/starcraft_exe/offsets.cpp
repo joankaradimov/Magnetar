@@ -20429,7 +20429,7 @@ void PlayWarpInOverlay(CImage *image) {
         call address
     }
 }
-DECL_FUNC(int (__thiscall*iscriptSomething_Death)(CImage *this_), iscriptSomething_Death, 0x4d8590);
+DECL_FUNC(void (__fastcall*iscriptSomething_Death)(CImage *image), iscriptSomething_Death, 0x4d8590);
 BOOL sub_4D8600(_BYTE a1) {
     int address = 0x4d8600;
     BOOL result_;
