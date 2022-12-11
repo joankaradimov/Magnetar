@@ -3,8 +3,10 @@
 #include "starcraft.h"
 #include "patching.h"
 
+IScriptProgram* sub_4D4D70_(int a1);
+
 template<typename T>
-T* take_iscript_data(IScriptProgram* program_state, int count)
+T* take_iscript_data(IScriptProgramState* program_state, int count)
 {
     BYTE* data = (BYTE*)iscript_data + program_state->program_counter;
     program_state->program_counter += sizeof(T) * count;
@@ -12,7 +14,7 @@ T* take_iscript_data(IScriptProgram* program_state, int count)
 }
 
 template<typename T>
-T take_iscript_datum(IScriptProgram* program_state)
+T take_iscript_datum(IScriptProgramState* program_state)
 {
     return *take_iscript_data<T>(program_state, 1);
 }
@@ -206,7 +208,7 @@ void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 
 FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd);
 
-void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, _DWORD* distance_moved)
+void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int noop, _DWORD* distance_moved)
 {
     if (program_state->wait)
     {
@@ -1018,7 +1020,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgram* program_state, int noop, 
     }
 }
 
-void __stdcall BWFXN_PlayIscript__(IScriptProgram* program_state, int noop, int* distance_moved)
+void __stdcall BWFXN_PlayIscript__(IScriptProgramState* program_state, int noop, int* distance_moved)
 {
     CImage* image;
 
@@ -1050,9 +1052,8 @@ void PlayIscriptAnim_(CImage* image, Anims new_animation)
                 animation = Anims::AE_AirAttkInit;
             }
 
-            char* v5 = (char*)iscript_data;
             image->iscript_program.anim = animation;
-            image->iscript_program.program_counter = *(_WORD*)&v5[2 * (unsigned __int8)animation + 8 + image->iscript_program.iscript_header];
+            image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[animation];
             image->iscript_program.wait = 0;
             image->iscript_program.return_address = 0;
             BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);

@@ -11774,12 +11774,12 @@ DECL_FUNC(int(*maskSomething0)(), maskSomething0, 0x47fc50);
 DECL_FUNC(int(*maskSomething2)(), maskSomething2, 0x47fe10);
 DECL_FUNC(int (__stdcall*fogGraphicSomething)(int, int, int), fogGraphicSomething, 0x47ff10);
 DECL_FUNC(int(*fogGraphicSomething_0)(), fogGraphicSomething_0, 0x480000);
-DECL_FUNC(int(*ResetFogSomething)(), ResetFogSomething, 0x4800a0);
+DECL_FUNC(void (__thiscall*ResetFogSomething)(_DWORD *this_), ResetFogSomething, 0x4800a0);
 DECL_FUNC(u32 (__fastcall*gndSightCB_Edge)(int megatile_x, int megatile_y, SightStruct *a3, MegatileFlags *a4, MegatileFlags a5, int a6), gndSightCB_Edge, 0x480110);
 DECL_FUNC(int (__fastcall*gndSightCB_Inside)(int a1, int a2, SightStruct *a3, MegatileFlags *a4, unsigned int a5, MegatileFlags a6), gndSightCB_Inside, 0x480200);
 DECL_FUNC(_DWORD *(__fastcall*airSightCB_Edge)(int megatile_x, int megatile_y, SightStruct *a3, MegatileFlags *a4, int a5, int a6), airSightCB_Edge, 0x4802a0);
 DECL_FUNC(int (__fastcall*airSightCB_Inside)(int a1, int a2, SightStruct *a3, MegatileFlags *a4, unsigned int a5, MegatileFlags a6), airSightCB_Inside, 0x480310);
-DECL_FUNC(int(*DestroyFogSightData)(), DestroyFogSightData, 0x480350);
+DECL_FUNC(void (__cdecl*DestroyFogSightData)(), DestroyFogSightData, 0x480350);
 DECL_FUNC(int(*sub_480410)(), sub_480410, 0x480410);
 DECL_FUNC(int(*sub_480430)(), sub_480430, 0x480430);
 DECL_FUNC(int(*j_maskSomething2)(), j_maskSomething2, 0x4804c0);
@@ -11823,7 +11823,7 @@ void updateAllFog(int a1) {
         call address
     }
 }
-DECL_FUNC(int(*sub_480960)(), sub_480960, 0x480960);
+DECL_FUNC(void (__cdecl*sub_480960)(), sub_480960, 0x480960);
 DECL_FUNC(int (__stdcall*GetKeyRandomizerSequence)(int), GetKeyRandomizerSequence, 0x480a40);
 DECL_FUNC(void (__fastcall*saveColorSettings)(bool exit_code), saveColorSettings, 0x480a90);
 DECL_FUNC(int (__thiscall*sub_480AE0)(dialog *this_), sub_480AE0, 0x480ae0);
@@ -15816,7 +15816,7 @@ DECL_FUNC(int(*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
 DECL_FUNC(void (__fastcall*updateMinimapPositioninfoProc)(dialog *, __int16), updateMinimapPositioninfoProc, 0x4a4a70);
 DECL_FUNC(int(*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(void (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
-DECL_FUNC(void(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
+DECL_FUNC(int(*sub_4A4CA0)(), sub_4A4CA0, 0x4a4ca0);
 DECL_FUNC(int(*sub_4A4CB4)(), sub_4A4CB4, 0x4a4cb4);
 void minimapGameUpdate(dialog *dlg) {
     int address = 0x4a4ce0;
@@ -15836,10 +15836,10 @@ void minimapGameMouseUpdate(dialog *dlg) {
 }
 DECL_FUNC(void (__fastcall*Minimap_TimerRefresh)(dialog *dlg, __int16 timer_id), Minimap_TimerRefresh, 0x4a4e00);
 DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfoProc)(dialog *, __int16), updateMinimapSurfaceInfoProc, 0x4a4e40);
-DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfo2Proc)(dialog *, __int16), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
+DECL_FUNC(void (__fastcall*updateMinimapSurfaceInfo2Proc)(dialog *dlg, __int16 a2), updateMinimapSurfaceInfo2Proc, 0x4a4f10);
 DECL_FUNC(void (__fastcall*playerInfoSomethingTvBProc)(dialog *, __int16), playerInfoSomethingTvBProc, 0x4a4fe0);
 DECL_FUNC(void (__thiscall*drawStatLBBtnsContextHelp)(dialog *this_), drawStatLBBtnsContextHelp, 0x4a5110);
-DECL_FUNC(void(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
+DECL_FUNC(int(*sub_4A51D0)(), sub_4A51D0, 0x4a51d0);
 DECL_FUNC(int(*nullsub_70)(), nullsub_70, 0x4a51fd);
 DECL_FUNC(int(*minimapPreviewUpdateState)(), minimapPreviewUpdateState, 0x4a5200);
 void Minimap_InitVisionButton(dialog *a1) {
@@ -19935,7 +19935,17 @@ int ImageDestructor(CImage *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4D4D70)(), sub_4D4D70, 0x4d4d70);
+IScriptProgram *sub_4D4D70(int a1) {
+    int address = 0x4d4d70;
+    IScriptProgram * result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_4D4D80)(), sub_4D4D80, 0x4d4d80);
 DECL_FUNC(int(*sub_4D4DA0)(), sub_4D4DA0, 0x4d4da0);
 DECL_FUNC(int(*sub_4D4DB0)(), sub_4D4DB0, 0x4d4db0);
@@ -20183,7 +20193,7 @@ DECL_FUNC(int(*InitDamageOverlayCounts)(), InitDamageOverlayCounts, 0x4d5c20);
 DECL_FUNC(void (__fastcall*imageRenderFxn12_1)(int, int, grpFrame *, rect *, int), imageRenderFxn12_1, 0x4d5c90);
 DECL_FUNC(char (__fastcall*imageRenderFxn12_0)(int a1, int a2, int a3, rect *a4, int a5), imageRenderFxn12_0, 0x4d5cd0);
 DECL_FUNC(void (__thiscall*iscriptDecloaking)(CImage *this_), iscriptDecloaking, 0x4d5d10);
-DECL_FUNC(int (__thiscall*iscriptCloaking)(CImage *result), iscriptCloaking, 0x4d5d70);
+DECL_FUNC(CImage *(__thiscall*iscriptCloaking)(CImage *this_), iscriptCloaking, 0x4d5d70);
 DECL_FUNC(int(*sub_4D5DC0)(), sub_4D5DC0, 0x4d5dc0);
 DECL_FUNC(int(*sub_4D5DE0)(), sub_4D5DE0, 0x4d5de0);
 DECL_FUNC(int(*sub_4D5E00)(), sub_4D5E00, 0x4d5e00);
@@ -20401,7 +20411,7 @@ CThingy *ISCRIPT_CreateSprite(CImage *image, unsigned __int16 sprite_id, int x, 
 }
 DECL_FUNC(int(*LoadImageData)(), LoadImageData, 0x4d7180);
 DECL_FUNC(int(*LoadInitIscriptBIN)(), LoadInitIscriptBIN, 0x4d7390);
-DECL_FUNC(void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgram *program_state, int noop, _DWORD *distance_moved), BWFXN_PlayIscript, 0x4d74c0);
+DECL_FUNC(void (__thiscall*BWFXN_PlayIscript)(CImage *image, IScriptProgramState *program_state, int noop, _DWORD *distance_moved), BWFXN_PlayIscript, 0x4d74c0);
 void PlayIscriptAnim(CImage *image, Anims new_animation) {
     int address = 0x4d8470;
     __asm {
@@ -20411,11 +20421,11 @@ void PlayIscriptAnim(CImage *image, Anims new_animation) {
         call address
     }
 }
-void PlayWarpInOverlay(CImage *a1) {
+void PlayWarpInOverlay(CImage *image) {
     int address = 0x4d8500;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, image
         call address
     }
 }
@@ -27851,7 +27861,7 @@ int& dword_6C1078 = * ((decltype(&dword_6C1078)) 0x6c1078);
 CUnit *& dword_6C107C = * ((decltype(&dword_6C107C)) 0x6c107c);
 rect& stru_6C1080 = * ((decltype(&stru_6C1080)) 0x6c1080);
 __int16& word_6C10A8 = * ((decltype(&word_6C10A8)) 0x6c10a8);
-IScriptProgram& program_state = * ((decltype(&program_state)) 0x6c2310);
+IScriptProgramState& program_state = * ((decltype(&program_state)) 0x6c2310);
 CSprite *(&dword_6C2318)[2500] = * ((decltype(&dword_6C2318)) 0x6c2318);
 int& dword_6C4A28 = * ((decltype(&dword_6C4A28)) 0x6c4a28);
 int& dword_6C4A2C = * ((decltype(&dword_6C4A2C)) 0x6c4a2c);
@@ -28069,7 +28079,7 @@ int& dword_6D11F0 = * ((decltype(&dword_6D11F0)) 0x6d11f0);
 CUnit *& iscript_flingy = * ((decltype(&iscript_flingy)) 0x6d11f4);
 CBullet *& iscript_bullet = * ((decltype(&iscript_bullet)) 0x6d11f8);
 CUnit *& iscript_unit = * ((decltype(&iscript_unit)) 0x6d11fc);
-void *& iscript_data = * ((decltype(&iscript_data)) 0x6d1200);
+IScript *& iscript_data = * ((decltype(&iscript_data)) 0x6d1200);
 int& game_starting_maybe = * ((decltype(&game_starting_maybe)) 0x6d1204);
 void (__cdecl *&dword_6D1208)() = *((decltype(&dword_6D1208)) 0x6d1208);
 HACCEL& hAccTable = * ((decltype(&hAccTable)) 0x6d120c);

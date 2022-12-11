@@ -248,12 +248,18 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
+IScriptProgram* sub_4D4D70_(int a1)
+{
+	return (IScriptProgram*)&iscript_data->data[a1];
+}
+
+FAIL_STUB_PATCH(sub_4D4D70);
+
 void PlayWarpInOverlay_(CImage* image)
 {
 	isValidScript(image, 193);
-	char* v3 = (char*)iscript_data;
 	image->iscript_program.anim = AE_Init;
-	image->iscript_program.program_counter = *(_WORD*)&v3[image->iscript_program.iscript_header + 8];
+	image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[AE_Init];
 	image->iscript_program.wait = 0;
 	image->iscript_program.return_address = 0;
 	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
@@ -360,8 +366,7 @@ void GroundAttackInit_(__int16 x, __int16 y)
 		if ((i->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) != 0)
 		{
 			i->iscript_program.anim = Anims::AE_GndAttkInit;
-			char* v7 = (char*)iscript_data;
-			i->iscript_program.program_counter = *(_WORD*)&v7[i->iscript_program.iscript_header + 12];
+			i->iscript_program.program_counter = sub_4D4D70_(i->iscript_program.iscript_header)->headers[Anims::AE_GndAttkInit];
 			i->iscript_program.wait = 0;
 			i->iscript_program.return_address = 0;
 			BWFXN_PlayIscript_(i, &i->iscript_program, 0, 0);
@@ -4051,7 +4056,7 @@ DatLoad* imagesDat_;
 void LoadInitIscriptBIN_()
 {
 	int iscript_bin_size;
-	iscript_data = fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	iscript_data = (IScript*) fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
 	// TODO: dynamically allocate imagesDat memory
 	imagesDat_ = new DatLoad[] {
