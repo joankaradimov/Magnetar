@@ -315,6 +315,125 @@ void __cdecl PlayWarpInOverlay__()
 
 FUNCTION_PATCH((void*)0x4D8500, PlayWarpInOverlay__);
 
+void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
+{
+	switch (unit->orderState)
+	{
+	case 0:
+		if (!unit->remainingBuildTime)
+		{
+			for (CImage* image = unit->sprite->pImageHead; image; image = image->next)
+			{
+				if (image->flags & 0x10)
+				{
+					image->iscript_program.anim = Anims::AE_SpecialState1;
+					image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_SpecialState1];
+					image->iscript_program.wait = 0;
+					image->iscript_program.return_address = 0;
+					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+				}
+			}
+			PlaySound(SFX_Protoss_SHUTTLE_pshBld03, unit, 1, 0);
+			unit->orderState = 1;
+		}
+		break;
+	case 1:
+		if (unit->orderSignal & 1)
+		{
+			unit->orderSignal &= ~1;
+			ReplaceSpriteOverlayImage(unit->sprite, Sprites_Image[unit->sprite->spriteID], 0);
+			PlayWarpInOverlay_(unit->sprite->pImagePrimary);
+			unit->orderState = 2;
+		}
+		return;
+	case 2:
+		if (unit->orderSignal & 1)
+		{
+			unit->orderSignal &= ~1;
+			ReplaceSpriteOverlayImage(unit->sprite, Sprites_Image[unit->sprite->spriteID], 0);
+			for (CImage* image = unit->sprite->pImageHead; image; image = image->next)
+			{
+				if (image->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS)
+				{
+					image->iscript_program.anim = Anims::AE_WarpIn;
+					image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_WarpIn];
+					image->iscript_program.wait = 0;
+					image->iscript_program.return_address = 0;
+					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+				}
+			}
+			unit->orderState = 3;
+		}
+		return;
+	case 3:
+		if (unit->orderSignal & 1)
+		{
+			unit->orderSignal &= ~1;
+			updateUnitStatsFinishBuilding(unit);
+			updateUnitStrengthAndApplyDefaultOrders(unit);
+			getUnitCollision(unit);
+			if (unit->statusFlags & DoodadStatesThing)
+			{
+				for (CImage* image = unit->sprite->pImageHead; image; image = image->next)
+				{
+					if (image->flags & 0x10)
+					{
+						image->iscript_program.anim = Anims::AE_Disable;
+						image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Disable];
+						image->iscript_program.wait = 0;
+						image->iscript_program.return_address = 0;
+						BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+					}
+				}
+			}
+			break;
+		}
+		return;
+	}
+
+	if (unit->remainingBuildTime)
+	{
+		if (GameCheats & CheatFlags::CHEAT_OperationCwal)
+		{
+			if (unit->remainingBuildTime < 16)
+			{
+				unit->remainingBuildTime = 0;
+			}
+			else
+			{
+				unit->remainingBuildTime -= 16;
+			}
+		}
+		else
+		{
+			unit->remainingBuildTime -= 1;
+		}
+	}
+	u16 hp_gain = (GameCheats & CheatFlags::CHEAT_OperationCwal) ? 16 * unit->hpGain : unit->hpGain;
+	SetUnitHp(unit, unit->hitPoints + hp_gain);
+
+	u16 shield_gain = (GameCheats & CheatFlags::CHEAT_OperationCwal) ? 16 * unit->shieldGain : unit->shieldGain;
+	if (Unit_MaxShieldPoints[unit->unitType] * 256 < (int)(unit->shieldPoints + shield_gain)) // TODO: this looks like a bug
+	{
+		unit->shieldPoints = Unit_MaxShieldPoints[unit->unitType] * 256;
+	}
+	else
+	{
+		unit->shieldPoints += shield_gain;
+	}
+}
+
+void orders_bldgUnderConstruction_Protoss__()
+{
+	CUnit* unit;
+
+	__asm mov unit, eax
+
+	orders_bldgUnderConstruction_Protoss_(unit);
+}
+
+FUNCTION_PATCH((void*)0x4E4F40, orders_bldgUnderConstruction_Protoss__);
+
 void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 {
 	if (sprite->position.x != x || sprite->position.y != y)

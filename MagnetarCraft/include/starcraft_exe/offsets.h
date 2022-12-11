@@ -2102,7 +2102,7 @@ int buildingAddon(CUnit *a1, int a2, int a3);
 void orders_SCVBuild2(CUnit *unit);
 extern void (__stdcall*orders_SCVBuild)(CUnit *unit);
 CUnit *attemptTrainHatchUnit(UnitType unit_type, CUnit *a2, int a3);
-extern int (__fastcall*Base_CancelStructure)(CUnit *a1, int a2);
+extern void (__thiscall*Base_CancelStructure)(CUnit *unit);
 void sub_468670(CUnit *unit);
 extern int (__stdcall*sub_4686D0)(int);
 extern int(*sub_468730)();

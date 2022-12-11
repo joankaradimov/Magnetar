@@ -8516,7 +8516,7 @@ CUnit *attemptTrainHatchUnit(UnitType unit_type, CUnit *a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*Base_CancelStructure)(CUnit *a1, int a2), Base_CancelStructure, 0x468280);
+DECL_FUNC(void (__thiscall*Base_CancelStructure)(CUnit *unit), Base_CancelStructure, 0x468280);
 void sub_468670(CUnit *unit) {
     int address = 0x468670;
     __asm {
@@ -14640,7 +14640,6 @@ void ReplaceSpriteOverlayImage(CSprite *a1, int a2, char a3) {
         push dword ptr a3
         push dword ptr a2
         call address
-        add esp, 8
     }
 }
 DECL_FUNC(void (__thiscall*playSpriteIscript)(CSprite *sprite, Anims animation, int a3), playSpriteIscript, 0x499d00);
