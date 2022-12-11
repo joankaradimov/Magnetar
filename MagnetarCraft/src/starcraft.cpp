@@ -13986,6 +13986,27 @@ void sub_4BDDD0_(const char* tileset_name)
 
 FAIL_STUB_PATCH(sub_4BDDD0);
 
+void sub_480960_()
+{
+	for (int i = 0; i < MAX_MAP_DIMENTION * MAX_MAP_DIMENTION; i++)
+	{
+		active_tiles[i] |= EXPLORED_PLAYER_8 | EXPLORED_PLAYER_7 | EXPLORED_PLAYER_6 | EXPLORED_PLAYER_5 | EXPLORED_PLAYER_4 | EXPLORED_PLAYER_3 | EXPLORED_PLAYER_2 | EXPLORED_PLAYER_1 | VISIBLE_PLAYER_8 | VISIBLE_PLAYER_7 | VISIBLE_PLAYER_6 | VISIBLE_PLAYER_5 | VISIBLE_PLAYER_4 | VISIBLE_PLAYER_3 | VISIBLE_PLAYER_2 | VISIBLE_PLAYER_1;
+	}
+	sub_480430();
+	InitializeSightValues(12, line_of_sight, map_size.width);
+	byte_657A9C = 31;
+	dword_6D5C0C = SMemAlloc(408, "Starcraft\\SWAR\\lang\\mask.cpp", 254, 0);
+	memset(dword_6D5C0C, 0, 408);
+	dword_6D5C10 = SMemAlloc(408, "Starcraft\\SWAR\\lang\\mask.cpp", 257, 0);
+	memset(dword_6D5C10, 0, 408);
+	dword_6D5C14 = SMemAlloc(408, "Starcraft\\SWAR\\lang\\mask.cpp", 260, 0);
+	memset(dword_6D5C14, 0, 408);
+	dword_6D5C18 = SMemAlloc(5280, "Starcraft\\SWAR\\lang\\mask.cpp", 266, 0);
+	memset(dword_6D5C18, 0, 5280);
+}
+
+FAIL_STUB_PATCH(sub_480960);
+
 void initMapData_()
 {
 	char filename[MAX_PATH];
@@ -14038,7 +14059,7 @@ void initMapData_()
 	if (!dword_5993AC)
 	{
 		ScreenLayers[5].buffers = 1;
-		sub_480960();
+		sub_480960_();
 		InitializeGameLayer_();
 	}
 	byte_658AC0 = 0;
