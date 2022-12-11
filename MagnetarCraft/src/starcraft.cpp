@@ -7620,6 +7620,41 @@ void destroyGameHUD_()
 
 FAIL_STUB_PATCH(destroyGameHUD);
 
+void DestroyFogSightData_()
+{
+	for (int i = 0; i < 12; i++)
+	{
+		if (line_of_sight[i].tiles)
+		{
+			SMemFree((void*) line_of_sight[i].tiles, "Starcraft\\SWAR\\lang\\los.cpp", 333, 0);
+			line_of_sight[i].tiles = 0;
+		}
+	}
+
+	if (dword_6D5C0C)
+	{
+		SMemFree(dword_6D5C0C, "Starcraft\\SWAR\\lang\\mask.cpp", 280, 0);
+		dword_6D5C0C = 0;
+	}
+	if (dword_6D5C10)
+	{
+		SMemFree(dword_6D5C10, "Starcraft\\SWAR\\lang\\mask.cpp", 285, 0);
+		dword_6D5C10 = 0;
+	}
+	if (dword_6D5C14)
+	{
+		SMemFree(dword_6D5C14, "Starcraft\\SWAR\\lang\\mask.cpp", 290, 0);
+		dword_6D5C14 = 0;
+	}
+	if (dword_6D5C18)
+	{
+		SMemFree(dword_6D5C18, "Starcraft\\SWAR\\lang\\mask.cpp", 297, 0);
+		dword_6D5C18 = 0;
+	}
+}
+
+FAIL_STUB_PATCH(DestroyFogSightData);
+
 void DestroyMapData_()
 {
 	if (dword_6D5CD8)
@@ -7679,7 +7714,7 @@ void DestroyMapData_()
 	}
 	ZergCreepArray = NULL;
 
-	DestroyFogSightData();
+	DestroyFogSightData_();
 	if (spkHandle)
 	{
 		SMemFree(spkHandle, "Starcraft\\SWAR\\lang\\scroll.cpp", 550, 0);
