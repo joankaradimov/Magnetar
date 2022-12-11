@@ -248,6 +248,34 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
 
+void PlayWarpInOverlay_(CImage* image)
+{
+	isValidScript(image, 193);
+	char* v3 = (char*)iscript_data;
+	image->iscript_program.anim = AE_Init;
+	image->iscript_program.program_counter = *(_WORD*)&v3[image->iscript_program.iscript_header + 8];
+	image->iscript_program.wait = 0;
+	image->iscript_program.return_address = 0;
+	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+	isValidScript(image, Images_IscriptEntry[image->imageID]);
+	image->paletteType = 12;
+	image->updateFunction = update_functions[12].update_function;
+	image->renderFunction = (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? render_functions[12].RenderFunction2 : render_functions[12].RenderFunction1;
+	image->flags |= ImageFlags::IF_REDRAW;
+	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+}
+
+void __cdecl PlayWarpInOverlay__()
+{
+	CImage* image;
+
+	__asm mov image, eax
+
+	PlayWarpInOverlay_(image);
+}
+
+FUNCTION_PATCH((void*)0x4D8500, PlayWarpInOverlay__);
+
 void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 {
 	if (sprite->position.x != x || sprite->position.y != y)
