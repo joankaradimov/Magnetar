@@ -318,8 +318,8 @@ FUNCTION_PATCH((void*)0x4D6640, isValidScript__);
 void PlayWarpInOverlay_(CImage* image)
 {
 	isValidScript_(image, 193);
-	image->iscript_program.anim = AE_Init;
-	image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[AE_Init];
+	image->iscript_program.anim = Anims::AE_Init;
+	image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Init];
 	image->iscript_program.wait = 0;
 	image->iscript_program.return_address = 0;
 	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
