@@ -288,15 +288,42 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 
 FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_);
 
+void isValidScript_(CImage* image, int a2)
+{
+	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);
+	while (v2[0] != a2)
+	{
+		if (v2[0] == 0xFFFF)
+		{
+			FatalError("script %d does not exist", a2);
+		}
+		v2 += 2;
+	}
+	image->iscript_program.iscript_header = v2[1];
+}
+
+void isValidScript__()
+{
+	CImage* image;
+	int a2;
+
+	__asm mov image, ebx
+	__asm mov a2, edi
+
+	isValidScript_(image, a2);
+}
+
+FUNCTION_PATCH((void*)0x4D6640, isValidScript__);
+
 void PlayWarpInOverlay_(CImage* image)
 {
-	isValidScript(image, 193);
+	isValidScript_(image, 193);
 	image->iscript_program.anim = AE_Init;
 	image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[AE_Init];
 	image->iscript_program.wait = 0;
 	image->iscript_program.return_address = 0;
 	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
-	isValidScript(image, Images_IscriptEntry[image->imageID]);
+	isValidScript_(image, Images_IscriptEntry[image->imageID]);
 	image->paletteType = 12;
 	image->updateFunction = update_functions[12].update_function;
 	image->renderFunction = (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? render_functions[12].RenderFunction2 : render_functions[12].RenderFunction1;
