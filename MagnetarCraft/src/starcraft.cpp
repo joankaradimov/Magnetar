@@ -331,16 +331,7 @@ void PlayWarpInOverlay_(CImage* image)
 	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 }
 
-void __cdecl PlayWarpInOverlay__()
-{
-	CImage* image;
-
-	__asm mov image, eax
-
-	PlayWarpInOverlay_(image);
-}
-
-FUNCTION_PATCH((void*)0x4D8500, PlayWarpInOverlay__);
+FAIL_STUB_PATCH(PlayWarpInOverlay);
 
 void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 {
