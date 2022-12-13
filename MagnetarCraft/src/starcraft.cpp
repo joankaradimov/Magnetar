@@ -255,6 +255,38 @@ IScriptProgram* sub_4D4D70_(int a1)
 
 FAIL_STUB_PATCH(sub_4D4D70);
 
+int sub_42D600_(Anims animation)
+{
+	IScriptProgram* program = sub_4D4D70_(program_state.iscript_header);
+	program_state.anim = animation;
+	if (animation > program->scpe_magic)
+	{
+		return 0;
+	}
+	program_state.program_counter = program->headers[animation];
+	if (program_state.program_counter)
+	{
+		program_state.wait = 0;
+		program_state.return_address = 0;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+void sub_42D600__()
+{
+	Anims animation;
+
+	__asm mov animation, al
+
+	sub_42D600_(animation);
+}
+
+FUNCTION_PATCH((void*)0x42D600, sub_42D600__);
+
 void __fastcall iscriptSomething_Death_(CImage* image)
 {
 	char v2 = BYTE1(image->coloringData);
