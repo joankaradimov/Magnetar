@@ -3444,7 +3444,17 @@ signed int isVisible(__int16 y, __int16 x) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_42D600)(), sub_42D600, 0x42d600);
+int sub_42D600(Anims animation) {
+    int address = 0x42d600;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov al, animation
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__fastcall*getUnitCollision_CB)(CUnit *, void *), getUnitCollision_CB, 0x42d650);
 BOOL sub_42D6B0(CUnit *a1, __int16 a2, __int16 a3, unsigned __int16 a4, __int16 a5, __int16 a6) {
     int address = 0x42d6b0;
@@ -3516,13 +3526,13 @@ int getUnitCollision(CUnit *a1) {
 }
 DECL_FUNC(BOOL (__fastcall*DoesBlockPoint)(int a1, CUnit *a2, unsigned __int16 a3, __int16 a4, __int16 a5), DoesBlockPoint, 0x42da00);
 DECL_FUNC(signed int (__fastcall*IsPointAtUnitBorder)(int a1, CUnit *a2, CUnit *a3, int a4), IsPointAtUnitBorder, 0x42da90);
-signed int sub_42DB50(CUnit *a1, int a2, int a3, int a4) {
+signed int sub_42DB50(CUnit *unit, int a2, int a3, Position *a4) {
     int address = 0x42db50;
     signed result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
-        mov ebx, a1
+        mov ebx, unit
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
@@ -3599,7 +3609,20 @@ DECL_FUNC(int(*nullsub_12)(), nullsub_12, 0x42e430);
 DECL_FUNC(void (__fastcall*nullsub_1)(bool exit_code), nullsub_1, 0x42e440);
 DECL_FUNC(int(*sub_42E450)(), sub_42E450, 0x42e450);
 DECL_FUNC(int(*sub_42E460)(), sub_42E460, 0x42e460);
-DECL_FUNC(int (__stdcall*sub_42E470)(int), sub_42E470, 0x42e470);
+int sub_42E470(int a1, struct_a1_1 *a2, int *a3) {
+    int address = 0x42e470;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor edi, edi
+        mov eax, a1
+        mov edi, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int(*sub_42E4F0)(), sub_42E4F0, 0x42e4f0);
 DECL_FUNC(BOOL (__stdcall*CreatePath_PullContours)(struct_a1_1 *a1, int a2, unsigned __int16 a3), CreatePath_PullContours, 0x42e600);
 BOOL GetClosestReachable(struct_a1_1 *a2) {
@@ -3682,7 +3705,21 @@ int reAssignPath(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*assignPathCreateFromUnitPath)(), assignPathCreateFromUnitPath, 0x42f790);
+struct_a1_1 *assignPathCreateFromUnitPath(struct_a1_1 *result, struct_path_related *a2, CUnit *a3) {
+    int address = 0x42f790;
+    struct_a1_1 * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor edx, edx
+        mov eax, result
+        mov edx, a2
+        mov ecx, a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int getAllocatedPathSingleStep(CUnit *a1, int a2, int a3) {
     int address = 0x42f830;
     int result_;
@@ -3696,7 +3733,19 @@ int getAllocatedPathSingleStep(CUnit *a1, int a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int(*getUnitDistanceToPathEnd)(), getUnitDistanceToPathEnd, 0x42f8f0);
+unsigned int getUnitDistanceToPathEnd(CUnit *a1, struct_a1_1 *a2) {
+    int address = 0x42f8f0;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov eax, a1
+        mov ecx, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int isLargePath(CUnit *a1, points a2) {
     int address = 0x42f920;
     signed result_;
@@ -3710,7 +3759,20 @@ signed int isLargePath(CUnit *a1, points a2) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*unitHasPathToDestOnGround)(__int16), unitHasPathToDestOnGround, 0x42fa00);
-DECL_FUNC(int (__thiscall*unitGetImaginaryPathDistanceToPosition)(CUnit *a1, int), unitGetImaginaryPathDistanceToPosition, 0x42fa30);
+int unitGetImaginaryPathDistanceToPosition(__int16 a1, CUnit *a2, int a3) {
+    int address = 0x42fa30;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        mov ax, a1
+        mov ecx, a2
+        push dword ptr a3
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 signed int sub_42FC10(CUnit *unit, Position a2, points *a3) {
     int address = 0x42fc10;
     signed result_;
@@ -9019,7 +9081,7 @@ signed int UMUIOrderDelay(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*UMScoutPath)(CUnit *a1), UMScoutPath, 0x46ab10);
+DECL_FUNC(signed int (__stdcall*UMScoutPath)(CUnit *unit), UMScoutPath, 0x46ab10);
 signed int UMFaceTarget(CUnit *a1) {
     int address = 0x46ac60;
     signed result_;
@@ -20291,19 +20353,15 @@ void ISCRIPT_PlaySnd(SfxData sfx, CImage *a1) {
         call address
     }
 }
-unsigned __int16 isValidScript(CImage *a1, int a2) {
+void isValidScript(CImage *image, int a2) {
     int address = 0x4d6640;
-    unsigned result_;
     __asm {
-        xor eax, eax
         xor ebx, ebx
         xor edi, edi
-        mov ebx, a1
+        mov ebx, image
         mov edi, a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_4D66B0(CImage *image) {
     int address = 0x4d66b0;
@@ -20350,22 +20408,19 @@ void createSelectionCircleImage(CSprite *a1, CImage *a2, unsigned __int8 a3, __i
         call address
     }
 }
-unsigned __int16 InitializeHealthBarImage(int a1, CImage *a2) {
+void InitializeHealthBarImage(int a1, CImage *a2) {
     int address = 0x4d68c0;
-    unsigned result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, a1
         mov ecx, a2
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*InitializePresetImageArrays)(), InitializePresetImageArrays, 0x4d6930);
 DECL_FUNC(CImage *(__stdcall*ISCRIPT_CreateImage)(CImage *image, int image_id, char horizontal_offset, int vertical_offset, ImageOrder image_order), ISCRIPT_CreateImage, 0x4d6d90);
-DECL_FUNC(CImage *(__fastcall*sub_4D6F00)(int a1, CSprite *a2, unsigned int a3, unsigned int a4), sub_4D6F00, 0x4d6f00);
+DECL_FUNC(void (__fastcall*sub_4D6F00)(int a1, CSprite *a2, unsigned int a3, unsigned int a4), sub_4D6F00, 0x4d6f00);
 CImage *sub_4D6F90(CSprite *a1, unsigned __int16 a2, unsigned int a3, unsigned __int16 a4) {
     int address = 0x4d6f90;
     CImage * result_;
