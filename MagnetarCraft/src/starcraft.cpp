@@ -6011,6 +6011,35 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
+int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (evt->wNo == EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			sub_4B6A20(dlg);
+			break;
+		case USER_DESTROY:
+			sub_4B65D0(dlg);
+			DestroyChildren(dlg);
+			dword_6D5A3C = 0;
+			dword_6D5A54 = 0;
+			break;
+		case USER_UNK_7:
+			sub_4CD9C0(dlg);
+			break;
+		case USER_INIT:
+			sub_4B6C70(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(gluPEdit_Main, gluPEdit_Main_);
+
 int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
