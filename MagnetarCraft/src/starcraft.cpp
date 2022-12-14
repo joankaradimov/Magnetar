@@ -13719,7 +13719,12 @@ void SAI_ContoursCreate_(SaiContourHub* a1)
 	int v45;
 	char v47;
 
-	BYTE(*a1a)[1024] = (BYTE(*)[1024])dword_6CA54C;
+	word_515B58[0] = -4 * MAX_MAP_DIMENTION;
+	word_515B58[2] = 4 * MAX_MAP_DIMENTION;
+	stru_515B60[0].y = MAX_MAP_DIMENTION - 1;
+	stru_515B60[3].x = MAX_MAP_DIMENTION - 1;
+
+	BYTE(*a1a)[4 * MAX_MAP_DIMENTION] = (BYTE(*)[4 * MAX_MAP_DIMENTION])dword_6CA54C;
 	a1->contourMax[0] = 5000;
 	a1->contourMax[1] = 5000;
 	a1->contourMax[2] = 5000;
