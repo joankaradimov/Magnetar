@@ -6011,6 +6011,23 @@ void sub_4AD0E0_(const char* text, const char* caption)
 
 FAIL_STUB_PATCH(sub_4AD0E0);
 
+void sub_4B6C70_(dialog* dlg)
+{
+	registerMenuFunctions(dword_6D5A40, dlg, dword_599D98, 0);
+	dlg->lFlags |= DialogFlags::CTRL_TRANSLUCENT;
+	dlg->srcBits = p_hist_pcx;
+	p_hist_pcx.wid = 0;
+	p_hist_pcx.ht = 0;
+	p_hist_pcx.data = 0;
+	if ((dlg->lFlags & CTRL_UPDATE) == 0)
+	{
+		dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+		updateDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(sub_4B6C70);
+
 int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (evt->wNo == EVN_USER)
@@ -6030,7 +6047,7 @@ int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 			sub_4CD9C0(dlg);
 			break;
 		case USER_INIT:
-			sub_4B6C70(dlg);
+			sub_4B6C70_(dlg);
 			break;
 		}
 	}
@@ -6058,7 +6075,7 @@ int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 			sub_4CD9C0(dlg);
 			break;
 		case USER_INIT:
-			sub_4B6C70(dlg);
+			sub_4B6C70_(dlg);
 			break;
 		}
 	}
@@ -14806,7 +14823,7 @@ void __stdcall registerMenuFunctions__(dialog* a2, int functions_size, int a4)
 }
 
 // TODO: patch the remaining usages:
-// gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID, sub_4B6C70
+// gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID
 FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__);
 
 int CreateCampaignGame_(MapData mapData)
