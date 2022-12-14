@@ -8494,6 +8494,130 @@ void RemoveFoWCheat_()
 
 FAIL_STUB_PATCH(RemoveFoWCheat);
 
+int sub_42DB50_(CUnit* unit, Position* a4)
+{
+	char v54 = GetAngle((__int16)unit->sprite->position.x, (__int16)unit->sprite->position.y, (__int16)unit->nextMovementWaypoint.x, (__int16)unit->nextMovementWaypoint.y);
+	u8 v55 = unit->velocityDirection1;
+	int v48 = (unsigned __int8)getModifiedUnitTurnRadius(unit);
+	int a5 = unit->current_speed2;
+	int v50 = unit->halt.x;
+	int v49 = unit->halt.y;
+	int v41 = unit->flingyTopSpeed;
+	int v15 = 0;
+	int v16 = 0;
+	int v51 = 1;
+
+	if (unit->flingyMovementType != 2)
+	{
+		for (int v45 = 0; v45 < 30; v45++)
+		{
+			if (v54 != v55)
+			{
+				v54 -= v55;
+				int v29 = v48 / 2;
+				if (v54 < v48 / 2)
+				{
+					if (v54 > v48 / -2)
+					{
+						LOBYTE(v29) = v54;
+					}
+					else
+					{
+						LOBYTE(v29) = v48 / -2;
+					}
+				}
+				v55 += v29;
+				v54 = GetAngle((__int16)unit->sprite->position.x, (__int16)unit->sprite->position.y, (__int16)unit->nextMovementWaypoint.x, (__int16)unit->nextMovementWaypoint.y);
+				v51 = 1;
+			}
+			if (a5 < v41)
+			{
+				a5 += (unsigned __int16)getModifiedUnitAcceleration(unit);
+				if (a5 > v41)
+				{
+					a5 = v41;
+				}
+				v15 = (a5 * AngleDistance[v55].x) >> 8;
+				v16 = (a5 * AngleDistance[v55].y) >> 8;
+				v51 = 0;
+				goto LABEL_47;
+			}
+			if (v51)
+			{
+				v15 = (a5 * AngleDistance[v55].x) >> 8;
+				v16 = (a5 * AngleDistance[v55].y) >> 8;
+				v51 = 0;
+				goto LABEL_47;
+			}
+		LABEL_47:
+			v50 += v15;
+			v49 += v16;
+		}
+	}
+	else
+	{
+		program_state = unit->sprite->pImagePrimary->iscript_program;
+		if (program_state.anim != Anims::AE_Walking)
+		{
+			sub_42D600_(Anims::AE_Walking);
+			CUnit* v43 = iscript_unit;
+			iscript_unit = unit;
+			BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &a5);
+			iscript_unit = v43;
+		}
+
+		for (int i = 0; i < 30; i++)
+		{
+			if (v55 != v54)
+			{
+				int v20 = v54 - v55;
+				if (v20 >= v48)
+				{
+					v20 = v48;
+				}
+				else if (v20 <= -v48)
+				{
+					v20 = -(char)v48;
+				}
+				v55 += v20;
+				v51 = 1;
+			}
+
+			if (v55 == v54 && a5)
+			{
+				if (v51)
+				{
+					v15 = (a5 * AngleDistance[v55].x) >> 8;
+					v16 = (a5 * AngleDistance[v55].y) >> 8;
+					v51 = 0;
+				}
+				v50 += v15;
+				v49 += v16;
+			}
+			a5 = 0;
+			CUnit* v42 = iscript_unit;
+			iscript_unit = unit;
+			BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &a5);
+			iscript_unit = v42;
+		}
+	}
+
+	a4->x = v50 >> 8;
+	a4->y = v49 >> 8;
+	return 1;
+}
+
+int __stdcall sub_42DB50__(int a2, int a3, Position* a4)
+{
+	CUnit* unit;
+
+	__asm mov unit, ebx
+
+	return sub_42DB50_(unit, a4);
+}
+
+FUNCTION_PATCH((void*)0x42DB50, sub_42DB50__);
+
 int UMInitSeq_(CUnit* unit)
 {
 	if (unit->statusFlags & NoBrkCodeStart)
