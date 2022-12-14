@@ -18294,6 +18294,59 @@ void gluChat_init_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_init);
 
+int killTimerFunc_()
+{
+	if (uIDEvent)
+	{
+		if (gwGameMode == GamePosition::GAME_GLUES && glGluesMode == MenuPosition::GLUE_CHAT)
+		{
+			sub_4B89A0();
+		}
+		KillTimer(0, uIDEvent);
+		uIDEvent = 0;
+		countdown_seconds = 0;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(killTimerFunc);
+
+void CALLBACK TimerFunc_(HWND a2, UINT a3, UINT_PTR a4, DWORD a5)
+{
+	if (gwGameMode != GamePosition::GAME_GLUES || glGluesMode != MenuPosition::GLUE_CHAT)
+	{
+		killTimerFunc_();
+	}
+	else if (countdown_seconds)
+	{
+		DLG_GlueCountdown(--countdown_seconds);
+	}
+	else
+	{
+		killTimerFunc_();
+		countdown_finished_maybe = 1;
+	}
+}
+
+FAIL_STUB_PATCH(TimerFunc);
+
+void __cdecl SetTimerFunc_()
+{
+	dword_6D5C28 = 1;
+	countdown_seconds = 5;
+	uIDEvent = SetTimer(0, 0, 1000, TimerFunc_);
+	if (gwGameMode == GamePosition::GAME_GLUES && glGluesMode == MenuPosition::GLUE_CHAT)
+	{
+		DLG_GlueCountdown(countdown_seconds);
+	}
+}
+
+FUNCTION_PATCH(SetTimerFunc, SetTimerFunc_);
+
 void sub_4D3860_()
 {
 	if (map_download)
@@ -18309,7 +18362,7 @@ void sub_4D3860_()
 	JoinGame();
 	clearGameNextMenu();
 	leaveGame(1073741825);
-	killTimerFunc();
+	killTimerFunc_();
 	g_LocalHumanID = -1;
 	g_LocalNationID = -1;
 	playerid = -1;
@@ -18768,7 +18821,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		[[fallthrough]];
 	case 557:
 		gameState = 1;
-		killTimerFunc();
+		killTimerFunc_();
 		updateMinimapPreviewDisplayOffOn(0, dlg, 1);
 		dword_5999D0 = 0;
 	}
