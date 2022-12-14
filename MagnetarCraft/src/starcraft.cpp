@@ -18294,6 +18294,36 @@ void gluChat_init_(dialog* dlg)
 
 FAIL_STUB_PATCH(gluChat_init);
 
+void sub_4D3860_()
+{
+	if (map_download)
+	{
+		sub_472C10(&map_download);
+		map_download = 0;
+	}
+	while (dword_51A300 > 0)
+	{
+		mapTransferVector2_clear(dword_51A300);
+	}
+	mapTransferVector_clear();
+	JoinGame();
+	clearGameNextMenu();
+	leaveGame(1073741825);
+	killTimerFunc();
+	g_LocalHumanID = -1;
+	g_LocalNationID = -1;
+	playerid = -1;
+	memset(Players, 0, sizeof(Players));
+	isHost = 0;
+	if (loadGameFileHandle)
+	{
+		fclose(loadGameFileHandle);
+		loadGameFileHandle = 0;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4D3860);
+
 signed int sub_4D4130_()
 {
 	game_starting_maybe = 0;
@@ -18313,7 +18343,7 @@ signed int sub_4D4130_()
 		char buff[28];
 		if (!(sub_4CFE40(gameData.save_timestamp, buff, 0x1Cu) && CMDRECV_LoadGame(buff) && sub_4CF5F0()))
 		{
-			sub_4D3860();
+			sub_4D3860_();
 			if (!outOfGame)
 			{
 				doNetTBLError_(0, 0, 0, 95);
@@ -18372,7 +18402,7 @@ signed int sub_4D4130_()
 	}
 	else
 	{
-		sub_4D3860();
+		sub_4D3860_();
 		if (!outOfGame)
 		{
 			doNetTBLError_(0, 0, 0, 100);
@@ -18460,7 +18490,7 @@ bool __fastcall sub_4B9B10_(dialog* lobby_dlg)
 	}
 	else if (dword_5999E8)
 	{
-		sub_4D3860();
+		sub_4D3860_();
 		updateMinimapPreviewDisplayOffOn(0, lobby_dlg, 1);
 		dword_5999D0 = 0;
 		return getErrorStringPair(dword_5999E0, 557);
@@ -18734,7 +18764,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		return 1;
 	case 8:
 		DisableControl(getControlFromIndex_(dlg, 8));
-		sub_4D3860();
+		sub_4D3860_();
 		[[fallthrough]];
 	case 557:
 		gameState = 1;
