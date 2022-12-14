@@ -7760,7 +7760,7 @@ dialog *sub_4618F0(dialog *result) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*sub_461940)(char *source), sub_461940, 0x461940);
+DECL_FUNC(int (__thiscall*CMDACT_LoadGame)(char *source), CMDACT_LoadGame, 0x461940);
 DECL_FUNC(int(*sub_461980)(), sub_461980, 0x461980);
 DECL_FUNC(int (__thiscall*sub_461A90)(dialog *this_), sub_461A90, 0x461a90);
 bool DLG_loadsave_Destroy(dialog *a1, char *a2, dlgEvent *a3) {
@@ -17396,19 +17396,15 @@ __int16 sub_4B6B10(dialog *a1, struct dlgEvent *evt) {
     return result_;
 }
 DECL_FUNC(bool (__fastcall*sub_4B6C30)(dialog *dlg, dlgEvent *a2), sub_4B6C30, 0x4b6c30);
-int sub_4B6C70(dialog *a1) {
+void sub_4B6C70(dialog *dlg) {
     int address = 0x4b6c70;
-    int result_;
     __asm {
-        xor eax, eax
         xor esi, esi
-        mov esi, a1
+        mov esi, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
-DECL_FUNC(bool (__fastcall*gluPEdit_Main)(dialog *dlg, struct dlgEvent *evt), gluPEdit_Main, 0x4b6cc0);
+DECL_FUNC(int (__fastcall*gluPEdit_Main)(dialog *dlg, struct dlgEvent *evt), gluPEdit_Main, 0x4b6cc0);
 DECL_FUNC(int (__fastcall*Popup_Main)(dialog *dlg, struct dlgEvent *evt), Popup_Main, 0x4b6d60);
 DECL_FUNC(int (__fastcall*gluHist_Interact)(dialog *dlg, struct dlgEvent *evt), gluHist_Interact, 0x4b6e10);
 DECL_FUNC(bool (__stdcall*BWFXN_gluPEdit_MBox)(char *text, char *dest, size_t size_, char *restricted), BWFXN_gluPEdit_MBox, 0x4b6e50);
@@ -22838,6 +22834,14 @@ DECL_FUNC(int (__stdcall*sub_4EAA80)(int), sub_4EAA80, 0x4eaa80);
 DECL_FUNC(int (__stdcall*WriteUnits)(FILE *file), WriteUnits, 0x4eaaf0);
 DECL_FUNC(int(*initializeGlobUnitCount)(), initializeGlobUnitCount, 0x4ead50);
 DECL_FUNC(int(*mapTransferVector_clear)(), mapTransferVector_clear, 0x4eadf0);
+void mapTransferVector2_clear(BOOL result) {
+    int address = 0x4eaeb0;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+    }
+}
 DECL_FUNC(int(*sub_4EAF30)(), sub_4EAF30, 0x4eaf30);
 DECL_FUNC(int(*sub_4EAF50)(), sub_4EAF50, 0x4eaf50);
 DECL_FUNC(int (__stdcall*mapStringCreate)(char, int, int, char *source, char *), mapStringCreate, 0x4eaf70);
@@ -23299,7 +23303,20 @@ DECL_FUNC(int(*contour_gen_leftTop)(), contour_gen_leftTop, 0x4f0d50);
 DECL_FUNC(int(*contour_gen_bottomLeft)(), contour_gen_bottomLeft, 0x4f1200);
 DECL_FUNC(int(*sub_4F1680)(), sub_4F1680, 0x4f1680);
 DECL_FUNC(int (__stdcall*sub_4F16C0)(int, signed __int16 *a3, int), sub_4F16C0, 0x4f16c0);
-DECL_FUNC(int(*sub_4F17C0)(), sub_4F17C0, 0x4f17c0);
+BOOL sub_4F17C0(CUnit *unit, CUnit *a2) {
+    int address = 0x4f17c0;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        xor esi, esi
+        mov ecx, unit
+        mov esi, a2
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4F1870(CUnit *a1, __int16 a2, __int16 a3) {
     int address = 0x4f1870;
     int result_;
@@ -26482,7 +26499,7 @@ int& dword_51A2E8 = * ((decltype(&dword_51A2E8)) 0x51a2e8);
 ListNode& stru_51A2EC = * ((decltype(&stru_51A2EC)) 0x51a2ec);
 int& dword_51A2F4 = * ((decltype(&dword_51A2F4)) 0x51a2f4);
 ListNode& stru_51A2F8 = * ((decltype(&stru_51A2F8)) 0x51a2f8);
-int& dword_51A300 = * ((decltype(&dword_51A300)) 0x51a300);
+BOOL& dword_51A300 = * ((decltype(&dword_51A300)) 0x51a300);
 ChunkNode& dword_51A304 = * ((decltype(&dword_51A304)) 0x51a304);
 void *& off_51A308 = * ((decltype(&off_51A308)) 0x51a308);
 void *& dword_51A30C = * ((decltype(&dword_51A30C)) 0x51a30c);

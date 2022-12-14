@@ -22468,11 +22468,11 @@ void CMDACT_RightClick_(dlgEvent* dlg)
 		getMinimapCursorPos(&x, &y);
 
 		RightClickCommand command;
-		command.command_id = 20; // TODO: use the CommandId enum
+		command.command_id = CommandId::CMD_RightClick;
 		command.x = x;
 		command.y = y;
-		command.var_F = 0;
-		command.var_D = 228;
+		command.target_id = 0;
+		command.unit_type = UnitType::UT_MAX;
 		command.is_shift_used = is_keycode_used[VK_SHIFT];
 		BWFXN_QueueCommand__(command);
 		PlayWorkerActionSound(ActivePortraitUnit);
