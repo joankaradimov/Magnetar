@@ -1871,7 +1871,16 @@ void removeDlgFromTimerTracking(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int(*assignNextActiveDlgElement)(), assignNextActiveDlgElement, 0x4196a0);
+void assignNextActiveDlgElement(dialog *dlg, int a2) {
+    int address = 0x4196a0;
+    __asm {
+        xor edi, edi
+        xor esi, esi
+        mov edi, dlg
+        mov esi, a2
+        call address
+    }
+}
 DECL_FUNC(void (__fastcall*SetActivationDelay_maybe)(dialog *a1, dialog *a2), SetActivationDelay_maybe, 0x4196f0);
 DECL_FUNC(void (__cdecl*pressGlobalDlgHotkey)(), pressGlobalDlgHotkey, 0x419740);
 DlgGrp *DlgGrp_Constructor(int a1, char *a2, char *grp_path, grpHead *(__fastcall *a4)(const char *, int, const char *, int)) {
@@ -6318,7 +6327,7 @@ BOOL sub_452530(char *a1) {
     return result_;
 }
 DECL_FUNC(int(*sub_452570)(), sub_452570, 0x452570);
-DECL_FUNC(int(*sub_452590)(), sub_452590, 0x452590);
+DECL_FUNC(void (__cdecl*sub_452590)(), sub_452590, 0x452590);
 DECL_FUNC(int(*sub_4525A0)(), sub_4525A0, 0x4525a0);
 DECL_FUNC(int (__stdcall*sub_4525C0)(int), sub_4525C0, 0x4525c0);
 DECL_FUNC(int(*BanPlayerSlot)(), BanPlayerSlot, 0x4525e0);
@@ -9888,8 +9897,8 @@ _DWORD *sub_472BA0(MapDownload *a1, char a2) {
 }
 DECL_FUNC(MapDownload *(__stdcall*sub_472C10)(MapDownload **a1), sub_472C10, 0x472c10);
 DECL_FUNC(int(*sub_472D50)(), sub_472D50, 0x472d50);
-DECL_FUNC(int(*killTimerFunc)(), killTimerFunc, 0x472d60);
-DECL_FUNC(void (__stdcall*TimerFunc)(HWND, UINT, UINT, DWORD), TimerFunc, 0x472db0);
+DECL_FUNC(int (__cdecl*killTimerFunc)(), killTimerFunc, 0x472d60);
+DECL_FUNC(void (__stdcall*TimerFunc)(HWND a2, UINT a3, UINT a4, DWORD a5), TimerFunc, 0x472db0);
 DECL_FUNC(int(*SetTimerFunc)(), SetTimerFunc, 0x472e00);
 void SetFogMask(int a1, int a2, int a3, int x, int y) {
     int address = 0x472e50;
@@ -15912,13 +15921,13 @@ void Minimap_InitVisionButton(dialog *a1) {
     }
 }
 DECL_FUNC(int (__stdcall*MinimapGameRightclickEventMoveto)(dialog *a2), MinimapGameRightclickEventMoveto, 0x4a5310);
-void MinimapGameClickEvent(dlgEvent *a1, dialog *a2) {
+void MinimapGameClickEvent(dialog *dlg, dlgEvent *event) {
     int address = 0x4a53c0;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        mov eax, a1
-        mov ecx, a2
+        mov ecx, dlg
+        mov eax, event
         call address
     }
 }

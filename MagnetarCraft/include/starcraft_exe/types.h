@@ -261,6 +261,7 @@ struct CarrierStopCommand;
 struct dialog_optn;
 struct __declspec(align(1)) MorphCommand;
 struct UnitAvail;
+struct __declspec(align(1)) MinimapPingCommand;
 struct UpgradesSC;
 struct ReturnCargoCommand;
 struct MergeArchonCommand;
@@ -2170,9 +2171,7 @@ struct __declspec(align(1)) struct_v2
 {
   char unknown;
   int initial_seed;
-  char player_bytes1[3];
-  int player_bytes2;
-  char player_bytes3;
+  char player_bytes[8];
 };
 #pragma pack(pop)
 static_assert(sizeof(struct_v2) == 13, "Incorrect size for type `struct_v2`. Expected: 13");
@@ -5193,6 +5192,16 @@ struct UnitAvail
   u8 available[12][228];
 };
 static_assert(sizeof(UnitAvail) == 2736, "Incorrect size for type `UnitAvail`. Expected: 2736");
+
+#pragma pack(push, 1)
+struct __declspec(align(1)) MinimapPingCommand
+{
+  CommandId command_id;
+  __int16 x;
+  __int16 y;
+};
+#pragma pack(pop)
+static_assert(sizeof(MinimapPingCommand) == 5, "Incorrect size for type `MinimapPingCommand`. Expected: 5");
 
 struct UpgradesSC
 {
