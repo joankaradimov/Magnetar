@@ -6229,6 +6229,56 @@ void __stdcall doNetTBLError__(int a4)
 
 FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
 
+void RECV_SetRandomSeed_(int a1, struct_v2* a2)
+{
+	if (!a1 && gameState == 8)
+	{
+		if (!InReplay)
+		{
+			replay_header.seed_related = *a2;
+		}
+		initialSeed = a2->initial_seed;
+		for (int v3 = 7; v3 >= 0; v3--)
+		{
+			u8 v4 = a2->player_bytes[v3];
+			if (v4 > 8)
+			{
+				if (!outOfGame)
+				{
+					leaveGame(3);
+					outOfGame = 1;
+					doNetTBLError(0, 0, 0, 96);
+					if (gwGameMode == GAME_RUN)
+					{
+						GameState = 0;
+						gwNextGameMode = GAME_GLUES;
+						if (!InReplay)
+						{
+							replay_header.ReplayFrames = ElapsedTimeFrames;
+						}
+					}
+					nextLeaveGameMenu();
+				}
+				break;
+			}
+			byte_66FF34[v3] = v4;
+		}
+	}
+}
+
+void __cdecl RECV_SetRandomSeed__()
+{
+	int a1;
+	struct_v2* a2;
+
+	__asm mov a1, eax
+	__asm mov a2, edx
+
+	RECV_SetRandomSeed_(a1, a2);
+}
+
+FUNCTION_PATCH((void*)0x472110, RECV_SetRandomSeed__);
+
 int sub_4EEFD0_()
 {
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
