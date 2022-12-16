@@ -6229,6 +6229,8 @@ void __stdcall doNetTBLError__(int a4)
 
 FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
 
+void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5);
+
 void RECV_SetRandomSeed_(int a1, struct_v2* a2)
 {
 	if (!a1 && gameState == 8)
@@ -6243,22 +6245,7 @@ void RECV_SetRandomSeed_(int a1, struct_v2* a2)
 			u8 v4 = a2->player_bytes[v3];
 			if (v4 > 8)
 			{
-				if (!outOfGame)
-				{
-					leaveGame(3);
-					outOfGame = 1;
-					doNetTBLError(0, 0, 0, 96);
-					if (gwGameMode == GAME_RUN)
-					{
-						GameState = 0;
-						gwNextGameMode = GAME_GLUES;
-						if (!InReplay)
-						{
-							replay_header.ReplayFrames = ElapsedTimeFrames;
-						}
-					}
-					nextLeaveGameMenu();
-				}
+				BigPacketError_(96, 0, 0, 0, true);
 				break;
 			}
 			byte_66FF34[v3] = v4;
@@ -6306,21 +6293,9 @@ int sub_4EEFD0_()
 	}
 	else
 	{
-		if (!dword_6D5BF8 && !outOfGame)
+		if (!dword_6D5BF8)
 		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 97);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
+			BigPacketError_(97, 0, 0, 0, true);
 		}
 		return 0;
 	}
@@ -6372,23 +6347,10 @@ u8 illegalTeamCheck_()
 	{
 		return 2;
 	}
-	else if (!outOfGame)
+	else
 	{
-		leaveGame(3);
-		outOfGame = 1;
-		doNetTBLError_(113, GetNetworkTblString_(73), "Starcraft\\SWAR\\lang\\Teams.cpp", 93);
-		if (gwGameMode == GAME_RUN)
-		{
-			GameState = 0;
-			gwNextGameMode = GAME_GLUES;
-			if (!InReplay)
-			{
-				replay_header.ReplayFrames = ElapsedTimeFrames;
-			}
-		}
-		nextLeaveGameMenu();
+		BigPacketError_(93, GetNetworkTblString_(73), "Starcraft\\SWAR\\lang\\Teams.cpp", 113, true);
 	}
-
 	return 0;
 }
 
@@ -6492,21 +6454,9 @@ signed int GameInit_()
 		}
 		return 1;
 	}
-	if (!dword_6D5BF8 && !outOfGame)
+	if (!dword_6D5BF8)
 	{
-		leaveGame(3);
-		outOfGame = 1;
-		doNetTBLError_(0, 0, 0, 97);
-		if (gwGameMode == GamePosition::GAME_RUN)
-		{
-			GameState = 0;
-			gwNextGameMode = GamePosition::GAME_GLUES;
-			if (!InReplay)
-			{
-				replay_header.ReplayFrames = ElapsedTimeFrames;
-			}
-		}
-		nextLeaveGameMenu();
+		BigPacketError_(97, 0, 0, 0, 1);
 	}
 	return 0;
 }
@@ -6712,21 +6662,9 @@ int InitializeNetworkProvider_(Char4 provider_id)
 				packetErrHandle_(SErrGetLastError(), 83, 0, 0, 0);
 			}
 		}
-		else if (!outOfGame)
+		else
 		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 82);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
+			BigPacketError_(82, 0, 0, 0, true);
 		}
 	}
 	else if (a3 || GameUpgrade(&a3))
@@ -6866,23 +6804,7 @@ int CreateGame_(GameData* data)
 		}
 		return 0;
 	}
-	if (outOfGame)
-	{
-		return 0;
-	}
-	leaveGame(3);
-	outOfGame = 1;
-	doNetTBLError_(0, 0, 0, 103);
-	if (gwGameMode == GAME_RUN)
-	{
-		GameState = 0;
-		gwNextGameMode = GAME_GLUES;
-		if (!InReplay)
-		{
-			replay_header.ReplayFrames = ElapsedTimeFrames;
-		}
-	}
-	nextLeaveGameMenu();
+	BigPacketError_(103, 0, 0, 0, true);
 	return 0;
 }
 
@@ -6909,22 +6831,7 @@ int LevelCheatInitGame_()
 		strcpy_s(dest, CurrentMapFileName);
 		if (!ReadMapData_(dest, &map_chunks, 0))
 		{
-			if (!outOfGame)
-			{
-				leaveGame(3);
-				outOfGame = 1;
-				doNetTBLError_(0, 0, 0, 97);
-				if (gwGameMode == GAME_RUN)
-				{
-					GameState = 0;
-					gwNextGameMode = GAME_GLUES;
-					if (!InReplay)
-					{
-						replay_header.ReplayFrames = ElapsedTimeFrames;
-					}
-				}
-				nextLeaveGameMenu();
-			}
+			BigPacketError_(97, 0, 0, 0, true);
 			return 0;
 		}
 
@@ -6960,62 +6867,17 @@ int LevelCheatInitGame_()
 			}
 			else
 			{
-				if (!outOfGame)
-				{
-					leaveGame(3);
-					outOfGame = 1;
-					doNetTBLError_(0, 0, 0, 97);
-					if (gwGameMode == GAME_RUN)
-					{
-						GameState = 0;
-						gwNextGameMode = GAME_GLUES;
-						if (!InReplay)
-						{
-							replay_header.ReplayFrames = ElapsedTimeFrames;
-						}
-					}
-					nextLeaveGameMenu();
-				}
+				BigPacketError_(97, 0, 0, 0, true);
 				return 0;
 			}
 		}
 		else
 		{
-			if (!outOfGame)
-			{
-				leaveGame(3);
-				outOfGame = 1;
-				doNetTBLError_(0, 0, 0, 102);
-				if (gwGameMode == GAME_RUN)
-				{
-					GameState = 0;
-					gwNextGameMode = GAME_GLUES;
-					if (!InReplay)
-					{
-						replay_header.ReplayFrames = ElapsedTimeFrames;
-					}
-				}
-				nextLeaveGameMenu();
-			}
+			BigPacketError_(102, 0, 0, 0, true);
 			return 0;
 		}
 	}
-	if (!outOfGame)
-	{
-		leaveGame(3);
-		outOfGame = 1;
-		doNetTBLError_(0, 0, 0, 97);
-		if (gwGameMode == GAME_RUN)
-		{
-			GameState = 0;
-			gwNextGameMode = GAME_GLUES;
-			if (!InReplay)
-			{
-				replay_header.ReplayFrames = ElapsedTimeFrames;
-			}
-		}
-		nextLeaveGameMenu();
-	}
+	BigPacketError_(97, 0, 0, 0, true);
 	return 0;
 }
 
@@ -7034,22 +6896,7 @@ signed int LoadGameCreate_()
 	}
 	else
 	{
-		if (!outOfGame)
-		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 97);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
-		}
+		BigPacketError_(97, 0, 0, 0, true);
 		return 0;
 	}
 }
@@ -7077,43 +6924,13 @@ int RestartGame_()
 		}
 		else
 		{
-			if (!outOfGame)
-			{
-				leaveGame(3);
-				outOfGame = 1;
-				doNetTBLError_(0, 0, 0, 97);
-				if (gwGameMode == GAME_RUN)
-				{
-					GameState = 0;
-					gwNextGameMode = GAME_GLUES;
-					if (!InReplay)
-					{
-						replay_header.ReplayFrames = ElapsedTimeFrames;
-					}
-				}
-				nextLeaveGameMenu();
-			}
+			BigPacketError_(97, 0, 0, 0, true);
 			return 0;
 		}
 	}
 	else
 	{
-		if (!outOfGame)
-		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 97);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
-		}
+		BigPacketError_(97, 0, 0, 0, true);
 		return 0;
 	}
 }
@@ -7468,22 +7285,7 @@ int LoadGameCore_()
 	}
 	else
 	{
-		if (!outOfGame)
-		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 98);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
-		}
+		BigPacketError_(98, 0, 0, 0, true);
 		return 0;
 	}
 }
@@ -16437,22 +16239,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 
 	if (is_spawn)
 	{
-		if (!outOfGame)
-		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(0, 0, 0, 104);
-			if (gwGameMode == GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
-		}
+		BigPacketError_(104, 0, 0, 0, true);
 	}
 	else if (GotFileValues* v3 = sub_4AAC90(a1->game_type_param, a1->game_type_unk, a1->game_type))
 	{
