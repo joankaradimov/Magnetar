@@ -4875,6 +4875,28 @@ void MinimapGameTargetOrder_(dlgEvent* event)
 
 FAIL_STUB_PATCH(MinimapGameTargetOrder);
 
+void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
+{
+	if (is_keycode_used[VK_MENU])
+	{
+		int x = event->cursor.x;
+		int y = event->cursor.y;
+		getMinimapCursorPos(&x, &y);
+
+		MinimapPingCommand command = { CommandId::CMD_MinimapPing, x, y };
+		BWFXN_QueueCommand__(command);
+	}
+	else
+	{
+		ClipCursor(&stru_512D00);
+		assignNextActiveDlgElement(dlg, 5);
+		assignNextActiveDlgElement(dlg, 3);
+		minimapGameMouseUpdate(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(MinimapGameClickEvent);
+
 void minimapGameResetMouseInput_(dialog* dlg)
 {
 	removeDlgFromTimerTracking(dlg);
@@ -5054,7 +5076,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		}
 		else
 		{
-			MinimapGameClickEvent(evt, dlg);
+			MinimapGameClickEvent_(dlg, evt);
 			return 1;
 		}
 	case EVN_LBUTTONUP:
