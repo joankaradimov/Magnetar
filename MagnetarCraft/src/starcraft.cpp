@@ -6681,6 +6681,121 @@ void __stdcall packetErrHandle__(int a2, char* a3, int a4, int a5)
 
 FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__);
 
+int InitializeNetworkProvider_(Char4 provider_id)
+{
+	SNETPROGRAMDATA provider_data;
+	initializeProviderVersion(&provider_data);
+
+	SNETPLAYERDATA user_data;
+	user_data.dwSize = sizeof(SNETPLAYERDATA);
+	user_data.dwUnknown = 0;
+	user_data.pszPlayerName = playerName;
+	user_data.pszUnknown = (char*)empty_string;
+
+	SNETUIDATA ui_data;
+	initializeProviderStruct(&ui_data);
+	if (provider_id.as_number == 'BNET' && hEvent && !IsBattleNet)
+	{
+		SetEvent(hEvent);
+		IsBattleNet = 1;
+	}
+	BOOL a3 = SNetInitializeProvider(provider_id.as_number, &provider_data, &user_data, &ui_data, &snet_version_data);
+	ClearAndFreeCdkeyStrings((const char*)provider_data.key, (const char*)provider_data.key_owner);
+	memset(&provider_data, 0, sizeof(provider_data));
+
+	if (a3 == 0 && SErrGetLastError() != 0x85100077)
+	{
+		if (provider_id.as_number)
+		{
+			if (provider_id.as_number != 'BNET' && !outOfGame)
+			{
+				packetErrHandle_(SErrGetLastError(), 83, 0, 0, 0);
+			}
+		}
+		else if (!outOfGame)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError_(0, 0, 0, 82);
+			if (gwGameMode == GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GAME_GLUES;
+				if (!InReplay)
+				{
+					replay_header.ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+	}
+	else if (a3 || GameUpgrade(&a3))
+	{
+		SNETCAPS caps;
+		caps.size = sizeof(SNETCAPS);
+		if (SNetGetProviderCaps(&caps))
+		{
+			if (caps.maxmessagesize >= 0x80)
+			{
+				MaxTurnSize = 512;
+				if (caps.maxmessagesize <= 512)
+				{
+					MaxTurnSize = caps.maxmessagesize;
+				}
+				if (provider_id.as_number == 0)
+				{
+					LatencyCalls = 1;
+				}
+				else
+				{
+					LatencyCalls = std::clamp(caps.defaultturnsintransit, 2ul, 8ul);
+				}
+
+				NetMode.as_number = provider_id.as_number;
+				if (InitializeModem(&user_data, &ui_data, &provider_data, provider_id))
+				{
+					clearPlayerFlags();
+					if (SNetRegisterEventHandler(2, eventPlayerDropped) && SNetRegisterEventHandler(3, eventSetPlayerFlag) && SNetRegisterEventHandler(4, BWFXN_GlobalPrintText) && SNetRegisterEventHandler(1, eventSetGameType))
+					{
+						return 1;
+					}
+					if (!outOfGame)
+					{
+						packetErrHandle_(SErrGetLastError(), 86, "Starcraft\\SWAR\\lang\\net_glue.cpp", 254, 1);
+					}
+				}
+			}
+			else if (!outOfGame)
+			{
+				doNetTBLError_(0, 0, 0, 85);
+			}
+		}
+		else if (!outOfGame)
+		{
+			packetErrHandle_(SErrGetLastError(), 85, "Starcraft\\SWAR\\lang\\net_glue.cpp", 214, 0);
+		}
+	}
+	else if (a3)
+	{
+		if (provider_id.as_number == 'BNET')
+		{
+			ResetLeagueEvent();
+		}
+		gwGameMode = GamePosition::GAME_EXIT;
+	}
+	else
+	{
+		SNetDestroy();
+		if (hEvent && IsBattleNet)
+		{
+			ResetEvent(hEvent);
+			IsBattleNet = 0;
+		}
+	}
+
+	return 0;
+}
+
 void cleanBufferCounts_()
 {
 	for (int i = 0; i < _countof(arraydatabytes); i++)
@@ -6731,7 +6846,7 @@ int CreateGame_(GameData* data)
 		sub_4D35A0_();
 		Char4 zero;
 		zero.as_number = 0;
-		if (InitializeNetworkProvider(zero))
+		if (InitializeNetworkProvider_(zero))
 		{
 			if (SNetCreateGame(data->player_name, "", "", 0, 0, 0, data->max_players, Players[g_LocalNationID].szName, "", &playerid))
 			{
@@ -18097,12 +18212,12 @@ int Begin_BNET_(Char4 network_provider_id)
 {
 	if (network_provider_id.as_number != 'BNET')
 	{
-		return InitializeNetworkProvider(network_provider_id);
+		return InitializeNetworkProvider_(network_provider_id);
 	}
 	sub_4DCEE0();
 	dword_50E064 = -1;
 	sub_4AD140();
-	if (InitializeNetworkProvider(network_provider_id))
+	if (InitializeNetworkProvider_(network_provider_id))
 	{
 		return 1;
 	}
