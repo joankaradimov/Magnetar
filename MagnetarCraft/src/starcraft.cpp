@@ -4981,6 +4981,39 @@ void drawAllMinimapBoxes_()
 
 FAIL_STUB_PATCH(drawAllMinimapBoxes);
 
+void MinimapGameRightclickEventMoveto_(dialog* dlg)
+{
+	_ClipCursor(&stru_512D00);
+
+	if (EventDialogs[EventNo::EVN_RBUTTONUP])
+	{
+		dlgEvent event;
+		event.wNo = EventNo::EVN_USER;
+		event.dwUser = EventUser::USER_NEXT;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+		*(_DWORD*)&event.wSelection = 0;
+		EventDialogs[EventNo::EVN_RBUTTONUP]->pfcnInteract(EventDialogs[EventNo::EVN_RBUTTONUP], &event);
+	}
+	EventDialogs[EventNo::EVN_RBUTTONUP] = dlg;
+
+	if (EventDialogs[EventNo::EVN_MOUSEMOVE])
+	{
+		dlgEvent event;
+		event.wNo = EventNo::EVN_USER;
+		event.dwUser = EventUser::USER_NEXT;
+		event.cursor.x = Mouse.x;
+		event.cursor.y = Mouse.y;
+		*(_DWORD*)&event.wSelection = 0;
+		EventDialogs[EventNo::EVN_MOUSEMOVE]->pfcnInteract(EventDialogs[EventNo::EVN_MOUSEMOVE], &event);
+	}
+	EventDialogs[EventNo::EVN_MOUSEMOVE] = dlg;
+
+	minimapGameMouseUpdate(dlg);
+}
+
+FAIL_STUB_PATCH(MinimapGameRightclickEventMoveto);
+
 void minimapGameUpdate_(dialog* a1)
 {
 	a1->pfcnUpdate = MinimapImageUpdate;
@@ -5036,7 +5069,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 		}
 		else if (is_placing_building || is_placing_order)
 		{
-			MinimapGameRightclickEventMoveto(dlg);
+			MinimapGameRightclickEventMoveto_(dlg);
 			return 1;
 		}
 		else
