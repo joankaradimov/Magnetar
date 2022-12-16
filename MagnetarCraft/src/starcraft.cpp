@@ -6229,7 +6229,34 @@ void __stdcall doNetTBLError__(int a4)
 
 FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
 
-void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5);
+void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
+{
+	if (!outOfGame)
+	{
+		if (a5)
+		{
+			leaveGame(3);
+			outOfGame = 1;
+			doNetTBLError_(a4, a2, a3, a1);
+			if (gwGameMode == GamePosition::GAME_RUN)
+			{
+				GameState = 0;
+				gwNextGameMode = GamePosition::GAME_GLUES;
+				if (!InReplay)
+				{
+					replay_header.ReplayFrames = ElapsedTimeFrames;
+				}
+			}
+			nextLeaveGameMenu();
+		}
+		else
+		{
+			doNetTBLError_(0, 0, 0, a1);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(BigPacketError);
 
 void RECV_SetRandomSeed_(int a1, struct_v2* a2)
 {
@@ -6580,35 +6607,6 @@ bool ReadCampaignMapData_(MapChunks* map_chunks)
 }
 
 FAIL_STUB_PATCH(ReadCampaignMapData);
-
-void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
-{
-	if (!outOfGame)
-	{
-		if (a5)
-		{
-			leaveGame(3);
-			outOfGame = 1;
-			doNetTBLError_(a4, a2, a3, a1);
-			if (gwGameMode == GamePosition::GAME_RUN)
-			{
-				GameState = 0;
-				gwNextGameMode = GamePosition::GAME_GLUES;
-				if (!InReplay)
-				{
-					replay_header.ReplayFrames = ElapsedTimeFrames;
-				}
-			}
-			nextLeaveGameMenu();
-		}
-		else
-		{
-			doNetTBLError_(0, 0, 0, a1);
-		}
-	}
-}
-
-FAIL_STUB_PATCH(BigPacketError);
 
 void packetErrHandle_(DWORD last_error, int a2, char* a3, int a4, int a5)
 {
