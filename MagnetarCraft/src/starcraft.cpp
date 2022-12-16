@@ -4875,6 +4875,38 @@ void MinimapGameTargetOrder_(dlgEvent* event)
 
 FAIL_STUB_PATCH(MinimapGameTargetOrder);
 
+void minimapGameMouseUpdate_(dialog* dlg)
+{
+	if (byte_658AC0)
+	{
+		removeDlgFromTimerTracking(dlg);
+		SetCursorClipBounds();
+		dword_6D5DD4 = 0;
+		if (dword_6D5DD0)
+		{
+			ClipCursor(&screen);
+		}
+	}
+	else
+	{
+		int v1 = 2 * (unsigned __int16)word_59CC68;
+		int x = Mouse.x - (20 << word_59C1B0) / v1;
+		int y = Mouse.y - (13 << word_59C1B0) / v1;
+		getMinimapCursorPos(&x, &y);
+		if ((unsigned __int16)x >> 5 != MoveToTile.x || (unsigned __int16)y >> 5 != MoveToTile.y)
+		{
+			BWFXN_MoveScreen(32 * ((unsigned __int16)x >> 5), 32 * (unsigned __int16)y >> 5);
+		}
+		if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
+		{
+			dlg->lFlags |= DialogFlags::CTRL_UPDATE;
+			updateDialog(dlg);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(minimapGameMouseUpdate);
+
 void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 {
 	if (is_keycode_used[VK_MENU])
@@ -4891,7 +4923,7 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 		ClipCursor(&stru_512D00);
 		assignNextActiveDlgElement(dlg, 5);
 		assignNextActiveDlgElement(dlg, 3);
-		minimapGameMouseUpdate(dlg);
+		minimapGameMouseUpdate_(dlg);
 	}
 }
 
@@ -5031,7 +5063,7 @@ void MinimapGameRightclickEventMoveto_(dialog* dlg)
 	}
 	EventDialogs[EventNo::EVN_MOUSEMOVE] = dlg;
 
-	minimapGameMouseUpdate(dlg);
+	minimapGameMouseUpdate_(dlg);
 }
 
 FAIL_STUB_PATCH(MinimapGameRightclickEventMoveto);
@@ -5061,7 +5093,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 	switch (evt->wNo)
 	{
 	case EVN_MOUSEMOVE:
-		minimapGameMouseUpdate(dlg);
+		minimapGameMouseUpdate_(dlg);
 		return 1;
 	case EVN_LBUTTONDOWN:
 	case EVN_LBUTTONDBLCLK:
