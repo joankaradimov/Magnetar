@@ -6590,10 +6590,10 @@ void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
 			leaveGame(3);
 			outOfGame = 1;
 			doNetTBLError_(a4, a2, a3, a1);
-			if (gwGameMode == GAME_RUN)
+			if (gwGameMode == GamePosition::GAME_RUN)
 			{
 				GameState = 0;
-				gwNextGameMode = GAME_GLUES;
+				gwNextGameMode = GamePosition::GAME_GLUES;
 				if (!InReplay)
 				{
 					replay_header.ReplayFrames = ElapsedTimeFrames;
