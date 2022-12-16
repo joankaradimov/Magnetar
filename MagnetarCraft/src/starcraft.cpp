@@ -6229,6 +6229,19 @@ void __stdcall doNetTBLError__(int a4)
 
 FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
 
+void nextLeaveGameMenu_()
+{
+	if (glGluesMode == MenuPosition::GLUE_BATTLE)
+	{
+		DWORD dwProcessId;
+		GetWindowThreadProcessId(hWndParent, &dwProcessId);
+		EnumWindows(EnumFunc, dwProcessId);
+	}
+	glGluesMode = MenuPosition::GLUE_GENERIC;
+}
+
+FAIL_STUB_PATCH(nextLeaveGameMenu);
+
 void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
 {
 	if (!outOfGame)
@@ -6247,7 +6260,7 @@ void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
 					replay_header.ReplayFrames = ElapsedTimeFrames;
 				}
 			}
-			nextLeaveGameMenu();
+			nextLeaveGameMenu_();
 		}
 		else
 		{
