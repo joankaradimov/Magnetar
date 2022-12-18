@@ -4859,13 +4859,41 @@ MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
 MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
 
+void getMinimapCursorPos_(int* x, int* y)
+{
+	*x -= minimap_dialog->rct.left;
+	if (*x < 0)
+	{
+		*x = 0;
+	}
+	else if (*x >= minimap_surface_no_fog.wid)
+	{
+		*x = minimap_surface_no_fog.wid - 1;
+	}
+
+	*x *= word_59CC6C;
+
+	*y -= (315 + minimap_dialog->rct.top);
+	if (*y < 0)
+	{
+		*y = 0;
+	}
+	else if (*y >= minimap_surface_no_fog.ht)
+	{
+		*y = minimap_surface_no_fog.ht - 1;
+	}
+	*y *= word_59CC6C;
+}
+
+FAIL_STUB_PATCH(getMinimapCursorPos);
+
 void MinimapGameTargetOrder_(dlgEvent* event)
 {
 	point p;
 	p.x = event->cursor.x;
 	p.y = event->cursor.y;
 
-	getMinimapCursorPos(&p.x, &p.y);
+	getMinimapCursorPos_(&p.x, &p.y);
 	resetGameInputProcs(CursorType::CUR_ARROW);
 	__int16 x = p.x;
 	__int16 y = p.y;
@@ -4892,7 +4920,7 @@ void minimapGameMouseUpdate_(dialog* dlg)
 		int v1 = 2 * (unsigned __int16)word_59CC68;
 		int x = Mouse.x - (20 << word_59C1B0) / v1;
 		int y = Mouse.y - (13 << word_59C1B0) / v1;
-		getMinimapCursorPos(&x, &y);
+		getMinimapCursorPos_(&x, &y);
 		if ((unsigned __int16)x >> 5 != MoveToTile.x || (unsigned __int16)y >> 5 != MoveToTile.y)
 		{
 			BWFXN_MoveScreen(32 * ((unsigned __int16)x >> 5), 32 * (unsigned __int16)y >> 5);
@@ -4913,7 +4941,7 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 	{
 		int x = event->cursor.x;
 		int y = event->cursor.y;
-		getMinimapCursorPos(&x, &y);
+		getMinimapCursorPos_(&x, &y);
 
 		MinimapPingCommand command = { CommandId::CMD_MinimapPing, x, y };
 		BWFXN_QueueCommand__(command);
@@ -22644,7 +22672,7 @@ void CMDACT_RightClick_(dlgEvent* dlg)
 
 		int x = dlg->cursor.x;
 		int y = dlg->cursor.y;
-		getMinimapCursorPos(&x, &y);
+		getMinimapCursorPos_(&x, &y);
 
 		RightClickCommand command;
 		command.command_id = CommandId::CMD_RightClick;
