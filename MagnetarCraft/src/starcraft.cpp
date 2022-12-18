@@ -1410,11 +1410,13 @@ char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 
 FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
+MusicTrackDescription* current_music_track = nullptr;
+
 void PlayMusic_(MusicTrackDescription* a1)
 {
-	if (directsound == NULL || (a1 - music_tracks) != current_music)
+	if (directsound == NULL || a1 != current_music_track)
 	{
-		current_music = MusicTrack(a1 - music_tracks);
+		current_music_track = a1;
 		if (directsound)
 		{
 			SFileDdaEnd(directsound);
@@ -1422,7 +1424,7 @@ void PlayMusic_(MusicTrackDescription* a1)
 			directsound = 0;
 			byte_6D5BBC = 0;
 		}
-		if (a1 - music_tracks == 0)
+		if (current_music_track == nullptr)
 		{
 			return;
 		}
@@ -1467,14 +1469,14 @@ FAIL_STUB_PATCH(PlayMusic);
 
 void playNextMusic_()
 {
-	if (byte_6D5BBC && music_tracks[current_music].track_type == IN_GAME_MUSIC)
+	if (byte_6D5BBC && current_music_track->track_type == IN_GAME_MUSIC)
 	{
 		unsigned a2;
 		unsigned a3;
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			PlayMusic_(&music_tracks[current_music]);
+			PlayMusic_(&ingame_music[current_music_track->in_game_music_index]);
 		}
 	}
 }
@@ -2167,7 +2169,7 @@ void playRadioFreeZerg_()
 	MusicTrackDescription* v0;
 	const char* v1;
 
-	if (current_music == MT_RADIO_FREE_ZERG)
+	if (current_music_track == music_tracks + MT_RADIO_FREE_ZERG)
 	{
 		v0 = music_tracks + MT_ZERG1;
 		v1 = GetNetworkTblString_(66);
@@ -3361,7 +3363,7 @@ void DLGMusicFade_(MusicTrackDescription* music_track)
 {
 	if (!directsound || !byte_6D5BBC)
 	{
-		if (music_track->fade_in_maybe)
+		if (music_track && music_track->fade_in_maybe)
 		{
 			int old_bigvolume = bigvolume;
 			bigvolume = -10000;
@@ -3407,7 +3409,7 @@ void muteBgm_(RegistryOptions* a1)
 			if (!byte_6D638C)
 			{
 				byte_6D638C = 1;
-				DLGMusicFade_(&music_tracks[current_music]);
+				DLGMusicFade_(current_music_track);
 			}
 		}
 		else
