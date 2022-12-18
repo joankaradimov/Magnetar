@@ -1412,6 +1412,15 @@ FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
 MusicTrackDescription* current_music_track = nullptr;
 
+MusicTrackDescription* title_music = music_tracks + MusicTrack::MT_TITLE;
+MusicTrackDescription* radio_free_zerg = music_tracks + MusicTrack::MT_RADIO_FREE_ZERG;
+MusicTrackDescription* briefing_music[] =
+{
+	music_tracks + MusicTrack::MT_ZERG_READY,
+	music_tracks + MusicTrack::MT_TERRAN_READY,
+	music_tracks + MusicTrack::MT_PROTOSS_READY,
+};
+
 void PlayMusic_(MusicTrackDescription* a1)
 {
 	if (directsound == NULL || a1 != current_music_track)
@@ -2169,14 +2178,14 @@ void playRadioFreeZerg_()
 	MusicTrackDescription* v0;
 	const char* v1;
 
-	if (current_music_track == music_tracks + MT_RADIO_FREE_ZERG)
+	if (current_music_track == radio_free_zerg)
 	{
 		v0 = music_tracks + MT_ZERG1;
 		v1 = GetNetworkTblString_(66);
 	}
 	else
 	{
-		v0 = music_tracks + MT_RADIO_FREE_ZERG;
+		v0 = radio_free_zerg;
 		v1 = GetNetworkTblString_(65);
 	}
 
@@ -4034,7 +4043,7 @@ void titleInit_(dialog* dlg)
 	}
 	if (!low_memory)
 	{
-		DLGMusicFade_(&music_tracks[MT_TITLE]);
+		DLGMusicFade_(title_music);
 	}
 
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
@@ -15274,7 +15283,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Terran,
 		terran_campaign_menu_entries_,
 		{},
-		music_tracks + MusicTrack::MT_NONE,
+		nullptr,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15284,7 +15293,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Zerg,
 		zerg_campaign_menu_entries_,
 		{},
-		music_tracks + MusicTrack::MT_NONE,
+		nullptr,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15304,7 +15313,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Protoss,
 		protoss_expcampaign_menu_entries_,
 		{},
-		music_tracks + MusicTrack::MT_NONE,
+		nullptr,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -15314,7 +15323,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Terran,
 		terran_expcampaign_menu_entries_,
 		{},
-		music_tracks + MusicTrack::MT_NONE,
+		nullptr,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -15874,7 +15883,7 @@ int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
 			{
-				DLGMusicFade_(&music_tracks[MT_TITLE]);
+				DLGMusicFade_(title_music);
 			}
 			break;
 		case EventUser::USER_ACTIVATE:
@@ -15961,7 +15970,7 @@ int __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 		case EventUser::USER_CREATE:
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
-				DLGMusicFade_(&music_tracks[MT_TITLE]);
+				DLGMusicFade_(title_music);
 			break;
 		case EventUser::USER_ACTIVATE:
 			return sub_4B5180_(dlg);
@@ -17438,7 +17447,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			{
 				return true;
 			}
-			DLGMusicFade_(&music_tracks[MT_TITLE]);
+			DLGMusicFade_(title_music);
 			return true;
 		case USER_DESTROY:
 			gluMainDestroy_(dlg);
@@ -17887,14 +17896,14 @@ FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu);
 void sub_46D1F0_()
 {
 	stopMusic();
-	DLGMusicFade_(&music_tracks[MT_TITLE]);
+	DLGMusicFade_(title_music);
 }
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(MusicTrackDescription* music_track, const char* bin_path)
+void loadMenu_gluRdy(Race race, const char* bin_path)
 {
-	sub_46D200_(music_track);
+	sub_46D200_(briefing_music[race]);
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
@@ -18077,7 +18086,7 @@ int getGameList_(dialog* dlg)
 	SNetEnumProviders(0, Provider_Constructor);
 	if (!byte_6D5BBC)
 	{
-		DLGMusicFade_(&music_tracks[MT_TITLE]);
+		DLGMusicFade_(title_music);
 	}
 	Template_Destructor(&templates_list);
 	return LoadGameTemplates_(Template_Constructor);
@@ -19895,13 +19904,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_TERRAN_READY], "rez\\glurdyt.bin");
+			loadMenu_gluRdy(Race::RACE_Terran, "rez\\glurdyt.bin");
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_ZERG_READY], "rez\\glurdyz.bin");
+			loadMenu_gluRdy(Race::RACE_Zerg, "rez\\glurdyz.bin");
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_PROTOSS_READY], "rez\\glurdyp.bin");
+			loadMenu_gluRdy(Race::RACE_Protoss, "rez\\glurdyp.bin");
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
