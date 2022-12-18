@@ -1410,11 +1410,11 @@ char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 
 FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
-void PlayMusic_(MusicTrack a1)
+void PlayMusic_(MusicTrackDescription* a1)
 {
-	if (directsound == NULL || a1 != current_music)
+	if (directsound == NULL || (a1 - music_tracks) != current_music)
 	{
-		current_music = a1;
+		current_music = MusicTrack(a1 - music_tracks);
 		if (directsound)
 		{
 			SFileDdaEnd(directsound);
@@ -1422,12 +1422,12 @@ void PlayMusic_(MusicTrack a1)
 			directsound = 0;
 			byte_6D5BBC = 0;
 		}
-		if (a1 == NULL)
+		if (a1 - music_tracks == 0)
 		{
 			return;
 		}
 
-		SFileOpenFile(music_tracks[a1].wav_filename, &directsound);
+		SFileOpenFile(a1->wav_filename, &directsound);
 	}
 
 	if (directsound)
@@ -1444,7 +1444,7 @@ void PlayMusic_(MusicTrack a1)
 			byte_6D5BBD = 0;
 			if (registry_options.Music)
 			{
-				if (SFileDdaBeginEx(directsound, 0x40000, music_tracks[a1].track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
+				if (SFileDdaBeginEx(directsound, 0x40000, a1->track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
 				{
 					byte_6D5BBC = 1;
 				}
@@ -1474,7 +1474,7 @@ void playNextMusic_()
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			PlayMusic_((MusicTrack)music_tracks[current_music].in_game_music_index);
+			PlayMusic_(&music_tracks[current_music]);
 		}
 	}
 }
@@ -2164,17 +2164,17 @@ MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
 
 void playRadioFreeZerg_()
 {
-	MusicTrack v0;
+	MusicTrackDescription* v0;
 	const char* v1;
 
 	if (current_music == MT_RADIO_FREE_ZERG)
 	{
-		v0 = MT_ZERG1;
+		v0 = music_tracks + MT_ZERG1;
 		v1 = GetNetworkTblString_(66);
 	}
 	else
 	{
-		v0 = MT_RADIO_FREE_ZERG;
+		v0 = music_tracks + MT_RADIO_FREE_ZERG;
 		v1 = GetNetworkTblString_(65);
 	}
 
@@ -3357,11 +3357,11 @@ void LoadBtnSfxFile_()
 
 FAIL_STUB_PATCH(LoadBtnSfxFile);
 
-void DLGMusicFade_(MusicTrack music_track)
+void DLGMusicFade_(MusicTrackDescription* music_track)
 {
 	if (!directsound || !byte_6D5BBC)
 	{
-		if (music_tracks[music_track].fade_in_maybe)
+		if (music_track->fade_in_maybe)
 		{
 			int old_bigvolume = bigvolume;
 			bigvolume = -10000;
@@ -3407,7 +3407,7 @@ void muteBgm_(RegistryOptions* a1)
 			if (!byte_6D638C)
 			{
 				byte_6D638C = 1;
-				DLGMusicFade_(current_music);
+				DLGMusicFade_(&music_tracks[current_music]);
 			}
 		}
 		else
@@ -4032,7 +4032,7 @@ void titleInit_(dialog* dlg)
 	}
 	if (!low_memory)
 	{
-		DLGMusicFade_(MT_TITLE);
+		DLGMusicFade_(&music_tracks[MT_TITLE]);
 	}
 
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
@@ -11498,7 +11498,7 @@ FAIL_STUB_PATCH(stopAllSound);
 GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
-	DLGMusicFade_((MusicTrack) currentMusicId);
+	DLGMusicFade_(&music_tracks[currentMusicId]);
 	if (has_viewport)
 	{
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -15250,7 +15250,7 @@ struct Campaign
 	Race race;
 	ExpandedCampaignMenuEntry* entries;
 	std::vector<const char*> epilogs;
-	MusicTrack epilog_music_track;
+	MusicTrackDescription* epilog_music_track;
 	MenuPosition post_epilog_menu;
 };
 
@@ -15262,7 +15262,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Terran,
 		terran_swcampaign_menu_entries_,
 		{"epilogsw"},
-		MusicTrack::MT_TERRAN2,
+		music_tracks + MusicTrack::MT_TERRAN2,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15272,7 +15272,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Terran,
 		terran_campaign_menu_entries_,
 		{},
-		MusicTrack::MT_NONE,
+		music_tracks + MusicTrack::MT_NONE,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15282,7 +15282,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Zerg,
 		zerg_campaign_menu_entries_,
 		{},
-		MusicTrack::MT_NONE,
+		music_tracks + MusicTrack::MT_NONE,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15292,7 +15292,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Protoss,
 		protoss_campaign_menu_entries_,
 		{"epilog", "crdt_lst"},
-		MusicTrack::MT_PROTOSS3,
+		music_tracks + MusicTrack::MT_PROTOSS3,
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 	{
@@ -15302,7 +15302,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Protoss,
 		protoss_expcampaign_menu_entries_,
 		{},
-		MusicTrack::MT_NONE,
+		music_tracks + MusicTrack::MT_NONE,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -15312,7 +15312,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Terran,
 		terran_expcampaign_menu_entries_,
 		{},
-		MusicTrack::MT_NONE,
+		music_tracks + MusicTrack::MT_NONE,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -15322,7 +15322,7 @@ std::vector<Campaign> campaigns = {
 		Race::RACE_Zerg,
 		zerg_expcampaign_menu_entries_,
 		{"epilogX", "crdt_exp"},
-		MusicTrack::MT_PROTOSS3,
+		music_tracks + MusicTrack::MT_PROTOSS3,
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 };
@@ -15872,7 +15872,7 @@ int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
 			{
-				DLGMusicFade_(MT_TITLE);
+				DLGMusicFade_(&music_tracks[MT_TITLE]);
 			}
 			break;
 		case EventUser::USER_ACTIVATE:
@@ -15959,7 +15959,7 @@ int __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
 		case EventUser::USER_CREATE:
 			DLG_SwishIn_(dlg);
 			if (!byte_6D5BBC)
-				DLGMusicFade_(MT_TITLE);
+				DLGMusicFade_(&music_tracks[MT_TITLE]);
 			break;
 		case EventUser::USER_ACTIVATE:
 			return sub_4B5180_(dlg);
@@ -17436,7 +17436,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			{
 				return true;
 			}
-			DLGMusicFade_(MT_TITLE);
+			DLGMusicFade_(&music_tracks[MT_TITLE]);
 			return true;
 		case USER_DESTROY:
 			gluMainDestroy_(dlg);
@@ -17856,7 +17856,7 @@ FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop);
 void DisplayEstablishingShot_();
 int ContinueCampaign_(int a1);
 
-void sub_46D200_(MusicTrack music_track)
+void sub_46D200_(MusicTrackDescription* music_track)
 {
 	stopMusic();
 	DLGMusicFade_(music_track);
@@ -17885,12 +17885,12 @@ FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu);
 void sub_46D1F0_()
 {
 	stopMusic();
-	DLGMusicFade_(MT_TITLE);
+	DLGMusicFade_(&music_tracks[MT_TITLE]);
 }
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(MusicTrack music_track, const char* bin_path)
+void loadMenu_gluRdy(MusicTrackDescription* music_track, const char* bin_path)
 {
 	sub_46D200_(music_track);
 	DisplayEstablishingShot_();
@@ -18075,7 +18075,7 @@ int getGameList_(dialog* dlg)
 	SNetEnumProviders(0, Provider_Constructor);
 	if (!byte_6D5BBC)
 	{
-		DLGMusicFade_(MT_TITLE);
+		DLGMusicFade_(&music_tracks[MT_TITLE]);
 	}
 	Template_Destructor(&templates_list);
 	return LoadGameTemplates_(Template_Constructor);
@@ -19656,13 +19656,13 @@ char* score_screens_[] = {
 	"glue\\scorePv\\",
 };
 
-MusicTrack score_music_track_[] = {
-	MT_ZERG_DEFEAT,
-	MT_ZERG_VICTORY,
-	MT_TERRAN_DEFEAT,
-	MT_TERRAN_VICTORY,
-	MT_PROTOSS_DEFEAT,
-	MT_PROTOSS_VICTORY,
+MusicTrackDescription* score_music_track_[] = {
+	music_tracks + MT_ZERG_DEFEAT,
+	music_tracks + MT_ZERG_VICTORY,
+	music_tracks + MT_TERRAN_DEFEAT,
+	music_tracks + MT_TERRAN_VICTORY,
+	music_tracks + MT_PROTOSS_DEFEAT,
+	music_tracks + MT_PROTOSS_VICTORY,
 };
 
 void loadMenu_gluScore_()
@@ -19893,13 +19893,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(MusicTrack::MT_TERRAN_READY, "rez\\glurdyt.bin");
+			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_TERRAN_READY], "rez\\glurdyt.bin");
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(MusicTrack::MT_ZERG_READY, "rez\\glurdyz.bin");
+			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_ZERG_READY], "rez\\glurdyz.bin");
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(MusicTrack::MT_PROTOSS_READY, "rez\\glurdyp.bin");
+			loadMenu_gluRdy(&music_tracks[MusicTrack::MT_PROTOSS_READY], "rez\\glurdyp.bin");
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
@@ -21231,7 +21231,7 @@ void BeginCredits_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade_(MT_TERRAN2);
+	DLGMusicFade_(&music_tracks[MT_TERRAN2]);
 	credits_interrupted = 0;
 	loadInitCreditsBIN_("crdt_mag");
 	if (credits_interrupted == 0 && is_expansion_installed)
