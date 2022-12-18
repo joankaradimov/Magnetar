@@ -1468,7 +1468,7 @@ void PlayMusic_(MusicTrackDescription* a1)
 			byte_6D5BBD = 0;
 			if (registry_options.Music)
 			{
-				if (SFileDdaBeginEx(directsound, 0x40000, a1->track_type != MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
+				if (SFileDdaBeginEx(directsound, 0x40000, a1->track_type != MusicTrackType::MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
 				{
 					byte_6D5BBC = 1;
 				}
@@ -1491,7 +1491,7 @@ FAIL_STUB_PATCH(PlayMusic);
 
 void playNextMusic_()
 {
-	if (byte_6D5BBC && current_music_track->track_type == IN_GAME_MUSIC)
+	if (byte_6D5BBC && current_music_track->track_type == MusicTrackType::IN_GAME_MUSIC)
 	{
 		unsigned a2;
 		unsigned a3;
