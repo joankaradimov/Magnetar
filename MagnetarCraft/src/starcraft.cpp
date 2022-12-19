@@ -19671,48 +19671,84 @@ void sub_4DBF80_()
 
 FAIL_STUB_PATCH(sub_4DBF80);
 
-char* score_screens_[] = {
-	"glue\\scoreZd\\",
+MenuPosition victory_menus[] = {
+	GLUE_SCORE_Z_VICTORY,
+	GLUE_SCORE_T_VICTORY,
+	GLUE_SCORE_P_VICTORY,
+};
+
+MenuPosition defeat_menus[] = {
+	GLUE_SCORE_Z_DEFEAT,
+	GLUE_SCORE_T_DEFEAT,
+	GLUE_SCORE_P_DEFEAT,
+};
+
+const char* victory_screens[] = {
 	"glue\\scoreZv\\",
-	"glue\\scoreTd\\",
 	"glue\\scoreTv\\",
-	"glue\\scorePd\\",
 	"glue\\scorePv\\",
 };
 
-MusicTrackDescription score_music_track_[] = {
+const char* defeat_screens[] = {
+	"glue\\scoreZd\\",
+	"glue\\scoreTd\\",
+	"glue\\scorePd\\",
+};
+
+MusicTrackDescription victory_music_track[] = {
+	{"music\\zvict.wav", MusicTrackType::MENU_MUSIC, 1, 0},
+	{"music\\tvict.wav", MusicTrackType::MENU_MUSIC, 0, 0},
+	{"music\\pvict.wav", MusicTrackType::MENU_MUSIC, 0, 0},
+};
+
+MusicTrackDescription defeat_music_track[] = {
 	{"music\\zdefeat.wav", MusicTrackType::MENU_MUSIC, 1, 0},
 	{"music\\tdefeat.wav", MusicTrackType::MENU_MUSIC, 0, 0},
 	{"music\\pdefeat.wav", MusicTrackType::MENU_MUSIC, 0, 0},
-	{"music\\zvict.wav", MusicTrackType::MENU_MUSIC, 1, 0},
-	{"music\\tvict.wav", MusicTrackType::MENU_MUSIC, 1, 0},
-	{"music\\pvict.wav", MusicTrackType::MENU_MUSIC, 0, 0},
 };
 
 void loadMenu_gluScore_()
 {
-	char v25[260];
-
 	ApplyGameVictoryStatus(dword_59B73C, &dword_59B3D0);
 
 	dword_59B75C = dword_59B3D0 == 1;
-	int v0 = dword_6D5A60 ? 1 : (dword_59B3D0 == 1) + 2 * Players[g_LocalNationID].nRace;
 
-	glGluesMode = dword_512AB0[v0];
-	strcpy(byte_59B628, score_screens_[v0]);
-	DLGMusicFade_(&score_music_track_[v0]);
+	const char* score_screen;
+	MusicTrackDescription* score_scren_music_track;
+	if (dword_6D5A60)
+	{
+		score_screen = victory_screens[Race::RACE_Zerg];
+		score_scren_music_track = &victory_music_track[Race::RACE_Zerg];
+		glGluesMode = victory_menus[Race::RACE_Zerg];
+	}
+	else if (dword_59B75C)
+	{
+		score_screen = victory_screens[Players[g_LocalNationID].nRace];
+		score_scren_music_track = &victory_music_track[Players[g_LocalNationID].nRace];
+		glGluesMode = victory_menus[Players[g_LocalNationID].nRace];
+	}
+	else
+	{
+		score_screen = defeat_screens[Players[g_LocalNationID].nRace];
+		score_scren_music_track = &defeat_music_track[Players[g_LocalNationID].nRace];
+		glGluesMode = defeat_menus[Players[g_LocalNationID].nRace];
+	}
 
-	strcpy(v25, score_screens_[v0]);
+	strcpy(byte_59B628, score_screen);
+	DLGMusicFade_(score_scren_music_track);
+
+	char v25[MAX_PATH];
+	strcpy(v25, score_screen);
 	strcat(v25, "iScore.grp");
 	iscore_grp = (void*)LoadGraphic(v25, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1376);
 
-	strcpy(v25, score_screens_[v0]);
+	strcpy(v25, score_screen);
 	strcat(v25, "tminimap.pcx");
 	if (!SBmpLoadImage(v25, 0, byte_59B730, 12, 0, 0, 0))
 	{
 		SysWarn_FileNotFound(v25, SErrGetLastError());
 	}
-	strcpy(byte_59B628, score_screens_[v0]);
+	strcpy(byte_59B628, score_screen);
 	sub_4BCA80_(SFX_glue_scorefill);
 
 	gluScore_Dlg = LoadDialog("rez\\gluScore.bin");
