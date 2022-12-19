@@ -6253,7 +6253,7 @@ void sub_450650(__int16 a1, LobbySlot *a2, int a3) {
 }
 DECL_FUNC(int (__stdcall*createOwnerDropdown)(int, int), createOwnerDropdown, 0x450740);
 DECL_FUNC(int (__fastcall*sub_450A60)(dialog *dlg, dlgEvent *evt), sub_450A60, 0x450a60);
-void CreateRaceDropdown(dialog *dlg, Race race) {
+void CreateRaceDropdown(dialog *dlg, RaceId race) {
     int address = 0x450ab0;
     __asm {
         xor eax, eax
@@ -15156,7 +15156,7 @@ int sub_49D660(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*CreateInitialOverlord)(unsigned __int8 player_index), CreateInitialOverlord, 0x49d6c0);
-CUnit *CreateInitialMeleeWorker(Race race, unsigned __int8 player_index) {
+CUnit *CreateInitialMeleeWorker(RaceId race, unsigned __int8 player_index) {
     int address = 0x49d760;
     CUnit * result_;
     __asm {
@@ -15168,7 +15168,7 @@ CUnit *CreateInitialMeleeWorker(Race race, unsigned __int8 player_index) {
     }
     return result_;
 }
-void CreateInitialMeleeBuildings(Race race, unsigned __int8 player_index) {
+void CreateInitialMeleeBuildings(RaceId race, unsigned __int8 player_index) {
     int address = 0x49d7c0;
     __asm {
         xor eax, eax
@@ -15822,18 +15822,15 @@ DECL_FUNC(void (__cdecl*minimapVisionUpdate_192_256)(), minimapVisionUpdate_192_
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_96_128)(), minimapVisionUpdate_96_128, 0x4a3b30);
 DECL_FUNC(void (__cdecl*minimapVisionUpdate_64)(), minimapVisionUpdate_64, 0x4a3c00);
 DECL_FUNC(int(*sub_4A3D40)(), sub_4A3D40, 0x4a3d40);
-__int16 getMinimapCursorPos(int *x, int *y) {
+void getMinimapCursorPos(int *x, int *y) {
     int address = 0x4a3d70;
-    __int16 result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
         mov eax, x
         mov ecx, y
         call address
-        mov result_, ax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_4A3E00)(), sub_4A3E00, 0x4a3e00);
 void killMinimapPreviewDlg(dialog *a1) {
@@ -15920,7 +15917,7 @@ void Minimap_InitVisionButton(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__stdcall*MinimapGameRightclickEventMoveto)(dialog *a2), MinimapGameRightclickEventMoveto, 0x4a5310);
+DECL_FUNC(void (__stdcall*MinimapGameRightclickEventMoveto)(dialog *dlg), MinimapGameRightclickEventMoveto, 0x4a5310);
 void MinimapGameClickEvent(dialog *dlg, dlgEvent *event) {
     int address = 0x4a53c0;
     __asm {
@@ -21027,7 +21024,7 @@ unsigned int RandBetween(int a1, unsigned int a2, int a3) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*BWFXN_NetSelectReturnMenu)(), BWFXN_NetSelectReturnMenu, 0x4dc5b0);
-void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3) {
+void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int race) {
     int address = 0x4dc630;
     __asm {
         xor eax, eax
@@ -21035,7 +21032,7 @@ void ContinueCampaignWithLevelCheat(MapData4 result, int a2, int a3) {
         xor edx, edx
         mov eax, result
         mov edx, a2
-        mov ecx, a3
+        mov ecx, race
         call address
     }
 }
@@ -21430,7 +21427,7 @@ void saveGame_Create(dialog *dlg) {
     }
 }
 DECL_FUNC(int (__fastcall*savegameBIN_Main)(dialog *dlg, struct dlgEvent *evt), savegameBIN_Main, 0x4dfef0);
-int LoadSaveGameBIN_Main(int a1, Race a2) {
+int LoadSaveGameBIN_Main(int a1, RaceId a2) {
     int address = 0x4dffc0;
     int result_;
     __asm {
@@ -26239,7 +26236,7 @@ swishTimer(&stru_512A54)[7] = * ((decltype(&stru_512A54)) 0x512a54);
 swishTimer(&stru_512A70)[7] = * ((decltype(&stru_512A70)) 0x512a70);
 swishTimer(&stru_512A8C)[2] = * ((decltype(&stru_512A8C)) 0x512a8c);
 char *(&score_screens)[6] = * ((decltype(&score_screens)) 0x512a98);
-MenuPosition(&dword_512AB0)[6] = * ((decltype(&dword_512AB0)) 0x512ab0);
+MenuPosition(&score_menus)[6] = * ((decltype(&score_menus)) 0x512ab0);
 MusicTrack(&score_music_track)[6] = * ((decltype(&score_music_track)) 0x512ac8);
 GluAllTblEntry& tbl_entry = * ((decltype(&tbl_entry)) 0x512ae0);
 swishTimer(&gluCmpgnSwishController)[2] = * ((decltype(&gluCmpgnSwishController)) 0x512b10);
@@ -26865,7 +26862,7 @@ int& dword_57F1B0 = * ((decltype(&dword_57F1B0)) 0x57f1b0);
 int& dword_57F1B4 = * ((decltype(&dword_57F1B4)) 0x57f1b4);
 int& dword_57F1B8 = * ((decltype(&dword_57F1B8)) 0x57f1b8);
 int& dword_57F1BC = * ((decltype(&dword_57F1BC)) 0x57f1bc);
-Race(&byte_57F1C0)[8] = * ((decltype(&byte_57F1C0)) 0x57f1c0);
+RaceId(&byte_57F1C0)[8] = * ((decltype(&byte_57F1C0)) 0x57f1c0);
 char(&byte_57F1CB)[] = * ((decltype(&byte_57F1CB)) 0x57f1cb);
 int& dword_57F1CC = * ((decltype(&dword_57F1CC)) 0x57f1cc);
 Position& MoveToTile = * ((decltype(&MoveToTile)) 0x57f1d0);
@@ -26875,7 +26872,7 @@ __int16& SendTextFilter = * ((decltype(&SendTextFilter)) 0x57f1da);
 Tileset& CurrentTileSet = * ((decltype(&CurrentTileSet)) 0x57f1dc);
 __int16& currentMusicId = * ((decltype(&currentMusicId)) 0x57f1de);
 char& byte_57F1E1 = * ((decltype(&byte_57F1E1)) 0x57f1e1);
-Race& consoleIndex = * ((decltype(&consoleIndex)) 0x57f1e2);
+RaceId& consoleIndex = * ((decltype(&consoleIndex)) 0x57f1e2);
 char(&customSingleplayer)[9] = * ((decltype(&customSingleplayer)) 0x57f1e3);
 int(&PlayerVision)[12] = * ((decltype(&PlayerVision)) 0x57f1ec);
 int(&factionsColorsOrdering)[8] = * ((decltype(&factionsColorsOrdering)) 0x57f21c);
@@ -26883,8 +26880,8 @@ DWORD& ElapsedTimeFrames = * ((decltype(&ElapsedTimeFrames)) 0x57f23c);
 int& savedElapsedSeconds = * ((decltype(&savedElapsedSeconds)) 0x57f240);
 MapData& CampaignIndex = * ((decltype(&CampaignIndex)) 0x57f244);
 char(&next_scenario)[32] = * ((decltype(&next_scenario)) 0x57f246);
-Race& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
-Race(&single_player_opponent_races)[8] = * ((decltype(&single_player_opponent_races)) 0x57f267);
+RaceId& selectedSingleplayerRace = * ((decltype(&selectedSingleplayerRace)) 0x57f266);
+RaceId(&single_player_opponent_races)[8] = * ((decltype(&single_player_opponent_races)) 0x57f267);
 __int16(&word_57F270)[] = * ((decltype(&word_57F270)) 0x57f270);
 __int16(&word_57F272)[5] = * ((decltype(&word_57F272)) 0x57f272);
 UnitAvail& UnitAvailability = * ((decltype(&UnitAvailability)) 0x57f27c);
@@ -27680,7 +27677,7 @@ char(&byte_68C208)[] = * ((decltype(&byte_68C208)) 0x68c208);
 char(&byteShieldStr)[22] = * ((decltype(&byteShieldStr)) 0x68c20a);
 dialog *& dword_68C220 = * ((decltype(&dword_68C220)) 0x68c220);
 dialog *& stat_f10_Dlg = * ((decltype(&stat_f10_Dlg)) 0x68c224);
-Race& statfluf_current_race = * ((decltype(&statfluf_current_race)) 0x68c228);
+RaceId& statfluf_current_race = * ((decltype(&statfluf_current_race)) 0x68c228);
 int& dword_68C22C = * ((decltype(&dword_68C22C)) 0x68c22c);
 int& dword_68C230 = * ((decltype(&dword_68C230)) 0x68c230);
 dialog *& statres_Dlg = * ((decltype(&statres_Dlg)) 0x68c234);

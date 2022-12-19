@@ -2226,7 +2226,7 @@ bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
 
 	if (!memcmp(a2, &cheat_hash_radio_free_zerg, 8))
 	{
-		if (gwGameMode == GAME_RUN && is_expansion_installed && consoleIndex == Race::RACE_Zerg)
+		if (gwGameMode == GAME_RUN && is_expansion_installed && consoleIndex == RaceId::RACE_Zerg)
 		{
 			playRadioFreeZerg_();
 		}
@@ -4334,22 +4334,22 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 
 FAIL_STUB_PATCH(CleanupIscriptBINHandle);
 
-UnitType GetBaseBuilding(Race race)
+UnitType GetBaseBuilding(RaceId race)
 {
 	switch (race)
 	{
-	case Race::RACE_Zerg:
+	case RaceId::RACE_Zerg:
 		return UnitType::Zerg_Hatchery;
-	case Race::RACE_Terran:
+	case RaceId::RACE_Terran:
 		return UnitType::Terran_Command_Center;
-	case Race::RACE_Protoss:
+	case RaceId::RACE_Protoss:
 		return UnitType::Protoss_Nexus;
 	default:
 		return (UnitType)228;
 	}
 }
 
-void CreateInitialMeleeBuildings_(Race race, u8 player_index)
+void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 {
 	UnitType base_building = GetBaseBuilding(race);
 
@@ -4387,15 +4387,15 @@ void CreateInitialMeleeBuildings_(Race race, u8 player_index)
 
 FAIL_STUB_PATCH(CreateInitialMeleeBuildings);
 
-UnitType GetWorkerType(Race race)
+UnitType GetWorkerType(RaceId race)
 {
 	switch (race)
 	{
-	case Race::RACE_Zerg:
+	case RaceId::RACE_Zerg:
 		return UnitType::Zerg_Drone;
-	case Race::RACE_Terran:
+	case RaceId::RACE_Terran:
 		return UnitType::Terran_SCV;
-	case Race::RACE_Protoss:
+	case RaceId::RACE_Protoss:
 		return UnitType::Protoss_Probe;
 	case 4:
 		return UnitType::Zerg_Infested_Terran;
@@ -4404,7 +4404,7 @@ UnitType GetWorkerType(Race race)
 	}
 }
 
-void CreateInitialMeleeWorker_(Race race, unsigned __int8 player_index)
+void CreateInitialMeleeWorker_(RaceId race, unsigned __int8 player_index)
 {
 	UnitType workerUnitType = GetWorkerType(race);
 
@@ -4446,7 +4446,7 @@ void CreateInitialMeleeUnits_()
 			{
 			case StartingUnits::SU_WORKER_AND_CENTER:
 				CreateInitialMeleeBuildings_(player->nRace, player_index);
-				if (player->nRace == Race::RACE_Zerg)
+				if (player->nRace == RaceId::RACE_Zerg)
 					CreateInitialOverlord(player_index);
 				[[fallthrough]];
 			case StartingUnits::SU_WORKER_ONLY:
@@ -6571,7 +6571,7 @@ void CreateInitialTeamMeleeUnits_()
 		for (int j = 0; j < 4; ++j)
 		{
 			int v9 = j % illegalTeamCheck_();
-			Race v10 = v6 + v9 < 8 ? byte_57F1C0[v6 + v9] : byte_57F1C0[v6 + 1];
+			RaceId v10 = v6 + v9 < 8 ? byte_57F1C0[v6 + v9] : byte_57F1C0[v6 + 1];
 
 			if (gameData.got_file_values.starting_units && gameData.got_file_values.starting_units <= StartingUnits::SU_WORKER_AND_CENTER)
 			{
@@ -6721,16 +6721,16 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		--v9;
 		LobbyPlayers[v9].dwPlayerID = v9;
 		LobbyPlayers[v9].dwStormId = -1;
-		if (LobbyPlayers[v9].nRace == Race::RACE_Select)
+		if (LobbyPlayers[v9].nRace == RaceId::RACE_Select)
 		{
-			LobbyPlayers[v9].nRace = Race::RACE_Random;
+			LobbyPlayers[v9].nRace = RaceId::RACE_Random;
 			if (v9 < 8)
 				playerForce[v9] = 1;
 		}
 		if (v9 >= 8)
 		{
 			LobbyPlayers[v9].nType = PlayerType::PT_NotUsed;
-			LobbyPlayers[v9].nRace = Race::RACE_Zerg;
+			LobbyPlayers[v9].nRace = RaceId::RACE_Zerg;
 			LobbyPlayers[v9].nTeam = 0;
 		}
 	} while (v9 > 0);
@@ -7059,7 +7059,7 @@ int RestartGame_()
 	{
 		return 1;
 	}
-	Race v1 = Players[g_LocalNationID].nRace;
+	RaceId v1 = Players[g_LocalNationID].nRace;
 	next_campaign_mission = 0;
 	char dest[260];
 	strcpy_s(dest, CurrentMapFileName);
@@ -7332,17 +7332,17 @@ enum ExpandedMapData : u16
 void LoadRaceUI_()
 {
 	LoadRaceSFX_(1);
-	if (consoleIndex == Race::RACE_Zerg)
+	if (consoleIndex == RaceId::RACE_Zerg)
 	{
 		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\zerg.grp", LoadGraphic);
 		currentMusicId = MT_ZERG1;
 	}
-	else if (consoleIndex == Race::RACE_Terran)
+	else if (consoleIndex == RaceId::RACE_Terran)
 	{
 		DlgGrp_Constructor(178, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
 		currentMusicId = MT_TERRAN1;
 	}
-	else if (consoleIndex == Race::RACE_Protoss)
+	else if (consoleIndex == RaceId::RACE_Protoss)
 	{
 		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
 		currentMusicId = MT_PROTOSS1;
@@ -8161,15 +8161,15 @@ int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 	}
 
 	__int16 v4;
-	if (consoleIndex == Race::RACE_Zerg)
+	if (consoleIndex == RaceId::RACE_Zerg)
 	{
 		v4 = 7;
 	}
-	else if (consoleIndex == Race::RACE_Terran)
+	else if (consoleIndex == RaceId::RACE_Terran)
 	{
 		v4 = 8;
 	}
-	else if (consoleIndex == Race::RACE_Protoss)
+	else if (consoleIndex == RaceId::RACE_Protoss)
 	{
 		v4 = 9;
 	}
@@ -11075,7 +11075,7 @@ void sub_4C4A80_(int a1, int a2)
 	}
 
 	PlayerType v8 = Players[player_id].nType;
-	Race v13 = Players[player_id].nRace;
+	RaceId v13 = Players[player_id].nRace;
 	u8 v12 = Players[player_id].nTeam;
 	memcpy(&Players[player_id], &LobbyPlayers[player_id], sizeof(PlayerInfo));
 	if (v8 == PT_ClosedSlot || v8 == PT_ComputerSlot)
@@ -11692,7 +11692,7 @@ FAIL_STUB_PATCH(statfluf_DLG_Interact);
 
 void load_statfluf_BIN_()
 {
-	statfluf_current_race = InReplay ? Race::RACE_Other : consoleIndex;
+	statfluf_current_race = InReplay ? RaceId::RACE_Other : consoleIndex;
 	StatFlufDialog* dlgs = statfluf_dialogs_[statfluf_current_race];
 	for (int i = 0; dlgs[i].position.left != -1; i++)
 	{
@@ -14983,7 +14983,7 @@ struct __declspec(align(2)) ExpandedCampaignMenuEntry
 	ExpandedMapData next_mission;
 	Cinematic cinematic;
 	char _padding0;
-	Race race;
+	RaceId race;
 	bool hide;
 	const char* establishing_shot;
 	const char* epilog;
@@ -15271,7 +15271,7 @@ struct Campaign
 	const char* campaign_id;
 	int first_mission_index;
 	bool is_expansion;
-	Race race;
+	RaceId race;
 	ExpandedCampaignMenuEntry* entries;
 	std::vector<const char*> epilogs;
 	MusicTrackDescription* epilog_music_track;
@@ -15283,7 +15283,7 @@ std::vector<Campaign> campaigns = {
 		"swterran",
 		0,
 		false,
-		Race::RACE_Terran,
+		RaceId::RACE_Terran,
 		terran_swcampaign_menu_entries_,
 		{"epilogsw"},
 		ingame_music + MusicTrack::MT_TERRAN2,
@@ -15293,7 +15293,7 @@ std::vector<Campaign> campaigns = {
 		"terran",
 		0,
 		false,
-		Race::RACE_Terran,
+		RaceId::RACE_Terran,
 		terran_campaign_menu_entries_,
 		{},
 		nullptr,
@@ -15303,7 +15303,7 @@ std::vector<Campaign> campaigns = {
 		"zerg",
 		1,
 		false,
-		Race::RACE_Zerg,
+		RaceId::RACE_Zerg,
 		zerg_campaign_menu_entries_,
 		{},
 		nullptr,
@@ -15313,7 +15313,7 @@ std::vector<Campaign> campaigns = {
 		"protoss",
 		1,
 		false,
-		Race::RACE_Protoss,
+		RaceId::RACE_Protoss,
 		protoss_campaign_menu_entries_,
 		{"epilog", "crdt_lst"},
 		ingame_music + MusicTrack::MT_PROTOSS3,
@@ -15323,7 +15323,7 @@ std::vector<Campaign> campaigns = {
 		"xprotoss",
 		1,
 		true,
-		Race::RACE_Protoss,
+		RaceId::RACE_Protoss,
 		protoss_expcampaign_menu_entries_,
 		{},
 		nullptr,
@@ -15333,7 +15333,7 @@ std::vector<Campaign> campaigns = {
 		"xterran",
 		1,
 		true,
-		Race::RACE_Terran,
+		RaceId::RACE_Terran,
 		terran_expcampaign_menu_entries_,
 		{},
 		nullptr,
@@ -15343,7 +15343,7 @@ std::vector<Campaign> campaigns = {
 		"xzerg",
 		1,
 		true,
-		Race::RACE_Zerg,
+		RaceId::RACE_Zerg,
 		zerg_expcampaign_menu_entries_,
 		{"epilogX", "crdt_exp"},
 		ingame_music + MusicTrack::MT_PROTOSS3,
@@ -15403,7 +15403,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, Expande
 
 FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
 
-void ContinueCampaignWithLevelCheat_(ExpandedMapData mission, bool is_expansion, Race race)
+void ContinueCampaignWithLevelCheat_(ExpandedMapData mission, bool is_expansion, RaceId race)
 {
 	Ophelia = 1;
 	level_cheat_mission = (MapData4)mission;
@@ -15499,7 +15499,7 @@ void updateActiveCampaignMission_()
 
 FAIL_STUB_PATCH(updateActiveCampaignMission);
 
-bool LoadCampaignWithCharacter_(Race race)
+bool LoadCampaignWithCharacter_(RaceId race)
 {
 	customSingleplayer[0] = 0;
 	dword_51CA1C = 0;
@@ -15585,11 +15585,11 @@ bool LoadPrecursorCampaign()
 	return active_campaign_menu_entry != NULL;
 }
 
-int sub_4B5110_(Race race)
+int sub_4B5110_(RaceId race)
 {
 	if (dword_59A0D4[race])
 	{
-		const char* v3 = GetNetworkTblString_(race != Race::RACE_Terran ? 144 : 143);
+		const char* v3 = GetNetworkTblString_(race != RaceId::RACE_Terran ? 144 : 143);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -15602,11 +15602,11 @@ int sub_4B5110_(Race race)
 
 FAIL_STUB_PATCH(sub_4B5110);
 
-bool sub_4B27A0_(Race race)
+bool sub_4B27A0_(RaceId race)
 {
 	if (dword_59B760[race])
 	{
-		const char* v3 = GetNetworkTblString_(race == Race::RACE_Protoss ? 142 : 141);
+		const char* v3 = GetNetworkTblString_(race == RaceId::RACE_Protoss ? 142 : 141);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -15624,21 +15624,21 @@ bool sub_4B5180_(dialog* a1)
 	switch (LastControlID)
 	{
 	case 6:
-		if (!sub_4B5110_(Race::RACE_Protoss))
+		if (!sub_4B5110_(RaceId::RACE_Protoss))
 		{
 			return true;
 		}
 		LastControlID = 6;
 		break;
 	case 7:
-		if (!sub_4B5110_(Race::RACE_Terran))
+		if (!sub_4B5110_(RaceId::RACE_Terran))
 		{
 			return true;
 		}
 		LastControlID = 7;
 		break;
 	case 8:
-		if (!sub_4B5110_(Race::RACE_Zerg))
+		if (!sub_4B5110_(RaceId::RACE_Zerg))
 		{
 			return true;
 		}
@@ -15655,21 +15655,21 @@ bool sub_4B2810_(dialog* a1)
 	switch (LastControlID)
 	{
 	case 6:
-		if (!sub_4B27A0_(Race::RACE_Protoss))
+		if (!sub_4B27A0_(RaceId::RACE_Protoss))
 		{
 			return true;
 		}
 		LastControlID = 6;
 		break;
 	case 7:
-		if (!sub_4B27A0_(Race::RACE_Terran))
+		if (!sub_4B27A0_(RaceId::RACE_Terran))
 		{
 			return true;
 		}
 		LastControlID = 7;
 		break;
 	case 8:
-		if (!sub_4B27A0_(Race::RACE_Zerg))
+		if (!sub_4B27A0_(RaceId::RACE_Zerg))
 		{
 			return true;
 		}
@@ -16995,18 +16995,18 @@ int __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCustm_PlayerSlot);
 
-const char* __stdcall getRaceString(Race race)
+const char* __stdcall getRaceString(RaceId race)
 {
 	static TblFile tbl_file("rez\\races.tbl");
 
 	return tbl_file[race];
 }
 
-Race SELECTABLE_RACES[] = {
-	Race::RACE_Zerg,
-	Race::RACE_Terran,
-	Race::RACE_Protoss,
-	Race::RACE_Random,
+RaceId SELECTABLE_RACES[] = {
+	RaceId::RACE_Zerg,
+	RaceId::RACE_Terran,
+	RaceId::RACE_Protoss,
+	RaceId::RACE_Random,
 };
 
 void gluCustm_raceDropdown_(dialog* a1)
@@ -17205,15 +17205,15 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		{
 			gwGameMode = GAME_RUNINIT;
 		}
-		else if (Players[g_LocalNationID].nRace == Race::RACE_Zerg)
+		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Zerg)
 		{
 			glGluesMode = GLUE_READY_Z;
 		}
-		else if (Players[g_LocalNationID].nRace == Race::RACE_Terran)
+		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Terran)
 		{
 			glGluesMode = GLUE_READY_T;
 		}
-		else if (Players[g_LocalNationID].nRace == Race::RACE_Protoss)
+		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Protoss)
 		{
 			glGluesMode = GLUE_READY_P;
 		}
@@ -17914,7 +17914,7 @@ void sub_46D1F0_()
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(Race race, const char* bin_path)
+void loadMenu_gluRdy(RaceId race, const char* bin_path)
 {
 	sub_46D200_(&briefing_music[race]);
 	DisplayEstablishingShot_();
@@ -18302,7 +18302,7 @@ void loadMenu_gluModem_()
 
 FAIL_STUB_PATCH(loadMenu_gluModem);
 
-void CreateRaceDropdown_(dialog* dlg, Race race)
+void CreateRaceDropdown_(dialog* dlg, RaceId race)
 {
 	HIBYTE(dlg->wUser) |= 1;
 	if (!dword_68F520)
@@ -18362,7 +18362,7 @@ void CreateRaceDropdown_(dialog* dlg, Race race)
 	dlg->pfcnInteract = sub_450A60;
 }
 
-void __stdcall CreateRaceDropdown__(Race race)
+void __stdcall CreateRaceDropdown__(RaceId race)
 {
 	dialog* dlg;
 
@@ -18606,15 +18606,15 @@ int LobbyLoopCnt_()
 	{
 		gwGameMode = GAME_RUNINIT;
 	}
-	else if (Players[g_LocalNationID].nRace == Race::RACE_Zerg)
+	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Zerg)
 	{
 		glGluesMode = GLUE_READY_Z;
 	}
-	else if (Players[g_LocalNationID].nRace == Race::RACE_Protoss)
+	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Protoss)
 	{
 		glGluesMode = GLUE_READY_P;
 	}
-	else if (Players[g_LocalNationID].nRace == Race::RACE_Terran)
+	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Terran)
 	{
 		glGluesMode = GLUE_READY_T;
 	}
@@ -19449,7 +19449,7 @@ int CopyLastReplayTo_(char* a1)
 
 FAIL_STUB_PATCH(CopyLastReplayTo);
 
-int LoadSaveGameBIN_Main_(int a1, Race a2)
+int LoadSaveGameBIN_Main_(int a1, RaceId a2)
 {
 	dword_51BFD4 = a1;
 	dword_51BFB4 = a2;
@@ -19717,9 +19717,9 @@ void loadMenu_gluScore_()
 	MusicTrackDescription* score_scren_music_track;
 	if (dword_6D5A60)
 	{
-		score_screen = victory_screens[Race::RACE_Zerg];
-		score_scren_music_track = &victory_music_track[Race::RACE_Zerg];
-		glGluesMode = victory_menus[Race::RACE_Zerg];
+		score_screen = victory_screens[RaceId::RACE_Zerg];
+		score_scren_music_track = &victory_music_track[RaceId::RACE_Zerg];
+		glGluesMode = victory_menus[RaceId::RACE_Zerg];
 	}
 	else if (dword_59B75C)
 	{
@@ -19888,15 +19888,15 @@ int SwitchMenu_()
 			IsExpansion = 0;
 			goto LABEL_28;
 		}
-		if (level_cheat_race == Race::RACE_Zerg)
+		if (level_cheat_race == RaceId::RACE_Zerg)
 		{
 			glGluesMode = GLUE_READY_Z;
 		}
-		else if (level_cheat_race == Race::RACE_Terran)
+		else if (level_cheat_race == RaceId::RACE_Terran)
 		{
 			glGluesMode = GLUE_READY_T;
 		}
-		else if (level_cheat_race == Race::RACE_Protoss)
+		else if (level_cheat_race == RaceId::RACE_Protoss)
 		{
 			glGluesMode = GLUE_READY_P;
 		}
@@ -19953,13 +19953,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(Race::RACE_Terran, "rez\\glurdyt.bin");
+			loadMenu_gluRdy(RaceId::RACE_Terran, "rez\\glurdyt.bin");
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(Race::RACE_Zerg, "rez\\glurdyz.bin");
+			loadMenu_gluRdy(RaceId::RACE_Zerg, "rez\\glurdyz.bin");
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(Race::RACE_Protoss, "rez\\glurdyp.bin");
+			loadMenu_gluRdy(RaceId::RACE_Protoss, "rez\\glurdyp.bin");
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
@@ -21201,13 +21201,13 @@ int ContinueCampaign_(int a1)
 		{
 			switch (active_campaign_menu_entry->race)
 			{
-			case Race::RACE_Zerg:
+			case RaceId::RACE_Zerg:
 				glGluesMode = MenuPosition::GLUE_READY_Z;
 				break;
-			case Race::RACE_Terran:
+			case RaceId::RACE_Terran:
 				glGluesMode = MenuPosition::GLUE_READY_T;
 				break;
-			case Race::RACE_Protoss:
+			case RaceId::RACE_Protoss:
 				glGluesMode = MenuPosition::GLUE_READY_P;
 				break;
 			}
