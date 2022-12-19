@@ -7033,7 +7033,7 @@ int LevelCheatInitGame_()
 
 FAIL_STUB_PATCH(LevelCheatInitGame);
 
-signed int LoadGameCreate_()
+int LoadGameCreate_()
 {
 	if (!loadGameFileHandle)
 	{
