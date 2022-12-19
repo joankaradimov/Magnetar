@@ -20,6 +20,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/iscript.cpp
 	src/file_info.cpp
 	src/MagnetarCraft.cpp
+	src/race.cpp
 	src/starcraft_executable.cpp
 	src/starcraft.cpp
 )

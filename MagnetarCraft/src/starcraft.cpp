@@ -7,6 +7,7 @@
 #include "CSprite.h"
 #include "iscript.h"
 #include "starcraft.h"
+#include "race.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
 #include "patching.h"
@@ -4334,24 +4335,9 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 
 FAIL_STUB_PATCH(CleanupIscriptBINHandle);
 
-UnitType GetBaseBuilding(RaceId race)
-{
-	switch (race)
-	{
-	case RaceId::RACE_Zerg:
-		return UnitType::Zerg_Hatchery;
-	case RaceId::RACE_Terran:
-		return UnitType::Terran_Command_Center;
-	case RaceId::RACE_Protoss:
-		return UnitType::Protoss_Nexus;
-	default:
-		return (UnitType)228;
-	}
-}
-
 void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 {
-	UnitType base_building = GetBaseBuilding(race);
+	UnitType base_building = Race::races[race].base_building;
 
 	// TODO: test this piece of code against the one in StarCraft.exe:
 	int v5 = Unit_Placement[base_building].x;
@@ -4387,28 +4373,9 @@ void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 
 FAIL_STUB_PATCH(CreateInitialMeleeBuildings);
 
-UnitType GetWorkerType(RaceId race)
-{
-	switch (race)
-	{
-	case RaceId::RACE_Zerg:
-		return UnitType::Zerg_Drone;
-	case RaceId::RACE_Terran:
-		return UnitType::Terran_SCV;
-	case RaceId::RACE_Protoss:
-		return UnitType::Protoss_Probe;
-	case 4:
-		return UnitType::Zerg_Infested_Terran;
-	default:
-		return (UnitType)228;
-	}
-}
-
 void CreateInitialMeleeWorker_(RaceId race, unsigned __int8 player_index)
 {
-	UnitType workerUnitType = GetWorkerType(race);
-
-	CUnit* worker = CreateUnit(workerUnitType, startPositions[player_index].x, startPositions[player_index].y, player_index);
+	CUnit* worker = CreateUnit(Race::races[race].worker, startPositions[player_index].x, startPositions[player_index].y, player_index);
 	if (worker)
 	{
 		updateUnitStatsFinishBuilding(worker);
@@ -6575,7 +6542,7 @@ void CreateInitialTeamMeleeUnits_()
 
 			if (gameData.got_file_values.starting_units && gameData.got_file_values.starting_units <= StartingUnits::SU_WORKER_AND_CENTER)
 			{
-				CUnit* worker_unit = CreateUnit(GetWorkerType(v10), startPositions[a1].x, startPositions[a1].y, a1);
+				CUnit* worker_unit = CreateUnit(Race::races[v10].worker, startPositions[a1].x, startPositions[a1].y, a1);
 				if (worker_unit)
 				{
 					updateUnitStatsFinishBuilding(worker_unit);
@@ -17187,6 +17154,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	dword_59B844 = is_multiplayer;
 	char v1 = 0;
 	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
+	RaceId race;
 
 	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
 	dword_59BA60 = (void *)LoadGraphic("glue\\create\\iCreate.grp", 0, "Starcraft\\SWAR\\lang\\gluCreat.cpp", 1427);
@@ -17205,17 +17173,10 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		{
 			gwGameMode = GAME_RUNINIT;
 		}
-		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Zerg)
+		race = Players[g_LocalNationID].nRace;
+		if (race == RaceId::RACE_Zerg || race == RaceId::RACE_Terran || race == RaceId::RACE_Protoss)
 		{
-			glGluesMode = GLUE_READY_Z;
-		}
-		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Terran)
-		{
-			glGluesMode = GLUE_READY_T;
-		}
-		else if (Players[g_LocalNationID].nRace == RaceId::RACE_Protoss)
-		{
-			glGluesMode = GLUE_READY_P;
+			glGluesMode = Race::races[race].ready_room_menu;
 		}
 		break;
 	case -3:
@@ -17914,14 +17875,14 @@ void sub_46D1F0_()
 
 FAIL_STUB_PATCH(sub_46D1F0);
 
-void loadMenu_gluRdy(RaceId race, const char* bin_path)
+void loadMenu_gluRdy(RaceId race)
 {
 	sub_46D200_(&briefing_music[race]);
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
 		dword_50E064 = -1;
-		dialog* bin_dialog = LoadDialog(bin_path);
+		dialog* bin_dialog = LoadDialog(Race::races[race].get_ready_room_bin());
 
 		switch (gluLoadBINDlg_(bin_dialog, gluRdy_BINDLG_Loop))
 		{
@@ -18606,21 +18567,9 @@ int LobbyLoopCnt_()
 	{
 		gwGameMode = GAME_RUNINIT;
 	}
-	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Zerg)
-	{
-		glGluesMode = GLUE_READY_Z;
-	}
-	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Protoss)
-	{
-		glGluesMode = GLUE_READY_P;
-	}
-	else if (Players[g_LocalNationID].nRace == RaceId::RACE_Terran)
-	{
-		glGluesMode = GLUE_READY_T;
-	}
 	else
 	{
-		throw "Unknown race"; // TODO: handle this
+		glGluesMode = Race::races[Players[g_LocalNationID].nRace].ready_room_menu;
 	}
 
 	clearGameNextMenu();
@@ -19671,18 +19620,6 @@ void sub_4DBF80_()
 
 FAIL_STUB_PATCH(sub_4DBF80);
 
-MenuPosition victory_menus[] = {
-	GLUE_SCORE_Z_VICTORY,
-	GLUE_SCORE_T_VICTORY,
-	GLUE_SCORE_P_VICTORY,
-};
-
-MenuPosition defeat_menus[] = {
-	GLUE_SCORE_Z_DEFEAT,
-	GLUE_SCORE_T_DEFEAT,
-	GLUE_SCORE_P_DEFEAT,
-};
-
 const char* victory_screens[] = {
 	"glue\\scoreZv\\",
 	"glue\\scoreTv\\",
@@ -19719,19 +19656,19 @@ void loadMenu_gluScore_()
 	{
 		score_screen = victory_screens[RaceId::RACE_Zerg];
 		score_scren_music_track = &victory_music_track[RaceId::RACE_Zerg];
-		glGluesMode = victory_menus[RaceId::RACE_Zerg];
+		glGluesMode = Race::races[RaceId::RACE_Zerg].victory_menu;
 	}
 	else if (dword_59B75C)
 	{
 		score_screen = victory_screens[Players[g_LocalNationID].nRace];
 		score_scren_music_track = &victory_music_track[Players[g_LocalNationID].nRace];
-		glGluesMode = victory_menus[Players[g_LocalNationID].nRace];
+		glGluesMode = Race::races[Players[g_LocalNationID].nRace].victory_menu;
 	}
 	else
 	{
 		score_screen = defeat_screens[Players[g_LocalNationID].nRace];
 		score_scren_music_track = &defeat_music_track[Players[g_LocalNationID].nRace];
-		glGluesMode = defeat_menus[Players[g_LocalNationID].nRace];
+		glGluesMode = Race::races[Players[g_LocalNationID].nRace].defeat_menu;
 	}
 
 	strcpy(byte_59B628, score_screen);
@@ -19888,17 +19825,9 @@ int SwitchMenu_()
 			IsExpansion = 0;
 			goto LABEL_28;
 		}
-		if (level_cheat_race == RaceId::RACE_Zerg)
+		if (level_cheat_race == RaceId::RACE_Zerg || level_cheat_race == RaceId::RACE_Terran || level_cheat_race == RaceId::RACE_Protoss)
 		{
-			glGluesMode = GLUE_READY_Z;
-		}
-		else if (level_cheat_race == RaceId::RACE_Terran)
-		{
-			glGluesMode = GLUE_READY_T;
-		}
-		else if (level_cheat_race == RaceId::RACE_Protoss)
-		{
-			glGluesMode = GLUE_READY_P;
+			glGluesMode = Race::races[level_cheat_race].ready_room_menu;
 		}
 		else
 		{
@@ -19953,13 +19882,13 @@ LABEL_28:
 			loadMenu_gluCmpgn_();
 			break;
 		case GLUE_READY_T:
-			loadMenu_gluRdy(RaceId::RACE_Terran, "rez\\glurdyt.bin");
+			loadMenu_gluRdy(RaceId::RACE_Terran);
 			break;
 		case GLUE_READY_Z:
-			loadMenu_gluRdy(RaceId::RACE_Zerg, "rez\\glurdyz.bin");
+			loadMenu_gluRdy(RaceId::RACE_Zerg);
 			break;
 		case GLUE_READY_P:
-			loadMenu_gluRdy(RaceId::RACE_Protoss, "rez\\glurdyp.bin");
+			loadMenu_gluRdy(RaceId::RACE_Protoss);
 			break;
 		case GLUE_EX_CAMPAIGN:
 			loadMenu_gluExpCmpgn_();
@@ -21199,18 +21128,7 @@ int ContinueCampaign_(int a1)
 		}
 		if (CreateCampaignGame_(active_campaign_menu_entry->next_mission))
 		{
-			switch (active_campaign_menu_entry->race)
-			{
-			case RaceId::RACE_Zerg:
-				glGluesMode = MenuPosition::GLUE_READY_Z;
-				break;
-			case RaceId::RACE_Terran:
-				glGluesMode = MenuPosition::GLUE_READY_T;
-				break;
-			case RaceId::RACE_Protoss:
-				glGluesMode = MenuPosition::GLUE_READY_P;
-				break;
-			}
+			glGluesMode = Race::races[active_campaign_menu_entry->race].ready_room_menu;
 			return 1;
 		}
 		return 0;
