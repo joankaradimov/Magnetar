@@ -1020,16 +1020,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
     }
 }
 
-void __stdcall BWFXN_PlayIscript__(IScriptProgramState* program_state, int noop, int* distance_moved)
-{
-    CImage* image;
-
-    __asm mov image, ecx
-
-    BWFXN_PlayIscript_(image, program_state, noop, distance_moved);
-}
-
-FUNCTION_PATCH((void*)0x4D74C0, BWFXN_PlayIscript__);
+FAIL_STUB_PATCH(BWFXN_PlayIscript);
 
 void PlayIscriptAnim_(CImage* image, Anims new_animation)
 {

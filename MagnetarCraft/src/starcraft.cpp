@@ -288,6 +288,63 @@ void sub_42D600__()
 
 FUNCTION_PATCH((void*)0x42D600, sub_42D600__);
 
+void sub_42D8C0_(CUnit* unit)
+{
+	if (unit->flingyMovementType == 2)
+	{
+		program_state = unit->sprite->pImagePrimary->iscript_program;
+		if (sub_42D600_(Anims::AE_Walking))
+		{
+			CUnit* v1 = iscript_unit;
+			int v9 = 0;
+			for (int i = 0; i < 32; i++)
+			{
+				int distance_moved = 0;
+				iscript_unit = unit;
+				BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &distance_moved);
+				iscript_unit = v1;
+				int v5 = 0;
+				if (unit->status.stimTimer)
+				{
+					v5 = 1;
+				}
+				if (unit->statusFlags & SpeedUpgrade)
+				{
+					++v5;
+				}
+				if (unit->status.ensnareTimer)
+				{
+					--v5;
+				}
+
+				if (v5 > 0)
+				{
+					distance_moved *= 2;
+				}
+				else if (v5 < 0)
+				{
+					distance_moved -= ((unsigned int)distance_moved >> 2);
+				}
+
+				v9 += distance_moved;
+			}
+			unit->flingyTopSpeed = v9 / 32;
+		}
+	}
+}
+
+void sub_42D8C0__()
+{
+	CUnit* unit;
+
+	__asm mov unit, esi
+
+	sub_42D8C0_(unit);
+}
+
+FUNCTION_PATCH((void*)0x42D8C0, sub_42D8C0__);
+
+
 void __fastcall iscriptSomething_Death_(CImage* image)
 {
 	char v2 = BYTE1(image->coloringData);
