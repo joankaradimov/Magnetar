@@ -208,6 +208,14 @@ void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 
 FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd);
 
+void init_iscript_program_state(IScriptProgramState* program_state, Anims animation)
+{
+    program_state->anim = animation;
+    program_state->wait = 0;
+    program_state->return_address = 0;
+    program_state->program_counter = sub_4D4D70_(program_state->iscript_header)->headers[animation];
+}
+
 void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int noop, _DWORD* distance_moved)
 {
     if (program_state->wait)
@@ -1043,10 +1051,7 @@ void PlayIscriptAnim_(CImage* image, Anims new_animation)
                 animation = Anims::AE_AirAttkInit;
             }
 
-            image->iscript_program.anim = animation;
-            image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[animation];
-            image->iscript_program.wait = 0;
-            image->iscript_program.return_address = 0;
+            init_iscript_program_state(&image->iscript_program, animation);
             BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
         }
     }

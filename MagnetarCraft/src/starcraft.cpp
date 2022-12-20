@@ -351,10 +351,7 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 		{
 			if (image->iscript_program.anim != Anims::AE_Death)
 			{
-				image->iscript_program.anim = Anims::AE_Death;
-				image->iscript_program.wait = 0;
-				image->iscript_program.return_address = 0;
-				image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Death];
+				init_iscript_program_state(&image->iscript_program, Anims::AE_Death);
 				BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 			}
 			iscript_flingy->orderSignal |= 1u;
@@ -399,10 +396,7 @@ FUNCTION_PATCH((void*)0x4D6640, isValidScript__);
 void PlayWarpInOverlay_(CImage* image)
 {
 	isValidScript_(image, 193);
-	image->iscript_program.anim = Anims::AE_Init;
-	image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Init];
-	image->iscript_program.wait = 0;
-	image->iscript_program.return_address = 0;
+	init_iscript_program_state(&image->iscript_program, Anims::AE_Init);
 	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 	isValidScript_(image, Images_IscriptEntry[image->imageID]);
 	image->paletteType = 12;
@@ -425,10 +419,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 			{
 				if (image->flags & 0x10)
 				{
-					image->iscript_program.anim = Anims::AE_SpecialState1;
-					image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_SpecialState1];
-					image->iscript_program.wait = 0;
-					image->iscript_program.return_address = 0;
+					init_iscript_program_state(&image->iscript_program, Anims::AE_SpecialState1);
 					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 				}
 			}
@@ -454,10 +445,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 			{
 				if (image->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS)
 				{
-					image->iscript_program.anim = Anims::AE_WarpIn;
-					image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_WarpIn];
-					image->iscript_program.wait = 0;
-					image->iscript_program.return_address = 0;
+					init_iscript_program_state(&image->iscript_program, Anims::AE_WarpIn);
 					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 				}
 			}
@@ -477,10 +465,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 				{
 					if (image->flags & 0x10)
 					{
-						image->iscript_program.anim = Anims::AE_Disable;
-						image->iscript_program.program_counter = sub_4D4D70_(image->iscript_program.iscript_header)->headers[Anims::AE_Disable];
-						image->iscript_program.wait = 0;
-						image->iscript_program.return_address = 0;
+						init_iscript_program_state(&image->iscript_program, Anims::AE_Disable);
 						BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
 					}
 				}
@@ -616,10 +601,7 @@ void GroundAttackInit_(__int16 x, __int16 y)
 	{
 		if ((i->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) != 0)
 		{
-			i->iscript_program.anim = Anims::AE_GndAttkInit;
-			i->iscript_program.program_counter = sub_4D4D70_(i->iscript_program.iscript_header)->headers[Anims::AE_GndAttkInit];
-			i->iscript_program.wait = 0;
-			i->iscript_program.return_address = 0;
+			init_iscript_program_state(&i->iscript_program, Anims::AE_GndAttkInit);
 			BWFXN_PlayIscript_(i, &i->iscript_program, 0, 0);
 		}
 	}
