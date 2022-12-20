@@ -11440,38 +11440,49 @@ FAIL_STUB_PATCH(GameLoop_State);
 
 void GameLoop_Top_()
 {
-	FramesUntilNextTurn = 1;
-	byte_51CE9D = 0;
-	dword_51CE94 = GetTickCount();
-	bool v2 = false;
-	while (GameState)
+	if (has_viewport)
 	{
-		BWFXN_videoLoop_(3);
-		DWORD v1 = GetTickCount();
-		if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.GameSpeed])
+		FramesUntilNextTurn = 1;
+		byte_51CE9D = 0;
+		dword_51CE94 = GetTickCount();
+		bool v2 = false;
+		while (GameState)
 		{
-			dword_51CE94 = v1;
+			BWFXN_videoLoop_(3);
+			DWORD v1 = GetTickCount();
+			if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.GameSpeed])
+			{
+				dword_51CE94 = v1;
+			}
+			BWFXN_NextFrameHelperFunctionTarget_();
+			if (v1 + dword_51CE8C[0] > 0xA)
+			{
+				dword_51CE8C[0] = -v1;
+				PollInput_();
+				v2 = true;
+			}
+			RecvMessage_();
+			LeagueChatFilter();
+			if (v1 >= dword_51CE94)
+			{
+				GameLoop_State_();
+				v2 = true;
+			}
+			updateHUDInformation_();
+			if (dword_5968EC || v2)
+			{
+				dword_5968EC = 0;
+				v2 = false;
+				BWFXN_RedrawTarget_();
+			}
 		}
-		BWFXN_NextFrameHelperFunctionTarget_();
-		if (v1 + dword_51CE8C[0] > 0xA)
-		{
-			dword_51CE8C[0] = -v1;
-			PollInput_();
-			v2 = true;
-		}
-		RecvMessage_();
-		LeagueChatFilter();
-		if (v1 >= dword_51CE94)
+	}
+	else
+	{
+		while (GameState)
 		{
 			GameLoop_State_();
-			v2 = true;
-		}
-		updateHUDInformation_();
-		if (dword_5968EC || v2)
-		{
-			dword_5968EC = 0;
-			v2 = false;
-			BWFXN_RedrawTarget_();
+			updateHUDInformation_();
 		}
 	}
 }
