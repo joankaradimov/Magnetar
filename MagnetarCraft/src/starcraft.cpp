@@ -277,16 +277,7 @@ int sub_42D600_(Anims animation)
 	}
 }
 
-void sub_42D600__()
-{
-	Anims animation;
-
-	__asm mov animation, al
-
-	sub_42D600_(animation);
-}
-
-FUNCTION_PATCH((void*)0x42D600, sub_42D600__);
+FAIL_STUB_PATCH(sub_42D600);
 
 void sub_42D8C0_(CUnit* unit)
 {
