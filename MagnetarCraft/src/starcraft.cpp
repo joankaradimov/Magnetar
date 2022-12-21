@@ -14804,6 +14804,22 @@ void sub_4CC990_()
 
 FAIL_STUB_PATCH(sub_4CC990);
 
+void loadDlgGrp_()
+{
+	for (int i = 0; i < 12; i++)
+	{
+		if (!stru_50E06C[i].field_110 || !is_spawn)
+		{
+			char dest[MAX_PATH];
+			strcpy_s(dest, stru_50E06C[i].glue_path);
+			strcat_s(dest, "\\Dlg.grp");
+			dword_51C5C8[i] = DlgGrp_Constructor(388, "Starcraft\\SWAR\\lang\\glues.cpp", dest, LoadGraphic);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(loadDlgGrp);
+
 void init_gluesounds_()
 {
 	if (!dword_6D6364)
@@ -19846,7 +19862,7 @@ int SwitchMenu_()
 	loadtEffectPcx();
 	loadCursor();
 	loadTFontPcx();
-	loadDlgGrp();
+	loadDlgGrp_();
 	init_gluesounds_();
 
 	if (gwGameMode == GAME_WIN)
