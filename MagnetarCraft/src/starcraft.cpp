@@ -6687,6 +6687,16 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 
 FAIL_STUB_PATCH(sub_4CCAC0);
 
+void sub_4A91E0_()
+{
+	for (int i = 0; i < _countof(Players); i++)
+	{
+		memcpy(&Players[i], &LobbyPlayers[i], sizeof(PlayerInfo));
+	}
+}
+
+FAIL_STUB_PATCH(sub_4A91E0);
+
 int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
 	CurrentMapFileName[0] = 0;
@@ -6731,7 +6741,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 			LobbyPlayers[v9].nTeam = 0;
 		}
 	} while (v9 > 0);
-	sub_4A91E0();
+	sub_4A91E0_();
 	sub_45AC10(a4->player_force);
 	updatePlayerForce();
 	strrchr(v8, '\\');
@@ -18532,7 +18542,7 @@ signed int sub_4D4130_()
 		}
 		if (isHost)
 		{
-			sub_4A91E0();
+			sub_4A91E0_();
 		}
 	}
 	g_LocalHumanID = -1;
