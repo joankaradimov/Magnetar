@@ -6243,7 +6243,7 @@ void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 	strcpy(byte_599B98, a1);
 
 	char dest[MAX_PATH];
-	strcpy_s(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
+	strcpy_s(dest, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 	strcat_s(dest, "\\pOPopup.pcx");
 	AllocBackgroundImage(dest, &p_hist_pcx, palette, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 473);
 
@@ -14889,7 +14889,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		if (!glue_background_palette[0].data || a2 == (dialog*)-12)
 		{
 			char dest[260];
-			strcpy_s(dest, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
+			strcpy_s(dest, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 			strcat_s(dest, "\\BackGnd.pcx");
 			AllocBackgroundImage(dest, &a2->srcBits, palette, "Starcraft\\SWAR\\lang\\glues.cpp", 1052);
 			glue_background_palette[0].wid = a2->srcBits.wid;
@@ -14913,7 +14913,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		DlgGrp* v11 = dword_51C5C8[v10];
 		memcpy(&stru_6CE000, &dword_51C40C[v10], sizeof(stru_6CE000));
 		sub_419290(v11);
-		grpHead* v12 = (grpHead*) dword_50E170[326 * v10];
+		grpHead* v12 = stru_50E06C[v10].grp_head;
 		setCursor_(v12);
 		SetCallbackTimer(24, a2, 50, sub_4DCEA0);
 		dword_6D5E20 = &a2->srcBits;
@@ -17324,7 +17324,7 @@ int load_gluGameMode_BINDLG_()
 	byte_599B98[0] = 0;
 
 	char fileName[260];
-	strcpy_s(fileName, &aGluePalmm[1304 * stru_4FFAD0[glGluesMode].menu_position]);
+	strcpy_s(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 	strcat_s(fileName, "\\retail_ex.pcx");
 
 	int width;

@@ -3514,11 +3514,11 @@ char sub_42D890(CUnit *a1, int a2, int a3) {
     }
     return result_;
 }
-void sub_42D8C0(CUnit *a1) {
+void sub_42D8C0(CUnit *unit) {
     int address = 0x42d8c0;
     __asm {
         xor esi, esi
-        mov esi, a1
+        mov esi, unit
         call address
     }
 }
@@ -6591,16 +6591,13 @@ void Unit_RefundFullUpgrade(CUnit *a1) {
         call address
     }
 }
-int UpdateSpeed(CUnit *a1) {
+void UpdateSpeed(CUnit *unit) {
     int address = 0x454310;
-    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int(*sub_454360)(), sub_454360, 0x454360);
 int ApplySpeedUpgradeFromUnitType(CUnit *a1) {
@@ -14167,7 +14164,17 @@ int isImageRefreshable(CImage *a1) {
     }
     return result_;
 }
-DECL_FUNC(int(*refreshImage)(), refreshImage, 0x4970a0);
+char refreshImage(CImage *a1) {
+    int address = 0x4970a0;
+    char result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(int (__stdcall*sub_4970F0)(int), sub_4970F0, 0x4970f0);
 DECL_FUNC(void (__cdecl*createUnitBuildingSpriteValidityArray)(), createUnitBuildingSpriteValidityArray, 0x497110);
 DECL_FUNC(int(*initializeSpriteArray)(), initializeSpriteArray, 0x497230);
@@ -16334,7 +16341,7 @@ void sub_4A9130(unsigned __int8 a1, unsigned __int8 a2) {
         add esp, 4
     }
 }
-DECL_FUNC(int(*sub_4A91E0)(), sub_4A91E0, 0x4a91e0);
+DECL_FUNC(void (__cdecl*sub_4A91E0)(), sub_4A91E0, 0x4a91e0);
 DECL_FUNC(int(*getTotalValidSlotCount)(), getTotalValidSlotCount, 0x4a9210);
 DECL_FUNC(void (__cdecl*InitializeLoadedGameSlots)(), InitializeLoadedGameSlots, 0x4a9250);
 DECL_FUNC(int (__stdcall*GetRandomRace)(int), GetRandomRace, 0x4a94c0);
@@ -16503,7 +16510,7 @@ DECL_FUNC(void (__stdcall*Template_Constructor)(char *template_name, char *templ
 DECL_FUNC(int(*beginComputerAIScriptExecution)(), beginComputerAIScriptExecution, 0x4ab230);
 DECL_FUNC(int (__stdcall*sub_4AB310)(char a3, int), sub_4AB310, 0x4ab310);
 DECL_FUNC(int (__stdcall*IsBNetGame)(int), IsBNetGame, 0x4ab5b0);
-DECL_FUNC(Trigger *(__stdcall*loadTRGFile)(const char *a1), loadTRGFile, 0x4ab620);
+DECL_FUNC(int (__stdcall*loadTRGFile)(const char *a1), loadTRGFile, 0x4ab620);
 int sub_4AB6C0(GotFileValues *a1, size_t a2, int a3, char *buff) {
     int address = 0x4ab6c0;
     int result_;
@@ -20015,18 +20022,21 @@ DECL_FUNC(int(*sub_4D4DB0)(), sub_4D4DB0, 0x4d4db0);
 DECL_FUNC(int(*sub_4D4E10)(), sub_4D4E10, 0x4d4e10);
 DECL_FUNC(int(*sub_4D4E20)(), sub_4D4E20, 0x4d4e20);
 DECL_FUNC(CImage *(__cdecl*sub_4D4E30)(), sub_4D4E30, 0x4d4e30);
-DECL_FUNC(int(*sub_4D4E80)(), sub_4D4E80, 0x4d4e80);
-CImage *sub_4D4F10(CImage *a1) {
-    int address = 0x4d4f10;
-    CImage * result_;
+void sub_4D4E80(CImage *a1) {
+    int address = 0x4d4e80;
     __asm {
-        xor eax, eax
         xor esi, esi
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
+}
+void sub_4D4F10(CImage *image) {
+    int address = 0x4d4f10;
+    __asm {
+        xor esi, esi
+        mov esi, image
+        call address
+    }
 }
 int removeSelectionCircleImage(CImage *a1) {
     int address = 0x4d4fa0;
@@ -20243,7 +20253,7 @@ CImage *sub_4D5B00(CImage *result, int a2) {
     }
     return result_;
 }
-DECL_FUNC(int(*sub_4D5B60)(), sub_4D5B60, 0x4d5b60);
+DECL_FUNC(void (__cdecl*sub_4D5B60)(), sub_4D5B60, 0x4d5b60);
 void sub_4D5BB0(CSprite *a1) {
     int address = 0x4d5bb0;
     __asm {
@@ -26173,16 +26183,7 @@ char *(&off_50E040)[6] = * ((decltype(&off_50E040)) 0x50e040);
 int& replay_speed_multiplier = * ((decltype(&replay_speed_multiplier)) 0x50e058);
 int& dword_50E05C = * ((decltype(&dword_50E05C)) 0x50e05c);
 int& dword_50E064 = * ((decltype(&dword_50E064)) 0x50e064);
-const char(&aGluePalmm)[] = * ((decltype(&aGluePalmm)) 0x50e06c);
-int(&dword_50E170)[] = * ((decltype(&dword_50E170)) 0x50e170);
-char(&byte_50E174)[] = * ((decltype(&byte_50E174)) 0x50e174);
-int& dword_50E176 = * ((decltype(&dword_50E176)) 0x50e176);
-char(&aGluePalcs)[260] = * ((decltype(&aGluePalcs)) 0x50e584);
-char(&aGluePalrt)[11] = * ((decltype(&aGluePalrt)) 0x50ea9c);
-char(&aGluePalpd)[11] = * ((decltype(&aGluePalpd)) 0x50f9e4);
-char(&aGluePalpv)[11] = * ((decltype(&aGluePalpv)) 0x50fefc);
-char(&aGluePalzd)[11] = * ((decltype(&aGluePalzd)) 0x510414);
-char(&aGluePalzv)[11] = * ((decltype(&aGluePalzv)) 0x51092c);
+GluRelated(&stru_50E06C)[12] = * ((decltype(&stru_50E06C)) 0x50e06c);
 CampaignMenuEntry *(&campaign_menu_entries)[3] = * ((decltype(&campaign_menu_entries)) 0x5122a0);
 CampaignMenuEntry *(&expcampaign_menu_entries)[3] = * ((decltype(&expcampaign_menu_entries)) 0x5122ac);
 Cinematic& active_cinematic = * ((decltype(&active_cinematic)) 0x5122b8);
