@@ -7336,30 +7336,32 @@ enum ExpandedMapData : u16
 	EMD_Unknown = 0x49,
 };
 
+MusicTrackDescription* current_ingame_music_track = nullptr;
+
 void LoadRaceUI_()
 {
 	LoadRaceSFX_(1);
 	if (consoleIndex == RaceId::RACE_Zerg)
 	{
 		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\zerg.grp", LoadGraphic);
-		currentMusicId = MT_ZERG1;
+		current_ingame_music_track = ingame_music + MT_ZERG1;
 	}
 	else if (consoleIndex == RaceId::RACE_Terran)
 	{
 		DlgGrp_Constructor(178, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
-		currentMusicId = MT_TERRAN1;
+		current_ingame_music_track = ingame_music + MT_TERRAN1;
 	}
 	else if (consoleIndex == RaceId::RACE_Protoss)
 	{
 		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
-		currentMusicId = MT_PROTOSS1;
+		current_ingame_music_track = ingame_music + MT_PROTOSS1;
 	}
 
 	if (CampaignIndex)
 	{
 		int v2 = CampaignIndex > ExpandedMapData::EMD_protoss10 ? xCampaignFirstMission[consoleIndex] : campaignFirstMission[consoleIndex];
-		int v1 = ((unsigned __int16)CampaignIndex - v2) % 3;
-		currentMusicId += v1;
+		int v1 = (CampaignIndex - v2) % 3;
+		current_ingame_music_track += v1;
 	}
 	else
 	{
@@ -7369,10 +7371,8 @@ void LoadRaceUI_()
 		{
 			consoleRaceSpecific = 0;
 		}
-		else
-		{
-			currentMusicId += consoleRaceSpecific;
-		}
+
+		current_ingame_music_track += consoleRaceSpecific;
 	}
 }
 
@@ -11540,7 +11540,7 @@ FAIL_STUB_PATCH(stopAllSound);
 GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
-	DLGMusicFade_(&ingame_music[currentMusicId]);
+	DLGMusicFade_(current_ingame_music_track);
 	if (has_viewport)
 	{
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
