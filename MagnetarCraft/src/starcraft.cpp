@@ -7565,6 +7565,73 @@ int __cdecl LoadReplayFile__()
 
 FUNCTION_PATCH((void*)0x4DF570, LoadReplayFile__);
 
+int chooseTRGTemplate_()
+{
+	VictoryConditions v0 = gameData.got_file_values.victory_conditions;
+	if ((gameData.got_file_values.player_types == PT_NO_COMPUTERS || gameData.got_file_values.player_types == PT_SINGLE_NO_COMPUTERS)
+		&& (gameData.got_file_values.victory_conditions || gameData.got_file_values.starting_units || gameData.got_file_values.tournament_mode))
+	{
+		beginComputerAIScriptExecution();
+		v0 = gameData.got_file_values.victory_conditions;
+	}
+	else
+	{
+		for (int i = 0; i < 8; i++)
+		{
+			*(_WORD*)&AIScriptController[i].flags |= 0x20u;
+		}
+	}
+	switch (v0)
+	{
+	case VC_MELEE:
+		return loadTRGFile("triggers\\Melee.trg");
+	case VC_SUSDDEN_DEATH:
+		return loadTRGFile("triggers\\SuddenDeath.trg");
+	case VC_ONE_ON_ONE:
+		return loadTRGFile("triggers\\Melee.trg");
+	case VC_RESOURCES:
+		if (gameData.got_file_values.variation_value > 0x1D4Cu)
+		{
+			if (gameData.got_file_values.variation_value == 10000)
+			{
+				return loadTRGFile("triggers\\Greed10000.trg");
+			}
+		}
+		else
+		{
+			switch (gameData.got_file_values.variation_value)
+			{
+			case 0x1D4C:
+				return loadTRGFile("triggers\\Greed7500.trg");
+			case 0x9C4:
+				return loadTRGFile("triggers\\Greed2500.trg");
+			case 0x1388:
+				return loadTRGFile("triggers\\Greed5000.trg");
+			}
+		}
+		return 0;
+	case VC_SLAUGHTER:
+		switch (gameData.got_file_values.variation_value)
+		{
+		case 0xF:
+			return loadTRGFile("triggers\\Slaughter15.trg");
+		case 0x1E:
+			return loadTRGFile("triggers\\Slaughter30.trg");
+		case 0x2D:
+			return loadTRGFile("triggers\\Slaughter45.trg");
+		case 0x3C:
+			return loadTRGFile("triggers\\Slaughter60.trg");
+		}
+		return 0;
+	case VC_CAPTURE_THE_FLAG:
+		sub_4ABA20();
+		break;
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(chooseTRGTemplate);
+
 signed int LoadGameInit_()
 {
 	stopMusic();
@@ -7660,7 +7727,7 @@ signed int LoadGameInit_()
 		return 0;
 	if (!mapStarted)
 	{
-		if (!chooseTRGTemplate())
+		if (!chooseTRGTemplate_())
 		{
 			BigPacketError_(93, 0, 0, 0, 1);
 			return 0;
