@@ -1,6 +1,15 @@
-﻿cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.9)
+
+include(CheckIPOSupported)
 
 project ("Magnetar")
+
+check_ipo_supported(RESULT result)
+if(result)
+    cmake_policy(SET CMP0069 NEW)
+    set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
+    set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+endif ()
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
