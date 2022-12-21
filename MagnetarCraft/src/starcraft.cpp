@@ -15796,21 +15796,19 @@ void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
 	SetCallbackTimer(7, dlg, 20, DLG_SwishInLock);
 	for (dialog* a1b = dword_51C4B0; a1b; a1b = a1b->pNext)
 	{
-		if (a1b->lFlags & 8)
+		if (a1b->lFlags & DialogFlags::CTRL_VISIBLE)
 		{
 			ListNodeUnknown* v11 = dword_51C4B4;
 			const char* v12 = type_info__szName((type_info*)0x51A368);
 			ListNodeUnknown* v13 = (ListNodeUnknown*)SMemAlloc(12, v12, -2, 8);
-			ListNodeUnknown* v14;
+			ListNodeUnknown* v14 = v13;
 			if (v13)
 			{
 				v13->previous = 0;
 				v13->next = 0;
-				v14 = v13;
 			}
 			else
 			{
-				v14 = 0;
 				v13 = (ListNodeUnknown*)&v11->next;
 			}
 			ListNodeUnknown* v15 = v13->previous;
