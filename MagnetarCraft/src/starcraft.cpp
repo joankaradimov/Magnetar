@@ -3861,6 +3861,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
+void HideDialog_(dialog* dlg);
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
 char gamemenu_CustomCtrlID_(dialog* dlg)
@@ -3893,7 +3894,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	if (dword_6D1234 == BWFXN_QuitMission_)
 	{
 		dialog* v3 = getControlFromIndex_(dlg, 1);
-		HideDialog(v3);
+		HideDialog_(v3);
 	}
 	if (dword_6D1234 == MainMenuOptionsCustomInteract)
 	{
