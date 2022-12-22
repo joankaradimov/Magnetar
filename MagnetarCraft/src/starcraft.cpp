@@ -1441,7 +1441,7 @@ char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 
 FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
 
-MusicTrackDescription* current_music_track = nullptr;
+const MusicTrackDescription* current_music_track = nullptr;
 
 MusicTrackDescription title_music = { "music\\title.wav", MusicTrackType::MENU_MUSIC, 0, 0 };
 MusicTrackDescription radio_free_zerg = { "music\\RadioFreeZerg.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1};
@@ -1451,7 +1451,7 @@ MusicTrackDescription briefing_music[] =
 	{ "music\\trdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
 	{ "music\\prdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
 };
-std::vector<MusicTrackDescription> ingame_music[] =
+const std::vector<MusicTrackDescription> ingame_music[] =
 {
 	{
 		{"music\\zerg1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
@@ -1470,7 +1470,7 @@ std::vector<MusicTrackDescription> ingame_music[] =
 	},
 };
 
-void PlayMusic_(MusicTrackDescription* a1)
+void PlayMusic_(const MusicTrackDescription* a1)
 {
 	if (directsound == NULL || a1 != current_music_track)
 	{
@@ -2225,7 +2225,7 @@ MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
 
 void playRadioFreeZerg_()
 {
-	MusicTrackDescription* v0;
+	const MusicTrackDescription* v0;
 	const char* v1;
 
 	if (current_music_track == &radio_free_zerg)
@@ -3418,7 +3418,7 @@ void LoadBtnSfxFile_()
 
 FAIL_STUB_PATCH(LoadBtnSfxFile);
 
-void DLGMusicFade_(MusicTrackDescription* music_track)
+void DLGMusicFade_(const MusicTrackDescription* music_track)
 {
 	if (!directsound || !byte_6D5BBC)
 	{
@@ -7343,7 +7343,7 @@ enum ExpandedMapData : u16
 	EMD_Unknown = 0x49,
 };
 
-MusicTrackDescription* current_ingame_music_track = nullptr;
+const MusicTrackDescription* current_ingame_music_track = nullptr;
 
 void LoadRaceUI_()
 {
@@ -15382,7 +15382,7 @@ struct Campaign
 	RaceId race;
 	ExpandedCampaignMenuEntry* entries;
 	std::vector<const char*> epilogs;
-	MusicTrackDescription* epilog_music_track;
+	const MusicTrackDescription* epilog_music_track;
 	MenuPosition post_epilog_menu;
 };
 
@@ -17980,7 +17980,7 @@ FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop);
 void DisplayEstablishingShot_();
 int ContinueCampaign_(int a1);
 
-void sub_46D200_(MusicTrackDescription* music_track)
+void sub_46D200_(const MusicTrackDescription* music_track)
 {
 	stopMusic();
 	DLGMusicFade_(music_track);
