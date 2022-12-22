@@ -7244,6 +7244,8 @@ FAIL_STUB_PATCH(LoadRaceSFX);
 
 const MusicTrackDescription* current_ingame_music_track = nullptr;
 
+Campaign* get_active_campaign();
+
 void LoadRaceUI_()
 {
 	LoadRaceSFX_(1);
@@ -7256,9 +7258,8 @@ void LoadRaceUI_()
 
 	if (CampaignIndex)
 	{
-		int v2 = CampaignIndex > ExpandedMapData::EMD_protoss10 ? xCampaignFirstMission[consoleIndex] : campaignFirstMission[consoleIndex];
-		int v1 = (CampaignIndex - v2) % 3;
-		current_ingame_music_track += v1;
+		int mission_index = get_active_campaign()->entries - (ExpandedCampaignMenuEntry*)active_campaign_menu_entry;
+		current_ingame_music_track += (mission_index % 3);
 	}
 	else
 	{
@@ -20926,18 +20927,26 @@ int ContinueCampaign_(int a1)
 
 FAIL_STUB_PATCH(ContinueCampaign);
 
-Campaign* GetActiveCampaign()
+Campaign* get_active_campaign()
 {
 	for (Campaign& campaign : campaigns)
 	{
-		ExpandedCampaignMenuEntry* last_campaign_menu_entry;
-		for (last_campaign_menu_entry = campaign.entries; last_campaign_menu_entry->next_mission; last_campaign_menu_entry++);
-		if (last_campaign_menu_entry == (ExpandedCampaignMenuEntry*) active_campaign_menu_entry)
+		for (ExpandedCampaignMenuEntry* campaign_menu_entry = campaign.entries; campaign_menu_entry->next_mission; campaign_menu_entry++)
 		{
-			return &campaign;
+			if (campaign_menu_entry == (ExpandedCampaignMenuEntry*)active_campaign_menu_entry)
+			{
+				return &campaign;
+			}
 		}
 	}
 	return NULL;
+}
+
+ExpandedCampaignMenuEntry* get_last_campaign_menu_entry(Campaign* campaign)
+{
+	ExpandedCampaignMenuEntry* last_campaign_menu_entry;
+	for (last_campaign_menu_entry = campaign->entries; last_campaign_menu_entry->next_mission; last_campaign_menu_entry++);
+	return last_campaign_menu_entry;
 }
 
 void BeginEpilog_()
@@ -20957,9 +20966,9 @@ void BeginEpilog_()
 		registry_options.Music = 50;
 	}
 
-	Campaign* active_campaign = GetActiveCampaign();
+	Campaign* active_campaign = get_active_campaign();
 
-	if (active_campaign)
+	if (get_last_campaign_menu_entry(active_campaign) == (ExpandedCampaignMenuEntry*)active_campaign_menu_entry)
 	{
 		DLGMusicFade_(active_campaign->epilog_music_track);
 		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
