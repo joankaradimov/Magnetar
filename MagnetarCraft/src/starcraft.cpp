@@ -1451,18 +1451,23 @@ MusicTrackDescription briefing_music[] =
 	{ "music\\trdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
 	{ "music\\prdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
 };
-MusicTrackDescription ingame_music[] =
+std::vector<MusicTrackDescription> ingame_music[] =
 {
-	{nullptr, MusicTrackType::NONE, 0, 0}, // TODO: this exists due to legacy reasons; drop it
-	{"music\\zerg1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
-	{"music\\zerg2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 3},
-	{"music\\zerg3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
-	{"music\\terran1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 5},
-	{"music\\terran2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 6},
-	{"music\\terran3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 4},
-	{"music\\protoss1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 8},
-	{"music\\protoss2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 9},
-	{"music\\protoss3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 7},
+	{
+		{"music\\zerg1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
+		{"music\\zerg2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
+		{"music\\zerg3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
+	},
+	{
+		{"music\\terran1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
+		{"music\\terran2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
+		{"music\\terran3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
+	},
+	{
+		{"music\\protoss1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
+		{"music\\protoss2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
+		{"music\\protoss3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
+	},
 };
 
 void PlayMusic_(MusicTrackDescription* a1)
@@ -1529,7 +1534,8 @@ void playNextMusic_()
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			PlayMusic_(&ingame_music[current_music_track->in_game_music_index]);
+			auto& race_ingame_music = ingame_music[consoleIndex];
+			PlayMusic_(&race_ingame_music[current_music_track->in_game_music_index]);
 		}
 	}
 }
@@ -2224,7 +2230,7 @@ void playRadioFreeZerg_()
 
 	if (current_music_track == &radio_free_zerg)
 	{
-		v0 = ingame_music + MT_ZERG1;
+		v0 = &ingame_music[RaceId::RACE_Zerg][0];
 		v1 = GetNetworkTblString_(66);
 	}
 	else
@@ -7345,17 +7351,17 @@ void LoadRaceUI_()
 	if (consoleIndex == RaceId::RACE_Zerg)
 	{
 		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\zerg.grp", LoadGraphic);
-		current_ingame_music_track = ingame_music + MT_ZERG1;
+		current_ingame_music_track = &ingame_music[consoleIndex][0];
 	}
 	else if (consoleIndex == RaceId::RACE_Terran)
 	{
 		DlgGrp_Constructor(178, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
-		current_ingame_music_track = ingame_music + MT_TERRAN1;
+		current_ingame_music_track = &ingame_music[consoleIndex][0];
 	}
 	else if (consoleIndex == RaceId::RACE_Protoss)
 	{
 		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
-		current_ingame_music_track = ingame_music + MT_PROTOSS1;
+		current_ingame_music_track = &ingame_music[consoleIndex][0];
 	}
 
 	if (CampaignIndex)
@@ -15388,7 +15394,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Terran,
 		terran_swcampaign_menu_entries_,
 		{"epilogsw"},
-		ingame_music + MusicTrack::MT_TERRAN2,
+		&ingame_music[RaceId::RACE_Terran][1],
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15418,7 +15424,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Protoss,
 		protoss_campaign_menu_entries_,
 		{"epilog", "crdt_lst"},
-		ingame_music + MusicTrack::MT_PROTOSS3,
+		&ingame_music[RaceId::RACE_Protoss][2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 	{
@@ -15448,7 +15454,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Zerg,
 		zerg_expcampaign_menu_entries_,
 		{"epilogX", "crdt_exp"},
-		ingame_music + MusicTrack::MT_PROTOSS3,
+		&ingame_music[RaceId::RACE_Protoss][2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 };
@@ -21342,7 +21348,7 @@ void BeginCredits_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade_(&ingame_music[MT_TERRAN2]);
+	DLGMusicFade_(&ingame_music[RaceId::RACE_Terran][1]);
 	credits_interrupted = 0;
 	loadInitCreditsBIN_("crdt_mag");
 	if (credits_interrupted == 0 && is_expansion_installed)
