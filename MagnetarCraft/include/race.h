@@ -13,6 +13,10 @@ public:
 	const MenuPosition ready_room_menu;
 	const MenuPosition victory_menu;
 	const MenuPosition defeat_menu;
+	const MusicTrackDescription briefing_music;
+	const MusicTrackDescription victory_music;
+	const MusicTrackDescription defeat_music;
+	const std::vector<MusicTrackDescription> ingame_music;
 
 	const char* get_ready_room_bin() const
 	{
@@ -20,8 +24,14 @@ public:
 	}
 
 private:
-	Race(char id, UnitType base_building, UnitType worker, MenuPosition ready_room_menu, MenuPosition victory_menu, MenuPosition defeat_menu) :
-		id(id), base_building(base_building), worker(worker), ready_room_menu(ready_room_menu), victory_menu(victory_menu), defeat_menu(defeat_menu)
+	Race(char id, UnitType base_building, UnitType worker,
+		MenuPosition ready_room_menu, MenuPosition victory_menu, MenuPosition defeat_menu,
+		MusicTrackDescription briefing_music, MusicTrackDescription victory_music, MusicTrackDescription defeat_music,
+		std::initializer_list<MusicTrackDescription> ingame_music
+	):
+		id(id), base_building(base_building), worker(worker),
+		ready_room_menu(ready_room_menu), victory_menu(victory_menu), defeat_menu(defeat_menu),
+		briefing_music(briefing_music), victory_music(victory_music), defeat_music(defeat_music), ingame_music(ingame_music)
 	{
 		ready_room_bin = (std::string)"rez\\glurdy" + id + ".bin";
 	}

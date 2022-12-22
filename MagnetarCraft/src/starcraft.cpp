@@ -1445,30 +1445,6 @@ const MusicTrackDescription* current_music_track = nullptr;
 
 MusicTrackDescription title_music = { "music\\title.wav", MusicTrackType::MENU_MUSIC, 0, 0 };
 MusicTrackDescription radio_free_zerg = { "music\\RadioFreeZerg.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1};
-MusicTrackDescription briefing_music[] =
-{
-	{ "music\\zrdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
-	{ "music\\trdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
-	{ "music\\prdyroom.wav", MusicTrackType::MENU_MUSIC, 1, 0 },
-};
-const std::vector<MusicTrackDescription> ingame_music[] =
-{
-	{
-		{"music\\zerg1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
-		{"music\\zerg2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
-		{"music\\zerg3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
-	},
-	{
-		{"music\\terran1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
-		{"music\\terran2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
-		{"music\\terran3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
-	},
-	{
-		{"music\\protoss1.wav", MusicTrackType::IN_GAME_MUSIC, 0, 1},
-		{"music\\protoss2.wav", MusicTrackType::IN_GAME_MUSIC, 0, 2},
-		{"music\\protoss3.wav", MusicTrackType::IN_GAME_MUSIC, 0, 0},
-	},
-};
 
 void PlayMusic_(const MusicTrackDescription* a1)
 {
@@ -1534,7 +1510,7 @@ void playNextMusic_()
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			auto& race_ingame_music = ingame_music[consoleIndex];
+			auto& race_ingame_music = Race::races[consoleIndex].ingame_music;
 			PlayMusic_(&race_ingame_music[current_music_track->in_game_music_index]);
 		}
 	}
@@ -2230,7 +2206,7 @@ void playRadioFreeZerg_()
 
 	if (current_music_track == &radio_free_zerg)
 	{
-		v0 = &ingame_music[RaceId::RACE_Zerg][0];
+		v0 = &Race::races[RaceId::RACE_Zerg].ingame_music[0];
 		v1 = GetNetworkTblString_(66);
 	}
 	else
@@ -7351,17 +7327,17 @@ void LoadRaceUI_()
 	if (consoleIndex == RaceId::RACE_Zerg)
 	{
 		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\zerg.grp", LoadGraphic);
-		current_ingame_music_track = &ingame_music[consoleIndex][0];
+		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
 	}
 	else if (consoleIndex == RaceId::RACE_Terran)
 	{
 		DlgGrp_Constructor(178, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
-		current_ingame_music_track = &ingame_music[consoleIndex][0];
+		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
 	}
 	else if (consoleIndex == RaceId::RACE_Protoss)
 	{
 		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
-		current_ingame_music_track = &ingame_music[consoleIndex][0];
+		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
 	}
 
 	if (CampaignIndex)
@@ -15394,7 +15370,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Terran,
 		terran_swcampaign_menu_entries_,
 		{"epilogsw"},
-		&ingame_music[RaceId::RACE_Terran][1],
+		&Race::races[RaceId::RACE_Terran].ingame_music[1],
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -15424,7 +15400,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Protoss,
 		protoss_campaign_menu_entries_,
 		{"epilog", "crdt_lst"},
-		&ingame_music[RaceId::RACE_Protoss][2],
+		&Race::races[RaceId::RACE_Protoss].ingame_music[2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 	{
@@ -15454,7 +15430,7 @@ std::vector<Campaign> campaigns = {
 		RaceId::RACE_Zerg,
 		zerg_expcampaign_menu_entries_,
 		{"epilogX", "crdt_exp"},
-		&ingame_music[RaceId::RACE_Protoss][2],
+		&Race::races[RaceId::RACE_Protoss].ingame_music[2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 };
@@ -18016,7 +17992,7 @@ FAIL_STUB_PATCH(sub_46D1F0);
 
 void loadMenu_gluRdy(RaceId race)
 {
-	sub_46D200_(&briefing_music[race]);
+	sub_46D200_(&Race::races[race].briefing_music);
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
@@ -19771,18 +19747,6 @@ const char* defeat_screens[] = {
 	"glue\\scorePd\\",
 };
 
-MusicTrackDescription victory_music_track[] = {
-	{"music\\zvict.wav", MusicTrackType::MENU_MUSIC, 1, 0},
-	{"music\\tvict.wav", MusicTrackType::MENU_MUSIC, 0, 0},
-	{"music\\pvict.wav", MusicTrackType::MENU_MUSIC, 0, 0},
-};
-
-MusicTrackDescription defeat_music_track[] = {
-	{"music\\zdefeat.wav", MusicTrackType::MENU_MUSIC, 1, 0},
-	{"music\\tdefeat.wav", MusicTrackType::MENU_MUSIC, 0, 0},
-	{"music\\pdefeat.wav", MusicTrackType::MENU_MUSIC, 0, 0},
-};
-
 void loadMenu_gluScore_()
 {
 	ApplyGameVictoryStatus(dword_59B73C, &dword_59B3D0);
@@ -19790,23 +19754,23 @@ void loadMenu_gluScore_()
 	dword_59B75C = dword_59B3D0 == 1;
 
 	const char* score_screen;
-	MusicTrackDescription* score_scren_music_track;
+	const MusicTrackDescription* score_scren_music_track;
 	if (dword_6D5A60)
 	{
 		score_screen = victory_screens[RaceId::RACE_Zerg];
-		score_scren_music_track = &victory_music_track[RaceId::RACE_Zerg];
+		score_scren_music_track = &Race::races[RaceId::RACE_Zerg].victory_music;
 		glGluesMode = Race::races[RaceId::RACE_Zerg].victory_menu;
 	}
 	else if (dword_59B75C)
 	{
 		score_screen = victory_screens[Players[g_LocalNationID].nRace];
-		score_scren_music_track = &victory_music_track[Players[g_LocalNationID].nRace];
+		score_scren_music_track = &Race::races[Players[g_LocalNationID].nRace].victory_music;
 		glGluesMode = Race::races[Players[g_LocalNationID].nRace].victory_menu;
 	}
 	else
 	{
 		score_screen = defeat_screens[Players[g_LocalNationID].nRace];
-		score_scren_music_track = &defeat_music_track[Players[g_LocalNationID].nRace];
+		score_scren_music_track = &Race::races[Players[g_LocalNationID].nRace].defeat_music;
 		glGluesMode = Race::races[Players[g_LocalNationID].nRace].defeat_menu;
 	}
 
@@ -21348,7 +21312,7 @@ void BeginCredits_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade_(&ingame_music[RaceId::RACE_Terran][1]);
+	DLGMusicFade_(&Race::races[RaceId::RACE_Terran].ingame_music[1]);
 	credits_interrupted = 0;
 	loadInitCreditsBIN_("crdt_mag");
 	if (credits_interrupted == 0 && is_expansion_installed)
