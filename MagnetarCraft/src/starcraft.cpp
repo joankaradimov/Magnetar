@@ -7324,20 +7324,11 @@ const MusicTrackDescription* current_ingame_music_track = nullptr;
 void LoadRaceUI_()
 {
 	LoadRaceSFX_(1);
-	if (consoleIndex == RaceId::RACE_Zerg)
+	if (consoleIndex == RaceId::RACE_Zerg || consoleIndex == RaceId::RACE_Terran || consoleIndex == RaceId::RACE_Protoss)
 	{
-		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\zerg.grp", LoadGraphic);
-		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
-	}
-	else if (consoleIndex == RaceId::RACE_Terran)
-	{
-		DlgGrp_Constructor(178, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\terran.grp", LoadGraphic);
-		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
-	}
-	else if (consoleIndex == RaceId::RACE_Protoss)
-	{
-		DlgGrp_Constructor(183, "Starcraft\\SWAR\\lang\\game.cpp", "dlgs\\protoss.grp", LoadGraphic);
-		current_ingame_music_track = &Race::races[consoleIndex].ingame_music[0];
+		const Race& race = Race::races[consoleIndex];
+		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", (char*)race.dialog_graphics, LoadGraphic);
+		current_ingame_music_track = &race.ingame_music[0];
 	}
 
 	if (CampaignIndex)
