@@ -5,7 +5,7 @@
 class Race
 {
 public:
-	const static std::vector<Race> races;
+	static const std::vector<Race>& races();
 
 	const char id;
 	UnitType base_building;

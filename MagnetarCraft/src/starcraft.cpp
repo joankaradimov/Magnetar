@@ -1510,7 +1510,7 @@ void playNextMusic_()
 		SFileDdaGetPos(directsound, (int)&a2, (int)&a3);
 		if (a2 >= a3)
 		{
-			auto& race_ingame_music = Race::races[consoleIndex].ingame_music;
+			auto& race_ingame_music = Race::races()[consoleIndex].ingame_music;
 			PlayMusic_(&race_ingame_music[current_music_track->in_game_music_index]);
 		}
 	}
@@ -2206,7 +2206,7 @@ void playRadioFreeZerg_()
 
 	if (current_music_track == &radio_free_zerg)
 	{
-		v0 = &Race::races[RaceId::RACE_Zerg].ingame_music[0];
+		v0 = &Race::races()[RaceId::RACE_Zerg].ingame_music[0];
 		v1 = GetNetworkTblString_(66);
 	}
 	else
@@ -4350,7 +4350,7 @@ FAIL_STUB_PATCH(CleanupIscriptBINHandle);
 
 void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 {
-	UnitType base_building = Race::races[race].base_building;
+	UnitType base_building = Race::races()[race].base_building;
 
 	// TODO: test this piece of code against the one in StarCraft.exe:
 	int v5 = Unit_Placement[base_building].x;
@@ -4388,7 +4388,7 @@ FAIL_STUB_PATCH(CreateInitialMeleeBuildings);
 
 void CreateInitialMeleeWorker_(RaceId race, unsigned __int8 player_index)
 {
-	CUnit* worker = CreateUnit(Race::races[race].worker, startPositions[player_index].x, startPositions[player_index].y, player_index);
+	CUnit* worker = CreateUnit(Race::races()[race].worker, startPositions[player_index].x, startPositions[player_index].y, player_index);
 	if (worker)
 	{
 		updateUnitStatsFinishBuilding(worker);
@@ -6555,7 +6555,7 @@ void CreateInitialTeamMeleeUnits_()
 
 			if (gameData.got_file_values.starting_units && gameData.got_file_values.starting_units <= StartingUnits::SU_WORKER_AND_CENTER)
 			{
-				CUnit* worker_unit = CreateUnit(Race::races[v10].worker, startPositions[a1].x, startPositions[a1].y, a1);
+				CUnit* worker_unit = CreateUnit(Race::races()[v10].worker, startPositions[a1].x, startPositions[a1].y, a1);
 				if (worker_unit)
 				{
 					updateUnitStatsFinishBuilding(worker_unit);
@@ -7326,7 +7326,7 @@ void LoadRaceUI_()
 	LoadRaceSFX_(1);
 	if (consoleIndex == RaceId::RACE_Zerg || consoleIndex == RaceId::RACE_Terran || consoleIndex == RaceId::RACE_Protoss)
 	{
-		const Race& race = Race::races[consoleIndex];
+		const Race& race = Race::races()[consoleIndex];
 		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", (char*)race.dialog_graphics, LoadGraphic);
 		current_ingame_music_track = &race.ingame_music[0];
 	}
@@ -17282,7 +17282,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		race = Players[g_LocalNationID].nRace;
 		if (race == RaceId::RACE_Zerg || race == RaceId::RACE_Terran || race == RaceId::RACE_Protoss)
 		{
-			glGluesMode = Race::races[race].ready_room_menu;
+			glGluesMode = Race::races()[race].ready_room_menu;
 		}
 		break;
 	case -3:
@@ -17983,12 +17983,12 @@ FAIL_STUB_PATCH(sub_46D1F0);
 
 void loadMenu_gluRdy(RaceId race)
 {
-	sub_46D200_(&Race::races[race].briefing_music);
+	sub_46D200_(&Race::races()[race].briefing_music);
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
 		dword_50E064 = -1;
-		dialog* bin_dialog = LoadDialog(Race::races[race].get_ready_room_bin());
+		dialog* bin_dialog = LoadDialog(Race::races()[race].get_ready_room_bin());
 
 		switch (gluLoadBINDlg_(bin_dialog, gluRdy_BINDLG_Loop))
 		{
@@ -18675,7 +18675,7 @@ int LobbyLoopCnt_()
 	}
 	else
 	{
-		glGluesMode = Race::races[Players[g_LocalNationID].nRace].ready_room_menu;
+		glGluesMode = Race::races()[Players[g_LocalNationID].nRace].ready_room_menu;
 	}
 
 	clearGameNextMenu();
@@ -19749,20 +19749,20 @@ void loadMenu_gluScore_()
 	if (dword_6D5A60)
 	{
 		score_screen = victory_screens[RaceId::RACE_Zerg];
-		score_scren_music_track = &Race::races[RaceId::RACE_Zerg].victory_music;
-		glGluesMode = Race::races[RaceId::RACE_Zerg].victory_menu;
+		score_scren_music_track = &Race::races()[RaceId::RACE_Zerg].victory_music;
+		glGluesMode = Race::races()[RaceId::RACE_Zerg].victory_menu;
 	}
 	else if (dword_59B75C)
 	{
 		score_screen = victory_screens[Players[g_LocalNationID].nRace];
-		score_scren_music_track = &Race::races[Players[g_LocalNationID].nRace].victory_music;
-		glGluesMode = Race::races[Players[g_LocalNationID].nRace].victory_menu;
+		score_scren_music_track = &Race::races()[Players[g_LocalNationID].nRace].victory_music;
+		glGluesMode = Race::races()[Players[g_LocalNationID].nRace].victory_menu;
 	}
 	else
 	{
 		score_screen = defeat_screens[Players[g_LocalNationID].nRace];
-		score_scren_music_track = &Race::races[Players[g_LocalNationID].nRace].defeat_music;
-		glGluesMode = Race::races[Players[g_LocalNationID].nRace].defeat_menu;
+		score_scren_music_track = &Race::races()[Players[g_LocalNationID].nRace].defeat_music;
+		glGluesMode = Race::races()[Players[g_LocalNationID].nRace].defeat_menu;
 	}
 
 	strcpy(byte_59B628, score_screen);
@@ -19921,7 +19921,7 @@ int SwitchMenu_()
 		}
 		if (level_cheat_race == RaceId::RACE_Zerg || level_cheat_race == RaceId::RACE_Terran || level_cheat_race == RaceId::RACE_Protoss)
 		{
-			glGluesMode = Race::races[level_cheat_race].ready_room_menu;
+			glGluesMode = Race::races()[level_cheat_race].ready_room_menu;
 		}
 		else
 		{
@@ -21222,7 +21222,7 @@ int ContinueCampaign_(int a1)
 		}
 		if (CreateCampaignGame_(active_campaign_menu_entry->next_mission))
 		{
-			glGluesMode = Race::races[active_campaign_menu_entry->race].ready_room_menu;
+			glGluesMode = Race::races()[active_campaign_menu_entry->race].ready_room_menu;
 			return 1;
 		}
 		return 0;
@@ -21303,7 +21303,7 @@ void BeginCredits_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade_(&Race::races[RaceId::RACE_Terran].ingame_music[1]);
+	DLGMusicFade_(&Race::races()[RaceId::RACE_Terran].ingame_music[1]);
 	credits_interrupted = 0;
 	loadInitCreditsBIN_("crdt_mag");
 	if (credits_interrupted == 0 && is_expansion_installed)
