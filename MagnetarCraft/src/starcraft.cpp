@@ -7244,7 +7244,8 @@ FAIL_STUB_PATCH(LoadRaceSFX);
 
 const MusicTrackDescription* current_ingame_music_track = nullptr;
 
-Campaign* get_active_campaign();
+Campaign* active_campaign;
+int active_campaign_entry_index;
 
 void LoadRaceUI_()
 {
@@ -7258,8 +7259,7 @@ void LoadRaceUI_()
 
 	if (CampaignIndex)
 	{
-		int mission_index = get_active_campaign()->entries - (ExpandedCampaignMenuEntry*)active_campaign_menu_entry;
-		current_ingame_music_track += (mission_index % 3);
+		current_ingame_music_track += (active_campaign_entry_index % 3);
 	}
 	else
 	{
@@ -14942,11 +14942,11 @@ void __stdcall registerMenuFunctions__(dialog* a2, int functions_size, int a4)
 // gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID
 FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__);
 
-int CreateCampaignGame_(MapData mapData)
+int CreateCampaignGame_(ExpandedMapData mapData)
 {
 	MapChunks mapChunks;
 
-	CampaignIndex = mapData;
+	CampaignIndex = (MapData) mapData;
 	if (ReadCampaignMapData_(&mapChunks))
 	{
 		GameData v4;
@@ -15093,11 +15093,11 @@ BOOL sub_4B6530_(ExpandedCampaignMenuEntry* a1, unsigned int a2)
 
 FAIL_STUB_PATCH(sub_4B6530);
 
-ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
+int loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
 {
 	if (!sub_4B6530_(a2, a1))
 	{
-		return a2;
+		return 0;
 	}
 
 	dword_6D5A48 = 0;
@@ -15117,12 +15117,12 @@ ExpandedCampaignMenuEntry* loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* 
 		dword_6D5A44 = NULL;
 	}
 
-	return (ExpandedCampaignMenuEntry*) dword_6D5A48;
+	return dword_6D5A48 ? (ExpandedCampaignMenuEntry*)dword_6D5A48 - a2 : -1;
 }
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
 
-int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, ExpandedMapData* a5)
+int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, ExpandedCampaignMenuEntry** a5)
 {
 	char* campaign_index_ = campaign_index;
 	int v5 = strtoul(campaign_index, &campaign_index_, 10) - campaign->first_mission_index;
@@ -15165,18 +15165,17 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, Expande
 			return 0;
 		}
 	}
-	*a5 = v8->next_mission;
+	*a5 = v8;
 	return 1;
 }
 
 FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
 
-void ContinueCampaignWithLevelCheat_(ExpandedMapData mission, bool is_expansion, RaceId race)
+void ContinueCampaignWithLevelCheat_(Campaign* campaign, int campaign_menu_entry_index)
 {
 	Ophelia = 1;
-	level_cheat_mission = (MapData4)mission;
-	level_cheat_race = race;
-	level_cheat_is_bw = is_expansion;
+	active_campaign = campaign;
+	active_campaign_entry_index = campaign_menu_entry_index;
 }
 
 FAIL_STUB_PATCH(ContinueCampaignWithLevelCheat);
@@ -15202,12 +15201,13 @@ int campaignTypeCheatStrings_(const char* a2)
 	{
 		return 0;
 	}
+	int campaign_index = strtoul(a2 + SStrLen(relevant_campaign->campaign_id), nullptr, 10) - relevant_campaign->first_mission_index;
 
-	ExpandedMapData mission;
+	ExpandedCampaignMenuEntry* campaign_menu_entry;
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*) a2 + prefix_length, &mission) && mission != EMD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry) && campaign_menu_entry->next_mission != EMD_xbonus)
 	{
-		ContinueCampaignWithLevelCheat_(mission, relevant_campaign->is_expansion, relevant_campaign->race);
+		ContinueCampaignWithLevelCheat_(relevant_campaign, campaign_menu_entry - relevant_campaign->entries);
 		if (gwGameMode == GAME_RUN)
 		{
 			GameState = 0;
@@ -15249,7 +15249,7 @@ FAIL_STUB_PATCH(getCampaignIndex);
 
 void updateActiveCampaignMission_()
 {
-	if (active_campaign_menu_entry == NULL || active_campaign_menu_entry->next_mission != CampaignIndex)
+	if (active_campaign_entry_index == -1 || active_campaign->entries[active_campaign_entry_index].next_mission != CampaignIndex)
 	{
 		for (Campaign& campaign : campaigns)
 		{
@@ -15257,7 +15257,8 @@ void updateActiveCampaignMission_()
 			{
 				if (entry->next_mission == CampaignIndex)
 				{
-					active_campaign_menu_entry = (CampaignMenuEntry*) getCampaignIndex_(campaign);
+					active_campaign = &campaign;
+					active_campaign_entry_index = (getCampaignIndex_(campaign) - campaign.entries);
 					return;
 				}
 			}
@@ -15281,40 +15282,39 @@ bool LoadCampaignWithCharacter_(RaceId race)
 		}
 	}
 
-	ExpandedCampaignMenuEntry* v2;
 	int* unlocked_mission;
 	if (IsExpansion)
 	{
-		v2 = expcampaigns_by_race[race]->entries;
+		active_campaign = expcampaigns_by_race[race];
 		unlocked_mission = &character_data.unlocked_expcampaign_mission[race];
 	}
 	else
 	{
-		v2 = campaigns_by_race[race]->entries;
+		active_campaign = campaigns_by_race[race];
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
-	active_campaign_menu_entry = (CampaignMenuEntry*) loadmenu_GluHist_(*unlocked_mission, v2);
-	if (active_campaign_menu_entry)
+	active_campaign_entry_index = loadmenu_GluHist_(*unlocked_mission, active_campaign->entries);
+	if (active_campaign_entry_index != -1)
 	{
-		if (*unlocked_mission < active_campaign_menu_entry->next_mission)
+		if (*unlocked_mission < active_campaign->entries[active_campaign_entry_index].next_mission)
 		{
-			*unlocked_mission = active_campaign_menu_entry->next_mission;
+			*unlocked_mission = active_campaign->entries[active_campaign_entry_index].next_mission;
 			CreateCharacterFile(&character_data);
 		}
 
-		if (active_campaign_menu_entry->cinematic)
+		if (active_campaign->entries[active_campaign_entry_index].cinematic)
 		{
-			active_cinematic = active_campaign_menu_entry->cinematic;
-			CampaignIndex = active_campaign_menu_entry->next_mission;
+			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
+			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
 		}
 		else
 		{
-			CreateCampaignGame_(active_campaign_menu_entry->next_mission);
+			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
 		}
 	}
-	return active_campaign_menu_entry != NULL;
+	return active_campaign_entry_index != -1;
 }
 
 FAIL_STUB_PATCH(LoadCampaignWithCharacter);
@@ -15333,24 +15333,24 @@ bool LoadPrecursorCampaign()
 		}
 	}
 
-	ExpandedCampaignMenuEntry* v2 = campaigns[0].entries;
+	active_campaign = &campaigns[0];
 	int unlocked_mission = 6;
-	active_campaign_menu_entry = (CampaignMenuEntry*) loadmenu_GluHist_(unlocked_mission, v2);
-	if (active_campaign_menu_entry)
+	active_campaign_entry_index = loadmenu_GluHist_(unlocked_mission, active_campaign->entries);
+	if (active_campaign_entry_index != -1)
 	{
-		if (active_campaign_menu_entry->cinematic)
+		if (active_campaign->entries[active_campaign_entry_index].cinematic)
 		{
-			active_cinematic = active_campaign_menu_entry->cinematic;
-			CampaignIndex = active_campaign_menu_entry->next_mission;
+			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
+			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
 		}
 		else
 		{
-			CreateCampaignGame_(active_campaign_menu_entry->next_mission);
+			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
 		}
 	}
-	return active_campaign_menu_entry != NULL;
+	return active_campaign_entry_index != -1;
 }
 
 int sub_4B5110_(RaceId race)
@@ -19410,9 +19410,9 @@ void sub_4DBF80_()
 	if (!multiPlayerMode && !dword_51CA1C)
 	{
 		updateActiveCampaignMission_();
-		if (active_campaign_menu_entry && active_campaign_menu_entry->next_mission)
+		if (active_campaign_entry_index != -1 && active_campaign->entries[active_campaign_entry_index].next_mission)
 		{
-			sub_4DBEE0_((ExpandedCampaignMenuEntry*) active_campaign_menu_entry + 1);
+			sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index + 1]);
 		}
 	}
 }
@@ -19605,16 +19605,16 @@ int SwitchMenu_()
 			strcpy_s(playerName, GetNetworkTblString_(72));
 		}
 		customSingleplayer[0] = 0;
-		IsExpansion = level_cheat_is_bw != 0;
-		if (level_cheat_is_bw && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_((MapData)level_cheat_mission))
+		IsExpansion = active_campaign->is_expansion;
+		if (active_campaign->is_expansion && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
 		{
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			IsExpansion = 0;
 			goto LABEL_28;
 		}
-		if (level_cheat_race == RaceId::RACE_Zerg || level_cheat_race == RaceId::RACE_Terran || level_cheat_race == RaceId::RACE_Protoss)
+		if (active_campaign->race == RaceId::RACE_Zerg || active_campaign->race == RaceId::RACE_Terran || active_campaign->race == RaceId::RACE_Protoss)
 		{
-			glGluesMode = Race::races()[level_cheat_race].ready_room_menu;
+			glGluesMode = Race::races()[active_campaign->race].ready_room_menu;
 		}
 		else
 		{
@@ -20350,7 +20350,7 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
 	{
-		return (ExpandedCampaignMenuEntry*) active_campaign_menu_entry;
+		return &active_campaign->entries[active_campaign_entry_index];
 	}
 
 	size_t v4 = v2 - a1;
@@ -20388,7 +20388,7 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 			break;
 		}
 	}
-	return (ExpandedCampaignMenuEntry*) active_campaign_menu_entry;
+	return &active_campaign->entries[active_campaign_entry_index];
 }
 
 FAIL_STUB_PATCH(sub_4DBDA0);
@@ -20743,10 +20743,9 @@ FAIL_STUB_PATCH(loadInitCreditsBIN);
 
 void DisplayMissionEpilog_()
 {
-	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && active_campaign_menu_entry)
+	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && active_campaign_entry_index != -1)
 	{
-		const char* epilog = ((ExpandedCampaignMenuEntry*)active_campaign_menu_entry)->epilog;
-		if (epilog)
+		if (const char* epilog = active_campaign->entries[active_campaign_entry_index].epilog)
 		{
 			loadInitCreditsBIN_(epilog);
 		}
@@ -20890,32 +20889,32 @@ int ContinueCampaign_(int a1)
 	}
 	DisplayMissionEpilog_();
 	updateActiveCampaignMission_();
-	if (!active_campaign_menu_entry || active_campaign_menu_entry->next_mission == MD_none)
+	if (active_campaign_entry_index == -1 || active_campaign->entries[active_campaign_entry_index].next_mission == MD_none)
 	{
 		return 0;
 	}
 	if (next_scenario[0])
 	{
-		active_campaign_menu_entry = (CampaignMenuEntry*) sub_4DBDA0_(next_scenario);
+		active_campaign_entry_index = sub_4DBDA0_(next_scenario) - active_campaign->entries;
 		next_scenario[0] = 0;
 	}
 	else
 	{
-		active_campaign_menu_entry = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)active_campaign_menu_entry + 1);
+		active_campaign_entry_index += 1;
 	}
-	sub_4DBEE0_((ExpandedCampaignMenuEntry*) active_campaign_menu_entry);
-	if (active_campaign_menu_entry->next_mission)
+	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
+	if (active_campaign->entries[active_campaign_entry_index].next_mission)
 	{
-		if (active_campaign_menu_entry->cinematic)
+		if (active_campaign->entries[active_campaign_entry_index].cinematic)
 		{
-			CampaignIndex = active_campaign_menu_entry->next_mission;
-			active_cinematic = active_campaign_menu_entry->cinematic;
+			CampaignIndex = (MapData) active_campaign->entries[active_campaign_entry_index].next_mission;
+			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 			gwGameMode = GAME_CINEMATIC;
 			return 1;
 		}
-		if (CreateCampaignGame_(active_campaign_menu_entry->next_mission))
+		if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
 		{
-			glGluesMode = Race::races()[active_campaign_menu_entry->race].ready_room_menu;
+			glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
 			return 1;
 		}
 		return 0;
@@ -20926,21 +20925,6 @@ int ContinueCampaign_(int a1)
 }
 
 FAIL_STUB_PATCH(ContinueCampaign);
-
-Campaign* get_active_campaign()
-{
-	for (Campaign& campaign : campaigns)
-	{
-		for (ExpandedCampaignMenuEntry* campaign_menu_entry = campaign.entries; campaign_menu_entry->next_mission; campaign_menu_entry++)
-		{
-			if (campaign_menu_entry == (ExpandedCampaignMenuEntry*)active_campaign_menu_entry)
-			{
-				return &campaign;
-			}
-		}
-	}
-	return NULL;
-}
 
 ExpandedCampaignMenuEntry* get_last_campaign_menu_entry(Campaign* campaign)
 {
@@ -20966,9 +20950,7 @@ void BeginEpilog_()
 		registry_options.Music = 50;
 	}
 
-	Campaign* active_campaign = get_active_campaign();
-
-	if (get_last_campaign_menu_entry(active_campaign) == (ExpandedCampaignMenuEntry*)active_campaign_menu_entry)
+	if (get_last_campaign_menu_entry(active_campaign) - active_campaign->entries == active_campaign_entry_index)
 	{
 		DLGMusicFade_(active_campaign->epilog_music_track);
 		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
@@ -20979,7 +20961,8 @@ void BeginEpilog_()
 		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 	gwGameMode = GAME_GLUES;
-	active_campaign_menu_entry = NULL;
+	active_campaign = nullptr;
+	active_campaign_entry_index = -1;
 
 	stopMusic();
 	registry_options.Music = v0;
@@ -21237,10 +21220,9 @@ FAIL_STUB_PATCH(localDll_Init);
 
 void DisplayEstablishingShot_()
 {
-	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && active_campaign_menu_entry)
+	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && active_campaign_entry_index != -1)
 	{
-		const char* establishing_shot = ((ExpandedCampaignMenuEntry*)active_campaign_menu_entry)->establishing_shot;
-		if (establishing_shot)
+		if (const char* establishing_shot = active_campaign->entries[active_campaign_entry_index].establishing_shot)
 		{
 			loadInitCreditsBIN_(establishing_shot);
 		}
