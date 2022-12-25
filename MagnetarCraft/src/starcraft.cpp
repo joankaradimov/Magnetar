@@ -15077,8 +15077,9 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluHist_Interact);
 
-BOOL sub_4B6530_(ExpandedCampaignMenuEntry* a1, unsigned int a2)
+BOOL sub_4B6530_(const std::vector<ExpandedCampaignMenuEntry>& entries, unsigned int a2)
 {
+	const ExpandedCampaignMenuEntry* a1 = &*entries.begin();
 	unsigned i = 0;
 	for (ExpandedMapData v2 = a1->next_mission; v2; ++a1)
 	{
@@ -15093,7 +15094,7 @@ BOOL sub_4B6530_(ExpandedCampaignMenuEntry* a1, unsigned int a2)
 
 FAIL_STUB_PATCH(sub_4B6530);
 
-int loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
+int loadmenu_GluHist_(int a1, const std::vector<ExpandedCampaignMenuEntry>& a2)
 {
 	if (!sub_4B6530_(a2, a1))
 	{
@@ -15101,7 +15102,7 @@ int loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
 	}
 
 	dword_6D5A48 = 0;
-	dword_6D5A4C = (CampaignMenuEntry*) a2;
+	dword_6D5A4C = (CampaignMenuEntry*) &*a2.begin();
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
@@ -15117,12 +15118,12 @@ int loadmenu_GluHist_(int a1, ExpandedCampaignMenuEntry* a2)
 		dword_6D5A44 = NULL;
 	}
 
-	return dword_6D5A48 ? (ExpandedCampaignMenuEntry*)dword_6D5A48 - a2 : -1;
+	return dword_6D5A48 ? (ExpandedCampaignMenuEntry*)dword_6D5A48 - &*a2.begin() : -1;
 }
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
 
-int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, ExpandedCampaignMenuEntry** a5)
+int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5)
 {
 	char* campaign_index_ = campaign_index;
 	int v5 = strtoul(campaign_index, &campaign_index_, 10) - campaign->first_mission_index;
@@ -15131,7 +15132,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, Expande
 		return 0;
 	}
 
-	ExpandedCampaignMenuEntry* v8 = campaign->entries;
+	auto v8 = campaign->entries.begin();
 	if (v8->next_mission == MD_none)
 	{
 		return 0;
@@ -15165,7 +15166,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, Expande
 			return 0;
 		}
 	}
-	*a5 = v8;
+	*a5 = v8 - campaign->entries.begin();
 	return 1;
 }
 
@@ -15203,11 +15204,11 @@ int campaignTypeCheatStrings_(const char* a2)
 	}
 	int campaign_index = strtoul(a2 + SStrLen(relevant_campaign->campaign_id), nullptr, 10) - relevant_campaign->first_mission_index;
 
-	ExpandedCampaignMenuEntry* campaign_menu_entry;
+	int campaign_menu_entry_index;
 	int prefix_length = SStrLen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry) && campaign_menu_entry->next_mission != EMD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry_index) && relevant_campaign->entries[campaign_menu_entry_index].next_mission != EMD_xbonus)
 	{
-		ContinueCampaignWithLevelCheat_(relevant_campaign, campaign_menu_entry - relevant_campaign->entries);
+		ContinueCampaignWithLevelCheat_(relevant_campaign, campaign_menu_entry_index);
 		if (gwGameMode == GAME_RUN)
 		{
 			GameState = 0;
@@ -15253,7 +15254,7 @@ void updateActiveCampaignMission_()
 	{
 		for (Campaign& campaign : campaigns)
 		{
-			for (ExpandedCampaignMenuEntry* entry = campaign.entries; entry->next_mission; entry++)
+			for (auto& entry = campaign.entries.begin(); entry->next_mission; entry++)
 			{
 				if (entry->next_mission == CampaignIndex)
 				{
@@ -20343,14 +20344,14 @@ int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 
 FAIL_STUB_PATCH(sub_4DBD20);
 
-ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
+int sub_4DBDA0_(const char* a1)
 {
 	ExpandedMapData v6;
 
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
 	{
-		return &active_campaign->entries[active_campaign_entry_index];
+		return active_campaign_entry_index;
 	}
 
 	size_t v4 = v2 - a1;
@@ -20362,7 +20363,7 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 		{
 			for (int i = 0; i < 3; ++i)
 			{
-				ExpandedCampaignMenuEntry* result = campaigns[i]->entries;
+				auto result = campaigns[i]->entries.begin();
 				v6 = result->next_mission;
 				if (v6)
 				{
@@ -20375,7 +20376,7 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 							goto LABEL_11;
 						}
 					}
-					return result;
+					return &*result - &*campaigns[i]->entries.begin();
 				}
 			LABEL_11:
 				;
@@ -20388,7 +20389,7 @@ ExpandedCampaignMenuEntry* sub_4DBDA0_(const char* a1)
 			break;
 		}
 	}
-	return &active_campaign->entries[active_campaign_entry_index];
+	return active_campaign_entry_index;
 }
 
 FAIL_STUB_PATCH(sub_4DBDA0);
@@ -20895,7 +20896,7 @@ int ContinueCampaign_(int a1)
 	}
 	if (next_scenario[0])
 	{
-		active_campaign_entry_index = sub_4DBDA0_(next_scenario) - active_campaign->entries;
+		active_campaign_entry_index = sub_4DBDA0_(next_scenario);
 		next_scenario[0] = 0;
 	}
 	else
@@ -20926,13 +20927,6 @@ int ContinueCampaign_(int a1)
 
 FAIL_STUB_PATCH(ContinueCampaign);
 
-ExpandedCampaignMenuEntry* get_last_campaign_menu_entry(Campaign* campaign)
-{
-	ExpandedCampaignMenuEntry* last_campaign_menu_entry;
-	for (last_campaign_menu_entry = campaign->entries; last_campaign_menu_entry->next_mission; last_campaign_menu_entry++);
-	return last_campaign_menu_entry;
-}
-
 void BeginEpilog_()
 {
 	int v0 = registry_options.Music;
@@ -20950,7 +20944,7 @@ void BeginEpilog_()
 		registry_options.Music = 50;
 	}
 
-	if (get_last_campaign_menu_entry(active_campaign) - active_campaign->entries == active_campaign_entry_index)
+	if (active_campaign->entries.size() == active_campaign_entry_index + 1)
 	{
 		DLGMusicFade_(active_campaign->epilog_music_track);
 		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);

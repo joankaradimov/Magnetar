@@ -1,3 +1,5 @@
+#include <vector>
+
 #include "starcraft.h"
 
 enum ExpandedMapData : u16
@@ -96,7 +98,7 @@ struct Campaign
 	int first_mission_index;
 	bool is_expansion;
 	RaceId race;
-	ExpandedCampaignMenuEntry* entries;
+	std::vector<ExpandedCampaignMenuEntry> entries;
 	std::vector<const char*> epilogs;
 	const MusicTrackDescription* epilog_music_track;
 	MenuPosition post_epilog_menu;

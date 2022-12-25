@@ -2,7 +2,7 @@
 #include "race.h"
 #include "patching.h"
 
-ExpandedCampaignMenuEntry terran_swcampaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> terran_swcampaign_menu_entries_ = {
 	{0x33, ExpandedMapData::EMD_swtutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "Estt0tsw"},
 	{0x34, ExpandedMapData::EMD_swterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "Estt01sw"},
 	{0x35, ExpandedMapData::EMD_swterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "Estt02sw"},
@@ -12,7 +12,7 @@ ExpandedCampaignMenuEntry terran_swcampaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry zerg_campaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> zerg_campaign_menu_entries_ = {
 	{0x20, ExpandedMapData::EMD_zerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ01"},
 	{0x21, ExpandedMapData::EMD_zerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ02"},
 	{0x22, ExpandedMapData::EMD_zerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ03"},
@@ -33,7 +33,7 @@ ExpandedCampaignMenuEntry zerg_campaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry terran_campaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> terran_campaign_menu_entries_ = {
 	{1, ExpandedMapData::EMD_tutorial, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT0t"},
 	{2, ExpandedMapData::EMD_terran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT01"},
 	{3, ExpandedMapData::EMD_terran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT02"},
@@ -56,7 +56,7 @@ ExpandedCampaignMenuEntry terran_campaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry protoss_campaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> protoss_campaign_menu_entries_ = {
 	{0x11, ExpandedMapData::EMD_protoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP01"},
 	{0x12, ExpandedMapData::EMD_protoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP02"},
 	{0x13, ExpandedMapData::EMD_protoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP03"},
@@ -77,7 +77,7 @@ ExpandedCampaignMenuEntry protoss_campaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> zerg_expcampaign_menu_entries_ = {
 	{0x4A, ExpandedMapData::EMD_xzerg01, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ01x"},
 	{0x4B, ExpandedMapData::EMD_xzerg02, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ02x"},
 	{0x4C, ExpandedMapData::EMD_xzerg03, C_BLIZZARD_LOGO, 0, RACE_Zerg, 0, "EstZ03x"},
@@ -98,7 +98,7 @@ ExpandedCampaignMenuEntry zerg_expcampaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry terran_expcampaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> terran_expcampaign_menu_entries_ = {
 	{0x41, ExpandedMapData::EMD_xterran01, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT01x"},
 	{0x42, ExpandedMapData::EMD_xterran02, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT02x"},
 	{0x43, ExpandedMapData::EMD_xterran03, C_BLIZZARD_LOGO, 0, RACE_Terran, 0, "EstT03x"},
@@ -112,7 +112,7 @@ ExpandedCampaignMenuEntry terran_expcampaign_menu_entries_[] = {
 	{0},
 };
 
-ExpandedCampaignMenuEntry protoss_expcampaign_menu_entries_[] = {
+std::vector<ExpandedCampaignMenuEntry> protoss_expcampaign_menu_entries_ = {
 	{0x39, ExpandedMapData::EMD_xprotoss01, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP01x"},
 	{0x3A, ExpandedMapData::EMD_xprotoss02, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP02x"},
 	{0x3B, ExpandedMapData::EMD_xprotoss03, C_BLIZZARD_LOGO, 0, RACE_Protoss, 0, "EstP03x"},
