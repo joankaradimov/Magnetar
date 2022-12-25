@@ -15230,19 +15230,19 @@ int campaignTypeCheatStrings_(const char* a2)
 
 FAIL_STUB_PATCH(campaignTypeCheatStrings);
 
-ExpandedCampaignMenuEntry* getCampaignIndex_(Campaign& campaign)
+int getCampaignIndex_(Campaign& campaign)
 {
-	ExpandedCampaignMenuEntry* entry = campaign.entries;
+	int index = 0;
 
-	while (entry->cinematic || entry->next_mission != CampaignIndex)
+	while (campaign.entries[index].cinematic || campaign.entries[index].next_mission != CampaignIndex)
 	{
-		++entry;
-		if (entry->next_mission == EMD_none)
+		++index;
+		if (campaign.entries[index].cinematic == EMD_none)
 		{
 			return 0;
 		}
 	}
-	return entry;
+	return index;
 }
 
 FAIL_STUB_PATCH(getCampaignIndex);
@@ -15258,7 +15258,7 @@ void updateActiveCampaignMission_()
 				if (entry->next_mission == CampaignIndex)
 				{
 					active_campaign = &campaign;
-					active_campaign_entry_index = (getCampaignIndex_(campaign) - campaign.entries);
+					active_campaign_entry_index = getCampaignIndex_(campaign);
 					return;
 				}
 			}
