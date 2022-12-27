@@ -14976,10 +14976,13 @@ int CreateCampaignGame_(ExpandedMapData mapData)
 
 FAIL_STUB_PATCH(CreateCampaignGame);
 
+const ExpandedCampaignMenuEntry* dword_6D5A48_ex;
+const ExpandedCampaignMenuEntry* dword_6D5A4C_ex;
+
 void gluHist_Create_(dialog* dlg)
 {
 	dialog* mission_list_dlg = getControlFromIndex_(dlg, 6);
-	ExpandedCampaignMenuEntry* mission_entries = (ExpandedCampaignMenuEntry*) dword_6D5A4C;
+	const ExpandedCampaignMenuEntry* mission_entries = dword_6D5A4C_ex;
 
 	mission_list_dlg->lFlags |= CTRL_LBOX_NORECALC | CTRL_PLAIN;
 
@@ -15021,7 +15024,7 @@ void gluHist_Activate_(dialog* dlg)
 		{
 			if (v1->fields.list.bCurrStr != 0xFF)
 			{
-				dword_6D5A48 = (CampaignMenuEntry*)((ExpandedCampaignMenuEntry*)dword_6D5A4C + v1->fields.list.pdwData[v1->fields.list.bCurrStr]);
+				dword_6D5A48_ex = dword_6D5A4C_ex + v1->fields.list.pdwData[v1->fields.list.bCurrStr];
 			}
 		}
 
@@ -15101,8 +15104,8 @@ int loadmenu_GluHist_(int a1, const std::vector<ExpandedCampaignMenuEntry>& a2)
 		return 0;
 	}
 
-	dword_6D5A48 = 0;
-	dword_6D5A4C = (CampaignMenuEntry*) &*a2.begin();
+	dword_6D5A48_ex = 0;
+	dword_6D5A4C_ex = &*a2.begin();
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
@@ -15118,7 +15121,7 @@ int loadmenu_GluHist_(int a1, const std::vector<ExpandedCampaignMenuEntry>& a2)
 		dword_6D5A44 = NULL;
 	}
 
-	return dword_6D5A48 ? (ExpandedCampaignMenuEntry*)dword_6D5A48 - &*a2.begin() : -1;
+	return dword_6D5A48_ex ? dword_6D5A48_ex - &*a2.begin() : -1;
 }
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
