@@ -80,12 +80,11 @@ enum ExpandedMapData : u16
 	EMD_Unknown = 0x49,
 };
 
-struct __declspec(align(2)) ExpandedCampaignMenuEntry
+struct ExpandedCampaignMenuEntry
 {
 	unsigned __int16 glu_hist_tbl_index;
 	ExpandedMapData next_mission;
 	Cinematic cinematic;
-	char _padding0;
 	RaceId race;
 	bool hide;
 	const char* establishing_shot;
