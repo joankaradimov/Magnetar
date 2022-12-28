@@ -20349,8 +20349,6 @@ FAIL_STUB_PATCH(sub_4DBD20);
 
 int sub_4DBDA0_(const char* a1)
 {
-	ExpandedMapData v6;
-
 	char* v2 = SStrChrR(a1, '.');
 	if (!v2)
 	{
@@ -20367,22 +20365,14 @@ int sub_4DBDA0_(const char* a1)
 			for (int i = 0; i < 3; ++i)
 			{
 				auto result = campaigns[i]->entries.begin();
-				v6 = result->next_mission;
-				if (v6)
+				while (result->next_mission)
 				{
-					while (result->cinematic || v6 != v8)
+					++result;
+					if (!result->cinematic && result->next_mission == v8)
 					{
-						v6 = result[1].next_mission;
-						++result;
-						if (v6 == MD_none)
-						{
-							goto LABEL_11;
-						}
+						return &*result - &*campaigns[i]->entries.begin();
 					}
-					return &*result - &*campaigns[i]->entries.begin();
 				}
-			LABEL_11:
-				;
 			}
 			++v8;
 			if (sub_4DBD20_(a1, v4, &v8))
