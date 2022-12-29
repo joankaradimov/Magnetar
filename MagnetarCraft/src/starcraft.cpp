@@ -15080,9 +15080,9 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluHist_Interact);
 
-BOOL sub_4B6530_(const std::vector<ExpandedCampaignMenuEntry>& entries, unsigned int a2)
+BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 {
-	const ExpandedCampaignMenuEntry* a1 = &*entries.begin();
+	const ExpandedCampaignMenuEntry* a1 = &*campaign->entries.begin();
 	unsigned i = 0;
 	for (ExpandedMapData v2 = a1->next_mission; v2; ++a1)
 	{
@@ -15097,15 +15097,15 @@ BOOL sub_4B6530_(const std::vector<ExpandedCampaignMenuEntry>& entries, unsigned
 
 FAIL_STUB_PATCH(sub_4B6530);
 
-int loadmenu_GluHist_(int a1, const std::vector<ExpandedCampaignMenuEntry>& a2)
+int loadmenu_GluHist_(int a1, Campaign* campaign)
 {
-	if (!sub_4B6530_(a2, a1))
+	if (!sub_4B6530_(campaign, a1))
 	{
 		return 0;
 	}
 
 	dword_6D5A48_ex = 0;
-	dword_6D5A4C_ex = &*a2.begin();
+	dword_6D5A4C_ex = &*campaign->entries.begin();
 	dword_6D5A50 = a1;
 	dword_6D5A40 = off_51A69C;
 	dword_599D98 = 28;
@@ -15121,7 +15121,7 @@ int loadmenu_GluHist_(int a1, const std::vector<ExpandedCampaignMenuEntry>& a2)
 		dword_6D5A44 = NULL;
 	}
 
-	return dword_6D5A48_ex ? dword_6D5A48_ex - &*a2.begin() : -1;
+	return dword_6D5A48_ex ? dword_6D5A48_ex - &*campaign->entries.begin() : -1;
 }
 
 FAIL_STUB_PATCH(loadmenu_GluHist);
@@ -15297,7 +15297,7 @@ bool LoadCampaignWithCharacter_(RaceId race)
 		active_campaign = campaigns_by_race[race];
 		unlocked_mission = &character_data.unlocked_campaign_mission[race];
 	}
-	active_campaign_entry_index = loadmenu_GluHist_(*unlocked_mission, active_campaign->entries);
+	active_campaign_entry_index = loadmenu_GluHist_(*unlocked_mission, active_campaign);
 	if (active_campaign_entry_index != -1)
 	{
 		if (*unlocked_mission < active_campaign->entries[active_campaign_entry_index].next_mission)
@@ -15339,7 +15339,7 @@ bool LoadPrecursorCampaign()
 
 	active_campaign = &campaigns[0];
 	int unlocked_mission = 6;
-	active_campaign_entry_index = loadmenu_GluHist_(unlocked_mission, active_campaign->entries);
+	active_campaign_entry_index = loadmenu_GluHist_(unlocked_mission, active_campaign);
 	if (active_campaign_entry_index != -1)
 	{
 		if (active_campaign->entries[active_campaign_entry_index].cinematic)
