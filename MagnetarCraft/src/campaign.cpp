@@ -187,7 +187,7 @@ std::vector<Campaign> campaigns = {
 std::vector<Campaign*> campaigns_by_race = { &campaigns[2], &campaigns[1], &campaigns[3] };
 std::vector<Campaign*> expcampaigns_by_race = { &campaigns[6], &campaigns[5], &campaigns[4] };
 
-MEMORY_PATCH(0x4B69CA, (BYTE)sizeof(ExpandedCampaignMenuEntry));
+MEMORY_PATCH(0x4B69CA, (BYTE)sizeof(CampaignMenuEntryEx));
 
 // Switch between building portraits in campaigns (Overmind/Daggoth and Aldaris/Fenix):
 MEMORY_PATCH(0x45E350, (BYTE)EMD_protoss10);

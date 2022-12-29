@@ -80,7 +80,7 @@ enum ExpandedMapData : u16
 	EMD_Unknown = 0x49,
 };
 
-struct ExpandedCampaignMenuEntry
+struct CampaignMenuEntryEx
 {
 	unsigned __int16 glu_hist_tbl_index;
 	ExpandedMapData next_mission;
@@ -97,7 +97,7 @@ struct Campaign
 	int first_mission_index;
 	bool is_expansion;
 	RaceId race;
-	std::vector<ExpandedCampaignMenuEntry> entries;
+	std::vector<CampaignMenuEntryEx> entries;
 	std::vector<const char*> epilogs;
 	const MusicTrackDescription* epilog_music_track;
 	MenuPosition post_epilog_menu;

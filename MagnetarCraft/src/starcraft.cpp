@@ -14976,13 +14976,13 @@ int CreateCampaignGame_(ExpandedMapData mapData)
 
 FAIL_STUB_PATCH(CreateCampaignGame);
 
-const ExpandedCampaignMenuEntry* dword_6D5A48_ex;
-const ExpandedCampaignMenuEntry* dword_6D5A4C_ex;
+const CampaignMenuEntryEx* dword_6D5A48_ex;
+const CampaignMenuEntryEx* dword_6D5A4C_ex;
 
 void gluHist_Create_(dialog* dlg)
 {
 	dialog* mission_list_dlg = getControlFromIndex_(dlg, 6);
-	const ExpandedCampaignMenuEntry* mission_entries = dword_6D5A4C_ex;
+	const CampaignMenuEntryEx* mission_entries = dword_6D5A4C_ex;
 
 	mission_list_dlg->lFlags |= CTRL_LBOX_NORECALC | CTRL_PLAIN;
 
@@ -15082,7 +15082,7 @@ FAIL_STUB_PATCH(gluHist_Interact);
 
 BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 {
-	const ExpandedCampaignMenuEntry* a1 = &*campaign->entries.begin();
+	const CampaignMenuEntryEx* a1 = &*campaign->entries.begin();
 	unsigned i = 0;
 	for (ExpandedMapData v2 = a1->next_mission; v2; ++a1)
 	{
@@ -19387,7 +19387,7 @@ int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluScore_Main);
 
-void sub_4DBEE0_(ExpandedCampaignMenuEntry* a1)
+void sub_4DBEE0_(CampaignMenuEntryEx* a1)
 {
 	CharacterData v5;
 
