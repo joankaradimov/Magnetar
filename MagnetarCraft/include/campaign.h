@@ -80,8 +80,16 @@ enum ExpandedMapData : u16
 	EMD_Unknown = 0x49,
 };
 
+enum CampaignMenuEntryType
+{
+	END_CAMPAIGN,
+	CINEMATIC,
+	MISSION,
+};
+
 struct CampaignMenuEntryEx
 {
+	CampaignMenuEntryType entry_type;
 	unsigned __int16 glu_hist_tbl_index;
 	ExpandedMapData next_mission;
 	Cinematic cinematic;

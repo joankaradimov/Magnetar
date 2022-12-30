@@ -6,6 +6,7 @@ CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData
 {
 	return
 	{
+		CampaignMenuEntryType::MISSION,
 		glu_hist_tbl_index,
 		next_mission,
 		C_BLIZZARD_LOGO,
@@ -20,6 +21,7 @@ CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapDa
 {
 	return
 	{
+		CampaignMenuEntryType::CINEMATIC,
 		glu_hist_tbl_index,
 		next_mission,
 		cinematic,
@@ -32,7 +34,7 @@ CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapDa
 
 CampaignMenuEntryEx campaign_end()
 {
-	return { 0 };
+	return { CampaignMenuEntryType::END_CAMPAIGN };
 }
 
 std::vector<Campaign> campaigns = {
