@@ -6989,8 +6989,7 @@ int LevelCheatInitGame_()
 	{
 	LABEL_21:
 		GameData v6;
-		memset(&v6, 0, 140u);
-		v6.got_file_values.unused3[4] = 0;
+		memset(&v6, 0, sizeof(GameData));
 		strcpy_s(v6.player_name, playerName);
 		strcpy_s(v6.map_name, CurrentMapName);
 		v6.active_human_players = 1;
