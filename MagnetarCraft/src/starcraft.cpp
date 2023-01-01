@@ -20363,15 +20363,15 @@ int sub_4DBDA0_(const char* a1)
 	{
 		while (2)
 		{
-			for (int i = 0; i < 3; ++i)
+			for (Campaign* campaign : campaigns)
 			{
-				auto result = campaigns[i]->entries.begin();
+				auto result = campaign->entries.begin();
 				while (result->next_mission)
 				{
 					++result;
 					if (!result->cinematic && result->next_mission == v8)
 					{
-						return result - campaigns[i]->entries.begin();
+						return result - campaign->entries.begin();
 					}
 				}
 			}
