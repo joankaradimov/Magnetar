@@ -15305,16 +15305,17 @@ bool LoadCampaignWithCharacter_(RaceId race)
 			CreateCharacterFile(&character_data);
 		}
 
-		if (active_campaign->entries[active_campaign_entry_index].cinematic)
+		switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 		{
+		case CampaignMenuEntryType::CINEMATIC:
 			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
-		}
-		else
-		{
+			break;
+		default:
 			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
+			break;
 		}
 	}
 	return active_campaign_entry_index != -1;
@@ -15341,16 +15342,17 @@ bool LoadPrecursorCampaign()
 	active_campaign_entry_index = loadmenu_GluHist_(unlocked_mission, active_campaign);
 	if (active_campaign_entry_index != -1)
 	{
-		if (active_campaign->entries[active_campaign_entry_index].cinematic)
+		switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 		{
+		case CampaignMenuEntryType::CINEMATIC:
 			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
-		}
-		else
-		{
+			break;
+		default:
 			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
+			break;
 		}
 	}
 	return active_campaign_entry_index != -1;
@@ -20897,23 +20899,24 @@ int ContinueCampaign_(int a1)
 	}
 	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
 
-	if (active_campaign->entries[active_campaign_entry_index].next_mission == 0)
+	switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 	{
+	case CampaignMenuEntryType::END_CAMPAIGN:
 		gwGameMode = GAME_EPILOG;
 		return 1;
-	}
-	else if (active_campaign->entries[active_campaign_entry_index].cinematic)
-	{
-		CampaignIndex = (MapData) active_campaign->entries[active_campaign_entry_index].next_mission;
+	case CampaignMenuEntryType::CINEMATIC:
+		CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 		active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 		gwGameMode = GAME_CINEMATIC;
 		return 1;
+	case CampaignMenuEntryType::MISSION:
+		if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
+		{
+			glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
+			return 1;
+		}
 	}
-	else if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
-	{
-		glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
-		return 1;
-	}
+
 	return 0;
 }
 
