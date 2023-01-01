@@ -20896,25 +20896,25 @@ int ContinueCampaign_(int a1)
 		active_campaign_entry_index += 1;
 	}
 	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
-	if (active_campaign->entries[active_campaign_entry_index].next_mission)
-	{
-		if (active_campaign->entries[active_campaign_entry_index].cinematic)
-		{
-			CampaignIndex = (MapData) active_campaign->entries[active_campaign_entry_index].next_mission;
-			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
-			gwGameMode = GAME_CINEMATIC;
-			return 1;
-		}
-		if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
-		{
-			glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
-			return 1;
-		}
-		return 0;
-	}
 
-	gwGameMode = GAME_EPILOG;
-	return 1;
+	if (active_campaign->entries[active_campaign_entry_index].next_mission == 0)
+	{
+		gwGameMode = GAME_EPILOG;
+		return 1;
+	}
+	else if (active_campaign->entries[active_campaign_entry_index].cinematic)
+	{
+		CampaignIndex = (MapData) active_campaign->entries[active_campaign_entry_index].next_mission;
+		active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
+		gwGameMode = GAME_CINEMATIC;
+		return 1;
+	}
+	else if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
+	{
+		glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
+		return 1;
+	}
+	return 0;
 }
 
 FAIL_STUB_PATCH(ContinueCampaign);
