@@ -20371,7 +20371,7 @@ int sub_4DBDA0_(const char* a1)
 					++result;
 					if (!result->cinematic && result->next_mission == v8)
 					{
-						return &*result - &*campaigns[i]->entries.begin();
+						return result - campaigns[i]->entries.begin();
 					}
 				}
 			}
