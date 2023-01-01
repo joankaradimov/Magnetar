@@ -20358,29 +20358,19 @@ int sub_4DBDA0_(const char* a1)
 
 	size_t v4 = v2 - a1;
 	auto& campaigns = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaigns_by_race : campaigns_by_race;
-	int v8 = 0;
-	if (sub_4DBD20_(a1, v4, &v8))
+	for (int v8 = 0; sub_4DBD20_(a1, v4, &v8); v8++)
 	{
-		while (2)
+		for (Campaign* campaign : campaigns)
 		{
-			for (Campaign* campaign : campaigns)
+			auto result = campaign->entries.begin();
+			while (result->next_mission)
 			{
-				auto result = campaign->entries.begin();
-				while (result->next_mission)
+				++result;
+				if (!result->cinematic && result->next_mission == v8)
 				{
-					++result;
-					if (!result->cinematic && result->next_mission == v8)
-					{
-						return result - campaign->entries.begin();
-					}
+					return result - campaign->entries.begin();
 				}
 			}
-			++v8;
-			if (sub_4DBD20_(a1, v4, &v8))
-			{
-				continue;
-			}
-			break;
 		}
 	}
 	return active_campaign_entry_index;
