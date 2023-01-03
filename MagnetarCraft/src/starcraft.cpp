@@ -15081,15 +15081,13 @@ FAIL_STUB_PATCH(gluHist_Interact);
 
 BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 {
-	const CampaignMenuEntryEx* a1 = &*campaign->entries.begin();
 	unsigned i = 0;
-	for (ExpandedMapData v2 = a1->next_mission; v2; ++a1)
+	for (const CampaignMenuEntryEx* a1 = &*campaign->entries.begin(); a1->next_mission; ++a1)
 	{
-		if (v2 <= a2 && a1->glu_hist_tbl_index)
+		if (a1->next_mission <= a2 && a1->glu_hist_tbl_index)
 		{
 			++i;
 		}
-		v2 = a1[1].next_mission;
 	}
 	return i > 1;
 }
