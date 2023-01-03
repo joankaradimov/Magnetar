@@ -82,7 +82,6 @@ enum ExpandedMapData : u16
 
 enum CampaignMenuEntryType
 {
-	END_CAMPAIGN,
 	CINEMATIC,
 	MISSION,
 };

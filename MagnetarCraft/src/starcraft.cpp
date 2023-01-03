@@ -14985,7 +14985,7 @@ void gluHist_Create_(dialog* dlg)
 
 	mission_list_dlg->lFlags |= CTRL_LBOX_NORECALC | CTRL_PLAIN;
 
-	for (int i = 0; mission_entries[i].next_mission; i++)
+	for (int i = 0; i < mission_entries.size(); i++)
 	{
 		if (mission_entries[i].next_mission <= (unsigned int)dword_6D5A50 && mission_entries[i].glu_hist_tbl_index)
 		{
@@ -15082,9 +15082,9 @@ FAIL_STUB_PATCH(gluHist_Interact);
 BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 {
 	unsigned i = 0;
-	for (const CampaignMenuEntryEx* a1 = &*campaign->entries.begin(); a1->next_mission; ++a1)
+	for (auto& a1 : campaign->entries)
 	{
-		if (a1->next_mission <= a2 && a1->glu_hist_tbl_index)
+		if (a1.next_mission <= a2 && a1.glu_hist_tbl_index)
 		{
 			++i;
 		}
@@ -15133,14 +15133,14 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 	}
 
 	auto v8 = campaign->entries.begin();
-	if (v8->next_mission == MD_none)
+	if (v8 == campaign->entries.end())
 	{
 		return 0;
 	}
 	while (v8->cinematic || v8->hide || v5--)
 	{
 		++v8;
-		if (v8->next_mission == MD_none)
+		if (v8 == campaign->entries.end())
 		{
 			return 0;
 		}
@@ -15151,7 +15151,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 		while (v10)
 		{
 			--v10;
-			if (v8->next_mission == MD_none)
+			if (v8 == campaign->entries.end())
 			{
 				return 0;
 			}
@@ -15161,7 +15161,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 				return 0;
 			}
 		}
-		if (v8->next_mission == MD_none)
+		if (v8 == campaign->entries.end())
 		{
 			return 0;
 		}
@@ -15254,9 +15254,9 @@ void updateActiveCampaignMission_()
 	{
 		for (Campaign& campaign : campaigns)
 		{
-			for (auto& entry = campaign.entries.begin(); entry->next_mission; entry++)
+			for (auto& entry : campaign.entries)
 			{
-				if (entry->next_mission == CampaignIndex)
+				if (entry.next_mission == CampaignIndex)
 				{
 					active_campaign = &campaign;
 					active_campaign_entry_index = getCampaignIndex_(campaign);
@@ -19413,7 +19413,7 @@ void sub_4DBF80_()
 	if (!multiPlayerMode && !dword_51CA1C)
 	{
 		updateActiveCampaignMission_();
-		if (active_campaign_entry_index != -1 && active_campaign->entries[active_campaign_entry_index].next_mission)
+		if (active_campaign_entry_index != -1 && active_campaign_entry_index + 1 < active_campaign->entries.size())
 		{
 			sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index + 1]);
 		}
@@ -20360,10 +20360,8 @@ int sub_4DBDA0_(const char* a1)
 	{
 		for (Campaign* campaign : campaigns)
 		{
-			auto result = campaign->entries.begin();
-			while (result->next_mission)
+			for (auto result = campaign->entries.begin(); result != campaign->entries.end(); result++)
 			{
-				++result;
 				if (!result->cinematic && result->next_mission == v8)
 				{
 					return result - campaign->entries.begin();
@@ -20872,7 +20870,7 @@ int ContinueCampaign_(int a1)
 	}
 	DisplayMissionEpilog_();
 	updateActiveCampaignMission_();
-	if (active_campaign_entry_index == -1 || active_campaign->entries[active_campaign_entry_index].next_mission == MD_none)
+	if (active_campaign_entry_index == -1 || active_campaign_entry_index >= active_campaign->entries.size())
 	{
 		return 0;
 	}
@@ -20885,13 +20883,15 @@ int ContinueCampaign_(int a1)
 	{
 		active_campaign_entry_index += 1;
 	}
+	if (active_campaign_entry_index >= active_campaign->entries.size())
+	{
+		gwGameMode = GAME_EPILOG;
+		return 1;
+	}
 	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
 
 	switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 	{
-	case CampaignMenuEntryType::END_CAMPAIGN:
-		gwGameMode = GAME_EPILOG;
-		return 1;
 	case CampaignMenuEntryType::CINEMATIC:
 		CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 		active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
@@ -20927,16 +20927,9 @@ void BeginEpilog_()
 		registry_options.Music = 50;
 	}
 
-	if (active_campaign->entries.size() == active_campaign_entry_index + 1)
-	{
-		DLGMusicFade_(active_campaign->epilog_music_track);
-		std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
-		glGluesMode = active_campaign->post_epilog_menu;
-	}
-	else
-	{
-		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
-	}
+	DLGMusicFade_(active_campaign->epilog_music_track);
+	std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
+	glGluesMode = active_campaign->post_epilog_menu;
 	gwGameMode = GAME_GLUES;
 	active_campaign = nullptr;
 	active_campaign_entry_index = -1;

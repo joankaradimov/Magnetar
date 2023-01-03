@@ -32,11 +32,6 @@ CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapDa
 	};
 }
 
-CampaignMenuEntryEx campaign_end()
-{
-	return { CampaignMenuEntryType::END_CAMPAIGN };
-}
-
 std::vector<Campaign> campaigns = {
 	{
 		"swterran",
@@ -50,7 +45,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x36, ExpandedMapData::EMD_swterran03, RACE_Terran, 0, "Estt03sw"),
 			mission(0x37, ExpandedMapData::EMD_swterran04, RACE_Terran, 0, "Estt04sw"),
 			mission(0x38, ExpandedMapData::EMD_swterran05, RACE_Terran, 0, "Estt05sw"),
-			campaign_end(),
 		},
 		{"epilogsw"},
 		&Race::races()[RaceId::RACE_Terran].ingame_music[1],
@@ -81,7 +75,6 @@ std::vector<Campaign> campaigns = {
 			mission(0xB, ExpandedMapData::EMD_terran12, RACE_Terran, 0, "EstT12"),
 			cinematic(0xF, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION_INTRO, 0),
 			cinematic(0, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 1),
-			campaign_end(),
 		},
 		{},
 		nullptr,
@@ -110,7 +103,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x29, ExpandedMapData::EMD_zerg10, RACE_Zerg, 0, "EstZ10"),
 			cinematic(0x2D, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR_INTRO, 0),
 			cinematic(0, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 1),
-			campaign_end(),
 		},
 		{},
 		nullptr,
@@ -139,7 +131,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x19, ExpandedMapData::EMD_protoss09, RACE_Protoss, 0, "EstP09"),
 			mission(0x1A, ExpandedMapData::EMD_protoss10, RACE_Protoss, 0, "EstP10"),
 			cinematic(0x1E, ExpandedMapData::EMD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0),
-			campaign_end(),
 		},
 		{"epilog", "crdt_lst"},
 		&Race::races()[RaceId::RACE_Protoss].ingame_music[2],
@@ -160,7 +151,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x3F, ExpandedMapData::EMD_xprotoss07, RACE_Protoss, 0, "EstP07x"),
 			mission(0x40, ExpandedMapData::EMD_xprotoss08, RACE_Protoss, 0, "EstP08x"),
 			cinematic(0x56, ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0),
-			campaign_end(),
 		},
 		{},
 		nullptr,
@@ -182,7 +172,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x48, ExpandedMapData::EMD_xterran07, RACE_Terran, 0, "EstT07x"),
 			mission(0x49, ExpandedMapData::EMD_xterran08, RACE_Terran, 0, "EstT08x"),
 			cinematic(0x57, ExpandedMapData::EMD_xzerg01, C_UED_VICTORY_REPORT, 0),
-			campaign_end(),
 		},
 		{},
 		nullptr,
@@ -211,7 +200,6 @@ std::vector<Campaign> campaigns = {
 			mission(0, ExpandedMapData::EMD_xbonus, RACE_Zerg, 1, "EstZ09bx", "FinZ09bx"),
 			mission(0x54, ExpandedMapData::EMD_xzerg10, RACE_Zerg, 0, "EstZ10x"),
 			cinematic(0x55, ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0),
-			campaign_end(),
 		},
 		{"epilogX", "crdt_exp"},
 		&Race::races()[RaceId::RACE_Protoss].ingame_music[2],
