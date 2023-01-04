@@ -15231,44 +15231,6 @@ int campaignTypeCheatStrings_(const char* a2)
 
 FAIL_STUB_PATCH(campaignTypeCheatStrings);
 
-int getCampaignIndex_(Campaign& campaign)
-{
-	int index = 0;
-
-	while (campaign.entries[index].cinematic || campaign.entries[index].next_mission != CampaignIndex)
-	{
-		++index;
-		if (campaign.entries[index].cinematic == EMD_none)
-		{
-			return 0;
-		}
-	}
-	return index;
-}
-
-FAIL_STUB_PATCH(getCampaignIndex);
-
-void updateActiveCampaignMission_()
-{
-	if (active_campaign_entry_index == -1 || active_campaign->entries[active_campaign_entry_index].next_mission != CampaignIndex)
-	{
-		for (Campaign& campaign : campaigns)
-		{
-			for (auto& entry : campaign.entries)
-			{
-				if (entry.next_mission == CampaignIndex)
-				{
-					active_campaign = &campaign;
-					active_campaign_entry_index = getCampaignIndex_(campaign);
-					return;
-				}
-			}
-		}
-	}
-}
-
-FAIL_STUB_PATCH(updateActiveCampaignMission);
-
 bool LoadCampaignWithCharacter_(RaceId race)
 {
 	customSingleplayer[0] = 0;
@@ -19412,7 +19374,6 @@ void sub_4DBF80_()
 {
 	if (!multiPlayerMode && !dword_51CA1C)
 	{
-		updateActiveCampaignMission_();
 		if (active_campaign_entry_index != -1 && active_campaign_entry_index + 1 < active_campaign->entries.size())
 		{
 			sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index + 1]);
@@ -20869,7 +20830,6 @@ int ContinueCampaign_(int a1)
 	}
 	gwGameMode = GAME_GLUES;
 	DisplayMissionEpilog_();
-	updateActiveCampaignMission_();
 	if (active_campaign_entry_index == -1 || active_campaign_entry_index >= active_campaign->entries.size())
 	{
 		return 0;
@@ -20910,6 +20870,8 @@ int ContinueCampaign_(int a1)
 	return 0;
 }
 
+FAIL_STUB_PATCH(getCampaignIndex);
+FAIL_STUB_PATCH(updateActiveCampaignMission);
 FAIL_STUB_PATCH(ContinueCampaign);
 
 void BeginEpilog_()
