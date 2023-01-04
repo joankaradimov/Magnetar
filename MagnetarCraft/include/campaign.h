@@ -84,6 +84,7 @@ enum CampaignMenuEntryType
 {
 	CINEMATIC,
 	MISSION,
+	EPILOG,
 };
 
 struct CampaignMenuEntryEx
@@ -96,6 +97,7 @@ struct CampaignMenuEntryEx
 	bool hide;
 	const char* establishing_shot;
 	const char* epilog;
+	const MusicTrackDescription* epilog_music_track;
 };
 
 struct Campaign
@@ -105,8 +107,6 @@ struct Campaign
 	bool is_expansion;
 	RaceId race;
 	std::vector<CampaignMenuEntryEx> entries;
-	std::vector<const char*> epilogs;
-	const MusicTrackDescription* epilog_music_track;
 	MenuPosition post_epilog_menu;
 };
 

@@ -20885,13 +20885,15 @@ int ContinueCampaign_(int a1)
 	}
 	if (active_campaign_entry_index >= active_campaign->entries.size())
 	{
-		gwGameMode = GAME_EPILOG;
 		return 1;
 	}
 	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
 
 	switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 	{
+	case CampaignMenuEntryType::EPILOG:
+		gwGameMode = GAME_EPILOG;
+		return 1;
 	case CampaignMenuEntryType::CINEMATIC:
 		CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 		active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
@@ -20927,8 +20929,12 @@ void BeginEpilog_()
 		registry_options.Music = 50;
 	}
 
-	DLGMusicFade_(active_campaign->epilog_music_track);
-	std::for_each(active_campaign->epilogs.begin(), active_campaign->epilogs.end(), loadInitCreditsBIN_);
+	while (active_campaign_entry_index < active_campaign->entries.size() && active_campaign->entries[active_campaign_entry_index].entry_type == CampaignMenuEntryType::EPILOG)
+	{
+		DLGMusicFade_(active_campaign->entries[active_campaign_entry_index].epilog_music_track);
+		loadInitCreditsBIN_(active_campaign->entries[active_campaign_entry_index].epilog);
+		active_campaign_entry_index++;
+	}
 	glGluesMode = active_campaign->post_epilog_menu;
 	gwGameMode = GAME_GLUES;
 	active_campaign = nullptr;

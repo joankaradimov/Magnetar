@@ -32,6 +32,22 @@ CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapDa
 	};
 }
 
+CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epilog_music_track)
+{
+	return
+	{
+		CampaignMenuEntryType::EPILOG,
+		0,
+		ExpandedMapData::EMD_none,
+		C_BLIZZARD_LOGO,
+		RaceId::RACE_None,
+		true,
+		nullptr,
+		epilog,
+		epilog_music_track,
+	};
+}
+
 std::vector<Campaign> campaigns = {
 	{
 		"swterran",
@@ -45,9 +61,8 @@ std::vector<Campaign> campaigns = {
 			mission(0x36, ExpandedMapData::EMD_swterran03, RACE_Terran, 0, "Estt03sw"),
 			mission(0x37, ExpandedMapData::EMD_swterran04, RACE_Terran, 0, "Estt04sw"),
 			mission(0x38, ExpandedMapData::EMD_swterran05, RACE_Terran, 0, "Estt05sw"),
+			epilog("epilogsw", &Race::races()[RaceId::RACE_Terran].ingame_music[1]),
 		},
-		{"epilogsw"},
-		&Race::races()[RaceId::RACE_Terran].ingame_music[1],
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -76,8 +91,6 @@ std::vector<Campaign> campaigns = {
 			cinematic(0xF, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION_INTRO, 0),
 			cinematic(0, ExpandedMapData::EMD_zerg01, C_THE_INAUGURATION, 1),
 		},
-		{},
-		nullptr,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -104,8 +117,6 @@ std::vector<Campaign> campaigns = {
 			cinematic(0x2D, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR_INTRO, 0),
 			cinematic(0, ExpandedMapData::EMD_protoss01, C_THE_INVASION_OF_AIUR, 1),
 		},
-		{},
-		nullptr,
 		MenuPosition::GLUE_CAMPAIGN,
 	},
 	{
@@ -131,9 +142,9 @@ std::vector<Campaign> campaigns = {
 			mission(0x19, ExpandedMapData::EMD_protoss09, RACE_Protoss, 0, "EstP09"),
 			mission(0x1A, ExpandedMapData::EMD_protoss10, RACE_Protoss, 0, "EstP10"),
 			cinematic(0x1E, ExpandedMapData::EMD_xprotoss01, C_THE_DEATH_OF_THE_OVERMIND, 0),
+			epilog("epilog", &Race::races()[RaceId::RACE_Protoss].ingame_music[2]),
+			epilog("crdt_lst", &Race::races()[RaceId::RACE_Protoss].ingame_music[2]),
 		},
-		{"epilog", "crdt_lst"},
-		&Race::races()[RaceId::RACE_Protoss].ingame_music[2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 	{
@@ -152,8 +163,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x40, ExpandedMapData::EMD_xprotoss08, RACE_Protoss, 0, "EstP08x"),
 			cinematic(0x56, ExpandedMapData::EMD_xterran01, C_FURY_OF_THE_XEL_NAGA, 0),
 		},
-		{},
-		nullptr,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -173,8 +182,6 @@ std::vector<Campaign> campaigns = {
 			mission(0x49, ExpandedMapData::EMD_xterran08, RACE_Terran, 0, "EstT08x"),
 			cinematic(0x57, ExpandedMapData::EMD_xzerg01, C_UED_VICTORY_REPORT, 0),
 		},
-		{},
-		nullptr,
 		MenuPosition::GLUE_EX_CAMPAIGN,
 	},
 	{
@@ -200,9 +207,9 @@ std::vector<Campaign> campaigns = {
 			mission(0, ExpandedMapData::EMD_xbonus, RACE_Zerg, 1, "EstZ09bx", "FinZ09bx"),
 			mission(0x54, ExpandedMapData::EMD_xzerg10, RACE_Zerg, 0, "EstZ10x"),
 			cinematic(0x55, ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0),
+			epilog("epilogX", &Race::races()[RaceId::RACE_Protoss].ingame_music[2]),
+			epilog("crdt_exp", &Race::races()[RaceId::RACE_Protoss].ingame_music[2]),
 		},
-		{"epilogX", "crdt_exp"},
-		&Race::races()[RaceId::RACE_Protoss].ingame_music[2],
 		MenuPosition::GLUE_MAIN_MENU,
 	},
 };
