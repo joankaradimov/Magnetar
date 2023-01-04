@@ -20857,7 +20857,6 @@ FAIL_STUB_PATCH(CreateNextCampaignGame);
 
 int ContinueCampaign_(int a1)
 {
-	gwGameMode = GAME_GLUES;
 	if (dword_51CA1C)
 	{
 		CreateNextCampaignGame_();
@@ -20868,6 +20867,7 @@ int ContinueCampaign_(int a1)
 		gwGameMode = GAME_RESTART;
 		return 1;
 	}
+	gwGameMode = GAME_GLUES;
 	DisplayMissionEpilog_();
 	updateActiveCampaignMission_();
 	if (active_campaign_entry_index == -1 || active_campaign_entry_index >= active_campaign->entries.size())
