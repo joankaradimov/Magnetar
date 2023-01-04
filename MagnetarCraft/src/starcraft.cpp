@@ -17633,8 +17633,7 @@ FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu);
 
 void sub_46D1F0_()
 {
-	stopMusic();
-	DLGMusicFade_(&title_music);
+	sub_46D200_(&title_music);
 }
 
 FAIL_STUB_PATCH(sub_46D1F0);
