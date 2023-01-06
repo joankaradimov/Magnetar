@@ -17181,11 +17181,10 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			gluMainCreate(dlg);
 			DLG_SwishIn_(dlg);
 			genericDlgInteract(dlg, evt);
-			if (byte_6D5BBC)
+			if (!byte_6D5BBC)
 			{
-				return true;
+				DLGMusicFade_(&title_music);
 			}
-			DLGMusicFade_(&title_music);
 			return true;
 		case USER_DESTROY:
 			gluMainDestroy_(dlg);
