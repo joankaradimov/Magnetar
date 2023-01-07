@@ -17199,7 +17199,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					BWFXN_gluPOK_MBox(s);
 					return true;
 				}
-				if (is_expansion_installed)
+				else if (is_expansion_installed)
 				{
 					if (SelGameMode_(0))
 					{
@@ -17217,7 +17217,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					}
 					return true;
 				}
-				if (is_spawn)
+				else if (is_spawn)
 				{
 					IsExpansion = 0;
 					return DLG_SwishOut(dlg);
