@@ -17207,6 +17207,14 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					}
 					return true;
 				}
+				else
+				{
+					if (!gluMain_DisplayCDRomErrorBinDlg())
+					{
+						return true;
+					}
+					IsExpansion = 0;
+				}
 				break;
 			case 4:
 				if (is_expansion_installed)
@@ -17222,6 +17230,14 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					IsExpansion = 0;
 					return DLG_SwishOut(dlg);
 				}
+				else
+				{
+					if (!gluMain_DisplayCDRomErrorBinDlg())
+					{
+						return true;
+					}
+					IsExpansion = 0;
+				}
 				break;
 			case 5:
 				loadStareditProcess_(dlg);
@@ -17229,11 +17245,6 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			default:
 				return DLG_SwishOut(dlg);
 			}
-			if (!gluMain_DisplayCDRomErrorBinDlg())
-			{
-				return true;
-			}
-			IsExpansion = 0;
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
 			gluMain_CustomCtrlID_(dlg);
