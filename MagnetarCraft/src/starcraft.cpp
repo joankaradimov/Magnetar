@@ -17201,11 +17201,11 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				else if (is_expansion_installed)
 				{
-					if (SelGameMode_(0))
+					if (!SelGameMode_(0))
 					{
-						return DLG_SwishOut(dlg);
+						return true;
 					}
-					return true;
+					return DLG_SwishOut(dlg);
 				}
 				else
 				{
@@ -17219,11 +17219,11 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			case 4:
 				if (is_expansion_installed)
 				{
-					if (SelGameMode_(1))
+					if (!SelGameMode_(1))
 					{
-						return DLG_SwishOut(dlg);
+						return true;
 					}
-					return true;
+					return DLG_SwishOut(dlg);
 				}
 				else if (is_spawn)
 				{
