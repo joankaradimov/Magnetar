@@ -17205,7 +17205,6 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					{
 						return true;
 					}
-					return DLG_SwishOut(dlg);
 				}
 				else
 				{
@@ -17223,12 +17222,10 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 					{
 						return true;
 					}
-					return DLG_SwishOut(dlg);
 				}
 				else if (is_spawn)
 				{
 					IsExpansion = 0;
-					return DLG_SwishOut(dlg);
 				}
 				else
 				{
@@ -17242,8 +17239,6 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 			case 5:
 				loadStareditProcess_(dlg);
 				return true;
-			default:
-				return DLG_SwishOut(dlg);
 			}
 			return DLG_SwishOut(dlg);
 		case USER_INIT:
