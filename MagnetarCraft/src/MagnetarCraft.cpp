@@ -239,6 +239,12 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 		starcraft_root = LocateStarCraftManually();
 		starcraft_root_manually_selected = true;
 	}
+	catch (const YAML::InvalidNode& e)
+	{
+		// TODO: try to find StarCraft path in registry, maybe?
+		starcraft_root = LocateStarCraftManually();
+		starcraft_root_manually_selected = true;
+	}
 
 	StarCraftExecutable* starcraft_exe = nullptr;
 	while (true)
