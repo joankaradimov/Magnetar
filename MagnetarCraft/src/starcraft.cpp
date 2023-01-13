@@ -17104,6 +17104,16 @@ int SelGameMode_(int a2)
 
 FAIL_STUB_PATCH(SelGameMode);
 
+int gluMain_DisplayCDRomErrorBinDlg_()
+{
+	int v0 = LastControlID;
+	int result = cmpgn_WaitForCDRom((GluAllTblEntry)0xA7, "rez\\glucmpgn.bin");
+	LastControlID = v0;
+	return result;
+}
+
+FAIL_STUB_PATCH(gluMain_DisplayCDRomErrorBinDlg);
+
 signed int loadStareditProcess_(dialog* a1)
 {
 	CHAR CommandLine[260];
@@ -17208,7 +17218,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				else
 				{
-					if (!gluMain_DisplayCDRomErrorBinDlg())
+					if (!gluMain_DisplayCDRomErrorBinDlg_())
 					{
 						return true;
 					}
@@ -17229,7 +17239,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				}
 				else
 				{
-					if (!gluMain_DisplayCDRomErrorBinDlg())
+					if (!gluMain_DisplayCDRomErrorBinDlg_())
 					{
 						return true;
 					}
