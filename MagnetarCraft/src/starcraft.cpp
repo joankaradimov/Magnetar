@@ -17067,13 +17067,54 @@ int load_gluGameMode_BINDLG_()
 
 FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
 
+BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
+{
+	HANDLE phFile;
+	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, filename, 0, &phFile))
+	{
+		SFileCloseFile(phFile);
+		return 1;
+	}
+	Streamed_SFX_FullDestructor(&soundFXList);
+	stopMusic();
+	if (cd_archive_mpq)
+	{
+		SFileCloseArchive(cd_archive_mpq);
+		cd_archive_mpq = 0;
+	}
+	if (InitializeCDArchives(filename, 0))
+	{
+		return 1;
+	}
+	if ((unsigned __int8)BWFXN_gluPOKCancel_MBox(get_GluAll_String(a2)))
+	{
+		while (!InitializeCDArchives(filename, 0))
+		{
+			if (!(unsigned __int8)BWFXN_gluPOKCancel_MBox(get_GluAll_String(a2)))
+			{
+				goto LABEL_11;
+			}
+		}
+		return 1;
+	}
+
+LABEL_11:
+	while (!InitializeCDArchives(0, 0))
+	{
+		BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry) 0xA9));
+	}
+	return cd_archive_mpq && SFileExists(filename, cd_archive_mpq);
+}
+
+FAIL_STUB_PATCH(cmpgn_WaitForCDRom);
+
 int SelGameMode_(int a2)
 {
 	int v4 = LastControlID;
 	switch (load_gluGameMode_BINDLG_())
 	{
 	case 6:
-		if (a2 || cmpgn_WaitForCDRom((GluAllTblEntry)167, "rez\\glucmpgn.bin"))
+		if (a2 || cmpgn_WaitForCDRom_((GluAllTblEntry)167, "rez\\glucmpgn.bin"))
 		{
 			IsExpansion = 0;
 			LastControlID = v4;
@@ -17085,7 +17126,7 @@ int SelGameMode_(int a2)
 			return 0;
 		}
 	case 7:
-		if (cmpgn_WaitForCDRom((GluAllTblEntry)168, "rez\\gluexpcmpgn.bin"))
+		if (cmpgn_WaitForCDRom_((GluAllTblEntry)168, "rez\\gluexpcmpgn.bin"))
 		{
 			IsExpansion = 1;
 			LastControlID = v4;
@@ -17107,7 +17148,7 @@ FAIL_STUB_PATCH(SelGameMode);
 int gluMain_DisplayCDRomErrorBinDlg_()
 {
 	int v0 = LastControlID;
-	int result = cmpgn_WaitForCDRom((GluAllTblEntry)0xA7, "rez\\glucmpgn.bin");
+	int result = cmpgn_WaitForCDRom_((GluAllTblEntry)167, "rez\\glucmpgn.bin");
 	LastControlID = v0;
 	return result;
 }
