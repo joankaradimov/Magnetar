@@ -17144,6 +17144,8 @@ int SelGameMode_(int a2)
 }
 
 FAIL_STUB_PATCH(SelGameMode);
+FAIL_STUB_PATCH(sub_4DB6A0);
+FAIL_STUB_PATCH(sub_4DB6C0);
 
 int gluMain_DisplayCDRomErrorBinDlg_()
 {
