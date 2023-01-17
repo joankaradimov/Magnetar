@@ -120,7 +120,7 @@ class Function:
         return self._signature
 
     @property
-    def arguments(self):
+    def all_arguments(self):
         depth = 0
 
         i = len(self.ref_type) - 1
@@ -170,7 +170,7 @@ class Function:
 
     def get_usercall_wrapper(self):
         result = self.signature
-        arguments = map(str.strip, split_args(self.arguments))
+        arguments = map(str.strip, split_args(self.all_arguments))
 
         return_type = extract_function_return_type(self.signature)
         if return_type == '__int64':
