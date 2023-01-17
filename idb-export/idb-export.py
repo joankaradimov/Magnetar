@@ -134,6 +134,20 @@ class Function:
             i -= 1
         raise IdbExportError('Trying to get args when none seem to be present: %s' % self.ref_type)
 
+    @property
+    def arguments(self):
+        """
+        Transforms the self.all_arguments string that looks like:
+        > int a1, int a2, int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>
+
+        to an array with arguments.
+        (e.g. ['int a1', 'int a2', 'int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>']
+
+        NOTE: in case of function pointers it only works with one level of nesting
+        """
+
+        return list(map(str.strip, filter(None, re.findall(r'(?:[^\(\,]|(?:\([^\)]*\)))*', self.all_arguments))))
+
     register_arg_pattern = re.compile(r'@<(\w+)>')
 
     full_regsiter = {
@@ -170,7 +184,7 @@ class Function:
 
     def get_usercall_wrapper(self):
         result = self.signature
-        arguments = map(str.strip, split_args(self.all_arguments))
+        arguments = map(str.strip, self.arguments)
 
         return_type = extract_function_return_type(self.signature)
         if return_type == '__int64':
@@ -264,20 +278,6 @@ class Function:
             return 'extern ' + self.signature + ';'
         else:
             return self.signature + ';'
-
-def split_args(arguments_str):
-    """
-    Accepts a string that looks like:
-      > int a1, int a2, int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>
-
-    and returns an array with arguments.
-    (e.g. ['int a1', 'int a2', 'int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>']
-
-    NOTE: in case of function pointers it only works with one level of nesting
-    """
-
-    return map(str.strip, filter(None, re.findall(r'(?:[^\(\,]|(?:\([^\)]*\)))*', arguments_str)))
-
 
 arg_name_pattern = re.compile(r'(\w+)$')
 func_ptr_arg_name_pattern = re.compile(r'\*\s*(?P<name>\w+)\)\(.*\)$')
