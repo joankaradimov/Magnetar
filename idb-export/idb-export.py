@@ -184,7 +184,6 @@ class Function:
 
     def get_usercall_wrapper(self):
         result = self.signature
-        arguments = map(str.strip, self.arguments)
 
         return_type = extract_function_return_type(self.signature)
         if return_type == '__int64':
@@ -203,7 +202,7 @@ class Function:
 
         stack_args = []
         register_args = collections.OrderedDict()
-        for arg in arguments:
+        for arg in self.arguments:
             is_passed_in_register = '@' in arg
             if is_passed_in_register:
                 register_name = self.register_arg_pattern.search(arg).group(1)
