@@ -94,6 +94,17 @@ class Function:
         return self._name
 
     @property
+    def return_type(self):
+        """
+        Transforms the ref_type string (IDA ref type) that looks like:
+          > void __userpurge(char a1@<al>, char a2@<cl>)
+
+        to the function's return type
+        """
+
+        return re.search('^\s*((const\s+)?\w+(?:\s*\*)*)', self.ref_type).group(1).strip()
+
+    @property
     def signature(self):
         if not hasattr(self, '_signature'):
             signature = self.ref_type
@@ -185,7 +196,7 @@ class Function:
     def get_usercall_wrapper(self):
         result = self.signature
 
-        return_type = extract_function_return_type(self.signature)
+        return_type = self.return_type
         if return_type == '__int64':
             # TODO: handle properly
             return result + '{ throw "not implemented"; }\n'
@@ -310,16 +321,6 @@ def extract_arg_name(argument):
         result = arg_name_pattern.search(argument).group(1)
 
     return normalize_arg_name(result)
-
-def extract_function_return_type(ref_type):
-    """
-    Accpets a string (IDA ref type) that looks like:
-      > void __userpurge(char a1@<al>, char a2@<cl>)
-
-    and extracts the return type for it
-    """
-
-    return re.search('^\s*((const\s+)?\w+(?:\s*\*)*)', ref_type).group(1).strip()
 
 def is_function_pointer(declaration):
     # TODO: add documentation
