@@ -196,18 +196,17 @@ class Function:
     def get_usercall_wrapper(self):
         result = self.signature
 
-        return_type = self.return_type
-        if return_type == '__int64':
+        if self.return_type == '__int64':
             # TODO: handle properly
             return result + '{ throw "not implemented"; }\n'
 
-        has_return_value = return_type != 'void'
+        has_return_value = self.return_type != 'void'
         result += ' {\n'
         result += '    int address = '
         result += hex(self.ref)
         result += ';\n'
         if has_return_value:
-            result += '    ' + return_type + ' result_;\n'
+            result += '    ' + self.return_type + ' result_;\n'
 
         result += '    __asm {\n'
 
@@ -252,9 +251,9 @@ class Function:
         result += '        call address\n'
         if has_return_value:
             # TODO: use the proper register for the return value
-            if return_type in {'char', 'u8', 'bool', 'Order'}:
+            if self.return_type in {'char', 'u8', 'bool', 'Order'}:
                 result += '        mov result_, al\n'
-            elif return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
+            elif self.return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
                 result += '        mov result_, ax\n'
             else:
                 result += '        mov result_, eax\n'
