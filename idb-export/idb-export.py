@@ -218,7 +218,6 @@ class Function:
             if register in self.full_regsiter:
                 touched_registers.add(self.full_regsiter[register])
             else:
-                print(self.arguments)
                 raise Exception('Argument `%s` of function `%s` used unknown register `%s`' % (arg_name, self.signature, register))
 
         if has_return_value:
