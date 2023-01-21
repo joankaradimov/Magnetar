@@ -107,26 +107,20 @@ class Function:
     @property
     def signature(self):
         if not hasattr(self, '_signature'):
-            signature = self.ref_type
-            # TODO: use 'normalize_arg_name'
-            signature = signature.replace('size,', 'size_,')
-            signature = signature.replace('size@', 'size_@')
-            signature = signature.replace('size)', 'size_)')
-            signature = signature.replace('this,', 'this_,')
-            signature = signature.replace('this@', 'this_@')
-            signature = signature.replace('this)', 'this_)')
-            signature = signature.replace(' __noreturn', '')
-            signature = re.sub(r' __spoils\<[^\>]*\>', '', signature)
+            # TODO: fix this mess...
+            normalized_args = [re.sub(r'@<[^>]*>', '', arg) for arg in self.arguments]
+            normalized_args = [arg if extract_arg_name(arg) else f'{arg} a{i + 1}' for i, arg in enumerate(normalized_args)]
+            normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
+            all_args = ', '.join(normalized_args)
 
             if self.calling_convention in {'usercall', 'userpurge'}:
-                signature = re.sub(r'@<[^>]*>', '', signature)
-                cc_replacement = '%s(' % self.name
-                self._signature = signature.replace('__%s(' % self.calling_convention, cc_replacement, 1)
+                name_with_cc = self.name
             elif self.calling_convention == None:
-                self._signature = signature.replace('(', '(*%s)(' % self.name, 1)
+                name_with_cc = f'(*{self.name})'
             else:
-                cc_replacement = '(__{cc}*{name})('.format(cc = self.calling_convention, name = self.name)
-                self._signature = signature.replace('__%s(' % self.calling_convention, cc_replacement, 1)
+                name_with_cc = f'(__{self.calling_convention}*{self.name})'
+
+            self._signature = f'{self.return_type} {name_with_cc}({all_args})'
 
         return self._signature
 
@@ -212,16 +206,16 @@ class Function:
 
         stack_args = []
         register_args = collections.OrderedDict()
-        for arg in self.arguments:
+        for i, arg in enumerate(self.arguments):
             is_passed_in_register = '@' in arg
             if is_passed_in_register:
                 register_name = self.register_arg_pattern.search(arg).group(1)
-                arg_name = extract_arg_name(arg)
+                arg_name = extract_arg_name(arg) or f'a{i + 1}'
                 register_args[arg_name] = register_name
             elif arg == '...':
                 pass # TODO: handle this
             else:
-                stack_args.append(extract_arg_name(arg))
+                stack_args.append(extract_arg_name(arg) or f'a{i + 1}')
 
         touched_registers = set()
         for arg_name, register in register_args.items():
@@ -291,9 +285,12 @@ arg_name_pattern = re.compile(r'(\w+)$')
 func_ptr_arg_name_pattern = re.compile(r'\*\s*(?P<name>\w+)\)\(.*\)$')
 
 def normalize_arg_name(argument_name):
+    if argument_name == None:
+        return None
+
     if argument_name == 'this':
         # TODO: fix this mess
-        argument_name = 'this_'
+        return 'this_'
 
     if argument_name.endswith('size'):
         argument_name += '_'
@@ -314,12 +311,11 @@ def extract_arg_name(argument):
     if is_passed_in_register:
         argument = re.sub(r'@<\w*>$', '', argument)
 
-    if is_function_pointer(argument):
-        result = func_ptr_arg_name_pattern.search(argument).group('name')
-    else:
-        result = arg_name_pattern.search(argument).group(1)
-
-    return normalize_arg_name(result)
+    try:
+        argument_definition = SimpleDefinition(argument)
+        return normalize_arg_name(argument_definition.name)
+    except:
+        return None
 
 def is_function_pointer(declaration):
     # TODO: add documentation
