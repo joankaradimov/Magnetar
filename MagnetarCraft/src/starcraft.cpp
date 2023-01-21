@@ -1512,7 +1512,7 @@ void playNextMusic_()
 		if (a2 >= a3)
 		{
 			auto& race_ingame_music = Race::races()[consoleIndex].ingame_music;
-			PlayMusic_(&race_ingame_music[current_music_track->in_game_music_index]);
+			PlayMusic_(&race_ingame_music[current_music_track->next_music_track]);
 		}
 	}
 }
@@ -2638,10 +2638,10 @@ char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 	switch ((a3 >> 16) & 0x1FFF)
 	{
 	case 0x878u:
-		DSERR_GetString(a2, lpBuffer);
+		DSERR_GetString(a2, lpBuffer, a3);
 		break;
 	case 0x876u:
-		DDERR_GetString(a2, lpBuffer);
+		DDERR_GetString(a2, lpBuffer, a3);
 		break;
 	case 0x617u:
 		_snprintf(lpBuffer, a2, "MMSYS error 0x%x", a3);
