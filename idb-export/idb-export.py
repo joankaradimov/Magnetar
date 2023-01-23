@@ -2,6 +2,8 @@ import re
 import collections
 import idautils
 
+from functools import cached_property
+
 class IdbExportError(Exception):
     pass
 
@@ -93,7 +95,7 @@ class Function:
 
         return self._name
 
-    @property
+    @cached_property
     def return_type(self):
         """
         Transforms the ref_type string (IDA ref type) that looks like:
@@ -124,7 +126,7 @@ class Function:
 
         return self._signature
 
-    @property
+    @cached_property
     def all_arguments(self):
         depth = 0
 
@@ -139,7 +141,7 @@ class Function:
             i -= 1
         raise IdbExportError('Trying to get args when none seem to be present: %s' % self.ref_type)
 
-    @property
+    @cached_property
     def arguments(self):
         """
         Transforms the self.all_arguments string that looks like:
@@ -594,24 +596,24 @@ class Definition(object):
         return self
 
 class SimpleDefinition(Definition):
-    @property
+    @cached_property
     def name(self):
         return self.simple_type_pattern.match(self.definition).group('name')
 
-    @property
+    @cached_property
     def type(self):
         return self.simple_type_pattern.match(self.definition).group('type').strip().replace(' *', '*').replace('*const', '*')
 
-    @property
+    @cached_property
     def types(self):
         return {self.type}
 
 class FunctionPointerDefinition(Definition):
-    @property
+    @cached_property
     def name(self):
         return self.function_ptr_type_pattern.match(self.definition).group('name')
 
-    @property
+    @cached_property
     def types(self):
         match = self.function_ptr_type_pattern.match(self.definition)
 
@@ -668,7 +670,7 @@ class Type(object):
             self._definition_without_body = self.base_type_pattern.sub('', local_type_no_body)
         return self._definition_without_body
 
-    @property
+    @cached_property
     def base_types(self):
         oneline_definition = self.definition.replace('\n', '')
         definition_without_body = self.body_pattern.sub('', oneline_definition)
@@ -688,7 +690,7 @@ class Type(object):
             self._name = name
         return self._name
 
-    @property
+    @cached_property
     def size(self):
         return None
 
@@ -700,11 +702,11 @@ def keywords(*keywords):
 
 @keywords('enum')
 class EnumType(Type):
-    @property
+    @cached_property
     def declaration(self):
         return self.definition_without_body
 
-    @property
+    @cached_property
     def dependencies(self):
         return set(self.base_types)
 
@@ -712,7 +714,7 @@ class EnumType(Type):
 class CompositionType(Type):
     fields_pattern = re.compile(r'{(.*)}', re.DOTALL)
 
-    @property
+    @cached_property
     def fields(self):
         body_fields = self.fields_pattern.findall(self.definition)
         body_fields = body_fields[0].split(';') if len(body_fields) > 0 else []
@@ -725,32 +727,32 @@ class CompositionType(Type):
         field = re.sub(r'\s+', ' ', field)
         return field.strip()
 
-    @property
+    @cached_property
     def declaration(self):
         return self.definition_without_body
 
-    @property
+    @cached_property
     def dependencies(self):
         result = set(self.base_types)
         for field in self.fields:
             result |= Definition(field).types
         return result
 
-    @property
+    @cached_property
     def size(self):
         return get_struc_size(get_struc_id(self.name))
 
 @keywords('typedef')
 class TypedefType(Type):
-    @property
+    @cached_property
     def declaration(self):
         return ''
 
-    @property
+    @cached_property
     def dependencies(self):
         return self.definition_object.types
 
-    @property
+    @cached_property
     def name(self):
         return self.definition_object.name
 
