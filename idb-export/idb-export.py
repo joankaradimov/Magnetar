@@ -61,39 +61,33 @@ class Function:
             self.skip = True
             return
 
-    @property
+    @cached_property
     def calling_convention(self):
-        if not hasattr(self, '_calling_convention'):
-            # Strip the register annotations from the type
-            ref_type = re.sub(r'@<[^>]*>', '', self.ref_type)
+       # Strip the register annotations from the type
+       ref_type = re.sub(r'@<[^>]*>', '', self.ref_type)
 
-            # TODO: proper implementation
-            if '__cdecl' in ref_type:
-                self._calling_convention = 'cdecl'
-            elif '__usercall' in ref_type:
-                self._calling_convention = 'usercall'
-            elif '__userpurge' in ref_type:
-                self._calling_convention = 'userpurge'
-            elif '__stdcall' in ref_type:
-                self._calling_convention = 'stdcall'
-            elif '__thiscall' in ref_type:
-                self._calling_convention = 'thiscall'
-            elif '__fastcall' in ref_type:
-                self._calling_convention = 'fastcall'
-            else:
-                self._calling_convention = None
+       # TODO: proper implementation
+       if '__cdecl' in ref_type:
+           return 'cdecl'
+       elif '__usercall' in ref_type:
+           return 'usercall'
+       elif '__userpurge' in ref_type:
+           return 'userpurge'
+       elif '__stdcall' in ref_type:
+           return 'stdcall'
+       elif '__thiscall' in ref_type:
+           return 'thiscall'
+       elif '__fastcall' in ref_type:
+           return 'fastcall'
+       else:
+           return None
 
-        return self._calling_convention
-
-    @property
+    @cached_property
     def name(self):
-        if not hasattr(self, '_name'):
-            if self.calling_convention == 'stdcall':
-                self._name = re.sub(r'\@\d+', '', self.ref_name)
-            else:
-                self._name = self.ref_name
-
-        return self._name
+        if self.calling_convention == 'stdcall':
+            return re.sub(r'\@\d+', '', self.ref_name)
+        else:
+            return self.ref_name
 
     @cached_property
     def return_type(self):
@@ -106,25 +100,22 @@ class Function:
 
         return re.search('^\s*((const\s+)?\w+(?:\s*\*)*)', self.ref_type).group(1).strip()
 
-    @property
+    @cached_property
     def signature(self):
-        if not hasattr(self, '_signature'):
-            # TODO: fix this mess...
-            normalized_args = [re.sub(r'@<[^>]*>', '', arg) for arg in self.arguments]
-            normalized_args = [arg if extract_arg_name(arg) else f'{arg} a{i + 1}' for i, arg in enumerate(normalized_args)]
-            normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
-            all_args = ', '.join(normalized_args)
+        # TODO: fix this mess...
+        normalized_args = [re.sub(r'@<[^>]*>', '', arg) for arg in self.arguments]
+        normalized_args = [arg if extract_arg_name(arg) else f'{arg} a{i + 1}' for i, arg in enumerate(normalized_args)]
+        normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
+        all_args = ', '.join(normalized_args)
 
-            if self.calling_convention in {'usercall', 'userpurge'}:
-                name_with_cc = self.name
-            elif self.calling_convention == None:
-                name_with_cc = f'(*{self.name})'
-            else:
-                name_with_cc = f'(__{self.calling_convention}*{self.name})'
+        if self.calling_convention in {'usercall', 'userpurge'}:
+            name_with_cc = self.name
+        elif self.calling_convention == None:
+            name_with_cc = f'(*{self.name})'
+        else:
+            name_with_cc = f'(__{self.calling_convention}*{self.name})'
 
-            self._signature = f'{self.return_type} {name_with_cc}({all_args})'
-
-        return self._signature
+        return f'{self.return_type} {name_with_cc}({all_args})'
 
     @cached_property
     def all_arguments(self):
@@ -662,13 +653,11 @@ class Type(object):
     def register_keyword(cls, keyword, subclass):
         cls.keyword_constructor[keyword] = subclass
 
-    @property
+    @cached_property
     def definition_without_body(self):
-        if not hasattr(self, '_definition_without_body'):
-            local_type_oneline = self.definition.replace('\n', '')
-            local_type_no_body = self.body_pattern.sub(';\n', local_type_oneline)
-            self._definition_without_body = self.base_type_pattern.sub('', local_type_no_body)
-        return self._definition_without_body
+        local_type_oneline = self.definition.replace('\n', '')
+        local_type_no_body = self.body_pattern.sub(';\n', local_type_oneline)
+        return self.base_type_pattern.sub('', local_type_no_body)
 
     @cached_property
     def base_types(self):
@@ -682,13 +671,10 @@ class Type(object):
         else:
             return []
 
-    @property
+    @cached_property
     def name(self):
-        if not hasattr(self, '_name'):
-            definition_without_body = self.base_type_pattern.sub('', self.definition_without_body).strip()
-            name = definition_without_body.replace(';', '').split()[-1]
-            self._name = name
-        return self._name
+        definition_without_body = self.base_type_pattern.sub('', self.definition_without_body).strip()
+        return definition_without_body.replace(';', '').split()[-1]
 
     @cached_property
     def size(self):
@@ -756,11 +742,9 @@ class TypedefType(Type):
     def name(self):
         return self.definition_object.name
 
-    @property
+    @cached_property
     def definition_object(self):
-        if not hasattr(self, '_definition_object'):
-            self._definition_object = Definition(self.definition.replace('typedef ', '').strip().rstrip(';'))
-        return self._definition_object
+        return Definition(self.definition.replace('typedef ', '').strip().rstrip(';'))
 
 def export_types(declarations, definitions):
     existing_type_names = set()
