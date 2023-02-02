@@ -32,8 +32,18 @@ class Datum:
         self.declaration = 'extern ' + self.type + ';'
 
 class FunctionArgument:
-    def __init__(self, signature):
-        self.signature = signature
+    register_pattern = re.compile(r'@<(?P<register_name>[^>]*)>')
+
+    def __init__(self, index, signature):
+        self.index = index
+        self.register = None
+        self.signature = self.register_pattern.sub(self._initialize_register, signature)
+
+    def _initialize_register(self, match):
+        if match:
+            self.register = match['register_name']
+
+        return ''
 
 class Function:
     def __init__(self, ref):
@@ -103,8 +113,7 @@ class Function:
     @cached_property
     def signature(self):
         # TODO: fix this mess...
-        normalized_args = [re.sub(r'@<[^>]*>', '', arg) for arg in self.arguments]
-        normalized_args = [arg if extract_arg_name(arg) else f'{arg} a{i + 1}' for i, arg in enumerate(normalized_args)]
+        normalized_args = [arg.signature if extract_arg_name(arg.signature) else f'{arg.signature} a{i + 1}' for i, arg in enumerate(self.arguments)]
         normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
         all_args = ', '.join(normalized_args)
 
@@ -144,9 +153,8 @@ class Function:
         NOTE: in case of function pointers it only works with one level of nesting
         """
 
-        return list(map(str.strip, filter(None, re.findall(r'(?:[^\(\,]|(?:\([^\)]*\)))*', self.all_arguments))))
-
-    register_arg_pattern = re.compile(r'@<(\w+)>')
+        args = filter(None, re.findall(r'(?:[^\(\,]|(?:\([^\)]*\)))*', self.all_arguments))
+        return [FunctionArgument(i, str.strip(arg)) for i, arg in enumerate(args)]
 
     full_regsiter = {
         'eax': 'eax',
@@ -200,15 +208,13 @@ class Function:
         stack_args = []
         register_args = collections.OrderedDict()
         for i, arg in enumerate(self.arguments):
-            is_passed_in_register = '@' in arg
-            if is_passed_in_register:
-                register_name = self.register_arg_pattern.search(arg).group(1)
-                arg_name = extract_arg_name(arg) or f'a{i + 1}'
-                register_args[arg_name] = register_name
-            elif arg == '...':
+            if arg.register:
+                arg_name = extract_arg_name(arg.signature) or f'a{i + 1}'
+                register_args[arg_name] = arg.register
+            elif arg.signature == '...':
                 pass # TODO: handle this
             else:
-                stack_args.append(extract_arg_name(arg) or f'a{i + 1}')
+                stack_args.append(extract_arg_name(arg.signature) or f'a{i + 1}')
 
         touched_registers = set()
         for arg_name, register in register_args.items():
