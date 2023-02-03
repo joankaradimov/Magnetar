@@ -45,6 +45,22 @@ class FunctionArgument:
 
         return ''
 
+    @cached_property
+    def name(self):
+        """
+        Takes a self.signature string that looks like:
+          > int a2
+        or
+          > int (__fastcall *a2)(_DWORD, _DWORD)
+
+        and returns the argument name (e.g. 'a2' in the above cases)
+        """
+        try:
+            argument_definition = SimpleDefinition(self.signature)
+            return normalize_arg_name(argument_definition.name)
+        except:
+            return None
+
 class Function:
     def __init__(self, ref):
         self.ref = ref
@@ -113,7 +129,7 @@ class Function:
     @cached_property
     def signature(self):
         # TODO: fix this mess...
-        normalized_args = [arg.signature if extract_arg_name(arg.signature) else f'{arg.signature} a{i + 1}' for i, arg in enumerate(self.arguments)]
+        normalized_args = [arg.signature if arg.name else f'{arg.signature} a{i + 1}' for i, arg in enumerate(self.arguments)]
         normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
         all_args = ', '.join(normalized_args)
 
@@ -209,12 +225,12 @@ class Function:
         register_args = collections.OrderedDict()
         for i, arg in enumerate(self.arguments):
             if arg.register:
-                arg_name = extract_arg_name(arg.signature) or f'a{i + 1}'
+                arg_name = arg.name or f'a{i + 1}'
                 register_args[arg_name] = arg.register
             elif arg.signature == '...':
                 pass # TODO: handle this
             else:
-                stack_args.append(extract_arg_name(arg.signature) or f'a{i + 1}')
+                stack_args.append(arg.name or f'a{i + 1}')
 
         touched_registers = set()
         for arg_name, register in register_args.items():
@@ -295,26 +311,6 @@ def normalize_arg_name(argument_name):
         argument_name += '_'
 
     return argument_name
-
-def extract_arg_name(argument):
-    """
-    Accepts a string that looks like:
-      > int a2
-    or
-      > int (__fastcall *a2)(_DWORD, _DWORD)@<ebx>
-
-    and extracts its name (e.g. 'a2' in the above cases)
-    """
-
-    is_passed_in_register = '@' in argument
-    if is_passed_in_register:
-        argument = re.sub(r'@<\w*>$', '', argument)
-
-    try:
-        argument_definition = SimpleDefinition(argument)
-        return normalize_arg_name(argument_definition.name)
-    except:
-        return None
 
 def is_function_pointer(declaration):
     # TODO: add documentation
