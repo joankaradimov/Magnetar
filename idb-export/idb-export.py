@@ -31,13 +31,32 @@ class Datum:
 
         self.declaration = 'extern ' + self.type + ';'
 
+class VarArgsDefinition:
+    def __init__(self):
+        self.register = None
+        self.name = '...'
+        self.type = ''
+        self.definition = '...'
+
+class RawDefinition:
+    def __init__(self, definition):
+        self.definition = definition
+
 class FunctionArgument:
     register_pattern = re.compile(r'@<(?P<register_name>[^>]*)>')
 
     def __init__(self, index, signature):
         self.index = index
         self.register = None
-        self.signature = self.register_pattern.sub(self._initialize_register, signature)
+
+        if signature == '...':
+            self.signature = VarArgsDefinition()
+        else:
+            signature = self.register_pattern.sub(self._initialize_register, signature)
+            try:
+                self.signature = SimpleDefinition(signature)
+            except:
+                self.signature = RawDefinition(signature)
 
     def _initialize_register(self, match):
         if match:
@@ -47,20 +66,11 @@ class FunctionArgument:
 
     @cached_property
     def name(self):
-        """
-        Takes a self.signature string that looks like:
-          > int a2
-        or
-          > int (__fastcall *a2)(_DWORD, _DWORD)
-
-        and returns the argument name (e.g. 'a2' in the above cases)
-        """
         try:
-            if self.signature == '...':
-                return '...'
+            if self.signature:
+                return normalize_arg_name(self.signature.name)
             else:
-                argument_definition = SimpleDefinition(self.signature)
-                return normalize_arg_name(argument_definition.name)
+                return None
         except:
             return None
 
@@ -132,7 +142,7 @@ class Function:
     @cached_property
     def signature(self):
         # TODO: fix this mess...
-        normalized_args = [arg.signature if arg.name else f'{arg.signature} a{i + 1}' for i, arg in enumerate(self.arguments)]
+        normalized_args = [arg.signature.definition if arg.name else f'{arg.signature.definition} a{i + 1}' for i, arg in enumerate(self.arguments)]
         normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
         all_args = ', '.join(normalized_args)
 
