@@ -56,8 +56,11 @@ class FunctionArgument:
         and returns the argument name (e.g. 'a2' in the above cases)
         """
         try:
-            argument_definition = SimpleDefinition(self.signature)
-            return normalize_arg_name(argument_definition.name)
+            if self.signature == '...':
+                return '...'
+            else:
+                argument_definition = SimpleDefinition(self.signature)
+                return normalize_arg_name(argument_definition.name)
         except:
             return None
 
