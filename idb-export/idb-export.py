@@ -593,7 +593,7 @@ class Definition(object):
         (const|signed|unsigned|struct|union|class|enum)*
         \s*
         (?P<type>\w+(\s|const|\*)*)
-        (?P<name>\w+)?
+        (?P<name>\w*)
         (
             (\[.*\])*
             |
@@ -612,7 +612,7 @@ class Definition(object):
             (\w+\s*)*
             \*
             \s*
-            (?P<name>\w+)?
+            (?P<name>\w*)
         \)
         \(
             (?P<args>.*)
