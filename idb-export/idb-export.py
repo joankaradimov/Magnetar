@@ -587,8 +587,38 @@ def is_type_blacklisted(type_ordinal):
     return False
 
 class Definition(object):
-    simple_type_pattern = re.compile(r'^(const|signed|unsigned|struct|union|class|enum)*\s*(?P<type>\w+(\s|const|\*)*)(?P<name>\w+)?((\[.*\])*|(\s*:\s*\d+))$')
-    function_ptr_type_pattern = re.compile(r'^(const|signed|unsigned|struct|union|class|enum)*\s*(?P<return_type>\w+(\s|const|\*)*)\((\w+\s*)*\*\s*(?P<name>\w+)?\)\((?P<args>.*)\)$')
+    simple_type_pattern = re.compile(
+        r'''
+        ^
+        (const|signed|unsigned|struct|union|class|enum)*
+        \s*
+        (?P<type>\w+(\s|const|\*)*)
+        (?P<name>\w+)?
+        (
+            (\[.*\])*
+            |
+            (\s*:\s*\d+)
+        )
+        $
+        ''', re.VERBOSE)
+
+    function_ptr_type_pattern = re.compile(
+        r'''
+        ^
+        (const|signed|unsigned|struct|union|class|enum)*
+        \s*
+        (?P<return_type>\w+(\s|const|\*)*)
+        \(
+            (\w+\s*)*
+            \*
+            \s*
+            (?P<name>\w+)?
+        \)
+        \(
+            (?P<args>.*)
+        \)
+        $
+        ''', re.VERBOSE)
 
     def __new__(self, definition):
         if self.simple_type_pattern.match(definition):
