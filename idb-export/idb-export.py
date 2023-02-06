@@ -67,10 +67,7 @@ class FunctionArgument:
     @cached_property
     def name(self):
         try:
-            if self.signature:
-                return normalize_arg_name(self.signature.name)
-            else:
-                return None
+            return normalize_arg_name(self.signature.name)
         except:
             return None
 
