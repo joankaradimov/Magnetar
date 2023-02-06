@@ -49,14 +49,17 @@ class FunctionArgument:
         self.index = index
         self.register = None
 
+        signature = self._replace_register(signature)
         if signature == '...':
             self.signature = VarArgsDefinition()
         else:
-            signature = self.register_pattern.sub(self._initialize_register, signature)
             try:
                 self.signature = SimpleDefinition(signature)
             except:
                 self.signature = RawDefinition(signature)
+
+    def _replace_register(self, signature):
+        return self.register_pattern.sub(self._initialize_register, signature)
 
     def _initialize_register(self, match):
         if match:
