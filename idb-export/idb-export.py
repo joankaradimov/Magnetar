@@ -35,12 +35,16 @@ class VarArgsDefinition:
     def __init__(self):
         self.register = None
         self.name = '...'
-        self.type = ''
-        self.definition = '...'
+
+    def signature_with_name(self, _):
+        return '...'
 
 class RawDefinition:
     def __init__(self, definition):
         self.definition = definition
+
+    def signature_with_name(self, _):
+        return self.definition
 
 class FunctionArgument:
     register_pattern = re.compile(r'@<(?P<register_name>[^>]*)>')
@@ -70,9 +74,13 @@ class FunctionArgument:
     @cached_property
     def name(self):
         try:
-            return normalize_arg_name(self.signature.name)
+            return normalize_arg_name(self.signature.name) or f'a{self.index + 1}'
         except:
             return None
+
+    @cached_property
+    def signature_with_name(self):
+        return self.signature.signature_with_name(self.name)
 
 class Function:
     def __init__(self, ref):
@@ -141,10 +149,7 @@ class Function:
 
     @cached_property
     def signature(self):
-        # TODO: fix this mess...
-        normalized_args = [arg.signature.definition if arg.name else f'{arg.signature.definition} a{i + 1}' for i, arg in enumerate(self.arguments)]
-        normalized_args = [arg.replace('size', 'size_').replace('this', 'this_').replace('this_call', 'thiscall').replace('size__t', 'size_t').replace('void a1', '') for arg in normalized_args]
-        all_args = ', '.join(normalized_args)
+        all_args = ', '.join(arg.signature_with_name for arg in self.arguments)
 
         if self.calling_convention in {'usercall', 'userpurge'}:
             name_with_cc = self.name
@@ -647,6 +652,9 @@ class SimpleDefinition(Definition):
     def types(self):
         return {self.type}
 
+    def signature_with_name(self, name):
+        return self.simple_type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
+
 class FunctionPointerDefinition(Definition):
     @cached_property
     def name(self):
@@ -664,6 +672,9 @@ class FunctionPointerDefinition(Definition):
             types |= set(Definition(arg.strip()).types)
 
         return types
+
+    def signature_with_name(self, name):
+        return self.function_ptr_type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
 
 class Type(object):
     body_pattern = re.compile('{.*};')
