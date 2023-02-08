@@ -42,6 +42,7 @@ class VarArgsDefinition:
 class RawDefinition:
     def __init__(self, definition):
         self.definition = definition
+        self.name = None
 
     def signature_with_name(self, _):
         return self.definition
@@ -73,10 +74,7 @@ class FunctionArgument:
 
     @cached_property
     def name(self):
-        try:
-            return normalize_arg_name(self.signature.name) or f'a{self.index + 1}'
-        except:
-            return None
+        return normalize_arg_name(self.signature.name) or f'a{self.index + 1}'
 
     @cached_property
     def signature_with_name(self):
