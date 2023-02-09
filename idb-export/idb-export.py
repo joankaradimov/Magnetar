@@ -654,6 +654,9 @@ class SimpleDefinition(Definition):
         return {self.type}
 
     def signature_with_name(self, name):
+        if self.type == 'void':
+            return 'void'
+
         return self.simple_type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
 
 class FunctionPointerDefinition(Definition):
