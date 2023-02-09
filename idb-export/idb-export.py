@@ -74,7 +74,10 @@ class FunctionArgument:
 
     @cached_property
     def name(self):
-        return normalize_arg_name(self.signature.name) or f'a{self.index + 1}'
+        if not self.signature.name or re.match(r'a\d+', self.signature.name):
+            return f'a{self.index + 1}'
+
+        return normalize_arg_name(self.signature.name)
 
     @cached_property
     def signature_with_name(self):
