@@ -241,12 +241,12 @@ class Function:
         register_args = collections.OrderedDict()
         for i, arg in enumerate(self.arguments):
             if arg.register:
-                arg_name = arg.name or f'a{i + 1}'
+                arg_name = arg.name
                 register_args[arg_name] = arg.register
             elif arg.signature == '...':
                 pass # TODO: handle this
             else:
-                stack_args.append(arg.name or f'a{i + 1}')
+                stack_args.append(arg.name)
 
         touched_registers = set()
         for arg_name, register in register_args.items():
