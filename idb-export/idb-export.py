@@ -81,7 +81,7 @@ class FunctionArgument:
 
     @cached_property
     def signature_with_name(self):
-        return self.signature.signature_with_name(self.name)
+        return self.signature.signature_with_name(self.name).replace('  ', ' ').replace('* ', '*')
 
 class Function:
     def __init__(self, ref):
