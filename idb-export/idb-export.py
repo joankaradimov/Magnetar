@@ -279,7 +279,7 @@ class Function:
         result += '        call address\n'
         if has_return_value:
             # TODO: use the proper register for the return value
-            if self.return_type in {'char', 'u8', 'bool', 'Order'}:
+            if self.return_type in {'char', 'u8', 'bool', 'Order', 'BYTE', 'EndgameState', 'Tech'}:
                 result += '        mov result_, al\n'
             elif self.return_type in {'short', '__int16', 'u16', 'UnitType', 'GamePosition'}:
                 result += '        mov result_, ax\n'
