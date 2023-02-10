@@ -246,7 +246,7 @@ class Function:
             if arg.register:
                 arg_name = arg.name
                 register_args[arg_name] = arg.register
-            elif arg.signature == '...':
+            elif arg.signature_with_name == '...':
                 pass # TODO: handle this
             else:
                 stack_args.append(arg.name)
