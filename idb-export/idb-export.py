@@ -315,9 +315,6 @@ class Function:
         else:
             return self.signature + ';'
 
-arg_name_pattern = re.compile(r'(\w+)$')
-func_ptr_arg_name_pattern = re.compile(r'\*\s*(?P<name>\w+)\)\(.*\)$')
-
 def normalize_arg_name(argument_name):
     if argument_name == None:
         return None
