@@ -316,9 +316,6 @@ class Function:
             return self.signature + ';'
 
 def normalize_arg_name(argument_name):
-    if argument_name == None:
-        return None
-
     if argument_name == 'this':
         # TODO: fix this mess
         return 'this_'
