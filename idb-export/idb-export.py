@@ -242,7 +242,7 @@ class Function:
 
         stack_args = []
         register_args = collections.OrderedDict()
-        for i, arg in enumerate(self.arguments):
+        for arg in self.arguments:
             if arg.register:
                 arg_name = arg.name
                 register_args[arg_name] = arg.register
