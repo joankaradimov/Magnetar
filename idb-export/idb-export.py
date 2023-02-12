@@ -77,11 +77,22 @@ class FunctionArgument:
         if not self.signature.name or re.match(r'a\d+', self.signature.name):
             return f'a{self.index + 1}'
 
-        return normalize_arg_name(self.signature.name)
+        return self.normalize_arg_name(self.signature.name)
 
     @cached_property
     def signature_with_name(self):
         return self.signature.signature_with_name(self.name).replace('  ', ' ').replace('* ', '*')
+
+    @staticmethod
+    def normalize_arg_name(argument_name):
+        if argument_name == 'this':
+            # TODO: fix this mess
+            return 'this_'
+
+        if argument_name.endswith('size'):
+            argument_name += '_'
+
+        return argument_name
 
 class Function:
     def __init__(self, ref):
@@ -314,16 +325,6 @@ class Function:
             return 'extern ' + self.signature + ';'
         else:
             return self.signature + ';'
-
-def normalize_arg_name(argument_name):
-    if argument_name == 'this':
-        # TODO: fix this mess
-        return 'this_'
-
-    if argument_name.endswith('size'):
-        argument_name += '_'
-
-    return argument_name
 
 def is_function_pointer(declaration):
     # TODO: add documentation
