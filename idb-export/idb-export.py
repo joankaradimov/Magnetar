@@ -262,12 +262,7 @@ class Function:
             else:
                 stack_args.append(arg.name)
 
-        touched_registers = set()
-        for arg_name, register in register_args.items():
-            if register in self.full_regsiter:
-                touched_registers.add(self.full_regsiter[register])
-            else:
-                raise Exception('Argument `%s` of function `%s` used unknown register `%s`' % (arg_name, self.signature, register))
+        touched_registers = {self.full_regsiter[argument.register] for argument in self.arguments if argument.register}
 
         if has_return_value:
             # TODO: do not hard-code EAX; take the register that contains the result from the signatire
