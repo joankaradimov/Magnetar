@@ -20,14 +20,14 @@ class Datum:
         self.valid = True
         if '[' in self.type: # array -> pointer
             self.type = self.type.replace('[', '(&' + self.name + ')[', 1)
-            self.definition = '{type} = * ((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+            self.definition = f'{self.type} = * ((decltype(&{self.name})) {hex(ref)});'
         elif '*)(' in self.type: # function pointer -> reference to function pointer
             self.type = self.type.replace('*)', '*&' + self.name + ')',  1)
             self.type = self.type.replace('__hidden this', '__hidden this_')
-            self.definition = '{type} = *((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+            self.definition = f'{self.type} = *((decltype(&{self.name})) {hex(ref)});'
         else: # scalar value -> reference
             self.type = self.type + '& ' + self.name
-            self.definition = '{type} = * ((decltype(&{name})) {address});'.format(type = self.type, name = self.name, address = hex(ref))
+            self.definition = f'{self.type} = * ((decltype(&{self.name})) {hex(ref)});'
 
         self.declaration = 'extern ' + self.type + ';'
 
@@ -243,11 +243,9 @@ class Function:
 
         has_return_value = self.return_type != 'void'
         result += ' {\n'
-        result += '    int address = '
-        result += hex(self.ref)
-        result += ';\n'
+        result += f'    int address = {hex(self.ref)};\n'
         if has_return_value:
-            result += '    ' + self.return_type + ' result_;\n'
+            result += f'    {self.return_type} result_;\n'
 
         result += '    __asm {\n'
 
@@ -269,18 +267,18 @@ class Function:
             touched_registers.add('eax')
 
         for touched_register in sorted(touched_registers):
-            result += '        xor ' + touched_register + ', ' + touched_register + '\n'
+            result += f'        xor {touched_register}, {touched_register}\n'
 
         for arg_name, register_name in register_args.items():
             if register_name in {'sil', 'dil'}:
                 # TODO: handle 64 bit case
                 # 32-bit assembly does not have the SIL/DIL registers
-                result += '        mov ' + register_name[:2] + ', word ptr ' + arg_name + '\n'
+                result += f'        mov {register_name[:2]}, word ptr {arg_name}\n'
             else:
-                result += '        mov ' + register_name + ', ' + arg_name + '\n'
+                result += f'        mov {register_name}, {arg_name}\n'
 
         for arg_name in reversed(stack_args):
-            result += '        push dword ptr ' + arg_name + '\n'
+            result += f'        push dword ptr {arg_name}\n'
 
         result += '        call address\n'
         if has_return_value:
@@ -296,7 +294,7 @@ class Function:
             # Clean up the stack
             # TODO: handle args larger than a single register
             # TODO: handle non 32-bit architectures
-            result += '        add esp, %d\n' % (len(stack_args) * 4)
+            result += f'        add esp, {len(stack_args) * 4}\n'
 
         result += '    }\n'
 
@@ -308,16 +306,16 @@ class Function:
 
     def build_export_definition(self):
         if self.name.find('@') >= 0:
-            raise IdbExportError('Function name contains invalid character: %s' % self.name)
+            raise IdbExportError(f'Function name contains invalid character: {self.name}')
 
         if is_function_pointer(self.signature):
-            return 'DECL_FUNC({decl}, {name}, {address});'.format(decl = self.signature, name = self.name, address = hex(self.ref))
+            return f'DECL_FUNC({self.signature}, {self.name}, {hex(self.ref)});'
         else:
             return self.get_usercall_wrapper()
 
     def build_export_declaration(self):
         if is_function_pointer(self.signature):
-            return 'extern ' + self.signature + ';'
+            return f'extern {self.signature};'
         else:
             return self.signature + ';'
 
@@ -622,7 +620,7 @@ class Definition(object):
         elif self.function_ptr_type_pattern.match(definition):
             self = object.__new__(FunctionPointerDefinition)
         else:
-            raise IdbExportError('Could not build definition for "%s"' % definition)
+            raise IdbExportError(f'Could not build definition for "{definition}"')
 
         self.definition = definition
         return self
@@ -828,10 +826,7 @@ def export_types(declarations, definitions):
         declarations.append(local_type.declaration)
         definitions.append('\n' + local_type.prologue + local_type.definition + local_type.epilogue)
         if local_type.size != None:
-            size_check = 'static_assert(sizeof({name}) == {size}, "Incorrect size for type `{name}`. Expected: {size}");\n'.format(
-                name = local_type.name,
-                size = local_type.size,
-            )
+            size_check = f'static_assert(sizeof({local_type.name}) == {local_type.size}, "Incorrect size for type `{local_type.name}`. Expected: {local_type.size}");\n'
             definitions.append(size_check)
 
 
