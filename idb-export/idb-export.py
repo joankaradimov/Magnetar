@@ -579,8 +579,7 @@ class Definition(object):
     simple_type_pattern = re.compile(
         r'''
         ^
-        (const|signed|unsigned|struct|union|class|enum)*
-        \s*
+        (const|signed|unsigned|struct|union|class|enum|\s)*
         (?P<type>\w+(\s|const|\*)*)
         (?P<name>\w*)
         (
@@ -594,8 +593,7 @@ class Definition(object):
     function_ptr_type_pattern = re.compile(
         r'''
         ^
-        (const|signed|unsigned|struct|union|class|enum)*
-        \s*
+        (const|signed|unsigned|struct|union|class|enum|\s)*
         (?P<return_type>\w+(\s|const|\*)*)
         \(
             (\w+\s*)*
