@@ -61,6 +61,7 @@ class FunctionArgument:
             try:
                 self.signature = SimpleDefinition(signature)
             except:
+                print(f'WARNING: Could not hande argument with signature "{signature}"')
                 self.signature = RawDefinition(signature)
 
     def _replace_register(self, signature):
