@@ -249,17 +249,6 @@ class Function:
 
         result += '    __asm {\n'
 
-        stack_args = []
-        register_args = collections.OrderedDict()
-        for arg in self.arguments:
-            if arg.register:
-                arg_name = arg.name
-                register_args[arg_name] = arg.register
-            elif arg.signature_with_name == '...':
-                pass # TODO: handle this
-            else:
-                stack_args.append(arg.name)
-
         touched_registers = {self.full_regsiter[argument.register] for argument in self.arguments if argument.register}
 
         if has_return_value:
@@ -269,16 +258,22 @@ class Function:
         for touched_register in sorted(touched_registers):
             result += f'        xor {touched_register}, {touched_register}\n'
 
-        for arg_name, register_name in register_args.items():
-            if register_name in {'sil', 'dil'}:
+        stack_arguments_code = []
+        register_arguments_code = []
+        for arg in self.arguments:
+            if arg.register in {'sil', 'dil'}:
                 # TODO: handle 64 bit case
                 # 32-bit assembly does not have the SIL/DIL registers
-                result += f'        mov {register_name[:2]}, word ptr {arg_name}\n'
+                register_arguments_code.append(f'mov {arg.register[:2]}, word ptr {arg.name}')
+            elif arg.register:
+                register_arguments_code.append(f'mov {arg.register}, {arg.name}')
+            elif arg.signature_with_name == '...':
+                pass # TODO: handle this
             else:
-                result += f'        mov {register_name}, {arg_name}\n'
+                stack_arguments_code.append(f'push dword ptr {arg.name}')
 
-        for arg_name in reversed(stack_args):
-            result += f'        push dword ptr {arg_name}\n'
+        result += ''.join(f'        {code}\n' for code in register_arguments_code)
+        result += ''.join(f'        {code}\n' for code in reversed(stack_arguments_code))
 
         result += '        call address\n'
         if has_return_value:
@@ -290,11 +285,11 @@ class Function:
             else:
                 result += '        mov result_, eax\n'
 
-        if self.calling_convention == 'usercall' and len(stack_args) != 0:
+        if self.calling_convention == 'usercall' and len(stack_arguments_code) != 0:
             # Clean up the stack
             # TODO: handle args larger than a single register
             # TODO: handle non 32-bit architectures
-            result += f'        add esp, {len(stack_args) * 4}\n'
+            result += f'        add esp, {len(stack_arguments_code) * 4}\n'
 
         result += '    }\n'
 
