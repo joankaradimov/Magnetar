@@ -577,7 +577,22 @@ def is_type_blacklisted(type_ordinal):
     return False
 
 class Definition(object):
-    simple_type_pattern = re.compile(
+    def __new__(self, definition):
+        if SimpleDefinition.type_pattern.match(definition):
+            self = object.__new__(SimpleDefinition)
+        elif FunctionPointerDefinition.type_pattern.match(definition):
+            self = object.__new__(FunctionPointerDefinition)
+        else:
+            raise IdbExportError(f'Could not build definition for "{definition}"')
+
+        self.definition = definition
+        return self
+
+    def __repr__(self):
+        return f"{self.__class__.__name__}('{self.definition}')"
+
+class SimpleDefinition(Definition):
+    type_pattern = re.compile(
         r'''
         ^
         (const|signed|unsigned|struct|union|class|enum|\s)*
@@ -591,7 +606,26 @@ class Definition(object):
         $
         ''', re.VERBOSE)
 
-    function_ptr_type_pattern = re.compile(
+    @cached_property
+    def name(self):
+        return self.type_pattern.match(self.definition).group('name')
+
+    @cached_property
+    def type(self):
+        return self.type_pattern.match(self.definition).group('type').strip().replace(' *', '*').replace('*const', '*')
+
+    @cached_property
+    def types(self):
+        return {self.type}
+
+    def signature_with_name(self, name):
+        if self.type == 'void':
+            return 'void'
+
+        return self.type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
+
+class FunctionPointerDefinition(Definition):
+    type_pattern = re.compile(
         r'''
         ^
         (const|signed|unsigned|struct|union|class|enum|\s)*
@@ -608,47 +642,13 @@ class Definition(object):
         $
         ''', re.VERBOSE)
 
-    def __new__(self, definition):
-        if self.simple_type_pattern.match(definition):
-            self = object.__new__(SimpleDefinition)
-        elif self.function_ptr_type_pattern.match(definition):
-            self = object.__new__(FunctionPointerDefinition)
-        else:
-            raise IdbExportError(f'Could not build definition for "{definition}"')
-
-        self.definition = definition
-        return self
-
-    def __repr__(self):
-        return f"{self.__class__.__name__}('{self.definition}')"
-
-class SimpleDefinition(Definition):
     @cached_property
     def name(self):
-        return self.simple_type_pattern.match(self.definition).group('name')
-
-    @cached_property
-    def type(self):
-        return self.simple_type_pattern.match(self.definition).group('type').strip().replace(' *', '*').replace('*const', '*')
+        return self.type_pattern.match(self.definition).group('name')
 
     @cached_property
     def types(self):
-        return {self.type}
-
-    def signature_with_name(self, name):
-        if self.type == 'void':
-            return 'void'
-
-        return self.simple_type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
-
-class FunctionPointerDefinition(Definition):
-    @cached_property
-    def name(self):
-        return self.function_ptr_type_pattern.match(self.definition).group('name')
-
-    @cached_property
-    def types(self):
-        match = self.function_ptr_type_pattern.match(self.definition)
+        match = self.type_pattern.match(self.definition)
 
         types = {match.group('return_type').strip()}
 
@@ -660,7 +660,7 @@ class FunctionPointerDefinition(Definition):
         return types
 
     def signature_with_name(self, name):
-        return self.function_ptr_type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
+        return self.type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
 
 class Type(object):
     body_pattern = re.compile('{.*};')
