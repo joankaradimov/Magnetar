@@ -59,7 +59,7 @@ class FunctionArgument:
             self.signature = VarArgsDefinition()
         else:
             try:
-                self.signature = SimpleDefinition(signature)
+                self.signature = Definition(signature)
             except:
                 print(f'WARNING: Could not hande argument with signature "{signature}"')
                 self.signature = RawDefinition(signature)
