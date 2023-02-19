@@ -577,7 +577,7 @@ def is_type_blacklisted(type_ordinal):
     return False
 
 class Definition(object):
-    def __new__(self, definition):
+    def __new__(cls, definition):
         if SimpleDefinition.type_pattern.match(definition):
             self = object.__new__(SimpleDefinition)
         elif FunctionPointerDefinition.type_pattern.match(definition):
