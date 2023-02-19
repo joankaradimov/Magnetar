@@ -31,14 +31,6 @@ class Datum:
 
         self.declaration = 'extern ' + self.type + ';'
 
-class VarArgsDefinition:
-    def __init__(self):
-        self.register = None
-        self.name = '...'
-
-    def signature_with_name(self, _):
-        return '...'
-
 class RawDefinition:
     def __init__(self, definition):
         self.definition = definition
@@ -55,14 +47,11 @@ class FunctionArgument:
         self.register = None
 
         signature = self._replace_register(signature)
-        if signature == '...':
-            self.signature = VarArgsDefinition()
-        else:
-            try:
-                self.signature = Definition(signature)
-            except:
-                print(f'WARNING: Could not hande argument with signature "{signature}"')
-                self.signature = RawDefinition(signature)
+        try:
+            self.signature = Definition(signature)
+        except:
+            print(f'WARNING: Could not hande argument with signature "{signature}"')
+            self.signature = RawDefinition(signature)
 
     def _replace_register(self, signature):
         return self.register_pattern.sub(self._initialize_register, signature)
@@ -582,6 +571,8 @@ class Definition(object):
             self = object.__new__(SimpleDefinition)
         elif FunctionPointerDefinition.type_pattern.match(definition):
             self = object.__new__(FunctionPointerDefinition)
+        elif VarArgsDefinition.type_pattern.match(definition):
+            self = object.__new__(VarArgsDefinition)
         else:
             raise IdbExportError(f'Could not build definition for "{definition}"')
 
@@ -661,6 +652,20 @@ class FunctionPointerDefinition(Definition):
 
     def signature_with_name(self, name):
         return self.type_pattern.sub(lambda m: f"{self.definition[:m.start('name')]} {name}{self.definition[m.end('name'):]}", self.definition)
+
+class VarArgsDefinition(Definition):
+    type_pattern = re.compile(r'^\.\.\.$')
+
+    @property
+    def name(self):
+        return None
+
+    @property
+    def types(self):
+        {'va_list'}
+
+    def signature_with_name(self, _):
+        return '...'
 
 class Type(object):
     body_pattern = re.compile('{.*};')
