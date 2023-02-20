@@ -293,21 +293,16 @@ class Function:
         if self.name.find('@') >= 0:
             raise IdbExportError(f'Function name contains invalid character: {self.name}')
 
-        if is_function_pointer(self.signature):
-            return f'DECL_FUNC({self.signature}, {self.name}, {hex(self.ref)});'
-        else:
+        if self.calling_convention in {'usercall', 'userpurge'}:
             return self.get_usercall_wrapper()
+        else:
+            return f'DECL_FUNC({self.signature}, {self.name}, {hex(self.ref)});'
 
     def build_export_declaration(self):
-        if is_function_pointer(self.signature):
-            return f'extern {self.signature};'
-        else:
+        if self.calling_convention in {'usercall', 'userpurge'}:
             return self.signature + ';'
-
-def is_function_pointer(declaration):
-    # TODO: add documentation
-
-    return re.search(r'^\s*[\w\s\*]*\s*\(\w*\s*\*\s*\w+\)\(.*\)', declaration) != None
+        else:
+            return f'extern {self.signature};'
 
 def get_code_refs(ea):
     refs = []
