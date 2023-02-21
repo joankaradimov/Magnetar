@@ -85,6 +85,8 @@ class FunctionArgument:
         return argument_name
 
 class Function:
+    register_pattern = re.compile(r'@<(?P<register_name>[^>]*)>')
+
     def __init__(self, ref):
         self.ref = ref
         self.ref_type = get_type(ref) or guess_type(ref)
@@ -113,7 +115,7 @@ class Function:
     @cached_property
     def calling_convention(self):
        # Strip the register annotations from the type
-       ref_type = re.sub(r'@<[^>]*>', '', self.ref_type)
+       ref_type = self.register_pattern.sub('', self.ref_type)
 
        # TODO: proper implementation
        if '__cdecl' in ref_type:
@@ -152,6 +154,11 @@ class Function:
         """
 
         return re.search('^\s*((const\s+)?\w+(?:\s*\*)*)', self.ref_type).group(1).strip()
+
+    @cached_property
+    def return_register(self):
+        if self.has_return_value:
+            return self.register_pattern.search(self.ref_type).group('register_name')
 
     @cached_property
     def signature(self):
@@ -245,8 +252,7 @@ class Function:
         touched_registers = {self.full_regsiter[argument.register] for argument in self.arguments if argument.register}
 
         if self.has_return_value:
-            # TODO: do not hard-code EAX; take the register that contains the result from the signatire
-            touched_registers.add('eax')
+            touched_registers.add(self.full_regsiter[self.return_register])
 
         for touched_register in sorted(touched_registers):
             result += f'        xor {touched_register}, {touched_register}\n'
