@@ -139,6 +139,10 @@ class Function:
             return self.ref_name
 
     @cached_property
+    def has_return_value(self):
+        return self.return_type != 'void'
+
+    @cached_property
     def return_type(self):
         """
         Transforms the ref_type string (IDA ref type) that looks like:
@@ -231,17 +235,16 @@ class Function:
             # TODO: handle properly
             return result + '{ throw "not implemented"; }\n'
 
-        has_return_value = self.return_type != 'void'
         result += ' {\n'
         result += f'    int address = {hex(self.ref)};\n'
-        if has_return_value:
+        if self.has_return_value:
             result += f'    {self.return_type} result_;\n'
 
         result += '    __asm {\n'
 
         touched_registers = {self.full_regsiter[argument.register] for argument in self.arguments if argument.register}
 
-        if has_return_value:
+        if self.has_return_value:
             # TODO: do not hard-code EAX; take the register that contains the result from the signatire
             touched_registers.add('eax')
 
@@ -266,7 +269,7 @@ class Function:
         result += ''.join(f'        {code}\n' for code in reversed(stack_arguments_code))
 
         result += '        call address\n'
-        if has_return_value:
+        if self.has_return_value:
             # TODO: use the proper register for the return value
             if self.return_type in {'char', 'u8', 'bool', 'Order', 'BYTE', 'EndgameState', 'Tech'}:
                 result += '        mov result_, al\n'
@@ -283,7 +286,7 @@ class Function:
 
         result += '    }\n'
 
-        if has_return_value:
+        if self.has_return_value:
             result += '    return result_;\n'
 
         result += '}'
