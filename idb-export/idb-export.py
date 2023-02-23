@@ -571,17 +571,13 @@ def is_type_blacklisted(type_ordinal):
 
 class Definition(object):
     def __new__(cls, definition):
-        if SimpleDefinition.type_pattern.match(definition):
-            self = object.__new__(SimpleDefinition)
-        elif FunctionPointerDefinition.type_pattern.match(definition):
-            self = object.__new__(FunctionPointerDefinition)
-        elif VarArgsDefinition.type_pattern.match(definition):
-            self = object.__new__(VarArgsDefinition)
-        else:
-            raise IdbExportError(f'Could not build definition for "{definition}"')
+        for definition_type in [SimpleDefinition, FunctionPointerDefinition, VarArgsDefinition]:
+            if definition_type.type_pattern.match(definition):
+                self = object.__new__(definition_type)
+                self.definition = definition
+                return self
 
-        self.definition = definition
-        return self
+        raise IdbExportError(f'Could not build definition for "{definition}"')
 
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.definition}')"
