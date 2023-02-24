@@ -257,22 +257,19 @@ class Function:
         for touched_register in sorted(touched_registers):
             result += f'        xor {touched_register}, {touched_register}\n'
 
-        stack_arguments_code = []
-        register_arguments_code = []
-        for arg in self.arguments:
+        stack_arguments_count = 0
+        for arg in reversed(self.arguments):
             if arg.register in {'sil', 'dil'}:
                 # TODO: handle 64 bit case
                 # 32-bit assembly does not have the SIL/DIL registers
-                register_arguments_code.append(f'mov {arg.register[:2]}, word ptr {arg.name}')
+                result += f'        mov {arg.register[:2]}, word ptr {arg.name}\n'
             elif arg.register:
-                register_arguments_code.append(f'mov {arg.register}, {arg.name}')
+                result += f'        mov {arg.register}, {arg.name}\n'
             elif arg.signature_with_name == '...':
                 pass # TODO: handle this
             else:
-                stack_arguments_code.append(f'push dword ptr {arg.name}')
-
-        result += ''.join(f'        {code}\n' for code in register_arguments_code)
-        result += ''.join(f'        {code}\n' for code in reversed(stack_arguments_code))
+                stack_arguments_count += 1
+                result += f'        push dword ptr {arg.name}\n'
 
         result += '        call address\n'
         if self.has_return_value:
@@ -284,11 +281,11 @@ class Function:
             else:
                 result += '        mov result_, eax\n'
 
-        if self.calling_convention == 'usercall' and len(stack_arguments_code) != 0:
+        if self.calling_convention == 'usercall' and stack_arguments_count != 0:
             # Clean up the stack
             # TODO: handle args larger than a single register
             # TODO: handle non 32-bit architectures
-            result += f'        add esp, {len(stack_arguments_code) * 4}\n'
+            result += f'        add esp, {stack_arguments_count * 4}\n'
 
         result += '    }\n'
 
