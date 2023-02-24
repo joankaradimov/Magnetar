@@ -1157,7 +1157,7 @@ extern BOOL (__fastcall*AI_EnterTransportProc)(CUnit *a1, CUnit *a2);
 extern unsigned (__stdcall*AI_AttackClear)(int a1);
 BOOL sub_439550(CUnit *a1);
 extern char (__stdcall*AI_ClearCombatData)(int a1, int a2);
-unsigned AI_ValueArea(signed int a1, signed int a2, int a3);
+u8 AI_ValueArea(signed int a1, signed int a2, int a3);
 extern signed (__stdcall*AI_GetSpiderMineLocations)(CUnit *a1, int a2, int a3);
 extern signed (__fastcall*AssignMilitaryToRegion)(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
 extern void (__stdcall*PopulateRgnsWithEnemy)(int a1, int a2);
