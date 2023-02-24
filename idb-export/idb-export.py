@@ -819,8 +819,6 @@ def export_types(declarations, definitions):
         except:
             continue
 
-        wat = local_type.definition_without_body # TODO: determine why nothing works without this line
-
     for local_type in sort_topologically(local_types):
         declarations.append(local_type.declaration)
         definitions.append('\n' + local_type.prologue + local_type.definition + local_type.epilogue)
