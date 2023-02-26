@@ -249,13 +249,18 @@ class Function:
 
         result += '    __asm {\n'
 
-        touched_registers = {self.full_regsiter[argument.register] for argument in self.arguments if argument.register}
-
+        zeroed_registers = set()
         if self.has_return_value:
-            touched_registers.add(self.full_regsiter[self.return_register])
+            # TODO: only do this if part of the register s used for return value:
+            zeroed_registers.add(self.full_regsiter[self.return_register])
+            result += f'        xor {self.full_regsiter[self.return_register]}, {self.full_regsiter[self.return_register]}\n'
 
-        for touched_register in sorted(touched_registers):
-            result += f'        xor {touched_register}, {touched_register}\n'
+        for argument in self.arguments:
+            if argument.register:
+                full_register = self.full_regsiter[argument.register]
+                if full_register not in zeroed_registers and argument.register != full_register:
+                    zeroed_registers.add(full_register)
+                    result += f'        xor {full_register}, {full_register}\n'
 
         stack_arguments_count = 0
         for arg in reversed(self.arguments):
