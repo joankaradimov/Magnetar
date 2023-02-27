@@ -367,6 +367,31 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 
 FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_);
 
+void FatalError_(const char* arg0, ...)
+{
+	va_list va;
+
+	va_start(va, arg0);
+	_vsnprintf(fatal_error_message, 0x200u, arg0, va);
+	fatal_error_message[511] = 0;
+	ErrorLogSystemInfo();
+	ErrorLog("%s", fatal_error_message);
+	ErrorLog("\r\n");
+	ProcError(1);
+	SErrSuppressErrors(1);
+	SNetLeaveGame(3);
+	SNetDestroy();
+	if (GetCurrentThreadId() == main_thread_id)
+	{
+		BWFXN_DDrawDestroy();
+		BWFXN_DSoundDestroy();
+	}
+	ErrMessageBox(16, fatal_error_message, "ERROR");
+	DLGErrFatal();
+}
+
+FUNCTION_PATCH(FatalError, FatalError_);
+
 void isValidScript_(CImage* image, int a2)
 {
 	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);
@@ -374,7 +399,7 @@ void isValidScript_(CImage* image, int a2)
 	{
 		if (v2[0] == 0xFFFF)
 		{
-			FatalError("script %d does not exist", a2);
+			FatalError_("script %d does not exist", a2);
 		}
 		v2 += 2;
 	}
@@ -1110,7 +1135,7 @@ void SysWarn_FileNotFound_(const char* a1, int last_error)
 	}
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)0x6A, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 	{
-		FatalError("GdsDialogBoxParam: %d", 106);
+		FatalError_("GdsDialogBoxParam: %d", 106);
 	}
 	DLGErrFatal();
 }
@@ -1191,7 +1216,7 @@ int AppAddExit_(AppExitHandle handle)
 
 	if (v2 == -1)
 	{
-		FatalError("APPADDEX:1");
+		FatalError_("APPADDEX:1");
 	}
 	app_exit_handles[v2] = handle;
 	return 1;
@@ -1869,7 +1894,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		INT_PTR v4 = DialogBoxParamA(local_dll_library, (LPCSTR)107, hWndParent, DialogFunc, 0);
 		if (v4 == -1)
 		{
-			FatalError("GdsDialogBoxParam: %d", 107);
+			FatalError_("GdsDialogBoxParam: %d", 107);
 		LABEL_13:
 			AppExit_(0);
 			ProcError(1);
@@ -2447,7 +2472,7 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 
 	if (v1 == nullptr)
 	{
-		FatalError("Unable to read game templates.");
+		FatalError_("Unable to read game templates.");
 	}
 	BYTE* v11 = v1;
 	while (sub_4AAE20(v7, (unsigned int*)&v10, (_BYTE**) &v11, sizeof(v7)))
@@ -2686,7 +2711,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 		BWFXN_DSoundDestroy();
 	}
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
-		FatalError("GdsDialogBoxParam: %d", resource);
+		FatalError_("GdsDialogBoxParam: %d", resource);
 	DLGErrFatal_();
 }
 
@@ -13998,7 +14023,7 @@ void SAI_ContoursCreate_(SaiContourHub* a1)
 			}
 			else
 			{
-				FatalError("write me!");
+				FatalError_("write me!");
 			}
 			v45 = v44;
 			v47 = v48;
@@ -20306,7 +20331,7 @@ void CreateMainWindow_()
 
 	if (!RegisterClassExA(&window_class))
 	{
-		FatalError("RegisterClass");
+		FatalError_("RegisterClass");
 	}
 
 	const char* window_name = is_expansion_installed ? "Brood War" : "Starcraft";
@@ -20320,7 +20345,7 @@ void CreateMainWindow_()
 	hWndParent = CreateWindowExA(0, "SWarClass", window_name, window_style, 0, 0, screen_width, screen_height, 0, 0, hInst, 0);
 	if (!hWndParent)
 	{
-		FatalError("CreateWindowEx");
+		FatalError_("CreateWindowEx");
 	}
 
 	UpdateWindow(hWndParent);
