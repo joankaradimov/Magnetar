@@ -386,7 +386,7 @@ void FatalError_(const char* arg0, ...)
 	va_list va;
 
 	va_start(va, arg0);
-	_vsnprintf(fatal_error_message, 0x200u, arg0, va);
+	_vsnprintf(fatal_error_message, sizeof(fatal_error_message), arg0, va);
 	fatal_error_message[511] = 0;
 	ErrorLogSystemInfo();
 	ErrorLog("%s", fatal_error_message);
