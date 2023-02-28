@@ -367,6 +367,20 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 
 FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_);
 
+void DLGErrFatal_()
+{
+	if (GetCurrentThreadId() == main_thread_id)
+	{
+		SErrSuppressErrors(1);
+		AppExit_(1);
+		ProcError(1);
+		exit(1);
+	}
+	ExitProcess(1);
+}
+
+FAIL_STUB_PATCH(DLGErrFatal);
+
 void FatalError_(const char* arg0, ...)
 {
 	va_list va;
@@ -387,7 +401,7 @@ void FatalError_(const char* arg0, ...)
 		BWFXN_DSoundDestroy();
 	}
 	ErrMessageBox(16, fatal_error_message, "ERROR");
-	DLGErrFatal();
+	DLGErrFatal_();
 }
 
 FUNCTION_PATCH(FatalError, FatalError_);
@@ -1137,7 +1151,7 @@ void SysWarn_FileNotFound_(const char* a1, int last_error)
 	{
 		FatalError_("GdsDialogBoxParam: %d", 106);
 	}
-	DLGErrFatal();
+	DLGErrFatal_();
 }
 
 void __stdcall SysWarn_FileNotFound__(const char* a1)
@@ -1264,20 +1278,6 @@ void sub_4C9C40__()
 }
 
 FUNCTION_PATCH((void*)0x4C9C40, sub_4C9C40__);
-
-void __cdecl DLGErrFatal_()
-{
-	if (GetCurrentThreadId() == main_thread_id)
-	{
-		SErrSuppressErrors(1);
-		AppExit_(1);
-		ProcError(1);
-		exit(1);
-	}
-	ExitProcess(1u);
-}
-
-FUNCTION_PATCH(DLGErrFatal, DLGErrFatal_);
 
 bool hasMessagesWaiting_(MSG* a1, int a2)
 {
