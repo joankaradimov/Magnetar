@@ -381,6 +381,35 @@ void DLGErrFatal_()
 
 FAIL_STUB_PATCH(DLGErrFatal);
 
+bool ErrMessageBox_(__int16 a1, LPCSTR lpText, LPCSTR lpCaption)
+{
+	UINT type;
+
+	switch (a1)
+	{
+	case 1:
+		type = MB_ICONWARNING;
+		break;
+	case 2:
+		type = MB_ICONQUESTION | MB_OKCANCEL;
+		break;
+	case 4:
+		type = MB_ICONQUESTION | MB_YESNO | MB_OKCANCEL;
+		break;
+	case 8:
+		type = MB_ICONINFORMATION;
+		break;
+	default:
+		type = MB_ICONERROR;
+		break;
+	}
+	bool result = MessageBoxA(hWndParent, lpText, lpCaption, type) != IDCANCEL;
+	SetCursor(0);
+	return result;
+}
+
+FAIL_STUB_PATCH(ErrMessageBox);
+
 void FatalError_(const char* arg0, ...)
 {
 	va_list va;
@@ -400,7 +429,7 @@ void FatalError_(const char* arg0, ...)
 		BWFXN_DDrawDestroy();
 		BWFXN_DSoundDestroy();
 	}
-	ErrMessageBox(16, fatal_error_message, "ERROR");
+	ErrMessageBox_(16, fatal_error_message, "ERROR");
 	DLGErrFatal_();
 }
 
