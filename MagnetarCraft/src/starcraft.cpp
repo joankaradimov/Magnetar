@@ -3766,6 +3766,13 @@ void __fastcall sfxdata_cleanup_(bool exit_code)
 
 FAIL_STUB_PATCH(sfxdata_cleanup);
 
+void __fastcall j_BWFXN_DSoundDestroy_(bool exit_code)
+{
+	BWFXN_DSoundDestroy();
+}
+
+FAIL_STUB_PATCH(j_BWFXN_DSoundDestroy);
+
 void audioVideoInit_()
 {
 	loadColorSettings_();
@@ -3784,7 +3791,9 @@ void audioVideoInit_()
 	{
 		AudioVideoInitializationError error;
 		if (DSoundInit_(&error, hWndParent))
-			AppAddExit_(j_BWFXN_DSoundDestroy);
+		{
+			AppAddExit_(j_BWFXN_DSoundDestroy_);
+		}
 	}
 }
 
