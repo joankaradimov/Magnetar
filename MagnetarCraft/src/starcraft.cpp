@@ -410,6 +410,8 @@ bool ErrMessageBox_(__int16 a1, LPCSTR lpText, LPCSTR lpCaption)
 
 FAIL_STUB_PATCH(ErrMessageBox);
 
+void BWFXN_DSoundDestroy_();
+
 void FatalError_(const char* arg0, ...)
 {
 	va_list va;
@@ -427,7 +429,7 @@ void FatalError_(const char* arg0, ...)
 	if (GetCurrentThreadId() == main_thread_id)
 	{
 		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 	}
 	ErrMessageBox_(16, fatal_error_message, "ERROR");
 	DLGErrFatal_();
@@ -1174,7 +1176,7 @@ void SysWarn_FileNotFound_(const char* a1, int last_error)
 	if (GetCurrentThreadId() == main_thread_id)
 	{
 		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 	}
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)0x6A, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 	{
@@ -2737,7 +2739,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 	if (GetCurrentThreadId() == main_thread_id)
 	{
 		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 	}
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 		FatalError_("GdsDialogBoxParam: %d", resource);
@@ -3647,6 +3649,60 @@ unsigned __stdcall DSoundThread_(void* a2)
 
 FAIL_STUB_PATCH(DSoundThread);
 
+void BWFXN_DSoundDestroy_()
+{
+	if (direct_sound)
+	{
+		dword_6D5A08 = 0;
+		if (sound_thread_handle)
+		{
+			SetEvent(dword_6D5A00);
+			if (ThreadId != GetCurrentThreadId())
+			{
+				WaitForSingleObject(sound_thread_handle, INFINITE);
+			}
+			CloseHandle(sound_thread_handle);
+			sound_thread_handle = 0;
+		}
+		if (dword_6D5A00)
+		{
+			CloseHandle(dword_6D5A00);
+			dword_6D5A00 = 0;
+		}
+		if (dword_6D1268)
+		{
+			dword_6D1268->Release();
+			dword_6D1268 = 0;
+		}
+		stopSounds();
+		stopMusic();
+		if (byte_6D1265)
+		{
+			byte_6D1265 = 0;
+			SFileDdaDestroy();
+		}
+		if (byte_6D1266)
+		{
+			byte_6D1266 = 0;
+			SVidDestroy();
+		}
+		dword_6D5A0C = 0;
+		if (soundbuffer)
+		{
+			soundbuffer->Release();
+			soundbuffer = 0;
+		}
+		if (direct_sound)
+		{
+			direct_sound->Release();
+			direct_sound = 0;
+		}
+		byte_6D1264 = 0;
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_DSoundDestroy);
+
 BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 {
 	if (direct_sound)
@@ -3659,7 +3715,7 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 	memset(stru_5998F0, 0, sizeof(stru_5998F0));
 	if (!DSoundCreate_(a1) || !SetCooperativeLevel_(a2, a1) || !CreateSoundBuffer_(a1))
 	{
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 		return 0;
 	}
 	SetAudioFormat_();
@@ -3684,14 +3740,14 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 	dword_6D5A00 = CreateEventA(0, 0, 0, 0);
 	if (dword_6D5A00 == NULL)
 	{
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 		return 0;
 	}
 	dword_6D5A08 = 1;
 	sound_thread_handle = (HANDLE) _beginthreadex(0, 0, DSoundThread_, 0, 0, &ThreadId);
 	if (sound_thread_handle == NULL)
 	{
-		BWFXN_DSoundDestroy();
+		BWFXN_DSoundDestroy_();
 		return 0;
 	}
 	byte_6D1264 = 1;
@@ -3768,7 +3824,7 @@ FAIL_STUB_PATCH(sfxdata_cleanup);
 
 void __fastcall j_BWFXN_DSoundDestroy_(bool exit_code)
 {
-	BWFXN_DSoundDestroy();
+	BWFXN_DSoundDestroy_();
 }
 
 FAIL_STUB_PATCH(j_BWFXN_DSoundDestroy);
