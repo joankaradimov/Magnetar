@@ -3597,6 +3597,14 @@ void stopMusic_()
 
 FAIL_STUB_PATCH(stopMusic);
 
+void stopAllSound_(void)
+{
+	stopSounds();
+	stopMusic_();
+}
+
+FAIL_STUB_PATCH(stopAllSound);
+
 unsigned __stdcall DSoundThread_(void* a2)
 {
 	void* location = NULL;
@@ -3720,8 +3728,7 @@ void BWFXN_DSoundDestroy_()
 			dword_6D1268->Release();
 			dword_6D1268 = 0;
 		}
-		stopSounds();
-		stopMusic_();
+		stopAllSound_();
 		if (byte_6D1265)
 		{
 			byte_6D1265 = 0;
@@ -8685,8 +8692,7 @@ void DestroyGame_()
 	CleanupFlingyDat_();
 	CleanupSpritesDat_();
 
-	stopSounds();
-	stopMusic_();
+	stopAllSound_();
 	stopSounds();
 	LoadRaceSFX_(0);
 	InitializeInputProcs_();
@@ -11657,14 +11663,6 @@ void GameLoop_Top_()
 }
 
 FAIL_STUB_PATCH(GameLoop_Top);
-
-void stopAllSound_(void)
-{
-	stopSounds();
-	stopMusic_();
-}
-
-FAIL_STUB_PATCH(stopAllSound);
 
 GamePosition BeginGame_()
 {
@@ -19909,8 +19907,7 @@ LABEL_28:
 	if (glue_background_palette[0].data)
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
-	stopSounds();
-	stopMusic_();
+	stopAllSound_();
 	dword_6D5E20 = &GameScreenBuffer;
 	if (!byte_51A0E9)
 	{
