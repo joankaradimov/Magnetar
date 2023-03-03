@@ -3551,6 +3551,52 @@ void initVolume_()
 
 FAIL_STUB_PATCH(initVolume);
 
+void stopMusic_()
+{
+	DWORD v4;
+
+	if (directsound)
+	{
+		if (byte_6D5BBC)
+		{
+			int v1 = bigvolume;
+			byte_6D5BBC = 0;
+			if (!byte_6D5BBD || (v1 = bigvolume - 750, dword_6D5BB8 = -10000, bigvolume - 750 >= -10000))
+			{
+				dword_6D5BB8 = v1;
+			}
+			DWORD tick_count = GetTickCount();
+
+			for (int i = 5; ; i += 5)
+			{
+				do
+				{
+					v4 = GetTickCount();
+				} while ((int)(v4 - tick_count) < 0);
+				tick_count = v4 + 20;
+				int v5 = dword_6D5BB8 - i;
+				dword_6D5BB8 -= i;
+				if (dword_6D5BB8 < -4000)
+				{
+					break;
+				}
+				SFileDdaSetVolume(directsound, v5, 0);
+			}
+			dword_6D5BB8 = -10000;
+			SFileDdaSetVolume(directsound, -10000, 0);
+		}
+		if (directsound)
+		{
+			SFileDdaEnd(directsound);
+			SFileCloseFile(directsound);
+			directsound = 0;
+		}
+		byte_6D5BBC = 0;
+	}
+}
+
+FAIL_STUB_PATCH(stopMusic);
+
 unsigned __stdcall DSoundThread_(void* a2)
 {
 	void* location = NULL;
@@ -3675,7 +3721,7 @@ void BWFXN_DSoundDestroy_()
 			dword_6D1268 = 0;
 		}
 		stopSounds();
-		stopMusic();
+		stopMusic_();
 		if (byte_6D1265)
 		{
 			byte_6D1265 = 0;
@@ -7649,7 +7695,7 @@ FAIL_STUB_PATCH(chooseTRGTemplate);
 
 signed int LoadGameInit_()
 {
-	stopMusic();
+	stopMusic_();
 	if (InReplay)
 	{
 		if (!scenarioChk)
@@ -8640,7 +8686,7 @@ void DestroyGame_()
 	CleanupSpritesDat_();
 
 	stopSounds();
-	stopMusic();
+	stopMusic_();
 	stopSounds();
 	LoadRaceSFX_(0);
 	InitializeInputProcs_();
@@ -11615,7 +11661,7 @@ FAIL_STUB_PATCH(GameLoop_Top);
 void stopAllSound_(void)
 {
 	stopSounds();
-	stopMusic();
+	stopMusic_();
 }
 
 FAIL_STUB_PATCH(stopAllSound);
@@ -17195,7 +17241,7 @@ BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
 		return 1;
 	}
 	Streamed_SFX_FullDestructor(&soundFXList);
-	stopMusic();
+	stopMusic_();
 	if (cd_archive_mpq)
 	{
 		SFileCloseArchive(cd_archive_mpq);
@@ -17784,7 +17830,7 @@ int ContinueCampaign_(int a1);
 
 void sub_46D200_(const MusicTrackDescription* music_track)
 {
-	stopMusic();
+	stopMusic_();
 	DLGMusicFade_(music_track);
 }
 
@@ -18075,7 +18121,7 @@ void loadMenu_gluConn_()
 	}
 	else if (network_provider_id.as_number == 'BNET')
 	{
-		stopMusic();
+		stopMusic_();
 		glGluesMode = Begin_BNET_(network_provider_id) ? glGluesRelated_maybe : GLUE_CONNECT;
 	}
 	else
@@ -19635,7 +19681,7 @@ void loadMenu_gluScore_()
 	}
 
 	changeMenu_();
-	stopMusic();
+	stopMusic_();
 	if (iscore_grp)
 	{
 		SMemFree(iscore_grp, "Starcraft\\SWAR\\lang\\gluScore.cpp", 1409, 0);
@@ -19864,7 +19910,7 @@ LABEL_28:
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 	memset(glue_background_palette, 0, sizeof(Bitmap[129]));
 	stopSounds();
-	stopMusic();
+	stopMusic_();
 	dword_6D5E20 = &GameScreenBuffer;
 	if (!byte_51A0E9)
 	{
@@ -21078,7 +21124,7 @@ void BeginEpilog_()
 	active_campaign = nullptr;
 	active_campaign_entry_index = -1;
 
-	stopMusic();
+	stopMusic_();
 	registry_options.Music = v0;
 }
 
@@ -21112,7 +21158,7 @@ void BeginCredits_()
 	{
 		loadInitCreditsBIN_("crdt_lst");
 	}
-	stopMusic();
+	stopMusic_();
 	registry_options.Music = v0;
 }
 
