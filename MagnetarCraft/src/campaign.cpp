@@ -12,8 +12,7 @@ CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData
 		C_BLIZZARD_LOGO,
 		race,
 		hide,
-		establishing_shot,
-		epilog
+		establishing_shot
 	};
 }
 
@@ -204,7 +203,8 @@ std::vector<Campaign> campaigns = {
 			mission(0x50, ExpandedMapData::EMD_xzerg07, RACE_Zerg, 0, "EstZ07x"),
 			mission(0x51, ExpandedMapData::EMD_xzerg08, RACE_Zerg, 0, "EstZ08x"),
 			mission(0x52, ExpandedMapData::EMD_xzerg09, RACE_Zerg, 0, "EstZ09x"),
-			mission(0, ExpandedMapData::EMD_xbonus, RACE_Zerg, 1, "EstZ09bx", "FinZ09bx"),
+			mission(0, ExpandedMapData::EMD_xbonus, RACE_Zerg, 1, "EstZ09bx"),
+			epilog("FinZ09bx", &Race::races()[RaceId::RACE_Zerg].briefing_music),
 			mission(0x54, ExpandedMapData::EMD_xzerg10, RACE_Zerg, 0, "EstZ10x"),
 			cinematic(0x55, ExpandedMapData::EMD_Unknown, C_THE_ASCENTION, 0),
 			epilog("epilogX", &Race::races()[RaceId::RACE_Protoss].ingame_music[2]),

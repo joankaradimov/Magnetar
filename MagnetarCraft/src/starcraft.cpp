@@ -17861,7 +17861,11 @@ FAIL_STUB_PATCH(sub_46D1F0);
 
 void loadMenu_gluRdy(RaceId race)
 {
-	sub_46D200_(&Race::races()[race].briefing_music);
+	auto briefing_music = &Race::races()[race].briefing_music;
+	if (current_music_track != briefing_music)
+	{
+		sub_46D200_(briefing_music);
+	}
 	DisplayEstablishingShot_();
 	if (gwGameMode == GAME_GLUES)
 	{
@@ -20902,20 +20906,6 @@ void loadInitCreditsBIN_(const char* a1)
 
 FAIL_STUB_PATCH(loadInitCreditsBIN);
 
-void DisplayMissionEpilog_()
-{
-	if (!multiPlayerMode && (GameCheats & CHEAT_NoGlues) == 0 && active_campaign_entry_index != -1)
-	{
-		if (const char* epilog = active_campaign->entries[active_campaign_entry_index].epilog)
-		{
-			loadInitCreditsBIN_(epilog);
-		}
-	}
-}
-
-FAIL_STUB_PATCH(DisplayMissionEpilog);
-FAIL_STUB_PATCH(sub_4D8F90);
-
 unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 game_speed)
 {
 	if (!a1 || !a3)
@@ -21048,7 +21038,6 @@ int ContinueCampaign_(int a1)
 		return 1;
 	}
 	gwGameMode = GAME_GLUES;
-	DisplayMissionEpilog_();
 	if (active_campaign_entry_index == -1 || active_campaign_entry_index >= active_campaign->entries.size())
 	{
 		return 0;
@@ -21064,6 +21053,10 @@ int ContinueCampaign_(int a1)
 	}
 	if (active_campaign_entry_index >= active_campaign->entries.size())
 	{
+		glGluesMode = active_campaign->post_epilog_menu;
+		gwGameMode = GAME_GLUES;
+		active_campaign = nullptr;
+		active_campaign_entry_index = -1;
 		return 1;
 	}
 	sub_4DBEE0_(&active_campaign->entries[active_campaign_entry_index]);
@@ -21089,6 +21082,8 @@ int ContinueCampaign_(int a1)
 	return 0;
 }
 
+FAIL_STUB_PATCH(DisplayMissionEpilog);
+FAIL_STUB_PATCH(sub_4D8F90);
 FAIL_STUB_PATCH(getCampaignIndex);
 FAIL_STUB_PATCH(updateActiveCampaignMission);
 FAIL_STUB_PATCH(ContinueCampaign);
@@ -21114,14 +21109,28 @@ void BeginEpilog_()
 	{
 		DLGMusicFade_(active_campaign->entries[active_campaign_entry_index].epilog_music_track);
 		loadInitCreditsBIN_(active_campaign->entries[active_campaign_entry_index].epilog);
-		active_campaign_entry_index++;
-	}
-	glGluesMode = active_campaign->post_epilog_menu;
-	gwGameMode = GAME_GLUES;
-	active_campaign = nullptr;
-	active_campaign_entry_index = -1;
 
-	stopMusic_();
+		if (active_campaign_entry_index + 1 == active_campaign->entries.size())
+		{
+			stopMusic_();
+			break;
+		}
+		else if (active_campaign->entries[active_campaign_entry_index + 1].entry_type == CampaignMenuEntryType::EPILOG)
+		{
+			active_campaign_entry_index++;
+		}
+		else if (active_campaign->entries[active_campaign_entry_index + 1].entry_type == CampaignMenuEntryType::CINEMATIC)
+		{
+			stopMusic_();
+			active_campaign_entry_index++;
+			break;
+		}
+		else if (active_campaign->entries[active_campaign_entry_index + 1].entry_type == CampaignMenuEntryType::MISSION)
+		{
+			break;
+		}
+	}
+
 	registry_options.Music = v0;
 }
 
@@ -21303,6 +21312,10 @@ void GameMainLoop_()
 			break;
 		case GAME_EPILOG:
 			BeginEpilog_();
+			if (gwGameMode == GAME_EPILOG)
+			{
+				ContinueCampaign_(1);
+			}
 			break;
 		default:
 			AppExit_(0);
