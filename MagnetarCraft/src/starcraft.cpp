@@ -15614,14 +15614,14 @@ void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
 			v8->rct.bottom = -1;
 			break;
 		case 2u:
-			v9 = 640 - v8->rct.left;
+			v9 = SCREEN_WIDTH - v8->rct.left;
 			v8->rct.right += v9;
-			v8->rct.left = 640;
+			v8->rct.left = SCREEN_WIDTH;
 			break;
 		case 3u:
-			v9 = 480 - v8->rct.top;
+			v9 = SCREEN_HEIGHT - v8->rct.top;
 			v8->rct.bottom += v9;
-			v8->rct.top = 480;
+			v8->rct.top = SCREEN_HEIGHT;
 			break;
 		default:
 			break;
