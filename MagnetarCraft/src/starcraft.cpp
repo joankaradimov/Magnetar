@@ -5592,7 +5592,7 @@ void HideDialog_(dialog* dlg)
 	}
 }
 
-void HideDialog__()
+void __cdecl HideDialog__()
 {
 	dialog* dlg;
 
