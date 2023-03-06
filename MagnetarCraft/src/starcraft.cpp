@@ -16359,6 +16359,33 @@ int CreateLadderGame_(GameData* a1, int a2)
 
 FAIL_STUB_PATCH(CreateLadderGame);
 
+void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
+{
+	if (hWnd)
+	{
+		KillTimer(hWnd, uIDEvent);
+	}
+
+	InReplay = 0;
+	if (replay->flags & MapDirEntryFlags::MDEF_SCENARIO)
+	{
+		FullyLoadMapDirEntry(replay);
+	}
+	else if (replay->flags & MapDirEntryFlags::MDEF_SAVEGAME)
+	{
+		sub_4A7540(replay);
+	}
+	else if (replay->flags & MapDirEntryFlags::MDEF_REPLAY)
+	{
+		LoadReplayMapDirEntry(replay);
+	}
+
+	sub_4A79D0(replay);
+	replay = 0;
+}
+
+FUNCTION_PATCH(sub_4A7F50, sub_4A7F50_);
+
 unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest)
 {
 	KillTimer(hWndParent, 0xCu);
