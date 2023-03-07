@@ -16359,6 +16359,67 @@ int CreateLadderGame_(GameData* a1, int a2)
 
 FAIL_STUB_PATCH(CreateLadderGame);
 
+const char* __stdcall get_Tileset_String(Tileset tileset);
+
+void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
+{
+	if (!map_dir_entry->fully_loaded)
+	{
+		map_dir_entry->fully_loaded = 1;
+		map_dir_entry->error = 1;
+		strcpy_s(map_dir_entry->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
+		int v4 = SStrLen(map_dir_entry->filename);
+		int v5 = SStrLen(map_dir_entry->full_path);
+		if (v4 < 32 && v5 + v4 < 260)
+		{
+			MapChunks a4;
+			memset(&a4, 0, sizeof(a4));
+			if (ReadMapData_(map_dir_entry->full_path, &a4, 0))
+			{
+				map_dir_entry->human_player_slots_maybe = getTotalValidSlotCount();
+				map_dir_entry->computer_slots = getComputerSlotCount();
+				map_dir_entry->human_player_slots = getOpenSlotCount();
+				map_dir_entry->unknown3 = 1;
+				map_dir_entry->map_width_tiles = map_size.width;
+				map_dir_entry->map_height_tiles = map_size.height;
+				map_dir_entry->tileset = CurrentTileSet;
+				strcpy_s(map_dir_entry->title, LOWORD(a4.data0) ? get_chk_String(a4.data0) : "");
+				if (strlen(map_dir_entry->title) > 0)
+				{
+					strcpy_s(map_dir_entry->title, map_dir_entry->filename);
+				}
+				strcpy_s(map_dir_entry->description, HIWORD(a4.data0) ? get_chk_String(SHIWORD(a4.data0)) : "");
+				sprintf_s(map_dir_entry->unknown_x478, get_GluAll_String(NUMBER_OF_PLAYERS), map_dir_entry->human_player_slots_maybe);
+				sprintf_s(map_dir_entry->map_dimension_string, get_GluAll_String(MAP_SIZE), map_dir_entry->map_width_tiles, map_dir_entry->map_height_tiles);
+				sprintf_s(map_dir_entry->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), map_dir_entry->computer_slots);
+				sprintf_s(map_dir_entry->human_players_string, get_GluAll_String(HUMAN_SLOTS), map_dir_entry->human_player_slots);
+				strcpy_s(map_dir_entry->tileset_string, get_Tileset_String(map_dir_entry->tileset));
+				for (int i = 0; i < _countof(map_dir_entry->player_forces); i++)
+				{
+					map_dir_entry->player_forces[i] = playerForce[i];
+				}
+				map_dir_entry->unknown2 = a4.data7;
+				map_dir_entry->error = 0;
+			}
+			else if (LOWORD(a4.version) <= 59)
+			{
+				strcpy_s(map_dir_entry->description, get_GluAll_String(INVALID_SAVE_GAME));
+			}
+			else
+			{
+				map_dir_entry->error = 2;
+				strcpy_s(map_dir_entry->description, get_GluAll_String(INVALID_SCENARIO));
+			}
+		}
+		else
+		{
+			strcpy_s(map_dir_entry->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
+		}
+	}
+}
+
+FAIL_STUB_PATCH(FullyLoadMapDirEntry);
+
 void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 {
 	if (hWnd)
@@ -16369,7 +16430,7 @@ void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 	InReplay = 0;
 	if (replay->flags & MapDirEntryFlags::MDEF_SCENARIO)
 	{
-		FullyLoadMapDirEntry(replay);
+		FullyLoadMapDirEntry_(replay);
 	}
 	else if (replay->flags & MapDirEntryFlags::MDEF_SAVEGAME)
 	{
@@ -16444,7 +16505,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 	case MapDirEntryFlags::MDEF_SCENARIO:
 		if (!v8->fully_loaded)
 		{
-			FullyLoadMapDirEntry(v8);
+			FullyLoadMapDirEntry_(v8);
 		}
 		if (v8->error == 1)
 		{
@@ -21448,9 +21509,6 @@ const char* __stdcall get_Tileset_String(Tileset tileset)
 
 	return tbl_file[tileset];
 }
-
-NOP_PATCH((void*)0x4A7960, 3);
-CALL_SITE_PATCH((void*)0x4A7964, get_Tileset_String);
 
 signed int __fastcall packColorShifts_(int a1, void* a2)
 {
