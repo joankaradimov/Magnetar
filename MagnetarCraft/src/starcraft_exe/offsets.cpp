@@ -21379,7 +21379,7 @@ MapDirEntry * save_Recent_Map_Data(MapDirEntry *result) {
     }
     return result_;
 }
-int getMapListEntryCount(int (__stdcall *a1)(MapDirEntry *, char *, MapDirEntryFlags), int a2, char *a3, char *a4) {
+int getMapListEntryCount(int (__stdcall *callback)(MapDirEntry *, char *, MapDirEntryFlags), int a2, char *a3, char *a4) {
     int address = 0x4a73c0;
     int result_;
     __asm {
@@ -21387,17 +21387,17 @@ int getMapListEntryCount(int (__stdcall *a1)(MapDirEntry *, char *, MapDirEntryF
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
-        mov eax, a1
+        mov eax, callback
         call address
         mov result_, eax
     }
     return result_;
 }
 DECL_FUNC(void (__stdcall*sub_4A7540)(MapDirEntry *a1), sub_4A7540, 0x4a7540);
-void FullyLoadMapDirEntry(MapDirEntry *a1) {
+void FullyLoadMapDirEntry(MapDirEntry *map_dir_entry) {
     int address = 0x4a7740;
     __asm {
-        mov eax, a1
+        mov eax, map_dir_entry
         call address
     }
 }
