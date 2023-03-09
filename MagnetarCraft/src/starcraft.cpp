@@ -6806,6 +6806,36 @@ GotFileValues* InitUseMapSettingsTemplate_()
 
 FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
 
+int sub_4CC350_(char* a1, const char* a2, int* a3, size_t a4)
+{
+	if (CampaignIndex)
+	{
+		if (!a1)
+		{
+			return 1;
+		}
+		SStrCopy(a1, a2, a4);
+		return 1;
+	}
+	if (a1)
+	{
+		*a1 = 0;
+	}
+
+	int a2a;
+	if (LoadFileArchiveToSBigBuf(a2, &a2a, 1, &mapArchiveHandle) == 0)
+	{
+		return 0;
+	}
+	if (a3)
+	{
+		*a3 = a2a;
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(sub_4CC350);
+
 int sub_4CCAC0_(const char* a1, MapChunks* a2)
 {
 	char buff[MAX_PATH];
@@ -6818,7 +6848,7 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 		SErrSetLastError(0x57u);
 		return 0;
 	}
-	if (!sub_4CC350(v9, a1, (int)&a2->data7, MAX_PATH))
+	if (!sub_4CC350_(v9, a1, &a2->data7, MAX_PATH))
 		return 0;
 	int chk_size = 0;
 	if (v9[0])
