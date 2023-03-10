@@ -4628,7 +4628,7 @@ BOOL LoadFileArchiveToSBigBuf(const char *filename, int *a2, int a3, HANDLE *a4)
 int sub_4CC1B0(unsigned __int8 a1, int a2, int a3);
 extern bool (__stdcall*ChkLoader_MBRF)(SectionData *a1, int a2, MapChunks *a3);
 signed sub_4CC2A0(void *chk_data, int chk_size_, int a3, MapChunks *a4);
-signed sub_4CC350(char *a1, const char *a2, int a3, size_t a4);
+signed sub_4CC350(char *a1, const char *a2, int *a3, size_t a4);
 extern _DWORD (__stdcall*setUnitEnergyEx)(_DWORD a1, char a2);
 BOOL sub_4CC420(int a1, int a2);
 void CHK_UNIT_ApplyOtherFlags(CUnit *a1, char a2, int a3);
@@ -5134,7 +5134,7 @@ struct_v2 * sub_4DE8F0(struct_v2 *result);
 struct_v2 * sub_4DE920(struct_v2 *result);
 void getReplPlayerColors(int *result);
 void getReplPlayerStructs(PlayerInfo *a1);
-void copyPlayerStructsToReplayPlayerStructs(void *result, void *a2);
+void copyPlayerStructsToReplayPlayerStructs(PlayerInfo *players_info, void *a2);
 void SetReplayData(GameData *a1, PlayerInfo *a2, int *a3);
 extern DWORD (*sub_4DEA90)();
 extern ButtonState (__fastcall*BTNSCOND_ReplayPlayPause)(u16 variable, int player_id, CUnit *unit);
