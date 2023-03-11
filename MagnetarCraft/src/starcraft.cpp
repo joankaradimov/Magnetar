@@ -16450,6 +16450,93 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 
 FAIL_STUB_PATCH(FullyLoadMapDirEntry);
 
+void LoadReplayMapDirEntry_(MapDirEntry* replay)
+{
+	InReplay = 1;
+	if (!replay->fully_loaded)
+	{
+		replay->fully_loaded = 1;
+		replay->error = 1;
+		strcpy_s(replay->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
+		int v4 = strlen(replay->filename);
+		int a3 = strlen(replay->full_path);
+		strcpy_s(replay->title, get_GluAll_String(GluAllTblEntry(SELECTED_SCENARIO_NOT_VALID | 0x80)));
+		if (v4 >= 32 || a3 + v4 + 1 > 260)
+		{
+			strcpy_s(replay->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
+			return;
+		}
+		if (!LoadReplayFile(replay->full_path, &a3))
+		{
+			unsigned v6 = a3 != 0 ? -3u : 0;
+			replay->error = 2;
+			strcpy_s(replay->description, get_GluAll_String((GluAllTblEntry)(v6 + 63)));
+			return;
+		}
+
+		replay->human_player_slots = 0;
+		replay->computer_slots = 0;
+
+		PlayerInfo player_info[12];
+		copyPlayerStructsToReplayPlayerStructs(player_info, &replay->game_data);
+		for (int i = 0; i < _countof(player_info); i++)
+		{
+			if (player_info[i].nType == PT_Computer)
+			{
+				replay->computer_slots += 1;
+			}
+			else if (player_info[i].nType == PT_Human)
+			{
+				replay->human_player_slots += 1;
+			}
+		}
+		replay->tileset = replay->game_data.tileset;
+		MapChunks a4;
+		memset(&a4, 0, 12);
+		replay->map_width_tiles = replay->game_data.width;
+		replay->save_hash = replay->game_data.save_timestamp;
+		for (int i = 0; i < _countof(a4.tbl_index_force_name); i++)
+		{
+			a4.tbl_index_force_name[i] = 0;
+		}
+		replay->unknown3 = 1;
+		replay->human_player_slots_maybe = 8;
+		replay->map_height_tiles = replay->game_data.height;
+		bool v14 = replay_header.campaign_index == MapData::MD_none;
+		for (int i = 0; i < _countof(a4.force_flags); i++)
+		{
+			a4.force_flags[i] = ForceFlags(0);
+		}
+		a4.version = 0;
+		replay->unknown6 = (unsigned __int16)replay_header.campaign_index;
+		a4.data7 = 0;
+		const char* source_file = v14 ? replay->full_path : MapdataFilenames[CampaignIndex];
+		if (ReadMapData_(source_file, &a4, !v14))
+		{
+			sprintf_s(replay->description, get_GluAll_String(UNABLE_TO_LOAD_MAP), replay->game_data.map_name);
+			strcat_s(replay->description, "\n\n");
+			strcpy_s(replay->name, replay->filename);
+			sprintf_s(replay->unknown_x478, get_GluAll_String(NUMBER_OF_PLAYERS), replay->unknown3);
+			sprintf_s(replay->map_dimension_string, get_GluAll_String(MAP_SIZE), replay->map_width_tiles, replay->map_height_tiles);
+			sprintf_s(replay->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), replay->computer_slots);
+			sprintf_s(replay->human_players_string, get_GluAll_String(HUMAN_SLOTS), replay->human_player_slots);
+			strcpy_s(replay->tileset_string, get_GluAll_String((GluAllTblEntry)(replay->tileset + 39)));
+			replay->error = 0;
+		}
+		else if (LOWORD(a4.version) <= 59)
+		{
+			strcpy_s(replay->description, get_GluAll_String(INVALID_SAVE_GAME));
+		}
+		else
+		{
+			replay->error = 2;
+			strcpy_s(replay->description, get_GluAll_String(INVALID_SCENARIO));
+		}
+	}
+}
+
+FAIL_STUB_PATCH(LoadReplayMapDirEntry);
+
 void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 {
 	if (hWnd)
@@ -16468,7 +16555,7 @@ void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 	}
 	else if (replay->flags & MapDirEntryFlags::MDEF_REPLAY)
 	{
-		LoadReplayMapDirEntry(replay);
+		LoadReplayMapDirEntry_(replay);
 	}
 
 	sub_4A79D0(replay);
@@ -16640,7 +16727,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 	case MapDirEntryFlags::MDEF_REPLAY:
 		InReplay = 1;
 		v8->fully_loaded = 0;
-		LoadReplayMapDirEntry(v8);
+		LoadReplayMapDirEntry_(v8);
 		if (v8->error == 1)
 		{
 			return 0x80000007;
