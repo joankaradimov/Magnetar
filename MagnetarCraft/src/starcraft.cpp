@@ -6841,8 +6841,8 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 	char buff[MAX_PATH];
 	char v9[MAX_PATH];
 
-	int v3 = a2 != 0 ? (a1 != 0 ? -(SStrLen(a1) != 0) : 0) : 0;
-	SStrLen(a1);
+	int v3 = a2 != 0 ? (a1 != 0 ? -(strlen(a1) != 0) : 0) : 0;
+	strlen(a1);
 	if (!v3)
 	{
 		SErrSetLastError(0x57u);
@@ -15384,7 +15384,7 @@ int campaignTypeCheatStrings_(const char* a2)
 	Campaign* relevant_campaign = NULL;
 	for (Campaign& campaign : campaigns)
 	{
-		int prefix_length = SStrLen(campaign.campaign_id);
+		int prefix_length = strlen(campaign.campaign_id);
 		if (!SStrCmpI(a2, campaign.campaign_id, prefix_length))
 		{
 			relevant_campaign = &campaign;
@@ -15395,10 +15395,10 @@ int campaignTypeCheatStrings_(const char* a2)
 	{
 		return 0;
 	}
-	int campaign_index = strtoul(a2 + SStrLen(relevant_campaign->campaign_id), nullptr, 10) - relevant_campaign->first_mission_index;
+	int campaign_index = strtoul(a2 + strlen(relevant_campaign->campaign_id), nullptr, 10) - relevant_campaign->first_mission_index;
 
 	int campaign_menu_entry_index;
-	int prefix_length = SStrLen(relevant_campaign->campaign_id);
+	int prefix_length = strlen(relevant_campaign->campaign_id);
 	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry_index) && relevant_campaign->entries[campaign_menu_entry_index].next_mission != EMD_xbonus)
 	{
 		ContinueCampaignWithLevelCheat_(relevant_campaign, campaign_menu_entry_index);
@@ -16398,8 +16398,8 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 		map_dir_entry->fully_loaded = 1;
 		map_dir_entry->error = 1;
 		strcpy_s(map_dir_entry->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
-		int v4 = SStrLen(map_dir_entry->filename);
-		int v5 = SStrLen(map_dir_entry->full_path);
+		int v4 = strlen(map_dir_entry->filename);
+		int v5 = strlen(map_dir_entry->full_path);
 		if (v4 < 32 && v5 + v4 < 260)
 		{
 			MapChunks a4;
