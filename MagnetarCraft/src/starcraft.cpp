@@ -7464,8 +7464,11 @@ void LoadRaceUI_()
 	}
 	else
 	{
-		int v0 = consoleRaceSpecific == -1 ? rand() % 3 : consoleRaceSpecific;
-		consoleRaceSpecific = v0 + 1;
+		if (consoleRaceSpecific == -1)
+		{
+			consoleRaceSpecific = rand() % 3;
+		}
+		consoleRaceSpecific = consoleRaceSpecific + 1;
 		if (consoleRaceSpecific >= 3)
 		{
 			consoleRaceSpecific = 0;
