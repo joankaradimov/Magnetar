@@ -6944,7 +6944,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	return 1;
 }
 
-FUNCTION_PATCH(ReadMapData, ReadMapData_);
+FAIL_STUB_PATCH(ReadMapData);
 
 bool ReadCampaignMapData_(MapChunks* map_chunks)
 {
