@@ -11482,6 +11482,34 @@ void GameKeepAlive_()
 
 FAIL_STUB_PATCH(GameKeepAlive);
 
+BOOL sub_4C4870_()
+{
+	if (!multiPlayerMode || NetMode.as_number != 'BNET' || gameData.save_timestamp || !gameData.approval_status || InReplay)
+	{
+		return 1;
+	}
+
+	int a2;
+	if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &a2, 0, 0))
+	{
+		return 0;
+	}
+
+	switch (gameData.approval_status)
+	{
+	case 1:
+	case 2:
+	case 3:
+	case 4:
+	case 5:
+	case 6:
+		return a2 == gameData.approval_status;
+	}
+	return 0;
+}
+
+FUNCTION_PATCH(sub_4C4870, sub_4C4870_);
+
 void Cls2RecvFrom_()
 {
 	for (int v0 = _countof(playerStatusArray) - 1; v0 >= 0; v0--)
