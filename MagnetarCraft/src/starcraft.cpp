@@ -6974,6 +6974,20 @@ void __stdcall packetErrHandle__(int a2, char* a3, int a4, int a5)
 
 FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__);
 
+void __stdcall BWFXN_GlobalPrintText_(s_evt* evt)
+{
+	if (gwGameMode == GAME_RUN)
+	{
+		InfoMessage(0, (const char*)evt->pData);
+	}
+	else if (gwGameMode == GAME_GLUES && glGluesMode == GLUE_CHAT && evt->pData)
+	{
+		printLobbyString(0xFFFFFFFF, (char*)evt->pData);
+	}
+}
+
+FAIL_STUB_PATCH(BWFXN_GlobalPrintText);
+
 int InitializeNetworkProvider_(Char4 provider_id)
 {
 	SNETPROGRAMDATA provider_data;
@@ -7036,7 +7050,7 @@ int InitializeNetworkProvider_(Char4 provider_id)
 				if (InitializeModem(&user_data, &ui_data, &provider_data, provider_id))
 				{
 					clearPlayerFlags();
-					if (SNetRegisterEventHandler(2, eventPlayerDropped) && SNetRegisterEventHandler(3, eventSetPlayerFlag) && SNetRegisterEventHandler(4, BWFXN_GlobalPrintText) && SNetRegisterEventHandler(1, eventSetGameType))
+					if (SNetRegisterEventHandler(2, eventPlayerDropped) && SNetRegisterEventHandler(3, eventSetPlayerFlag) && SNetRegisterEventHandler(4, BWFXN_GlobalPrintText_) && SNetRegisterEventHandler(1, eventSetGameType))
 					{
 						return 1;
 					}
