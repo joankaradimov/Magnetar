@@ -1367,7 +1367,7 @@ signed ReadChunkNodes(int chk_section_loader_count, int chk_size_, ChkSectionLoa
     }
     return result_;
 }
-void mapAuthProc(int (__stdcall *a1)(_DWORD, _DWORD, _DWORD), int a2) {
+void mapAuthProc(int (__stdcall *a1)(char *, void *, HANDLE *), HANDLE *a2) {
     int address = 0x4137f0;
     __asm {
         push dword ptr a2
@@ -23881,7 +23881,7 @@ int sub_4BEF40(const char *a1, int a2) {
     }
     return result_;
 }
-signed LoadFileToSBigBuf(char *filename, int a2) {
+signed LoadFileToSBigBuf(const char *filename, int *a2) {
     int address = 0x4bef80;
     signed result_;
     __asm {
@@ -24522,7 +24522,7 @@ int ApplyGameVictoryStatus(_DWORD *a1, _DWORD *a2) {
 DECL_FUNC(void (__fastcall*leaveOnQuit)(bool exit_code), leaveOnQuit, 0x4c4680);
 DECL_FUNC(void (*RECV_MakeGamePublic)(), RECV_MakeGamePublic, 0x4c46e0);
 DECL_FUNC(void (__cdecl*ReportGameResult)(), ReportGameResult, 0x4c4790);
-DECL_FUNC(int (__thiscall*sub_4C4870)(void *this_), sub_4C4870, 0x4c4870);
+DECL_FUNC(BOOL (*sub_4C4870)(), sub_4C4870, 0x4c4870);
 void sub_4C4950(int result, int a2, int a3) {
     int address = 0x4c4950;
     __asm {
@@ -25159,12 +25159,12 @@ signed sub_4CC350(char *a1, const char *a2, int *a3, size_t a4) {
     return result_;
 }
 DECL_FUNC(_DWORD (__stdcall*setUnitEnergyEx)(_DWORD a1, char a2), setUnitEnergyEx, 0x4cc3b0);
-BOOL sub_4CC420(int a1, int a2) {
+BOOL sub_4CC420(char *a1, size_t ecx0) {
     int address = 0x4cc420;
     BOOL result_;
     __asm {
         xor eax, eax
-        mov ecx, a2
+        mov ecx, ecx0
         mov eax, a1
         call address
         mov result_, eax
