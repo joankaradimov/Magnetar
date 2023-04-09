@@ -9699,11 +9699,499 @@ void __stdcall playSpriteIscript__(Anims animation, int a3)
 
 FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__);
 
+void ordersEntries_(CUnit* unit)
+{
+	switch (unit->orderID)
+	{
+	case Order::Die:
+		BWFXN_KillUnitTarget(unit);
+		break;
+	case Order::IncompleteWarping:
+		orders_bldgUnderConstruction_Protoss_(unit);
+		break;
+	case Order::Hallucination2:
+		orders_NukeTrack(unit);
+		break;
+	case 174:
+		orders_Warpin(unit);
+		break;
+	default:
+		if ((unit->statusFlags & StatusFlags::DoodadStatesThing) || unit->status.lockdownTimer || unit->status.stasisTimer || unit->status.maelstromTimer)
+		{
+			getMaelstromTarget(unit);
+		}
+		else
+		{
+			if ((unit->statusFlags & IsABuilding) == 0 && SBYTE1(unit->statusFlags) < 0)
+			{
+				getMaelstromTarget(unit);
+			}
+			switch (unit->orderID)
+			{
+			case Order::TurretGuard:
+				orders_TurretGuard(unit);
+				break;
+			case Order::TurretAttack:
+				orders_TurretAttack(unit);
+				break;
+			case Order::DroneBuild:
+				orders_DroneBuild(unit);
+				break;
+			case Order::PlaceBuilding:
+				orders_SCVBuild(unit);
+				break;
+			case Order::PlaceProtossBuilding:
+				orders_ProbeBuild(unit);
+				break;
+			case Order::ConstructingBuilding:
+				orders_SCVBuild2(unit);
+				break;
+			case Order::Repair:
+				orders_Repair1(unit);
+				break;
+			case Order::ZergBirth:
+				orders_ZergBirth(unit);
+				break;
+			case ZergUnitMorph:
+				orders_Morph1(unit);
+				break;
+			case IncompleteBuilding:
+				orders_TerranBuildSelf(unit);
+				break;
+			case IncompleteMorphing:
+				orders_ZergBuildSelf(unit);
+				break;
+			case ScarabAttack:
+				orders_StrafeUnit2(unit);
+				break;
+			case RechargeShieldsUnit:
+				orders_RechargeShields1(unit);
+				break;
+			case BuildingLand:
+				orders_BuildingLand(unit);
+				break;
+			case BuildingLiftOff:
+				orders_BuildingLiftoff(unit);
+				break;
+			case ResearchTech:
+				orders_ResearchTech(unit);
+				break;
+			case Upgrade:
+				orders_Upgrade(unit);
+				break;
+			case Harvest3:
+				orders_HarvestOreInterrupted(unit);
+				break;
+			case Harvest4:
+				orders_HarvestWTF(unit);
+				break;
+			case Interrupted:
+				Orders_HarvestInterrupt(unit);
+				break;
+			case Sieging:
+				orders_SiegeMode(unit);
+				break;
+			case Unsieging:
+				orders_TankMode(unit);
+				break;
+			case ArchonWarp:
+				orders_WarpingArchon(unit);
+				break;
+			case CompletingArchonSummon:
+				orders_CompletingArchonSummon(unit);
+				break;
+			case CastPlague:
+				orders_NukeTrain(unit);
+				break;
+			case ResetCollision:
+				orders_cloakNearbyUnits(unit);
+				break;
+			case HideTrap:
+				orders_ResetCollision1(unit);
+				break;
+			case RevealTrap:
+				orders_ResetCollision2(unit);
+				break;
+			case Medic:
+				orders_CTFCOP2(unit);
+				break;
+			case CastOpticalFlare:
+				RemoveUnit(unit);
+				break;
+			case CastMaelstrom:
+				orders_Critter(unit);
+				break;
+			case CastRestoration | UnusedNothing:
+				orders_MedicHeal1(unit);
+				break;
+			case CastDisruptionWeb | UnusedNothing:
+				orders_HealMove(unit);
+				break;
+			case CastMindControl | UnusedNothing:
+				orders_MedicHoldPosition(unit);
+				break;
+			case DarkArchonMeld | UnusedNothing:
+				orders_MedicHeal2(unit);
+				break;
+			case JunkYardDog | UnusedNothing:
+				orders_WarpingDarkArchon(unit);
+				break;
+			default:
+				break;
+			}
+			u8 v3 = unit->orderQueueTimer;
+			unit->orderQueueTimer = v3 - 1;
+			if (v3 == 0)
+			{
+				unit->orderQueueTimer = 8;
+				getTargetSomething(unit);
+				unit->AIActionFlag = 0;
+				switch (unit->orderID)
+				{
+				case Order::Stop:
+					sub_47BBA0(unit);
+					break;
+				case Order::Guard:
+					orders_Guard(unit);
+					break;
+				case Order::PlayerGuard:
+					sub_4774A0(unit);
+					break;
+				case Order::Move:
+				case Order::ReaverCarrierMove:
+					sub_47C950(unit);
+					break;
+				case Order::ReaverStop:
+					orders_ReaverStop(unit);
+					break;
+				case Order::Attack2:
+				case Order::MoveToInfest:
+				case Order::MoveToRepair:
+				case Order::CarrierMoveToAttack:
+				case Order::ReaverMoveToAttack:
+				case Order::Harvest2:
+				case Order::MoveToFireYamatoGun:
+					orders_Special(unit);
+					break;
+				case Order::AttackUnit:
+					orders_AttackUnit(unit);
+					break;
+				case Order::AttackFixedRange:
+					orders_AttackFixedRange(unit);
+					break;
+				case Order::AttackMove:
+					orders_AttackMove(unit);
+					break;
+				case Order::InfestedCommandCenter:
+					orders_InfestMine1(unit);
+					break;
+				case Order::UnusedPowerup:
+					orders_Powerup1(unit);
+					break;
+				case Order::TowerGuard:
+					sub_476F50(unit);
+					break;
+				case Order::TowerAttack:
+					sub_479150(unit);
+					break;
+				case Order::VultureMine:
+					sub_463DF0(unit);
+					break;
+				case Order::StayInRange:
+					orders_StayInRange(unit);
+					break;
+				case Order::Nothing:
+					goto LABEL_56;
+				case Order::DroneStartBuild:
+					orders_DroneStartBuild(unit);
+					break;
+				case Order::CastInfestation:
+					sub_4E98E0(unit);
+					break;
+				case Order::InfestingCommandCenter:
+					orders_InfestMine4(unit);
+					break;
+				case Order::CreateProtossBuilding:
+					sub_4E4F20(unit);
+					break;
+				case Order::PlaceAddon:
+					orders_PlaceAddon(unit);
+					break;
+				case Order::ZergBuildingMorph:
+					orders_Morph2(unit);
+					break;
+				case Order::BuildNydusExit:
+					orders_Build5(unit);
+					break;
+				case Order::EnterNydusCanal:
+					orders_EnterNydusCanal(unit);
+					break;
+				case Order::Follow:
+					sub_47C7B0(unit);
+					break;
+				case Order::Carrier:
+				case Order::CarrierFight:
+				case Order::CarrierHoldPosition:
+					orders_Carrier(unit);
+					break;
+				case Order::CarrierStop:
+					sub_465910(unit);
+					break;
+				case Order::CarrierAttack:
+					orders_CarrierAttack1(unit);
+					break;
+				case Order::CarrierIgnore2:
+					sub_466720(unit);
+					break;
+				case Order::Reaver:
+				case Order::ReaverFight:
+				case Order::ReaverHoldPosition:
+					orders_Reaver(unit);
+					break;
+				case Order::ReaverAttack:
+					orders_ReaverAttack1(unit);
+					break;
+				case Order::InterceptorAttack:
+					orders_StrafeUnit(unit);
+					break;
+				case Order::RechargeShieldsBattery:
+					orders_RechargeShields2(unit);
+					break;
+				case Order::InterceptorReturn:
+					sub_466350(unit);
+					break;
+				case Order::DroneLand:
+					orders_DroneLand(unit);
+					break;
+				case Order::LiftingOff:
+					sub_463AC0(unit);
+					break;
+				case Order::Larva:
+					orders_Larva(unit);
+					break;
+				case Order::Harvest1:
+				case Order::MoveToGas:
+					sub_469500(unit);
+					break;
+				case Order::WaitForGas:
+					sub_469000(unit);
+					break;
+				case Order::HarvestGas:
+					orders_EnterExitGas(unit);
+					break;
+				case Order::ReturnGas:
+				case Order::ReturnMinerals:
+					sub_4690C0(unit);
+					break;
+				case Order::MoveToMinerals:
+					orders_MoveToHarvestMinerals(unit);
+					break;
+				case Order::WaitForMinerals:
+					orders_CanHarvestMinerals(unit);
+					break;
+				case Order::MiningMinerals:
+					orders_HarvestingMinerals(unit);
+					break;
+				case Order::EnterTransport:
+					orders_EnterTransport(unit);
+					break;
+				case Order::PickupIdle:
+					orders_TransportIdle(unit);
+					break;
+				case Order::PickupTransport:
+					transportIdleOpen(unit);
+					break;
+				case Order::PickupBunker:
+					orders_Pickup3_0(unit);
+					break;
+				case Order::Pickup4:
+					orders_Pickup4_0(unit);
+					break;
+				case Order::PowerupIdle:
+					orders_Powerup2(unit);
+					break;
+				case Order::WatchTarget:
+					orders_WatchTarget(unit);
+					break;
+				case Order::InitCreepGrowth:
+					orders_InitCreepGrowth(unit);
+					break;
+				case Order::StoppingCreepGrowth:
+					orders_StopCreepGrowth(unit);
+					break;
+				case Order::HoldPosition:
+					sub_478D10(unit);
+					break;
+				case Order::QueenHoldPosition:
+				case Order::ComputerAI:
+					if (!unit->orderState)
+					{
+						orders_HoldPositionSuicidal(unit);
+						unit->orderState = 1;
+					}
+				LABEL_56:
+					if (unit->orderQueueHead)
+					{
+						PrepareForNextOrderFunc(unit);
+					}
+					break;
+				case Order::Unload:
+					orders_Unload(unit);
+					break;
+				case Order::MoveUnload:
+					orders_MoveUnload(unit);
+					break;
+				case Order::FireYamatoGun:
+				case Order::CastLockdown:
+				case Order::CastScannerSweep:
+				case Order::Scanner:
+				case Order::CastDefensiveMatrix:
+				case Order::CastPsionicStorm:
+				case Order::Neutral:
+				case Order::ComputerReturn:
+				case Order::InitializePsiProvider:
+				case Order::SelfDestructing:
+				case Order::Critter:
+				case Order::HiddenGun:
+				case 180:
+				case 181:
+				case 185:
+				case 186:
+					orders_Spell(unit);
+					break;
+				case Order::Burrowing:
+					sub_4E9E60(unit);
+					break;
+				case Order::CastRecall:
+					sub_4E9860(unit);
+					break;
+				case Order::Teleport:
+					sub_4EA670(unit);
+					break;
+				case Order::CastConsume:
+					sub_464730(unit);
+					break;
+				case Order::CastEnsnare:
+					sub_463610(unit);
+					break;
+				case Order::CastStasisField:
+					sub_479410(unit);
+					break;
+				case Order::CastHallucination:
+					orders_NukeGround(unit);
+					break;
+				case Order::Patrol:
+					orders_PlaceMine(unit);
+					break;
+				case Order::CTFCOPInit:
+					orders_RightClickAction(unit);
+					break;
+				case Order::CTFCOPStarted:
+					orders_SapUnit(unit);
+					break;
+				case Order::CTFCOP2:
+					orders_SapLocation(unit);
+					break;
+				case Order::AtkMoveEP:
+					orders_Recall(unit);
+					break;
+				case Order::AIPatrol:
+					orders_PlaceScanner(unit);
+					break;
+				case Order::GuardPost:
+					sub_463D30(unit);
+					break;
+				case Order::RescuePassive:
+					orders_DefensiveMatrix(unit);
+					break;
+				case 148:
+					orders_Hallucination1(unit);
+					break;
+				case 152:
+					orders_Patrol(unit);
+					break;
+				case 153:
+					sub_4E4210(unit);
+					break;
+				case 154:
+					orders_CTFCOP1(unit);
+					break;
+				case 156:
+					sub_4A28B0(unit);
+					break;
+				case 157:
+					orders_AttackMoveEP(unit);
+					break;
+				case 158:
+					orders_HarassMove(unit);
+					break;
+				case 159:
+					orders_AIPatrol(unit);
+					break;
+				case 160:
+					sub_4778E0(unit);
+					break;
+				case 161:
+					orders_RescuePassive(unit);
+					break;
+				case 162:
+					orders_Neutral(unit);
+					break;
+				case 163:
+					sub_478490(unit);
+					break;
+				case 164:
+					orders_InitPsiProvider(unit);
+					break;
+				case 167:
+					sub_47BF80(unit);
+					break;
+				case 168:
+					orders_OpenDoor(unit);
+					break;
+				case 169:
+					orders_CloseDoor(unit);
+					break;
+				case 170:
+					orders_HideTrap(unit);
+					break;
+				case 171:
+					sub_47C1B0(unit);
+					break;
+				case 172:
+					sub_47BE80(unit);
+					break;
+				case 173:
+					sub_47BD60(unit);
+					break;
+				case 175:
+					orders_Medic(unit);
+					break;
+				case 182:
+					orders_CastMindControl(unit);
+					break;
+				case 184:
+					orders_Feedback(unit);
+					break;
+				case 187:
+					orders_JunkYardDog(unit);
+					break;
+				default:
+					return;
+				}
+			}
+		}
+		break;
+	}
+}
+
+FAIL_STUB_PATCH(ordersEntries);
+
 void UpdateUnitOrderData_(CUnit* unit)
 {
 	RefreshUnit_(unit);
 	updateUnitTimers_(unit);
-	ordersEntries(unit);
+	ordersEntries_(unit);
 	performSecondaryOrders(unit);
 	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
 	{
