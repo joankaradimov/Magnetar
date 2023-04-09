@@ -9699,6 +9699,37 @@ void __stdcall playSpriteIscript__(Anims animation, int a3)
 
 FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__);
 
+void orders_Warpin_(CUnit* unit)
+{
+	if (unit->orderState == 0)
+	{
+		if (unit->orderSignal & 1)
+		{
+			unit->orderSignal &= 0xFE;
+			ReplaceSpriteOverlayImage(unit->sprite, Sprites_Image[unit->sprite->spriteID], unit->currentDirection1);
+			for (CImage* i = unit->sprite->pImageHead; i; i = i->next)
+			{
+				PlayIscriptAnim_(i, AE_WarpIn);
+			}
+			unit->orderState = 1;
+		}
+	}
+	else if (unit->orderState == 1)
+	{
+		if (unit->orderSignal & 1)
+		{
+			unit->orderSignal &= 0xFE;
+			if (Unit_PrototypeFlags[unit->unitType] & PermanentCloak)
+			{
+				PlaySoundFromDirect(unit, SFX_Terran_PHOENIX_TPhClo00);
+			}
+			actUnitReturnToIdle(unit);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(orders_Warpin);
+
 void ordersEntries_(CUnit* unit)
 {
 	switch (unit->orderID)
@@ -9713,7 +9744,7 @@ void ordersEntries_(CUnit* unit)
 		orders_NukeTrack(unit);
 		break;
 	case 174:
-		orders_Warpin(unit);
+		orders_Warpin_(unit);
 		break;
 	default:
 		if ((unit->statusFlags & StatusFlags::DoodadStatesThing) || unit->status.lockdownTimer || unit->status.stasisTimer || unit->status.maelstromTimer)
