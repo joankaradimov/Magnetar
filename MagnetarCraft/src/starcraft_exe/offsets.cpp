@@ -1367,7 +1367,7 @@ signed ReadChunkNodes(int chk_section_loader_count, int chk_size_, ChkSectionLoa
     }
     return result_;
 }
-void mapAuthProc(int (__stdcall *a1)(char *, void *, HANDLE *), HANDLE *a2) {
+void mapAuthProc(int (__stdcall *a1)(char *, void *, struct_v3 *), struct_v3 *a2) {
     int address = 0x4137f0;
     __asm {
         push dword ptr a2
@@ -24916,7 +24916,7 @@ DECL_FUNC(void (__cdecl*sub_4CA430)(), sub_4CA430, 0x4ca430);
 DECL_FUNC(void (__fastcall*sub_4CA450)(dialog *dlg), sub_4CA450, 0x4ca450);
 DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
 DECL_FUNC(BOOL (*mapHandleDestroy)(), mapHandleDestroy, 0x4ca520);
-DECL_FUNC(int (__stdcall*mapAuthCallback)(char *szFileName, void *a2, HANDLE *a3), mapAuthCallback, 0x4ca540);
+DECL_FUNC(int (__stdcall*mapAuthCallback)(char *szFileName, void *a2, struct_v3 *a3), mapAuthCallback, 0x4ca540);
 DECL_FUNC(bool (__stdcall*ChkLoader_PUNI)(SectionData *a1, int a2, MapChunks *a3), ChkLoader_PUNI, 0x4ca600);
 DECL_FUNC(bool (__stdcall*ChkLoader_TECS)(SectionData *a1, int a2, MapChunks *a3), ChkLoader_TECS, 0x4ca6d0);
 DECL_FUNC(bool (__stdcall*ChkLoader_TECx)(SectionData *a1, int a2, MapChunks *a3), ChkLoader_TECx, 0x4ca7d0);
@@ -28731,11 +28731,11 @@ int _CreateDashedSelection(CUnit *a1) {
     }
     return result_;
 }
-void SetConstructionGraphic(CUnit *a1, int a2) {
+void SetConstructionGraphic(CUnit *unit, int a2) {
     int address = 0x4e65e0;
     __asm {
         push dword ptr a2
-        mov edi, a1
+        mov edi, unit
         call address
         add esp, 4
     }
@@ -28751,7 +28751,13 @@ int isConstructingAddon(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (*CancelAddon_Direct)(void), CancelAddon_Direct, 0x4e66e0);
+void CancelAddon_Direct(int a1) {
+    int address = 0x4e66e0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 void orders_NukeTrain(CUnit *unit) {
     int address = 0x4e6700;
     __asm {
