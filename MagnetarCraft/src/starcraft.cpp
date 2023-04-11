@@ -4953,6 +4953,38 @@ int ReadGameChunks(void* chk_data, int chk_size)
 
 FAIL_STUB_PATCH(sub_4CC2A0);
 
+BOOL LoadFileArchiveToSBigBuf_(const char* filename, int* a2, int a3, HANDLE* a4)
+{
+	HANDLE handle;
+	if (!SFileOpenArchive(filename, 0, 0, &handle))
+	{
+		return 0;
+	}
+
+	struct_v3 v5;
+	v5.handle = handle;
+	v5.dword4 = 0;
+	mapAuthProc(mapAuthCallback, &v5);
+
+	int a2a;
+	if (v5.dword4 && (!LoadFileToSBigBuf(filename, &a2a) || a2a != 1))
+	{
+		v5.dword4 = 0;
+	}
+	if (a3)
+	{
+		*a4 = handle;
+	}
+	else
+	{
+		SFileCloseArchive(handle);
+	}
+	*a2 = v5.dword4;
+	return 1;
+}
+
+FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
+
 BOOL sub_4CC7F0_(char* a1)
 {
 	char buff[260];
@@ -4966,7 +4998,7 @@ BOOL sub_4CC7F0_(char* a1)
 	else
 	{
 		dest[0] = 0;
-		int result = LoadFileArchiveToSBigBuf(a1, &chk_size, 1, &mapArchiveHandle);
+		int result = LoadFileArchiveToSBigBuf_(a1, &chk_size, 1, &mapArchiveHandle);
 		if (!result)
 		{
 			return result;
@@ -6823,7 +6855,7 @@ int sub_4CC350_(char* a1, const char* a2, int* a3, size_t a4)
 	}
 
 	int a2a;
-	if (LoadFileArchiveToSBigBuf(a2, &a2a, 1, &mapArchiveHandle) == 0)
+	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle) == 0)
 	{
 		return 0;
 	}
@@ -7824,7 +7856,7 @@ signed int LoadGameInit_()
 	int v6;
 	if (!InReplay
 		&& CampaignIndex == MD_none
-		&& !LoadFileArchiveToSBigBuf(CurrentMapFileName, &v6, 1, &mapArchiveHandle)
+		&& !LoadFileArchiveToSBigBuf_(CurrentMapFileName, &v6, 1, &mapArchiveHandle)
 		&& !gameData.got_file_values.victory_conditions
 		&& !gameData.got_file_values.starting_units
 		&& !gameData.got_file_values.tournament_mode)
@@ -7917,7 +7949,7 @@ int getFullMapChunk_(char* filename, int* a3)
 	else
 	{
 		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf(filename, &a2, 1, &mapArchiveHandle))
+		if (!LoadFileArchiveToSBigBuf_(filename, &a2, 1, &mapArchiveHandle))
 		{
 			return 0;
 		}
@@ -12023,7 +12055,7 @@ BOOL sub_4C4870_()
 	}
 
 	int a2;
-	if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &a2, 0, 0))
+	if (!LoadFileArchiveToSBigBuf_(CurrentMapFileName, &a2, 0, 0))
 	{
 		return 0;
 	}
@@ -15553,7 +15585,7 @@ void sub_4CC990_()
 	else
 	{
 		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf(CurrentMapFileName, &loader_index, 1, &mapArchiveHandle))
+		if (!LoadFileArchiveToSBigBuf_(CurrentMapFileName, &loader_index, 1, &mapArchiveHandle))
 			return;
 	}
 	int chk_size = 0;
