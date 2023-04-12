@@ -9902,9 +9902,8 @@ void ordersEntries_(CUnit* unit)
 			default:
 				break;
 			}
-			u8 v3 = unit->orderQueueTimer;
-			unit->orderQueueTimer = v3 - 1;
-			if (v3 == 0)
+
+			if (!unit->orderQueueTimer--)
 			{
 				unit->orderQueueTimer = 8;
 				getTargetSomething(unit);
