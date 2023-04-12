@@ -9785,7 +9785,7 @@ void ordersEntries_(CUnit* unit)
 		}
 		else
 		{
-			if ((unit->statusFlags & IsABuilding) == 0 && SBYTE1(unit->statusFlags) < 0)
+			if ((unit->statusFlags & StatusFlags::IsABuilding) == 0 && (unit->statusFlags & StatusFlags::CanNotAttack))
 			{
 				getMaelstromTarget(unit);
 			}
