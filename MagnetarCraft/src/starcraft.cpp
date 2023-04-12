@@ -9962,8 +9962,6 @@ void ordersEntries_(CUnit* unit)
 				case Order::StayInRange:
 					orders_StayInRange(unit);
 					break;
-				case Order::Nothing:
-					goto LABEL_56;
 				case Order::DroneStartBuild:
 					orders_DroneStartBuild(unit);
 					break;
@@ -10091,7 +10089,8 @@ void ordersEntries_(CUnit* unit)
 						orders_HoldPositionSuicidal(unit);
 						unit->orderState = 1;
 					}
-				LABEL_56:
+					[[fallthrough]];
+				case Order::Nothing:
 					if (unit->orderQueueHead)
 					{
 						PrepareForNextOrderFunc(unit);
