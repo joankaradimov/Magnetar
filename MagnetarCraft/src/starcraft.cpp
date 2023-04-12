@@ -6855,15 +6855,15 @@ int sub_4CC350_(char* a1, const char* a2, int* a3, size_t a4)
 	}
 
 	int a2a;
-	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle) == 0)
+	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle))
 	{
-		return 0;
+		if (a3)
+		{
+			*a3 = a2a;
+		}
+		return 1;
 	}
-	if (a3)
-	{
-		*a3 = a2a;
-	}
-	return 1;
+	return 0;
 }
 
 FAIL_STUB_PATCH(sub_4CC350);
