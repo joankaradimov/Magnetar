@@ -11727,7 +11727,7 @@ int AI_OrderHeal(CUnit *a1, CUnit *a2) {
     return result_;
 }
 DECL_FUNC(signed (__fastcall*liftoffCheck)(CUnit *a1, CUnit *a2), liftoffCheck, 0x4635b0);
-void sub_463610(CUnit *unit) {
+void orders_nuke_paint(CUnit *unit) {
     int address = 0x463610;
     __asm {
         mov eax, unit
@@ -11780,7 +11780,7 @@ BOOL sub_463A10(UnitType a1, CUnit *a2) {
     }
     return result_;
 }
-void sub_463AC0(CUnit *unit) {
+void orders_lift_off(CUnit *unit) {
     int address = 0x463ac0;
     __asm {
         mov eax, unit
@@ -11799,7 +11799,7 @@ ButtonState doMedicHeal(CUnit *a1, CUnit *a2) {
     }
     return result_;
 }
-void sub_463D30(CUnit *unit) {
+void orders_scanner(CUnit *unit) {
     int address = 0x463d30;
     __asm {
         mov eax, unit
@@ -11825,7 +11825,7 @@ char CheckCreateAddon(CUnit *a1) {
     }
     return result_;
 }
-void sub_463DF0(CUnit *unit) {
+void orders_vulture_mine(CUnit *unit) {
     int address = 0x463df0;
     __asm {
         mov eax, unit
@@ -11867,7 +11867,7 @@ void orders_BuildingLand(CUnit *unit) {
         call address
     }
 }
-void sub_464730(CUnit *unit) {
+void orders_nuke_launch(CUnit *unit) {
     int address = 0x464730;
     __asm {
         mov eax, unit
@@ -11964,7 +11964,7 @@ signed returnInterceptorIfCannotAttack(CUnit *a1) {
     }
     return result_;
 }
-void sub_465910(CUnit *unit) {
+void orders_carrier_stop(CUnit *unit) {
     int address = 0x465910;
     __asm {
         mov eax, unit
@@ -12043,7 +12043,7 @@ char sub_466270(CUnit *a1, CUnit *a2) {
     return result_;
 }
 DECL_FUNC(int (*addHangerUnit)(void), addHangerUnit, 0x466300);
-void sub_466350(CUnit *unit) {
+void orders_return(CUnit *unit) {
     int address = 0x466350;
     __asm {
         mov eax, unit
@@ -12075,7 +12075,7 @@ void orders_Carrier(CUnit *unit) {
         call address
     }
 }
-void sub_466720(CUnit *unit) {
+void orders_carrier_ignore2(CUnit *unit) {
     int address = 0x466720;
     __asm {
         mov eax, unit
@@ -12437,14 +12437,14 @@ void orders_CanHarvestMinerals(CUnit *a1) {
         call address
     }
 }
-void sub_469000(CUnit *unit) {
+void orders_enter_gas(CUnit *unit) {
     int address = 0x469000;
     __asm {
         mov eax, unit
         call address
     }
 }
-void sub_4690C0(CUnit *unit) {
+void orders_return_resource(CUnit *unit) {
     int address = 0x4690c0;
     __asm {
         mov eax, unit
@@ -12458,7 +12458,7 @@ void orders_MoveToHarvestMinerals(CUnit *unit) {
         call address
     }
 }
-void sub_469500(CUnit *unit) {
+void orders_harvest(CUnit *unit) {
     int address = 0x469500;
     __asm {
         mov eax, unit
@@ -15017,7 +15017,7 @@ CUnit * getWeaponBeginIscript(CUnit *result, Anims a2) {
     }
     return result_;
 }
-void sub_476F50(CUnit *unit) {
+void orders_tower_guard(CUnit *unit) {
     int address = 0x476f50;
     __asm {
         mov eax, unit
@@ -15046,7 +15046,7 @@ int sub_4770E0(CUnit *unit) {
     return result_;
 }
 DECL_FUNC(signed (__thiscall*AI_AggressiveUnitTask)(CUnit *this_, int a2, int a3, signed int a4), AI_AggressiveUnitTask, 0x477160);
-void sub_4774A0(CUnit *unit) {
+void orders_guard_play(CUnit *unit) {
     int address = 0x4774a0;
     __asm {
         mov eax, unit
@@ -15081,7 +15081,7 @@ char sub_477820(CUnit *a1, Order a2) {
     }
     return result_;
 }
-void sub_4778E0(CUnit *unit) {
+void orders_guard_post(CUnit *unit) {
     int address = 0x4778e0;
     __asm {
         mov eax, unit
@@ -15140,7 +15140,7 @@ BOOL sub_478370(CUnit *a1, Order a2) {
     }
     return result_;
 }
-void sub_478490(CUnit *unit) {
+void orders_comp_return(CUnit *unit) {
     int address = 0x478490;
     __asm {
         mov eax, unit
@@ -15183,7 +15183,7 @@ bool attackApplyCooldown(CUnit *a1) {
     }
     return result_;
 }
-void sub_478D10(CUnit *unit) {
+void orders_hold_position(CUnit *unit) {
     int address = 0x478d10;
     __asm {
         mov eax, unit
@@ -15215,7 +15215,7 @@ char orders_AttackMove(CUnit *a1) {
     }
     return result_;
 }
-void sub_479150(CUnit *unit) {
+void orders_tower_attack(CUnit *unit) {
     int address = 0x479150;
     __asm {
         mov eax, unit
@@ -15223,7 +15223,7 @@ void sub_479150(CUnit *unit) {
     }
 }
 DECL_FUNC(void (__stdcall*orders_NukeGround)(CUnit *a1), orders_NukeGround, 0x479200);
-void sub_479410(CUnit *unit) {
+void orders_nuke_unit(CUnit *unit) {
     int address = 0x479410;
     __asm {
         mov eax, unit
@@ -15666,7 +15666,7 @@ void orders_WatchTarget(CUnit *a1) {
         call address
     }
 }
-void sub_47BBA0(CUnit *unit) {
+void orders_stop(CUnit *unit) {
     int address = 0x47bba0;
     __asm {
         mov eax, unit
@@ -15694,14 +15694,14 @@ void orders_OpenDoor(CUnit *a1) {
         call address
     }
 }
-void sub_47BD60(CUnit *unit) {
+void orders_disable_doodad(CUnit *unit) {
     int address = 0x47bd60;
     __asm {
         mov eax, unit
         call address
     }
 }
-void sub_47BE80(CUnit *unit) {
+void orders_enable_doodad(CUnit *unit) {
     int address = 0x47be80;
     __asm {
         mov eax, unit
@@ -15722,7 +15722,7 @@ void orders_HideTrap(CUnit *unit) {
         call address
     }
 }
-void sub_47C1B0(CUnit *unit) {
+void orders_RevealTrap(CUnit *unit) {
     int address = 0x47c1b0;
     __asm {
         mov eax, unit
@@ -15750,14 +15750,14 @@ void orders_StayInRange(CUnit *a1) {
         call address
     }
 }
-void sub_47C7B0(CUnit *unit) {
+void orders_follow(CUnit *unit) {
     int address = 0x47c7b0;
     __asm {
         mov eax, unit
         call address
     }
 }
-void sub_47C950(CUnit *unit) {
+void orders_ignore(CUnit *unit) {
     int address = 0x47c950;
     __asm {
         mov eax, unit
@@ -20945,7 +20945,7 @@ void AI_TrainingUnit(CUnit *a1, CUnit *a2) {
         call address
     }
 }
-void sub_4A28B0(CUnit *unit) {
+void orders_comp_ai(CUnit *unit) {
     int address = 0x4a28b0;
     __asm {
         mov eax, unit
@@ -28364,7 +28364,7 @@ void orders_CTFCOP1(CUnit *a1) {
         call address
     }
 }
-void sub_4E4210(CUnit *unit) {
+void orders_CTFCOP_init(CUnit *unit) {
     int address = 0x4e4210;
     __asm {
         mov eax, unit
@@ -28486,7 +28486,7 @@ void orders_ProbeBuild(CUnit *unit) {
         call address
     }
 }
-void sub_4E4F20(CUnit *unit) {
+void orders_pylon_build(CUnit *unit) {
     int address = 0x4e4f20;
     __asm {
         mov eax, unit
@@ -29254,14 +29254,14 @@ void Unburrow(CUnit *a1) {
         call address
     }
 }
-void sub_4E9860(CUnit *unit) {
+void orders_burrowed(CUnit *unit) {
     int address = 0x4e9860;
     __asm {
         mov eax, unit
         call address
     }
 }
-void sub_4E98E0(CUnit *unit) {
+void orders_drone_infest(CUnit *unit) {
     int address = 0x4e98e0;
     __asm {
         mov eax, unit
@@ -29289,7 +29289,7 @@ void orders_DroneLand(CUnit *unit) {
         call address
     }
 }
-void sub_4E9E60(CUnit *unit) {
+void orders_burrow(CUnit *unit) {
     int address = 0x4e9e60;
     __asm {
         mov eax, unit
@@ -29332,7 +29332,7 @@ void orders_InfestMine1(CUnit *unit) {
         call address
     }
 }
-void sub_4EA670(CUnit *unit) {
+void orders_deburrowed(CUnit *unit) {
     int address = 0x4ea670;
     __asm {
         mov eax, unit

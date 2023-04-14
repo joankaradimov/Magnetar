@@ -9911,17 +9911,17 @@ void ordersEntries_(CUnit* unit)
 				switch (unit->orderID)
 				{
 				case Order::ORD_STOP:
-					sub_47BBA0(unit);
+					orders_stop(unit);
 					break;
 				case Order::ORD_GUARD:
 					orders_Guard(unit);
 					break;
 				case Order::ORD_GUARD_PLAY:
-					sub_4774A0(unit);
+					orders_guard_play(unit);
 					break;
 				case Order::ORD_IGNORE:
 				case Order::ORD_CARRIER_IGNORE:
-					sub_47C950(unit);
+					orders_ignore(unit);
 					break;
 				case Order::ORD_TRILOBYTE_STOP:
 					orders_ReaverStop(unit);
@@ -9951,13 +9951,13 @@ void ordersEntries_(CUnit* unit)
 					orders_Powerup1(unit);
 					break;
 				case Order::ORD_TOWER_GUARD:
-					sub_476F50(unit);
+					orders_tower_guard(unit);
 					break;
 				case Order::ORD_TOWER_ATTACK:
-					sub_479150(unit);
+					orders_tower_attack(unit);
 					break;
 				case Order::ORD_VULTURE_MINE:
-					sub_463DF0(unit);
+					orders_vulture_mine(unit);
 					break;
 				case Order::ORD_STAY_IN_RANGE:
 					orders_StayInRange(unit);
@@ -9966,13 +9966,13 @@ void ordersEntries_(CUnit* unit)
 					orders_DroneStartBuild(unit);
 					break;
 				case Order::ORD_DRONE_INFEST:
-					sub_4E98E0(unit);
+					orders_drone_infest(unit);
 					break;
 				case Order::ORD_QUEEN_INFEST:
 					orders_InfestMine4(unit);
 					break;
 				case Order::ORD_PYLON_BUILD:
-					sub_4E4F20(unit);
+					orders_pylon_build(unit);
 					break;
 				case Order::ORD_PLACE_ADDON:
 					orders_PlaceAddon(unit);
@@ -9987,7 +9987,7 @@ void ordersEntries_(CUnit* unit)
 					orders_EnterNydusCanal(unit);
 					break;
 				case Order::ORD_FOLLOW:
-					sub_47C7B0(unit);
+					orders_follow(unit);
 					break;
 				case Order::ORD_CARRIER:
 				case Order::ORD_CARRIER_FIGHT:
@@ -9995,13 +9995,13 @@ void ordersEntries_(CUnit* unit)
 					orders_Carrier(unit);
 					break;
 				case Order::ORD_CARRIER_STOP:
-					sub_465910(unit);
+					orders_carrier_stop(unit);
 					break;
 				case Order::ORD_CARRIER_ATTACK:
 					orders_CarrierAttack1(unit);
 					break;
 				case Order::ORD_CARRIER_IGNORE2:
-					sub_466720(unit);
+					orders_carrier_ignore2(unit);
 					break;
 				case Order::ORD_REAVER:
 				case Order::ORD_REAVER_FIGHT:
@@ -10018,30 +10018,30 @@ void ordersEntries_(CUnit* unit)
 					orders_RechargeShields2(unit);
 					break;
 				case Order::ORD_RETURN:
-					sub_466350(unit);
+					orders_return(unit);
 					break;
 				case Order::ORD_DRONE_LAND:
 					orders_DroneLand(unit);
 					break;
 				case Order::ORD_LIFT_OFF:
-					sub_463AC0(unit);
+					orders_lift_off(unit);
 					break;
 				case Order::ORD_LARVA:
 					orders_Larva(unit);
 					break;
 				case Order::ORD_HARVEST:
 				case Order::ORD_HARVEST_GAS:
-					sub_469500(unit);
+					orders_harvest(unit);
 					break;
 				case Order::ORD_ENTER_GAS:
-					sub_469000(unit);
+					orders_enter_gas(unit);
 					break;
 				case Order::ORD_IN_GAS:
 					orders_EnterExitGas(unit);
 					break;
 				case Order::ORD_RETURN_GAS:
 				case Order::ORD_RETURN_MINERALS:
-					sub_4690C0(unit);
+					orders_return_resource(unit);
 					break;
 				case Order::ORD_HARVEST_MINERALS:
 					orders_MoveToHarvestMinerals(unit);
@@ -10080,7 +10080,7 @@ void ordersEntries_(CUnit* unit)
 					orders_StopCreepGrowth(unit);
 					break;
 				case Order::ORD_HOLDPOS:
-					sub_478D10(unit);
+					orders_hold_position(unit);
 					break;
 				case Order::ORD_HOLDPOS_QUEEN:
 				case Order::ORD_SAP_HOLDPOS:
@@ -10121,22 +10121,22 @@ void ordersEntries_(CUnit* unit)
 					orders_Spell(unit);
 					break;
 				case Order::ORD_BURROW:
-					sub_4E9E60(unit);
+					orders_burrow(unit);
 					break;
 				case Order::ORD_BURROWED:
-					sub_4E9860(unit);
+					orders_burrowed(unit);
 					break;
 				case Order::ORD_DEBURROW:
-					sub_4EA670(unit);
+					orders_deburrowed(unit);
 					break;
 				case Order::ORD_NUKE_LAUNCH:
-					sub_464730(unit);
+					orders_nuke_launch(unit);
 					break;
 				case Order::ORD_NUKE_PAINT:
-					sub_463610(unit);
+					orders_nuke_paint(unit);
 					break;
 				case Order::ORD_NUKE_UNIT:
-					sub_479410(unit);
+					orders_nuke_unit(unit);
 					break;
 				case Order::ORD_NUKE_GROUND:
 					orders_NukeGround(unit);
@@ -10160,7 +10160,7 @@ void ordersEntries_(CUnit* unit)
 					orders_PlaceScanner(unit);
 					break;
 				case Order::ORD_SCANNER:
-					sub_463D30(unit);
+					orders_scanner(unit);
 					break;
 				case Order::ORD_DEF_MAT:
 					orders_DefensiveMatrix(unit);
@@ -10172,13 +10172,13 @@ void ordersEntries_(CUnit* unit)
 					orders_Patrol(unit);
 					break;
 				case Order::ORD_CTF_COP_INIT:
-					sub_4E4210(unit);
+					orders_CTFCOP_init(unit);
 					break;
 				case Order::ORD_CTF_COP:
 					orders_CTFCOP1(unit);
 					break;
 				case Order::ORD_COMP_AI:
-					sub_4A28B0(unit);
+					orders_comp_ai(unit);
 					break;
 				case Order::ORD_ATTACK_MOVE_EP:
 					orders_AttackMoveEP(unit);
@@ -10190,7 +10190,7 @@ void ordersEntries_(CUnit* unit)
 					orders_AIPatrol(unit);
 					break;
 				case Order::ORD_GUARD_POST:
-					sub_4778E0(unit);
+					orders_guard_post(unit);
 					break;
 				case Order::ORD_RESCUE_PASSIVE:
 					orders_RescuePassive(unit);
@@ -10199,7 +10199,7 @@ void ordersEntries_(CUnit* unit)
 					orders_Neutral(unit);
 					break;
 				case Order::ORD_COMP_RETURN:
-					sub_478490(unit);
+					orders_comp_return(unit);
 					break;
 				case Order::ORD_JUICE_INIT:
 					orders_InitPsiProvider(unit);
@@ -10217,13 +10217,13 @@ void ordersEntries_(CUnit* unit)
 					orders_HideTrap(unit);
 					break;
 				case Order::ORD_REVEAL_TRAP:
-					sub_47C1B0(unit);
+					orders_RevealTrap(unit);
 					break;
 				case Order::ORD_ENABLE_DOODAD:
-					sub_47BE80(unit);
+					orders_enable_doodad(unit);
 					break;
 				case Order::ORD_DISABLE_DOODAD:
-					sub_47BD60(unit);
+					orders_disable_doodad(unit);
 					break;
 				case Order::ORD_MEDIC:
 					orders_Medic(unit);
