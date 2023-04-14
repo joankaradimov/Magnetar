@@ -9766,16 +9766,16 @@ void ordersEntries_(CUnit* unit)
 {
 	switch (unit->orderID)
 	{
-	case Order::Die:
+	case Order::ORD_DIE:
 		BWFXN_KillUnitTarget(unit);
 		break;
-	case Order::IncompleteWarping:
+	case Order::ORD_BUILDSELFPROTOSS: ;
 		orders_bldgUnderConstruction_Protoss_(unit);
 		break;
-	case Order::Hallucination2:
+	case Order::ORD_NUKE_TRACK:
 		orders_NukeTrack(unit);
 		break;
-	case 174:
+	case Order::ORD_PROTOSS_WARP_IN:
 		orders_Warpin_(unit);
 		break;
 	default:
@@ -9791,112 +9791,112 @@ void ordersEntries_(CUnit* unit)
 			}
 			switch (unit->orderID)
 			{
-			case Order::TurretGuard:
+			case Order::ORD_TURRET_GUARD:
 				orders_TurretGuard(unit);
 				break;
-			case Order::TurretAttack:
+			case Order::ORD_TURRET_ATTACK:
 				orders_TurretAttack(unit);
 				break;
-			case Order::DroneBuild:
+			case Order::ORD_DRONE_BUILD:
 				orders_DroneBuild(unit);
 				break;
-			case Order::PlaceBuilding:
+			case Order::ORD_BUILD:
 				orders_SCVBuild(unit);
 				break;
-			case Order::PlaceProtossBuilding:
+			case Order::ORD_BUILDPROTOSS:
 				orders_ProbeBuild(unit);
 				break;
-			case Order::ConstructingBuilding:
+			case Order::ORD_CONSTRUCT_BLDG:
 				orders_SCVBuild2(unit);
 				break;
-			case Order::Repair:
+			case Order::ORD_REPAIR:
 				orders_Repair1(unit);
 				break;
-			case Order::ZergBirth:
+			case Order::ORD_ZERG_BIRTH:
 				orders_ZergBirth(unit);
 				break;
-			case ZergUnitMorph:
+			case Order::ORD_MORPH:
 				orders_Morph1(unit);
 				break;
-			case IncompleteBuilding:
+			case Order::ORD_BUILDSELF:
 				orders_TerranBuildSelf(unit);
 				break;
-			case IncompleteMorphing:
+			case Order::ORD_BUILDSELFZERG:
 				orders_ZergBuildSelf(unit);
 				break;
-			case ScarabAttack:
+			case Order::ORD_STRAFE_UNIT_SCARAB:
 				orders_StrafeUnit2(unit);
 				break;
-			case RechargeShieldsUnit:
+			case Order::ORD_RECHARGE_UNIT:
 				orders_RechargeShields1(unit);
 				break;
-			case BuildingLand:
+			case Order::ORD_BLDG_LAND:
 				orders_BuildingLand(unit);
 				break;
-			case BuildingLiftOff:
+			case Order::ORD_BLDG_LIFT_OFF:
 				orders_BuildingLiftoff(unit);
 				break;
-			case ResearchTech:
+			case Order::ORD_RESEARCH_TECH:
 				orders_ResearchTech(unit);
 				break;
-			case Upgrade:
+			case Order::ORD_UPGRADE:
 				orders_Upgrade(unit);
 				break;
-			case Harvest3:
+			case Order::ORD_HARVEST_INTERRUPT:
 				orders_HarvestOreInterrupted(unit);
 				break;
-			case Harvest4:
+			case Order::ORD_HARVEST4:
 				orders_HarvestWTF(unit);
 				break;
-			case Interrupted:
+			case Order::ORD_HARVEST_INTERRUPT2:
 				Orders_HarvestInterrupt(unit);
 				break;
-			case Sieging:
+			case Order::ORD_SIEGEMODE:
 				orders_SiegeMode(unit);
 				break;
-			case Unsieging:
+			case Order::ORD_TANKMODE:
 				orders_TankMode(unit);
 				break;
-			case ArchonWarp:
+			case Order::ORD_SUMMON_ARCHON:
 				orders_WarpingArchon(unit);
 				break;
-			case CompletingArchonSummon:
+			case Order::ORD_SUMMON_COMPLETE:
 				orders_CompletingArchonSummon(unit);
 				break;
-			case CastPlague:
+			case Order::ORD_NUKE_TRAIN:
 				orders_NukeTrain(unit);
 				break;
-			case ResetCollision:
+			case Order::ORD_ARBITER:
 				orders_cloakNearbyUnits(unit);
 				break;
-			case HideTrap:
+			case Order::ORD_UNDO_FLYER:
 				orders_ResetCollision1(unit);
 				break;
-			case RevealTrap:
+			case Order::ORD_UNDO_TRANSPARENT_WORKER:
 				orders_ResetCollision2(unit);
 				break;
-			case Medic:
+			case Order::ORD_CTF_COP_2:
 				orders_CTFCOP2(unit);
 				break;
-			case CastOpticalFlare:
+			case Order::ORD_SELF_DESTRUCT:
 				RemoveUnit(unit);
 				break;
-			case CastMaelstrom:
+			case Order::ORD_CRITTER:
 				orders_Critter(unit);
 				break;
-			case CastRestoration | UnusedNothing:
+			case Order::ORD_MEDIC_HEAL:
 				orders_MedicHeal1(unit);
 				break;
-			case CastDisruptionWeb | UnusedNothing:
+			case Order::ORD_MEDIC_HEALMOVE:
 				orders_HealMove(unit);
 				break;
-			case CastMindControl | UnusedNothing:
+			case Order::ORD_MEDIC_HOLDPOS:
 				orders_MedicHoldPosition(unit);
 				break;
-			case DarkArchonMeld | UnusedNothing:
+			case Order::ORD_MEDIC_RETURN_TO_IDLE:
 				orders_MedicHeal2(unit);
 				break;
-			case JunkYardDog | UnusedNothing:
+			case Order::ORD_SUMMON_DARCHON:
 				orders_WarpingDarkArchon(unit);
 				break;
 			default:
@@ -9910,331 +9910,331 @@ void ordersEntries_(CUnit* unit)
 				unit->AIActionFlag = 0;
 				switch (unit->orderID)
 				{
-				case Order::Stop:
+				case Order::ORD_STOP:
 					sub_47BBA0(unit);
 					break;
-				case Order::Guard:
+				case Order::ORD_GUARD:
 					orders_Guard(unit);
 					break;
-				case Order::PlayerGuard:
+				case Order::ORD_GUARD_PLAY:
 					sub_4774A0(unit);
 					break;
-				case Order::Move:
-				case Order::ReaverCarrierMove:
+				case Order::ORD_IGNORE:
+				case Order::ORD_CARRIER_IGNORE:
 					sub_47C950(unit);
 					break;
-				case Order::ReaverStop:
+				case Order::ORD_TRILOBYTE_STOP:
 					orders_ReaverStop(unit);
 					break;
-				case Order::Attack2:
-				case Order::MoveToInfest:
-				case Order::MoveToRepair:
-				case Order::CarrierMoveToAttack:
-				case Order::ReaverMoveToAttack:
-				case Order::Harvest2:
-				case Order::MoveToFireYamatoGun:
+				case Order::ORD_MOVE_ATTACK_UNIT:
+				case Order::ORD_DRONE_INFEST2:
+				case Order::ORD_REPAIR_MOVE:
+				case Order::ORD_CARRIER_ATTACK_MOVE:
+				case Order::ORD_REAVER_ATTACK_MOVE:
+				case Order::ORD_HARVEST_MOVE:
+				case Order::ORD_YAMATO_MOVE:
 					orders_Special(unit);
 					break;
-				case Order::AttackUnit:
+				case Order::ORD_ATTACK_UNIT:
 					orders_AttackUnit(unit);
 					break;
-				case Order::AttackFixedRange:
+				case Order::ORD_ATTACK_FIXED_RNGE:
 					orders_AttackFixedRange(unit);
 					break;
-				case Order::AttackMove:
+				case Order::ORD_ATTACK_MOVE:
 					orders_AttackMove(unit);
 					break;
-				case Order::InfestedCommandCenter:
+				case Order::ORD_DRONE_INFEST0:
 					orders_InfestMine1(unit);
 					break;
-				case Order::UnusedPowerup:
+				case Order::ORD_POWERUP0:
 					orders_Powerup1(unit);
 					break;
-				case Order::TowerGuard:
+				case Order::ORD_TOWER_GUARD:
 					sub_476F50(unit);
 					break;
-				case Order::TowerAttack:
+				case Order::ORD_TOWER_ATTACK:
 					sub_479150(unit);
 					break;
-				case Order::VultureMine:
+				case Order::ORD_VULTURE_MINE:
 					sub_463DF0(unit);
 					break;
-				case Order::StayInRange:
+				case Order::ORD_STAY_IN_RANGE:
 					orders_StayInRange(unit);
 					break;
-				case Order::DroneStartBuild:
+				case Order::ORD_DRONE_START_BUILD:
 					orders_DroneStartBuild(unit);
 					break;
-				case Order::CastInfestation:
+				case Order::ORD_DRONE_INFEST:
 					sub_4E98E0(unit);
 					break;
-				case Order::InfestingCommandCenter:
+				case Order::ORD_QUEEN_INFEST:
 					orders_InfestMine4(unit);
 					break;
-				case Order::CreateProtossBuilding:
+				case Order::ORD_PYLON_BUILD:
 					sub_4E4F20(unit);
 					break;
-				case Order::PlaceAddon:
+				case Order::ORD_PLACE_ADDON:
 					orders_PlaceAddon(unit);
 					break;
-				case Order::ZergBuildingMorph:
+				case Order::ORD_ZERG_BLDG_MORPH:
 					orders_Morph2(unit);
 					break;
-				case Order::BuildNydusExit:
+				case Order::ORD_BUILDNYDUS:
 					orders_Build5(unit);
 					break;
-				case Order::EnterNydusCanal:
+				case Order::ORD_ENTER_NYDUS:
 					orders_EnterNydusCanal(unit);
 					break;
-				case Order::Follow:
+				case Order::ORD_FOLLOW:
 					sub_47C7B0(unit);
 					break;
-				case Order::Carrier:
-				case Order::CarrierFight:
-				case Order::CarrierHoldPosition:
+				case Order::ORD_CARRIER:
+				case Order::ORD_CARRIER_FIGHT:
+				case Order::ORD_CARRIER_HOLDPOS:
 					orders_Carrier(unit);
 					break;
-				case Order::CarrierStop:
+				case Order::ORD_CARRIER_STOP:
 					sub_465910(unit);
 					break;
-				case Order::CarrierAttack:
+				case Order::ORD_CARRIER_ATTACK:
 					orders_CarrierAttack1(unit);
 					break;
-				case Order::CarrierIgnore2:
+				case Order::ORD_CARRIER_IGNORE2:
 					sub_466720(unit);
 					break;
-				case Order::Reaver:
-				case Order::ReaverFight:
-				case Order::ReaverHoldPosition:
+				case Order::ORD_REAVER:
+				case Order::ORD_REAVER_FIGHT:
+				case Order::ORD_REAVER_HOLD:
 					orders_Reaver(unit);
 					break;
-				case Order::ReaverAttack:
+				case Order::ORD_REAVER_ATTACK:
 					orders_ReaverAttack1(unit);
 					break;
-				case Order::InterceptorAttack:
+				case Order::ORD_STRAFE_UNIT:
 					orders_StrafeUnit(unit);
 					break;
-				case Order::RechargeShieldsBattery:
+				case Order::ORD_RECHARGE:
 					orders_RechargeShields2(unit);
 					break;
-				case Order::InterceptorReturn:
+				case Order::ORD_RETURN:
 					sub_466350(unit);
 					break;
-				case Order::DroneLand:
+				case Order::ORD_DRONE_LAND:
 					orders_DroneLand(unit);
 					break;
-				case Order::LiftingOff:
+				case Order::ORD_LIFT_OFF:
 					sub_463AC0(unit);
 					break;
-				case Order::Larva:
+				case Order::ORD_LARVA:
 					orders_Larva(unit);
 					break;
-				case Order::Harvest1:
-				case Order::MoveToGas:
+				case Order::ORD_HARVEST:
+				case Order::ORD_HARVEST_GAS:
 					sub_469500(unit);
 					break;
-				case Order::WaitForGas:
+				case Order::ORD_ENTER_GAS:
 					sub_469000(unit);
 					break;
-				case Order::HarvestGas:
+				case Order::ORD_IN_GAS:
 					orders_EnterExitGas(unit);
 					break;
-				case Order::ReturnGas:
-				case Order::ReturnMinerals:
+				case Order::ORD_RETURN_GAS:
+				case Order::ORD_RETURN_MINERALS:
 					sub_4690C0(unit);
 					break;
-				case Order::MoveToMinerals:
+				case Order::ORD_HARVEST_MINERALS:
 					orders_MoveToHarvestMinerals(unit);
 					break;
-				case Order::WaitForMinerals:
+				case Order::ORD_HARVEST_MINERALS_WAIT:
 					orders_CanHarvestMinerals(unit);
 					break;
-				case Order::MiningMinerals:
+				case Order::ORD_HARVESTING_MINERALS:
 					orders_HarvestingMinerals(unit);
 					break;
-				case Order::EnterTransport:
+				case Order::ORD_ENTER_TRANSPORT:
 					orders_EnterTransport(unit);
 					break;
-				case Order::PickupIdle:
+				case Order::ORD_PICK_UP:
 					orders_TransportIdle(unit);
 					break;
-				case Order::PickupTransport:
+				case Order::ORD_PICK_UP_MOBILE:
 					transportIdleOpen(unit);
 					break;
-				case Order::PickupBunker:
+				case Order::ORD_PICK_UP_STATIONARY:
 					orders_Pickup3_0(unit);
 					break;
-				case Order::Pickup4:
+				case Order::ORD_PICK_UP_UNK:
 					orders_Pickup4_0(unit);
 					break;
-				case Order::PowerupIdle:
+				case Order::ORD_POWERUP:
 					orders_Powerup2(unit);
 					break;
-				case Order::WatchTarget:
+				case Order::ORD_WATCHTARGET:
 					orders_WatchTarget(unit);
 					break;
-				case Order::InitCreepGrowth:
+				case Order::ORD_INIT_SPREAD_CREEP:
 					orders_InitCreepGrowth(unit);
 					break;
-				case Order::StoppingCreepGrowth:
+				case Order::ORD_STOP_SPREAD_CREEP:
 					orders_StopCreepGrowth(unit);
 					break;
-				case Order::HoldPosition:
+				case Order::ORD_HOLDPOS:
 					sub_478D10(unit);
 					break;
-				case Order::QueenHoldPosition:
-				case Order::ComputerAI:
+				case Order::ORD_HOLDPOS_QUEEN:
+				case Order::ORD_SAP_HOLDPOS:
 					if (!unit->orderState)
 					{
 						orders_HoldPositionSuicidal(unit);
 						unit->orderState = 1;
 					}
 					[[fallthrough]];
-				case Order::Nothing:
+				case Order::ORD_NOTHING:
 					if (unit->orderQueueHead)
 					{
 						PrepareForNextOrderFunc(unit);
 					}
 					break;
-				case Order::Unload:
+				case Order::ORD_UNLOAD:
 					orders_Unload(unit);
 					break;
-				case Order::MoveUnload:
+				case Order::ORD_MOVE_UNLOAD:
 					orders_MoveUnload(unit);
 					break;
-				case Order::FireYamatoGun:
-				case Order::CastLockdown:
-				case Order::CastScannerSweep:
-				case Order::Scanner:
-				case Order::CastDefensiveMatrix:
-				case Order::CastPsionicStorm:
-				case Order::Neutral:
-				case Order::ComputerReturn:
-				case Order::InitializePsiProvider:
-				case Order::SelfDestructing:
-				case Order::Critter:
-				case Order::HiddenGun:
-				case 180:
-				case 181:
-				case 185:
-				case 186:
+				case Order::ORD_YAMATO:
+				case Order::ORD_MAGNAPULSE:
+				case Order::ORD_DARK_SWARM:
+				case Order::ORD_CAST_PARASITE:
+				case Order::ORD_SUMMON_BROODLINGS:
+				case Order::ORD_EMP_SHOCKWAVE:
+				case Order::ORD_PSI_STORM:
+				case Order::ORD_IRRADIATE:
+				case Order::ORD_PLAGUE:
+				case Order::ORD_CONSUME:
+				case Order::ORD_ENSNARE:
+				case Order::ORD_STASIS:
+				case Order::ORD_MEDIC_CURE:
+				case Order::ORD_CAST_DISRUPTOR:
+				case Order::ORD_MYOPIA:
+				case Order::ORD_PARALIZE:
 					orders_Spell(unit);
 					break;
-				case Order::Burrowing:
+				case Order::ORD_BURROW:
 					sub_4E9E60(unit);
 					break;
-				case Order::CastRecall:
+				case Order::ORD_BURROWED:
 					sub_4E9860(unit);
 					break;
-				case Order::Teleport:
+				case Order::ORD_DEBURROW:
 					sub_4EA670(unit);
 					break;
-				case Order::CastConsume:
+				case Order::ORD_NUKE_LAUNCH:
 					sub_464730(unit);
 					break;
-				case Order::CastEnsnare:
+				case Order::ORD_NUKE_PAINT:
 					sub_463610(unit);
 					break;
-				case Order::CastStasisField:
+				case Order::ORD_NUKE_UNIT:
 					sub_479410(unit);
 					break;
-				case Order::CastHallucination:
+				case Order::ORD_NUKE_GROUND:
 					orders_NukeGround(unit);
 					break;
-				case Order::Patrol:
+				case Order::ORD_PLACE_MINE:
 					orders_PlaceMine(unit);
 					break;
-				case Order::CTFCOPInit:
+				case Order::ORD_RCLICK:
 					orders_RightClickAction(unit);
 					break;
-				case Order::CTFCOPStarted:
+				case Order::ORD_SAP_UNIT:
 					orders_SapUnit(unit);
 					break;
-				case Order::CTFCOP2:
+				case Order::ORD_SAP_LOC:
 					orders_SapLocation(unit);
 					break;
-				case Order::AtkMoveEP:
+				case Order::ORD_TELEPORT:
 					orders_Recall(unit);
 					break;
-				case Order::AIPatrol:
+				case Order::ORD_PLACE_SCANNER:
 					orders_PlaceScanner(unit);
 					break;
-				case Order::GuardPost:
+				case Order::ORD_SCANNER:
 					sub_463D30(unit);
 					break;
-				case Order::RescuePassive:
+				case Order::ORD_DEF_MAT:
 					orders_DefensiveMatrix(unit);
 					break;
-				case 148:
+				case Order::ORD_HALLUCINATE:
 					orders_Hallucination1(unit);
 					break;
-				case 152:
+				case Order::ORD_PATROL:
 					orders_Patrol(unit);
 					break;
-				case 153:
+				case Order::ORD_CTF_COP_INIT:
 					sub_4E4210(unit);
 					break;
-				case 154:
+				case Order::ORD_CTF_COP:
 					orders_CTFCOP1(unit);
 					break;
-				case 156:
+				case Order::ORD_COMP_AI:
 					sub_4A28B0(unit);
 					break;
-				case 157:
+				case Order::ORD_ATTACK_MOVE_EP:
 					orders_AttackMoveEP(unit);
 					break;
-				case 158:
+				case Order::ORD_HARASS_MOVE_EP:
 					orders_HarassMove(unit);
 					break;
-				case 159:
+				case Order::ORD_AI_PATROL:
 					orders_AIPatrol(unit);
 					break;
-				case 160:
+				case Order::ORD_GUARD_POST:
 					sub_4778E0(unit);
 					break;
-				case 161:
+				case Order::ORD_RESCUE_PASSIVE:
 					orders_RescuePassive(unit);
 					break;
-				case 162:
+				case Order::ORD_NEUTRAL:
 					orders_Neutral(unit);
 					break;
-				case 163:
+				case Order::ORD_COMP_RETURN:
 					sub_478490(unit);
 					break;
-				case 164:
+				case Order::ORD_JUICE_INIT:
 					orders_InitPsiProvider(unit);
 					break;
-				case 167:
+				case Order::ORD_HIDDEN_GUN:
 					sub_47BF80(unit);
 					break;
-				case 168:
+				case Order::ORD_OPEN_DOOR:
 					orders_OpenDoor(unit);
 					break;
-				case 169:
+				case Order::ORD_CLOSE_DOOR:
 					orders_CloseDoor(unit);
 					break;
-				case 170:
+				case Order::ORD_HIDE_TRAP:
 					orders_HideTrap(unit);
 					break;
-				case 171:
+				case Order::ORD_REVEAL_TRAP:
 					sub_47C1B0(unit);
 					break;
-				case 172:
+				case Order::ORD_ENABLE_DOODAD:
 					sub_47BE80(unit);
 					break;
-				case 173:
+				case Order::ORD_DISABLE_DOODAD:
 					sub_47BD60(unit);
 					break;
-				case 175:
+				case Order::ORD_MEDIC:
 					orders_Medic(unit);
 					break;
-				case 182:
+				case Order::ORD_MINDCONTROL:
 					orders_CastMindControl(unit);
 					break;
-				case 184:
+				case Order::ORD_PSYFEEDBACK:
 					orders_Feedback(unit);
 					break;
-				case 187:
+				case Order::ORD_JUNK_YARD_DOG:
 					orders_JunkYardDog(unit);
 					break;
 				default:
@@ -10287,14 +10287,14 @@ void unitUpdate_(CUnit* unit)
 
 	switch (unit->secondaryOrderID)
 	{
-	case Order::TrainFighter:
+	case Order::ORD_TRAIN_FIGHTER:
 		secondaryOrd_TrainFighter(unit);
 		break;
-	case Order::Cloak:
+	case Order::ORD_CLOAK:
 		secondaryOrd_Cloak(unit);
 		break;
-	case Order::Decloak:
-		unit->secondaryOrderID = Nothing;
+	case Order::ORD_DECLOAK:
+		unit->secondaryOrderID = Order::ORD_NOTHING;
 		unit->secondaryOrderPosition.y = 0;
 		unit->secondaryOrderPosition.x = 0;
 		unit->currentBuildUnit = nullptr;
@@ -23637,10 +23637,10 @@ ButtonState __fastcall BTNSCOND_Rally_(u16 variable, int player_id, CUnit* unit)
 		dword_66FF60 = 11;
 		return BTNST_HIDDEN;
 	}
-	else if (unit->unitType == Terran_SCV && unit->orderID == ConstructingBuilding
-		|| UnitIsGhost(unit) && unit->orderID == Hallucination2
-		|| unit->unitType == Protoss_Archon && unit->orderID == CompletingArchonSummon
-		|| unit->unitType == Protoss_Dark_Archon && unit->orderID == CompletingArchonSummon)
+	else if (unit->unitType == Terran_SCV && unit->orderID == Order::ORD_CONSTRUCT_BLDG
+		|| UnitIsGhost(unit) && unit->orderID == Order::ORD_NUKE_TRACK
+		|| unit->unitType == Protoss_Archon && unit->orderID == Order::ORD_SUMMON_COMPLETE
+		|| unit->unitType == Protoss_Dark_Archon && unit->orderID == Order::ORD_SUMMON_COMPLETE)
 	{
 		dword_66FF60 = 8;
 		return BTNST_HIDDEN;
@@ -23994,7 +23994,7 @@ ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* u
 				{
 					return (ButtonState) result;
 				}
-				if ((unit->statusFlags & 0x10) == 0 && unit->orderID != Order::Burrowing && unit->orderID != Order::Teleport)
+				if ((unit->statusFlags & StatusFlags::Burrowed) == 0 && unit->orderID != Order::ORD_BURROW && unit->orderID != Order::ORD_DEBURROW)
 				{
 					return ButtonState::BTNST_ENABLED;
 				}
@@ -24020,7 +24020,7 @@ ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* 
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
-				if (unit->orderID == Order::Burrowing || unit->orderID == Order::Teleport)
+				if (unit->orderID == Order::ORD_BURROW || unit->orderID == Order::ORD_DEBURROW)
 				{
 					return ButtonState::BTNST_HIDDEN;
 				}
@@ -24334,7 +24334,7 @@ ButtonState __fastcall BTNSCOND_ScvIsBuilding_(u16 variable, int player_id, CUni
 	{
 		if (CUnit* selected_unit = ClientSelectionGroup[i])
 		{
-			if (selected_unit->orderID != Order::ConstructingBuilding)
+			if (selected_unit->orderID != Order::ORD_CONSTRUCT_BLDG)
 			{
 				return ButtonState::BTNST_HIDDEN;
 			}
@@ -24618,7 +24618,7 @@ FUNCTION_PATCH(BTNSCOND_IsLanded, BTNSCOND_IsLanded_);
 
 ButtonState __fastcall BTNSCOND_IsBuildingAddon_(u16 variable, int player_id, CUnit* unit)
 {
-	if (unit->secondaryOrderID == BuildAddon && (unit->statusFlags & StatusFlags::GoundedBuilding))
+	if (unit->secondaryOrderID == Order::ORD_BUILD_ADDON && (unit->statusFlags & StatusFlags::GoundedBuilding))
 	{
 		if (unit->currentBuildUnit && (unit->currentBuildUnit->statusFlags & StatusFlags::Completed) == 0)
 		{
