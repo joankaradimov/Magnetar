@@ -13257,6 +13257,29 @@ void load_Statf10_BIN_()
 
 FAIL_STUB_PATCH(load_Statf10_BIN);
 
+void sendChatMessage_(const char* message)
+{
+	short previous_text_filter = SendTextFilter;
+
+	if (byte_68C144 == 2)
+	{
+		SendTextFilter = -1;
+	}
+	else if (byte_68C144 == 3)
+	{
+		prepareMessageAllyFilter();
+		BWFXN_SendPublicCallTarget(message);
+		SendTextFilter = previous_text_filter;
+	}
+	else
+	{
+		BWFXN_SendPublicCallTarget(message);
+		SendTextFilter = previous_text_filter;
+	}
+}
+
+FAIL_STUB_PATCH(sendChatMessage);
+
 void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 {
 	if (byte_68C144)
@@ -13286,7 +13309,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 			}
 			else if ((!InReplay || !replayCommand(dest)) && multiPlayerMode)
 			{
-				sendChatMessage(dest);
+				sendChatMessage_(dest);
 			}
 		}
 		SStrCopy(v4->pszText, empty_string, 0x100u);
