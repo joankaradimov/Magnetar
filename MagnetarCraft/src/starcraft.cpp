@@ -17972,10 +17972,13 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		{
 			gwGameMode = GAME_RUNINIT;
 		}
-		race = Players[g_LocalNationID].nRace;
-		if (race == RaceId::RACE_Zerg || race == RaceId::RACE_Terran || race == RaceId::RACE_Protoss)
+		else
 		{
-			glGluesMode = Race::races()[race].ready_room_menu;
+			race = Players[g_LocalNationID].nRace;
+			if (race == RaceId::RACE_Zerg || race == RaceId::RACE_Terran || race == RaceId::RACE_Protoss)
+			{
+				glGluesMode = Race::races()[race].ready_room_menu;
+			}
 		}
 		break;
 	case -3:
