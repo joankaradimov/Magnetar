@@ -6873,9 +6873,7 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 	char buff[MAX_PATH];
 	char v9[MAX_PATH];
 
-	int v3 = a2 != 0 ? (a1 != 0 ? -(strlen(a1) != 0) : 0) : 0;
-	strlen(a1);
-	if (!v3)
+	if (!a2 || !a1 || strlen(a1) == 0)
 	{
 		SErrSetLastError(0x57u);
 		return 0;
