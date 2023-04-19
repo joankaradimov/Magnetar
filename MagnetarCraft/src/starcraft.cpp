@@ -6883,7 +6883,7 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 		return 0;
 	}
 	int chk_size = 0;
-	if (v9[0])
+	if (strlen(v9) > 0)
 	{
 		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
 	}
