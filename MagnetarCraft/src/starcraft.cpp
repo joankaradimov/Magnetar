@@ -6879,12 +6879,18 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 		return 0;
 	}
 	if (!sub_4CC350_(v9, a1, &a2->data7, MAX_PATH))
+	{
 		return 0;
+	}
 	int chk_size = 0;
 	if (v9[0])
+	{
 		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
+	}
 	else
+	{
 		strcpy_s(buff, "staredit\\scenario.chk");
+	}
 	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 	if (chk_data)
 	{
