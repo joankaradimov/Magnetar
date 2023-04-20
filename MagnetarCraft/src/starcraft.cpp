@@ -6939,7 +6939,11 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 			return 0;
 		}
 	}
-	else if (source[0] == 0 || !sub_4CCAC0_(source, a4))
+	else if (source[0] == 0)
+	{
+		return 0;
+	}
+	else if (!sub_4CCAC0_(source, a4))
 	{
 		return 0;
 	}
