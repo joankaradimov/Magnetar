@@ -6970,7 +6970,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	sub_4A91E0_();
 	sub_45AC10(a4->player_force);
 	updatePlayerForce();
-	strrchr(v8, '\\');
+
 	strcpy_s(CurrentMapFileName, v8);
 	if (!is_campaign)
 	{
