@@ -6948,25 +6948,24 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		return 0;
 	}
 
-	int v9 = 12;
-	do
+	for (int player = _countof(LobbyPlayers) - 1; player >= 0; player--)
 	{
-		--v9;
-		LobbyPlayers[v9].dwPlayerID = v9;
-		LobbyPlayers[v9].dwStormId = -1;
-		if (LobbyPlayers[v9].nRace == RaceId::RACE_Select)
+		LobbyPlayers[player].dwPlayerID = player;
+		LobbyPlayers[player].dwStormId = -1;
+		if (LobbyPlayers[player].nRace == RaceId::RACE_Select)
 		{
-			LobbyPlayers[v9].nRace = RaceId::RACE_Random;
-			if (v9 < 8)
-				playerForce[v9] = 1;
+			LobbyPlayers[player].nRace = RaceId::RACE_Random;
+			if (player < 8)
+				playerForce[player] = 1;
 		}
-		if (v9 >= 8)
+		if (player >= 8)
 		{
-			LobbyPlayers[v9].nType = PlayerType::PT_NotUsed;
-			LobbyPlayers[v9].nRace = RaceId::RACE_Zerg;
-			LobbyPlayers[v9].nTeam = 0;
+			LobbyPlayers[player].nType = PlayerType::PT_NotUsed;
+			LobbyPlayers[player].nRace = RaceId::RACE_Zerg;
+			LobbyPlayers[player].nTeam = 0;
 		}
-	} while (v9 > 0);
+	}
+
 	sub_4A91E0_();
 	sub_45AC10(a4->player_force);
 	updatePlayerForce();
