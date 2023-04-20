@@ -6947,7 +6947,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	{
 		return 0;
 	}
-	const char* v8 = source;
+
 	int v9 = 12;
 	do
 	{
@@ -6971,7 +6971,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	sub_45AC10(a4->player_force);
 	updatePlayerForce();
 
-	strcpy_s(CurrentMapFileName, v8);
+	strcpy_s(CurrentMapFileName, source);
 	if (!is_campaign)
 	{
 		CampaignIndex = MD_none;
