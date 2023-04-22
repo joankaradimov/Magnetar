@@ -6838,22 +6838,15 @@ GotFileValues* InitUseMapSettingsTemplate_()
 
 FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
 
-int sub_4CC350_(char* a1, const char* a2, int* a3, size_t a4)
+void* sub_4CCAC0_campaign(const char* a1, MapChunks* a2, int* chk_size)
 {
-	if (CampaignIndex)
-	{
-		if (!a1)
-		{
-			return 1;
-		}
-		SStrCopy(a1, a2, a4);
-		return 1;
-	}
-	if (a1)
-	{
-		*a1 = 0;
-	}
+	char campaign_map_path[MAX_PATH];
+	_snprintf(campaign_map_path, MAX_PATH, "%s\\%s", a1, "staredit\\scenario.chk");
+	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+}
 
+int sub_4CC350_(const char* a2, int* a3, size_t a4)
+{
 	int a2a;
 	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle))
 	{
@@ -6868,30 +6861,34 @@ int sub_4CC350_(char* a1, const char* a2, int* a3, size_t a4)
 
 FAIL_STUB_PATCH(sub_4CC350);
 
+void* sub_4CCAC0_scm(const char* a1, MapChunks* a2, int* chk_size)
+{
+	if (sub_4CC350_(a1, &a2->data7, MAX_PATH))
+	{
+		return fastFileRead_(chk_size, 0, "staredit\\scenario.chk", 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	}
+	return 0;
+}
+
 int sub_4CCAC0_(const char* a1, MapChunks* a2)
 {
-	char buff[MAX_PATH];
-	char v9[MAX_PATH];
-
 	if (!a2 || !a1 || strlen(a1) == 0)
 	{
 		SErrSetLastError(0x57u);
 		return 0;
 	}
-	if (!sub_4CC350_(v9, a1, &a2->data7, MAX_PATH))
-	{
-		return 0;
-	}
+
 	int chk_size = 0;
-	if (strlen(v9) > 0)
+	void* chk_data;
+	if (CampaignIndex)
 	{
-		_snprintf(buff, MAX_PATH, "%s\\%s", v9, "staredit\\scenario.chk");
+		chk_data = sub_4CCAC0_campaign(a1, a2, &chk_size);
 	}
 	else
 	{
-		strcpy_s(buff, "staredit\\scenario.chk");
+		chk_data = sub_4CCAC0_scm(a1, a2, &chk_size);
 	}
-	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+
 	if (chk_data)
 	{
 		int v7 = ReadLobbyChunks(chk_data, chk_size, a2);
