@@ -4985,34 +4985,14 @@ BOOL LoadFileArchiveToSBigBuf_(const char* filename, int* a2, int a3, HANDLE* a4
 
 FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
 
+void* read_chk_data(const char* filename, int* a2, int* chk_size);
+
 BOOL sub_4CC7F0_(char* a1)
 {
-	char buff[260];
-	char dest[260];
-	int chk_size;
+	int loader_index;
+	int chk_size = 0;
+	void* chk_data = read_chk_data(a1, &loader_index, &chk_size);
 
-	if (CampaignIndex)
-	{
-		strcpy_s(dest, a1);
-	}
-	else
-	{
-		dest[0] = 0;
-		int result = LoadFileArchiveToSBigBuf_(a1, &chk_size, 1, &mapArchiveHandle);
-		if (!result)
-		{
-			return result;
-		}
-	}
-	if (dest[0])
-	{
-		_snprintf(buff, 260u, "%s\\%s", dest, "staredit\\scenario.chk");
-	}
-	else
-	{
-		strcpy_s(buff, "staredit\\scenario.chk");
-	}
-	void* chk_data = (void*)fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2141);
 	int result;
 	if (chk_data)
 	{
@@ -7945,32 +7925,10 @@ FAIL_STUB_PATCH(loadOKBIN);
 
 void* getFullMapChunk_(char* filename, int* chk_size)
 {
-	char buff[260];
-	char dest[260];
-
+	int loader_index;
 	*chk_size = 0;
-	if (CampaignIndex)
-	{
-		strcpy_s(dest, filename);
-	}
-	else
-	{
-		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf_(filename, chk_size, 1, &mapArchiveHandle))
-		{
-			return 0;
-		}
-	}
-	if (dest[0])
-	{
-		sprintf_s(buff, "%s\\%s", dest, "staredit\\scenario.chk");
-	}
-	else
-	{
-		strcpy_s(buff, "staredit\\scenario.chk");
-	}
+	void* v2 = read_chk_data(filename, &loader_index, chk_size);
 
-	void* v2 = (void*)fastFileRead(chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2187);
 	if (!v2)
 	{
 		if (!mapArchiveHandle)
@@ -15601,26 +15559,10 @@ FUNCTION_PATCH((void*)0x4806F0, revealSightAtLocation__);
 
 void sub_4CC990_()
 {
-	char buff[MAX_PATH];
-	char dest[MAX_PATH];
 	int loader_index;
-
-	if (CampaignIndex)
-	{
-		strcpy_s(dest, CurrentMapFileName);
-	}
-	else
-	{
-		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf_(CurrentMapFileName, &loader_index, 1, &mapArchiveHandle))
-			return;
-	}
 	int chk_size = 0;
-	if (dest[0])
-		_snprintf(buff, MAX_PATH, "%s\\%s", dest, "staredit\\scenario.chk");
-	else
-		strcpy_s(buff, "staredit\\scenario.chk");
-	void* chk_data = fastFileRead_(&chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2095);
+	void* chk_data = read_chk_data(CurrentMapFileName, &loader_index, &chk_size);
+
 	if (chk_data)
 	{
 		loader_index = 0;
