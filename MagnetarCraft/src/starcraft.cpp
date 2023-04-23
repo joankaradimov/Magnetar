@@ -4985,7 +4985,49 @@ BOOL LoadFileArchiveToSBigBuf_(const char* filename, int* a2, int a3, HANDLE* a4
 
 FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
 
-void* read_chk_data(const char* filename, int* a2, int* chk_size);
+void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
+{
+	char campaign_map_path[MAX_PATH];
+	_snprintf(campaign_map_path, MAX_PATH, "%s\\%s", a1, "staredit\\scenario.chk");
+	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+}
+
+int sub_4CC350_(const char* a2, int* a3, size_t a4)
+{
+	int a2a;
+	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle))
+	{
+		if (a3)
+		{
+			*a3 = a2a;
+		}
+		return 1;
+	}
+	return 0;
+}
+
+FAIL_STUB_PATCH(sub_4CC350);
+
+void* sub_4CCAC0_scm(const char* a1, int* a2, int* chk_size)
+{
+	if (sub_4CC350_(a1, a2, MAX_PATH))
+	{
+		return fastFileRead_(chk_size, 0, "staredit\\scenario.chk", 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
+	}
+	return 0;
+}
+
+void* read_chk_data(const char* filename, int* a2, int* chk_size)
+{
+	if (CampaignIndex)
+	{
+		return sub_4CCAC0_campaign(filename, chk_size);
+	}
+	else
+	{
+		return sub_4CCAC0_scm(filename, a2, chk_size);
+	}
+}
 
 BOOL sub_4CC7F0_(char* a1)
 {
@@ -6817,50 +6859,6 @@ GotFileValues* InitUseMapSettingsTemplate_()
 }
 
 FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
-
-void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
-{
-	char campaign_map_path[MAX_PATH];
-	_snprintf(campaign_map_path, MAX_PATH, "%s\\%s", a1, "staredit\\scenario.chk");
-	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
-}
-
-int sub_4CC350_(const char* a2, int* a3, size_t a4)
-{
-	int a2a;
-	if (LoadFileArchiveToSBigBuf_(a2, &a2a, 1, &mapArchiveHandle))
-	{
-		if (a3)
-		{
-			*a3 = a2a;
-		}
-		return 1;
-	}
-	return 0;
-}
-
-FAIL_STUB_PATCH(sub_4CC350);
-
-void* sub_4CCAC0_scm(const char* a1, int* a2, int* chk_size)
-{
-	if (sub_4CC350_(a1, a2, MAX_PATH))
-	{
-		return fastFileRead_(chk_size, 0, "staredit\\scenario.chk", 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
-	}
-	return 0;
-}
-
-void* read_chk_data(const char* filename, int* a2, int* chk_size)
-{
-	if (CampaignIndex)
-	{
-		return sub_4CCAC0_campaign(filename, chk_size);
-	}
-	else
-	{
-		return sub_4CCAC0_scm(filename, a2, chk_size);
-	}
-}
 
 int sub_4CCAC0_(const char* a1, MapChunks* a2)
 {
