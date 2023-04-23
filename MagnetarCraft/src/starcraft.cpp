@@ -7943,13 +7943,12 @@ int loadOKBIN_(int a1, const char* message, HANDLE a3)
 
 FAIL_STUB_PATCH(loadOKBIN);
 
-int getFullMapChunk_(char* filename, int* a3)
+void* getFullMapChunk_(char* filename, int* chk_size)
 {
-	int a2;
 	char buff[260];
 	char dest[260];
 
-	*a3 = 0;
+	*chk_size = 0;
 	if (CampaignIndex)
 	{
 		strcpy_s(dest, filename);
@@ -7957,7 +7956,7 @@ int getFullMapChunk_(char* filename, int* a3)
 	else
 	{
 		dest[0] = 0;
-		if (!LoadFileArchiveToSBigBuf_(filename, &a2, 1, &mapArchiveHandle))
+		if (!LoadFileArchiveToSBigBuf_(filename, chk_size, 1, &mapArchiveHandle))
 		{
 			return 0;
 		}
@@ -7971,7 +7970,7 @@ int getFullMapChunk_(char* filename, int* a3)
 		strcpy_s(buff, "staredit\\scenario.chk");
 	}
 
-	int v2 = fastFileRead(&a2, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2187);
+	void* v2 = (void*)fastFileRead(chk_size, 0, buff, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2187);
 	if (!v2)
 	{
 		if (!mapArchiveHandle)
@@ -7987,7 +7986,6 @@ int getFullMapChunk_(char* filename, int* a3)
 		SFileCloseArchive(mapArchiveHandle);
 		mapArchiveHandle = 0;
 	}
-	*a3 = a2;
 	return v2;
 }
 
@@ -8033,7 +8031,7 @@ int SaveReplay_(const char* a1, int a3)
 			v5 = WriteGameActions(v4, replayData);
 			if (v5)
 			{
-				void* v6 = (void*)getFullMapChunk_(CurrentMapFileName, &a3);
+				void* v6 = getFullMapChunk_(CurrentMapFileName, &a3);
 				if (v6)
 				{
 					v5 = CompressWrite(&a3, 4, v4);
