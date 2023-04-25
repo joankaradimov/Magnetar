@@ -437,18 +437,16 @@ void FatalError_(const char* arg0, ...)
 
 FUNCTION_PATCH(FatalError, FatalError_);
 
-void isValidScript_(CImage* image, int a2)
+std::unordered_map<u16, u16> iscript_id_to_pc;
+
+void isValidScript_(CImage* image, int iscript_id)
 {
-	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);
-	while (v2[0] != a2)
+	auto pc_iterator = iscript_id_to_pc.find(iscript_id);
+	if (pc_iterator == iscript_id_to_pc.end())
 	{
-		if (v2[0] == 0xFFFF)
-		{
-			FatalError_("script %d does not exist", a2);
-		}
-		v2 += 2;
+		FatalError("script %d does not exist", iscript_id);
 	}
-	image->iscript_program.iscript_header = v2[1];
+	image->iscript_program.iscript_header = pc_iterator->second;
 }
 
 void isValidScript__()
@@ -4470,6 +4468,14 @@ void LoadInitIscriptBIN_()
 {
 	int iscript_bin_size;
 	iscript_data = (IScript*) fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+
+	iscript_id_to_pc.clear();
+	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);
+	while (v2[0] != 0xFFFF)
+	{
+		iscript_id_to_pc[v2[0]] = v2[1];
+		v2 += 2;
+	}
 
 	// TODO: dynamically allocate imagesDat memory
 	imagesDat_ = new DatLoad[] {
