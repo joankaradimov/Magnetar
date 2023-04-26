@@ -794,6 +794,41 @@ void __cdecl sub_468670__()
 
 FUNCTION_PATCH((void*)0x468670, sub_468670__);
 
+void getSelectedUnitsInBox_(Box16* box)
+{
+	CUnit* a2[12] = { 0 };
+	memset(a2, 0, sizeof(a2));
+	int v3 = SortAllUnits(FindAllUnits(box), a2, 0);
+	tempUnitsListCurrentArrayCount = tempUnitsListArraysCountsListLastIndex[tempUnitsListArraysCountsListLastIndex[0]--];
+	if (v3)
+	{
+		if (is_keycode_used[VK_SHIFT] && PlayerSelection[0])
+		{
+			CUnit* v8[12];
+			memcpy(v8, PlayerSelection, sizeof(v8));
+			UI_doSelectUnits_IfAltNotHeld(v8, sub_46F290(v8, a2, v3, 0), 1, 1);
+			return;
+		}
+		if (v3 != 1 || !is_keycode_used[18] || !selectSingleUnitFromID(CUnitToUnitID(a2[0])))
+		{
+			selectMultipleUnitsFromUnitList(v3, a2, 1, 1);
+			if (v3 != 1)
+			{
+				return;
+			}
+		}
+		if (a2[0] && a2[0]->playerID == g_ActiveNationID)
+		{
+			if (Unit_IsFactoryBuilding(a2[0]))
+			{
+				sub_468670_(a2[0]);
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(getSelectedUnitsInBox);
+
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
 	input_dragSelect_MouseMove(a1);
@@ -814,7 +849,7 @@ void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 		}
 		if ((__int16)stru_66FF50.right - (__int16)stru_66FF50.left > 4 || v3 - (__int16)stru_66FF50.top > 4)
 		{
-			getSelectedUnitsInBox(&stru_66FF50);
+			getSelectedUnitsInBox_(&stru_66FF50);
 		}
 		else
 		{
