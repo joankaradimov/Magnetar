@@ -16199,6 +16199,65 @@ bool sub_4B27A0_(RaceId race)
 
 FAIL_STUB_PATCH(sub_4B27A0);
 
+char __stdcall DLG_SwishOut_(dialog* dlg)
+{
+	RefreshCursor_0();
+	BWFXN_RedrawTarget();
+	dword_51C4A8 = 1;
+	ListNodeUnknown* v1 = dword_51C4B4;
+	if (dword_51C4B4)
+	{
+		_list_unlink((ListNode*)dword_51C4B4);
+		if (v1->next)
+		{
+			int v4 = (int)v1->unknown;
+			int v5 = v4 > 0 ? (char*)&v1->next - (char*)v1->next->next + v4 : ~v4;
+			*(_DWORD*)v5 = (_DWORD)v1->next;
+			v1->next->next = v1->unknown;
+			v1->next = 0;
+			v1->unknown = 0;
+		}
+		SMemFree(v1, "delete", -1, 0);
+	}
+
+	int v6 = 0;
+	dialog* v7;
+	dword_51C4B4 = 0;
+	if (timer_related.active_timers_count_maybe > 0)
+	{
+		do
+		{
+			v7 = dlg;
+			getControlFromIndex_(dlg, timer_related.timers[v6].wIndex)->wUser = 1;
+			timer_related.active_timers_maybe[v6++] = { 1, 0 };
+		} while (v6 < timer_related.active_timers_count_maybe);
+		if (v6 && direct_sound && registry_options.Sfx)
+		{
+			PlayTransmissionLocation(SFX_glue_swishout, volume[99 * registry_options.Sfx / 100], 0, 0);
+		}
+	}
+	else
+	{
+		v7 = dlg;
+	}
+
+	SetCallbackTimer(7, v7, 20, DLGSwishOutProc);
+	for (dialog* i = dword_51C4B0; i; i = i->pNext)
+	{
+		HideDialog_(i);
+	}
+
+	dialog* v11 = v7;
+	while (v11)
+	{
+		v11->lFlags &= ~CTRL_EVENTS;
+		v11 = v11->wCtrlType ? v11->pNext : v11->fields.dlg.pFirstChild;
+	}
+	return 1;
+}
+
+FUNCTION_PATCH(DLG_SwishOut, DLG_SwishOut_);
+
 bool sub_4B5180_(dialog* a1)
 {
 	switch (LastControlID)
@@ -16225,7 +16284,7 @@ bool sub_4B5180_(dialog* a1)
 		LastControlID = 8;
 		break;
 	}
-	return DLG_SwishOut(a1);
+	return DLG_SwishOut_(a1);
 }
 
 FAIL_STUB_PATCH(sub_4B5180);
@@ -16263,7 +16322,7 @@ bool sub_4B2810_(dialog* a1)
 		LastControlID = 30;
 		break;
 	}
-	return DLG_SwishOut(a1);
+	return DLG_SwishOut_(a1);
 }
 
 FAIL_STUB_PATCH(sub_4B2810);
@@ -16644,7 +16703,7 @@ int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 			case 4: // OK
 				if (gluLogin_Activate(dword_5999C0))
 				{
-					return DLG_SwishOut(dlg);
+					return DLG_SwishOut_(dlg);
 				}
 				break;
 			case 6: // Create character
@@ -16654,7 +16713,7 @@ int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 				gluLogin_DeleteCharacter(dword_5999C0);
 				return 1;
 			default: // Cancel
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			}
 			return 1;
 		case USER_UNK_8:
@@ -16892,12 +16951,12 @@ int __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 				if (JoinNetworkGame(&stru_5999F0))
 				{
 					EnableControl(v5);
-					return DLG_SwishOut(dlg);
+					return DLG_SwishOut_(dlg);
 				}
 			}
 			else if (LastControlID != 15 || !is_spawn)
 			{
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			}
 			else
 			{
@@ -17892,7 +17951,7 @@ int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 				return 1;
 			}
 			waitLoopCntd(5, gluCreateOrCustm_bin);
-			return DLG_SwishOut(dlg);
+			return DLG_SwishOut_(dlg);
 		case EventUser::USER_INIT:
 			gluCustm_CustomCtrl_InitializeChildren_(dlg);
 			break;
@@ -18318,7 +18377,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				loadStareditProcess_(dlg);
 				return true;
 			}
-			return DLG_SwishOut(dlg);
+			return DLG_SwishOut_(dlg);
 		case USER_INIT:
 			gluMain_CustomCtrlID_(dlg);
 			break;
@@ -18940,7 +18999,7 @@ int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 				}
 				LastControlID = 9;
 			}
-			return DLG_SwishOut(dlg);
+			return DLG_SwishOut_(dlg);
 		case USER_INIT:
 			ConnSel_InitChildren_(dlg);
 			break;
@@ -19053,14 +19112,14 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 					return 1;
 				}
 				LastControlID = 5;
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			case 6:
 				if (dword_59B82C && !BWFXN_gluPOKCancel_MBox(get_GluAll_String((GluAllTblEntry)82)))
 				{
 					return 1;
 				}
 				LastControlID = 6;
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			case 7:
 				AU_PHONENUMBER(dlg);
 				return 1;
@@ -19073,9 +19132,9 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 					BWFXN_gluPOK_MBox(GetNetworkTblString_(104));
 					return 1;
 				}
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			default:
-				return DLG_SwishOut(dlg);
+				return DLG_SwishOut_(dlg);
 			}
 			break;
 		case USER_INIT:
@@ -19727,7 +19786,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 		dword_5999D0 = 0;
 	}
 	lobby_dlg->fields.dlg.pModalFcn = 0;
-	return DLG_SwishOut(dlg);
+	return DLG_SwishOut_(dlg);
 }
 
 FAIL_STUB_PATCH(gluChat_controlActivation);
@@ -19896,7 +19955,7 @@ int __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
 				DeleteSavedGame();
 				return 1;
 			}
-			return DLG_SwishOut(dlg);
+			return DLG_SwishOut_(dlg);
 		case USER_INIT:
 			gluLoad_CustomCtrlID_(dlg);
 			break;
@@ -20423,7 +20482,7 @@ int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 			break;
 		case USER_ACTIVATE:
 			stopSounds();
-			return DLG_SwishOut(dlg);
+			return DLG_SwishOut_(dlg);
 		case USER_INIT:
 			gluScore_CustomCtrlID_(dlg);
 			break;
