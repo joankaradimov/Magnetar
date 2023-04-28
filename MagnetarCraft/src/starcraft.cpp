@@ -11860,6 +11860,7 @@ void sub_4C4A80_(int a1, int a2)
 		}
 		if (stru_66FE20[a1].field_0 && stru_66FE20[a1].player_name)
 		{
+			char buff[128];
 			_snprintf(buff, sizeof(buff), GetNetworkTblString_(a2 == 0x40000006 ? 76 : 75), getPlayerName(a1));
 			printLobbyString(8, buff);
 		}
