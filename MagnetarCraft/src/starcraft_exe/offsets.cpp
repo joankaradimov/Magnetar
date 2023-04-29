@@ -4835,7 +4835,7 @@ BOOL canUnitTypeFitAt(signed int x, UnitType unit_type, __int16 y) {
     }
     return result_;
 }
-void sub_42D890(CUnit *a1, int a2) {
+void sub_42D890(CUnit *a1, _DWORD *a2) {
     int address = 0x42d890;
     __asm {
         mov ecx, a2
@@ -25190,12 +25190,12 @@ void sub_4CC610(CUnit *a1, char a2, int a3) {
     }
 }
 DECL_FUNC(bool (__stdcall*ChkLoader_STR)(SectionData *section_data, int section_size_, MapChunks *a3), ChkLoader_STR, 0x4cc650);
-int getFullMapChunk(char *filename, int *a2) {
+void * getFullMapChunk(char *filename, int *chk_size_) {
     int address = 0x4cc6e0;
-    int result_;
+    void * result_;
     __asm {
         xor eax, eax
-        push dword ptr a2
+        push dword ptr chk_size_
         mov eax, filename
         call address
         mov result_, eax
@@ -35316,7 +35316,7 @@ int& dword_6D643C = * ((decltype(&dword_6D643C)) 0x6d643c);
 int& dword_6D683C = * ((decltype(&dword_6D683C)) 0x6d683c);
 size_t& amount = * ((decltype(&amount)) 0x6d6c3c);
 int& dword_6D6C40 = * ((decltype(&dword_6D6C40)) 0x6d6c40);
-CHAR(&buff)[260] = * ((decltype(&buff)) 0x6d7448);
+CHAR(&byte_6D7448)[260] = * ((decltype(&byte_6D7448)) 0x6d7448);
 char& byte_6D754C = * ((decltype(&byte_6D754C)) 0x6d754c);
 char(&byte_6D7550)[32] = * ((decltype(&byte_6D7550)) 0x6d7550);
 int& dword_6D7570 = * ((decltype(&dword_6D7570)) 0x6d7570);
