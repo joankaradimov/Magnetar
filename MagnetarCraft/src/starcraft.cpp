@@ -214,6 +214,288 @@ FAIL_STUB_PATCH(input_Game_UserKeyPress);
 
 template <typename T> void BWFXN_QueueCommand__(const T& buffer);
 
+void __fastcall CMDACT_Hotkey_(dlgEvent* event)
+{
+	int wVirtKey = (__int16)event->wVirtKey;
+	if (wVirtKey == -25498)
+	{
+		if (registry_options.Music)
+		{
+			dword_5999B4 = registry_options.Music;
+			registry_options.Music = 0;
+		}
+		else
+		{
+			registry_options.Music = dword_5999B4;
+		}
+		muteBgm(&registry_options);
+	}
+	else if (wVirtKey == -25497)
+	{
+		muteSfx();
+	}
+	if (!byte_6D5BC2)
+	{
+		switch (wVirtKey)
+		{
+		case -25493:
+			ExitGameMenu();
+			break;
+		case -25491:
+			QuitMissionMenu();
+			break;
+		case -25489:
+			loadoptionsMenu();
+			return;
+		case -25484:
+			HelpMenu();
+			return;
+		case -25483:
+			ToggleLeaderboardList();
+			break;
+		case -25482:
+			savegameMenu();
+			break;
+		case -25481:
+			LoadGame_DlgCreate();
+			break;
+		case -25477:
+			gameMenu();
+			return;
+		default:
+			break;
+		}
+		if (!IS_GAME_PAUSED)
+		{
+			GroupUnitsCommand buffer;
+
+			switch (wVirtKey)
+			{
+			case -25645:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 1;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25644:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 2;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25643:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 3;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25642:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 4;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25641:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 5;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25640:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 6;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25639:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 7;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25638:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 8;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25637:
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				buffer.f1 = 2;
+				buffer.f2 = 9;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				return;
+			case -25636:
+				buffer.f1 = 2;
+				buffer.f2 = 0;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25635:
+				buffer.f1 = 0;
+				buffer.f2 = 1;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25634:
+				buffer.f1 = 0;
+				buffer.f2 = 2;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25633:
+				buffer.f1 = 0;
+				buffer.f2 = 3;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25632:
+				buffer.f1 = 0;
+				buffer.f2 = 4;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25631:
+				buffer.f1 = 0;
+				buffer.f2 = 5;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25630:
+				buffer.f1 = 0;
+				buffer.f2 = 6;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25629:
+				buffer.f1 = 0;
+				buffer.f2 = 7;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25628:
+				buffer.f1 = 0;
+				buffer.f2 = 8;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25627:
+				buffer.f1 = 0;
+				buffer.f2 = 9;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25626:
+				buffer.f1 = 0;
+				buffer.f2 = 0;
+				buffer.command_id = CommandId::CMD_GroupUnits;
+				BWFXN_QueueCommand__(buffer);
+				byte_597280 = -1;
+				break;
+			case -25615:
+				centerviewUnitGroup(1);
+				selectUnitGroup(1);
+				break;
+			case -25614:
+				centerviewUnitGroup(2);
+				selectUnitGroup(2);
+				break;
+			case -25613:
+				centerviewUnitGroup(3);
+				selectUnitGroup(3);
+				break;
+			case -25612:
+				centerviewUnitGroup(4);
+				selectUnitGroup(4);
+				break;
+			case -25611:
+				centerviewUnitGroup(5);
+				selectUnitGroup(5);
+				break;
+			case -25610:
+				centerviewUnitGroup(6);
+				selectUnitGroup(6);
+				break;
+			case -25609:
+				centerviewUnitGroup(7);
+				selectUnitGroup(7);
+				break;
+			case -25608:
+				centerviewUnitGroup(8);
+				selectUnitGroup(8);
+				break;
+			case -25607:
+				centerviewUnitGroup(9);
+				selectUnitGroup(9);
+				break;
+			case -25606:
+				centerviewUnitGroup(0);
+				selectUnitGroup(0);
+				break;
+			case -25500:
+				if (ActivePortraitUnit)
+				{
+					moveScreenToUnit(ActivePortraitUnit);
+				}
+				break;
+			case -25480:
+				if (!multiPlayerMode && registry_options.GameSpeed < 6)
+				{
+					CMDACT_ChangeGameSpeed(LOBYTE(registry_options.GameSpeed) + 1);
+				}
+				break;
+			case -25478:
+				if (!multiPlayerMode && registry_options.GameSpeed)
+				{
+					CMDACT_ChangeGameSpeed(LOBYTE(registry_options.GameSpeed) - 1);
+				}
+				break;
+			case -25476:
+				saveScreenLocation(0);
+				break;
+			case -25475:
+				saveScreenLocation(1);
+				break;
+			case -25474:
+				saveScreenLocation(2);
+				break;
+			case -25473:
+				recallScreenLocation(0);
+				break;
+			case -25472:
+				recallScreenLocation(1);
+				break;
+			case -25471:
+				recallScreenLocation(2);
+				break;
+			default:
+				return;
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(CMDACT_Hotkey);
+
 void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
 {
 	if (!IsOutsideGameScreen_((__int16)event->cursor.x, (__int16)event->cursor.y))
@@ -959,7 +1241,7 @@ void SetInGameInputProcs_()
 	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp;
 	input_procedures[EventNo::EVN_IDLE] = input_Game_Idle;
 	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress_;
-	input_procedures[EventNo::EVN_SYSCHAR] = CMDACT_Hotkey;
+	input_procedures[EventNo::EVN_SYSCHAR] = CMDACT_Hotkey_;
 	input_procedures[EventNo::EVN_WHEELUP] = nullptr;
 	input_procedures[EventNo::EVN_WHEELDWN] = nullptr;
 
@@ -13325,7 +13607,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 			updateDialog(v4);
 		}
 		hAccTable = hAccel;
-		input_procedures[16] = CMDACT_Hotkey;
+		input_procedures[16] = CMDACT_Hotkey_;
 		byte_68C144 = 0;
 	}
 	else
@@ -13344,7 +13626,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 
 		SNetGetLeaguePlayerName((int*)curPlayerID, 0x19u);
 		hAccTable = dword_5968F4;
-		input_procedures[16] = CMDACT_Hotkey;
+		input_procedures[16] = CMDACT_Hotkey_;
 
 		if (!multiPlayerMode)
 		{
