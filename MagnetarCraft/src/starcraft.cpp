@@ -14058,6 +14058,17 @@ void setMinimapConstants()
 		word_59C184 = 0;
 		word_59C1B0 = 0;
 	}
+	else if (larger_dimension <= 512)
+	{
+		word_59CC68 = 4;
+		word_59CC6C = 128;
+		minimapSurfaceUpdate = minimapSurfaceUpdate_<1>;
+		minimapVisionUpdate = minimapVisionUpdate_<1>;
+		minimap_surface_height = map_size.height >> 2;
+		minimap_surface_width = map_size.width >> 2;
+		word_59C184 = 0;
+		word_59C1B0 = 0;
+	}
 }
 
 void setMapSizeConstants_()
