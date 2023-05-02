@@ -212,6 +212,14 @@ void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_Game_UserKeyPress);
 
+void sub_496E90_(unsigned __int8 a1)
+{
+	centerviewUnitGroup(a1);
+	selectUnitGroup(a1);
+}
+
+FAIL_STUB_PATCH(sub_496E90);
+
 template <typename T> void BWFXN_QueueCommand__(const T& buffer);
 
 void __fastcall CMDACT_Hotkey_(dlgEvent* event)
@@ -412,44 +420,34 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 				byte_597280 = -1;
 				break;
 			case -25615:
-				centerviewUnitGroup(1);
-				selectUnitGroup(1);
+				sub_496E90_(1);
 				break;
 			case -25614:
-				centerviewUnitGroup(2);
-				selectUnitGroup(2);
+				sub_496E90_(2);
 				break;
 			case -25613:
-				centerviewUnitGroup(3);
-				selectUnitGroup(3);
+				sub_496E90_(3);
 				break;
 			case -25612:
-				centerviewUnitGroup(4);
-				selectUnitGroup(4);
+				sub_496E90_(4);
 				break;
 			case -25611:
-				centerviewUnitGroup(5);
-				selectUnitGroup(5);
+				sub_496E90_(5);
 				break;
 			case -25610:
-				centerviewUnitGroup(6);
-				selectUnitGroup(6);
+				sub_496E90_(6);
 				break;
 			case -25609:
-				centerviewUnitGroup(7);
-				selectUnitGroup(7);
+				sub_496E90_(7);
 				break;
 			case -25608:
-				centerviewUnitGroup(8);
-				selectUnitGroup(8);
+				sub_496E90_(8);
 				break;
 			case -25607:
-				centerviewUnitGroup(9);
-				selectUnitGroup(9);
+				sub_496E90_(9);
 				break;
 			case -25606:
-				centerviewUnitGroup(0);
-				selectUnitGroup(0);
+				sub_496E90_(0);
 				break;
 			case -25500:
 				if (ActivePortraitUnit)
