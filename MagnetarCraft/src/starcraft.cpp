@@ -22602,14 +22602,7 @@ FAIL_STUB_PATCH(localDll_Init);
 
 void DisplayEstablishingShot_()
 {
-	if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && active_campaign_entry_index != -1)
-	{
-		if (const char* establishing_shot = active_campaign->entries[active_campaign_entry_index].establishing_shot)
-		{
-			loadInitCreditsBIN_(establishing_shot);
-		}
-	}
-	else if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
+	if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
 	{
 		SFileOpenArchive(CurrentMapFileName, 0, 0, &mapArchiveHandle);
 		HANDLE handle;
@@ -22622,6 +22615,13 @@ void DisplayEstablishingShot_()
 
 		if (mapArchiveHandle)
 			SFileCloseArchive(mapArchiveHandle);
+	}
+	else if (!multiPlayerMode && !(GameCheats & CHEAT_NoGlues) && active_campaign_entry_index != -1)
+	{
+		if (const char* establishing_shot = active_campaign->entries[active_campaign_entry_index].establishing_shot)
+		{
+			loadInitCreditsBIN_(establishing_shot);
+		}
 	}
 }
 
