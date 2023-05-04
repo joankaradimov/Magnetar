@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
 #include <ddraw.h>
 #include <process.h>
 #include <time.h>
@@ -5313,6 +5314,20 @@ void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
 	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 }
 
+void* sub_4CCAC0_chk(const char* a1, int* chk_size)
+{
+	std::ifstream infile(a1, std::ios_base::binary, std::ios_base::binary);
+
+	infile.seekg(0, std::ios::end);
+	*chk_size = infile.tellg();
+
+	infile.seekg(0, std::ios::beg);
+	char* buffer = (char*)SMemAlloc(*chk_size, __FILE__, __LINE__, NULL);
+	infile.read(buffer, *chk_size);
+
+	return buffer;
+}
+
 int sub_4CC350_(const char* a2, int* a3, size_t a4)
 {
 	int a2a;
@@ -5343,6 +5358,10 @@ void* read_chk_data(const char* filename, int* a2, int* chk_size)
 	if (CampaignIndex)
 	{
 		return sub_4CCAC0_campaign(filename, chk_size);
+	}
+	else if (std::filesystem::path(filename).extension() == ".chk")
+	{
+		return sub_4CCAC0_chk(filename, chk_size);
 	}
 	else
 	{
@@ -17811,7 +17830,7 @@ void fileExt_(const char* a1, MapDirEntryFlags flags)
 			{
 				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
 			}
-			else if (extension == ".scm")
+			else if (extension == ".scm" || extension == ".chk")
 			{
 				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
 			}
