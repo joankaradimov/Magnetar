@@ -16290,42 +16290,36 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 		return 0;
 	}
 
-	auto v8 = campaign->entries.begin();
-	if (v8 == campaign->entries.end())
+	for (auto v8 = campaign->entries.begin(); v8 != campaign->entries.end(); v8++)
 	{
-		return 0;
-	}
-	while (v8->cinematic || v8->hide || v5--)
-	{
-		++v8;
-		if (v8 == campaign->entries.end())
+		if (!(v8->cinematic || v8->hide || v5--))
 		{
-			return 0;
-		}
-	}
-	if (campaign_index_ && *campaign_index_)
-	{
-		int v10 = tolower(*campaign_index_) - 'a';
-		while (v10)
-		{
-			--v10;
-			if (v8 == campaign->entries.end())
+			if (campaign_index_ && *campaign_index_)
 			{
-				return 0;
+				int v10 = tolower(*campaign_index_) - 'a';
+				while (v10)
+				{
+					--v10;
+					if (v8 == campaign->entries.end())
+					{
+						return 0;
+					}
+					++v8;
+					if (!v8->hide)
+					{
+						return 0;
+					}
+				}
+				if (v8 == campaign->entries.end())
+				{
+					return 0;
+				}
 			}
-			++v8;
-			if (!v8->hide)
-			{
-				return 0;
-			}
-		}
-		if (v8 == campaign->entries.end())
-		{
-			return 0;
+			*a5 = v8 - campaign->entries.begin();
+			return 1;
 		}
 	}
-	*a5 = v8 - campaign->entries.begin();
-	return 1;
+	return 0;
 }
 
 FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
