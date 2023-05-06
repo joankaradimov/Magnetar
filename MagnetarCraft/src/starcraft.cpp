@@ -17715,14 +17715,15 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		{
 			v13 = CreateLadderGame_(&game_data, a3);
 		}
-		else
+		else if (initSingle())
 		{
-			if (!initSingle())
-			{
-				return 0x80000007;
-			}
 			v13 = CreateGame_(&game_data);
 		}
+		else
+		{
+			return 0x80000007;
+		}
+
 		if (v13)
 		{
 			save_Recent_Map_Data(v8);
