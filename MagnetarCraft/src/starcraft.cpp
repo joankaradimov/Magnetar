@@ -13686,6 +13686,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 	}
 }
 
+FAIL_STUB_PATCH(sub_4D3220);
 FAIL_STUB_PATCH(onSendText);
 
 int __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
