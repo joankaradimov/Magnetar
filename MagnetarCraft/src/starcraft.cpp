@@ -17125,8 +17125,8 @@ FAIL_STUB_PATCH(loadMenu_gluLogin);
 
 void loadMenu_gluCmpgn_()
 {
-	OpheliaEnabled = GLUE_MAIN_MENU;
-	multiPlayerMode = GLUE_MAIN_MENU;
+	OpheliaEnabled = 0;
+	multiPlayerMode = 0;
 	sub_4B26E0();
 	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluCmpgn.bin");
 
