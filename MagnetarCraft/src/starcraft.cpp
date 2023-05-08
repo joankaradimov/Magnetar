@@ -7670,8 +7670,8 @@ IDirectSoundBuffer* sub_4BCA30_(SfxData sfx_id, struct_5* a2)
 {
 	if (SFXData_SoundFile[sfx_id])
 	{
-		char buff[260];
-		_snprintf(buff, 0x104u, "sound\\%s", SFXData_SoundFile[sfx_id]);
+		char buff[MAX_PATH];
+		_snprintf(buff, sizeof(buff), "sound\\%s", SFXData_SoundFile[sfx_id]);
 		return LoadSoundProc(buff, a2);
 	}
 	else
@@ -8281,8 +8281,8 @@ FAIL_STUB_PATCH(getFullMapChunk);
 
 int SaveReplay_(const char* a1, int a3)
 {
-	CHAR FileName[260];
-	if (!getDirectoryPath(FileName, 0x104u, a1))
+	CHAR FileName[MAX_PATH];
+	if (!getDirectoryPath(FileName, sizeof(FileName), a1))
 	{
 		return 0;
 	}
@@ -13829,9 +13829,9 @@ FAIL_STUB_PATCH(load_textbox_BIN);
 
 void LoadConsoleImage_()
 {
-	char buff[260];
+	char buff[MAX_PATH];
 	char v0 = InReplay ? 'n' : race_lowercase_char_id[consoleIndex];
-	_snprintf(buff, 0x104u, "game\\%c%s", v0, "console.pcx");
+	_snprintf(buff, sizeof(buff), "game\\%c%s", v0, "console.pcx");
 
 	void* buffer;
 	int width;
@@ -18541,10 +18541,10 @@ FAIL_STUB_PATCH(gluMain_DisplayCDRomErrorBinDlg);
 
 signed int loadStareditProcess_(dialog* a1)
 {
-	CHAR CommandLine[260];
-	CHAR Filename[260];
+	CHAR CommandLine[MAX_PATH];
+	CHAR Filename[MAX_PATH];
 
-	if (!GetModuleFileNameA(hInst, Filename, 0x104u))
+	if (!GetModuleFileNameA(hInst, Filename, sizeof(Filename)))
 	{
 		Filename[0] = 0;
 	}
@@ -20588,8 +20588,8 @@ FAIL_STUB_PATCH(ConfirmReplayOverwrite);
 
 int CopyLastReplayTo_(char* a1)
 {
-	CHAR FileName[260];
-	if (!getDirectoryPath(FileName, 0x104u, a1))
+	CHAR FileName[MAX_PATH];
+	if (!getDirectoryPath(FileName, sizeof(FileName), a1))
 	{
 		return 0;
 	}
