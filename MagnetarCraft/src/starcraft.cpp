@@ -7251,55 +7251,47 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	memset(a4->force_flags, 0, sizeof(a4->force_flags));
 	a4->version = 0;
 	a4->data7 = 0;
-	if (InReplay)
+
+	if (InReplay ? ReadLobbyChunks(scenarioChk, scenarioChkSize, a4) : strlen(source) != 0 && sub_4CCAC0_(source, a4))
 	{
-		if (!ReadLobbyChunks(scenarioChk, scenarioChkSize, a4))
+		for (int player = _countof(LobbyPlayers) - 1; player >= 0; player--)
 		{
-			return 0;
+			LobbyPlayers[player].dwPlayerID = player;
+			LobbyPlayers[player].dwStormId = -1;
+			if (LobbyPlayers[player].nRace == RaceId::RACE_Select)
+			{
+				LobbyPlayers[player].nRace = RaceId::RACE_Random;
+				if (player < 8)
+					playerForce[player] = 1;
+			}
+			if (player >= 8)
+			{
+				LobbyPlayers[player].nType = PlayerType::PT_NotUsed;
+				LobbyPlayers[player].nRace = RaceId::RACE_Zerg;
+				LobbyPlayers[player].nTeam = 0;
+			}
 		}
+
+		sub_4A91E0_();
+		sub_45AC10(a4->player_force);
+		updatePlayerForce();
+
+		strcpy_s(CurrentMapFileName, source);
+		if (!is_campaign)
+		{
+			CampaignIndex = MD_none;
+		}
+		__int16 v12 = LOWORD(a4->data0);
+		dword_5994DC = 1;
+		const char* v13 = GetMapTblString(v12);
+
+		strcpy_s(CurrentMapName, v13);
+		return 1;
 	}
-	else if (strlen(source) == 0)
+	else
 	{
 		return 0;
 	}
-	else if (!sub_4CCAC0_(source, a4))
-	{
-		return 0;
-	}
-
-	for (int player = _countof(LobbyPlayers) - 1; player >= 0; player--)
-	{
-		LobbyPlayers[player].dwPlayerID = player;
-		LobbyPlayers[player].dwStormId = -1;
-		if (LobbyPlayers[player].nRace == RaceId::RACE_Select)
-		{
-			LobbyPlayers[player].nRace = RaceId::RACE_Random;
-			if (player < 8)
-				playerForce[player] = 1;
-		}
-		if (player >= 8)
-		{
-			LobbyPlayers[player].nType = PlayerType::PT_NotUsed;
-			LobbyPlayers[player].nRace = RaceId::RACE_Zerg;
-			LobbyPlayers[player].nTeam = 0;
-		}
-	}
-
-	sub_4A91E0_();
-	sub_45AC10(a4->player_force);
-	updatePlayerForce();
-
-	strcpy_s(CurrentMapFileName, source);
-	if (!is_campaign)
-	{
-		CampaignIndex = MD_none;
-	}
-	__int16 v12 = LOWORD(a4->data0);
-	dword_5994DC = 1;
-	const char* v13 = GetMapTblString(v12);
-
-	strcpy_s(CurrentMapName, v13);
-	return 1;
 }
 
 FAIL_STUB_PATCH(ReadMapData);
