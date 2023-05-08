@@ -2418,12 +2418,12 @@ int InitializeArchiveHandles_()
 	std::filesystem::path broodat_path = starcraft_path / "Broodat.mpq";
 	std::filesystem::path patch_rt_path = starcraft_path / "patch_rt.mpq";
 
-	if (!SFileOpenArchive(stardat_path.generic_string().c_str(), 2000u, 2u, &stardat_mpq))
+	if (!SFileOpenArchive(stardat_path.generic_string().c_str(), 2000, 2, &stardat_mpq))
 	{
 		SysWarn_FileNotFound("Stardat.mpq", GetLastError());
 	}
 
-	if (SFileOpenArchive(patch_rt_path.generic_string().c_str(), 7000u, 2u, &patch_rt_mpq))
+	if (SFileOpenArchive(patch_rt_path.generic_string().c_str(), 7000, 2, &patch_rt_mpq))
 	{
 		strcpy_s(patch_archive_file, patch_rt_path.generic_string().c_str());
 	}
@@ -2439,7 +2439,7 @@ int InitializeArchiveHandles_()
 	if (separator)
 		*separator = 0;
 	strcat_s(magnetarDatFilename, "\\MagnetarDat.mpq");
-	if (!SFileOpenArchive(magnetarDatFilename, 8000u, 2u, &magnetar_mpq))
+	if (!SFileOpenArchive(magnetarDatFilename, 8000, 2, &magnetar_mpq))
 	{
 		SysWarn_FileNotFound("MagnetarDat.mpq", GetLastError());
 	}
@@ -2452,7 +2452,7 @@ int InitializeArchiveHandles_()
 	archive_files[0] = 0;
 	if (!is_spawn)
 	{
-		if (SFileOpenArchive(broodat_path.generic_string().c_str(), 2500u, 2u, &broodat_mpq))
+		if (SFileOpenArchive(broodat_path.generic_string().c_str(), 2500, 2, &broodat_mpq))
 		{
 			strcpy_s(archive_files, broodat_path.generic_string().c_str());
 			strcat_s(archive_files, ";");
