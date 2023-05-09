@@ -18449,6 +18449,56 @@ int load_gluGameMode_BINDLG_()
 
 FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
 
+int BWFXN_gluPOKCancel_MBox_(const char* a1)
+{
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	dword_6D5A40 = off_51A6E4;
+	dword_599D98 = 12;
+	strcpy(byte_599C98, a1);
+	byte_599B98[0] = 0;
+
+	char fileName[MAX_PATH];
+	strcpy_s(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
+	strcat_s(fileName, "\\pDPopup.pcx");
+
+	u8* data;
+	int width, height;
+	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**)&data, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(fileName, SErrGetLastError());
+	}
+	p_hist_pcx.wid = width;
+	p_hist_pcx.ht = height;
+	p_hist_pcx.data = data;
+
+	dialog* dword_6D5A3C = (dialog*) fastFileRead_(NULL, 0, "rez\\gluPOkCancel.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (dword_6D5A3C)
+	{
+		dword_6D5A3C->lFlags |= DialogFlags::CTRL_ACTIVE;
+		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 369);
+	}
+	return gluLoadBINDlg(dword_6D5A3C, Popup_Main) == 1;
+}
+
+int __cdecl BWFXN_gluPOKCancel_MBox__()
+{
+	const char* a1;
+
+	__asm mov a1, eax
+
+	return BWFXN_gluPOKCancel_MBox_(a1);
+}
+
+FUNCTION_PATCH((void*)0x4B73B0, BWFXN_gluPOKCancel_MBox__);
+
 BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
 {
 	HANDLE phFile;
@@ -18468,11 +18518,11 @@ BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
 	{
 		return 1;
 	}
-	if ((unsigned __int8)BWFXN_gluPOKCancel_MBox(get_GluAll_String(a2)))
+	if ((unsigned __int8)BWFXN_gluPOKCancel_MBox_(get_GluAll_String(a2)))
 	{
 		while (!InitializeCDArchives(filename, 0))
 		{
-			if (!(unsigned __int8)BWFXN_gluPOKCancel_MBox(get_GluAll_String(a2)))
+			if (!(unsigned __int8)BWFXN_gluPOKCancel_MBox_(get_GluAll_String(a2)))
 			{
 				goto LABEL_11;
 			}
@@ -19412,7 +19462,7 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 				LastControlID = 5;
 				return DLG_SwishOut_(dlg);
 			case 6:
-				if (dword_59B82C && !BWFXN_gluPOKCancel_MBox(get_GluAll_String((GluAllTblEntry)82)))
+				if (dword_59B82C && !BWFXN_gluPOKCancel_MBox_(get_GluAll_String((GluAllTblEntry)82)))
 				{
 					return 1;
 				}
