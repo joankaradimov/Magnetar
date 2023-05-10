@@ -6771,6 +6771,56 @@ int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 
 FUNCTION_PATCH(Popup_Main, Popup_Main_);
 
+void BWFXN_gluPOK_MBox_(const char* a1)
+{
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	dword_6D5A40 = off_51A6DC;
+	dword_599D98 = 8;
+	strcpy(byte_599C98, a1);
+	byte_599B98[0] = 0;
+
+	char fileName[260];
+	strcpy_s(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
+	strcat_s(fileName, "\\pOPopup.pcx");
+
+	u8* data;
+	int height, width;
+	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**)&data, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(fileName, SErrGetLastError());
+	}
+	p_hist_pcx.wid = (unsigned __int16)width;
+	p_hist_pcx.ht = (unsigned __int16)height;
+	p_hist_pcx.data = data;
+
+	dialog* dword_6D5A3C = (dialog * ) fastFileRead_(0, 0, "rez\\gluPOk.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (dword_6D5A3C)
+	{
+		dword_6D5A3C->lFlags |= DialogFlags::CTRL_ACTIVE;
+		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 396);
+	}
+	gluLoadBINDlg(dword_6D5A3C, Popup_Main_);
+}
+
+void __cdecl BWFXN_gluPOK_MBox__()
+{
+	const char* a1;
+
+	__asm mov a1, eax
+
+	BWFXN_gluPOK_MBox_(a1);
+}
+
+FUNCTION_PATCH((void*) 0x4B7180, BWFXN_gluPOK_MBox__);
+
 void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 {
 	if (dword_6D5A3C)
@@ -6784,7 +6834,7 @@ void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 	}
 	if (!a1 || !*a1)
 	{
-		BWFXN_gluPOK_MBox(a2);
+		BWFXN_gluPOK_MBox_(a2);
 		return;
 	}
 	dword_6D5A40 = off_51A6B8;
@@ -17259,7 +17309,7 @@ int __fastcall gluJoin_Main_(dialog* dlg, struct dlgEvent* evt)
 			else
 			{
 				const char* str = GetNetworkTblString_(104);
-				BWFXN_gluPOK_MBox(str);
+				BWFXN_gluPOK_MBox_(str);
 			}
 			return 1;
 		case USER_INIT:
@@ -17998,7 +18048,7 @@ int gluCustmLoadMapFromList_()
 				}
 			}
 
-			BWFXN_gluPOK_MBox(get_GluAll_String(error_tbl_entry));
+			BWFXN_gluPOK_MBox_(get_GluAll_String(error_tbl_entry));
 		}
 	}
 
@@ -18533,7 +18583,7 @@ BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
 LABEL_11:
 	while (!InitializeCDArchives(0, 0))
 	{
-		BWFXN_gluPOK_MBox(get_GluAll_String((GluAllTblEntry) 0xA9));
+		BWFXN_gluPOK_MBox_(get_GluAll_String((GluAllTblEntry) 0xA9));
 	}
 	return cd_archive_mpq && SFileExists(filename, cd_archive_mpq);
 }
@@ -18627,7 +18677,7 @@ signed int loadStareditProcess_(dialog* a1)
 	else
 	{
 		const char* v8 = get_GluAll_String_(SPAWNED_BY);
-		BWFXN_gluPOK_MBox(v8);
+		BWFXN_gluPOK_MBox_(v8);
 		return 0;
 	}
 }
@@ -18681,7 +18731,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 				if (is_spawn)
 				{
 					const char* s = GetNetworkTblString_(103);
-					BWFXN_gluPOK_MBox(s);
+					BWFXN_gluPOK_MBox_(s);
 					return true;
 				}
 				else if (is_expansion_installed)
@@ -19477,7 +19527,7 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 			case 9:
 				if (is_spawn)
 				{
-					BWFXN_gluPOK_MBox(GetNetworkTblString_(104));
+					BWFXN_gluPOK_MBox_(GetNetworkTblString_(104));
 					return 1;
 				}
 				return DLG_SwishOut_(dlg);
@@ -20102,15 +20152,15 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 	case 7:
 		if (!InReplay && sub_44F7B0() < 2)
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x72));
+			BWFXN_gluPOK_MBox_(get_GluAll_String_((GluAllTblEntry)0x72));
 		}
 		else if (!InReplay && isGameTypeSpecial() && getHumansOnTeam(1) < 2)
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x0BA));
+			BWFXN_gluPOK_MBox_(get_GluAll_String_((GluAllTblEntry)0x0BA));
 		}
 		else if (map_download && !IsDownloadComplete(map_download))
 		{
-			BWFXN_gluPOK_MBox(get_GluAll_String_((GluAllTblEntry)0x73));
+			BWFXN_gluPOK_MBox_(get_GluAll_String_((GluAllTblEntry)0x73));
 		}
 		else
 		{
