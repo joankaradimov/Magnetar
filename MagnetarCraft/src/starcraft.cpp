@@ -6741,7 +6741,92 @@ int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FUNCTION_PATCH(gluPEdit_Main, gluPEdit_Main_);
+FAIL_STUB_PATCH(gluPEdit_Main);
+
+bool __stdcall BWFXN_gluPEdit_MBox_(char* text, char* dest, size_t size, char* restricted)
+{
+	if (dword_6D5A3C)
+	{
+		LastControlID = dword_6D5A54;
+		if (!dword_6D5A54)
+		{
+			LastControlID = 3;
+		}
+		DestroyDialog(dword_6D5A3C);
+	}
+	SStrCopy(byte_599C98, text, 0xFFu);
+	SStrCopy(byte_599A90, dest, 0xFFu);
+	dword_599A88 = (int)restricted;
+	dword_6D5A40 = off_51A6CC;
+	dword_599D98 = 16;
+
+	char fileName[MAX_PATH];
+	SStrCopy(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path, sizeof(fileName));
+	strcat_s(fileName, "\\pEPopup.pcx");
+
+	u8* buffer;
+	int width, height;
+	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**) &buffer, &width, &height, 0, 0, allocFunction))
+	{
+		SysWarn_FileNotFound(fileName, SErrGetLastError());
+	}
+	p_hist_pcx.wid = (unsigned __int16)width;
+	p_hist_pcx.ht = (unsigned __int16)height;
+	p_hist_pcx.data = (u8*)buffer;
+
+	dword_6D5A3C = (dialog*) fastFileRead_(0, 0, "rez\\gluPEdit.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	if (dword_6D5A3C)
+	{
+		dword_6D5A3C->lFlags |= DialogFlags::CTRL_ACTIVE;
+		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 432);
+	}
+
+	getControlFromIndex_(dword_6D5A3C, 4)->lUser = size;
+	if (GetUserDefaultLangID() == 1042)
+	{
+		HIMC Context = dword_6D6438;
+		if (!dword_6D6438)
+		{
+			Context = ImmGetContext(hWndParent);
+			dword_6D6438 = Context;
+		}
+		ImmAssociateContext(hWndParent, Context);
+	}
+	int BINDlg = gluLoadBINDlg(dword_6D5A3C, gluPEdit_Main_);
+	if (GetUserDefaultLangID() == 1042)
+	{
+		if (!dword_6D6438)
+		{
+			dword_6D6438 = ImmGetContext(hWndParent);
+		}
+		dword_6D6438 = ImmAssociateContext(hWndParent, 0);
+	}
+	if (BINDlg != 1)
+	{
+		return 0;
+	}
+
+	int v19 = size;
+	char* v20 = byte_599A90;
+	char v21;
+	if (byte_599A90[0])
+	{
+		do
+		{
+			v21 = *++v20;
+			--v19;
+		} while (v21);
+	}
+	if (v19 > 0)
+	{
+		memset(v20, 0, v19);
+	}
+	SStrCopy(dest, byte_599A90, size);
+	byte_599A90[0] = 0;
+	return 1;
+}
+
+FUNCTION_PATCH(BWFXN_gluPEdit_MBox, BWFXN_gluPEdit_MBox_);
 
 int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 {
