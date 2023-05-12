@@ -6854,7 +6854,7 @@ int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FUNCTION_PATCH(Popup_Main, Popup_Main_);
+FAIL_STUB_PATCH(Popup_Main);
 
 void BWFXN_gluPOK_MBox_(const char* a1)
 {
@@ -18620,7 +18620,7 @@ int BWFXN_gluPOKCancel_MBox_(const char* a1)
 		dword_6D5A3C->lFlags |= DialogFlags::CTRL_ACTIVE;
 		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 369);
 	}
-	return gluLoadBINDlg(dword_6D5A3C, Popup_Main) == 1;
+	return gluLoadBINDlg(dword_6D5A3C, Popup_Main_) == 1;
 }
 
 int __cdecl BWFXN_gluPOKCancel_MBox__()
