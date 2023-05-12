@@ -16183,9 +16183,8 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		a2->lFlags |= CTRL_UNKOWN1;
 		sub_41E450(sub_4BDB30, palette);
 		sub_4178B0(palette, NULL);
-		MenuPosition v9 = glGluesMode;
 		getBGPalInfo(glGluesMode);
-		MenuPosition v10 = stru_4FFAD0[v9].menu_position;
+		MenuPosition v10 = stru_4FFAD0[glGluesMode].menu_position;
 		DlgGrp* v11 = dword_51C5C8[v10];
 		memcpy(&stru_6CE000, &dword_51C40C[v10], sizeof(stru_6CE000));
 		sub_419290(v11);
