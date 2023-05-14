@@ -19831,6 +19831,44 @@ void sub_4D3860_()
 
 FAIL_STUB_PATCH(sub_4D3860);
 
+bool userHasMap_()
+{
+	CHAR Filename[MAX_PATH];
+	if (!GetModuleFileNameA(0, Filename, sizeof(Filename)))
+	{
+		Filename[0] = 0;
+	}
+	char* v0 = strrchr(Filename, '\\');
+	if (v0)
+	{
+		v0[1] = 0;
+	}
+
+	char dest[260];
+	strcpy_s(dest, Filename);
+	strcat_s(dest, "maps\\download\\");
+
+	char base[260];
+	strcpy_s(base, Filename);
+	strcat_s(base, "maps\\");
+
+	map_download = 0;
+	mapStringCreate(playerid, (int)LOBSEND_SendMapData, MaxTurnSize - 4, dest, base);
+	if (!isHost)
+	{
+		return true;
+	}
+	if (loadGameFileHandle)
+	{
+		return true;
+	}
+	map_download = CreateMapDownload(CurrentMapFileName);
+
+	return map_download;
+}
+
+FAIL_STUB_PATCH(userHasMap);
+
 signed int sub_4D4130_()
 {
 	game_starting_maybe = 0;
@@ -19892,7 +19930,7 @@ signed int sub_4D4130_()
 	countdown_finished_maybe = 0;
 	dword_6D5C28 = 0;
 	cleanBufferCounts_();
-	if (userHasMap())
+	if (userHasMap_())
 	{
 		download_percentage = -1;
 		dword_66FF48 = GetTickCount();
