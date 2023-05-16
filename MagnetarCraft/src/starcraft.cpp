@@ -19831,6 +19831,30 @@ void sub_4D3860_()
 
 FAIL_STUB_PATCH(sub_4D3860);
 
+BOOL extensionIsValidMap_(const char* path)
+{
+	if (const char* extension_separator = strrchr(path, '.'))
+	{
+		const char* extension = extension_separator + 1;
+		if (!_stricmp(extension, "scx") || !_stricmp(extension, "scm") || !_stricmp(extension, "rep"))
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+
+BOOL __cdecl extensionIsValidMap__()
+{
+	const char* path;
+
+	__asm mov path, eax
+
+	return extensionIsValidMap_(path);
+}
+
+FUNCTION_PATCH((void*)0x459FB0, extensionIsValidMap__);
+
 bool userHasMap_()
 {
 	CHAR Filename[MAX_PATH];
