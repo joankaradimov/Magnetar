@@ -19836,7 +19836,7 @@ BOOL extensionIsValidMap_(const char* path)
 	if (const char* extension_separator = strrchr(path, '.'))
 	{
 		const char* extension = extension_separator + 1;
-		if (!_stricmp(extension, "scx") || !_stricmp(extension, "scm") || !_stricmp(extension, "rep"))
+		if (!_stricmp(extension, "scx") || !_stricmp(extension, "scm") || !_stricmp(extension, "rep") || !_stricmp(extension, "chk"))
 		{
 			return 1;
 		}
