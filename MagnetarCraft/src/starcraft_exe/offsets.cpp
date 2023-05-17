@@ -5161,7 +5161,7 @@ signed UMAnotherPath(CUnit *unit, points p) {
 DECL_FUNC(CUnit ** (*sub_42FE90)(), sub_42FE90, 0x42fe90);
 DECL_FUNC(int (*sub_42FEC0)(), sub_42FEC0, 0x42fec0);
 DECL_FUNC(void (__cdecl*resetUnitBoundsLists_GetMaxUnitTypeSize)(), resetUnitBoundsLists_GetMaxUnitTypeSize, 0x42fee0);
-CUnit ** getAllUnitsInBounds(int a1) {
+CUnit ** getAllUnitsInBounds(__int16 *a1) {
     int address = 0x42ff80;
     CUnit ** result_;
     __asm {
@@ -21940,9 +21940,9 @@ int sub_4AAE20(char *a1, unsigned int *a2, _BYTE **a3, unsigned int a4) {
 }
 DECL_FUNC(void (__stdcall*eventSetGameType)(s_evt *evt), eventSetGameType, 0x4aaea0);
 DECL_FUNC(BOOL (*sub_4AAF30)(), sub_4AAF30, 0x4aaf30);
-int sub_4AAF50(char a1, __int16 a2, GameType template_id) {
+BOOL sub_4AAF50(char a1, __int16 a2, GameType template_id) {
     int address = 0x4aaf50;
-    int result_;
+    BOOL result_;
     __asm {
         xor eax, eax
         xor edx, edx
@@ -26156,7 +26156,7 @@ DECL_FUNC(void (__cdecl*InitializeInputProcs)(), InitializeInputProcs, 0x4d2ff0)
 DECL_FUNC(void (__cdecl*InitAccelerators)(), InitAccelerators, 0x4d3070);
 DECL_FUNC(void (*j_InitializeInputProcs)(), j_InitializeInputProcs, 0x4d31f0);
 DECL_FUNC(HACCEL (*sub_4D3200)(), sub_4D3200, 0x4d3200);
-DECL_FUNC(HACCEL (*sub_4D3220)(), sub_4D3220, 0x4d3220);
+DECL_FUNC(void (__cdecl*sub_4D3220)(), sub_4D3220, 0x4d3220);
 DECL_FUNC(void (__cdecl*cleanBufferCounts)(), cleanBufferCounts, 0x4d3240);
 _BYTE * sub_4D32E0(unsigned __int8 a1, char a2) {
     int address = 0x4d32e0;
@@ -33469,7 +33469,7 @@ int(&dword_57EE7C)[7] = * ((decltype(&dword_57EE7C)) 0x57ee7c);
 int(&dword_57EE98)[] = * ((decltype(&dword_57EE98)) 0x57ee98);
 char(&playerName)[25] = * ((decltype(&playerName)) 0x57ee9c);
 int& playerExploredVisions = * ((decltype(&playerExploredVisions)) 0x57eeb8);
-int& turn_counter = * ((decltype(&turn_counter)) 0x57eebc);
+unsigned int& turn_counter = * ((decltype(&turn_counter)) 0x57eebc);
 int(&dword_57EEC0)[] = * ((decltype(&dword_57EEC0)) 0x57eec0);
 int& dword_57EEC4 = * ((decltype(&dword_57EEC4)) 0x57eec4);
 int& dword_57EEC8 = * ((decltype(&dword_57EEC8)) 0x57eec8);
@@ -33850,7 +33850,7 @@ __int16(&word_63FE2C)[] = * ((decltype(&word_63FE2C)) 0x63fe2c);
 CSprite *& UnusedSprites = * ((decltype(&UnusedSprites)) 0x63fe30);
 CSprite *& dword_63FE34 = * ((decltype(&dword_63FE34)) 0x63fe34);
 char& byte_63FE38 = * ((decltype(&byte_63FE38)) 0x63fe38);
-__int16(&word_63FE40)[8] = * ((decltype(&word_63FE40)) 0x63fe40);
+unsigned __int16(&word_63FE40)[1][8] = * ((decltype(&word_63FE40)) 0x63fe40);
 char& byte_63FEC0 = * ((decltype(&byte_63FEC0)) 0x63fec0);
 char& byte_63FEC1 = * ((decltype(&byte_63FEC1)) 0x63fec1);
 char& byte_63FEC2 = * ((decltype(&byte_63FEC2)) 0x63fec2);

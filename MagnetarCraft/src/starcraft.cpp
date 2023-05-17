@@ -7380,7 +7380,8 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		CampaignIndex = MD_none;
 	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
 	memset(playerForce, 0, 8);
-	a4->data0 = 0;
+	a4->tbl_index_title = 0;
+	a4->tbl_index_description = 0;
 	memset(a4->player_force, 0, sizeof(a4->player_force));
 	memset(a4->tbl_index_force_name, 0, sizeof(a4->tbl_index_force_name));
 	memset(a4->force_flags, 0, sizeof(a4->force_flags));
@@ -7416,9 +7417,8 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		{
 			CampaignIndex = MD_none;
 		}
-		__int16 v12 = LOWORD(a4->data0);
 		dword_5994DC = 1;
-		const char* v13 = GetMapTblString(v12);
+		const char* v13 = GetMapTblString(a4->tbl_index_title);
 
 		strcpy_s(CurrentMapName, v13);
 		return 1;
@@ -17558,12 +17558,12 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 				map_dir_entry->map_width_tiles = map_size.width;
 				map_dir_entry->map_height_tiles = map_size.height;
 				map_dir_entry->tileset = CurrentTileSet;
-				strcpy_s(map_dir_entry->title, LOWORD(a4.data0) ? get_chk_String(a4.data0) : "");
+				strcpy_s(map_dir_entry->title, a4.tbl_index_title ? get_chk_String(a4.tbl_index_title) : "");
 				if (strlen(map_dir_entry->title) > 0)
 				{
 					strcpy_s(map_dir_entry->title, map_dir_entry->filename);
 				}
-				strcpy_s(map_dir_entry->description, HIWORD(a4.data0) ? get_chk_String(SHIWORD(a4.data0)) : "");
+				strcpy_s(map_dir_entry->description, a4.tbl_index_description ? get_chk_String(a4.tbl_index_description) : "");
 				sprintf_s(map_dir_entry->unknown_x478, get_GluAll_String(NUMBER_OF_PLAYERS), map_dir_entry->human_player_slots_maybe);
 				sprintf_s(map_dir_entry->map_dimension_string, get_GluAll_String(MAP_SIZE), map_dir_entry->map_width_tiles, map_dir_entry->map_height_tiles);
 				sprintf_s(map_dir_entry->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), map_dir_entry->computer_slots);
@@ -17779,7 +17779,8 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		}
 
 		MapChunks a4a;
-		a4a.data0 = 0;
+		a4a.tbl_index_title = 0;
+		a4a.tbl_index_description = 0;
 		for (int i = 0; i < _countof(a4a.player_force); i++)
 		{
 			a4a.player_force[i] = 0;
@@ -22379,7 +22380,8 @@ unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 g
 	}
 
 	MapChunks a4;
-	a4.data0 = 0;
+	a4.tbl_index_title = 0;
+	a4.tbl_index_description = 0;
 	for (int i = 0; i < _countof(a4.player_force); i++)
 	{
 		a4.player_force[i] = 0;
@@ -22403,7 +22405,7 @@ unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 g
 	GameData game_data;
 	memset(&game_data, 0, sizeof(game_data));
 	SStrCopy(game_data.player_name, a3, 0x20u);
-	const char* v6 = LOWORD(a4.data0) ? get_chk_String(a4.data0) : "";
+	const char* v6 = a4.tbl_index_title ? get_chk_String(a4.tbl_index_title) : "";
 	SStrCopy(game_data.map_name, v6, sizeof(game_data.map_name));
 	game_data.active_human_players = 1;
 	game_data.max_players = getTotalValidSlotCount();
