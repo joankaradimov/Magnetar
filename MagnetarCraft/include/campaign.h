@@ -113,3 +113,7 @@ struct Campaign
 extern std::vector<Campaign> campaigns;
 extern std::vector<Campaign*> campaigns_by_race;
 extern std::vector<Campaign*> expcampaigns_by_race;
+
+CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog = nullptr);
+CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, Cinematic cinematic, bool hide);
+CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epilog_music_track);
