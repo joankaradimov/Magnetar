@@ -18309,7 +18309,7 @@ int __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 
 FAIL_STUB_PATCH(gluCustm_RaceSlot);
 
-BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
+void gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 {
 	static FnInteract functions[] = {
 		NULL,
@@ -18358,13 +18358,11 @@ BYTE gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 	custom_game_submode = getControlFromIndex_(dlg, 18);
 	custom_game_slots = getControlFromIndex_(dlg, 19);
 
-	if (multiPlayerMode)
+	if (!multiPlayerMode)
 	{
-		return 0;
+		byte_59BB6C = registry_options.GameSpeed;
+		registry_options.GameSpeed;
 	}
-
-	byte_59BB6C = registry_options.GameSpeed;
-	return registry_options.GameSpeed;
 }
 
 FAIL_STUB_PATCH(gluCustm_CustomCtrl_InitializeChildren);
