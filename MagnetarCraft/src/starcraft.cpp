@@ -17559,7 +17559,7 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 				map_dir_entry->map_height_tiles = map_size.height;
 				map_dir_entry->tileset = CurrentTileSet;
 				strcpy_s(map_dir_entry->title, a4.tbl_index_title ? get_chk_String(a4.tbl_index_title) : "");
-				if (strlen(map_dir_entry->title) > 0)
+				if (strlen(map_dir_entry->title) == 0)
 				{
 					strcpy_s(map_dir_entry->title, map_dir_entry->filename);
 				}
