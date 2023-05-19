@@ -6222,6 +6222,158 @@ FAIL_STUB_PATCH(load_gluMinimap);
 
 DatLoad* spritesDat_;
 
+const char* TILESET_NAMES[] = {
+	"badlands",
+	"platform",
+	"install",
+	"AshWorld",
+	"Jungle",
+	"Desert",
+	"Ice",
+	"Twilight",
+};
+
+void InitializePresetImageArrays_()
+{
+	memset(images, 0, sizeof(images));
+	memset(stru_57EB78, 0, sizeof(stru_57EB78));
+	memset(stru_57D768, 0, sizeof(stru_57D768));
+	memset(stru_5244B8, 0, sizeof(stru_5244B8));
+	memset(stru_51DE70, 0, sizeof(stru_51DE70));
+
+	dword_57EB6C = stru_57EB78;
+	dword_5254B8 = stru_57EB78;
+
+	InitializeHealthBarImage(0, stru_57EB78);
+	unsigned v0 = 1;
+	CImage* v1 = &stru_57EB78[1];
+	do
+	{
+		if (dword_57EB6C == stru_57EB78)
+		{
+			dword_57EB6C = v1;
+		}
+		v1->prev = stru_57EB78;
+		v1->next = stru_57EB78[0].next;
+		if (stru_57EB78[0].next)
+		{
+			stru_57EB78[0].next->prev = v1;
+		}
+		stru_57EB78[0].next = v1;
+		InitializeHealthBarImage(v0++, v1++);
+	} while (v0 < _countof(stru_57EB78));
+
+	dword_52E4C0 = stru_57D768;
+	dword_52F564 = stru_57D768;
+
+	CImage* v2 = &stru_57D768[1];
+	int v3 = 79;
+	do
+	{
+		if (dword_52E4C0 == stru_57D768)
+		{
+			dword_52E4C0 = v2;
+		}
+		v2->prev = stru_57D768;
+		v2->next = stru_57D768[0].next;
+		if (stru_57D768[0].next)
+		{
+			stru_57D768[0].next->prev = v2;
+		}
+		stru_57D768[0].next = v2++;
+		--v3;
+	} while (v3);
+	dword_51F1F8 = stru_5244B8;
+	dword_52E4C4 = stru_5244B8;
+
+	CImage* v4 = &stru_5244B8[1];
+	int v5 = 63;
+	do
+	{
+		if (dword_51F1F8 == stru_5244B8)
+		{
+			dword_51F1F8 = v4;
+		}
+		v4->prev = stru_5244B8;
+		v4->next = stru_5244B8[0].next;
+		if (stru_5244B8[0].next)
+		{
+			stru_5244B8[0].next->prev = v4;
+		}
+		stru_5244B8[0].next = v4++;
+		--v5;
+	} while (v5);
+
+	dword_5240B4 = stru_51DE70;
+	dword_51EE70 = stru_51DE70;
+
+	stru_51DE70[0].flags &= ~(IF_CLICKABLE | IF_HAS_ISCRIPT_ANIMATIONS | IF_HAS_DIRECTIONAL_FRAMES);
+	stru_51DE70[0].imageID = 583;
+	stru_51DE70[0].GRPFile = stru_51EE78;
+	stru_51EE78[0].wFrames = 1;
+	stru_51DE70[0].frameSet = 0;
+	stru_51DE70[0].direction = 0;
+	stru_51DE70[0].frameIndex = 0;
+	stru_51DE70[0].paletteType = 15;
+	stru_51DE70[0].updateFunction = update_functions[15].update_function;
+	stru_51DE70[0].renderFunction = stru_51DE70[0].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? render_functions[15].RenderFunction2 : stru_51DE70[0].renderFunction = render_functions[15].RenderFunction1;
+	stru_51DE70[0].flags |= ImageFlags::IF_REDRAW;
+
+	for (int i = 1; i < _countof(stru_51DE70); i++)
+	{
+		if (dword_5240B4 == stru_51DE70)
+		{
+			dword_5240B4 = stru_51DE70 + i;
+		}
+		stru_51DE70[i].prev = stru_51DE70;
+		stru_51DE70[i].next = stru_51DE70[0].next;
+		if (stru_51DE70[0].next)
+		{
+			stru_51DE70[0].next->prev = stru_51DE70 + i;
+		}
+		stru_51DE70[0].next = stru_51DE70 + i;
+		stru_51DE70[i].imageID = 583;
+		stru_51DE70[i].GRPFile = stru_51EE78 + 1 + i;
+		stru_51DE70[i].GRPFile->wFrames = 1;
+		stru_51DE70[i].updateFunction = update_functions[15].update_function;
+		stru_51DE70[i].renderFunction = stru_51DE70[i].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? render_functions[15].RenderFunction2 : render_functions[15].RenderFunction1;
+		stru_51DE70[i].flags &= ~(IF_CLICKABLE | IF_HAS_ISCRIPT_ANIMATIONS | IF_HAS_DIRECTIONAL_FRAMES);
+		stru_51DE70[i].frameSet = 0;
+		stru_51DE70[i].direction = 0;
+		stru_51DE70[i].frameIndex = 0;
+		stru_51DE70[i].paletteType = 15;
+		stru_51DE70[i].flags |= ImageFlags::IF_REDRAW;
+	}
+
+	dword_57EB70 = images;
+	dword_57EB68 = images;
+
+	for (int i = 1; i < _countof(images); i++)
+	{
+		CImage* v16 = images + i;
+		if (dword_57EB70 == images)
+		{
+			dword_57EB70 = v16;
+		}
+		v16->prev = images;
+		v16->next = images[0].next;
+		if (images[0].next)
+		{
+			images[0].next->prev = v16;
+		}
+		images[0].next = v16;
+	}
+
+	char buff[MAX_PATH];
+	sprintf_s(buff, "Tileset\\%s\\shift.pcx", TILESET_NAMES[CurrentTileSet]);
+	if (!SBmpLoadImage(buff, 0, tileset_shift, 256, 0, 0, 0))
+	{
+		SysWarn_FileNotFound(buff, SErrGetLastError());
+	}
+}
+
+FAIL_STUB_PATCH(InitializePresetImageArrays);
+
 void InitializeSpriteArray_()
 {
 	// TODO: dynamically allocate spritesDat memory
@@ -7132,7 +7284,7 @@ int sub_4EEFD0_()
 	memcpy(stru_59C6C0, palette, sizeof(stru_59C6C0));
 	sub_49BB90();
 	initMapData_();
-	InitializePresetImageArrays();
+	InitializePresetImageArrays_();
 	InitializeSpriteArray_();
 	InitializeThingyArray_();
 	InitializeFlingyDat_();
@@ -7280,7 +7432,7 @@ signed int GameInit_()
 	resetTextAndLineData();
 	GameInitAI_();
 	initMapData_();
-	InitializePresetImageArrays();
+	InitializePresetImageArrays_();
 	InitializeSpriteArray_();
 	InitializeThingyArray_();
 	InitializeFlingyDat_();
@@ -14234,19 +14386,6 @@ void setMapSizeConstants_()
 }
 
 FAIL_STUB_PATCH(setMapSizeConstants);
-
-const char* TILESET_NAMES[] = {
-	"badlands",
-	"platform",
-	"install",
-	"AshWorld",
-	"Jungle",
-	"Desert",
-	"Ice",
-	"Twilight",
-};
-
-MEMORY_PATCH(0x4D6D41, TILESET_NAMES);
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3)
 {
