@@ -8606,13 +8606,14 @@ int SaveReplay_(const char* a1, int a3)
 			v5 = WriteGameActions(v4, replayData);
 			if (v5)
 			{
-				void* v6 = getFullMapChunk_(CurrentMapFileName, &a3);
+				int chk_size;
+				void* v6 = getFullMapChunk_(CurrentMapFileName, &chk_size);
 				if (v6)
 				{
-					v5 = CompressWrite(&a3, 4, v4);
+					v5 = CompressWrite(&chk_size, 4, v4);
 					if (v5)
 					{
-						v5 = CompressWrite(v6, a3, v4);
+						v5 = CompressWrite(v6, chk_size, v4);
 					}
 					SMemFree(v6, "Starcraft\\SWAR\\lang\\replay.cpp", 940, 0);
 				}
