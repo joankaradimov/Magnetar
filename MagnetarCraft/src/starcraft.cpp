@@ -7530,8 +7530,8 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	CurrentMapFileName[0] = 0;
 	if (!is_campaign)
 		CampaignIndex = MD_none;
-	memset(LobbyPlayers, 0, sizeof(PlayerInfo[12]));
-	memset(playerForce, 0, 8);
+	memset(LobbyPlayers, 0, sizeof(LobbyPlayers));
+	memset(playerForce, 0, sizeof(playerForce));
 	a4->tbl_index_title = 0;
 	a4->tbl_index_description = 0;
 	memset(a4->player_force, 0, sizeof(a4->player_force));
