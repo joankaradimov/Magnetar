@@ -8228,6 +8228,22 @@ void __fastcall FreeGameActionData_(bool exit_code)
 
 FAIL_STUB_PATCH(FreeGameActionData);
 
+void __cdecl sub_4CDFC0_()
+{
+	replayData->field2 = 0;
+}
+
+FAIL_STUB_PATCH(sub_4CDFC0);
+
+void sub_4CDFD0_()
+{
+	replayData->field1 = 0;
+	replayData->field2 = 1;
+	replayData->field8 = replayData->net_record_buffer;
+}
+
+FAIL_STUB_PATCH(sub_4CDFD0);
+
 void __cdecl createNewGameActionDataBlock_()
 {
 	FreeGameActionData_(false);
@@ -8501,9 +8517,7 @@ signed int LoadGameInit_()
 	{
 		copyPlayerStructsToReplayPlayerStructs(Players, &gameData);
 		dword_6D5BF0 = 0;
-		replayData->field1 = 0;
-		replayData->field2 = 1;
-		replayData->field8 = replayData->net_record_buffer;
+		sub_4CDFD0_();
 		ReplayVision = 255;
 		playerVisions = 255;
 		replayShowEntireMap = 0;
@@ -9425,7 +9439,7 @@ void DestroyGame_()
 	dword_6D5A60 = (int)InReplay;
 	if (InReplay)
 	{
-		replayData->field2 = 0;
+		sub_4CDFC0_();
 		freeChkFileMem_();
 		InReplay = 0;
 		game_id_hash = 0;
