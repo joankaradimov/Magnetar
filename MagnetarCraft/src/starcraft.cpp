@@ -9501,6 +9501,18 @@ void updateActiveTileInfo_()
 
 FAIL_STUB_PATCH(updateActiveTileInfo);
 
+MegatileFlags VISIBLE_ALL =
+	MegatileFlags::VISIBLE_PLAYER_1 | MegatileFlags::VISIBLE_PLAYER_2 |
+	MegatileFlags::VISIBLE_PLAYER_3 | MegatileFlags::VISIBLE_PLAYER_4 |
+	MegatileFlags::VISIBLE_PLAYER_5 | MegatileFlags::VISIBLE_PLAYER_6 |
+	MegatileFlags::VISIBLE_PLAYER_7 | MegatileFlags::VISIBLE_PLAYER_8;
+
+MegatileFlags EXPLORED_ALL =
+	MegatileFlags::EXPLORED_PLAYER_1 | MegatileFlags::EXPLORED_PLAYER_2 |
+	MegatileFlags::EXPLORED_PLAYER_3 | MegatileFlags::EXPLORED_PLAYER_4 |
+	MegatileFlags::EXPLORED_PLAYER_5 | MegatileFlags::EXPLORED_PLAYER_6 |
+	MegatileFlags::EXPLORED_PLAYER_7 | MegatileFlags::EXPLORED_PLAYER_8;
+
 void RemoveFoWCheat_()
 {
 	if (multiPlayerMode)
@@ -9517,7 +9529,7 @@ void RemoveFoWCheat_()
 		RefreshLayer5();
 		for (int i = 0; i < map_size.width * map_size.height; i++)
 		{
-			active_tiles[i] |= VISIBLE_PLAYER_8 | VISIBLE_PLAYER_7 | VISIBLE_PLAYER_6 | VISIBLE_PLAYER_5 | VISIBLE_PLAYER_4 | VISIBLE_PLAYER_3 | VISIBLE_PLAYER_2 | VISIBLE_PLAYER_1;
+			active_tiles[i] |= VISIBLE_ALL;
 		}
 	}
 }
@@ -15986,7 +15998,7 @@ void sub_480960_()
 {
 	for (int i = 0; i < MAX_MAP_DIMENTION * MAX_MAP_DIMENTION; i++)
 	{
-		active_tiles[i] |= EXPLORED_PLAYER_8 | EXPLORED_PLAYER_7 | EXPLORED_PLAYER_6 | EXPLORED_PLAYER_5 | EXPLORED_PLAYER_4 | EXPLORED_PLAYER_3 | EXPLORED_PLAYER_2 | EXPLORED_PLAYER_1 | VISIBLE_PLAYER_8 | VISIBLE_PLAYER_7 | VISIBLE_PLAYER_6 | VISIBLE_PLAYER_5 | VISIBLE_PLAYER_4 | VISIBLE_PLAYER_3 | VISIBLE_PLAYER_2 | VISIBLE_PLAYER_1;
+		active_tiles[i] |= EXPLORED_ALL | VISIBLE_ALL;
 	}
 	sub_480430();
 	InitializeSightValues(12, line_of_sight, map_size.width);
