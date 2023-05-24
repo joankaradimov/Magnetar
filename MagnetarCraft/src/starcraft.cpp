@@ -11822,6 +11822,83 @@ void sub_4591D0_()
 
 FAIL_STUB_PATCH(sub_4591D0);
 
+void replayStatBtns_(dialog* dlg)
+{
+	showDialog(getControlFromIndex_(dlg, 10));
+	DLGsetProgressBarValue(dlg, 10, 100 * ElapsedTimeFrames / replay_header.ReplayFrames);
+	const char* v3;
+	if (*StatTxtTbl.buffer > 0x608u)
+	{
+		v3 = (char*)StatTxtTbl.buffer + StatTxtTbl.buffer[1545];
+	}
+	else
+	{
+		v3 = empty_string;
+	}
+	char v16[4] = { 3, 0 };
+	sprintf_s(byte_6CA988, "%s%s", v16, v3);
+	AddTextToDialog(dlg, -45, byte_6CA988);
+
+	char buff[32];
+	DWORD v4 = ElapsedTimeFrames * dword_4FF90C[replay_header.game_data.game_speed] / 1000 / 3600;
+	DWORD v13 = ElapsedTimeFrames * dword_4FF90C[replay_header.game_data.game_speed] / 1000 % 60;
+	DWORD v11 = ElapsedTimeFrames * dword_4FF90C[replay_header.game_data.game_speed] / 1000 / 60 % 60;
+	if (v4)
+	{
+		sprintf_s(buff, "%d:%02d:%02d", v4, v11, v13);
+	}
+	else
+	{
+		sprintf_s(buff, "%02d:%02d", v11, v13);
+	}
+	sprintf_s(byte_6CA7A0, get_GluAll_String((GluAllTblEntry)16), buff);
+	AddTextToDialog(dlg, -46, byte_6CA7A0);
+
+	if (is_replay_paused)
+	{
+		if (dword_6D11B4)
+		{
+			char* v6;
+			if (*StatTxtTbl.buffer > 0x609u)
+			{
+				v6 = (char*)StatTxtTbl.buffer + StatTxtTbl.buffer[1546];
+			}
+			else
+			{
+				v6 = (char*)empty_string;
+			}
+			char* v7 = (char*)(byte_6CAC10 - v6);
+			char v8;
+			do
+			{
+				v8 = *v6;
+				v6[(_DWORD)v7] = *v6;
+				++v6;
+			} while (v8);
+		}
+		else
+		{
+			byte_6CAC10[0] = 0;
+		}
+	}
+	else
+	{
+		char v15[8];
+		v15[0] = 0;
+		if (replay_speed_multiplier > 1)
+		{
+			const char* v9 = registry_options.GameSpeed >= 3 ? "x" : "/";
+			sprintf_s(v15, " %s %d", v9, replay_speed_multiplier);
+		}
+		const char* v12 = get_GluAll_String((GluAllTblEntry)(LOWORD(registry_options.GameSpeed) + 85));
+		const char* v10 = get_GluAll_String((GluAllTblEntry)0x5D);
+		sprintf_s(byte_6CAC10, "%s %s%s", v10, v12, v15);
+	}
+	AddTextToDialog(dlg, -47, byte_6CAC10);
+}
+
+FAIL_STUB_PATCH(replayStatBtns);
+
 void updateCurrentButtonset_()
 {
 	u16 v0 = word_68C1C8;
@@ -11868,7 +11945,7 @@ LABEL_14:
 		}
 		if (InReplay)
 		{
-			replayStatBtns(current_dialog);
+			replayStatBtns_(current_dialog);
 		}
 		CanUpdateCurrentButtonSet = 0;
 	}
