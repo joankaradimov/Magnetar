@@ -698,7 +698,7 @@ void FatalError_(const char* arg0, ...)
 	va_list va;
 
 	va_start(va, arg0);
-	_vsnprintf(fatal_error_message, sizeof(fatal_error_message), arg0, va);
+	vsprintf_s(fatal_error_message, arg0, va);
 	fatal_error_message[511] = 0;
 	ErrorLogSystemInfo();
 	ErrorLog("%s", fatal_error_message);
@@ -1483,7 +1483,7 @@ void SysWarn_FileNotFound_(const char* a1, int last_error)
 	char Buffer[256];
 
 	char* v2 = GetErrorString(Buffer, 0x100u, last_error);
-	_snprintf(dwInitParam, 0x200u, "%s\n%s", a1, v2);
+	sprintf_s(dwInitParam, "%s\n%s", a1, v2);
 	SErrSuppressErrors(1);
 	SNetLeaveGame(3);
 	SNetDestroy();
@@ -2319,7 +2319,7 @@ dialog* LoadDialog(const char* bin_path)
 void InitializeFontKey_(void)
 {
 	char buff[MAX_PATH];
-	_snprintf(buff, MAX_PATH, "%s\\%s.gid", "font", "font");
+	sprintf_s(buff, "%s\\%s.gid", "font", "font");
 	void* v0 = fastFileRead_(&cdkey_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (v0 && cdkey_encrypted_len == 0)
 	{
@@ -2328,7 +2328,7 @@ void InitializeFontKey_(void)
 	}
 
 	cdkey_encrypted = v0;
-	_snprintf(buff, MAX_PATH, "%s\\%s.clh", "font", "font");
+	sprintf_s(buff, "%s\\%s.clh", "font", "font");
 	void* v1 = fastFileRead_(&cdkeyowner_encrypted_len, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (v1 == NULL)
 	{
@@ -2340,7 +2340,7 @@ void InitializeFontKey_(void)
 		v1 = NULL;
 	}
 	cdkeyowner_encrypted = v1;
-	_snprintf(buff, MAX_PATH, "%s\\%s.ccd", "font", "font");
+	sprintf_s(buff, "%s\\%s.ccd", "font", "font");
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
 
@@ -2361,9 +2361,8 @@ void LoadMainModuleStringInfo_()
 				VS_FIXEDFILEINFO* lpBuffer;
 				unsigned int puLen;
 				if (VerQueryValueA(v2, "\\", (LPVOID*)&lpBuffer, &puLen))
-					_snprintf(
+					sprintf_s(
 						aInternalVersio,
-						MAX_PATH,
 						"Version %d.%d.%d",
 						HIWORD(lpBuffer->dwProductVersionMS),
 						LOWORD(lpBuffer->dwProductVersionMS),
@@ -2780,7 +2779,7 @@ GotFileValues* readTemplate_(const char* template_name, char* got_template_name,
 	char buff[MAX_PATH];
 	int got_file_size;
 
-	_snprintf(buff, sizeof(buff), "%s%s%s", "Templates\\", template_name, ".got");
+	sprintf_s(buff, "%s%s%s", "Templates\\", template_name, ".got");
 	GotFile* got_file_data = (GotFile*)fastFileRead_(&got_file_size, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!got_file_data)
 	{
@@ -2812,7 +2811,7 @@ int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
 	char v7[MAX_PATH];
 	int v10;
 
-	_snprintf(buff, sizeof(buff), "%s%s", "Templates\\", "templates.lst");
+	sprintf_s(buff, "%s%s", "Templates\\", "templates.lst");
 	BYTE* v1 = (BYTE*)fastFileRead(&v10, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
 	if (v1 == nullptr)
@@ -3046,7 +3045,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 	if (!v6)
 		v6 = "";
 	char* v8 = GetErrorString_(Buffer, sizeof(Buffer), last_error);
-	_snprintf(dwInitParam, 512u, "%s\n%s line %d\n%s", v8, v5, source_line, v6);
+	sprintf_s(dwInitParam, "%s\n%s line %d\n%s", v8, v5, source_line, v6);
 	SErrSuppressErrors(1);
 	SNetLeaveGame(3);
 	SNetDestroy();
@@ -3754,7 +3753,7 @@ void LoadBtnSfxFile_()
 
 	if (SFXData_SoundFile[SFX_Misc_Button_1])
 	{
-		_snprintf(buff, 0x104u, "sound\\%s", SFXData_SoundFile[15]);
+		sprintf_s(buff, "sound\\%s", SFXData_SoundFile[15]);
 		dword_6D1268 = LoadSoundProc(buff, 0);
 	}
 	else
@@ -3943,7 +3942,7 @@ unsigned __stdcall DSoundThread_(void* a2)
 					goto LABEL_16;
 				}
 				char buff[MAX_PATH];
-				_snprintf(buff, sizeof(buff), "sound\\%s", SFXData_SoundFile[sfx_id]);
+				sprintf_s(buff, "sound\\%s", SFXData_SoundFile[sfx_id]);
 				location = (void*)fastFileRead(&bytes_read, 1, buff, 0, 1, "Starcraft\\SWAR\\lang\\snd.cpp", 737);
 				if (location)
 				{
@@ -5310,7 +5309,7 @@ FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
 void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
 {
 	char campaign_map_path[MAX_PATH];
-	_snprintf(campaign_map_path, MAX_PATH, "%s\\%s", a1, "staredit\\scenario.chk");
+	sprintf_s(campaign_map_path, "%s\\%s", a1, "staredit\\scenario.chk");
 	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 }
 
@@ -7162,7 +7161,7 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 	char buff[256] = { 0 };
 	if (error_message && file_name && line)
 	{
-		_snprintf(buff, sizeof(buff), "%s file: %s:%d", error_message, file_name, line);
+		sprintf_s(buff, "%s file: %s:%d", error_message, file_name, line);
 	}
 
 	if (gwGameMode == GAME_RUN)
@@ -7958,7 +7957,7 @@ IDirectSoundBuffer* sub_4BCA30_(SfxData sfx_id, struct_5* a2)
 	if (SFXData_SoundFile[sfx_id])
 	{
 		char buff[MAX_PATH];
-		_snprintf(buff, sizeof(buff), "sound\\%s", SFXData_SoundFile[sfx_id]);
+		sprintf_s(buff, "sound\\%s", SFXData_SoundFile[sfx_id]);
 		return LoadSoundProc(buff, a2);
 	}
 	else
@@ -8592,7 +8591,7 @@ int SaveReplay_(const char* a1, int a3)
 	{
 		char buff[256];
 		const char* var = GetNetworkTblString_(2);
-		_snprintf(buff, 0x100u, var, &byte_51BFB8);
+		sprintf_s(buff, var, &byte_51BFB8);
 		loadOKBIN_(1, buff, dword_6D0F2C);
 		return -1;
 	}
@@ -9076,7 +9075,7 @@ int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 	{
 		char new_[1024];
 		sub_4B31C0(stru_59A0F0, byte_59B3D8, 8, v18[i].score_calc);
-		_snprintf(new_, sizeof(new_), v18[i].format_string,
+		sprintf_s(new_, v18[i].format_string,
 			stru_59A0F0[g_LocalNationID].total_score_field,
 			stru_59A0F0[g_LocalNationID].score_field_0,
 			stru_59A0F0[g_LocalNationID].score_field_1,
@@ -12466,7 +12465,7 @@ void sub_4C4A80_(int a1, int a2)
 		if (stru_66FE20[a1].field_0 && stru_66FE20[a1].player_name)
 		{
 			char buff[128];
-			_snprintf(buff, sizeof(buff), GetNetworkTblString_(a2 == 0x40000006 ? 76 : 75), getPlayerName(a1));
+			sprintf_s(buff, GetNetworkTblString_(a2 == 0x40000006 ? 76 : 75), getPlayerName(a1));
 			printLobbyString(8, buff);
 		}
 	}
@@ -13251,7 +13250,7 @@ void statport_Buttonpress_(dialog* dlg)
 	BINDLG_BlitSurface_(dlg);
 
 	char buff[MAX_PATH];
-	_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", InReplay ? 'n' : race_lowercase_char_id[consoleIndex], "conover.pcx");
+	sprintf_s(buff, "%s%c%s", "game\\", InReplay ? 'n' : race_lowercase_char_id[consoleIndex], "conover.pcx");
 	stru_68AC78.data = 0;
 
 	void* buffer;
@@ -13481,12 +13480,12 @@ void ProgressBar_Create_(dialog* a1)
 	a1->wUser = 0;
 	if (!progress_bar_empty_pcx.data)
 	{
-		_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrempt.pcx");
+		sprintf_s(buff, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrempt.pcx");
 		AllocBackgroundImage(buff, &progress_bar_empty_pcx, 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 222);
 	}
 	if (!progress_bar_full_pcx.data)
 	{
-		_snprintf(buff, MAX_PATH, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrfull.pcx");
+		sprintf_s(buff, "%s%c%s", "game\\", race_lowercase_char_id[consoleIndex], "pbrfull.pcx");
 		AllocBackgroundImage(buff, &progress_bar_full_pcx, 0, "Starcraft\\SWAR\\lang\\statdata.cpp", 226);
 	}
 }
@@ -13790,7 +13789,7 @@ void load_statbtn_BIN_()
 	word_68C1C8 = 228;
 	word_68C1C4 = 228;
 	word_68C1BC = -1;
-	_snprintf(buff, MAX_PATH, "unit\\cmdbtns\\%ccmdbtns.grp", race_lowercase_char_id[consoleIndex]);
+	sprintf_s(buff, "unit\\cmdbtns\\%ccmdbtns.grp", race_lowercase_char_id[consoleIndex]);
 	cmdbtns_grp = (void*)LoadGraphic(buff, 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1086);
 	cmdicons_grp = (void*)LoadGraphic("unit\\cmdbtns\\cmdicons.grp", 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1089);
 	if (!SBmpLoadImage("unit\\cmdbtns\\ticon.pcx", 0, byte_68C150, 96, 0, 0, 0))
@@ -13798,7 +13797,7 @@ void load_statbtn_BIN_()
 		SysWarn_FileNotFound("unit\\cmdbtns\\ticon.pcx", SErrGetLastError());
 	}
 
-	_snprintf(buff, MAX_PATH, "rez\\statbtn%c.bin", InReplay ? 'n' : race_lowercase_char_id[consoleIndex]);
+	sprintf_s(buff, "rez\\statbtn%c.bin", InReplay ? 'n' : race_lowercase_char_id[consoleIndex]);
 	current_dialog = LoadDialog(buff);
 	InitializeDialog_(current_dialog, statbtn_DLG_Interact_);
 }
@@ -14134,7 +14133,7 @@ FAIL_STUB_PATCH(textbox_DLG_Interact);
 void load_textbox_BIN_()
 {
 	char buff[80];
-	_snprintf(buff, sizeof(buff), "rez\\%ctextbox.bin", race_lowercase_char_id[consoleIndex]);
+	sprintf_s(buff, "rez\\%ctextbox.bin", race_lowercase_char_id[consoleIndex]);
 	textbox_bin = LoadDialog(buff);
 	InitializeDialog_(textbox_bin, textbox_DLG_Interact_);
 }
@@ -14145,7 +14144,7 @@ void LoadConsoleImage_()
 {
 	char buff[MAX_PATH];
 	char v0 = InReplay ? 'n' : race_lowercase_char_id[consoleIndex];
-	_snprintf(buff, sizeof(buff), "game\\%c%s", v0, "console.pcx");
+	sprintf_s(buff, "game\\%c%s", v0, "console.pcx");
 
 	void* buffer;
 	int width;
@@ -15837,7 +15836,7 @@ FAIL_STUB_PATCH(InitTerrainGraphicsAndCreep);
 void loadParallaxStarGfx_(const char* parallaxFile)
 {
 	char parallaxFilePath[MAX_PATH];
-	snprintf(parallaxFilePath, MAX_PATH, "parallax\\%s.spk", parallaxFile);
+	sprintf_s(parallaxFilePath, "parallax\\%s.spk", parallaxFile);
 
 	parallaxSomethingWidth = 165888;
 	parallaxSomethingHeight = 124928;
@@ -15981,7 +15980,7 @@ void sub_4BDDD0_(const char* tileset_name)
 	{
 		byte_50CDC1[i] = i;
 	}
-	_snprintf(buff, sizeof(buff), "Tileset\\%s\\dark.pcx", tileset_name);
+	sprintf_s(buff, "Tileset\\%s\\dark.pcx", tileset_name);
 	if (!SBmpLoadImage(buff, 0, byte_5973A0, 0x2000, 0, 0, 0))
 	{
 		SysWarn_FileNotFound(buff, SErrGetLastError());
@@ -16029,19 +16028,19 @@ void initMapData_()
 	memset(active_tiles, 0, MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles));
 	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
 
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".wpe");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vf4");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vf4");
 	MiniTileFlags = (MiniTileMaps_type *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	megatileCount = bytes_read / sizeof(MiniTileFlagArray);
 
 	GenerateMegatileDefaultFlags_();
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".cv5");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".cv5");
 	TileSetMap = (TileType *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	TileSetMapSize = bytes_read / sizeof(TileType);
 
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".grp");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".grp");
 
 	struct_a1 a1;
 	a1.pfunc0 = sub_47E2D0;
@@ -16051,10 +16050,10 @@ void initMapData_()
 	InitTerrainGraphicsAndCreep_(&a1, MapTileArray, map_size.width, map_size.height, filename);
 	ZergCreepArray = location;
 
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vx4");
 	VX4Data = (vx4entry *)fastFileRead_(&bytes_read, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
-	_snprintf(filename, MAX_PATH, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
+	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".vr4");
 	VR4Data = (vr4entry*) fastFileRead_(0, 0, filename, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	if (!dword_5993AC)
 	{
@@ -20989,7 +20988,7 @@ int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 	}
 
 	char buff[256];
-	_snprintf(buff, 0x100u, GetNetworkTblString_(a2), v3);
+	sprintf_s(buff, GetNetworkTblString_(a2), v3);
 
 	free(v3);
 	return loadOKCancelBIN_(1, buff, dword_6D0F2C) == -2;
@@ -21662,9 +21661,8 @@ void TakeScreenshot_()
 	GetLocalTime(&SystemTime);
 
 	char buff[MAX_PATH];
-	_snprintf(
+	sprintf_s(
 		buff,
-		MAX_PATH,
 		"SCScrnShot_%02d%02d%02d_%02d%02d%02d.pcx",
 		SystemTime.wMonth,
 		SystemTime.wDay,
@@ -21677,7 +21675,7 @@ void TakeScreenshot_()
 	{
 		const char* v0 = GetNetworkTblString_(110);
 		char text[512];
-		_snprintf(text, 0x200u, v0, buff);
+		sprintf_s(text, v0, buff);
 		InfoMessage(2000, text);
 	}
 }
@@ -22518,7 +22516,7 @@ FAIL_STUB_PATCH(creditsDlgInteract);
 void loadInitCreditsBIN_(const char* a1)
 {
 	char buff[MAX_PATH];
-	_snprintf(buff, MAX_PATH, "rez\\%s.txt", a1);
+	sprintf_s(buff, "rez\\%s.txt", a1);
 
 	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	dword_51CEBC = dword_51CEA8;
@@ -23071,11 +23069,11 @@ void UpdateCountdownTimer_()
 
 	if (CountdownTimer / 3600)
 	{
-		_snprintf(buff, sizeof(buff), "%d:%02d:%02d", CountdownTimer / 3600, CountdownTimer % 3600 / 60, CountdownTimer % 60);
+		sprintf_s(buff, "%d:%02d:%02d", CountdownTimer / 3600, CountdownTimer % 3600 / 60, CountdownTimer % 60);
 	}
 	else
 	{
-		_snprintf(buff, sizeof(buff), "%d:%02d", CountdownTimer / 60, CountdownTimer % 60);
+		sprintf_s(buff, "%d:%02d", CountdownTimer / 60, CountdownTimer % 60);
 	}
 	setCountdownTimerString(buff);
 }
@@ -23293,7 +23291,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 		}
 		else
 		{
-			_snprintf(buff, 260u, "%s\\%s", MapdataFilenames_[CampaignIndex], chk_string);
+			sprintf_s(buff, "%s\\%s", MapdataFilenames_[CampaignIndex], chk_string);
 		}
 		PlayWavByFilename_maybe(buff);
 	}
