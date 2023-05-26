@@ -8253,6 +8253,33 @@ void __cdecl createNewGameActionDataBlock_()
 
 FUNCTION_PATCH(createNewGameActionDataBlock, createNewGameActionDataBlock_);
 
+bool sub_4CE220_(FILE* file)
+{
+	BOOL result = DecompressRead(&replayData->field4, 4, file);
+	if (!result)
+	{
+		return 0;
+	}
+	else
+	{
+		if (replayData->field4 > 0)
+		{
+			while (replayData->field4 > replayData->net_record_size)
+			{
+				sub_4CDD30(replayData);
+			}
+			result = DecompressRead(replayData->net_record_buffer, replayData->field4, file);
+			if (!result)
+			{
+				return 0;
+			}
+		}
+		return result;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4CE220);
+
 void __cdecl freeChkFileMem_();
 
 int LoadReplayFile_(const char* filename, int* a3)
@@ -8294,7 +8321,7 @@ int LoadReplayFile_(const char* filename, int* a3)
 	CampaignIndex = replay_header.campaign_index;
 	createNewGameActionDataBlock();
 
-	if (!sub_4CE220(replay_file))
+	if (!sub_4CE220_(replay_file))
 	{
 		fclose(replay_file);
 		return 0;
