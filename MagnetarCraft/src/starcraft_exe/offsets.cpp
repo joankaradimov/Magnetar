@@ -4260,10 +4260,10 @@ void sub_427540(dialog *a1) {
     }
 }
 DECL_FUNC(void (__fastcall*UnitStatAct_Building)(dialog *dlg), UnitStatAct_Building, 0x427890);
-void replayStatBtns(dialog *a1) {
+void replayStatBtns(dialog *dlg) {
     int address = 0x427a80;
     __asm {
-        mov ebx, a1
+        mov ebx, dlg
         call address
     }
 }
@@ -7201,7 +7201,7 @@ DECL_FUNC(bool (__fastcall*AI_RecallRequirementsProc)(CUnit *a1, CUnit *a2), AI_
 DECL_FUNC(int (__fastcall*AI_RestorationRequirementsProc)(CUnit *a1, CUnit *a2), AI_RestorationRequirementsProc, 0x4407e0);
 DECL_FUNC(int (__fastcall*AI_RestorationRequirementsProc2)(CUnit *a1, CUnit *a2), AI_RestorationRequirementsProc2, 0x440870);
 DECL_FUNC(int (__fastcall*IsUnitVisibleIteratorProc)(CUnit *a1, int a2), IsUnitVisibleIteratorProc, 0x4408a0);
-DECL_FUNC(BOOL (__fastcall*powerupCanBePickedUpProc)(CUnit *a1, CUnit *a2), powerupCanBePickedUpProc, 0x440930);
+DECL_FUNC(int (__fastcall*powerupCanBePickedUpProc)(CUnit *a1, CUnit *a2), powerupCanBePickedUpProc, 0x440930);
 DECL_FUNC(BOOL (__fastcall*isUnitTypeOwnerAllied)(CUnit *unit, UnitType unit_type), isUnitTypeOwnerAllied, 0x440980);
 DECL_FUNC(CUnit * (__fastcall*sub_4409D0)(int a1, int a2), sub_4409D0, 0x4409d0);
 DECL_FUNC(int (__fastcall*AI_targetEnemyProc)(CUnit *a1, CUnit *a2), AI_targetEnemyProc, 0x440a20);
@@ -9228,13 +9228,12 @@ int sub_44F8D0(int a1, _DWORD *a2, const char *a3, int a4, _DWORD *a5) {
     }
     return result_;
 }
-BOOL sub_44FA60(int a1, int a2, char a3) {
+BOOL sub_44FA60(int a1, char a2) {
     int address = 0x44fa60;
     BOOL result_;
     __asm {
         xor eax, eax
-        push dword ptr a3
-        mov edx, a2
+        push dword ptr a2
         mov eax, a1
         call address
         mov result_, eax
@@ -10681,7 +10680,7 @@ int sub_45ABE0(size_t size_, char *dest, int result) {
 }
 DECL_FUNC(signed (__thiscall*sub_45AC10)(u8 *this_), sub_45AC10, 0x45ac10);
 DECL_FUNC(int (*GetEmptiestTeam)(), GetEmptiestTeam, 0x45ad20);
-DECL_FUNC(int (*updatePlayerForce)(), updatePlayerForce, 0x45ad90);
+DECL_FUNC(void (__cdecl*updatePlayerForce)(), updatePlayerForce, 0x45ad90);
 DECL_FUNC(int (__fastcall*GetFreeSlotFromEmptiestTeam)(_DWORD a1, _DWORD a2), GetFreeSlotFromEmptiestTeam, 0x45ade0);
 void sub_45AE20(int a1) {
     int address = 0x45ae20;
@@ -13438,7 +13437,7 @@ void LOBSEND_PlayerForceData(unsigned int a1) {
     }
 }
 DECL_FUNC(void (__stdcall*LOBSEND_SendMapData)(const void *a1, unsigned int a2, unsigned __int8 a3), LOBSEND_SendMapData, 0x470400);
-void LOBSEND_BootPlayer(char a1, int a2, int a3) {
+void LOBSEND_BootPlayer(char a1, int a2, unsigned int a3) {
     int address = 0x470480;
     __asm {
         xor eax, eax
@@ -21972,7 +21971,7 @@ BOOL sub_4AAFA0(char a1, __int16 a2, char a3) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*sub_4AAFF0)(int this_), sub_4AAFF0, 0x4aaff0);
+DECL_FUNC(BOOL (__thiscall*sub_4AAFF0)(int this_), sub_4AAFF0, 0x4aaff0);
 int sub_4AB050(int a1, int a2) {
     int address = 0x4ab050;
     int result_;
@@ -22031,7 +22030,7 @@ void CTFCreateFlagBeacon(int a1) {
         call address
     }
 }
-DECL_FUNC(void (*sub_4ABA20)(), sub_4ABA20, 0x4aba20);
+DECL_FUNC(void (__cdecl*sub_4ABA20)(), sub_4ABA20, 0x4aba20);
 DECL_FUNC(signed (*chooseTRGTemplate)(), chooseTRGTemplate, 0x4abaf0);
 int sub_4ABC90(int a1, LPCSTR lpszString, int nFit, int a4) {
     int address = 0x4abc90;
@@ -22880,13 +22879,13 @@ void sub_4B5CC0(const char *error_message, const char *a2) {
     }
 }
 DECL_FUNC(int (__thiscall*sub_4B5E80)(void *this_), sub_4B5E80, 0x4b5e80);
-DECL_FUNC(int (*sub_4B5EB0)(), sub_4B5EB0, 0x4b5eb0);
+DECL_FUNC(void (*sub_4B5EB0)(), sub_4B5EB0, 0x4b5eb0);
 DECL_FUNC(int (__thiscall*sub_4B5EC0)(int this_), sub_4B5EC0, 0x4b5ec0);
-DECL_FUNC(u32 (__thiscall*sub_4B5EF0)(dialog *this_), sub_4B5EF0, 0x4b5ef0);
+DECL_FUNC(int (__thiscall*sub_4B5EF0)(dialog *this_), sub_4B5EF0, 0x4b5ef0);
 DECL_FUNC(void (__stdcall*SaveGame_Constructor)(int a1), SaveGame_Constructor, 0x4b6010);
-u32 sub_4B6180(dialog *a1) {
+int sub_4B6180(dialog *a1) {
     int address = 0x4b6180;
-    u32 result_;
+    int result_;
     __asm {
         xor eax, eax
         mov esi, a1
@@ -22895,9 +22894,9 @@ u32 sub_4B6180(dialog *a1) {
     }
     return result_;
 }
-u32 sub_4B61C0(dialog *a1) {
+int sub_4B61C0(dialog *a1) {
     int address = 0x4b61c0;
-    u32 result_;
+    int result_;
     __asm {
         xor eax, eax
         mov esi, a1
@@ -23070,9 +23069,9 @@ void load_gluPOKSplitBINDLG(const char *a1, const char *a2) {
 }
 DECL_FUNC(_DWORD * (*sub_4B7C90)(), sub_4B7C90, 0x4b7c90);
 DECL_FUNC(int (__fastcall*sub_4B7CB0)(int a1, const char *a2), sub_4B7CB0, 0x4b7cb0);
-DECL_FUNC(_DWORD * (*sub_4B7D10)(), sub_4B7D10, 0x4b7d10);
+DECL_FUNC(void (__cdecl*sub_4B7D10)(), sub_4B7D10, 0x4b7d10);
 DECL_FUNC(int (__thiscall*sub_4B7DA0)(dialog *this_), sub_4B7DA0, 0x4b7da0);
-DECL_FUNC(int (*sub_4B7DE0)(), sub_4B7DE0, 0x4b7de0);
+DECL_FUNC(void (*sub_4B7DE0)(), sub_4B7DE0, 0x4b7de0);
 DECL_FUNC(void (*DestroyGameNodes)(), DestroyGameNodes, 0x4b7df0);
 DialogFlags sub_4B7E10(dialog *dlg) {
     int address = 0x4b7e10;
@@ -24523,7 +24522,7 @@ DECL_FUNC(void (__fastcall*leaveOnQuit)(bool exit_code), leaveOnQuit, 0x4c4680);
 DECL_FUNC(void (*RECV_MakeGamePublic)(), RECV_MakeGamePublic, 0x4c46e0);
 DECL_FUNC(void (__cdecl*ReportGameResult)(), ReportGameResult, 0x4c4790);
 DECL_FUNC(BOOL (*sub_4C4870)(), sub_4C4870, 0x4c4870);
-void sub_4C4950(int result, int a2, int a3) {
+void sub_4C4950(int result, DWORD a2, const char *a3) {
     int address = 0x4c4950;
     __asm {
         mov esi, a3
@@ -25358,7 +25357,17 @@ int sub_4CDCC0(int result) {
     return result_;
 }
 DECL_FUNC(char * (__thiscall*sub_4CDCE0)(GameActionDataBlock *this_), sub_4CDCE0, 0x4cdce0);
-DECL_FUNC(int (*sub_4CDD30)(void), sub_4CDD30, 0x4cdd30);
+int sub_4CDD30(GameActionDataBlock *a1) {
+    int address = 0x4cdd30;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 _DWORD * sub_4CDDC0(_DWORD *result) {
     int address = 0x4cddc0;
     _DWORD * result_;
@@ -25413,8 +25422,8 @@ void sub_4CDFA0(_BYTE *a1, size_t a2) {
         call address
     }
 }
-DECL_FUNC(GameActionDataBlock * (*sub_4CDFC0)(), sub_4CDFC0, 0x4cdfc0);
-DECL_FUNC(GameActionDataBlock * (*sub_4CDFD0)(), sub_4CDFD0, 0x4cdfd0);
+DECL_FUNC(void (__cdecl*sub_4CDFC0)(), sub_4CDFC0, 0x4cdfc0);
+DECL_FUNC(void (__cdecl*sub_4CDFD0)(), sub_4CDFD0, 0x4cdfd0);
 int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, char *a3, u8 *dest, int *a5) {
     int address = 0x4cdff0;
     int result_;
@@ -25457,12 +25466,12 @@ int WriteGameActions(FILE *file, GameActionDataBlock *a2) {
     }
     return result_;
 }
-BOOL sub_4CE220(FILE *a1) {
+BOOL sub_4CE220(FILE *file) {
     int address = 0x4ce220;
     BOOL result_;
     __asm {
         xor eax, eax
-        mov ebx, a1
+        mov ebx, file
         call address
         mov result_, eax
     }
@@ -30765,7 +30774,7 @@ void PlayMovieWithIntro(Cinematic a1) {
         call address
     }
 }
-DECL_FUNC(int (*nullsub_4)(), nullsub_4, 0x4f7b17);
+DECL_FUNC(void (*nullsub_4)(), nullsub_4, 0x4f7b17);
 DECL_FUNC(_DWORD (__cdecl*__ld12cvt_0)(_DWORD a1, _DWORD a2), __ld12cvt_0, 0x4f99e4);
 DECL_FUNC(_DWORD (__cdecl*___ld12cvt)(_DWORD a1, _DWORD a2), ___ld12cvt, 0x4f99fa);
 DECL_FUNC(int (__cdecl*___strgtold12_0)(int a1, int a2), ___strgtold12_0, 0x4f9a10);
@@ -32173,7 +32182,7 @@ char(&aUnitWireframWi)[] = * ((decltype(&aUnitWireframWi)) 0x504c04);
 char(&aStarcraftSw_92)[] = * ((decltype(&aStarcraftSw_92)) 0x504c20);
 char(&aRezStat_f10_bi)[] = * ((decltype(&aRezStat_f10_bi)) 0x504c44);
 char(&aStarcraftSw_97)[] = * ((decltype(&aStarcraftSw_97)) 0x504c58);
-FnInteract& off_504C7C = * ((decltype(&off_504C7C)) 0x504c7c);
+FnInteract& a3 = * ((decltype(&a3)) 0x504c7c);
 char(&aRezStatfluf_bi)[] = * ((decltype(&aRezStatfluf_bi)) 0x504c80);
 char(&aStarcraftSw_96)[] = * ((decltype(&aStarcraftSw_96)) 0x504c94);
 char(&aRezStatres_bin)[] = * ((decltype(&aRezStatres_bin)) 0x504cb8);
@@ -32865,7 +32874,7 @@ char(&aNxpif)[6] = * ((decltype(&aNxpif)) 0x5129cc);
 char(&aNpdu)[6] = * ((decltype(&aNpdu)) 0x5129d4);
 char(&aLbcse)[6] = * ((decltype(&aLbcse)) 0x5129dc);
 swishTimer(&commonSwishControllers)[5] = * ((decltype(&commonSwishControllers)) 0x5129ec);
-swishTimer(&stru_512A00)[3] = * ((decltype(&stru_512A00)) 0x512a00);
+swishTimer(&timers)[3] = * ((decltype(&timers)) 0x512a00);
 __int16& word_512A0C = * ((decltype(&word_512A0C)) 0x512a0c);
 int& dword_512A10 = * ((decltype(&dword_512A10)) 0x512a10);
 swishTimer(&stru_512A14)[7] = * ((decltype(&stru_512A14)) 0x512a14);
@@ -33546,7 +33555,7 @@ TechSC(&TechResearchSC)[12] = * ((decltype(&TechResearchSC)) 0x58cf44);
 UpgradesSC(&UpgradeMaxSC)[12] = * ((decltype(&UpgradeMaxSC)) 0x58d088);
 UpgradesSC(&UpgradeLevelSC)[12] = * ((decltype(&UpgradeLevelSC)) 0x58d2b0);
 char(&byte_58D5AF)[] = * ((decltype(&byte_58D5AF)) 0x58d5af);
-int& dword_58D5B0 = * ((decltype(&dword_58D5B0)) 0x58d5b0);
+byte(&dword_58D5B0)[8] = * ((decltype(&dword_58D5B0)) 0x58d5b0);
 int& dword_58D5B4 = * ((decltype(&dword_58D5B4)) 0x58d5b4);
 int& dword_58D5B8 = * ((decltype(&dword_58D5B8)) 0x58d5b8);
 ForceName& BWDATA_ForceNames = * ((decltype(&BWDATA_ForceNames)) 0x58d5bc);
@@ -34280,7 +34289,7 @@ int& dword_68C0FC = * ((decltype(&dword_68C0FC)) 0x68c0fc);
 _DWORD& dword_68C100 = * ((decltype(&dword_68C100)) 0x68c100);
 void *& aiscript_bin_data = * ((decltype(&aiscript_bin_data)) 0x68c104);
 void *& aiscript_bin = * ((decltype(&aiscript_bin)) 0x68c108);
-char(&byte_68C10C)[52] = * ((decltype(&byte_68C10C)) 0x68c10c);
+char(&buff)[52] = * ((decltype(&buff)) 0x68c10c);
 dialog *& textbox_bin = * ((decltype(&textbox_bin)) 0x68c140);
 char& byte_68C144 = * ((decltype(&byte_68C144)) 0x68c144);
 dialog *& current_dialog = * ((decltype(&current_dialog)) 0x68c148);
