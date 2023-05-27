@@ -6,6 +6,7 @@
 #include <Windows.h>
 #include <windowsx.h>
 
+#include "starcraft_exe/types.h"
 #include "starcraft_exe/offsets.h"
 
 #define MAX_MAP_DIMENTION 256
@@ -48,6 +49,7 @@ extern bool has_viewport;
 extern bool has_hud;
 extern bool end_mission_prompt;
 extern bool keep_app_active_in_background;
+extern MusicTrackDescription title_music;
 
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
@@ -62,3 +64,18 @@ int LoadReplayFile_(const char* a1, int* a3);
 int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign);
 int CreateGame_(GameData* data);
 void GameRun_();
+int load_gluGameMode_BINDLG_();
+void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
+void stopMusic_();
+void DLGMusicFade_(const MusicTrackDescription* music_track);
+const char* GetNetworkTblString_(__int16 network_tbl_entry);
+int BWFXN_gluPOKCancel_MBox_(const char* a1);
+void DLG_SwishIn_(dialog* a1);
+char __stdcall DLG_SwishOut_(dialog* dlg);
+void BWFXN_gluPOK_MBox_(const char* a1);
+void changeMenu_();
+void* fastFileRead_(int* bytes_read, int searchScope, const char* filename, int defaultValue, int bytes_to_read, const char* logfilename, int logline);
+dialog* getControlFromIndex_(dialog* dlg, __int16 index);
+int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
+GotFileValues* InitUseMapSettingsTemplate_();
+char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry);
