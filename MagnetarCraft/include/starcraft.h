@@ -72,6 +72,7 @@ const char* GetNetworkTblString_(__int16 network_tbl_entry);
 int BWFXN_gluPOKCancel_MBox_(const char* a1);
 void DLG_SwishIn_(dialog* a1);
 char __stdcall DLG_SwishOut_(dialog* dlg);
+void DlgSwooshin_(dialog* dlg, swishTimer* timers, size_t timers_count, __int16 a4);
 void BWFXN_gluPOK_MBox_(const char* a1);
 void changeMenu_();
 void* fastFileRead_(int* bytes_read, int searchScope, const char* filename, int defaultValue, int bytes_to_read, const char* logfilename, int logline);
@@ -79,3 +80,15 @@ dialog* getControlFromIndex_(dialog* dlg, __int16 index);
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
 GotFileValues* InitUseMapSettingsTemplate_();
 char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry);
+int ContinueCampaign_(int a1);
+void sub_4BCA80_(SfxData a1);
+void sub_4DBF80_();
+int LoadSaveGameBIN_Main_(int a1, RaceId a2);
+dialog* LoadDialog(const char* bin_path);
+MenuPosition BWFXN_NetSelectReturnMenu_();
+
+template <size_t TIMERS_COUNT>
+void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
+{
+	DlgSwooshin_(dlg, timers, TIMERS_COUNT, a4);
+}

@@ -25,6 +25,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/starcraft_executable.cpp
 	src/starcraft.cpp
 	src/glu_main.cpp
+	src/glu_score.cpp
 )
 
 add_subdirectory(src)
