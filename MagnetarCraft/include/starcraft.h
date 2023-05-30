@@ -86,6 +86,7 @@ void sub_4DBF80_();
 int LoadSaveGameBIN_Main_(int a1, RaceId a2);
 dialog* LoadDialog(const char* bin_path);
 MenuPosition BWFXN_NetSelectReturnMenu_();
+dialog* loadAndInitFullMenuDLG_(const char* filename);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
