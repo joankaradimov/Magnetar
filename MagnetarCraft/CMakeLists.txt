@@ -24,6 +24,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/race.cpp
 	src/starcraft_executable.cpp
 	src/starcraft.cpp
+	src/glu_chat.cpp
 	src/glu_join.cpp
 	src/glu_load.cpp
 	src/glu_login.cpp

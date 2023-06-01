@@ -88,6 +88,14 @@ dialog* LoadDialog(const char* bin_path);
 MenuPosition BWFXN_NetSelectReturnMenu_();
 dialog* loadAndInitFullMenuDLG_(const char* filename);
 void __cdecl freeChkFileMem_();
+signed int sub_4D4130_();
+void sub_4D3860_();
+int sub_4EE210_();
+int sub_4EEFD0_();
+int killTimerFunc_();
+void HideDialog_(dialog* dlg);
+int LobbyLoopCnt_();
+void load_MinimapPreview_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
