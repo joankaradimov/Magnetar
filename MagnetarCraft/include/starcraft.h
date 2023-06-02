@@ -50,6 +50,7 @@ extern bool has_hud;
 extern bool end_mission_prompt;
 extern bool keep_app_active_in_background;
 extern MusicTrackDescription title_music;
+extern const MusicTrackDescription* current_music_track;
 
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
@@ -96,6 +97,12 @@ int killTimerFunc_();
 void HideDialog_(dialog* dlg);
 int LobbyLoopCnt_();
 void load_MinimapPreview_();
+void DisplayEstablishingShot_();
+void sub_46D1F0_();
+void sub_46D200_(const MusicTrackDescription* music_track);
+void sub_46D220_(dialog* a1);
+void sub_46D3C0_(dialog* dlg);
+int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
