@@ -13823,10 +13823,51 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EVN_MOUSEMOVE)
+	{
+		setActiveDlgElement(dlg, evt);
+	}
+	else if (evt->wNo == EVN_USER)
+	{
+		if (evt->dwUser)
+		{
+			if (evt->dwUser == USER_ACTIVATE)
+			{
+				load_gamemenu(dlg);
+			}
+		}
+		else
+		{
+			dlg->wUser = word_51276C;
+			dlg->pfcnUpdate = statf10_ButtonUpdate;
+		}
+	}
+	if (evt->wNo != EVN_USER)
+	{
+		return GenericControlInteract(dlg, evt);
+	}
+	if (evt->dwUser != USER_ACTIVATE)
+	{
+		return GenericControlInteract(dlg, evt);
+	}
+
+	if (dlg->wIndex != -3 && dlg->wIndex != -2)
+	{
+		return GenericControlInteract(dlg, evt);
+	}
+	LastControlID = dlg->wIndex;
+	dlg->fields.ctrl.pDlg->pfcnInteract(dlg->fields.ctrl.pDlg, evt);
+	return 1;
+}
+
+FAIL_STUB_PATCH(statf10_ButtonInteract);
+
 void Statf10_RegisterCustomProcs_(dialog* dlg)
 {
 	static FnInteract functions[] = {
-		statf10_ButtonInteract,
+		statf10_ButtonInteract_,
 	};
 
 	dlg->lFlags |= DialogFlags::CTRL_USELOCALGRAPHIC;
