@@ -13823,6 +13823,17 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void load_gamemenu_(dialog* dlg)
+{
+	if (dlg->wIndex == 1)
+	{
+		dword_6D1234 = sub_4CA450;
+		BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
+	}
+}
+
+FAIL_STUB_PATCH(load_gamemenu);
+
 int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EVN_MOUSEMOVE)
@@ -13835,7 +13846,7 @@ int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 		{
 			if (evt->dwUser == USER_ACTIVATE)
 			{
-				load_gamemenu(dlg);
+				load_gamemenu_(dlg);
 			}
 		}
 		else
