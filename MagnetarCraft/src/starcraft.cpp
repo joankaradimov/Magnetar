@@ -13836,41 +13836,32 @@ FAIL_STUB_PATCH(load_gamemenu);
 
 int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_MOUSEMOVE)
+	switch (evt->wNo)
 	{
+	case EventNo::EVN_MOUSEMOVE:
 		setActiveDlgElement(dlg, evt);
-	}
-	else if (evt->wNo == EVN_USER)
-	{
-		if (evt->dwUser)
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
 		{
-			if (evt->dwUser == USER_ACTIVATE)
-			{
-				load_gamemenu_(dlg);
-			}
-		}
-		else
-		{
+		case EventUser::USER_CREATE:
 			dlg->wUser = word_51276C;
 			dlg->pfcnUpdate = statf10_ButtonUpdate;
+			break;
+		case EventUser::USER_ACTIVATE:
+			load_gamemenu_(dlg);
+			break;
+		}
+
+		if (dlg->wIndex == -3 || dlg->wIndex == -2)
+		{
+			LastControlID = dlg->wIndex;
+			dlg->fields.ctrl.pDlg->pfcnInteract(dlg->fields.ctrl.pDlg, evt);
+			return 1;
 		}
 	}
-	if (evt->wNo != EVN_USER)
-	{
-		return GenericControlInteract(dlg, evt);
-	}
-	if (evt->dwUser != USER_ACTIVATE)
-	{
-		return GenericControlInteract(dlg, evt);
-	}
 
-	if (dlg->wIndex != -3 && dlg->wIndex != -2)
-	{
-		return GenericControlInteract(dlg, evt);
-	}
-	LastControlID = dlg->wIndex;
-	dlg->fields.ctrl.pDlg->pfcnInteract(dlg->fields.ctrl.pDlg, evt);
-	return 1;
+	return GenericControlInteract(dlg, evt);
 }
 
 FAIL_STUB_PATCH(statf10_ButtonInteract);
