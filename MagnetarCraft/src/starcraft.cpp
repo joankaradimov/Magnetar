@@ -7527,7 +7527,7 @@ int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 
 	if (InReplay ? ReadLobbyChunks(scenarioChk, scenarioChkSize, a4) : strlen(source) != 0 && sub_4CCAC0_(source, a4))
 	{
-		for (int player = _countof(LobbyPlayers) - 1; player >= 0; player--)
+		for (int player = 0; player < _countof(LobbyPlayers); player++)
 		{
 			LobbyPlayers[player].dwPlayerID = player;
 			LobbyPlayers[player].dwStormId = -1;
