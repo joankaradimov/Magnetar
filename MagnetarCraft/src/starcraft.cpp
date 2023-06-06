@@ -10318,7 +10318,7 @@ void ordersEntries_(CUnit* unit)
 	case Order::ORD_DIE:
 		BWFXN_KillUnitTarget(unit);
 		break;
-	case Order::ORD_BUILDSELFPROTOSS: ;
+	case Order::ORD_BUILDSELFPROTOSS:
 		orders_bldgUnderConstruction_Protoss_(unit);
 		break;
 	case Order::ORD_NUKE_TRACK:
