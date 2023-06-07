@@ -18231,7 +18231,7 @@ const char* __stdcall getRaceString(RaceId race)
 	return tbl_file[race];
 }
 
-RaceId SELECTABLE_RACES[] = {
+std::vector<RaceId> SELECTABLE_RACES = {
 	RaceId::RACE_Zerg,
 	RaceId::RACE_Terran,
 	RaceId::RACE_Protoss,
@@ -18242,15 +18242,15 @@ void gluCustm_raceDropdown_(dialog* a1)
 {
 	a1->lFlags |= CTRL_LBOX_NORECALC;
 
-	for (int i = 0; i < _countof(SELECTABLE_RACES); i++)
+	for (RaceId race: SELECTABLE_RACES)
 	{
-		const char* race_name = getRaceString(SELECTABLE_RACES[i]);
+		const char* race_name = getRaceString(race);
 		u8 v5 = ListBox_AddEntry(race_name, a1, 0);
 		if (v5 == 0xFF)
 		{
 			break;
 		}
-		a1->fields.list.pdwData[v5] = SELECTABLE_RACES[i];
+		a1->fields.list.pdwData[v5] = race;
 	}
 
 	if (a1->lFlags & CTRL_LBOX_NORECALC)
@@ -19157,7 +19157,7 @@ void CreateRaceDropdown_(dialog* dlg, RaceId race)
 	u8 v5 = 0;
 	u8 v12 = 0;
 
-	for (int i = 0; i < _countof(SELECTABLE_RACES); i++)
+	for (int i = 0; i < SELECTABLE_RACES.size(); i++)
 	{
 		const char* race_name = getRaceString(SELECTABLE_RACES[i]);
 		u8 v9 = ListBox_AddEntry(race_name, dlg, 0);
