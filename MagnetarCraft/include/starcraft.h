@@ -51,6 +51,7 @@ extern bool end_mission_prompt;
 extern bool keep_app_active_in_background;
 extern MusicTrackDescription title_music;
 extern const MusicTrackDescription* current_music_track;
+extern std::vector<RaceId> SELECTABLE_RACES;
 
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
@@ -103,6 +104,9 @@ void sub_46D200_(const MusicTrackDescription* music_track);
 void sub_46D220_(dialog* a1);
 void sub_46D3C0_(dialog* dlg);
 int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt);
+int getMapListEntryCount_(int(__stdcall* callback)(MapDirEntry*, char*, MapDirEntryFlags), MapDirEntryFlags flags, char* directory, char* filename);
+unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest);
+const char* __stdcall getRaceString(RaceId race);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
