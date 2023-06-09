@@ -13824,6 +13824,22 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void setActiveDlgElement_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (IS_GAME_PAUSED && !multiPlayerMode || dlg != dlgSetMouseOver(dlg->fields.ctrl.pDlg, evt))
+	{
+		dword_68C220 = 0;
+		refreshSelectionScreen_();
+	}
+	else if (dlg != dword_68C220 || !dword_655C48)
+	{
+		dword_68C220 = dlg;
+		drawGameMenuContextHelp(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(setActiveDlgElement);
+
 void load_gamemenu_(dialog* dlg)
 {
 	if (dlg->wIndex == 1)
@@ -13840,7 +13856,7 @@ int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 	switch (evt->wNo)
 	{
 	case EventNo::EVN_MOUSEMOVE:
-		setActiveDlgElement(dlg, evt);
+		setActiveDlgElement_(dlg, evt);
 		break;
 	case EventNo::EVN_USER:
 		switch (evt->dwUser)
