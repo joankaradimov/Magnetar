@@ -13851,6 +13851,37 @@ void load_gamemenu_(dialog* dlg)
 
 FAIL_STUB_PATCH(load_gamemenu);
 
+void Statf10_MouseMoveEvt_(dialog* dlg, struct dlgEvent* evt)
+{
+	dialog* v3;
+
+	if (!IS_GAME_PAUSED || multiPlayerMode)
+	{
+		v3 = dlgSetMouseOver(dlg, evt);
+		if (v3 && dlg != v3)
+		{
+			if (v3 != dword_68C220 || !dword_655C48)
+			{
+				dword_68C220 = v3;
+				drawGameMenuContextHelp(v3);
+			}
+			return;
+		}
+	}
+	else
+	{
+		v3 = 0;
+	}
+
+	if (v3 != dword_68C220)
+	{
+		dword_68C220 = v3;
+		refreshSelectionScreen_();
+	}
+}
+
+FAIL_STUB_PATCH(Statf10_MouseMoveEvt);
+
 int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -13903,7 +13934,7 @@ int __fastcall Statf10_DialogProc_(dialog* dlg, dlgEvent* evt)
 	case EventNo::EVN_KEYRPT:
 		return 0;
 	case EventNo::EVN_MOUSEMOVE:
-		Statf10_MouseMoveEvt(dlg, evt);
+		Statf10_MouseMoveEvt_(dlg, evt);
 		[[fallthough]];
 	case EventNo::EVN_KEYFIRST:
 	case EventNo::EVN_LBUTTONDOWN:
