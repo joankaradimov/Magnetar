@@ -13824,6 +13824,24 @@ void load_statbtn_BIN_()
 
 FAIL_STUB_PATCH(load_statbtn_BIN);
 
+void drawGameMenuContextHelp_(dialog* dlg)
+{
+	char* v1;
+
+	if (*StatTxtTbl.buffer > 0x32Du)
+	{
+		v1 = (char*)StatTxtTbl.buffer + StatTxtTbl.buffer[814];
+	}
+	else
+	{
+		v1 = "";
+	}
+
+	CreateContextHelp(dlg->rct.right + dlg->fields.ctrl.pDlg->rct.left, dlg->rct.top + dlg->fields.ctrl.pDlg->rct.top, v1);
+}
+
+FAIL_STUB_PATCH(drawGameMenuContextHelp);
+
 void setActiveDlgElement_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (IS_GAME_PAUSED && !multiPlayerMode || dlg != dlgSetMouseOver(dlg->fields.ctrl.pDlg, evt))
@@ -13834,7 +13852,7 @@ void setActiveDlgElement_(dialog* dlg, struct dlgEvent* evt)
 	else if (dlg != dword_68C220 || !dword_655C48)
 	{
 		dword_68C220 = dlg;
-		drawGameMenuContextHelp(dlg);
+		drawGameMenuContextHelp_(dlg);
 	}
 }
 
@@ -13863,7 +13881,7 @@ void Statf10_MouseMoveEvt_(dialog* dlg, struct dlgEvent* evt)
 			if (v3 != dword_68C220 || !dword_655C48)
 			{
 				dword_68C220 = v3;
-				drawGameMenuContextHelp(v3);
+				drawGameMenuContextHelp_(v3);
 			}
 			return;
 		}
