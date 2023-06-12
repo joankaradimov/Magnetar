@@ -20550,10 +20550,7 @@ FAIL_STUB_PATCH(creditsDlgInteract);
 
 void loadInitCreditsBIN_(const char* a1)
 {
-	char buff[MAX_PATH];
-	sprintf_s(buff, "rez\\%s.txt", a1);
-
-	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, buff, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	dword_51CEA8 = (char*)fastFileRead_(&bytes_read, 0, a1, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 	dword_51CEBC = dword_51CEA8;
 	dword_51CEB8 = bytes_read;
 	credits_interrupted = 0;
@@ -20819,14 +20816,14 @@ void BeginCredits_()
 
 	DLGMusicFade_(&Race::races()[RaceId::RACE_Terran].ingame_music[1]);
 	credits_interrupted = 0;
-	loadInitCreditsBIN_("crdt_mag");
+	loadInitCreditsBIN_("rez\\crdt_mag.txt");
 	if (credits_interrupted == 0 && is_expansion_installed)
 	{
-		loadInitCreditsBIN_("crdt_exp");
+		loadInitCreditsBIN_("rez\\crdt_exp.txt");
 	}
 	if (credits_interrupted == 0)
 	{
-		loadInitCreditsBIN_("crdt_lst");
+		loadInitCreditsBIN_("rez\\crdt_lst.txt");
 	}
 	stopMusic_();
 	registry_options.Music = v0;
@@ -21063,7 +21060,7 @@ void DisplayEstablishingShot_()
 			SFileCloseFile(handle);
 
 		if (establishingShotExists)
-			loadInitCreditsBIN_("est");
+			loadInitCreditsBIN_("rez\\est.txt");
 
 		if (mapArchiveHandle)
 			SFileCloseArchive(mapArchiveHandle);
