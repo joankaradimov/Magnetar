@@ -20850,7 +20850,7 @@ void PlayMovie_(Cinematic cinematic)
 	sub_4D4440_();
 
 	HANDLE video;
-	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, cinematic < 0x19 ? 0x10280808 : 0x10A80808, &video);
+	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, cinematic < Cinematic::C_FURY_OF_THE_XEL_NAGA ? 0x10280808 : 0x10A80808, &video);
 	if (video)
 	{
 		while (!dword_5967F0)
@@ -20864,7 +20864,7 @@ void PlayMovie_(Cinematic cinematic)
 		}
 		SVidPlayEnd(video);
 	}
-	else if (cinematic != 1 && cinematic != 24)
+	else if (cinematic != Cinematic::C_INTRO && cinematic != Cinematic::C_EXPANSION_INTRO)
 	{
 		SysWarn_FileNotFound(cinematics[cinematic], 2);
 	}
