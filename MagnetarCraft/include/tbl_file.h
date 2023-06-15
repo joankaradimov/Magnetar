@@ -3,6 +3,7 @@
 #include <string>
 
 #include "starcraft.h"
+#include "exception.h"
 
 class TblFile {
 public:
@@ -25,7 +26,7 @@ public:
 		}
 		if (fileSize == 0)
 		{
-			SysWarn_FileNotFound(file_name, 24);
+			throw FileNotFoundException(file_name, 24);
 		}
 
 		if (fileSize < 2) {

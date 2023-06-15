@@ -4,6 +4,7 @@
 #include "magnetorm.h"
 #include "patching.h"
 #include "race.h"
+#include "exception.h"
 
 int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 {
@@ -237,7 +238,7 @@ int sub_4B4600_(dialog* a1)
 	void* buffer;
 	while (!SBmpAllocLoadImage(fileName, 0, &buffer, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(fileName, SErrGetLastError());
+		throw FileNotFoundException(fileName, SErrGetLastError());
 	}
 
 	dialog* v13 = getControlFromIndex_(a1, 1);
@@ -438,7 +439,7 @@ void loadMenu_gluScore_()
 	strcat(v25, "tminimap.pcx");
 	if (!SBmpLoadImage(v25, 0, byte_59B730, 12, 0, 0, 0))
 	{
-		SysWarn_FileNotFound(v25, SErrGetLastError());
+		throw FileNotFoundException(v25, SErrGetLastError());
 	}
 	strcpy(byte_59B628, score_screen);
 	sub_4BCA80_(SFX_glue_scorefill);

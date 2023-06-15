@@ -20,6 +20,7 @@
 #include "glu_main.h"
 #include "glu_ready_room.h"
 #include "glu_score.h"
+#include "exception.h"
 
 std::function<void()> on_end_game = nullptr;
 bool frame_capping = true;
@@ -1512,7 +1513,7 @@ void __stdcall SysWarn_FileNotFound__(const char* a1)
 
 	__asm mov last_error, ebx
 
-	SysWarn_FileNotFound_(a1, last_error);
+	throw FileNotFoundException(a1, last_error);
 }
 
 FUNCTION_PATCH((void*)0x4212C0, SysWarn_FileNotFound__);
@@ -1525,7 +1526,7 @@ void FileFatal_(HANDLE a1, int a2)
 	{
 		strcpy_s(buffer, "*unknown*");
 	}
-	SysWarn_FileNotFound(buffer, a2);
+	throw FileNotFoundException(buffer, a2);
 }
 
 void FileFatal__()
@@ -2270,7 +2271,7 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 		int last_error = SErrGetLastError();
 		if (!bytes_to_read || last_error != 2 && last_error != 1006)
 		{
-			SysWarn_FileNotFound(filename, last_error);
+			throw FileNotFoundException(filename, last_error);
 		}
 		if (bytes_read)
 			*bytes_read = 0;
@@ -2291,7 +2292,7 @@ void* fastFileRead_(int *bytes_read, int searchScope, const char *filename, int 
 			SFileCloseFile(phFile);
 			return 0;
 		}
-		SysWarn_FileNotFound(filename, 24);
+		throw FileNotFoundException(filename, 24);
 	}
 	void* buffer = (void*)defaultValue;
 	if (!defaultValue)
@@ -2424,7 +2425,7 @@ int InitializeArchiveHandles_()
 
 	if (!SFileOpenArchive(stardat_path.generic_string().c_str(), 2000, 2, &stardat_mpq))
 	{
-		SysWarn_FileNotFound("Stardat.mpq", GetLastError());
+		throw FileNotFoundException("Stardat.mpq", GetLastError());
 	}
 
 	if (SFileOpenArchive(patch_rt_path.generic_string().c_str(), 7000, 2, &patch_rt_mpq))
@@ -2445,7 +2446,7 @@ int InitializeArchiveHandles_()
 	strcat_s(magnetarDatFilename, "\\MagnetarDat.mpq");
 	if (!SFileOpenArchive(magnetarDatFilename, 8000, 2, &magnetar_mpq))
 	{
-		SysWarn_FileNotFound("MagnetarDat.mpq", GetLastError());
+		throw FileNotFoundException("MagnetarDat.mpq", GetLastError());
 	}
 
 	InitializeFontKey_();
@@ -2542,7 +2543,7 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 	}
 	if (bytes_read)
 	{
-		SysWarn_FileNotFound(a2, 24);
+		throw FileNotFoundException(a2, 24);
 	}
 	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
 }
@@ -4547,7 +4548,7 @@ void titleInit_(dialog* dlg)
 
 	if (!SBmpAllocLoadImage("glue\\title\\title.pcx", (int*)palette, &buffer, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound("glue\\title\\title.pcx", SErrGetLastError());
+		throw FileNotFoundException("glue\\title\\title.pcx", SErrGetLastError());
 	}
 	dlg->srcBits.wid = width;
 	dlg->srcBits.ht = height;
@@ -4556,7 +4557,7 @@ void titleInit_(dialog* dlg)
 
 	if (!SBmpLoadImage("glue\\title\\tFont.pcx", 0, &stru_6CE000, 192, 0, 0, 0))
 	{
-		SysWarn_FileNotFound("glue\\title\\tFont.pcx", SErrGetLastError());
+		throw FileNotFoundException("glue\\title\\tFont.pcx", SErrGetLastError());
 	}
 	if (!low_memory)
 	{
@@ -4816,7 +4817,7 @@ void LoadInitIscriptBIN_()
 	LoadGameData_(imagesDat_, "arr\\images.dat");
 	if (!SBmpLoadImage("game\\tselect.pcx", 0, dword_5240B8, 24, 0, 0, 0))
 	{
-		SysWarn_FileNotFound("game\\tselect.pcx", SErrGetLastError());
+		throw FileNotFoundException("game\\tselect.pcx", SErrGetLastError());
 	}
 	LoadImageData_();
 	InitDamageOverlayCounts();
@@ -6176,7 +6177,7 @@ void load_gluMinimap_()
 	blink_grp = (void*)LoadGraphic("game\\blink.grp", 0, "Starcraft\\SWAR\\lang\\minimap.cpp", 2011);
 	if (!SBmpLoadImage("game\\tblink.pcx", 0, byte_59CAC0, sizeof(byte_59CAC0), 0, 0, 0))
 	{
-		SysWarn_FileNotFound("game\\tblink.pcx", SErrGetLastError());
+		throw FileNotFoundException("game\\tblink.pcx", SErrGetLastError());
 	}
 
 	for (int i = 0; i < _countof(palette); i++)
@@ -6371,7 +6372,7 @@ void InitializePresetImageArrays_()
 	sprintf_s(buff, "Tileset\\%s\\shift.pcx", TILESET_NAMES[CurrentTileSet]);
 	if (!SBmpLoadImage(buff, 0, tileset_shift, 256, 0, 0, 0))
 	{
-		SysWarn_FileNotFound(buff, SErrGetLastError());
+		throw FileNotFoundException(buff, SErrGetLastError());
 	}
 }
 
@@ -6921,7 +6922,7 @@ bool __stdcall BWFXN_gluPEdit_MBox_(char* text, char* dest, size_t size, char* r
 	int width, height;
 	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**) &buffer, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(fileName, SErrGetLastError());
+		throw FileNotFoundException(fileName, SErrGetLastError());
 	}
 	p_hist_pcx.wid = (unsigned __int16)width;
 	p_hist_pcx.ht = (unsigned __int16)height;
@@ -7033,7 +7034,7 @@ void BWFXN_gluPOK_MBox_(const char* a1)
 	int height, width;
 	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**)&data, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(fileName, SErrGetLastError());
+		throw FileNotFoundException(fileName, SErrGetLastError());
 	}
 	p_hist_pcx.wid = (unsigned __int16)width;
 	p_hist_pcx.ht = (unsigned __int16)height;
@@ -13278,7 +13279,7 @@ void statport_Buttonpress_(dialog* dlg)
 	int height;
 	if (!SBmpAllocLoadImage(buff, 0, &buffer, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(buff, SErrGetLastError());
+		throw FileNotFoundException(buff, SErrGetLastError());
 	}
 	stru_68AC78.wid = (unsigned __int16)width;
 	stru_68AC78.ht = height;
@@ -13814,7 +13815,7 @@ void load_statbtn_BIN_()
 	cmdicons_grp = (void*)LoadGraphic("unit\\cmdbtns\\cmdicons.grp", 0, "Starcraft\\SWAR\\lang\\statcmd.cpp", 1089);
 	if (!SBmpLoadImage("unit\\cmdbtns\\ticon.pcx", 0, byte_68C150, 96, 0, 0, 0))
 	{
-		SysWarn_FileNotFound("unit\\cmdbtns\\ticon.pcx", SErrGetLastError());
+		throw FileNotFoundException("unit\\cmdbtns\\ticon.pcx", SErrGetLastError());
 	}
 
 	sprintf_s(buff, "rez\\statbtn%c.bin", InReplay ? 'n' : race_lowercase_char_id[consoleIndex]);
@@ -14279,7 +14280,7 @@ void LoadConsoleImage_()
 	int height;
 	if (!SBmpAllocLoadImage(buff, 0, &buffer, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(buff, SErrGetLastError());
+		throw FileNotFoundException(buff, SErrGetLastError());
 	}
 
 	GameScreenConsole.ht = height;
@@ -14295,7 +14296,7 @@ void sub_47AAC0_()
 {
 	if (!SBmpLoadImage("game\\thpbar.pcx", 0, byte_66FBE4, 19, 0, 0, 0))
 	{
-		SysWarn_FileNotFound("game\\thpbar.pcx", SErrGetLastError());
+		throw FileNotFoundException("game\\thpbar.pcx", SErrGetLastError());
 	}
 }
 
@@ -15972,7 +15973,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	HANDLE hFile;
 	if (!SFileOpenFileEx(0, parallaxFilePath, 0, &hFile))
 	{
-		SysWarn_FileNotFound(parallaxFilePath, SErrGetLastError());
+		throw FileNotFoundException(parallaxFilePath, SErrGetLastError());
 		throw std::exception("Could not find SPK file");
 	}
 	LONG fileSize = SFileGetFileSize(hFile, 0);
@@ -15983,8 +15984,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	}
 	if (!fileSize)
 	{
-		fileSize = 24;
-		SysWarn_FileNotFound(parallaxFilePath, 24);
+		throw FileNotFoundException(parallaxFilePath, 24);
 	}
 	void* spkData = SMemAlloc(fileSize, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210, 0);
 	int read;
@@ -16111,7 +16111,7 @@ void sub_4BDDD0_(const char* tileset_name)
 	sprintf_s(buff, "Tileset\\%s\\dark.pcx", tileset_name);
 	if (!SBmpLoadImage(buff, 0, byte_5973A0, 0x2000, 0, 0, 0))
 	{
-		SysWarn_FileNotFound(buff, SErrGetLastError());
+		throw FileNotFoundException(buff, SErrGetLastError());
 	}
 	for (int i = 0; i < _countof(byte_5992A0); ++i)
 	{
@@ -18149,7 +18149,7 @@ int load_gluGameMode_BINDLG_()
 	int read;
 	if (!SBmpAllocLoadImage(fileName, (int*)palette, (void**)&read, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(fileName, SErrGetLastError());
+		throw FileNotFoundException(fileName, SErrGetLastError());
 	}
 	p_hist_pcx.wid = width;
 	p_hist_pcx.ht = height;
@@ -18185,7 +18185,7 @@ int BWFXN_gluPOKCancel_MBox_(const char* a1)
 	int width, height;
 	if (!SBmpAllocLoadImage(fileName, (int*) palette, (void**)&data, &width, &height, 0, 0, allocFunction))
 	{
-		SysWarn_FileNotFound(fileName, SErrGetLastError());
+		throw FileNotFoundException(fileName, SErrGetLastError());
 	}
 	p_hist_pcx.wid = width;
 	p_hist_pcx.ht = height;
@@ -20866,7 +20866,7 @@ void PlayMovie_(Cinematic cinematic)
 	}
 	else if (cinematic != Cinematic::C_INTRO && cinematic != Cinematic::C_EXPANSION_INTRO)
 	{
-		SysWarn_FileNotFound(cinematics[cinematic], 2);
+		throw FileNotFoundException(cinematics[cinematic], 2);
 	}
 }
 
