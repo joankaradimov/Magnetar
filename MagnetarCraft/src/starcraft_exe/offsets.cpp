@@ -16211,7 +16211,6 @@ void CreateContextHelp(int a1, int a2, char *a3) {
         push dword ptr a2
         mov eax, a1
         call address
-        add esp, 8
     }
 }
 DECL_FUNC(int (*sub_481690)(), sub_481690, 0x481690);
@@ -22172,7 +22171,7 @@ DECL_FUNC(void (__cdecl*SelectGame)(), SelectGame, 0x4ad230);
 DECL_FUNC(void (__cdecl*loadMenu_gluBNRes)(), loadMenu_gluBNRes, 0x4ad330);
 DECL_FUNC(int (__thiscall*sub_4AD390)(dialog *this_), sub_4AD390, 0x4ad390);
 DECL_FUNC(u8 (__thiscall*sub_4AD3E0)(dialog *this_), sub_4AD3E0, 0x4ad3e0);
-DECL_FUNC(int (__thiscall*sub_4AD400)(_DWORD a1), sub_4AD400, 0x4ad400);
+DECL_FUNC(int (__thiscall*sub_4AD400)(int this_), sub_4AD400, 0x4ad400);
 dialog * sub_4AD440(dialog *result) {
     int address = 0x4ad440;
     dialog * result_;
@@ -22362,7 +22361,7 @@ DECL_FUNC(int (__stdcall*sub_4AF8E0)(char *source, int a2, int a3, int a4, int (
 DECL_FUNC(int (__stdcall*joinModemGame)(char *gameName), joinModemGame, 0x4af920);
 DECL_FUNC(int (__stdcall*Device_Constructor)(DWORD a1, DWORD a2, DWORD a3, DWORD a4), Device_Constructor, 0x4af970);
 DECL_FUNC(BOOL (__fastcall*InitializeDevice)(int a1, int a2, int arg0, int a4, const void *a5), InitializeDevice, 0x4afa30);
-DECL_FUNC(int (__stdcall*callback)(DWORD a1), callback, 0x4afa90);
+DECL_FUNC(int (__fastcall*callback)(DWORD a1, DWORD a2, DWORD a3), callback, 0x4afa90);
 DECL_FUNC(void (__thiscall*sub_4AFAD0)(dialog *this_), sub_4AFAD0, 0x4afad0);
 Timer * sub_4AFB60(dialog *a1) {
     int address = 0x4afb60;
@@ -22429,7 +22428,7 @@ void gluModemList_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*sub_4B0140)(dialog *dlg, __int16 timer_id), sub_4B0140, 0x4b0140);
+DECL_FUNC(void (__fastcall*a4)(dialog *dlg, __int16 timer_id), a4, 0x4b0140);
 void gluModemStatus_CustomCtrlID(dialog *a1) {
     int address = 0x4b01f0;
     __asm {
@@ -30376,19 +30375,19 @@ void statflufDlgUpdate(dialog *dlg) {
 DECL_FUNC(int (__fastcall*statfluf_DLG_Interact)(dialog *dlg, dlgEvent *evt), statfluf_DLG_Interact, 0x4f4d60);
 DECL_FUNC(void (*load_statfluf_BIN)(), load_statfluf_BIN, 0x4f4dc0);
 DECL_FUNC(void (*destroy_statf10_bin)(), destroy_statf10_bin, 0x4f4f50);
-void drawGameMenuContextHelp(dialog *a1) {
+void drawGameMenuContextHelp(dialog *dlg) {
     int address = 0x4f4f70;
     __asm {
-        mov edx, a1
+        mov edx, dlg
         call address
     }
 }
 DECL_FUNC(void (__fastcall*statf10_ButtonUpdate)(dialog *dlg, int x, int y, rect *dst), statf10_ButtonUpdate, 0x4f4fb0);
-void Statf10_MouseMoveEvt(dialog *a1, struct dlgEvent *a2) {
+void Statf10_MouseMoveEvt(dialog *dlg, struct dlgEvent *evt) {
     int address = 0x4f5070;
     __asm {
-        mov ecx, a2
-        mov eax, a1
+        mov ecx, evt
+        mov eax, dlg
         call address
     }
 }
@@ -30403,13 +30402,12 @@ int sub_4F50D0(int result) {
     }
     return result_;
 }
-void setActiveDlgElement(dialog *a1, struct dlgEvent *a2) {
+void setActiveDlgElement(dialog *dlg, struct dlgEvent *evt) {
     int address = 0x4f50f0;
     __asm {
-        push dword ptr a2
-        mov esi, a1
+        push dword ptr evt
+        mov esi, dlg
         call address
-        add esp, 4
     }
 }
 void load_gamemenu(dialog *result) {
