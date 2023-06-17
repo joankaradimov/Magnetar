@@ -20864,7 +20864,7 @@ void PlayMovie_(Cinematic cinematic)
 		}
 		SVidPlayEnd(video);
 	}
-	else if (cinematic != Cinematic::C_INTRO && cinematic != Cinematic::C_EXPANSION_INTRO)
+	else
 	{
 		throw FileNotFoundException(cinematics[cinematic], 2);
 	}
@@ -20896,7 +20896,13 @@ void GameMainLoop_()
 		{
 			registry_options.field_18 &= ~0x800;
 			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
-			PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+			try
+			{
+				PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+			}
+			catch (const FileNotFoundException& e)
+			{
+			}
 		}
 	}
 	else
@@ -20905,7 +20911,13 @@ void GameMainLoop_()
 		{
 			registry_options.field_18 &= ~0x200;
 			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
-			PlayMovie_(Cinematic::C_INTRO);
+			try
+			{
+				PlayMovie_(Cinematic::C_INTRO);
+			}
+			catch (const FileNotFoundException& e)
+			{
+			}
 		}
 	}
 
@@ -20948,11 +20960,23 @@ void GameMainLoop_()
 				if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 				{
 					SFileCloseFile(phFile);
-					PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+					try
+					{
+						PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+					}
+					catch (const FileNotFoundException& e)
+					{
+					}
 				}
 				else
 				{
-					PlayMovie_(Cinematic::C_INTRO);
+					try
+					{
+						PlayMovie_(Cinematic::C_INTRO);
+					}
+					catch (const FileNotFoundException& e)
+					{
+					}
 				}
 				if (gwGameMode == GAME_INTRO)
 					gwGameMode = GAME_GLUES;
