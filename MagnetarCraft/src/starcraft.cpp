@@ -701,6 +701,20 @@ FAIL_STUB_PATCH(ErrMessageBox);
 
 void BWFXN_DSoundDestroy_();
 
+void sub_421510_()
+{
+	SErrSuppressErrors(1);
+	SNetLeaveGame(3);
+	SNetDestroy();
+	if (GetCurrentThreadId() == main_thread_id)
+	{
+		BWFXN_DDrawDestroy();
+		BWFXN_DSoundDestroy_();
+	}
+}
+
+FAIL_STUB_PATCH(sub_421510);
+
 void FatalError_(const char* arg0, ...)
 {
 	va_list va;
@@ -712,14 +726,7 @@ void FatalError_(const char* arg0, ...)
 	ErrorLog("%s", fatal_error_message);
 	ErrorLog("\r\n");
 	ProcError(1);
-	SErrSuppressErrors(1);
-	SNetLeaveGame(3);
-	SNetDestroy();
-	if (GetCurrentThreadId() == main_thread_id)
-	{
-		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy_();
-	}
+	sub_421510_();
 	ErrMessageBox_(16, fatal_error_message, "ERROR");
 	DLGErrFatal_();
 }
@@ -1492,14 +1499,7 @@ void SysWarn_FileNotFound_(const char* a1, int last_error)
 
 	char* v2 = GetErrorString(Buffer, 0x100u, last_error);
 	sprintf_s(dwInitParam, "%s\n%s", a1, v2);
-	SErrSuppressErrors(1);
-	SNetLeaveGame(3);
-	SNetDestroy();
-	if (GetCurrentThreadId() == main_thread_id)
-	{
-		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy_();
-	}
+	sub_421510_();
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)0x6A, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 	{
 		FatalError_("GdsDialogBoxParam: %d", 106);
@@ -3052,14 +3052,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 		v6 = "";
 	char* v8 = GetErrorString_(Buffer, sizeof(Buffer), last_error);
 	sprintf_s(dwInitParam, "%s\n%s line %d\n%s", v8, v5, source_line, v6);
-	SErrSuppressErrors(1);
-	SNetLeaveGame(3);
-	SNetDestroy();
-	if (GetCurrentThreadId() == main_thread_id)
-	{
-		BWFXN_DDrawDestroy();
-		BWFXN_DSoundDestroy_();
-	}
+	sub_421510_();
 	if (DialogBoxParamA(local_dll_library, (LPCSTR)resource, hWndParent, DialogFunc, (LPARAM)dwInitParam) == -1)
 		FatalError_("GdsDialogBoxParam: %d", resource);
 	DLGErrFatal_();
