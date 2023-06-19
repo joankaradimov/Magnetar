@@ -20837,18 +20837,14 @@ void sub_4D4440_()
 
 FAIL_STUB_PATCH(sub_4D4440);
 
-void PlayMovie_(Cinematic cinematic)
+void PlayMovie_(char* cinematic, int flags)
 {
 	RefreshCursor_0();
 	sub_4D4440_();
 
 	HANDLE video;
-	int flags = 0x10280808;
-	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
-	{
-		flags |= 0x800000;
-	}
-	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, flags, &video);
+
+	SVidPlayBegin(cinematic, 0, 0, 0, 0, flags, &video);
 	if (video)
 	{
 		while (!dword_5967F0)
@@ -20864,8 +20860,19 @@ void PlayMovie_(Cinematic cinematic)
 	}
 	else
 	{
-		throw FileNotFoundException(cinematics[cinematic], 2);
+		throw FileNotFoundException(cinematic, 2);
 	}
+}
+
+void PlayMovie_(Cinematic cinematic)
+{
+	int flags = 0x10280808;
+	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
+	{
+		flags |= 0x800000;
+	}
+
+	PlayMovie_(cinematics[cinematic], flags);
 }
 
 FAIL_STUB_PATCH(PlayMovie);
