@@ -20843,7 +20843,12 @@ void PlayMovie_(Cinematic cinematic)
 	sub_4D4440_();
 
 	HANDLE video;
-	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, cinematic < Cinematic::C_FURY_OF_THE_XEL_NAGA ? 0x10280808 : 0x10A80808, &video);
+	int flags = 0x10280808;
+	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
+	{
+		flags |= 0x800000;
+	}
+	SVidPlayBegin(cinematics[cinematic], 0, 0, 0, 0, flags, &video);
 	if (video)
 	{
 		while (!dword_5967F0)
