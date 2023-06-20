@@ -21,6 +21,7 @@
 #include "glu_ready_room.h"
 #include "glu_score.h"
 #include "exception.h"
+#include "video.h"
 
 std::function<void()> on_end_game = nullptr;
 bool frame_capping = true;
@@ -20825,67 +20826,6 @@ void BeginCredits_()
 FAIL_STUB_PATCH(BeginCredits);
 FAIL_STUB_PATCH(sub_4A60D0);
 FAIL_STUB_PATCH(sub_48EB90);
-
-void sub_4D4440_()
-{
-	InitializeInputProcs_();
-	input_procedures[EventNo::EVN_CHAR] = endVideoProc;
-	input_procedures[EventNo::EVN_LBUTTONUP] = endVideoProc;
-	input_procedures[EventNo::EVN_RBUTTONUP] = endVideoProc;
-	dword_5967F0 = 0;
-}
-
-FAIL_STUB_PATCH(sub_4D4440);
-
-void PlayMovie_(char* cinematic, StormVideoFlags flags)
-{
-	RefreshCursor_0();
-	sub_4D4440_();
-
-	HANDLE video;
-
-	SVidPlayBegin(cinematic, 0, 0, 0, 0, flags, &video);
-	if (video)
-	{
-		while (!dword_5967F0)
-		{
-			if (is_app_active && !SVidPlayContinueSingle(video, 0, 0))
-			{
-				break;
-			}
-			BWFXN_videoLoop_(3);
-			Sleep(0);
-		}
-		SVidPlayEnd(video);
-	}
-	else
-	{
-		throw FileNotFoundException(cinematic, 2);
-	}
-}
-
-DEFINE_ENUM_FLAG_OPERATORS(StormVideoFlags);
-
-const StormVideoFlags SVID_AUTOCUTSCENE =
-	StormVideoFlags::SVID_FLAG_TOSCREEN |
-	StormVideoFlags::SVID_FLAG_CLEARSCREEN |
-	StormVideoFlags::SVID_FLAG_FULLSCREEN |
-	StormVideoFlags::SVID_FLAG_AUTOSIZE |
-	StormVideoFlags::SVID_FLAG_AUTOQUALITY;
-
-void PlayMovie_(Cinematic cinematic)
-{
-	StormVideoFlags flags = SVID_AUTOCUTSCENE;
-
-	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
-	{
-		flags |= StormVideoFlags::SVID_FLAG_UNK;
-	}
-
-	PlayMovie_(cinematics[cinematic], flags);
-}
-
-FAIL_STUB_PATCH(PlayMovie);
 
 void GameMainLoop_()
 {

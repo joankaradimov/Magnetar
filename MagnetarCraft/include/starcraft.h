@@ -107,6 +107,8 @@ int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt);
 int getMapListEntryCount_(int(__stdcall* callback)(MapDirEntry*, char*, MapDirEntryFlags), MapDirEntryFlags flags, char* directory, char* filename);
 unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest);
 const char* __stdcall getRaceString(RaceId race);
+void InitializeInputProcs_();
+void __stdcall BWFXN_videoLoop_(int flag);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
