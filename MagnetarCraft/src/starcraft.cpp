@@ -16772,7 +16772,7 @@ int campaignTypeCheatStrings_(const char* a2)
 
 	int campaign_menu_entry_index;
 	int prefix_length = strlen(relevant_campaign->campaign_id);
-	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry_index) && relevant_campaign->entries[campaign_menu_entry_index].next_mission != EMD_xbonus)
+	if (parseCmpgnCheatTypeString_(relevant_campaign, (char*)a2 + prefix_length, &campaign_menu_entry_index))
 	{
 		ContinueCampaignWithLevelCheat_(relevant_campaign, campaign_menu_entry_index);
 		if (gwGameMode == GAME_RUN)
