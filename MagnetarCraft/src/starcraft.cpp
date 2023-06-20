@@ -16558,7 +16558,7 @@ void gluHist_Create_(dialog* dlg)
 
 	for (int i = 0; i < mission_entries.size(); i++)
 	{
-		if (mission_entries[i].next_mission <= (unsigned int)dword_6D5A50 && mission_entries[i].glu_hist_tbl_index)
+		if (mission_entries[i].next_mission <= dword_6D5A50 && mission_entries[i].glu_hist_tbl_index)
 		{
 			const char* v6 = GetTblString(dword_6D5A44, mission_entries[i].glu_hist_tbl_index);
 			mission_list_dlg->fields.list.pdwData[ListBox_AddEntry(v6, mission_list_dlg, 0)] = i;
