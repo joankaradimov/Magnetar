@@ -20837,7 +20837,7 @@ void sub_4D4440_()
 
 FAIL_STUB_PATCH(sub_4D4440);
 
-void PlayMovie_(char* cinematic, int flags)
+void PlayMovie_(char* cinematic, StormVideoFlags flags)
 {
 	RefreshCursor_0();
 	sub_4D4440_();
@@ -20864,12 +20864,22 @@ void PlayMovie_(char* cinematic, int flags)
 	}
 }
 
+DEFINE_ENUM_FLAG_OPERATORS(StormVideoFlags);
+
+const StormVideoFlags SVID_AUTOCUTSCENE =
+	StormVideoFlags::SVID_FLAG_TOSCREEN |
+	StormVideoFlags::SVID_FLAG_CLEARSCREEN |
+	StormVideoFlags::SVID_FLAG_FULLSCREEN |
+	StormVideoFlags::SVID_FLAG_AUTOSIZE |
+	StormVideoFlags::SVID_FLAG_AUTOQUALITY;
+
 void PlayMovie_(Cinematic cinematic)
 {
-	int flags = 0x10280808;
+	StormVideoFlags flags = SVID_AUTOCUTSCENE;
+
 	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
 	{
-		flags |= 0x800000;
+		flags |= StormVideoFlags::SVID_FLAG_UNK;
 	}
 
 	PlayMovie_(cinematics[cinematic], flags);
