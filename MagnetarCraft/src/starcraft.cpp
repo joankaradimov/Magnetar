@@ -20850,10 +20850,10 @@ void GameMainLoop_()
 		if (registry_options.field_18 & 0x800)
 		{
 			registry_options.field_18 &= ~0x800;
-			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			try
 			{
-				PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+				PlayMovie_("smk\\starXintr.smk", SVID_AUTOCUTSCENE);
 			}
 			catch (const FileNotFoundException& e)
 			{
@@ -20865,10 +20865,10 @@ void GameMainLoop_()
 		if (registry_options.field_18 & 0x200)
 		{
 			registry_options.field_18 &= ~0x200;
-			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			try
 			{
-				PlayMovie_(Cinematic::C_INTRO);
+				PlayMovie_("smk\\starintr.smk", SVID_AUTOCUTSCENE);
 			}
 			catch (const FileNotFoundException& e)
 			{
@@ -20909,7 +20909,7 @@ void GameMainLoop_()
 			gwGameMode = GAME_RUN;
 			break;
 		case GAME_INTRO:
-			PlayMovie_(Cinematic::C_BLIZZARD_LOGO);
+			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			if (gwGameMode == GAME_INTRO)
 			{
 				if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
@@ -20917,7 +20917,7 @@ void GameMainLoop_()
 					SFileCloseFile(phFile);
 					try
 					{
-						PlayMovie_(Cinematic::C_EXPANSION_INTRO);
+						PlayMovie_("smk\\starXintr.smk", SVID_AUTOCUTSCENE);
 					}
 					catch (const FileNotFoundException& e)
 					{
@@ -20927,7 +20927,7 @@ void GameMainLoop_()
 				{
 					try
 					{
-						PlayMovie_(Cinematic::C_INTRO);
+						PlayMovie_("smk\\starintr.smk", SVID_AUTOCUTSCENE);
 					}
 					catch (const FileNotFoundException& e)
 					{

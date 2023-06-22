@@ -11,4 +11,5 @@ const StormVideoFlags SVID_AUTOCUTSCENE =
     StormVideoFlags::SVID_FLAG_AUTOSIZE |
     StormVideoFlags::SVID_FLAG_AUTOQUALITY;
 
+void PlayMovie_(const char* cinematic, StormVideoFlags flags);
 void PlayMovie_(Cinematic cinematic);

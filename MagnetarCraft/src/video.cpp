@@ -15,14 +15,14 @@ void sub_4D4440_()
 
 FAIL_STUB_PATCH(sub_4D4440);
 
-void PlayMovie_(char* cinematic, StormVideoFlags flags)
+void PlayMovie_(const char* cinematic, StormVideoFlags flags)
 {
 	RefreshCursor_0();
 	sub_4D4440_();
 
 	HANDLE video;
 
-	SVidPlayBegin(cinematic, 0, 0, 0, 0, flags, &video);
+	SVidPlayBegin((char*) cinematic, 0, 0, 0, 0, flags, &video);
 	if (video)
 	{
 		while (!dword_5967F0)
