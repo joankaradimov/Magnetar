@@ -32,6 +32,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/glu_main.cpp
 	src/glu_ready_room.cpp
 	src/glu_score.cpp
+	src/glu_title.cpp
 	src/video.cpp
 )
 
