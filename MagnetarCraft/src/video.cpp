@@ -42,6 +42,11 @@ void PlayMovie_(const char* cinematic, StormVideoFlags flags)
 	}
 }
 
+void PlayMovie_(const struct CampaignMenuEntryEx& entry)
+{
+	PlayMovie_(entry.cinematic);
+}
+
 void PlayMovie_(Cinematic cinematic)
 {
 	StormVideoFlags flags = SVID_AUTOCUTSCENE;

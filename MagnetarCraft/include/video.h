@@ -1,6 +1,7 @@
 #pragma once
 
 #include "starcraft.h"
+#include "campaign.h"
 
 DEFINE_ENUM_FLAG_OPERATORS(StormVideoFlags);
 
@@ -12,4 +13,5 @@ const StormVideoFlags SVID_AUTOCUTSCENE =
     StormVideoFlags::SVID_FLAG_AUTOQUALITY;
 
 void PlayMovie_(const char* cinematic, StormVideoFlags flags);
+void PlayMovie_(const struct CampaignMenuEntryEx& entry);
 void PlayMovie_(Cinematic cinematic);

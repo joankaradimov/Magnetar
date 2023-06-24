@@ -16759,7 +16759,6 @@ bool LoadCampaignWithCharacter_(RaceId race)
 		switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 		{
 		case CampaignMenuEntryType::CINEMATIC:
-			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
@@ -16796,7 +16795,6 @@ bool LoadPrecursorCampaign()
 		switch (active_campaign->entries[active_campaign_entry_index].entry_type)
 		{
 		case CampaignMenuEntryType::CINEMATIC:
-			active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 			CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
 			next_scenario[0] = 0;
 			gwGameMode = GAME_CINEMATIC;
@@ -20648,7 +20646,6 @@ int ContinueCampaign_(int a1)
 		return 1;
 	case CampaignMenuEntryType::CINEMATIC:
 		CampaignIndex = (MapData)active_campaign->entries[active_campaign_entry_index].next_mission;
-		active_cinematic = active_campaign->entries[active_campaign_entry_index].cinematic;
 		gwGameMode = GAME_CINEMATIC;
 		return 1;
 	case CampaignMenuEntryType::MISSION:
@@ -20822,8 +20819,7 @@ void GameMainLoop_()
 			GameRun_();
 			break;
 		case GAME_CINEMATIC:
-			PlayMovie_(active_cinematic);
-			active_cinematic = Cinematic::C_NONE;
+			PlayMovie_(active_campaign->entries[active_campaign_entry_index]);
 			if (gwGameMode == GAME_CINEMATIC)
 				ContinueCampaign_(1);
 			break;
