@@ -44,19 +44,7 @@ void PlayMovie_(const char* cinematic, StormVideoFlags flags)
 
 void PlayMovie_(const struct CampaignMenuEntryEx& entry)
 {
-	PlayMovie_(entry.cinematic);
-}
-
-void PlayMovie_(Cinematic cinematic)
-{
-	StormVideoFlags flags = SVID_AUTOCUTSCENE;
-
-	if (cinematic >= Cinematic::C_FURY_OF_THE_XEL_NAGA)
-	{
-		flags |= StormVideoFlags::SVID_FLAG_UNK;
-	}
-
-	PlayMovie_(cinematics[cinematic], flags);
+	PlayMovie_(cinematics[entry.cinematic], entry.video_flags);
 }
 
 FAIL_STUB_PATCH(PlayMovie);
