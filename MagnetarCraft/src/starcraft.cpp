@@ -16438,11 +16438,11 @@ void __stdcall registerMenuFunctions__(dialog* a2, int functions_size, int a4)
 // gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID
 FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__);
 
-int CreateCampaignGame_(ExpandedMapData mapData)
+int CreateCampaignGame_(const CampaignMenuEntryEx& campaign_entry)
 {
 	MapChunks mapChunks;
 
-	CampaignIndex = (MapData) mapData;
+	CampaignIndex = (MapData)campaign_entry.next_mission;
 	if (ReadCampaignMapData_(&mapChunks))
 	{
 		GameData v4;
@@ -16764,7 +16764,7 @@ bool LoadCampaignWithCharacter_(RaceId race)
 			gwGameMode = GAME_CINEMATIC;
 			break;
 		default:
-			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
+			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]);
 			break;
 		}
 	}
@@ -16800,7 +16800,7 @@ bool LoadPrecursorCampaign()
 			gwGameMode = GAME_CINEMATIC;
 			break;
 		default:
-			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission);
+			CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]);
 			break;
 		}
 	}
@@ -19375,7 +19375,7 @@ int SwitchMenu_()
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = active_campaign->is_expansion;
-		if (active_campaign->is_expansion && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
+		if (active_campaign->is_expansion && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]))
 		{
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			IsExpansion = 0;
@@ -20649,7 +20649,7 @@ int ContinueCampaign_(int a1)
 		gwGameMode = GAME_CINEMATIC;
 		return 1;
 	case CampaignMenuEntryType::MISSION:
-		if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index].next_mission))
+		if (CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]))
 		{
 			glGluesMode = Race::races()[active_campaign->entries[active_campaign_entry_index].race].ready_room_menu;
 			return 1;
