@@ -2573,7 +2573,6 @@ FAIL_STUB_PATCH(LoadSfx);
 char* MapdataFilenames_[73];
 
 MEMORY_PATCH(0x4280A2, MapdataFilenames_);
-MEMORY_PATCH(0x4A7DC9, MapdataFilenames_);
 MEMORY_PATCH(0x512BA0, MapdataFilenames_);
 MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
 
