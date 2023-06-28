@@ -17604,7 +17604,7 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 		a4.version = 0;
 		replay->unknown6 = (unsigned __int16)replay_header.campaign_index;
 		a4.data7 = 0;
-		const char* source_file = v14 ? replay->full_path : MapdataFilenames[CampaignIndex];
+		const char* source_file = v14 ? replay->full_path : MapdataFilenames_[CampaignIndex];
 		if (ReadMapData_(source_file, &a4, !v14))
 		{
 			sprintf_s(replay->description, get_GluAll_String(UNABLE_TO_LOAD_MAP), replay->game_data.map_name);
