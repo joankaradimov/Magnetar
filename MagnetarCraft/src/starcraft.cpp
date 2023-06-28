@@ -18256,16 +18256,14 @@ void sub_46D220_(dialog* a1)
 	sub_46CBC0(a1);
 	if (!a1->lUser)
 	{
-		dialog* v6 = getControlFromIndex_(a1, -14);
-		showDialog_(v6);
+		showDialog_(getControlFromIndex_(a1, -14));
 		if (multiPlayerMode)
 		{
 			BriefingStart(a1, 0);
 		}
 		else
 		{
-			dialog* v7 = getControlFromIndex_(a1, 20);
-			DisableControl(v7);
+			DisableControl(getControlFromIndex_(a1, 20));
 		}
 	}
 }
