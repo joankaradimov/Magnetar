@@ -4269,7 +4269,7 @@ void replayStatBtns(dialog *dlg) {
 }
 DECL_FUNC(void (__fastcall*UnitStatAct_Dropship)(dialog *dlg), UnitStatAct_Dropship, 0x427c90);
 DECL_FUNC(void (__fastcall*UnitStatAct_Overlord)(dialog *dlg), UnitStatAct_Overlord, 0x427d30);
-signed BriefingActionsLoop(int a1) {
+signed BriefingActionsLoop(Trigger *a1) {
     int address = 0x427da0;
     signed result_;
     __asm {
@@ -4282,14 +4282,14 @@ signed BriefingActionsLoop(int a1) {
 }
 DECL_FUNC(void (*sub_427E30)(), sub_427E30, 0x427e30);
 DECL_FUNC(int (*BRFACT_NoAct)(), BRFACT_NoAct, 0x427e40);
-DECL_FUNC(signed (__thiscall*BRFACT_Wait)(int this_), BRFACT_Wait, 0x427e50);
+DECL_FUNC(signed (__fastcall*BRFACT_Wait)(Action *action, BYTE action_index), BRFACT_Wait, 0x427e50);
 DECL_FUNC(signed (*BRFACT_SkipTutorial)(), BRFACT_SkipTutorial, 0x427ea0);
 DECL_FUNC(signed (__thiscall*BRFACT_MissionObjectives)(int this_), BRFACT_MissionObjectives, 0x427ec0);
 DECL_FUNC(signed (__thiscall*BRFACT_HidePortrait)(int this_), BRFACT_HidePortrait, 0x427ee0);
 DECL_FUNC(int (__fastcall*BRFACT_ShowPortrait)(int a1, int a2), BRFACT_ShowPortrait, 0x427ef0);
 DECL_FUNC(signed (__thiscall*BRFACT_TextMessage)(int this_), BRFACT_TextMessage, 0x427f10);
 DECL_FUNC(int (__fastcall*BRFACT_DisplaySpeakingPortrait)(int a1, int a2), BRFACT_DisplaySpeakingPortrait, 0x427f80);
-DECL_FUNC(signed (__thiscall*BRFACT_PlayWAV)(int this_), BRFACT_PlayWAV, 0x427fa0);
+DECL_FUNC(int (__fastcall*BRFACT_PlayWAV)(Action *action, BYTE action_index), BRFACT_PlayWAV, 0x427fa0);
 DECL_FUNC(signed (__fastcall*BRFACT_Transmission)(int a1, int a2), BRFACT_Transmission, 0x4280e0);
 DECL_FUNC(int (__fastcall*isUpgradeInProgress)(char a1, int a2), isUpgradeInProgress, 0x4281b0);
 DECL_FUNC(u8 * (__fastcall*sub_4281E0)(char a1, int a2), sub_4281E0, 0x4281e0);
@@ -9147,11 +9147,11 @@ void gluRdy_Portrait_InitChildren(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*gluRdy_Portrait)(dialog *dlg, dlgEvent *evt), gluRdy_Portrait, 0x44efe0);
-void LoadBriefingFrameImages(const char **a1, const char **a2) {
+void LoadBriefingFrameImages(const char **highlighted_frame_paths, const char **normal_frame_paths) {
     int address = 0x44f020;
     __asm {
-        push dword ptr a2
-        mov eax, a1
+        push dword ptr normal_frame_paths
+        mov eax, highlighted_frame_paths
         call address
     }
 }
@@ -13096,7 +13096,7 @@ DECL_FUNC(void (__fastcall*textScrollLoop)(dialog *a1, __int16 a2), textScrollLo
 DECL_FUNC(void (*CreateSkipTutorialButton)(), CreateSkipTutorialButton, 0x46c9c0);
 DECL_FUNC(void (__fastcall*HidePortrait)(unsigned __int8 a1), HidePortrait, 0x46ca30);
 DECL_FUNC(void (__stdcall*sub_46CA90)(dialog *a1), sub_46CA90, 0x46ca90);
-DECL_FUNC(TriggerListEntry * (__stdcall*sub_46CBC0)(dialog *a1), sub_46CBC0, 0x46cbc0);
+DECL_FUNC(void (__stdcall*sub_46CBC0)(dialog *a1), sub_46CBC0, 0x46cbc0);
 DECL_FUNC(void (*updateMissionObjectives)(), updateMissionObjectives, 0x46cd30);
 void BRF_displayText(char *text, unsigned int a2) {
     int address = 0x46cdd0;
@@ -13106,7 +13106,7 @@ void BRF_displayText(char *text, unsigned int a2) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*ShowPortrait)(int a1, int a2, unsigned __int16 a3), ShowPortrait, 0x46cf30);
+DECL_FUNC(void (__fastcall*ShowPortrait)(unsigned __int8 a1, int a2, unsigned __int16 a3), ShowPortrait, 0x46cf30);
 void briefingFramesCleanup(dialog *a1) {
     int address = 0x46cfd0;
     __asm {
@@ -13123,12 +13123,12 @@ void BriefingStart(dialog *a1, int a2) {
         call address
     }
 }
-int sub_46D160(dialog *a1) {
+int sub_46D160(dialog *dlg) {
     int address = 0x46d160;
     int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
         mov result_, eax
     }
