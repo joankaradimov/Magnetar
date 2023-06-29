@@ -18242,6 +18242,28 @@ void loadPortdataDAT_()
 
 FAIL_STUB_PATCH(loadPortdataDAT);
 
+void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
+{
+	TriggerListEntry* lUser = (TriggerListEntry*)dlg->lUser;
+	if (lUser && BriefingActionsLoop(&lUser->container))
+	{
+		if ((int)lUser->next <= 0)
+		{
+			dlg->lUser = 0;
+			if (multiPlayerMode)
+			{
+				BriefingStart(dlg, 0);
+			}
+		}
+		else
+		{
+			dlg->lUser = (int)lUser->next;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(MissionBriefingLoop);
+
 void sub_46D220_(dialog* a1)
 {
 	dword_66FF6C = a1;
@@ -18252,7 +18274,7 @@ void sub_46D220_(dialog* a1)
 	stru_66FF64.wid = v3->rct.right - v3->rct.left + 1;
 	stru_66FF64.ht = 20 * (v3->rct.bottom - v3->rct.top + 1);
 	stru_66FF64.data = (u8*)SMemAlloc((__int16)(v3->rct.right - v3->rct.left + 1) * (__int16)stru_66FF64.ht, "Starcraft\\SWAR\\lang\\gluRdy.cpp", 228, 0);
-	SetCallbackTimer(10, a1, 100, MissionBriefingLoop);
+	SetCallbackTimer(10, a1, 100, MissionBriefingLoop_);
 	sub_46CBC0(a1);
 	if (!a1->lUser)
 	{
