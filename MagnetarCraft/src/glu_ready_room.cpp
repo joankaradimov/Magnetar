@@ -110,6 +110,27 @@ FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
 FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
 
+int sub_46D160_(dialog* dlg)
+{
+	switch (LastControlID)
+	{
+	case 13:
+		BriefingStart(dlg, 0);
+		return 1;
+	case 14:
+		BriefingStart(dlg, 1);
+		break;
+	case 20:
+		sub_46CBC0(dlg);
+		return 1;
+	}
+
+	sub_46CA90(dlg);
+	return (unsigned __int8) DLG_SwishOut(dlg);
+}
+
+FAIL_STUB_PATCH(sub_46D160);
+
 int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -123,7 +144,7 @@ int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 			briefingFramesCleanup(dlg);
 			break;
 		case EventUser::USER_ACTIVATE:
-			return sub_46D160(dlg);
+			return sub_46D160_(dlg);
 		case EventUser::USER_INIT:
 			sub_46D3C0_(dlg);
 			gluRdy_CustomCtrlID_(dlg);
