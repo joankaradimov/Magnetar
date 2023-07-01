@@ -112,6 +112,7 @@ void __stdcall BWFXN_videoLoop_(int flag);
 void BWFXN_RedrawTarget_();
 void InitializeDialog_(dialog* a1, FnInteract a2);
 void TitlePaletteUpdate_(int a1);
+void BriefingStart_(dialog* a1, int buffer);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

@@ -18242,6 +18242,38 @@ void loadPortdataDAT_()
 
 FAIL_STUB_PATCH(loadPortdataDAT);
 
+void BriefingStart_(dialog* dlg, int buffer)
+{
+	dlg->lUser = 0;
+	DisableControl(getControlFromIndex_(dlg, 13));
+	if (multiPlayerMode)
+	{
+		showDialog(getControlFromIndex_(dlg, -12));
+	}
+
+	if (buffer)
+	{
+		leaveGame(3);
+	}
+	if (byte_6554B0 == 1)
+	{
+		if (!buffer)
+		{
+			BYTE command = 0x54;
+			BWFXN_QueueCommand(&command, 1);
+			byte_6554B0 = 2;
+			return;
+		}
+		byte_6554B0 = 0;
+	}
+	if (buffer)
+	{
+		dlg->fields.dlg.pModalFcn = 0;
+	}
+}
+
+FAIL_STUB_PATCH(BriefingStart);
+
 void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
 {
 	TriggerListEntry* lUser = (TriggerListEntry*)dlg->lUser;
@@ -18252,7 +18284,7 @@ void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
 			dlg->lUser = 0;
 			if (multiPlayerMode)
 			{
-				BriefingStart(dlg, 0);
+				BriefingStart_(dlg, 0);
 			}
 		}
 		else
@@ -18281,7 +18313,7 @@ void sub_46D220_(dialog* a1)
 		showDialog_(getControlFromIndex_(a1, -14));
 		if (multiPlayerMode)
 		{
-			BriefingStart(a1, 0);
+			BriefingStart_(a1, 0);
 		}
 		else
 		{

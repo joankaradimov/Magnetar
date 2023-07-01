@@ -115,10 +115,10 @@ int sub_46D160_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case 13:
-		BriefingStart(dlg, 0);
+		BriefingStart_(dlg, 0);
 		return 1;
 	case 14:
-		BriefingStart(dlg, 1);
+		BriefingStart_(dlg, 1);
 		break;
 	case 20:
 		sub_46CBC0(dlg);
