@@ -18242,6 +18242,61 @@ void loadPortdataDAT_()
 
 FAIL_STUB_PATCH(loadPortdataDAT);
 
+int __fastcall BRFACT_PlayWAV_(Action* action, BYTE action_index)
+{
+	char buff[MAX_PATH];
+
+	if (!action->wavString)
+	{
+		return 1;
+	}
+	const char* v2 = nullptr;
+	if (CampaignIndex)
+	{
+		if (MapStringTbl.buffer)
+		{
+			__int16 wavString = action->wavString;
+
+			if (wavString == 0)
+			{
+				v2 = nullptr;
+			}
+			else if (wavString < *MapStringTbl.buffer + 1)
+			{
+				v2 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[wavString];
+			}
+			else
+			{
+				v2 = "";
+			}
+		}
+		sprintf_s(buff, "%s\\%s", MapdataFilenames_[CampaignIndex], v2);
+	}
+	else if (MapStringTbl.buffer)
+	{
+		__int16 v3 = action->wavString;
+		if (!v3)
+		{
+			v2 = nullptr;
+		}
+		if (v3 >= *MapStringTbl.buffer + 1)
+		{
+			v2 = "";
+		}
+		else
+		{
+			v2 = (char*)MapStringTbl.buffer + MapStringTbl.buffer[v3];
+		}
+		strcpy_s(buff, v2);
+	}
+
+	PlayWavByFilename_maybe(buff);
+
+	return 1;
+}
+
+FUNCTION_PATCH(BRFACT_PlayWAV, BRFACT_PlayWAV_);
+
 void BriefingStart_(dialog* dlg, int buffer)
 {
 	dlg->lUser = 0;
