@@ -2813,7 +2813,7 @@ GotFileValues* readTemplate_(const char* template_name, char* got_template_name,
 
 FAIL_STUB_PATCH(readTemplate);
 
-int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor)
+int LoadGameTemplates_(TemplateConstructor template_constructor)
 {
 	char buff[MAX_PATH];
 	char v7[MAX_PATH];
@@ -7431,7 +7431,7 @@ void sub_4A91E0_()
 
 FAIL_STUB_PATCH(sub_4A91E0);
 
-int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
+int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
 	CurrentMapFileName[0] = 0;
 	if (!is_campaign)

@@ -63,7 +63,7 @@ void audioVideoInit_();
 void LoadInitIscriptBIN_();
 void __fastcall CleanupIscriptBINHandle_(bool exit_code);
 int LoadReplayFile_(const char* a1, int* a3);
-int __stdcall ReadMapData_(const char* source, MapChunks* a4, int is_campaign);
+int ReadMapData_(const char* source, MapChunks* a4, int is_campaign);
 int CreateGame_(GameData* data);
 void GameRun_();
 int load_gluGameMode_BINDLG_();
@@ -115,7 +115,7 @@ void TitlePaletteUpdate_(int a1);
 void BriefingStart_(dialog* a1, int buffer);
 void sub_4D35A0_();
 void showDialog_(dialog* dlg);
-int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor);
+int LoadGameTemplates_(TemplateConstructor template_constructor);
 int InitializeNetworkProvider_(Char4 provider_id);
 
 template <size_t TIMERS_COUNT>
