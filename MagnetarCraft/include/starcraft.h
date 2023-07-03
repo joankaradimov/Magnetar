@@ -113,6 +113,10 @@ void BWFXN_RedrawTarget_();
 void InitializeDialog_(dialog* a1, FnInteract a2);
 void TitlePaletteUpdate_(int a1);
 void BriefingStart_(dialog* a1, int buffer);
+void sub_4D35A0_();
+void showDialog_(dialog* dlg);
+int __stdcall LoadGameTemplates_(TemplateConstructor template_constructor);
+int InitializeNetworkProvider_(Char4 provider_id);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
