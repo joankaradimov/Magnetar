@@ -97,7 +97,6 @@ int sub_4EEFD0_();
 int killTimerFunc_();
 void HideDialog_(dialog* dlg);
 int LobbyLoopCnt_();
-void load_MinimapPreview_();
 void DisplayEstablishingShot_();
 void sub_46D1F0_();
 void sub_46D200_(const MusicTrackDescription* music_track);
@@ -117,9 +116,23 @@ void sub_4D35A0_();
 void showDialog_(dialog* dlg);
 int LoadGameTemplates_(TemplateConstructor template_constructor);
 int InitializeNetworkProvider_(Char4 provider_id);
+void SetCursorClipBounds_();
+void __cdecl refreshSelectionScreen_();
+void initMapData_();
+void BINDLG_BlitSurface_(dialog* dlg);
+void GroundAttackInit_(__int16 x, __int16 y);
+void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2);
+void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size);
+void minimapPreviewUpdateState_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
 {
 	DlgSwooshin_(dlg, timers, TIMERS_COUNT, a4);
+}
+
+template <typename T>
+void BWFXN_QueueCommand__(const T& buffer)
+{
+	BWFXN_QueueCommand_(&buffer, sizeof(T));
 }

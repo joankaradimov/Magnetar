@@ -1,6 +1,7 @@
 #include "starcraft.h"
 #include "magnetorm.h"
 #include "patching.h"
+#include "minimap.h"
 
 void sub_4B8D90_(dialog* dlg)
 {
