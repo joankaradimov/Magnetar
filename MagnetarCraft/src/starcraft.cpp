@@ -5212,7 +5212,7 @@ FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
 void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
 {
 	char campaign_map_path[MAX_PATH];
-	sprintf_s(campaign_map_path, "%s\\%s", a1, "staredit\\scenario.chk");
+	sprintf_s(campaign_map_path, "%s\\staredit\\scenario.chk", a1);
 	return fastFileRead_(chk_size, 0, campaign_map_path, 0, 1, "Starcraft\\SWAR\\lang\\maphdr.cpp", 2060);
 }
 
