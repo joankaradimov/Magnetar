@@ -17365,21 +17365,18 @@ void BriefingStart_(dialog* dlg, int buffer)
 	if (buffer)
 	{
 		leaveGame(3);
-	}
-	if (byte_6554B0 == 1)
-	{
-		if (!buffer)
+		if (byte_6554B0 == 1)
 		{
-			BYTE command = 0x54;
-			BWFXN_QueueCommand(&command, 1);
-			byte_6554B0 = 2;
-			return;
+			byte_6554B0 = 0;
 		}
-		byte_6554B0 = 0;
-	}
-	if (buffer)
-	{
 		dlg->fields.dlg.pModalFcn = 0;
+	}
+	else if (byte_6554B0 == 1)
+	{
+		// TODO: handle this properly
+		BYTE command = 0x54;
+		BWFXN_QueueCommand(&command, 1);
+		byte_6554B0 = 2;
 	}
 }
 
