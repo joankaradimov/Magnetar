@@ -15807,7 +15807,7 @@ int campaignTypeCheatStrings_(const char* a2)
 
 FAIL_STUB_PATCH(campaignTypeCheatStrings);
 
-bool LoadCampaignWithCharacter_(RaceId race)
+bool LoadCampaignWithCharacter_(Campaign& campaign)
 {
 	customSingleplayer[0] = 0;
 	dword_51CA1C = 0;
@@ -15821,16 +15821,15 @@ bool LoadCampaignWithCharacter_(RaceId race)
 		}
 	}
 
+	active_campaign = &campaign;
 	int* unlocked_mission;
 	if (IsExpansion)
 	{
-		active_campaign = expcampaigns_by_race[race];
-		unlocked_mission = &character_data.unlocked_expcampaign_mission[race];
+		unlocked_mission = &character_data.unlocked_expcampaign_mission[active_campaign->race];
 	}
 	else
 	{
-		active_campaign = campaigns_by_race[race];
-		unlocked_mission = &character_data.unlocked_campaign_mission[race];
+		unlocked_mission = &character_data.unlocked_campaign_mission[active_campaign->race];
 	}
 	active_campaign_entry_index = loadmenu_GluHist_(*unlocked_mission, active_campaign);
 	if (active_campaign_entry_index != -1)
@@ -15892,11 +15891,11 @@ bool LoadPrecursorCampaign()
 	return active_campaign_entry_index != -1;
 }
 
-int sub_4B5110_(RaceId race)
+int sub_4B5110_(Campaign& campaign)
 {
-	if (dword_59A0D4[race])
+	if (dword_59A0D4[campaign.race])
 	{
-		const char* v3 = GetNetworkTblString_(race != RaceId::RACE_Terran ? 144 : 143);
+		const char* v3 = GetNetworkTblString_(campaign.race != RaceId::RACE_Terran ? 144 : 143);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -15904,16 +15903,16 @@ int sub_4B5110_(RaceId race)
 		}
 	}
 
-	return LoadCampaignWithCharacter_(race);
+	return LoadCampaignWithCharacter_(campaign);
 }
 
 FAIL_STUB_PATCH(sub_4B5110);
 
-bool sub_4B27A0_(RaceId race)
+bool sub_4B27A0_(Campaign& campaign)
 {
-	if (dword_59B760[race])
+	if (dword_59B760[campaign.race])
 	{
-		const char* v3 = GetNetworkTblString_(race == RaceId::RACE_Protoss ? 142 : 141);
+		const char* v3 = GetNetworkTblString_(campaign.race == RaceId::RACE_Protoss ? 142 : 141);
 
 		if (!sub_4B5B20(v3))
 		{
@@ -15921,7 +15920,7 @@ bool sub_4B27A0_(RaceId race)
 		}
 	}
 
-	return LoadCampaignWithCharacter_(race);
+	return LoadCampaignWithCharacter_(campaign);
 }
 
 FAIL_STUB_PATCH(sub_4B27A0);
@@ -15990,21 +15989,21 @@ bool sub_4B5180_(dialog* a1)
 	switch (LastControlID)
 	{
 	case 6:
-		if (!sub_4B5110_(RaceId::RACE_Protoss))
+		if (!sub_4B5110_(campaigns[4]))
 		{
 			return true;
 		}
 		LastControlID = 6;
 		break;
 	case 7:
-		if (!sub_4B5110_(RaceId::RACE_Terran))
+		if (!sub_4B5110_(campaigns[5]))
 		{
 			return true;
 		}
 		LastControlID = 7;
 		break;
 	case 8:
-		if (!sub_4B5110_(RaceId::RACE_Zerg))
+		if (!sub_4B5110_(campaigns[6]))
 		{
 			return true;
 		}
@@ -16021,21 +16020,21 @@ bool sub_4B2810_(dialog* a1)
 	switch (LastControlID)
 	{
 	case 6:
-		if (!sub_4B27A0_(RaceId::RACE_Protoss))
+		if (!sub_4B27A0_(campaigns[3]))
 		{
 			return true;
 		}
 		LastControlID = 6;
 		break;
 	case 7:
-		if (!sub_4B27A0_(RaceId::RACE_Terran))
+		if (!sub_4B27A0_(campaigns[1]))
 		{
 			return true;
 		}
 		LastControlID = 7;
 		break;
 	case 8:
-		if (!sub_4B27A0_(RaceId::RACE_Zerg))
+		if (!sub_4B27A0_(campaigns[2]))
 		{
 			return true;
 		}
