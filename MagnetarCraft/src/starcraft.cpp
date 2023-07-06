@@ -19041,17 +19041,13 @@ int sub_4DBDA0_(const char* a1)
 	}
 
 	size_t v4 = v2 - a1;
-	auto& campaigns = SStrCmpI(v2, ".SCM", 0x7FFFFFFFu) ? expcampaigns_by_race : campaigns_by_race;
 	for (int v8 = 0; sub_4DBD20_(a1, v4, &v8); v8++)
 	{
-		for (Campaign* campaign : campaigns)
+		for (auto result = active_campaign->entries.begin(); result != active_campaign->entries.end(); result++)
 		{
-			for (auto result = campaign->entries.begin(); result != campaign->entries.end(); result++)
+			if (!result->cinematic && result->next_mission == v8)
 			{
-				if (!result->cinematic && result->next_mission == v8)
-				{
-					return result - campaign->entries.begin();
-				}
+				return result - active_campaign->entries.begin();
 			}
 		}
 	}
