@@ -194,7 +194,7 @@ void loadMenu_gluRdy(RaceId race)
 			}
 			else
 			{
-				glGluesMode = IsExpansion ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+				glGluesMode = IsExpansion ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 			}
 			sub_46D1F0_();
 			break;
@@ -208,7 +208,7 @@ void loadMenu_gluRdy(RaceId race)
 			gwGameMode = GAME_RUNINIT;
 			break;
 		default:
-			glGluesMode = GLUE_MAIN_MENU;
+			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			sub_46D1F0_();
 			break;
 		}

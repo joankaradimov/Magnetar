@@ -454,13 +454,13 @@ void loadMenu_gluScore_()
 		}
 		else if (!ContinueCampaign_(dword_59B75C))
 		{
-			glGluesMode = GLUE_MAIN_MENU;
+			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		}
 	}
 	else
 	{
 		sub_4DBF80_();
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 
 	changeMenu_();

@@ -277,7 +277,7 @@ void loadMenu_gluMain_()
 			break;
 		case 3:
 			multiPlayerMode = 0;
-			glGluesMode = GLUE_LOGIN;
+			glGluesMode = MenuPosition::GLUE_LOGIN;
 			ums_game_template = InitUseMapSettingsTemplate_();
 			memcpy(&gameData.got_file_values, ums_game_template, sizeof(gameData.got_file_values));
 			SMemFree(ums_game_template, "Starcraft\\SWAR\\lang\\gluMain.cpp", 646, 0);
@@ -300,7 +300,7 @@ void loadMenu_gluMain_()
 		case 65520:
 			break;
 		default:
-			glGluesMode = GLUE_MAIN_MENU;
+			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			break;
 		}
 		changeMenu_();

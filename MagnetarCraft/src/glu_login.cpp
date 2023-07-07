@@ -113,23 +113,23 @@ void loadMenu_gluLogin_()
 	case 4:
 		if (!multiPlayerMode)
 		{
-			glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+			glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		}
 		else if (NetMode.as_number == 'MDMX' || NetMode.as_number == 'MODM')
 		{
-			glGluesMode = GLUE_MODEM;
+			glGluesMode = MenuPosition::GLUE_MODEM;
 		}
 		else
 		{
-			glGluesMode = NetMode.as_number == 'SCBL' ? GLUE_DIRECT : GLUE_GAME_SELECT;
+			glGluesMode = NetMode.as_number == 'SCBL' ? MenuPosition::GLUE_DIRECT : MenuPosition::GLUE_GAME_SELECT;
 		}
 		break;
 	case 5:
 		leaveOnQuit(0);
-		glGluesMode = multiPlayerMode != 0 ? GLUE_CONNECT : GLUE_MAIN_MENU;
+		glGluesMode = multiPlayerMode != 0 ? MenuPosition::GLUE_CONNECT : MenuPosition::GLUE_MAIN_MENU;
 		break;
 	default:
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 
 	changeMenu_();

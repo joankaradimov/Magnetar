@@ -63,10 +63,10 @@ void loadMenu_gluLoad_()
 		CMDRECV_LoadGame(byte_599DA4);
 		break;
 	case 5:
-		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		break;
 	default:
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		break;
 	}
 

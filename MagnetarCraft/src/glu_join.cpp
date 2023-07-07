@@ -91,16 +91,16 @@ void loadMenu_gluJoin_()
 	switch (gluLoadBINDlg_(gluJoin_Dlg, gluJoin_Main_))
 	{
 	case 13:
-		glGluesMode = GLUE_CHAT;
+		glGluesMode = MenuPosition::GLUE_CHAT;
 		break;
 	case 14:
-		glGluesMode = NetMode.as_number != 'SCBL' ? GLUE_LOGIN : GLUE_CONNECT;
+		glGluesMode = NetMode.as_number != 'SCBL' ? MenuPosition::GLUE_LOGIN : MenuPosition::GLUE_CONNECT;
 		break;
 	case 15:
-		glGluesMode = GLUE_CREATE;
+		glGluesMode = MenuPosition::GLUE_CREATE;
 		break;
 	default:
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		break;
 	}
 
