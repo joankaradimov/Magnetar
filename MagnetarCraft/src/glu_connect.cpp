@@ -4,7 +4,7 @@
 
 void InitNetProviders_(dialog* dlg)
 {
-	dlg->lFlags |= CTRL_LBOX_NORECALC;
+	dlg->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 	for (TPROVIDER* provider = (int)dword_51A21C > 0 ? dword_51A21C : 0; (int)provider > 0; provider = provider->next)
 	{
 		ListBox_AddEntry(provider->name, dlg, 0);
@@ -74,7 +74,7 @@ int __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 			ListBNGateways(dlg); // TODO: Move the gateways to the YML configuration
 			break;
 		case USER_INIT:
-			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
+			dlg->lFlags |= DialogFlags::CTRL_PLAIN | DialogFlags::CTRL_FONT_SMALL;
 			break;
 		case USER_DESTROY:
 			sub_4BA240(dlg->fields.list.bStrs ? dlg->fields.list.bCurrStr : -1);
@@ -135,9 +135,9 @@ int getGameList_(dialog* dlg)
 	const char* v11 = get_GluAll_String_((GluAllTblEntry)0xB9);
 	dialog* v14 = getControlFromIndex_(gluConn_Dlg, 13);
 	SStrCopy(v14->pszText, v11, 0xFFu);
-	if ((v14->lFlags & CTRL_UPDATE) == 0)
+	if ((v14->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
-		v14->lFlags |= CTRL_UPDATE;
+		v14->lFlags |= DialogFlags::CTRL_UPDATE;
 		updateDialog(v14);
 	}
 	SNetEnumProviders(0, Provider_Constructor);

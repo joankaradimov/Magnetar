@@ -28,12 +28,12 @@ FAIL_STUB_PATCH(gluCustm_initSwish);
 
 void InitGlueMapListBox_()
 {
-	map_listbox->lFlags |= CTRL_LBOX_NORECALC;
+	map_listbox->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 	ClearListBox(map_listbox);
 	int v1 = getMapListEntryCount_(AddMapToList_CB, (MapDirEntryFlags)40, CurrentMapFolder, byte_59BA68[0] != 0 ? byte_59BA68 : 0);
-	if (map_listbox->lFlags & CTRL_LBOX_NORECALC)
+	if (map_listbox->lFlags & DialogFlags::CTRL_LBOX_NORECALC)
 	{
-		map_listbox->lFlags &= ~CTRL_LBOX_NORECALC;
+		map_listbox->lFlags &= ~DialogFlags::CTRL_LBOX_NORECALC;
 		List_Update(map_listbox);
 	}
 	if (v1 != 255)
@@ -142,7 +142,7 @@ int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 			break;
 		case USER_INIT:
 			map_listbox = dlg;
-			dlg->lFlags |= CTRL_PLAIN | CTRL_FONT_SMALL;
+			dlg->lFlags |= DialogFlags::CTRL_PLAIN | DialogFlags::CTRL_FONT_SMALL;
 			break;
 		case USER_SELECT:
 			genericListboxInteract(dlg, evt);
@@ -164,7 +164,7 @@ FAIL_STUB_PATCH(gluCustm_FileListbox_Main);
 
 void gluCustm_raceDropdown_(dialog* a1)
 {
-	a1->lFlags |= CTRL_LBOX_NORECALC;
+	a1->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 
 	for (RaceId race: SELECTABLE_RACES)
 	{
@@ -177,9 +177,9 @@ void gluCustm_raceDropdown_(dialog* a1)
 		a1->fields.list.pdwData[v5] = race;
 	}
 
-	if (a1->lFlags & CTRL_LBOX_NORECALC)
+	if (a1->lFlags & DialogFlags::CTRL_LBOX_NORECALC)
 	{
-		a1->lFlags &= ~CTRL_LBOX_NORECALC;
+		a1->lFlags &= ~DialogFlags::CTRL_LBOX_NORECALC;
 		List_Update(a1);
 	}
 
@@ -199,7 +199,7 @@ FAIL_STUB_PATCH(gluCustm_raceDropdown);
 void gluCustm_typeDropdown_(dialog* dlg)
 {
 	unsigned __int8 v2 = 0;
-	dlg->lFlags |= CTRL_LBOX_NORECALC;
+	dlg->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 	for (const auto& player_type : singleTypeSelect_)
 	{
 		char* v4 = get_GluAll_String_(player_type.tbl_entry);
@@ -212,9 +212,9 @@ void gluCustm_typeDropdown_(dialog* dlg)
 		v2 = player_type.player_type == PlayerType::PT_Computer ? v5 : 0;
 	}
 
-	if (dlg->lFlags & CTRL_LBOX_NORECALC)
+	if (dlg->lFlags & DialogFlags::CTRL_LBOX_NORECALC)
 	{
-		dlg->lFlags &= ~CTRL_LBOX_NORECALC;
+		dlg->lFlags &= ~DialogFlags::CTRL_LBOX_NORECALC;
 		List_Update(dlg);
 	}
 	if (v2 < dlg->fields.list.bStrs || v2 == 0xFF)
@@ -241,7 +241,7 @@ int __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 			gluCustm_typeDropdown_(dlg);
 			break;
 		case EventUser::USER_INIT:
-			dlg->lFlags |= CTRL_PLAIN;
+			dlg->lFlags |= DialogFlags::CTRL_PLAIN;
 			break;
 		case EventUser::USER_SELECT:
 			genericListboxInteract(dlg, evt);

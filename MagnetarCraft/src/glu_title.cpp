@@ -42,9 +42,9 @@ void titleInit_(dialog* dlg)
 		DLGMusicFade_(&title_music);
 	}
 
-	if ((dlg->lFlags & CTRL_UPDATE) == 0)
+	if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
-		dlg->lFlags |= CTRL_UPDATE;
+		dlg->lFlags |= DialogFlags::CTRL_UPDATE;
 		updateDialog(dlg);
 	}
 	RefreshCursor_0();

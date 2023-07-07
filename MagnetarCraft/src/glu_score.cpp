@@ -219,15 +219,15 @@ int sub_4B4600_(dialog* a1)
 	{
 		dialog* v2 = getControlFromIndex_(a1, 2);
 		v2->pszText = (char*)v3;
-		if ((v2->lFlags & CTRL_UPDATE) == 0)
+		if ((v2->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
-			v2->lFlags |= CTRL_UPDATE;
+			v2->lFlags |= DialogFlags::CTRL_UPDATE;
 			updateDialog(v2);
 		}
-		v2->lFlags |= CTRL_DLG_ACTIVE;
+		v2->lFlags |= DialogFlags::CTRL_DLG_ACTIVE;
 	}
 
-	getControlFromIndex_(a1, 8)->lFlags |= CTRL_DLG_ACTIVE;
+	getControlFromIndex_(a1, 8)->lFlags |= DialogFlags::CTRL_DLG_ACTIVE;
 
 	char fileName[260];
 	strcpy(fileName, byte_59B628);
@@ -245,9 +245,9 @@ int sub_4B4600_(dialog* a1)
 	v13->srcBits.ht = height;
 	v13->srcBits.wid = width;
 	v13->srcBits.data = (u8*)buffer;
-	if ((v13->lFlags & CTRL_UPDATE) == 0)
+	if ((v13->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
-		v13->lFlags |= CTRL_UPDATE;
+		v13->lFlags |= DialogFlags::CTRL_UPDATE;
 		updateDialog(v13);
 	}
 	return sub_4B42D0(a1);
@@ -271,9 +271,9 @@ int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 			if (LoadSaveGameBIN_Main_(dword_59B75C, Players[g_LocalNationID].nRace))
 			{
 				dlg->pszText = get_GluAll_String_((GluAllTblEntry)177);
-				if ((dlg->lFlags & CTRL_UPDATE) == 0)
+				if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 				{
-					dlg->lFlags = dlg->lFlags | CTRL_UPDATE;
+					dlg->lFlags = dlg->lFlags | DialogFlags::CTRL_UPDATE;
 					updateDialog(dlg);
 				}
 				DisableControl(dlg);
