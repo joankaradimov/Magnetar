@@ -15716,7 +15716,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 
 	for (auto v8 = campaign->entries.begin(); v8 != campaign->entries.end(); v8++)
 	{
-		if (!(v8->cinematic || v8->hide || v5--))
+		if (!(v8->entry_type == CampaignMenuEntryType::CINEMATIC || v8->hide || v5--))
 		{
 			if (campaign_index_ && *campaign_index_)
 			{
@@ -19045,7 +19045,7 @@ int sub_4DBDA0_(const char* a1)
 	{
 		for (auto result = active_campaign->entries.begin(); result != active_campaign->entries.end(); result++)
 		{
-			if (!result->cinematic && result->next_mission == v8)
+			if (result->entry_type == CampaignMenuEntryType::MISSION && result->next_mission == v8)
 			{
 				return result - active_campaign->entries.begin();
 			}
