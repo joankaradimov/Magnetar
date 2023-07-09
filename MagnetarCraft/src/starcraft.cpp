@@ -5041,10 +5041,9 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 		{
 			if (v6->section_data.chunk_name.as_number == *(DWORD*)loader[v4].name)
 			{
-				if (loader[v4].func)
+				if (loader[v4].func && !loader[v4].func(&v6->section_data, v6->section_data.size, a4))
 				{
-					if (!loader[v4].func(&v6->section_data, v6->section_data.size, a4))
-						break;
+					break;
 				}
 			}
 			v6 = v6->next;
