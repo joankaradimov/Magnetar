@@ -5743,9 +5743,9 @@ void ResetDATFiles_()
 
 	if (!loadGameFileHandle)
 	{
-		memset(&UnitAvailability, 1u, sizeof(UnitAvailability));
-		memset(TechAvailableSC, 1u, sizeof(TechAvailableSC));
-		memset(TechAvailableBW, 1u, sizeof(TechAvailableBW));
+		memset(&UnitAvailability, 1, sizeof(UnitAvailability));
+		memset(TechAvailableSC, 1, sizeof(TechAvailableSC));
+		memset(TechAvailableBW, 1, sizeof(TechAvailableBW));
 		memset(TechResearchSC, 0, sizeof(TechResearchSC));
 		memset(TechResearchBW, 0, sizeof(TechResearchBW));
 		memset(ResearchProgress, 0, sizeof(ResearchProgress));
