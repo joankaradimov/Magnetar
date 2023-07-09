@@ -59,13 +59,14 @@ int __fastcall TitleDlgProc_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
-		if (evt->dwUser == EventUser::USER_CREATE)
+		switch (evt->dwUser)
 		{
+		case EventUser::USER_CREATE:
 			titleInit_(dlg);
-		}
-		else if (evt->dwUser == EventUser::USER_DESTROY)
-		{
+			break;
+		case EventUser::USER_DESTROY:
 			DrawBINDialog_(dlg);
+			break;
 		}
 	}
 	return genericDlgInteract(dlg, evt);
