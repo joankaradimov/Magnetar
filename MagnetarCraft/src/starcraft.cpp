@@ -17326,6 +17326,14 @@ void loadPortdataDAT_()
 
 FAIL_STUB_PATCH(loadPortdataDAT);
 
+int __fastcall BRFACT_ShowPortrait_(Action* action, BYTE action_index)
+{
+	ShowPortrait(action->player, action_index, action->unit);
+	return 1;
+}
+
+FUNCTION_PATCH(BRFACT_ShowPortrait, BRFACT_ShowPortrait_);
+
 int __fastcall BRFACT_PlayWAV_(Action* action, BYTE action_index)
 {
 	char buff[MAX_PATH];
