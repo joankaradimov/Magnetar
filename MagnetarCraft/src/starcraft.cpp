@@ -20232,7 +20232,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			{
 				DisplayTalkingPortrait_maybe_(v7, (UnitType) a1->unit, -1, -1);
 			}
-			if ((registry_options.field_18 & 0x400) != 0 || (a1->flags & 4) != 0)
+			if ((registry_options.field_18 & 0x400) || (a1->flags & 4))
 			{
 				const char* text_message = get_chk_String(a1->string);
 				unsigned display_time = max(v7, getTextDisplayTime_(text_message));
