@@ -20191,7 +20191,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 	{
 		if (a1->flags & 1)
 		{
-			a1->flags = a1->flags & 0xFE;
+			a1->flags &= ~1;
 			return 1;
 		}
 		if (dword_6509AC->container.dwExecutionFlags & 0x10)
@@ -20215,7 +20215,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			v7 = a1->time;
 		}
 
-		a1->flags = a1->flags | 1;
+		a1->flags |= 1;
 		dword_650980[active_trigger_player] = multiPlayerMode ? v7 : -1;
 		byte_6509B8[active_trigger_player] = 1;
 		if (active_trigger_player == g_LocalNationID)
