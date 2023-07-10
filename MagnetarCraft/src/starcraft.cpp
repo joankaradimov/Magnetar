@@ -20149,6 +20149,24 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 
 FAIL_STUB_PATCH(TriggerAction_PlayWav);
 
+int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
+{
+	dword_68AC4C = 1;
+	SetCallbackTimer(4, dword_68AC98, a2, GameTalkingPortrait_CB);
+
+	WORD portrait = setBuildingSelPortrait(unit_type);
+	displayUpdatePortrait(portrait, 0, 2);
+	SetCallbackTimer(3, dword_68AC98, a2, sub_45EC40);
+	if (x != -1)
+	{
+		dword_57FD34 = (x - GAME_AREA_WIDTH / 2) & ((x - GAME_AREA_WIDTH / 2 < 0) - 1);
+		dword_57FD38 = (y - GAME_AREA_HEIGHT / 2) & ((y - GAME_AREA_HEIGHT / 2 < 0) - 1);
+	}
+	return 1;
+}
+
+FAIL_STUB_PATCH(DisplayTalkingPortrait_maybe);
+
 int __fastcall TriggerAction_Transmission_(Action* a1)
 {
 	if (a1->location == 0)
@@ -20200,11 +20218,11 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			{
 				unit->sprite->selectionTimer = 45;
 				MinimapPing_maybe_(unit->sprite->position.x, unit->sprite->position.y, 17);
-				DisplayTalkingPortrait_maybe(unit->sprite->position.x, v7, a1->unit, unit->sprite->position.y);
+				DisplayTalkingPortrait_maybe_(v7, (UnitType) a1->unit, unit->sprite->position.x, unit->sprite->position.y);
 			}
 			else
 			{
-				DisplayTalkingPortrait_maybe(-1, v7, a1->unit, -1);
+				DisplayTalkingPortrait_maybe_(v7, (UnitType) a1->unit, -1, -1);
 			}
 			if ((registry_options.field_18 & 0x400) != 0 || (a1->flags & 4) != 0)
 			{
@@ -20569,7 +20587,7 @@ int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
 {
 	if (active_trigger_player == g_LocalNationID && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
-		DisplayTalkingPortrait_maybe(-1, a1->time, a1->unit, -1);
+		DisplayTalkingPortrait_maybe_(a1->time, (UnitType) a1->unit, -1, -1);
 	}
 	return 1;
 }
