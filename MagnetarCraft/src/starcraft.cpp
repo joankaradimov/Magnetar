@@ -12338,6 +12338,16 @@ void GameLoop_Top_()
 
 FAIL_STUB_PATCH(GameLoop_Top);
 
+int save_crash_report(unsigned int code, struct _EXCEPTION_POINTERS* ep)
+{
+	// TODO: Save and pending commands from this frame; This might be achieved via
+	// some code in Game_RECV@0x4865D0 and its call to saveReplayAction@0x4CDE70
+	replay_header.ReplayFrames = ElapsedTimeFrames;
+	SaveReplay_("LastCrash", 1);
+
+	return EXCEPTION_CONTINUE_SEARCH;
+}
+
 GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
@@ -12377,7 +12387,15 @@ GamePosition BeginGame_()
 	{
 		BWFXN_RedrawTarget_();
 	}
-	GameLoop_Top_();
+
+	__try
+	{
+		GameLoop_Top_();
+	}
+	__except (save_crash_report(GetExceptionCode(), GetExceptionInformation()))
+	{
+	}
+
 	if (on_end_game)
 	{
 		on_end_game();
