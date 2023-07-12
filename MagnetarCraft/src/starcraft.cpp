@@ -17326,9 +17326,27 @@ void loadPortdataDAT_()
 
 FAIL_STUB_PATCH(loadPortdataDAT);
 
+void ShowPortrait_(unsigned __int8 a1, int a2, UnitType unit_type)
+{
+	dialog* v6 = getControlFromIndex_(dword_66FF6C, a1 + 15);
+	u16 portrait_id = setBuildingSelPortrait(unit_type);
+	Portrait* portrait = (Portrait*)v6->lUser;
+
+	if (portrait->video)
+	{
+		SVidPlayEnd(portrait->video);
+		portrait->video = 0;
+	}
+	portrait->flags = 2;
+	portrait->portrait_id = portrait_id;
+	StartUnitPortrait(v6);
+}
+
+FAIL_STUB_PATCH(ShowPortrait);
+
 int __fastcall BRFACT_ShowPortrait_(Action* action, BYTE action_index)
 {
-	ShowPortrait(action->player, action_index, action->unit);
+	ShowPortrait_(action->player, action_index, (UnitType) action->unit);
 	return 1;
 }
 
