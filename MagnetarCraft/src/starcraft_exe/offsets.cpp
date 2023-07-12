@@ -4286,7 +4286,7 @@ DECL_FUNC(signed (__fastcall*BRFACT_Wait)(Action *action, BYTE action_index), BR
 DECL_FUNC(signed (*BRFACT_SkipTutorial)(), BRFACT_SkipTutorial, 0x427ea0);
 DECL_FUNC(signed (__thiscall*BRFACT_MissionObjectives)(int this_), BRFACT_MissionObjectives, 0x427ec0);
 DECL_FUNC(signed (__thiscall*BRFACT_HidePortrait)(int this_), BRFACT_HidePortrait, 0x427ee0);
-DECL_FUNC(int (__fastcall*BRFACT_ShowPortrait)(int a1, int a2), BRFACT_ShowPortrait, 0x427ef0);
+DECL_FUNC(int (__fastcall*BRFACT_ShowPortrait)(Action *action, BYTE action_index), BRFACT_ShowPortrait, 0x427ef0);
 DECL_FUNC(signed (__thiscall*BRFACT_TextMessage)(int this_), BRFACT_TextMessage, 0x427f10);
 DECL_FUNC(int (__fastcall*BRFACT_DisplaySpeakingPortrait)(int a1, int a2), BRFACT_DisplaySpeakingPortrait, 0x427f80);
 DECL_FUNC(int (__fastcall*BRFACT_PlayWAV)(Action *action, BYTE action_index), BRFACT_PlayWAV, 0x427fa0);
@@ -9130,14 +9130,22 @@ void sub_44ED80(dialog *a1) {
         call address
     }
 }
-void StartUnitPortrait(dialog *a1) {
+void StartUnitPortrait(dialog *dlg) {
     int address = 0x44edb0;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
-DECL_FUNC(void (__fastcall*videoSpeakingPortraitLoop)(dialog *a1, __int16 timer_id), videoSpeakingPortraitLoop, 0x44ee80);
+void sub_44EE40(dialog *a1, __int16 a2) {
+    int address = 0x44ee40;
+    __asm {
+        push dword ptr a2
+        mov edi, a1
+        call address
+    }
+}
+DECL_FUNC(void (__fastcall*videoSpeakingPortraitLoop)(dialog *dlg, __int16 timer_id), videoSpeakingPortraitLoop, 0x44ee80);
 DECL_FUNC(void (__thiscall*sub_44EED0)(dialog *this_, int a2), sub_44EED0, 0x44eed0);
 void gluRdy_Portrait_InitChildren(dialog *a1) {
     int address = 0x44ef00;
@@ -10447,9 +10455,9 @@ void statbtn_BIN_CustomCtrlID(dialog *a1) {
 DECL_FUNC(void (__fastcall*BTNSACT_ChangeButtons)(__int16 a1), BTNSACT_ChangeButtons, 0x459af0);
 DECL_FUNC(int (__fastcall*statbtn_DLG_Interact)(dialog *dlg, dlgEvent *evt), statbtn_DLG_Interact, 0x459b00);
 DECL_FUNC(void (*load_statbtn_BIN)(), load_statbtn_BIN, 0x459b90);
-int sub_459D90(int result, int a2, int a3) {
+DownloadListMaybe * sub_459D90(DownloadListMaybe *result, int a2, int a3) {
     int address = 0x459d90;
-    int result_;
+    DownloadListMaybe * result_;
     __asm {
         xor eax, eax
         push dword ptr a3
@@ -10460,9 +10468,9 @@ int sub_459D90(int result, int a2, int a3) {
     }
     return result_;
 }
-int sub_459DC0(int result) {
+DownloadListMaybe * sub_459DC0(DownloadListMaybe *result) {
     int address = 0x459dc0;
-    int result_;
+    DownloadListMaybe * result_;
     __asm {
         xor eax, eax
         mov eax, result
@@ -10471,7 +10479,7 @@ int sub_459DC0(int result) {
     }
     return result_;
 }
-unsigned sub_459E00(int a1, unsigned int a2) {
+unsigned sub_459E00(DownloadListMaybe *a1, unsigned int a2) {
     int address = 0x459e00;
     unsigned result_;
     __asm {
@@ -10521,9 +10529,9 @@ BOOL extensionIsValidMap(const char *a1) {
     }
     return result_;
 }
-_BYTE * sub_45A010(char a1, char a2) {
+DownloadListMaybe * sub_45A010(char a1, char a2) {
     int address = 0x45a010;
-    _BYTE * result_;
+    DownloadListMaybe * result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
@@ -10565,9 +10573,35 @@ int dataXFer_0x05(int a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*dataXFer_0x03)(int a1), dataXFer_0x03, 0x45a1f0);
-DECL_FUNC(int (*dataXFer_0x02)(), dataXFer_0x02, 0x45a230);
-BOOL openMapFile(int a1) {
+int dataXFer_0x03(int a1, char a2, int a3) {
+    int address = 0x45a1f0;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        push dword ptr a3
+        mov bl, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int dataXFer_0x02(int a1, int a2, char a3) {
+    int address = 0x45a230;
+    int result_;
+    __asm {
+        xor eax, eax
+        xor ebx, ebx
+        mov bl, a3
+        mov ecx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+BOOL openMapFile(DownloadListMaybe *a1) {
     int address = 0x45a290;
     BOOL result_;
     __asm {
@@ -10605,7 +10639,7 @@ int fd_user(char *a1, int a2, int a3) {
     return result_;
 }
 DECL_FUNC(int (__stdcall*sub_45A520)(int a1, int a2), sub_45A520, 0x45a520);
-signed CreateMapDownloadString(int a1, const char *a2, int a3) {
+signed CreateMapDownloadString(size_t a1, const char *a2, int a3) {
     int address = 0x45a570;
     signed result_;
     __asm {
@@ -10936,12 +10970,12 @@ void orders_Morph1(CUnit *unit) {
 }
 DECL_FUNC(void (__stdcall*orders_DroneBuild)(CUnit *unit), orders_DroneBuild, 0x45e090);
 DECL_FUNC(void (*sub_45E310)(), sub_45E310, 0x45e310);
-u16 setBuildingSelPortrait(UnitType a1) {
+u16 setBuildingSelPortrait(UnitType unit_type) {
     int address = 0x45e320;
     u16 result_;
     __asm {
         xor eax, eax
-        mov ax, a1
+        mov ax, unit_type
         call address
         mov result_, ax
     }
@@ -11081,15 +11115,15 @@ void sub_45EB80(signed int a1) {
 DECL_FUNC(void (*updateSelectedUnitPortrait)(), updateSelectedUnitPortrait, 0x45ebc0);
 DECL_FUNC(void (__fastcall*sub_45EC40)(dialog *a1, __int16 timer_id), sub_45EC40, 0x45ec40);
 DECL_FUNC(void (*sub_45ED90)(), sub_45ED90, 0x45ed90);
-signed DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_type, int y) {
+signed DisplayTalkingPortrait_maybe(int a1, UnitType unit_type, int x, int y) {
     int address = 0x45edd0;
     signed result_;
     __asm {
         xor eax, eax
         push dword ptr y
-        push dword ptr unit_type
-        mov esi, a2
         mov edi, x
+        push dword ptr unit_type
+        mov esi, a1
         call address
         mov result_, eax
     }
@@ -11097,7 +11131,7 @@ signed DisplayTalkingPortrait_maybe(int x, int a2, unsigned __int16 unit_type, i
 }
 DECL_FUNC(int (__fastcall*statPortBtnInteract)(dialog *dlg, dlgEvent *evt), statPortBtnInteract, 0x45ee90);
 DECL_FUNC(void (__fastcall*sub_45EF50)(dialog *a1, __int16 a2), sub_45EF50, 0x45ef50);
-void DoUnitEventNotify(CUnit *a1, char a2, int a3, int *a4, unsigned int a5) {
+void DoUnitEventNotify(CUnit *unit, char a2, int a3, int *a4, unsigned int a5) {
     int address = 0x45efe0;
     __asm {
         xor ebx, ebx
@@ -11105,7 +11139,7 @@ void DoUnitEventNotify(CUnit *a1, char a2, int a3, int *a4, unsigned int a5) {
         push dword ptr a4
         mov edi, a3
         mov bl, a2
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -13773,16 +13807,12 @@ int isPlayerBanned(const char *a1) {
 DECL_FUNC(int (__stdcall*Ban_Constructor)(char *source), Ban_Constructor, 0x472840);
 DECL_FUNC(void (*sub_4728E0)(), sub_4728E0, 0x4728e0);
 DECL_FUNC(void (*sub_4728F0)(), sub_4728F0, 0x4728f0);
-int dataXFer_0x06(int result) {
+void dataXFer_0x06(DownloadListMaybe *result) {
     int address = 0x472900;
-    int result_;
     __asm {
-        xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_472940(int a1) {
     int address = 0x472940;
@@ -16020,7 +16050,7 @@ void tips_BinDLG_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*TIPS_BINDLG)(dialog *dlg, dlgEvent *evt), TIPS_BINDLG, 0x47e9a0);
+DECL_FUNC(int (__fastcall*TIPS_BINDLG)(dialog *dlg, dlgEvent *evt), TIPS_BINDLG, 0x47e9a0);
 void loadTips_BINDLG(int a1) {
     int address = 0x47ea30;
     __asm {
@@ -18591,7 +18621,7 @@ char ** sub_494C70(char **result, int a2) {
     }
     return result_;
 }
-int packFlingyData(int a1, int a2) {
+int packFlingyData(unsigned int *a1, int a2) {
     int address = 0x494ce0;
     int result_;
     __asm {
@@ -21013,7 +21043,7 @@ __int16 sub_4A37A0(int a1, int a2, int a3, int a4, int a5) {
     }
     return result_;
 }
-DECL_FUNC(char (*sub_4A3870)(), sub_4A3870, 0x4a3870);
+DECL_FUNC(u8 (*sub_4A3870)(), sub_4A3870, 0x4a3870);
 DECL_FUNC(int (*sub_4A39D0)(), sub_4A39D0, 0x4a39d0);
 DECL_FUNC(_BYTE * (__thiscall*sub_4A39E0)(_BYTE *this_, _BYTE *a2), sub_4A39E0, 0x4a39e0);
 DECL_FUNC(void (__cdecl*sub_4A3A00)(), sub_4A3A00, 0x4a3a00);
@@ -21040,7 +21070,17 @@ void getMinimapCursorPos(int *x, int *y) {
         call address
     }
 }
-DECL_FUNC(int (*sub_4A3E00)(), sub_4A3E00, 0x4a3e00);
+BOOL sub_4A3E00(unsigned __int16 a1) {
+    int address = 0x4a3e00;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov ax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 void killMinimapPreviewDlg(dialog *a1) {
     int address = 0x4a3e20;
     __asm {
@@ -21083,7 +21123,17 @@ void drawAllMinimapUnitBoxes(int a1) {
         call address
     }
 }
-DECL_FUNC(int (*sub_4A49F0)(), sub_4A49F0, 0x4a49f0);
+BOOL sub_4A49F0(CUnit *a1) {
+    int address = 0x4a49f0;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__fastcall*updateMinimapPositioninfoProc)(dialog *a1, __int16 a2), updateMinimapPositioninfoProc, 0x4a4a70);
 DECL_FUNC(void (*drawAllMinimapBoxes)(), drawAllMinimapBoxes, 0x4a4ac0);
 DECL_FUNC(void (__thiscall*drawShowHideTerrainContextHelp)(dialog *this_), drawShowHideTerrainContextHelp, 0x4a4c40);
@@ -21413,7 +21463,7 @@ void LoadReplayMapDirEntry(MapDirEntry *replay) {
         call address
     }
 }
-DECL_FUNC(void (__stdcall*sub_4A7F50)(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4), sub_4A7F50, 0x4a7f50);
+DECL_FUNC(void (__stdcall*sub_4A7F50)(HWND a1, UINT a2, UINT a3, DWORD a4), sub_4A7F50, 0x4a7f50);
 void sub_4A7FC0(MapDirEntry *a1) {
     int address = 0x4a7fc0;
     __asm {
@@ -23307,7 +23357,20 @@ BOOL DlgPszTextMemFree(dialog *a1, __int16 a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4BA1F0)(int amount), sub_4BA1F0, 0x4ba1f0);
+void * sub_4BA1F0(int a1, __int16 a2, int amount) {
+    int address = 0x4ba1f0;
+    void * result_;
+    __asm {
+        xor eax, eax
+        xor ecx, ecx
+        push dword ptr amount
+        mov cx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int sub_4BA240(int a1) {
     int address = 0x4ba240;
     int result_;
@@ -23319,8 +23382,8 @@ int sub_4BA240(int a1) {
     }
     return result_;
 }
-DECL_FUNC(unsigned (__thiscall*sub_4BA290)(dialog *this_), sub_4BA290, 0x4ba290);
-DECL_FUNC(int (*sub_4BA320)(), sub_4BA320, 0x4ba320);
+DECL_FUNC(TPROVIDER * (__thiscall*sub_4BA290)(dialog *this_), sub_4BA290, 0x4ba290);
+DECL_FUNC(void (*sub_4BA320)(), sub_4BA320, 0x4ba320);
 void DestroyProviderList(dialog *a1) {
     int address = 0x4ba330;
     __asm {
@@ -23347,16 +23410,12 @@ void ListBNGateways(dialog *dlg) {
         call address
     }
 }
-unsigned sub_4BA600(dialog *a1) {
+void sub_4BA600(dialog *a1) {
     int address = 0x4ba600;
-    unsigned result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__stdcall*Provider_Constructor)(int a1, char *a2, char *source, int a4), Provider_Constructor, 0x4ba610);
 DECL_FUNC(int (__fastcall*GatewayListProc)(dialog *dlg, dlgEvent *evt), GatewayListProc, 0x4ba740);
@@ -29436,7 +29495,16 @@ void mapTransferVector2_clear(BOOL result) {
 DECL_FUNC(int (*sub_4EAF30)(), sub_4EAF30, 0x4eaf30);
 DECL_FUNC(void (*sub_4EAF50)(), sub_4EAF50, 0x4eaf50);
 DECL_FUNC(int (__stdcall*mapStringCreate)(char a1, int a2, int a3, char *source, char *a5), mapStringCreate, 0x4eaf70);
-DECL_FUNC(int (__fastcall*mapDataTransfer)(_DWORD a1, _DWORD a2), mapDataTransfer, 0x4eafe0);
+void mapDataTransfer(unsigned int a1, _BYTE *a2, char a3) {
+    int address = 0x4eafe0;
+    __asm {
+        xor ecx, ecx
+        mov cl, a3
+        mov edx, a2
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(COrder * (__thiscall*sub_4EB070)(CUnit *this_), sub_4EB070, 0x4eb070);
 DECL_FUNC(char (*sub_4EB090)(), sub_4EB090, 0x4eb090);
 DECL_FUNC(char (*sub_4EB0C0)(), sub_4EB0C0, 0x4eb0c0);
