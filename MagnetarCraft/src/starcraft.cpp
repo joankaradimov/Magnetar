@@ -2860,6 +2860,46 @@ void InitializeDialogScreenLayer_()
 
 FAIL_STUB_PATCH(InitializeDialogScreenLayer);
 
+void initializeDefaultPlayerNames_()
+{
+	for (int i = 0; i < 8; ++i)
+	{
+		PlayerType nType = Players[i].nType;
+		if (nType == PT_Computer || nType == PT_Rescuable || nType == PT_Unknown0 || nType == PT_Neutral)
+		{
+			int v1 = IsExpansion != 0 ? 145 : 29;
+
+			switch (Players[i].nRace)
+			{
+			case RaceId::RACE_Terran:
+				v1 += 0;
+				break;
+			case RaceId::RACE_Zerg:
+				v1 += 8;
+				break;
+			case RaceId::RACE_Protoss:
+				v1 += 16;
+				break;
+			}
+
+			int v5 = i < 8 ? factionsColorsOrdering[i] : i;
+			const char* player_name = GetNetworkTblString_(v1 + v5);
+			if (!player_name)
+			{
+				player_name = GetNetworkTblString_(11);
+			}
+			SStrCopy(Players[i].szName, player_name, sizeof(Players[i].szName));
+		}
+	}
+
+	if (!multiPlayerMode && CampaignIndex && (CampaignIndex == EMD_zerg04 || CampaignIndex == EMD_zerg06))
+	{
+		Players[2].szName[0] = 0;
+	}
+}
+
+FAIL_STUB_PATCH(initializeDefaultPlayerNames);
+
 void setCursor_(grpHead* cursor)
 {
 	if (last_cursor != cursor)
@@ -7670,7 +7710,7 @@ signed int LoadGameInit_()
 			RandomizeSlotsForcesColors();
 	}
 	BWFXN_InitializePlayerConsole();
-	initializeDefaultPlayerNames();
+	initializeDefaultPlayerNames_();
 	memset(randomCounts, 0, 0x400u);
 	randomCountsTotal = 0;
 	LastRandomNumber = initialSeed;
