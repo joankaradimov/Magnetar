@@ -17384,6 +17384,17 @@ void ShowPortrait_(unsigned __int8 a1, int a2, UnitType unit_type)
 
 FAIL_STUB_PATCH(ShowPortrait);
 
+int __fastcall BRFACT_SkipTutorial_(Action* action, BYTE action_index)
+{
+	if (!multiPlayerMode && CampaignIndex)
+	{
+		CreateSkipTutorialButton();
+	}
+	return 1;
+}
+
+FUNCTION_PATCH(BRFACT_SkipTutorial, BRFACT_SkipTutorial_);
+
 int __fastcall BRFACT_ShowPortrait_(Action* action, BYTE action_index)
 {
 	ShowPortrait_(action->player, action_index, (UnitType) action->unit);
