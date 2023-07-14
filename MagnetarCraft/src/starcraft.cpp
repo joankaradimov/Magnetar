@@ -4351,6 +4351,21 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+void video_CustomCTRLID_(dialog* a1)
+{
+	static FnInteract functions[] = {
+		video_GammaSlider,
+		video_CCyclingCheckbox,
+		video_PortraitRadioBtns,
+		video_PortraitRadioBtns,
+		video_PortraitRadioBtns,
+	};
+
+	registerUserDialogAction(a1, sizeof(functions), functions);
+}
+
+FAIL_STUB_PATCH(video_CustomCTRLID);
+
 int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
 	int result; // eax
@@ -4398,7 +4413,7 @@ int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 		result = 1;
 		break;
 	case USER_INIT:
-		video_CustomCTRLID(dlg);
+		video_CustomCTRLID_(dlg);
 		goto LABEL_9;
 	default:
 		goto LABEL_9;
