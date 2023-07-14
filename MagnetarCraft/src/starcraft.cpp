@@ -20244,6 +20244,47 @@ int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 
 FAIL_STUB_PATCH(DisplayTalkingPortrait_maybe);
 
+void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
+{
+	if (!dword_68AC4C)
+	{
+		WORD portrait = setBuildingSelPortrait(getLastQueueSlotType(unit));
+		displayUpdatePortrait(portrait, unit, 2);
+		if (a3 || a5 >= 1144)
+		{
+			SetCallbackTimer(3, dword_68AC98, a3, sub_45EC40);
+		}
+		else
+		{
+			dword_68ACA0 = a5;
+			SetCallbackTimer(3, dword_68AC98, 1000, sub_45EF50);
+		}
+
+		if (unit && a4)
+		{
+			setLastEventPosition((__int16)unit->sprite->position.x, (__int16)unit->sprite->position.y);
+			unit->lastEventTimer = 8;
+			unit->lastEventColor = a2;
+			MinimapPing_maybe_(unit->sprite->position.x, unit->sprite->position.y, a2);
+		}
+	}
+}
+
+void __stdcall DoUnitEventNotify__(int* a4, unsigned int a5)
+{
+	CUnit* unit;
+	char a2;
+	int a3;
+
+	__asm mov unit, eax;
+	__asm mov a2, bl;
+	__asm mov a3, edi;
+
+	DoUnitEventNotify_(unit, a2, a3, a4, a5);
+}
+
+FUNCTION_PATCH((void*)0x45EFE0, DoUnitEventNotify__);
+
 int __fastcall TriggerAction_Transmission_(Action* a1)
 {
 	if (a1->location == 0)
