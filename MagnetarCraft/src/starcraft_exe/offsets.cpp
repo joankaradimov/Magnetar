@@ -4283,7 +4283,7 @@ signed BriefingActionsLoop(Trigger *a1) {
 DECL_FUNC(void (*sub_427E30)(), sub_427E30, 0x427e30);
 DECL_FUNC(int (*BRFACT_NoAct)(), BRFACT_NoAct, 0x427e40);
 DECL_FUNC(signed (__fastcall*BRFACT_Wait)(Action *action, BYTE action_index), BRFACT_Wait, 0x427e50);
-DECL_FUNC(signed (*BRFACT_SkipTutorial)(), BRFACT_SkipTutorial, 0x427ea0);
+DECL_FUNC(int (__fastcall*BRFACT_SkipTutorial)(Action *action, BYTE action_index), BRFACT_SkipTutorial, 0x427ea0);
 DECL_FUNC(signed (__thiscall*BRFACT_MissionObjectives)(int this_), BRFACT_MissionObjectives, 0x427ec0);
 DECL_FUNC(signed (__thiscall*BRFACT_HidePortrait)(int this_), BRFACT_HidePortrait, 0x427ee0);
 DECL_FUNC(int (__fastcall*BRFACT_ShowPortrait)(Action *action, BYTE action_index), BRFACT_ShowPortrait, 0x427ef0);
@@ -11021,7 +11021,7 @@ unsigned rgbValue(int a1, int a2, int a3) {
     }
     return result_;
 }
-signed sub_45E4C0(HANDLE video, int esi0, int a3) {
+signed sub_45E4C0(HANDLE video, int *esi0, int a3) {
     int address = 0x45e4c0;
     signed result_;
     __asm {
@@ -13140,7 +13140,7 @@ void BRF_displayText(char *text, unsigned int a2) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*ShowPortrait)(unsigned __int8 a1, int a2, unsigned __int16 a3), ShowPortrait, 0x46cf30);
+DECL_FUNC(void (__fastcall*ShowPortrait)(unsigned __int8 a1, int a2, UnitType unit_type), ShowPortrait, 0x46cf30);
 void briefingFramesCleanup(dialog *a1) {
     int address = 0x46cfd0;
     __asm {
@@ -16164,11 +16164,11 @@ DECL_FUNC(_DWORD (__stdcall*GetKeyRandomizerSequence)(_DWORD a1), GetKeyRandomiz
 DECL_FUNC(void (__fastcall*saveColorSettings)(bool exit_code), saveColorSettings, 0x480a90);
 DECL_FUNC(int (__thiscall*sub_480AE0)(dialog *this_), sub_480AE0, 0x480ae0);
 DECL_FUNC(int (*sub_480B20)(), sub_480B20, 0x480b20);
-DECL_FUNC(unsigned (__fastcall*sub_480B30)(int a1, int a2), sub_480B30, 0x480b30);
-void sub_480B90(dialog *a1) {
+DECL_FUNC(unsigned (__fastcall*sub_480B30)(dialog *a1, dialog *a2), sub_480B30, 0x480b30);
+void sub_480B90(dialog *dlg) {
     int address = 0x480b90;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -16192,9 +16192,9 @@ void video_Cancel(dialog *a1, dlgEvent *a2) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*video_PortraitRadioBtns)(dialog *dlg, dlgEvent *evt), video_PortraitRadioBtns, 0x480d50);
-DECL_FUNC(bool (__fastcall*video_CCyclingCheckbox)(dialog *dlg, dlgEvent *evt), video_CCyclingCheckbox, 0x480d90);
-DECL_FUNC(bool (__fastcall*video_GammaSlider)(dialog *dlg, dlgEvent *evt), video_GammaSlider, 0x480e10);
+DECL_FUNC(int (__fastcall*video_PortraitRadioBtns)(dialog *dlg, dlgEvent *evt), video_PortraitRadioBtns, 0x480d50);
+DECL_FUNC(int (__fastcall*video_CCyclingCheckbox)(dialog *dlg, dlgEvent *evt), video_CCyclingCheckbox, 0x480d90);
+DECL_FUNC(int (__fastcall*video_GammaSlider)(dialog *dlg, dlgEvent *evt), video_GammaSlider, 0x480e10);
 void video_CustomCTRLID(dialog *a1) {
     int address = 0x480e50;
     __asm {
@@ -16209,14 +16209,14 @@ void video_Main(dialog *a1) {
         call address
     }
 }
-void video_OK(dialog *a1) {
+void video_OK(dialog *dlg) {
     int address = 0x480ee0;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*video_BINDLG_Main)(dialog *dlg, dlgEvent *evt), video_BINDLG_Main, 0x480f90);
+DECL_FUNC(int (__fastcall*video_BINDLG_Main)(dialog *dlg, dlgEvent *evt), video_BINDLG_Main, 0x480f90);
 DECL_FUNC(void (__cdecl*sub_481060)(), sub_481060, 0x481060);
 DECL_FUNC(void (__fastcall*DestroyHelpContext)(bool exit_code), DestroyHelpContext, 0x4810a0);
 DECL_FUNC(void (__fastcall*ContextHelpUpdateProc)(int a1, int a2, Bitmap *pSurface, bounds *pBounds), ContextHelpUpdateProc, 0x4810f0);
