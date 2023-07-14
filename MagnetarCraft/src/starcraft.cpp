@@ -4351,12 +4351,69 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
+{
+	int result; // eax
+
+	if (evt->wNo == EVN_IDLE)
+	{
+		sub_480B30(dlg, dlg);
+	LABEL_9:
+		switch (evt->wNo)
+		{
+		case EVN_KEYFIRST:
+		case EVN_KEYRPT:
+		case EVN_MOUSEMOVE:
+		case EVN_LBUTTONDOWN:
+		case EVN_LBUTTONUP:
+		case EVN_LBUTTONDBLCLK:
+		case EVN_RBUTTONDOWN:
+		case EVN_RBUTTONUP:
+		case EVN_RBUTTONDBLCLK:
+		case EVN_CHAR:
+			genericDlgInteract(dlg, evt);
+			result = 1;
+			break;
+		default:
+			result = genericDlgInteract(dlg, evt);
+			break;
+		}
+		return result;
+	}
+	if (evt->wNo != EVN_USER)
+	{
+		goto LABEL_9;
+	}
+	switch (evt->dwUser)
+	{
+	case USER_CREATE:
+		video_Main(dlg);
+		goto LABEL_9;
+	case USER_DESTROY:
+		video_Cancel(dlg, evt);
+		result = 1;
+		break;
+	case USER_ACTIVATE:
+		video_OK(dlg);
+		result = 1;
+		break;
+	case USER_INIT:
+		video_CustomCTRLID(dlg);
+		goto LABEL_9;
+	default:
+		goto LABEL_9;
+	}
+	return result;
+}
+
+FAIL_STUB_PATCH(video_BINDLG_Main);
+
 void __cdecl sub_481060_()
 {
 	dword_656190 = Gamma;
 	dword_65618C = UnitPortraits;
 	dword_656188 = ColorCycle;
-	BWFXN_OpenGameDialog("rez\\video.bin", video_BINDLG_Main);
+	BWFXN_OpenGameDialog("rez\\video.bin", video_BINDLG_Main_);
 }
 
 FUNCTION_PATCH(sub_481060, sub_481060_);
