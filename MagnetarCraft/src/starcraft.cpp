@@ -4351,6 +4351,16 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+void __cdecl sub_481060_()
+{
+	dword_656190 = Gamma;
+	dword_65618C = UnitPortraits;
+	dword_656188 = ColorCycle;
+	BWFXN_OpenGameDialog("rez\\video.bin", video_BINDLG_Main);
+}
+
+FUNCTION_PATCH(sub_481060, sub_481060_);
+
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] =
