@@ -4351,6 +4351,37 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+void video_OK_(dialog* dlg)
+{
+	if (LastControlID != -2)
+	{
+		ColorCycle = dword_656188;
+		Gamma = (unsigned int)dword_656190 > 0x8C || (unsigned int)dword_656190 < 0x3C ? 100 : dword_656190;
+		updatePaletteEntries();
+		UnitPortraits = (unsigned int)dword_65618C > 2 ? 2 : dword_65618C;
+		if (dword_68AC98 && ActivePortraitUnit)
+		{
+			UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
+			u16 v6 = setBuildingSelPortrait(last_queue_slot_type);
+			displayUpdatePortrait(v6, ActivePortraitUnit, 1);
+		}
+	}
+	sub_4C9780(dlg);
+	char v7 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v7 - 1;
+		dword_6D1234 = MainMenuOptionsCustomInteract;
+		BWFXN_OpenGameDialog("rez\\options.bin", gamemenu_Dlg_Interact);
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(video_OK);
+
 void sub_480B90_(dialog* dlg)
 {
 	UnitPortraits = dlg->wIndex > 5 ? 2 : dlg->wIndex - 3;
@@ -4416,7 +4447,7 @@ int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 			video_Cancel(dlg, evt);
 			return 1;
 		case USER_ACTIVATE:
-			video_OK(dlg);
+			video_OK_(dlg);
 			return 1;
 		case USER_INIT:
 			video_CustomCTRLID_(dlg);
