@@ -4351,6 +4351,20 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+void sub_480B90_(dialog* dlg)
+{
+	UnitPortraits = dlg->wIndex > 5 ? 2 : dlg->wIndex - 3;
+
+	if (dword_68AC98 && ActivePortraitUnit)
+	{
+		UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
+		u16 portrait_id = setBuildingSelPortrait(last_queue_slot_type);
+		displayUpdatePortrait(portrait_id, ActivePortraitUnit, 1);
+	}
+}
+
+FAIL_STUB_PATCH(sub_480B90);
+
 int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
@@ -4358,7 +4372,7 @@ int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_ACTIVATE:
-			sub_480B90(dlg);
+			sub_480B90_(dlg);
 			break;
 		case EventUser::USER_INIT:
 			sub_480AE0(dlg);
