@@ -11215,6 +11215,30 @@ void replayStatBtns_(dialog* dlg)
 
 FAIL_STUB_PATCH(replayStatBtns);
 
+void updateSelectedUnitPortrait_()
+{
+	if (CanUpdateSelectedUnitPortrait && !dword_68AC60)
+	{
+		CUnit* lUser = (CUnit*)dword_68AC98->lUser;
+		CUnit* v2 = ActivePortraitUnit;
+		if (!ActivePortraitUnit)
+		{
+			dword_68AC98->lUser = (int)ActivePortraitUnit;
+			dword_68AC98->wUser = -1;
+			HideDialog(dword_68AC98);
+		}
+		else if (lUser != ActivePortraitUnit || lUser && getLastQueueSlotType(lUser) != getLastQueueSlotType(ActivePortraitUnit))
+		{
+			UnitType LastQueueSlotType = getLastQueueSlotType(v2);
+			WORD v5 = setBuildingSelPortrait(LastQueueSlotType);
+			displayUpdatePortrait(v5, v2, 1);
+		}
+	}
+	CanUpdateSelectedUnitPortrait = 0;
+}
+
+FAIL_STUB_PATCH(updateSelectedUnitPortrait);
+
 void updateCurrentButtonset_()
 {
 	u16 v0 = word_68C1C8;
@@ -11605,7 +11629,7 @@ void sub_4C3B10_()
 		updateSelectedUnitData_();
 		byte_59723C = 0;
 	}
-	updateSelectedUnitPortrait();
+	updateSelectedUnitPortrait_();
 	updateCurrentButtonset_();
 	sub_458120_();
 }
