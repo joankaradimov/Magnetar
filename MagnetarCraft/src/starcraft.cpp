@@ -4401,57 +4401,45 @@ FAIL_STUB_PATCH(video_CustomCTRLID);
 
 int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
-	int result; // eax
-
-	if (evt->wNo == EVN_IDLE)
+	switch (evt->wNo)
 	{
+	case EventNo::EVN_IDLE:
 		sub_480B30(dlg, dlg);
-	LABEL_9:
-		switch (evt->wNo)
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
 		{
-		case EVN_KEYFIRST:
-		case EVN_KEYRPT:
-		case EVN_MOUSEMOVE:
-		case EVN_LBUTTONDOWN:
-		case EVN_LBUTTONUP:
-		case EVN_LBUTTONDBLCLK:
-		case EVN_RBUTTONDOWN:
-		case EVN_RBUTTONUP:
-		case EVN_RBUTTONDBLCLK:
-		case EVN_CHAR:
-			genericDlgInteract(dlg, evt);
-			result = 1;
+		case USER_CREATE:
+			video_Main(dlg);
 			break;
-		default:
-			result = genericDlgInteract(dlg, evt);
+		case USER_DESTROY:
+			video_Cancel(dlg, evt);
+			return 1;
+		case USER_ACTIVATE:
+			video_OK(dlg);
+			return 1;
+		case USER_INIT:
+			video_CustomCTRLID_(dlg);
 			break;
 		}
-		return result;
 	}
-	if (evt->wNo != EVN_USER)
+
+	switch (evt->wNo)
 	{
-		goto LABEL_9;
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
 	}
-	switch (evt->dwUser)
-	{
-	case USER_CREATE:
-		video_Main(dlg);
-		goto LABEL_9;
-	case USER_DESTROY:
-		video_Cancel(dlg, evt);
-		result = 1;
-		break;
-	case USER_ACTIVATE:
-		video_OK(dlg);
-		result = 1;
-		break;
-	case USER_INIT:
-		video_CustomCTRLID_(dlg);
-		goto LABEL_9;
-	default:
-		goto LABEL_9;
-	}
-	return result;
+	return genericDlgInteract(dlg, evt);
 }
 
 FAIL_STUB_PATCH(video_BINDLG_Main);
