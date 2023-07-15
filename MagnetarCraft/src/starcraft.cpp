@@ -4351,14 +4351,33 @@ FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
+int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_ACTIVATE:
+			sub_480B90(dlg);
+			break;
+		case EventUser::USER_INIT:
+			sub_480AE0(dlg);
+			break;
+		}
+	}
+	return genericOptionInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(video_PortraitRadioBtns);
+
 void video_CustomCTRLID_(dialog* a1)
 {
 	static FnInteract functions[] = {
 		video_GammaSlider,
 		video_CCyclingCheckbox,
-		video_PortraitRadioBtns,
-		video_PortraitRadioBtns,
-		video_PortraitRadioBtns,
+		video_PortraitRadioBtns_,
+		video_PortraitRadioBtns_,
+		video_PortraitRadioBtns_,
 	};
 
 	registerUserDialogAction(a1, sizeof(functions), functions);
