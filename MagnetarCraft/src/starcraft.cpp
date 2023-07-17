@@ -274,7 +274,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 	return;
 }
 
-FUNCTION_PATCH(sub_45EC40, sub_45EC40_);
+FAIL_STUB_PATCH(sub_45EC40);
 
 void keyPress_Escape_()
 {
@@ -20514,6 +20514,31 @@ int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 
 FAIL_STUB_PATCH(DisplayTalkingPortrait_maybe);
 
+void __fastcall sub_45EF50_(dialog* dlg, __int16 a2)
+{
+	if (a2 == 3)
+	{
+		unsigned v2 = 1000 * (stru_6D1270[dword_68ACA0].anonymous_2 / 1000);
+		if (v2 <= 1000)
+		{
+			dword_68AC60 = 0;
+			waitLoopCntd(3, dlg);
+			if (!ActivePortraitUnit)
+			{
+				dword_68AC98->lUser = 0;
+				dword_68AC98->wUser = -1;
+				HideDialog(dword_68AC98);
+			}
+		}
+		else
+		{
+			SetCallbackTimer(3, dword_68AC98, v2 - 1000, sub_45EC40_);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_45EF50);
+
 void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
 {
 	if (!dword_68AC4C)
@@ -20527,7 +20552,7 @@ void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
 		else
 		{
 			dword_68ACA0 = a5;
-			SetCallbackTimer(3, dword_68AC98, 1000, sub_45EF50);
+			SetCallbackTimer(3, dword_68AC98, 1000, sub_45EF50_);
 		}
 
 		if (unit && a4)
