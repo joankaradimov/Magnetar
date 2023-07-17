@@ -164,6 +164,100 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen);
 
+void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
+{
+	int v11 = 0;
+	switch (timer_id)
+	{
+	case 1:
+		if ((a1->lFlags & CTRL_VISIBLE) != 0 && video)
+		{
+			if (!sub_45E4C0(video, &v11, 0))
+			{
+				if (dword_68AC60)
+				{
+					displayUpdatePortrait(a1->wUser, (CUnit*)a1->lUser, 2);
+				}
+				else
+				{
+					CUnit* v7 = ActivePortraitUnit;
+					UnitType LastQueueSlotType = getLastQueueSlotType(ActivePortraitUnit);
+					u16 v9 = setBuildingSelPortrait(LastQueueSlotType);
+					displayUpdatePortrait(v9, v7, 1);
+				}
+			}
+			if (byte_6D5CA0)
+			{
+				if (!v11)
+				{
+					return;
+				}
+				byte_6D5CA0 = 0;
+				byte_68AC9C = 50;
+			}
+			if (!v11)
+			{
+				return;
+			}
+			goto LABEL_25;
+		}
+		break;
+	case 2:
+		if ((a1->lFlags & CTRL_VISIBLE) != 0 && video)
+		{
+			if (byte_6D5CA0)
+			{
+				v11 = 1;
+			}
+			else
+			{
+				if ((unsigned __int8)byte_68AC9C >= 0x50u)
+				{
+					return;
+				}
+				byte_68AC9C += 10;
+				v11 = 1;
+			}
+		LABEL_25:
+			if ((a1->lFlags & CTRL_UPDATE) == 0)
+			{
+				a1->lFlags |= CTRL_UPDATE;
+				updateDialog(a1);
+			}
+		}
+		break;
+	case 3:
+		dword_68AC60 = 0;
+		waitLoopCntd(timer_id, a1);
+		if (video)
+		{
+			SVidPlayEnd(video);
+			video = 0;
+		}
+		CUnit* v3 = ActivePortraitUnit;
+		if (ActivePortraitUnit)
+		{
+			UnitType v4 = getLastQueueSlotType(ActivePortraitUnit);
+			u16 v5 = setBuildingSelPortrait(v4);
+			displayUpdatePortrait(v5, v3, 1);
+		}
+		else
+		{
+			dword_68AC98->lUser = 0;
+			dword_68AC98->wUser = -1;
+			HideDialog(dword_68AC98);
+		}
+		if (!v11)
+		{
+			return;
+		}
+		goto LABEL_25;
+	}
+	return;
+}
+
+FUNCTION_PATCH(sub_45EC40, sub_45EC40_);
+
 void keyPress_Escape_()
 {
 	if (!multiPlayerMode && CampaignIndex < MapData::MD_xprotoss01)
@@ -181,7 +275,7 @@ void keyPress_Escape_()
 				{
 					dword_68AC4C = 0;
 					waitLoopCntd(4, dword_68AC98);
-					sub_45EC40(dword_68AC98, 3);
+					sub_45EC40_(dword_68AC98, 3);
 				}
 				refreshGameTextIfFlagIsSet();
 			}
@@ -12617,8 +12711,8 @@ int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 		{
 		case EventUser::USER_CREATE:
 			sub_45E770_(dlg);
-			SetCallbackTimer(1, dlg, 50, sub_45EC40);
-			SetCallbackTimer(2, dlg, 30, sub_45EC40);
+			SetCallbackTimer(1, dlg, 50, sub_45EC40_);
+			SetCallbackTimer(2, dlg, 30, sub_45EC40_);
 			return 1;
 		case EventUser::USER_DESTROY:
 			waitLoopCntd(1, dlg);
@@ -20391,7 +20485,7 @@ int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 
 	WORD portrait = setBuildingSelPortrait(unit_type);
 	displayUpdatePortrait(portrait, 0, 2);
-	SetCallbackTimer(3, dword_68AC98, a2, sub_45EC40);
+	SetCallbackTimer(3, dword_68AC98, a2, sub_45EC40_);
 	if (x != -1)
 	{
 		dword_57FD34 = (x - GAME_AREA_WIDTH / 2) & ((x - GAME_AREA_WIDTH / 2 < 0) - 1);
@@ -20410,7 +20504,7 @@ void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
 		displayUpdatePortrait(portrait, unit, 2);
 		if (a3 || a5 >= 1144)
 		{
-			SetCallbackTimer(3, dword_68AC98, a3, sub_45EC40);
+			SetCallbackTimer(3, dword_68AC98, a3, sub_45EC40_);
 		}
 		else
 		{
