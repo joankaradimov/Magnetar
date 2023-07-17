@@ -164,6 +164,24 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen);
 
+u16 setBuildingSelPortrait_(UnitType unit_type)
+{
+	u16 portrait_id = Unit_IdlePortrait[unit_type];
+
+	if (portrait_id == 38 && CampaignIndex > EMD_protoss10)
+	{
+		return Unit_IdlePortrait[Special_Cerebrate_Daggoth];
+	}
+	if (portrait_id == 60 && CampaignIndex >= EMD_protoss07)
+	{
+		return Unit_IdlePortrait[Hero_Fenix_Dragoon];
+	}
+
+	return portrait_id;
+}
+
+FAIL_STUB_PATCH(setBuildingSelPortrait);
+
 void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 {
 	int v11 = 0;
@@ -182,7 +200,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 				{
 					CUnit* v7 = ActivePortraitUnit;
 					UnitType LastQueueSlotType = getLastQueueSlotType(ActivePortraitUnit);
-					u16 v9 = setBuildingSelPortrait(LastQueueSlotType);
+					u16 v9 = setBuildingSelPortrait_(LastQueueSlotType);
 					displayUpdatePortrait(v9, v7, 1);
 				}
 			}
@@ -238,7 +256,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 		if (ActivePortraitUnit)
 		{
 			UnitType v4 = getLastQueueSlotType(ActivePortraitUnit);
-			u16 v5 = setBuildingSelPortrait(v4);
+			u16 v5 = setBuildingSelPortrait_(v4);
 			displayUpdatePortrait(v5, v3, 1);
 		}
 		else
@@ -4281,7 +4299,7 @@ void loadColorSettings_()
 	if (dword_68AC98 && ActivePortraitUnit)
 	{
 		UnitType v2 = getLastQueueSlotType(ActivePortraitUnit);
-		WORD v3 = setBuildingSelPortrait(v2);
+		WORD v3 = setBuildingSelPortrait_(v2);
 		displayUpdatePortrait(v3, ActivePortraitUnit, 1);
 	}
 }
@@ -4456,7 +4474,7 @@ void video_OK_(dialog* dlg)
 		if (dword_68AC98 && ActivePortraitUnit)
 		{
 			UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
-			u16 v6 = setBuildingSelPortrait(last_queue_slot_type);
+			u16 v6 = setBuildingSelPortrait_(last_queue_slot_type);
 			displayUpdatePortrait(v6, ActivePortraitUnit, 1);
 		}
 	}
@@ -4483,7 +4501,7 @@ void sub_480B90_(dialog* dlg)
 	if (dword_68AC98 && ActivePortraitUnit)
 	{
 		UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
-		u16 portrait_id = setBuildingSelPortrait(last_queue_slot_type);
+		u16 portrait_id = setBuildingSelPortrait_(last_queue_slot_type);
 		displayUpdatePortrait(portrait_id, ActivePortraitUnit, 1);
 	}
 }
@@ -11324,7 +11342,7 @@ void updateSelectedUnitPortrait_()
 		else if (lUser != ActivePortraitUnit || lUser && getLastQueueSlotType(lUser) != getLastQueueSlotType(ActivePortraitUnit))
 		{
 			UnitType LastQueueSlotType = getLastQueueSlotType(v2);
-			WORD v5 = setBuildingSelPortrait(LastQueueSlotType);
+			WORD v5 = setBuildingSelPortrait_(LastQueueSlotType);
 			displayUpdatePortrait(v5, v2, 1);
 		}
 	}
@@ -17621,7 +17639,7 @@ FAIL_STUB_PATCH(loadPortdataDAT);
 void ShowPortrait_(unsigned __int8 a1, int a2, UnitType unit_type)
 {
 	dialog* v6 = getControlFromIndex_(dword_66FF6C, a1 + 15);
-	u16 portrait_id = setBuildingSelPortrait(unit_type);
+	u16 portrait_id = setBuildingSelPortrait_(unit_type);
 	Portrait* portrait = (Portrait*)v6->lUser;
 
 	if (portrait->video)
@@ -20483,7 +20501,7 @@ int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 	dword_68AC4C = 1;
 	SetCallbackTimer(4, dword_68AC98, a2, GameTalkingPortrait_CB);
 
-	WORD portrait = setBuildingSelPortrait(unit_type);
+	WORD portrait = setBuildingSelPortrait_(unit_type);
 	displayUpdatePortrait(portrait, 0, 2);
 	SetCallbackTimer(3, dword_68AC98, a2, sub_45EC40_);
 	if (x != -1)
@@ -20500,7 +20518,7 @@ void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
 {
 	if (!dword_68AC4C)
 	{
-		WORD portrait = setBuildingSelPortrait(getLastQueueSlotType(unit));
+		WORD portrait = setBuildingSelPortrait_(getLastQueueSlotType(unit));
 		displayUpdatePortrait(portrait, unit, 2);
 		if (a3 || a5 >= 1144)
 		{
