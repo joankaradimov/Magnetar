@@ -191,7 +191,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 	switch (timer_id)
 	{
 	case 1:
-		if ((a1->lFlags & CTRL_VISIBLE) != 0 && video)
+		if ((a1->lFlags & CTRL_VISIBLE) && video)
 		{
 			if (!sub_45E4C0(video, &v11, 0))
 			{
