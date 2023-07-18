@@ -168,13 +168,16 @@ u16 setBuildingSelPortrait_(UnitType unit_type)
 {
 	u16 portrait_id = Unit_IdlePortrait[unit_type];
 
-	if (portrait_id == 38 && CampaignIndex > EMD_protoss10)
+	if (active_campaign)
 	{
-		return Unit_IdlePortrait[Special_Cerebrate_Daggoth];
-	}
-	if (portrait_id == 60 && CampaignIndex >= EMD_protoss07)
-	{
-		return Unit_IdlePortrait[Hero_Fenix_Dragoon];
+		if (portrait_id == 38 && CampaignIndex > EMD_protoss10)
+		{
+			return Unit_IdlePortrait[Special_Cerebrate_Daggoth];
+		}
+		if (portrait_id == 60 && CampaignIndex >= EMD_protoss07)
+		{
+			return Unit_IdlePortrait[Hero_Fenix_Dragoon];
+		}
 	}
 
 	return portrait_id;
@@ -278,7 +281,7 @@ FAIL_STUB_PATCH(sub_45EC40);
 
 void keyPress_Escape_()
 {
-	if (!multiPlayerMode && CampaignIndex < MapData::MD_xprotoss01)
+	if (!multiPlayerMode && active_campaign && CampaignIndex < MapData::MD_xprotoss01)
 	{
 		for (TriggerListEntry* i = (int)stru_51A280[g_LocalNationID].begin <= 0 ? 0 : stru_51A280[g_LocalNationID].begin; (int)i > 0; i = i->next)
 		{
@@ -2662,11 +2665,17 @@ void LoadSfx_()
 
 FAIL_STUB_PATCH(LoadSfx);
 
+Campaign* active_campaign;
+int active_campaign_entry_index;
+
 char* MapdataFilenames_[73];
 
 MEMORY_PATCH(0x4280A2, MapdataFilenames_);
 MEMORY_PATCH(0x512BA0, MapdataFilenames_);
 MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
+
+MEMORY_PATCH(0x45A2F7, &active_campaign);
+MEMORY_PATCH(0x45A5ED, &active_campaign);
 
 void playRadioFreeZerg_()
 {
@@ -3004,7 +3013,7 @@ void initializeDefaultPlayerNames_()
 		}
 	}
 
-	if (!multiPlayerMode && CampaignIndex && (CampaignIndex == EMD_zerg04 || CampaignIndex == EMD_zerg06))
+	if (!multiPlayerMode && active_campaign && (CampaignIndex == EMD_zerg04 || CampaignIndex == EMD_zerg06))
 	{
 		Players[2].szName[0] = 0;
 	}
@@ -5542,7 +5551,7 @@ void* sub_4CCAC0_scm(const char* a1, int* a2, int* chk_size)
 
 void* read_chk_data(const char* filename, int* a2, int* chk_size)
 {
-	if (CampaignIndex)
+	if (active_campaign)
 	{
 		return sub_4CCAC0_campaign(filename, chk_size);
 	}
@@ -7000,7 +7009,9 @@ int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
 	CurrentMapFileName[0] = 0;
 	if (!is_campaign)
-		CampaignIndex = MD_none;
+	{
+		active_campaign = nullptr;
+	}
 	memset(LobbyPlayers, 0, sizeof(LobbyPlayers));
 	memset(playerForce, 0, sizeof(playerForce));
 	a4->tbl_index_title = 0;
@@ -7038,7 +7049,7 @@ int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		strcpy_s(CurrentMapFileName, source);
 		if (!is_campaign)
 		{
-			CampaignIndex = MD_none;
+			active_campaign = nullptr;
 		}
 		dword_5994DC = 1;
 		const char* v13 = GetMapTblString(a4->tbl_index_title);
@@ -7290,7 +7301,7 @@ int LevelCheatInitGame_()
 		const char* v1 = GetNetworkTblString_(72);
 		strcpy_s(playerName, v1);
 	}
-	if (CampaignIndex == MD_none)
+	if (!active_campaign)
 	{
 		char dest[MAX_PATH];
 		strcpy_s(dest, CurrentMapFileName);
@@ -7567,9 +7578,6 @@ FAIL_STUB_PATCH(LoadRaceSFX);
 
 const MusicTrackDescription* current_ingame_music_track = nullptr;
 
-Campaign* active_campaign;
-int active_campaign_entry_index;
-
 void LoadRaceUI_()
 {
 	LoadRaceSFX_(1);
@@ -7580,7 +7588,7 @@ void LoadRaceUI_()
 		current_ingame_music_track = &race.ingame_music[0];
 	}
 
-	if (CampaignIndex)
+	if (active_campaign)
 	{
 		current_ingame_music_track += (active_campaign_entry_index % 3);
 	}
@@ -7972,7 +7980,7 @@ signed int LoadGameInit_()
 
 	int v6;
 	if (!InReplay
-		&& CampaignIndex == MD_none
+		&& !active_campaign
 		&& !LoadFileArchiveToSBigBuf_(CurrentMapFileName, &v6, 1, &mapArchiveHandle)
 		&& !gameData.got_file_values.victory_conditions
 		&& !gameData.got_file_values.starting_units
@@ -12501,7 +12509,7 @@ GamePosition BeginGame_()
 	{
 		registry_options.GameSpeed = gameData.game_speed;
 	}
-	else if (CampaignIndex == MD_none)
+	else if (!active_campaign)
 	{
 		registry_options.GameSpeed = 4;
 	}
@@ -17656,7 +17664,7 @@ FAIL_STUB_PATCH(ShowPortrait);
 
 int __fastcall BRFACT_SkipTutorial_(Action* action, BYTE action_index)
 {
-	if (!multiPlayerMode && CampaignIndex)
+	if (!multiPlayerMode && active_campaign)
 	{
 		CreateSkipTutorialButton();
 	}
@@ -17681,7 +17689,7 @@ int __fastcall BRFACT_PlayWAV_(Action* action, BYTE action_index)
 	{
 		const char* wav_filename = GetTblString(MapStringTbl.buffer, action->wavString);
 
-		if (CampaignIndex)
+		if (active_campaign)
 		{
 			sprintf_s(buff, "%s\\%s", MapdataFilenames_[CampaignIndex], wav_filename);
 		}
@@ -20215,7 +20223,7 @@ FAIL_STUB_PATCH(localDll_Init);
 
 void DisplayEstablishingShot_()
 {
-	if (CampaignIndex == MapData::MD_none && CurrentMapFileName)
+	if (!active_campaign && CurrentMapFileName)
 	{
 		SFileOpenArchive(CurrentMapFileName, 0, 0, &mapArchiveHandle);
 		HANDLE handle;
@@ -20481,7 +20489,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	if (!InReplay && active_trigger_player == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
 		const char* chk_string = get_chk_String(a1->wavString);
-		if (CampaignIndex == MD_none)
+		if (!active_campaign)
 		{
 			strcpy_s(buff, chk_string);
 		}

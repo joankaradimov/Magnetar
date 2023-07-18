@@ -53,6 +53,10 @@ extern MusicTrackDescription title_music;
 extern const MusicTrackDescription* current_music_track;
 extern std::vector<RaceId> SELECTABLE_RACES;
 
+// TODO: move to campaign.h, maybe?
+extern struct Campaign* active_campaign;
+extern int active_campaign_entry_index;
+
 void localDll_Init_(HINSTANCE a1);
 void GameMainLoop_();
 int AppAddExit_(AppExitHandle handle);

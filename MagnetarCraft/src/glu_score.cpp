@@ -262,7 +262,7 @@ int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			if (dword_6D5A60 || saveLoadSuccess || CampaignIndex || is_spawn)
+			if (dword_6D5A60 || saveLoadSuccess || active_campaign || is_spawn)
 			{
 				DisableControl(dlg);
 			}
