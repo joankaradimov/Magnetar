@@ -8791,16 +8791,12 @@ LRESULT sub_44B9C0(HWND a1, int a2, char a3) {
     }
     return result_;
 }
-HWND sub_44BA90(HWND result) {
+void sub_44BA90(int a1) {
     int address = 0x44ba90;
-    HWND result_;
     __asm {
-        xor eax, eax
-        mov eax, result
+        mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void sub_44BAE0(HWND a1) {
     int address = 0x44bae0;
@@ -21271,9 +21267,9 @@ void DLGMusicFade(MusicTrack music_track) {
     }
 }
 DECL_FUNC(void (*sub_4A6390)(), sub_4A6390, 0x4a6390);
-_DWORD * sub_4A63A0(int a1, int a2, int a3, int a4) {
+struct_v4_1 * sub_4A63A0(int a1, int a2, int a3, int a4) {
     int address = 0x4a63a0;
-    _DWORD * result_;
+    struct_v4_1 * result_;
     __asm {
         xor eax, eax
         push dword ptr a4
@@ -22353,9 +22349,9 @@ void sub_4AE790(dialog *a1) {
 }
 DECL_FUNC(void (__stdcall*sub_4AE830)(int a1), sub_4AE830, 0x4ae830);
 DECL_FUNC(int (__fastcall*gluCreate_GameSpeed_Slider)(dialog *dlg, dlgEvent *evt), gluCreate_GameSpeed_Slider, 0x4ae860);
-_DWORD * SingleMakeCreateGameDialog(dialog *dlg) {
+struct_v4_1 * SingleMakeCreateGameDialog(dialog *dlg) {
     int address = 0x4ae920;
-    _DWORD * result_;
+    struct_v4_1 * result_;
     __asm {
         xor eax, eax
         mov eax, dlg
@@ -22478,7 +22474,7 @@ void gluModemList_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*a4)(dialog *dlg, __int16 timer_id), a4, 0x4b0140);
+DECL_FUNC(void (__fastcall*sub_4B0140)(dialog *dlg, __int16 timer_id), sub_4B0140, 0x4b0140);
 void gluModemStatus_CustomCtrlID(dialog *a1) {
     int address = 0x4b01f0;
     __asm {
@@ -32248,7 +32244,7 @@ char(&aUnitWireframWi)[] = * ((decltype(&aUnitWireframWi)) 0x504c04);
 char(&aStarcraftSw_92)[] = * ((decltype(&aStarcraftSw_92)) 0x504c20);
 char(&aRezStat_f10_bi)[] = * ((decltype(&aRezStat_f10_bi)) 0x504c44);
 char(&aStarcraftSw_97)[] = * ((decltype(&aStarcraftSw_97)) 0x504c58);
-FnInteract& a3 = * ((decltype(&a3)) 0x504c7c);
+FnInteract& off_504C7C = * ((decltype(&off_504C7C)) 0x504c7c);
 char(&aRezStatfluf_bi)[] = * ((decltype(&aRezStatfluf_bi)) 0x504c80);
 char(&aStarcraftSw_96)[] = * ((decltype(&aStarcraftSw_96)) 0x504c94);
 char(&aRezStatres_bin)[] = * ((decltype(&aRezStatres_bin)) 0x504cb8);
@@ -32489,7 +32485,7 @@ int(&dword_5061B8)[] = * ((decltype(&dword_5061B8)) 0x5061b8);
 int(&dword_5061BC)[17] = * ((decltype(&dword_5061BC)) 0x5061bc);
 char(&asc_506200)[] = * ((decltype(&asc_506200)) 0x506200);
 char(&byte_506224)[4] = * ((decltype(&byte_506224)) 0x506224);
-const char(&a2)[] = * ((decltype(&a2)) 0x506228);
+const char(&asc_506228)[] = * ((decltype(&asc_506228)) 0x506228);
 double& dbl_506230 = * ((decltype(&dbl_506230)) 0x506230);
 double& dbl_506238 = * ((decltype(&dbl_506238)) 0x506238);
 double& dbl_506240 = * ((decltype(&dbl_506240)) 0x506240);
@@ -32964,7 +32960,7 @@ RECT& stru_512D00 = * ((decltype(&stru_512D00)) 0x512d00);
 int(&dword_512D20)[] = * ((decltype(&dword_512D20)) 0x512d20);
 POINT(&AngleDistance)[256] = * ((decltype(&AngleDistance)) 0x512d28);
 int(&tangent_table)[64] = * ((decltype(&tangent_table)) 0x513528);
-u16 *(&a1)[3] = * ((decltype(&a1)) 0x513628);
+u16 *(&off_513628)[3] = * ((decltype(&off_513628)) 0x513628);
 __int16(&word_513634)[14] = * ((decltype(&word_513634)) 0x513634);
 point(&bullet_random_offsets)[15] = * ((decltype(&bullet_random_offsets)) 0x513650);
 int& nextReplayCommandFrame = * ((decltype(&nextReplayCommandFrame)) 0x5136c8);
@@ -34933,16 +34929,16 @@ CheatFlags& GameCheats = * ((decltype(&GameCheats)) 0x6d5a6c);
 dialog *& gluCreateOrCustm_bin = * ((decltype(&gluCreateOrCustm_bin)) 0x6d5a70);
 int& dword_6D5A74 = * ((decltype(&dword_6D5A74)) 0x6d5a74);
 int& dword_6D5A78 = * ((decltype(&dword_6D5A78)) 0x6d5a78);
-void *& dword_6D5A7C = * ((decltype(&dword_6D5A7C)) 0x6d5a7c);
-void *& dword_6D5A80 = * ((decltype(&dword_6D5A80)) 0x6d5a80);
-void *& dword_6D5A84 = * ((decltype(&dword_6D5A84)) 0x6d5a84);
-void *& dword_6D5A88 = * ((decltype(&dword_6D5A88)) 0x6d5a88);
-void *& dword_6D5A8C = * ((decltype(&dword_6D5A8C)) 0x6d5a8c);
-void *& dword_6D5A90 = * ((decltype(&dword_6D5A90)) 0x6d5a90);
-void *& dword_6D5A94 = * ((decltype(&dword_6D5A94)) 0x6d5a94);
-void *& dword_6D5A98 = * ((decltype(&dword_6D5A98)) 0x6d5a98);
-void *& dword_6D5A9C = * ((decltype(&dword_6D5A9C)) 0x6d5a9c);
-void *& dword_6D5AA0 = * ((decltype(&dword_6D5AA0)) 0x6d5aa0);
+struct_v4_1 *& dword_6D5A7C = * ((decltype(&dword_6D5A7C)) 0x6d5a7c);
+struct_v4_1 *& dword_6D5A80 = * ((decltype(&dword_6D5A80)) 0x6d5a80);
+struct_v4_1 *& dword_6D5A84 = * ((decltype(&dword_6D5A84)) 0x6d5a84);
+struct_v4_1 *& dword_6D5A88 = * ((decltype(&dword_6D5A88)) 0x6d5a88);
+struct_v4_1 *& dword_6D5A8C = * ((decltype(&dword_6D5A8C)) 0x6d5a8c);
+struct_v4_1 *& dword_6D5A90 = * ((decltype(&dword_6D5A90)) 0x6d5a90);
+struct_v4_1 *& dword_6D5A94 = * ((decltype(&dword_6D5A94)) 0x6d5a94);
+struct_v4_1 *& dword_6D5A98 = * ((decltype(&dword_6D5A98)) 0x6d5a98);
+struct_v4_1 *& dword_6D5A9C = * ((decltype(&dword_6D5A9C)) 0x6d5a9c);
+struct_v4_1 *& dword_6D5AA0 = * ((decltype(&dword_6D5AA0)) 0x6d5aa0);
 char& byte_6D5AA8 = * ((decltype(&byte_6D5AA8)) 0x6d5aa8);
 HANDLE& directsound = * ((decltype(&directsound)) 0x6d5bac);
 MusicTrack& current_music = * ((decltype(&current_music)) 0x6d5bb0);
