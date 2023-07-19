@@ -17032,6 +17032,123 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 
 FAIL_STUB_PATCH(LoadReplayMapDirEntry);
 
+void sub_4A79D0_(MapDirEntry* a1)
+{
+	if (a1->error == 1)
+	{
+		SStrCopy(a1->unknown, "", 0x20u);
+	}
+	else if (!(a1->flags & (MDEF_REPLAY | MDEF_SAVEGAME)))
+	{
+		SStrCopy(a1->unknown, byte_68FC88, 0x20u);
+	}
+	else if (a1->game_data.got_file_values.template_id)
+	{
+		char* v10 = sub_4AB0E0(a1->game_data.got_file_values.unused1, a1->game_data.got_file_values.template_id);
+		SStrCopy(a1->unknown, v10, 0x20u);
+	}
+	else
+	{
+		a1->unknown[0] = 0;
+	}
+
+	int flag = (a1->flags & MDEF_REPLAY) || sub_4AAF50(dword_68F710[0], dword_68F6FC, template_id);
+	if (dword_6D5A8C)
+	{
+		dword_6D5A8C->fn2(6, dword_6D5A8C->hwnd, flag);
+	}
+	if (dword_6D5A90)
+	{
+		dword_6D5A90->fn2(9, dword_6D5A90->hwnd, flag);
+	}
+
+	char* i;
+	char* description = a1->description;
+	unsigned __int8 v3 = a1->description[0];
+	int v4 = 256;
+	for (i = a1->description; v3; v3 = *++description)
+	{
+		if (!v4)
+		{
+			break;
+		}
+		if (v3 >= ' ' || v3 == '\n' || v3 == '\r' || v3 == '\t')
+		{
+			*i++ = v3;
+			--v4;
+		}
+	}
+
+	*i = 0;
+	if (dword_6D5A7C)
+	{
+		dword_6D5A7C->fn1(0, dword_6D5A7C->hwnd, a1->title);
+	}
+	if (dword_6D5A80)
+	{
+		dword_6D5A80->fn1(1, dword_6D5A80->hwnd, a1->description);
+	}
+	if (dword_6D5A84)
+	{
+		dword_6D5A84->fn1(3, dword_6D5A84->hwnd, a1->unknown);
+	}
+	if (dword_6D5A88)
+	{
+		dword_6D5A88->fn1(4, dword_6D5A88->hwnd, a1->unknown_x478);
+	}
+	if (dword_6D5A8C)
+	{
+		dword_6D5A8C->fn1(6, dword_6D5A8C->hwnd, a1->computer_players_string);
+	}
+	if (dword_6D5A94)
+	{
+		dword_6D5A94->fn1(7, dword_6D5A94->hwnd, a1->human_players_string);
+	}
+	if (dword_6D5A98)
+	{
+		dword_6D5A98->fn1(5, dword_6D5A98->hwnd, a1->map_dimension_string);
+	}
+	if (dword_6D5A9C)
+	{
+		dword_6D5A9C->fn1(2, dword_6D5A9C->hwnd, &a1->unknown[32]);
+	}
+	if (dword_6D5AA0)
+	{
+		dword_6D5AA0->fn1(8, dword_6D5AA0->hwnd, a1->tileset_string);
+	}
+
+	memcpy_s(playerForce, sizeof(playerForce), a1->player_forces, sizeof(a1->player_forces));
+	if (!InReplay)
+	{
+		memcpy_s(replay_header.playerForce, sizeof(replay_header.playerForce), a1->player_forces, sizeof(a1->player_forces));
+	}
+	if (dword_6D5D68 && !dword_6D5D64)
+	{
+		sub_44BA90(a1->human_player_slots_maybe);
+	}
+
+	if (dword_6D5A74)
+	{
+		dword_6D5A78 = InReplay ? replay_header.game_data.max_players : a1->human_player_slots_maybe;
+		if (selectedGameType == GT_TopVsBottom)
+		{
+			sub_4AE790(custom_game_submode);
+		}
+		sub_4ADB10();
+	}
+}
+
+void __cdecl sub_4A79D0__()
+{
+	MapDirEntry* a1;
+
+	__asm mov a1, esi
+
+	return sub_4A79D0_(a1);
+}
+
+FUNCTION_PATCH((void*)0x4A79D0, sub_4A79D0__);
+
 void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 {
 	if (hWnd)
@@ -17053,7 +17170,7 @@ void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 		LoadReplayMapDirEntry_(replay);
 	}
 
-	sub_4A79D0(replay);
+	sub_4A79D0_(replay);
 	replay = 0;
 }
 
