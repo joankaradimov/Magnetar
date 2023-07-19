@@ -17032,6 +17032,21 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 
 FAIL_STUB_PATCH(LoadReplayMapDirEntry);
 
+void sub_4AE830_(int player_slots)
+{
+	if (dword_6D5A74)
+	{
+		dword_6D5A78 = player_slots;
+		if (selectedGameType == GT_TopVsBottom)
+		{
+			sub_4AE790(custom_game_submode);
+		}
+		sub_4ADB10();
+	}
+}
+
+FAIL_STUB_PATCH(sub_4AE830);
+
 void sub_4A79D0_(MapDirEntry* a1)
 {
 	if (a1->error == 1)
@@ -17127,15 +17142,7 @@ void sub_4A79D0_(MapDirEntry* a1)
 		sub_44BA90(a1->human_player_slots_maybe);
 	}
 
-	if (dword_6D5A74)
-	{
-		dword_6D5A78 = InReplay ? replay_header.game_data.max_players : a1->human_player_slots_maybe;
-		if (selectedGameType == GT_TopVsBottom)
-		{
-			sub_4AE790(custom_game_submode);
-		}
-		sub_4ADB10();
-	}
+	sub_4AE830_(InReplay ? replay_header.game_data.max_players : a1->human_player_slots_maybe);
 }
 
 void __cdecl sub_4A79D0__()
