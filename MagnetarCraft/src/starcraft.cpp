@@ -17125,7 +17125,7 @@ void sub_4A79D0_(MapDirEntry* a1)
 	}
 	if (dword_6D5A9C)
 	{
-		dword_6D5A9C->fn1(2, dword_6D5A9C->hwnd, &a1->unknown[32]);
+		dword_6D5A9C->fn1(2, dword_6D5A9C->hwnd, a1->unknown7);
 	}
 	if (dword_6D5AA0)
 	{
