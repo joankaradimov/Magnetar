@@ -17032,6 +17032,126 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 
 FAIL_STUB_PATCH(LoadReplayMapDirEntry);
 
+void sub_4ADB10_()
+{
+	struct_a2 v17;
+
+	u8 bSliderGraphic = map_listbox->fields.scroll.bSliderSkip ? map_listbox->fields.scroll.bSliderGraphic : -1;
+	if (GetMapDirEntryInformation((MapDirEntry*)map_listbox->fields.list.pdwData[bSliderGraphic], &v17))
+	{
+		dialog* v3 = 0;
+
+		dialog* v19 = getControlFromIndex_(map_listbox, 16);
+		dialog* v6 = getControlFromIndex_(map_listbox, 17);
+		dialog* v21 = getControlFromIndex_(map_listbox, 18);
+		dialog* v12 = getControlFromIndex_(map_listbox, 38);
+
+		if (v17.fully_loaded && (char)v17.flags < 0)
+		{
+			if (v6)
+			{
+				if (multiPlayerMode)
+				{
+					u8 bSliderSkip = v6->fields.scroll.bSliderSkip;
+					int v14 = 0;
+					if (!bSliderSkip)
+					{
+						goto LABEL_37;
+					}
+					while (v6->fields.list.pdwData[v14] != (unsigned __int8)v17.game_data.got_file_values.template_id)
+					{
+						if (++v14 >= bSliderSkip)
+						{
+							goto LABEL_37;
+						}
+					}
+					if (v14 == -1)
+					{
+						goto LABEL_37;
+					}
+					if (v14 == v6->fields.scroll.bSliderGraphic)
+					{
+					LABEL_37:
+						DisableControl(v6);
+						v3 = v19;
+					}
+					else
+					{
+						setSelectedIndexDirect(v14, v6);
+						DisableControl(v6);
+						v3 = v19;
+					}
+				}
+				else
+				{
+					HideDialog(v6);
+					if (v12)
+					{
+						HideDialog(v12);
+					}
+				}
+			}
+			if (v21)
+			{
+				u8 v15 = v21->fields.scroll.bSliderSkip;
+				int v16 = 0;
+				if (v15)
+				{
+					while (v21->fields.list.pdwData[(unsigned __int8)v16] != v17.game_data.got_file_values.variation_id)
+					{
+						if (++v16 >= v15)
+						{
+							goto LABEL_55;
+						}
+					}
+					if (v16 != -1 && v16 != v21->fields.scroll.bSliderGraphic)
+					{
+						dlgEvent v18;
+						v18.wNo = EVN_USER;
+						v18.dwUser = USER_SELECT;
+						*(_DWORD*)&v18.wSelection = v16;
+						v21->pfcnInteract(v21, &v18);
+					}
+				}
+			LABEL_55:
+				DisableControl(v21);
+				v3 = v19;
+			}
+			if (v3)
+			{
+				dlgEvent v18;
+				v18.wNo = EVN_USER;
+				v18.dwUser = USER_SELECT;
+				*(_DWORD*)&v18.wSelection = (unsigned __int8)v17.game_data.game_speed;
+				v3->pfcnInteract(v3, &v18);
+				DisableControl(v3);
+			}
+		}
+		else
+		{
+			if (v6)
+			{
+				showDialog(v6);
+				EnableControl(v6);
+			}
+			if (v12)
+			{
+				showDialog(v12);
+			}
+			if (v21)
+			{
+				EnableControl(v21);
+			}
+			if (v3)
+			{
+				EnableControl(v3);
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4ADB10);
+
 void sub_4AE830_(int player_slots)
 {
 	if (dword_6D5A74)
@@ -17041,7 +17161,7 @@ void sub_4AE830_(int player_slots)
 		{
 			sub_4AE790(custom_game_submode);
 		}
-		sub_4ADB10();
+		sub_4ADB10_();
 	}
 }
 
