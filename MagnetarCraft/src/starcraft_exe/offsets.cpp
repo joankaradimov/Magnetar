@@ -2164,7 +2164,18 @@ void CompileSCode(int a1, int palette) {
 DECL_FUNC(int (*sub_417DF0)(), sub_417DF0, 0x417df0);
 DECL_FUNC(int (__fastcall*pDLGInteract)(_DWORD a1, _DWORD a2), pDLGInteract, 0x417e20);
 DECL_FUNC(int (__thiscall*canTextboxDlgAcceptEvents_CB)(dialog *this_), canTextboxDlgAcceptEvents_CB, 0x417e30);
-DECL_FUNC(int (__thiscall*setSelectedIndexDirect)(_DWORD a1), setSelectedIndexDirect, 0x417e50);
+int setSelectedIndexDirect(int a1, dialog *a2) {
+    int address = 0x417e50;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov ecx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int doUserEvent(unsigned __int16 a1, int a2, dialog *a3) {
     int address = 0x417e70;
     int result_;

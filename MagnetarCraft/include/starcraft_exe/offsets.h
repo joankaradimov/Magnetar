@@ -310,7 +310,7 @@ void CompileSCode(int a1, int palette);
 extern int (*sub_417DF0)();
 extern int (__fastcall*pDLGInteract)(_DWORD a1, _DWORD a2);
 extern int (__thiscall*canTextboxDlgAcceptEvents_CB)(dialog *this_);
-extern int (__thiscall*setSelectedIndexDirect)(_DWORD a1);
+int setSelectedIndexDirect(int a1, dialog *a2);
 int doUserEvent(unsigned __int16 a1, int a2, dialog *a3);
 int DLG_IterateChildren(dialog *a1, int (__fastcall *a2)(_DWORD, _DWORD), int a3);
 int dlgUpdate1(dialog *a1, dlgEvent *a2, int (__fastcall *a3)(_DWORD, _DWORD));
