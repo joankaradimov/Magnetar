@@ -3,13 +3,13 @@
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
   - Allow raw CHK files to be loaded as custom scenarios
+  - Add command line arguments:
+    * `-keep-app-active` - keep the app active while in the background
+    * `-skip-end-mission-prompt` - remove the win/lose dialog upon mission completion
   - Fix issues with buildability flags in the bottom map corners (introduced in 0.1.0)
   - Fix an issue in units updaing within the game loop (introduced in 0.2.0)
   - Fix an issue in melee unit initialization (introduced in 0.2.0)
   - Fix an issue in sprite initialization (introduced in 0.2.0)
-  - Add command line arguments:
-    * `-keep-app-active` - keeps the app active in the background
-    * `-skip-end-mission-prompt` - remove the win/lose dialog upon mission completion
 
 ## 0.2.0 - Busy Barracks
   - Reimplement ~10% of the functions in StarCraft 1.16.1
