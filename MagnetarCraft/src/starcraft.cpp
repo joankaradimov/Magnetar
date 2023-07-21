@@ -17037,7 +17037,8 @@ void sub_4ADB10_()
 	struct_a2 v17;
 
 	u8 bSliderGraphic = map_listbox->fields.scroll.bSliderSkip ? map_listbox->fields.scroll.bSliderGraphic : -1;
-	if (GetMapDirEntryInformation((MapDirEntry*)map_listbox->fields.list.pdwData[bSliderGraphic], &v17))
+	MapDirEntry* map_entry = (MapDirEntry*)map_listbox->fields.list.pdwData[bSliderGraphic];
+	if (GetMapDirEntryInformation(map_entry, &v17))
 	{
 		dialog* v3 = 0;
 
