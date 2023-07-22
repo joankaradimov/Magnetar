@@ -17172,16 +17172,16 @@ void sub_4A79D0_(MapDirEntry* a1)
 {
 	if (a1->error == 1)
 	{
-		SStrCopy(a1->unknown, "", 0x20u);
+		SStrCopy(a1->unknown, "", sizeof(a1->unknown));
 	}
 	else if (!(a1->flags & (MDEF_REPLAY | MDEF_SAVEGAME)))
 	{
-		SStrCopy(a1->unknown, byte_68FC88, 0x20u);
+		SStrCopy(a1->unknown, byte_68FC88, sizeof(a1->unknown));
 	}
 	else if (a1->game_data.got_file_values.template_id)
 	{
 		char* v10 = sub_4AB0E0(a1->game_data.got_file_values.unused1, a1->game_data.got_file_values.template_id);
-		SStrCopy(a1->unknown, v10, 0x20u);
+		SStrCopy(a1->unknown, v10, sizeof(a1->unknown));
 	}
 	else
 	{
