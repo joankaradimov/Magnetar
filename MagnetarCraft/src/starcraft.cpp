@@ -17053,15 +17053,14 @@ void sub_4ADB10_()
 			{
 				if (multiPlayerMode)
 				{
-					u8 bSliderSkip = v6->fields.scroll.bSliderSkip;
 					int v14 = 0;
-					if (!bSliderSkip)
+					if (!v6->fields.scroll.bSliderSkip)
 					{
 						goto LABEL_37;
 					}
 					while (v6->fields.list.pdwData[v14] != (unsigned __int8)v17.game_data.got_file_values.template_id)
 					{
-						if (++v14 >= bSliderSkip)
+						if (++v14 >= v6->fields.scroll.bSliderSkip)
 						{
 							goto LABEL_37;
 						}
@@ -17094,13 +17093,12 @@ void sub_4ADB10_()
 			}
 			if (v21)
 			{
-				u8 v15 = v21->fields.scroll.bSliderSkip;
 				int v16 = 0;
-				if (v15)
+				if (v21->fields.scroll.bSliderSkip)
 				{
 					while (v21->fields.list.pdwData[v16] != v17.game_data.got_file_values.variation_id)
 					{
-						if (++v16 >= v15)
+						if (++v16 >= v21->fields.scroll.bSliderSkip)
 						{
 							goto LABEL_55;
 						}
