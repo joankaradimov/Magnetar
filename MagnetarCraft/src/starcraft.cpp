@@ -17098,7 +17098,7 @@ void sub_4ADB10_()
 				int v16 = 0;
 				if (v15)
 				{
-					while (v21->fields.list.pdwData[(unsigned __int8)v16] != v17.game_data.got_file_values.variation_id)
+					while (v21->fields.list.pdwData[v16] != v17.game_data.got_file_values.variation_id)
 					{
 						if (++v16 >= v15)
 						{
