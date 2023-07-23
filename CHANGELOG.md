@@ -6,6 +6,7 @@
   - Add command line arguments:
     * `-keep-app-active` - keep the app active while in the background
     * `-skip-end-mission-prompt` - remove the win/lose dialog upon mission completion
+  - Hide game type UI elements for directories during custom scenario selection
   - Fix issues with buildability flags in the bottom map corners (introduced in 0.1.0)
   - Fix an issue in units updaing within the game loop (introduced in 0.2.0)
   - Fix an issue in melee unit initialization (introduced in 0.2.0)

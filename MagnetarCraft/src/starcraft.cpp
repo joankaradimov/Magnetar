@@ -17104,6 +17104,12 @@ void sub_4ADB10_()
 				DisableControl(v3);
 			}
 		}
+		else if (v17.flags & MDEF_DIRECTORY)
+		{
+			// TODO: hide game type variant, speed, and other irrelevant UI elements
+			HideDialog_(game_type_label);
+			HideDialog_(game_type_dropdown);
+		}
 		else
 		{
 			if (game_type_dropdown)
