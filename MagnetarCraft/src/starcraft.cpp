@@ -17043,24 +17043,24 @@ void sub_4ADB10_()
 		dialog* v3 = 0;
 
 		dialog* v19 = getControlFromIndex_(map_listbox, 16);
-		dialog* v6 = getControlFromIndex_(map_listbox, 17);
 		dialog* v21 = getControlFromIndex_(map_listbox, 18);
-		dialog* v12 = getControlFromIndex_(map_listbox, 38);
+		dialog* game_type_label = getControlFromIndex_(map_listbox, 38);
+		dialog* game_type_dropdown = getControlFromIndex_(map_listbox, 17);
 
 		if (v17.fully_loaded && (char)v17.flags < 0)
 		{
-			if (v6)
+			if (game_type_dropdown)
 			{
 				if (multiPlayerMode)
 				{
 					int v14 = 0;
-					if (!v6->fields.scroll.bSliderSkip)
+					if (!game_type_dropdown->fields.scroll.bSliderSkip)
 					{
 						goto LABEL_37;
 					}
-					while (v6->fields.list.pdwData[v14] != (unsigned __int8)v17.game_data.got_file_values.template_id)
+					while (game_type_dropdown->fields.list.pdwData[v14] != (unsigned __int8)v17.game_data.got_file_values.template_id)
 					{
-						if (++v14 >= v6->fields.scroll.bSliderSkip)
+						if (++v14 >= game_type_dropdown->fields.scroll.bSliderSkip)
 						{
 							goto LABEL_37;
 						}
@@ -17069,25 +17069,25 @@ void sub_4ADB10_()
 					{
 						goto LABEL_37;
 					}
-					if (v14 == v6->fields.scroll.bSliderGraphic)
+					if (v14 == game_type_dropdown->fields.scroll.bSliderGraphic)
 					{
 					LABEL_37:
-						DisableControl(v6);
+						DisableControl(game_type_dropdown);
 						v3 = v19;
 					}
 					else
 					{
-						setSelectedIndexDirect(v14, v6);
-						DisableControl(v6);
+						setSelectedIndexDirect(v14, game_type_dropdown);
+						DisableControl(game_type_dropdown);
 						v3 = v19;
 					}
 				}
 				else
 				{
-					HideDialog(v6);
-					if (v12)
+					HideDialog(game_type_dropdown);
+					if (game_type_label)
 					{
-						HideDialog(v12);
+						HideDialog(game_type_label);
 					}
 				}
 			}
@@ -17128,14 +17128,14 @@ void sub_4ADB10_()
 		}
 		else
 		{
-			if (v6)
+			if (game_type_dropdown)
 			{
-				showDialog(v6);
-				EnableControl(v6);
+				showDialog(game_type_dropdown);
+				EnableControl(game_type_dropdown);
 			}
-			if (v12)
+			if (game_type_label)
 			{
-				showDialog(v12);
+				showDialog(game_type_label);
 			}
 			if (v21)
 			{
