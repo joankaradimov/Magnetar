@@ -17053,34 +17053,20 @@ void sub_4ADB10_()
 			{
 				if (multiPlayerMode)
 				{
-					int v14 = 0;
-					if (!game_type_dropdown->fields.scroll.bSliderSkip)
+					for (int v14 = 0; game_type_dropdown->fields.scroll.bSliderSkip < v14; v14++)
 					{
-						goto LABEL_37;
-					}
-					while (game_type_dropdown->fields.list.pdwData[v14] != (unsigned __int8)v17.game_data.got_file_values.template_id)
-					{
-						if (++v14 >= game_type_dropdown->fields.scroll.bSliderSkip)
+						if (game_type_dropdown->fields.list.pdwData[v14] == (unsigned __int8)v17.game_data.got_file_values.template_id)
 						{
-							goto LABEL_37;
+							if (v14 != -1 && v14 != game_type_dropdown->fields.scroll.bSliderGraphic)
+							{
+								setSelectedIndexDirect(v14, game_type_dropdown);
+							}
+							break;
 						}
 					}
-					if (v14 == -1)
-					{
-						goto LABEL_37;
-					}
-					if (v14 == game_type_dropdown->fields.scroll.bSliderGraphic)
-					{
-					LABEL_37:
-						DisableControl(game_type_dropdown);
-						v3 = v19;
-					}
-					else
-					{
-						setSelectedIndexDirect(v14, game_type_dropdown);
-						DisableControl(game_type_dropdown);
-						v3 = v19;
-					}
+
+					DisableControl(game_type_dropdown);
+					v3 = v19;
 				}
 				else
 				{
@@ -17093,26 +17079,18 @@ void sub_4ADB10_()
 			}
 			if (v21)
 			{
-				int v16 = 0;
-				if (v21->fields.scroll.bSliderSkip)
+				for (int v16 = 0; v21->fields.scroll.bSliderSkip < v16; ++v16)
 				{
-					while (v21->fields.list.pdwData[v16] != v17.game_data.got_file_values.variation_id)
+					if (v21->fields.list.pdwData[v16] == v17.game_data.got_file_values.variation_id)
 					{
-						if (++v16 >= v21->fields.scroll.bSliderSkip)
+						if (v16 != -1 && v16 != v21->fields.scroll.bSliderGraphic)
 						{
-							goto LABEL_55;
+							setSelectedIndexDirect(v16, v21);
 						}
-					}
-					if (v16 != -1 && v16 != v21->fields.scroll.bSliderGraphic)
-					{
-						dlgEvent v18;
-						v18.wNo = EVN_USER;
-						v18.dwUser = USER_SELECT;
-						*(_DWORD*)&v18.wSelection = v16;
-						v21->pfcnInteract(v21, &v18);
+						break;
 					}
 				}
-			LABEL_55:
+
 				DisableControl(v21);
 				v3 = v19;
 			}
