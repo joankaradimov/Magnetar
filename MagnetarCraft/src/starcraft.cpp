@@ -7005,6 +7005,8 @@ void sub_4A91E0_()
 
 FAIL_STUB_PATCH(sub_4A91E0);
 
+HANDLE custom_campaign_mpq = nullptr;
+
 int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 {
 	CurrentMapFileName[0] = 0;
@@ -16899,7 +16901,30 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 		{
 			MapChunks a4;
 			memset(&a4, 0, sizeof(a4));
-			if (ReadMapData_(map_dir_entry->full_path, &a4, 0))
+			if (std::filesystem::path(map_dir_entry->full_path).extension() == ".scn")
+			{
+				if (SFileOpenArchive(map_dir_entry->full_path, 9000, 0, &custom_campaign_mpq))
+				{
+					if (WORD* table = (WORD*)fastFileRead_(0, 0, "rez\\campaign.tbl", 0, 1, __FILE__, __LINE__))
+					{
+						strcpy_s(map_dir_entry->title, GetTblString(table, 1));
+						strcpy_s(map_dir_entry->description, GetTblString(table, 2));
+
+						SMemFree(table, __FILE__, __LINE__, 0);
+					}
+
+					if (strlen(map_dir_entry->title) == 0)
+					{
+						strcpy_s(map_dir_entry->title, map_dir_entry->filename);
+					}
+
+					SFileCloseArchive(custom_campaign_mpq);
+					custom_campaign_mpq = nullptr;
+
+					map_dir_entry->error = 0;
+				}
+			}
+			else if (ReadMapData_(map_dir_entry->full_path, &a4, 0))
 			{
 				map_dir_entry->human_player_slots_maybe = getTotalValidSlotCount();
 				map_dir_entry->computer_slots = getComputerSlotCount();
@@ -17103,6 +17128,12 @@ void sub_4ADB10_()
 				v3->pfcnInteract(v3, &v18);
 				DisableControl(v3);
 			}
+		}
+		else if (std::filesystem::path(map_entry->filename).extension() == ".scn")
+		{
+			// add a 'campaign' game type and use `v17.game_data.game_type` as condition
+			HideDialog_(game_type_label);
+			HideDialog_(game_type_dropdown);
 		}
 		else if (v17.flags & MDEF_DIRECTORY)
 		{
@@ -17530,7 +17561,7 @@ void fileExt_(const char* a1, MapDirEntryFlags flags)
 			{
 				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
 			}
-			else if (extension == ".scm" || extension == ".chk")
+			else if (extension == ".scm" || extension == ".chk" || extension == ".scn")
 			{
 				AddFileToMapDirListing(a1, filename.generic_string().c_str(), v15 | MapDirEntryFlags::MDEF_SCENARIO);
 			}
