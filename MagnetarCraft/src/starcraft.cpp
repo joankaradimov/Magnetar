@@ -17072,7 +17072,7 @@ void sub_4ADB10_()
 		dialog* game_type_label = getControlFromIndex_(map_listbox, 38);
 		dialog* game_type_dropdown = getControlFromIndex_(map_listbox, 17);
 
-		if (v17.fully_loaded && (char)v17.flags < 0)
+		if (v17.fully_loaded && v17.flags & MDEF_REPLAY)
 		{
 			if (game_type_dropdown)
 			{
