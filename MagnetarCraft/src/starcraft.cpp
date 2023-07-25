@@ -20747,13 +20747,13 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	if (!InReplay && active_trigger_player == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
 		const char* chk_string = get_chk_String(a1->wavString);
-		if (!active_campaign)
+		if (active_campaign)
 		{
-			strcpy_s(buff, chk_string);
+			sprintf_s(buff, "%s\\%s", MapdataFilenames_[CampaignIndex], chk_string);
 		}
 		else
 		{
-			sprintf_s(buff, "%s\\%s", MapdataFilenames_[CampaignIndex], chk_string);
+			strcpy_s(buff, chk_string);
 		}
 		PlayWavByFilename_maybe(buff);
 	}
