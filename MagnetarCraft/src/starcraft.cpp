@@ -8,10 +8,11 @@
 #include "iscript.h"
 #include "starcraft.h"
 #include "race.h"
-#include "campaign.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
 #include "patching.h"
+#include "glu_campaign.h"
+#include "glu_campaign_exp.h"
 #include "glu_chat.h"
 #include "glu_connect.h"
 #include "glu_custom.h"
@@ -16210,40 +16211,6 @@ bool LoadPrecursorCampaign()
 	return active_campaign_entry_index != -1;
 }
 
-int sub_4B5110_(Campaign& campaign)
-{
-	if (dword_59A0D4[campaign.race])
-	{
-		const char* v3 = GetNetworkTblString_(campaign.race != RaceId::RACE_Terran ? 144 : 143);
-
-		if (!sub_4B5B20(v3))
-		{
-			return 0;
-		}
-	}
-
-	return LoadCampaignWithCharacter_(campaign);
-}
-
-FAIL_STUB_PATCH(sub_4B5110);
-
-bool sub_4B27A0_(Campaign& campaign)
-{
-	if (dword_59B760[campaign.race])
-	{
-		const char* v3 = GetNetworkTblString_(campaign.race == RaceId::RACE_Protoss ? 142 : 141);
-
-		if (!sub_4B5B20(v3))
-		{
-			return 0;
-		}
-	}
-
-	return LoadCampaignWithCharacter_(campaign);
-}
-
-FAIL_STUB_PATCH(sub_4B27A0);
-
 char __stdcall DLG_SwishOut_(dialog* dlg)
 {
 	RefreshCursor_0();
@@ -16302,75 +16269,6 @@ char __stdcall DLG_SwishOut_(dialog* dlg)
 }
 
 FUNCTION_PATCH(DLG_SwishOut, DLG_SwishOut_);
-
-bool sub_4B5180_(dialog* a1)
-{
-	switch (LastControlID)
-	{
-	case 6:
-		if (!sub_4B5110_(campaigns[4]))
-		{
-			return true;
-		}
-		LastControlID = 6;
-		break;
-	case 7:
-		if (!sub_4B5110_(campaigns[5]))
-		{
-			return true;
-		}
-		LastControlID = 7;
-		break;
-	case 8:
-		if (!sub_4B5110_(campaigns[6]))
-		{
-			return true;
-		}
-		LastControlID = 8;
-		break;
-	}
-	return DLG_SwishOut_(a1);
-}
-
-FAIL_STUB_PATCH(sub_4B5180);
-
-bool sub_4B2810_(dialog* a1)
-{
-	switch (LastControlID)
-	{
-	case 6:
-		if (!sub_4B27A0_(campaigns[3]))
-		{
-			return true;
-		}
-		LastControlID = 6;
-		break;
-	case 7:
-		if (!sub_4B27A0_(campaigns[1]))
-		{
-			return true;
-		}
-		LastControlID = 7;
-		break;
-	case 8:
-		if (!sub_4B27A0_(campaigns[2]))
-		{
-			return true;
-		}
-		LastControlID = 8;
-		break;
-	case 30:
-		if (!LoadPrecursorCampaign())
-		{
-			return true;
-		}
-		LastControlID = 30;
-		break;
-	}
-	return DLG_SwishOut_(a1);
-}
-
-FAIL_STUB_PATCH(sub_4B2810);
 
 void DlgSwooshin_(dialog* dlg, swishTimer* timers, size_t timers_count, __int16 a4)
 {
@@ -16503,180 +16401,6 @@ void DLG_SwishIn_(dialog* a1)
 
 FAIL_STUB_PATCH(DLG_SwishIn);
 
-int __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
-{
-	switch (evt->wNo)
-	{
-	case EventNo::EVN_LBUTTONDOWN:
-	case EventNo::EVN_LBUTTONDBLCLK:
-		if (dlg->lFlags & CTRL_DISABLED)
-		{
-			return 0;
-		}
-		break;
-	case EventNo::EVN_USER:
-		switch (evt->dwUser)
-		{
-		case EventUser::USER_CREATE:
-			SetCallbackTimer(CTRL_DISABLED, dlg, 200, gluCmpgnBtn_UpdateTimer);
-			break;
-		case EventUser::USER_DESTROY:
-			waitLoopCntd(CTRL_DISABLED, dlg);
-			break;
-		case EventUser::USER_MOUSEMOVE:
-			return sub_4B24B0(dlg, evt);
-		case EventUser::USER_INIT:
-			genericLightupBtnInteract(dlg, evt);
-			dlg->pfcnUpdate = gluCmpgnBtn_BtnLightupUpdate;
-			SetCallbackTimer(72, dlg, 30, gluCmpgnBtn_InitTimer);
-			return 1;
-		}
-		break;
-	}
-
-	return genericLightupBtnInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(gluCmpgn_CampaignButton);
-
-void gluCmpgn_CustomCtrlID_(dialog* dlg)
-{
-	static FnInteract functions[] = {
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		Menu_Generic_Button,
-		gluCmpgn_CampaignButton_,
-		genericLightupBtnInteract,
-		gluCmpgn_CampaignButton_,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-	};
-
-	static swishTimer timers[] = {
-		{1, 0},
-		{3, 2},
-	};
-
-	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin_(dlg, timers, 0);
-}
-
-FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
-
-int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
-{
-	if (evt->wNo == EventNo::EVN_USER)
-	{
-		switch (evt->dwUser)
-		{
-		case EventUser::USER_CREATE:
-			DLG_SwishIn_(dlg);
-			if (!byte_6D5BBC)
-			{
-				DLGMusicFade_(&title_music);
-			}
-			break;
-		case EventUser::USER_ACTIVATE:
-			return sub_4B2810_(dlg);
-		case EventUser::USER_INIT:
-			gluCmpgn_CustomCtrlID_(dlg);
-			break;
-		}
-	}
-	return genericDlgInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(gluCmpgn_Main);
-
-int __fastcall gluExpCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
-{
-	switch (evt->wNo)
-	{
-	case EventNo::EVN_LBUTTONDOWN:
-	case EventNo::EVN_LBUTTONDBLCLK:
-		if (dlg->lFlags & CTRL_DISABLED)
-		{
-			return 0;
-		}
-		break;
-	case EventNo::EVN_USER:
-		switch (evt->dwUser)
-		{
-		case EventUser::USER_CREATE:
-			SetCallbackTimer(2, dlg, 200, sub_4B4E70);
-			break;
-		case EventUser::USER_DESTROY:
-			waitLoopCntd(2, dlg);
-			break;
-		case EventUser::USER_MOUSEMOVE:
-			return sub_4B4E20(dlg, evt);
-		case EventUser::USER_INIT:
-			genericLightupBtnInteract(dlg, evt);
-			dlg->pfcnUpdate = sub_4B4F10;
-			SetCallbackTimer(72, dlg, 30, sub_4B4EE0);
-			return 1;
-		}
-		break;
-	}
-
-	return genericLightupBtnInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(gluExpCmpgn_CampaignButton);
-
-void gluExpCmpgn_CustomCtrlID_(dialog* dlg)
-{
-	static FnInteract functions[] = {
-		NULL,
-		NULL,
-		NULL,
-		NULL,
-		Menu_Generic_Button,
-		genericLightupBtnInteract,
-		gluExpCmpgn_CampaignButton_,
-		gluExpCmpgn_CampaignButton_,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-		Menu_Generic_Button,
-	};
-
-	static swishTimer timers[] = {
-		{1, 0},
-		{3, 2},
-	};
-
-	registerMenuFunctions_(functions, dlg, sizeof(functions));
-	DlgSwooshin_(dlg, timers, 0);
-}
-
-FAIL_STUB_PATCH(gluExpCmpgn_CustomCtrlID);
-
-int __fastcall gluExpCmpgn_Main_(dialog* dlg, struct dlgEvent* evt)
-{
-	if (evt->wNo == EventNo::EVN_USER)
-	{
-		switch (evt->dwUser)
-		{
-		case EventUser::USER_CREATE:
-			DLG_SwishIn_(dlg);
-			if (!byte_6D5BBC)
-				DLGMusicFade_(&title_music);
-			break;
-		case EventUser::USER_ACTIVATE:
-			return sub_4B5180_(dlg);
-		case EventUser::USER_INIT:
-			gluExpCmpgn_CustomCtrlID_(dlg);
-			break;
-		}
-	}
-	return genericDlgInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(gluExpCmpgn_Main);
-
 dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int* read, const char* logfilename, int logline)
 {
 	return (dialog*) fastFileRead_(read, 0, filename, (int)buffer, 1, logfilename, logline);
@@ -16724,85 +16448,6 @@ void changeMenu_()
 }
 
 FAIL_STUB_PATCH(changeMenu);
-
-void loadMenu_gluCmpgn_()
-{
-	OpheliaEnabled = 0;
-	multiPlayerMode = 0;
-	sub_4B26E0();
-	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluCmpgn.bin");
-
-	switch (gluLoadBINDlg_(campaign_dialog, gluCmpgn_Main_))
-	{
-	case 5:
-		glGluesMode = GLUE_LOAD;
-		break;
-	case 6:
-		glGluesMode = GLUE_READY_P;
-		break;
-	case 30:
-	case 7:
-		glGluesMode = GLUE_READY_T;
-		break;
-	case 8:
-		glGluesMode = GLUE_READY_Z;
-		break;
-	case 9:
-		glGluesMode = GLUE_LOGIN;
-		break;
-	case 10:
-		glGluesMode = GLUE_CREATE;
-		break;
-	case 11:
-		glGluesMode = GLUE_CREATE_MULTI;
-		break;
-	default:
-		glGluesMode = GLUE_MAIN_MENU;
-		break;
-	}
-	changeMenu_();
-}
-
-FAIL_STUB_PATCH(loadMenu_gluCmpgn);
-
-void loadMenu_gluExpCmpgn_()
-{
-	OpheliaEnabled = 0;
-	multiPlayerMode = 0;
-	sub_4B5050();
-	dialog* campaign_dialog = loadAndInitFullMenuDLG_("rez\\gluExpCmpgn.bin");
-
-	switch (gluLoadBINDlg_(campaign_dialog, gluExpCmpgn_Main_))
-	{
-	case 8:
-		glGluesMode = GLUE_READY_Z;
-		break;
-	case 7:
-		glGluesMode = GLUE_READY_T;
-		break;
-	case 6:
-		glGluesMode = GLUE_READY_P;
-		break;
-	case 5:
-		glGluesMode = GLUE_LOAD;
-		break;
-	case 10:
-		glGluesMode = GLUE_CREATE;
-		break;
-	case 11:
-		glGluesMode = GLUE_CREATE_MULTI;
-		break;
-	case 9:
-		glGluesMode = GLUE_LOGIN;
-		break;
-	default:
-		glGluesMode = GLUE_MAIN_MENU;
-		break;
-	}
-	changeMenu_();
-}
-
-FAIL_STUB_PATCH(loadMenu_gluExpCmpgn);
 
 int CreateLadderGame_(GameData* a1, int a2)
 {
