@@ -113,8 +113,14 @@ struct Campaign
 	MenuPosition post_epilog_menu;
 };
 
-extern std::vector<Campaign> campaigns;
-
 CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog = nullptr);
 CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, Cinematic cinematic, StormVideoFlags flags, bool hide);
 CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epilog_music_track);
+
+class CampaignSet
+{
+public:
+	std::vector<Campaign> campaigns;
+};
+
+extern CampaignSet* active_campaign_set;

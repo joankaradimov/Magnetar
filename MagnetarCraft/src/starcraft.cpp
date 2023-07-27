@@ -16085,7 +16085,7 @@ int campaignTypeCheatStrings_(const char* a2)
 	}
 
 	Campaign* relevant_campaign = NULL;
-	for (Campaign& campaign : campaigns)
+	for (Campaign& campaign : active_campaign_set->campaigns)
 	{
 		int prefix_length = strlen(campaign.campaign_id);
 		if (!SStrCmpI(a2, campaign.campaign_id, prefix_length))
@@ -16191,7 +16191,7 @@ bool LoadPrecursorCampaign()
 		}
 	}
 
-	active_campaign = &campaigns[0];
+	active_campaign = &active_campaign_set->campaigns[0];
 	int unlocked_mission = 6;
 	active_campaign_entry_index = loadmenu_GluHist_(unlocked_mission, active_campaign);
 	if (active_campaign_entry_index != -1)
