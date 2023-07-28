@@ -52,7 +52,7 @@ CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epil
 	};
 }
 
-CampaignSet* active_campaign_set;
+std::unique_ptr<CampaignSet> active_campaign_set;
 
 MEMORY_PATCH(0x4B69CA, (BYTE)sizeof(CampaignMenuEntryEx));
 

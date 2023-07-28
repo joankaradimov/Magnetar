@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <vector>
 
 #include "starcraft.h"
@@ -123,4 +124,4 @@ public:
 	std::vector<Campaign> campaigns;
 };
 
-extern CampaignSet* active_campaign_set;
+extern std::unique_ptr<CampaignSet> active_campaign_set;
