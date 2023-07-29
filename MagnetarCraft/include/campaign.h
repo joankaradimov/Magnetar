@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <string>
 #include <vector>
 
 #include "starcraft.h"
@@ -93,7 +94,7 @@ enum CampaignMenuEntryType
 struct CampaignMenuEntryEx
 {
 	CampaignMenuEntryType entry_type;
-	unsigned __int16 glu_hist_tbl_index;
+	std::string description;
 	ExpandedMapData next_mission;
 	Cinematic cinematic;
 	RaceId race;
@@ -114,8 +115,8 @@ struct Campaign
 	MenuPosition post_epilog_menu;
 };
 
-CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog = nullptr);
-CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, Cinematic cinematic, StormVideoFlags flags, bool hide);
+CampaignMenuEntryEx mission(const char* description, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog = nullptr);
+CampaignMenuEntryEx cinematic(const char* description, ExpandedMapData next_mission, Cinematic cinematic, StormVideoFlags flags, bool hide);
 CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epilog_music_track);
 
 class CampaignSet

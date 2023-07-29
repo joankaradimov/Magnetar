@@ -15889,10 +15889,10 @@ void gluHist_Create_(dialog* dlg)
 
 	for (int i = 0; i < mission_entries.size(); i++)
 	{
-		if (mission_entries[i].next_mission <= dword_6D5A50 && mission_entries[i].glu_hist_tbl_index)
+		if (mission_entries[i].next_mission <= dword_6D5A50 && !mission_entries[i].description.empty())
 		{
-			const char* v6 = GetTblString(dword_6D5A44, mission_entries[i].glu_hist_tbl_index);
-			mission_list_dlg->fields.list.pdwData[ListBox_AddEntry(v6, mission_list_dlg, 0)] = i;
+			u8 list_box_entry = ListBox_AddEntry(mission_entries[i].description.c_str(), mission_list_dlg, 0);
+			mission_list_dlg->fields.list.pdwData[list_box_entry] = i;
 		}
 	}
 
@@ -15986,7 +15986,7 @@ BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 	unsigned i = 0;
 	for (auto& a1 : campaign->entries)
 	{
-		if (a1.next_mission <= a2 && a1.glu_hist_tbl_index)
+		if (a1.next_mission <= a2 && !a1.description.empty())
 		{
 			++i;
 		}

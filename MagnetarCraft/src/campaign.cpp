@@ -1,12 +1,12 @@
 #include "campaign.h"
 #include "patching.h"
 
-CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog)
+CampaignMenuEntryEx mission(const char* description, ExpandedMapData next_mission, RaceId race, bool hide, const char* establishing_shot, const char* epilog)
 {
 	return
 	{
 		CampaignMenuEntryType::MISSION,
-		glu_hist_tbl_index,
+		description ? description : "",
 		next_mission,
 		C_BLIZZARD_LOGO,
 		race,
@@ -18,12 +18,12 @@ CampaignMenuEntryEx mission(unsigned __int16 glu_hist_tbl_index, ExpandedMapData
 	};
 }
 
-CampaignMenuEntryEx cinematic(unsigned __int16 glu_hist_tbl_index, ExpandedMapData next_mission, Cinematic cinematic, StormVideoFlags flags, bool hide)
+CampaignMenuEntryEx cinematic(const char* description, ExpandedMapData next_mission, Cinematic cinematic, StormVideoFlags flags, bool hide)
 {
 	return
 	{
 		CampaignMenuEntryType::CINEMATIC,
-		glu_hist_tbl_index,
+		description ? description : "",
 		next_mission,
 		cinematic,
 		RaceId::RACE_None,
@@ -40,7 +40,7 @@ CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epil
 	return
 	{
 		CampaignMenuEntryType::EPILOG,
-		0,
+		"",
 		ExpandedMapData::EMD_none,
 		C_BLIZZARD_LOGO,
 		RaceId::RACE_None,
