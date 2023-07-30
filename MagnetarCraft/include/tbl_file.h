@@ -15,7 +15,7 @@ public:
 		HANDLE hFile;
 		if (!SFileOpenFileEx(0, file_name, 0, &hFile))
 		{
-			std::string message = std::string("Could not open '") + file_name + "'";
+			std::string message = (std::string)"Could not open '" + file_name + "'";
 			throw std::exception(message.c_str());
 		}
 
