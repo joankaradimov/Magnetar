@@ -2095,7 +2095,18 @@ int sub_417130(int result, int a2, int a3, int a4, int a5, int a6, int a7) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_4171F0)(), sub_4171F0, 0x4171f0);
+bool sub_4171F0(const void *a1, const void *a2) {
+    int address = 0x4171f0;
+    bool result_;
+    __asm {
+        xor eax, eax
+        mov edx, a2
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 unsigned sub_417210(unsigned __int8 result, unsigned __int8 a2, unsigned __int8 a3) {
     int address = 0x417210;
     unsigned result_;
@@ -2111,7 +2122,18 @@ unsigned sub_417210(unsigned __int8 result, unsigned __int8 a2, unsigned __int8 
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*sub_417270)(_DWORD a1), sub_417270, 0x417270);
+int sub_417270(int a1, int a2) {
+    int address = 0x417270;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov ebx, a2
+        mov ecx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (__fastcall*sub_4172C0)(int a1, int a2), sub_4172C0, 0x4172c0);
 int DrawTransparencies(int a1, int a2, RECT *a3, int a4, int a5, int a6) {
     int address = 0x4172f0;
@@ -2161,8 +2183,8 @@ void CompileSCode(int a1, int palette) {
         call address
     }
 }
-DECL_FUNC(int (*sub_417DF0)(), sub_417DF0, 0x417df0);
-DECL_FUNC(int (__fastcall*pDLGInteract)(_DWORD a1, _DWORD a2), pDLGInteract, 0x417e20);
+DECL_FUNC(__int16 (__fastcall*sub_417DF0)(int a1, int a2), sub_417DF0, 0x417df0);
+DECL_FUNC(int (__fastcall*pDLGInteract)(int a1, int a2), pDLGInteract, 0x417e20);
 DECL_FUNC(int (__thiscall*canTextboxDlgAcceptEvents_CB)(dialog *this_), canTextboxDlgAcceptEvents_CB, 0x417e30);
 int setSelectedIndexDirect(int a1, dialog *a2) {
     int address = 0x417e50;
@@ -2215,16 +2237,57 @@ int dlgUpdate1(dialog *a1, dlgEvent *a2, int (__fastcall *a3)(_DWORD, _DWORD)) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_417F20)(), sub_417F20, 0x417f20);
-DECL_FUNC(int (*sub_417F50)(), sub_417F50, 0x417f50);
-DECL_FUNC(int (*sub_417F80)(), sub_417F80, 0x417f80);
-DECL_FUNC(int (*sub_417FA0)(), sub_417FA0, 0x417fa0);
+int sub_417F20(int result, int a2, _WORD *a3) {
+    int address = 0x417f20;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov ecx, a3
+        mov edx, a2
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+BOOL sub_417F50(_WORD *a1, _WORD *a2) {
+    int address = 0x417f50;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov edx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int sub_417F80(int result) {
+    int address = 0x417f80;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+int sub_417FA0(int result) {
+    int address = 0x417fa0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (*sub_417FB0)(), sub_417FB0, 0x417fb0);
-DECL_FUNC(int (*sub_417FF0)(), sub_417FF0, 0x417ff0);
-DECL_FUNC(signed (__thiscall*isDlgVisible_CB)(dialog *this_), isDlgVisible_CB, 0x418010);
-unsigned dlgMouseOverGenericLabel(dialog *a1) {
-    int address = 0x418030;
-    unsigned result_;
+BOOL sub_417FF0(dialog *a1) {
+    int address = 0x417ff0;
+    BOOL result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -2233,7 +2296,30 @@ unsigned dlgMouseOverGenericLabel(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_418060)(), sub_418060, 0x418060);
+DECL_FUNC(signed (__thiscall*isDlgVisible_CB)(dialog *this_), isDlgVisible_CB, 0x418010);
+int dlgMouseOverGenericLabel(dialog *a1) {
+    int address = 0x418030;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+dialog * sub_418060(dialog *a1, int a2) {
+    int address = 0x418060;
+    dialog * result_;
+    __asm {
+        xor eax, eax
+        mov ecx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 dialog * getControlFromIndex(dialog *dlg, __int16 index) {
     int address = 0x418080;
     dialog * result_;
@@ -2333,10 +2419,10 @@ BOOL isDlgEventCursorInsideDlg(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*sub_418440)(_DWORD a1), sub_418440, 0x418440);
-int FreeDialogDestBuffer(dialog *a1) {
+DECL_FUNC(unsigned (__thiscall*sub_418440)(int this_), sub_418440, 0x418440);
+u8 * FreeDialogDestBuffer(dialog *a1) {
     int address = 0x418480;
-    int result_;
+    u8 * result_;
     __asm {
         xor eax, eax
         mov esi, a1
@@ -10462,18 +10548,14 @@ void statbtn_BIN_CustomCtrlID(dialog *a1) {
 DECL_FUNC(void (__fastcall*BTNSACT_ChangeButtons)(__int16 a1), BTNSACT_ChangeButtons, 0x459af0);
 DECL_FUNC(int (__fastcall*statbtn_DLG_Interact)(dialog *dlg, dlgEvent *evt), statbtn_DLG_Interact, 0x459b00);
 DECL_FUNC(void (*load_statbtn_BIN)(), load_statbtn_BIN, 0x459b90);
-DownloadListMaybe * sub_459D90(DownloadListMaybe *result, int a2, int a3) {
+void sub_459D90(DownloadListMaybe *result, int a2, int a3) {
     int address = 0x459d90;
-    DownloadListMaybe * result_;
     __asm {
-        xor eax, eax
         push dword ptr a3
         mov ecx, a2
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DownloadListMaybe * sub_459DC0(DownloadListMaybe *result) {
     int address = 0x459dc0;
@@ -11286,12 +11368,12 @@ DECL_FUNC(int (__stdcall*GetNonAlliedVictoryPlayers)(int a1, struct_a3 *a2, int 
 DECL_FUNC(__int16 (__fastcall*sub_45FE40)(int a1, CUnit *a2), sub_45FE40, 0x45fe40);
 DECL_FUNC(int (__fastcall*increaseHangerCountsAtLocation)(int a1, int a2), increaseHangerCountsAtLocation, 0x45fe80);
 DECL_FUNC(int (__thiscall*isUnitOwnedByPlayerEx)(int player, CUnit *a2), isUnitOwnedByPlayerEx, 0x45fef0);
-DECL_FUNC(s32 (__fastcall*Score)(int a1, __int16 a2, struct_a3 *a3), Score, 0x45ffe0);
-DECL_FUNC(int (__fastcall*Opponents)(int ecx0, int a2, struct_a3 *a3), Opponents, 0x460160);
-DECL_FUNC(s32 (__fastcall*Deaths)(int a1, unsigned __int16 a2, struct_a3 *a3), Deaths, 0x460380);
-DECL_FUNC(s32 (__fastcall*Kill)(int a1, unsigned __int16 a2, struct_a3 *a3), Kill, 0x4604a0);
-DECL_FUNC(int (__fastcall*Accumulate)(int a1, __int16 a2, struct_a3 *a3), Accumulate, 0x4605c0);
-DECL_FUNC(int (__fastcall*Command)(int a1, unsigned __int16 edx0, struct_a3 *a3), Command, 0x4606b0);
+DECL_FUNC(int (__fastcall*Score)(_DWORD a1, _DWORD a2, struct_a3 *a3), Score, 0x45ffe0);
+DECL_FUNC(int (__fastcall*Opponents)(_DWORD a1, _DWORD a2, struct_a3 *a3), Opponents, 0x460160);
+DECL_FUNC(int (__fastcall*Deaths)(_DWORD a1, _DWORD a2, struct_a3 *a3), Deaths, 0x460380);
+DECL_FUNC(int (__fastcall*Kill)(_DWORD a1, _DWORD a2, struct_a3 *a3), Kill, 0x4604a0);
+DECL_FUNC(int (__fastcall*Accumulate)(_DWORD a1, _DWORD a2, struct_a3 *a3), Accumulate, 0x4605c0);
+DECL_FUNC(int (__fastcall*Command)(_DWORD a1, _DWORD a2, struct_a3 *a3), Command, 0x4606b0);
 DECL_FUNC(__int16 (__thiscall*IncreaseCompletedUnitCountsAtLocation)(CUnit *this_), IncreaseCompletedUnitCountsAtLocation, 0x460860);
 DECL_FUNC(int (__fastcall*TrgBringProc)(CUnit *a1, int a2), TrgBringProc, 0x460980);
 DECL_FUNC(unsigned (__fastcall*Bring)(int a1, char a2), Bring, 0x4609d0);
@@ -11552,7 +11634,7 @@ void DLG_Loadsave_Activate(dialog *dlg) {
         call address
     }
 }
-DECL_FUNC(int (__fastcall*savegameBIN_DLG_Interact)(dialog *a1, dlgEvent *a2), savegameBIN_DLG_Interact, 0x462580);
+DECL_FUNC(int (__fastcall*savegameBIN_DLG_Interact)(dialog *dlg, dlgEvent *evt), savegameBIN_DLG_Interact, 0x462580);
 DECL_FUNC(void (__cdecl*savegameMenu)(), savegameMenu, 0x462600);
 int * AI_CreateGuard(__int16 a1, int a2, __int16 a3, __int16 a4) {
     int address = 0x462670;
@@ -14049,7 +14131,7 @@ BOOL sub_473410(int a1, int a2, int a3) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*UnitIsResourceContainer)(CUnit *this_), UnitIsResourceContainer, 0x473490);
+DECL_FUNC(int (__fastcall*UnitIsResourceContainer)(CUnit *a1, CUnit *a2), UnitIsResourceContainer, 0x473490);
 bool * sub_4734B0(__int16 a1, __int16 a2, __int16 a3) {
     int address = 0x4734b0;
     bool * result_;
@@ -16274,16 +16356,12 @@ int DecryptKey(int a1, int a2, unsigned int a3) {
 }
 DECL_FUNC(void (__fastcall*SaveCPUThrottleOption)(bool exit_code), SaveCPUThrottleOption, 0x481ae0);
 DECL_FUNC(int (__thiscall*speedOptnsScreenScrollSliders)(int this_), speedOptnsScreenScrollSliders, 0x481b00);
-dlgEvent * createUpdateSpdOptionsScrollers(dialog *a1) {
+void createUpdateSpdOptionsScrollers(dialog *a1) {
     int address = 0x481b80;
-    dlgEvent * result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (*sub_481CF0)(), sub_481CF0, 0x481cf0);
 bool destroySpdDlg(dialog *a1, dlgEvent *a2) {
@@ -16827,7 +16905,7 @@ CThingy * sub_487A10(int a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(BOOL (__fastcall*sub_487A90)(CUnit *a1, __int16 a2), sub_487A90, 0x487a90);
+DECL_FUNC(int (__fastcall*sub_487A90)(CUnit *a1, CUnit *a2), sub_487A90, 0x487a90);
 DECL_FUNC(CThingy * (__stdcall*getPlacementRestrictionsFromSpriteID)(int a1, int a2, int a3), getPlacementRestrictionsFromSpriteID, 0x487b00);
 DECL_FUNC(CThingy * (__stdcall*sub_487C70)(int a1, int a2, int a3, int a4), sub_487C70, 0x487c70);
 int CThingyIsVisible(int a1, CThingy *a2) {
@@ -18065,9 +18143,9 @@ char sub_4908E0(struct dlgEvent *a1, dialog *a2) {
 }
 DECL_FUNC(bool (__fastcall*allyfltr_AllianceBox)(dialog *dlg, dlgEvent *evt), allyfltr_AllianceBox, 0x490960);
 DECL_FUNC(bool (__fastcall*msgfltr_SendToText)(dialog *dlg, struct dlgEvent *evt), msgfltr_SendToText, 0x490a10);
-char sub_490A50(dialog *a1) {
+u8 sub_490A50(dialog *a1) {
     int address = 0x490a50;
-    char result_;
+    u8 result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -22576,7 +22654,18 @@ DECL_FUNC(void (__stdcall*load_gluModemEntry)(int a1), load_gluModemEntry, 0x4b1
 DECL_FUNC(void (__stdcall*AU_PHONENUMBER)(dialog *arg0), AU_PHONENUMBER, 0x4b14d0);
 DECL_FUNC(int (__fastcall*gluModem_Main)(dialog *dlg, struct dlgEvent *evt), gluModem_Main, 0x4b1820);
 DECL_FUNC(void (*loadMenu_gluModem)(), loadMenu_gluModem, 0x4b19c0);
-DECL_FUNC(int (*sub_4B1B30)(), sub_4B1B30, 0x4b1b30);
+bool sub_4B1B30(const void *a1, const void *a2) {
+    int address = 0x4b1b30;
+    bool result_;
+    __asm {
+        xor eax, eax
+        mov edx, a2
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 signed verifyCheatCode(const void *a1, CheatFlags *game_cheats) {
     int address = 0x4b1b50;
     signed result_;
@@ -22689,16 +22778,12 @@ DECL_FUNC(void (__fastcall*structureScoreCalc)(struc_59A0F0 *a1, int a2), struct
 DECL_FUNC(void (__fastcall*unitScoreCalc)(struc_59A0F0 *a1, int player_id), unitScoreCalc, 0x4b2b30);
 DECL_FUNC(void (__fastcall*overallScoreCalc)(struc_59A0F0 *a1, int player_id), overallScoreCalc, 0x4b2b70);
 DECL_FUNC(int (__thiscall*sub_4B2BD0)(struc_59A0F0 *this_), sub_4B2BD0, 0x4b2bd0);
-int sub_4B2D10(int result) {
+void sub_4B2D10(int result) {
     int address = 0x4b2d10;
-    int result_;
     __asm {
-        xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(u8 * (__stdcall*sub_4B2D20)(int a1, int a2), sub_4B2D20, 0x4b2d20);
 BOOL sub_4B2D50(int a1) {
@@ -23002,7 +23087,18 @@ int sub_4B65D0(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_4B6610)(), sub_4B6610, 0x4b6610);
+char sub_4B6610(char *a1, signed int a2) {
+    int address = 0x4b6610;
+    char result_;
+    __asm {
+        xor eax, eax
+        mov ecx, a2
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 DECL_FUNC(dialog * (*sub_4B6640)(), sub_4B6640, 0x4b6640);
 dialog * sub_4B6650(dialog *result, int a2) {
     int address = 0x4b6650;
@@ -32937,6 +33033,7 @@ UnknownTilesetRelated1& stru_51279C = * ((decltype(&stru_51279C)) 0x51279c);
 UnknownTilesetRelated1& stru_5127B8 = * ((decltype(&stru_5127B8)) 0x5127b8);
 UnknownTilesetRelated1 *(&off_5127DC)[8] = * ((decltype(&off_5127DC)) 0x5127dc);
 ActionPointer(&ActionTable)[60] = * ((decltype(&ActionTable)) 0x512800);
+int (__fastcall *&off_512818)(Action *) = *((decltype(&off_512818)) 0x512818);
 int& dword_5128F0 = * ((decltype(&dword_5128F0)) 0x5128f0);
 ColorShiftData(&colorShift)[8] = * ((decltype(&colorShift)) 0x5128f8);
 char *(&TileSetNames)[8] = * ((decltype(&TileSetNames)) 0x512998);
@@ -33092,62 +33189,62 @@ ButtonOrder(&stru_515D00)[1] = * ((decltype(&stru_515D00)) 0x515d00);
 ButtonOrder(&stru_515D14)[3] = * ((decltype(&stru_515D14)) 0x515d14);
 ButtonOrder(&stru_515D50)[1] = * ((decltype(&stru_515D50)) 0x515d50);
 ButtonOrder(&stru_515D68)[5] = * ((decltype(&stru_515D68)) 0x515d68);
-ButtonOrder(&stru_515DD0)[5] = * ((decltype(&stru_515DD0)) 0x515dd0);
+ButtonOrder(&button_set_generic_army)[5] = * ((decltype(&button_set_generic_army)) 0x515dd0);
 ButtonOrder(&stru_515E38)[5] = * ((decltype(&stru_515E38)) 0x515e38);
-ButtonOrder(&stru_515EA0)[7] = * ((decltype(&stru_515EA0)) 0x515ea0);
-ButtonOrder(&stru_515F2C)[2] = * ((decltype(&stru_515F2C)) 0x515f2c);
+ButtonOrder(&button_set_dropship)[7] = * ((decltype(&button_set_dropship)) 0x515ea0);
+ButtonOrder(&button_set_missile_turret)[2] = * ((decltype(&button_set_missile_turret)) 0x515f2c);
 ButtonOrder(&button_set_larva)[9] = * ((decltype(&button_set_larva)) 0x515f58);
-ButtonOrder(&stru_51600C)[1] = * ((decltype(&stru_51600C)) 0x51600c);
+ButtonOrder(&button_set_egg)[1] = * ((decltype(&button_set_egg)) 0x51600c);
 ButtonOrder(&button_set_drone)[9] = * ((decltype(&button_set_drone)) 0x516020);
 ButtonOrder(&button_set_basic_zerg_buildings)[7] = * ((decltype(&button_set_basic_zerg_buildings)) 0x5160d8);
 ButtonOrder(&button_set_advanced_zerg_buildings)[6] = * ((decltype(&button_set_advanced_zerg_buildings)) 0x516168);
-ButtonOrder(&stru_5161E0)[7] = * ((decltype(&stru_5161E0)) 0x5161e0);
+ButtonOrder(&button_set_zergling)[7] = * ((decltype(&button_set_zergling)) 0x5161e0);
 ButtonOrder(&button_set_hydralisk)[8] = * ((decltype(&button_set_hydralisk)) 0x516270);
 ButtonOrder(&button_set_mutalisk)[7] = * ((decltype(&button_set_mutalisk)) 0x516310);
 ButtonOrder(&button_set_lurker)[7] = * ((decltype(&button_set_lurker)) 0x5163a0);
-ButtonOrder(&stru_516430)[9] = * ((decltype(&stru_516430)) 0x516430);
+ButtonOrder(&button_set_queen)[9] = * ((decltype(&button_set_queen)) 0x516430);
 ButtonOrder(&button_set_deflier)[9] = * ((decltype(&button_set_deflier)) 0x5164e8);
-ButtonOrder(&stru_5165A0)[7] = * ((decltype(&stru_5165A0)) 0x5165a0);
+ButtonOrder(&button_set_infested_terran)[7] = * ((decltype(&button_set_infested_terran)) 0x5165a0);
 ButtonOrder(&button_set_infested_kerrigan)[10] = * ((decltype(&button_set_infested_kerrigan)) 0x516630);
 ButtonOrder(&button_set_infested_duran)[9] = * ((decltype(&button_set_infested_duran)) 0x5166f8);
-ButtonOrder(&stru_5167B0)[5] = * ((decltype(&stru_5167B0)) 0x5167b0);
-ButtonOrder(&stru_516818)[9] = * ((decltype(&stru_516818)) 0x516818);
-ButtonOrder(&stru_5168D0)[8] = * ((decltype(&stru_5168D0)) 0x5168d0);
-ButtonOrder(&stru_516970)[1] = * ((decltype(&stru_516970)) 0x516970);
-ButtonOrder(&stru_516988)[4] = * ((decltype(&stru_516988)) 0x516988);
-ButtonOrder(&stru_5169D8)[3] = * ((decltype(&stru_5169D8)) 0x5169d8);
-ButtonOrder(&stru_516A14)[3] = * ((decltype(&stru_516A14)) 0x516a14);
-ButtonOrder(&stru_516A50)[2] = * ((decltype(&stru_516A50)) 0x516a50);
-ButtonOrder(&stru_516A78)[5] = * ((decltype(&stru_516A78)) 0x516a78);
-ButtonOrder(&stru_516AE0)[5] = * ((decltype(&stru_516AE0)) 0x516ae0);
-ButtonOrder(&stru_516B48)[5] = * ((decltype(&stru_516B48)) 0x516b48);
-ButtonOrder(&stru_516BB0)[4] = * ((decltype(&stru_516BB0)) 0x516bb0);
-ButtonOrder(&stru_516C00)[3] = * ((decltype(&stru_516C00)) 0x516c00);
-ButtonOrder(&stru_516C3C)[3] = * ((decltype(&stru_516C3C)) 0x516c3c);
-ButtonOrder(&stru_516C78)[7] = * ((decltype(&stru_516C78)) 0x516c78);
+ButtonOrder(&button_set_hatchery)[5] = * ((decltype(&button_set_hatchery)) 0x5167b0);
+ButtonOrder(&button_set_lair)[9] = * ((decltype(&button_set_lair)) 0x516818);
+ButtonOrder(&button_set_hive)[8] = * ((decltype(&button_set_hive)) 0x5168d0);
+ButtonOrder(&button_set_nydus_canal)[1] = * ((decltype(&button_set_nydus_canal)) 0x516970);
+ButtonOrder(&button_set_spire)[4] = * ((decltype(&button_set_spire)) 0x516988);
+ButtonOrder(&button_set_greater_spire)[3] = * ((decltype(&button_set_greater_spire)) 0x5169d8);
+ButtonOrder(&button_set_spawning_pool)[3] = * ((decltype(&button_set_spawning_pool)) 0x516a14);
+ButtonOrder(&button_set_creep_colony)[2] = * ((decltype(&button_set_creep_colony)) 0x516a50);
+ButtonOrder(&button_set_hydralisk_den)[5] = * ((decltype(&button_set_hydralisk_den)) 0x516a78);
+ButtonOrder(&button_set_queens_nest)[5] = * ((decltype(&button_set_queens_nest)) 0x516ae0);
+ButtonOrder(&button_set_defiler_mound)[5] = * ((decltype(&button_set_defiler_mound)) 0x516b48);
+ButtonOrder(&button_set_evolution_chamber)[4] = * ((decltype(&button_set_evolution_chamber)) 0x516bb0);
+ButtonOrder(&button_set_ultralisk_cavern)[3] = * ((decltype(&button_set_ultralisk_cavern)) 0x516c00);
+ButtonOrder(&button_set_nexus)[3] = * ((decltype(&button_set_nexus)) 0x516c3c);
+ButtonOrder(&button_set_probe)[7] = * ((decltype(&button_set_probe)) 0x516c78);
 ButtonOrder(&stru_516D08)[9] = * ((decltype(&stru_516D08)) 0x516d08);
 ButtonOrder(&stru_516DC0)[9] = * ((decltype(&stru_516DC0)) 0x516dc0);
-ButtonOrder(&stru_516E78)[8] = * ((decltype(&stru_516E78)) 0x516e78);
-ButtonOrder(&stru_516F18)[7] = * ((decltype(&stru_516F18)) 0x516f18);
-ButtonOrder(&stru_516FA8)[7] = * ((decltype(&stru_516FA8)) 0x516fa8);
-ButtonOrder(&stru_517038)[7] = * ((decltype(&stru_517038)) 0x517038);
-ButtonOrder(&stru_5170C8)[7] = * ((decltype(&stru_5170C8)) 0x5170c8);
-ButtonOrder(&stru_517158)[7] = * ((decltype(&stru_517158)) 0x517158);
-ButtonOrder(&stru_5171E8)[6] = * ((decltype(&stru_5171E8)) 0x5171e8);
-ButtonOrder(&stru_517260)[7] = * ((decltype(&stru_517260)) 0x517260);
-ButtonOrder(&stru_5172F0)[5] = * ((decltype(&stru_5172F0)) 0x5172f0);
-ButtonOrder(&stru_517358)[6] = * ((decltype(&stru_517358)) 0x517358);
-ButtonOrder(&stru_5173D0)[6] = * ((decltype(&stru_5173D0)) 0x5173d0);
-ButtonOrder(&stru_517448)[2] = * ((decltype(&stru_517448)) 0x517448);
-ButtonOrder(&stru_517470)[4] = * ((decltype(&stru_517470)) 0x517470);
-ButtonOrder(&stru_5174C0)[8] = * ((decltype(&stru_5174C0)) 0x5174c0);
-ButtonOrder(&stru_517560)[4] = * ((decltype(&stru_517560)) 0x517560);
-ButtonOrder(&stru_5175B0)[7] = * ((decltype(&stru_5175B0)) 0x5175b0);
+ButtonOrder(&button_set_high_templar)[8] = * ((decltype(&button_set_high_templar)) 0x516e78);
+ButtonOrder(&button_set_dark_templar)[7] = * ((decltype(&button_set_dark_templar)) 0x516f18);
+ButtonOrder(&button_set_carrier)[7] = * ((decltype(&button_set_carrier)) 0x516fa8);
+ButtonOrder(&button_set_reaver)[7] = * ((decltype(&button_set_reaver)) 0x517038);
+ButtonOrder(&button_set_arbiter)[7] = * ((decltype(&button_set_arbiter)) 0x5170c8);
+ButtonOrder(&button_set_tassadar)[7] = * ((decltype(&button_set_tassadar)) 0x517158);
+ButtonOrder(&button_set_corsair)[6] = * ((decltype(&button_set_corsair)) 0x5171e8);
+ButtonOrder(&button_set_dark_archon)[7] = * ((decltype(&button_set_dark_archon)) 0x517260);
+ButtonOrder(&button_set_robotics_facility)[5] = * ((decltype(&button_set_robotics_facility)) 0x5172f0);
+ButtonOrder(&button_set_gateway)[6] = * ((decltype(&button_set_gateway)) 0x517358);
+ButtonOrder(&button_set_stargate)[6] = * ((decltype(&button_set_stargate)) 0x5173d0);
+ButtonOrder(&button_set_citadel_of_adun)[2] = * ((decltype(&button_set_citadel_of_adun)) 0x517448);
+ButtonOrder(&button_set_cybernetics_core)[4] = * ((decltype(&button_set_cybernetics_core)) 0x517470);
+ButtonOrder(&button_set_templar_archives)[8] = * ((decltype(&button_set_templar_archives)) 0x5174c0);
+ButtonOrder(&button_set_forge)[4] = * ((decltype(&button_set_forge)) 0x517560);
+ButtonOrder(&button_set_fleet_beacon)[7] = * ((decltype(&button_set_fleet_beacon)) 0x5175b0);
 ButtonOrder(&button_set_arbiter_tribunal)[5] = * ((decltype(&button_set_arbiter_tribunal)) 0x517640);
 ButtonOrder(&button_set_robotics_support_bay)[4] = * ((decltype(&button_set_robotics_support_bay)) 0x5176a8);
 ButtonOrder(&button_set_shield_battery)[1] = * ((decltype(&button_set_shield_battery)) 0x5176f8);
 ButtonOrder(&button_set_observatory)[3] = * ((decltype(&button_set_observatory)) 0x51770c);
-ButtonOrder(&button_set_wraith)[7] = * ((decltype(&button_set_wraith)) 0x517748);
+ButtonOrder(&button_set_wraiths_maybe)[7] = * ((decltype(&button_set_wraiths_maybe)) 0x517748);
 ButtonOrder(&button_set_terran_infantry)[6] = * ((decltype(&button_set_terran_infantry)) 0x5177d8);
 ButtonOrder(&button_set_medic)[7] = * ((decltype(&button_set_medic)) 0x517850);
 ButtonOrder(&button_set_scv)[9] = * ((decltype(&button_set_scv)) 0x5178e0);
@@ -33155,12 +33252,12 @@ ButtonOrder(&button_set_basic_terran_buildings)[9] = * ((decltype(&button_set_ba
 ButtonOrder(&button_set_advanced_terran_buildings)[5] = * ((decltype(&button_set_advanced_terran_buildings)) 0x517a50);
 ButtonOrder(&button_set_ghost)[9] = * ((decltype(&button_set_ghost)) 0x517ab8);
 ButtonOrder(&button_set_ghost_hero)[8] = * ((decltype(&button_set_ghost_hero)) 0x517b70);
-ButtonOrder(&stru_517C10)[6] = * ((decltype(&stru_517C10)) 0x517c10);
+ButtonOrder(&button_set_vulture)[6] = * ((decltype(&button_set_vulture)) 0x517c10);
 ButtonOrder(&button_set_siege_tank)[7] = * ((decltype(&button_set_siege_tank)) 0x517c88);
-ButtonOrder(&stru_517D18)[7] = * ((decltype(&stru_517D18)) 0x517d18);
+ButtonOrder(&button_set_wraith)[7] = * ((decltype(&button_set_wraith)) 0x517d18);
 ButtonOrder(&button_set_science_vessel)[8] = * ((decltype(&button_set_science_vessel)) 0x517da8);
 ButtonOrder(&button_set_battlecruiser)[6] = * ((decltype(&button_set_battlecruiser)) 0x517e48);
-ButtonOrder(&stru_517EC0)[6] = * ((decltype(&stru_517EC0)) 0x517ec0);
+ButtonOrder(&button_set_vaynor_vulture)[6] = * ((decltype(&button_set_vaynor_vulture)) 0x517ec0);
 ButtonOrder(&button_set_command_center)[10] = * ((decltype(&button_set_command_center)) 0x517f38);
 ButtonOrder(&button_set_comsat)[1] = * ((decltype(&button_set_comsat)) 0x518000);
 ButtonOrder(&button_set_nuclear_silo)[2] = * ((decltype(&button_set_nuclear_silo)) 0x518014);
@@ -33177,7 +33274,7 @@ ButtonOrder(&button_set_armory)[5] = * ((decltype(&button_set_armory)) 0x5185d8)
 ButtonOrder(&button_set_academy)[7] = * ((decltype(&button_set_academy)) 0x518640);
 ButtonOrder(&button_set_machine_shop)[6] = * ((decltype(&button_set_machine_shop)) 0x5186d0);
 ButtonOrder(&button_set_infested_command_center)[7] = * ((decltype(&button_set_infested_command_center)) 0x518748);
-ButtonOrder(&stru_5187D4)[1] = * ((decltype(&stru_5187D4)) 0x5187d4);
+ButtonOrder(&button_set_flag_beacon)[1] = * ((decltype(&button_set_flag_beacon)) 0x5187d4);
 ButtonSet(&button_sets)[250] = * ((decltype(&button_sets)) 0x5187e8);
 UnitStat(&unit_stats)[228] = * ((decltype(&unit_stats)) 0x5193a0);
 BriefingAction(&briefing_actions)[10] = * ((decltype(&briefing_actions)) 0x519e50);
@@ -35395,7 +35492,7 @@ int& cached_game_screen_region_check_x = * ((decltype(&cached_game_screen_region
 int& cached_game_screen_region_check_y = * ((decltype(&cached_game_screen_region_check_y)) 0x6d6434);
 HIMC& dword_6D6438 = * ((decltype(&dword_6D6438)) 0x6d6438);
 int& dword_6D643C = * ((decltype(&dword_6D643C)) 0x6d643c);
-int& dword_6D683C = * ((decltype(&dword_6D683C)) 0x6d683c);
+int(&dword_6D683C)[256] = * ((decltype(&dword_6D683C)) 0x6d683c);
 size_t& amount = * ((decltype(&amount)) 0x6d6c3c);
 int& dword_6D6C40 = * ((decltype(&dword_6D6C40)) 0x6d6c40);
 CHAR(&byte_6D7448)[260] = * ((decltype(&byte_6D7448)) 0x6d7448);
