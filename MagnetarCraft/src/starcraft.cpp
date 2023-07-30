@@ -15921,14 +15921,10 @@ void gluHist_Activate_(dialog* dlg)
 	{
 		dialog * v1 = getControlFromIndex_(dlg, 6);
 
-		if (v1 && v1->fields.list.bStrs)
+		if (v1 && v1->fields.list.bStrs && v1->fields.list.bCurrStr != 0xFF)
 		{
-			if (v1->fields.list.bCurrStr != 0xFF)
-			{
-				dword_6D5A48_ex = v1->fields.list.pdwData[v1->fields.list.bCurrStr];
-			}
+			dword_6D5A48_ex = v1->fields.list.pdwData[v1->fields.list.bCurrStr];
 		}
-
 	}
 }
 
