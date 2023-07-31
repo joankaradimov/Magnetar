@@ -944,7 +944,7 @@ signed UMAnotherPath(CUnit *unit, points p);
 extern CUnit ** (*sub_42FE90)();
 extern int (*sub_42FEC0)();
 extern void (__cdecl*resetUnitBoundsLists_GetMaxUnitTypeSize)();
-CUnit ** getAllUnitsInBounds(__int16 *a1);
+CUnit ** getAllUnitsInBounds(rect *a1);
 CUnit ** getUnitsAtPoint(__int16 a1, int a2);
 extern s32 * (__thiscall*UnitRelManyFinderUMScoutPath)(CUnit *this_, __int16 a2, __int16 a3);
 s32 * unkUnitRelManyFinderEx(__int16 a1, int a2, int a3);

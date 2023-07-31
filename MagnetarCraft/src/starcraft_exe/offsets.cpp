@@ -5258,7 +5258,7 @@ signed UMAnotherPath(CUnit *unit, points p) {
 DECL_FUNC(CUnit ** (*sub_42FE90)(), sub_42FE90, 0x42fe90);
 DECL_FUNC(int (*sub_42FEC0)(), sub_42FEC0, 0x42fec0);
 DECL_FUNC(void (__cdecl*resetUnitBoundsLists_GetMaxUnitTypeSize)(), resetUnitBoundsLists_GetMaxUnitTypeSize, 0x42fee0);
-CUnit ** getAllUnitsInBounds(__int16 *a1) {
+CUnit ** getAllUnitsInBounds(rect *a1) {
     int address = 0x42ff80;
     CUnit ** result_;
     __asm {

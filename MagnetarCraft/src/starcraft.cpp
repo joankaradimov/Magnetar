@@ -1223,6 +1223,133 @@ void getSelectedUnitsInBox_(Box16* box)
 
 FAIL_STUB_PATCH(getSelectedUnitsInBox);
 
+void getSelectedUnitsAtPoint_(int y, int x)
+{
+	int v2 = (unsigned __int8)is_keycode_used[VK_CONTROL];
+	int v25 = (unsigned __int8)is_keycode_used[VK_SHIFT];
+	CUnit* UnitAtPoint = FindUnitAtPoint(x, y);
+	CUnit* v4 = UnitAtPoint;
+	CUnit* a1a = UnitAtPoint;
+	if (UnitAtPoint)
+	{
+		BOOL v5 = (UnitAtPoint->sprite->flags & 8) && dword_66FF58;
+		int v6 = v5 | v2;
+		CUnit* unitsToSelect[12];
+		memset(unitsToSelect, 0, sizeof(unitsToSelect));
+		if (v6 || v25 && PlayerSelection[0])
+		{
+			if (v25)
+			{
+				if (v6)
+				{
+					rect v26;
+					v26.left = MoveToX;
+					v26.right = MoveToX + GAME_AREA_WIDTH;
+					v26.top = MoveToY;
+					v26.bottom = MoveToY + GAME_AREA_HEIGHT;
+
+					CUnit* a2a[12];
+					memcpy(a2a, PlayerSelection, sizeof(a2a));
+
+					CUnit** AllUnitsInBounds = getAllUnitsInBounds(&v26);
+					int v11 = SortAllUnits(AllUnitsInBounds, unitsToSelect, v4);
+					int v12 = tempUnitsListArraysCountsListLastIndex[tempUnitsListArraysCountsListLastIndex[0]--];
+					tempUnitsListCurrentArrayCount = v12;
+					if (v11)
+					{
+						int v13 = sub_46F290(a2a, unitsToSelect, v11, v4);
+						UI_doSelectUnits_IfAltNotHeld(a2a, v13, 1, 1);
+					}
+				}
+				else
+				{
+					CUnit** v14 = PlayerSelection;
+					int i;
+					for (i = 0; i < 12; unitsToSelect[i++] = *v14++)
+					{
+						if (!*v14)
+						{
+							break;
+						}
+					}
+					if (v4->sprite->flags & 8)
+					{
+						int v18 = i - 1;
+						u8 selection_index = v4->sprite->selectionIndex;
+						memcpy(&unitsToSelect[selection_index], &unitsToSelect[selection_index + 1], 4 * (v18 - selection_index));
+						unitsToSelect[v18] = 0;
+						if (v18 != 1 || !is_keycode_used[18] || !selectSingleUnitFromID(CUnitToUnitID(unitsToSelect[0])))
+						{
+							CreateNewUnitSelectionsFromList(unitsToSelect, v18);
+							selectUnits(v18, unitsToSelect);
+							ctrl_under_mouse = 0;
+							ctrl_under_mouse_val = 0;
+							byte_59723C = 1;
+							CanUpdateCurrentButtonSet = 1;
+							CanUpdateSelectedUnitPortrait = 1;
+							CanUpdateStatDataDialog = 1;
+						}
+					}
+					else if (i < 12)
+					{
+						CUnit* v17 = unitsToSelect[0];
+						if (unit_IsStandardAndMovable(unitsToSelect[0]))
+						{
+							if (unitIsOwnerByCurrentPlayer(v17) && unit_IsStandardAndMovable(v4) && unitIsOwnerByCurrentPlayer(v4))
+							{
+								unitsToSelect[i] = v4;
+								UI_doSelectUnits_IfAltNotHeld(unitsToSelect, i + 1, 1, 1);
+							}
+						}
+					}
+				}
+			}
+			else if (v6)
+			{
+				rect v27;
+				v27.left = MoveToX;
+				v27.right = MoveToX + GAME_AREA_WIDTH;
+				v27.top = MoveToY;
+				v27.bottom = MoveToY + GAME_AREA_HEIGHT;
+
+				CUnit** v20 = getAllUnitsInBounds(&v27);
+				int v21 = SortAllUnits(v20, unitsToSelect, v4);
+				tempUnitsListCurrentArrayCount = tempUnitsListArraysCountsList[--tempUnitsListArraysCountsListLastIndex[0]];
+				if (v21)
+				{
+					UI_doSelectUnits_IfAltNotHeld(unitsToSelect, v21, 1, 1);
+					if (v21 == 1 && a1a->playerID == g_ActiveNationID && Unit_IsFactoryBuilding(a1a))
+					{
+						sub_468670_(a1a);
+					}
+				}
+			}
+		}
+		else
+		{
+			if (!is_keycode_used[VK_MENU] || !selectSingleUnitFromID(CUnitToUnitID(v4)))
+			{
+				CreateNewUnitSelectionsFromList(&a1a, 1);
+				selectBuildingSFX(compareUnitRank(a1a, 0) ? a1a : nullptr);
+				selectUnits(1, &a1a);
+				v4 = a1a;
+				byte_59723C = 1;
+				CanUpdateCurrentButtonSet = 1;
+				CanUpdateSelectedUnitPortrait = 1;
+				CanUpdateStatDataDialog = 1;
+				ctrl_under_mouse = 0;
+				ctrl_under_mouse_val = 0;
+			}
+			if (v4->playerID == g_ActiveNationID && Unit_IsFactoryBuilding(v4))
+			{
+				sub_468670(v4);
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(getSelectedUnitsAtPoint);
+
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
 	input_dragSelect_MouseMove(a1);
@@ -1247,7 +1374,7 @@ void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 		}
 		else
 		{
-			getSelectedUnitsAtPoint((__int16)stru_66FF50.top, (__int16)stru_66FF50.left);
+			getSelectedUnitsAtPoint_((__int16)stru_66FF50.top, (__int16)stru_66FF50.left);
 		}
 	}
 }
