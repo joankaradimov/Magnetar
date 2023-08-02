@@ -4123,7 +4123,7 @@ signed sub_422A90(struct_a1_1 *a1, Position *a2) {
 }
 DECL_FUNC(int (__stdcall*sub_422C90)(__int16 *a1), sub_422C90, 0x422c90);
 DECL_FUNC(signed (__stdcall*sub_422FA0)(struct_a1_1 *a1, int a2), sub_422FA0, 0x422fa0);
-DECL_FUNC(int (*nullsub_10)(), nullsub_10, 0x423180);
+DECL_FUNC(void (__fastcall*BTNSACT_None)(int action_variable, bool is_shift_used), BTNSACT_None, 0x423180);
 signed getLarvaeUnitsFromList(CUnit *a1, CUnit **a2) {
     int address = 0x423190;
     signed result_;
@@ -4136,25 +4136,25 @@ signed getLarvaeUnitsFromList(CUnit *a1, CUnit **a2) {
     }
     return result_;
 }
-DECL_FUNC(void (*CMDACT_CancelNuke)(), CMDACT_CancelNuke, 0x4231d0);
-DECL_FUNC(void (*CMDACT_MergeDarkArchon)(), CMDACT_MergeDarkArchon, 0x4231f0);
-DECL_FUNC(void (*CMDACT_MergeArchon)(), CMDACT_MergeArchon, 0x423210);
-DECL_FUNC(void (*CMDACT_Lift)(), CMDACT_Lift, 0x423230);
+DECL_FUNC(void (__fastcall*CMDACT_CancelNuke)(int action_variable, bool is_shift_used), CMDACT_CancelNuke, 0x4231d0);
+DECL_FUNC(void (__fastcall*CMDACT_MergeDarkArchon)(int action_variable, bool is_shift_used), CMDACT_MergeDarkArchon, 0x4231f0);
+DECL_FUNC(void (__fastcall*CMDACT_MergeArchon)(int action_variable, bool is_shift_used), CMDACT_MergeArchon, 0x423210);
+DECL_FUNC(void (__fastcall*CMDACT_Lift)(int action_variable, bool is_shift_used), CMDACT_Lift, 0x423230);
 DECL_FUNC(void (__fastcall*CMDACT_Decloak)(int action_variable, bool is_shift_used), CMDACT_Decloak, 0x423270);
 DECL_FUNC(void (__fastcall*CMDACT_Unburrow)(int action_variable, bool is_shift_used), CMDACT_Unburrow, 0x423290);
 DECL_FUNC(void (__fastcall*CMDACT_Burrow)(int action_variable, bool is_shift_used), CMDACT_Burrow, 0x4232b0);
-DECL_FUNC(void (*CMDACT_CancelAddon)(), CMDACT_CancelAddon, 0x4232d0);
-DECL_FUNC(void (*CMDACT_CancelUpgrade)(), CMDACT_CancelUpgrade, 0x4232f0);
+DECL_FUNC(void (__fastcall*CMDACT_CancelAddon)(int action_variable, bool is_shift_used), CMDACT_CancelAddon, 0x4232d0);
+DECL_FUNC(void (__fastcall*CMDACT_CancelUpgrade)(int action_variable, bool is_shift_used), CMDACT_CancelUpgrade, 0x4232f0);
 DECL_FUNC(void (__fastcall*CMDACT_Upgrade)(int action_variable, bool is_shift_used), CMDACT_Upgrade, 0x423310);
-DECL_FUNC(void (*CMDACT_CancelResearch)(), CMDACT_CancelResearch, 0x423330);
+DECL_FUNC(void (__fastcall*CMDACT_CancelResearch)(int action_variable, bool is_shift_used), CMDACT_CancelResearch, 0x423330);
 DECL_FUNC(void (__fastcall*CMDACT_Research)(int action_variable, bool is_shift_used), CMDACT_Research, 0x423350);
 DECL_FUNC(void (__fastcall*CMDACT_HoldPosition)(int action_variable, bool is_shift_used), CMDACT_HoldPosition, 0x423370);
-DECL_FUNC(void (*CMDACT_TrainFighter)(), CMDACT_TrainFighter, 0x423390);
-DECL_FUNC(void (*CMDACT_ReaverStop)(), CMDACT_ReaverStop, 0x4233b0);
-DECL_FUNC(void (*CMDACT_CarrierStop)(), CMDACT_CarrierStop, 0x4233d0);
+DECL_FUNC(void (__fastcall*CMDACT_TrainFighter)(int action_variable, bool is_shift_used), CMDACT_TrainFighter, 0x423390);
+DECL_FUNC(void (__fastcall*CMDACT_ReaverStop)(int action_variable, bool is_shift_used), CMDACT_ReaverStop, 0x4233b0);
+DECL_FUNC(void (__fastcall*CMDACT_CarrierStop)(int action_variable, bool is_shift_used), CMDACT_CarrierStop, 0x4233d0);
 DECL_FUNC(void (__fastcall*CMDACT_Stop)(int action_variable, bool is_shift_used), CMDACT_Stop, 0x4233f0);
-DECL_FUNC(void (*CMDACT_CancelUnitMorph)(), CMDACT_CancelUnitMorph, 0x423410);
-DECL_FUNC(void (*CMDACT_CancelConstruction)(), CMDACT_CancelConstruction, 0x423430);
+DECL_FUNC(void (__fastcall*CMDACT_CancelUnitMorph)(int action_variable, bool is_shift_used), CMDACT_CancelUnitMorph, 0x423410);
+DECL_FUNC(void (__fastcall*CMDACT_CancelConstruction)(int action_variable, bool is_shift_used), CMDACT_CancelConstruction, 0x423430);
 DECL_FUNC(void (__fastcall*CMDACT_Siege)(int action_variable, bool is_shift_used), CMDACT_Siege, 0x423450);
 DECL_FUNC(void (__fastcall*CMDACT_Unsiege)(int action_variable, bool is_shift_used), CMDACT_Unsiege, 0x423470);
 DECL_FUNC(void (__fastcall*CMDACT_CancelTrain)(int action_variable, bool is_shift_used), CMDACT_CancelTrain, 0x423490);
@@ -4176,31 +4176,31 @@ DECL_FUNC(void (__fastcall*CMDACT_Cloak)(int action_variable, bool is_shift_used
 DECL_FUNC(void (__fastcall*CMDACT_ReturnCargo)(int action_variable, bool is_shift_used), CMDACT_ReturnCargo, 0x423760);
 DECL_FUNC(void (__fastcall*CMDACT_Morph)(int action_variable, bool is_shift_used), CMDACT_Morph, 0x423790);
 DECL_FUNC(void (__fastcall*CMDACT_BuildingMorph)(int action_variable, bool is_shift_used), CMDACT_BuildingMorph, 0x423860);
-DECL_FUNC(int (*BTNSACT_SelectLarva)(), BTNSACT_SelectLarva, 0x423930);
-DECL_FUNC(void (__thiscall*BTNSACT_Heal)(StatusFlags this_), BTNSACT_Heal, 0x4239e0);
-DECL_FUNC(void (__thiscall*BTNSACT_UseNuke)(StatusFlags this_), BTNSACT_UseNuke, 0x423a40);
-DECL_FUNC(void (__thiscall*BTNSACT_RechargeShields)(StatusFlags this_), BTNSACT_RechargeShields, 0x423aa0);
+DECL_FUNC(void (__fastcall*BTNSACT_SelectLarva)(int action_variable, bool is_shift_used), BTNSACT_SelectLarva, 0x423930);
+DECL_FUNC(void (__fastcall*BTNSACT_Heal)(int action_variable, bool is_shift_used), BTNSACT_Heal, 0x4239e0);
+DECL_FUNC(void (__fastcall*BTNSACT_UseNuke)(int action_variable, bool is_shift_used), BTNSACT_UseNuke, 0x423a40);
+DECL_FUNC(void (__fastcall*BTNSACT_RechargeShields)(int action_variable, bool is_shift_used), BTNSACT_RechargeShields, 0x423aa0);
 DECL_FUNC(void (__fastcall*CMDACT_UnloadAll)(int action_variable, bool is_shift_used), CMDACT_UnloadAll, 0x423b00);
-DECL_FUNC(void (*BTNSACT_LoadUnit)(), BTNSACT_LoadUnit, 0x423b40);
-DECL_FUNC(void (__thiscall*BTNSACT_Harvest)(StatusFlags this_), BTNSACT_Harvest, 0x423b70);
-DECL_FUNC(void (__thiscall*BTNSACT_Repair)(StatusFlags this_), BTNSACT_Repair, 0x423bd0);
-DECL_FUNC(char (__fastcall*BTNSACT_BuildingLand)(UnitType a1), BTNSACT_BuildingLand, 0x423c30);
-DECL_FUNC(char (__fastcall*BTNSACT_PlaceNydusExit)(UnitType a1), BTNSACT_PlaceNydusExit, 0x423c40);
-DECL_FUNC(void (__fastcall*BTNSACT_ZergBuild)(UnitType a1), BTNSACT_ZergBuild, 0x423c50);
-DECL_FUNC(void (__fastcall*BTNSACT_PlaceAddon)(int a1), BTNSACT_PlaceAddon, 0x423d10);
-DECL_FUNC(void (__fastcall*BTNSACT_BuildProtoss)(UnitType a1), BTNSACT_BuildProtoss, 0x423dd0);
-DECL_FUNC(char (*BTNSACT_PlaceCOP)(), BTNSACT_PlaceCOP, 0x423e90);
-DECL_FUNC(void (__fastcall*BTNSACT_BuildTerran)(int a1), BTNSACT_BuildTerran, 0x423eb0);
-DECL_FUNC(void (__fastcall*BTNSACT_UseTech)(unsigned __int16 a1), BTNSACT_UseTech, 0x423f70);
+DECL_FUNC(void (__fastcall*BTNSACT_LoadUnit)(int action_variable, bool is_shift_used), BTNSACT_LoadUnit, 0x423b40);
+DECL_FUNC(void (__fastcall*BTNSACT_Harvest)(int action_variable, bool is_shift_used), BTNSACT_Harvest, 0x423b70);
+DECL_FUNC(void (__fastcall*BTNSACT_Repair)(int action_variable, bool is_shift_used), BTNSACT_Repair, 0x423bd0);
+DECL_FUNC(void (__fastcall*BTNSACT_BuildingLand)(int action_variable, bool is_shift_used), BTNSACT_BuildingLand, 0x423c30);
+DECL_FUNC(void (__fastcall*BTNSACT_PlaceNydusExit)(int action_variable, bool is_shift_used), BTNSACT_PlaceNydusExit, 0x423c40);
+DECL_FUNC(void (__fastcall*BTNSACT_ZergBuild)(int action_variable, bool is_shift_used), BTNSACT_ZergBuild, 0x423c50);
+DECL_FUNC(void (__fastcall*BTNSACT_PlaceAddon)(int action_variable, bool is_shift_used), BTNSACT_PlaceAddon, 0x423d10);
+DECL_FUNC(void (__fastcall*BTNSACT_BuildProtoss)(int action_variable, bool is_shift_used), BTNSACT_BuildProtoss, 0x423dd0);
+DECL_FUNC(void (__fastcall*BTNSACT_PlaceCOP)(int action_variable, bool is_shift_used), BTNSACT_PlaceCOP, 0x423e90);
+DECL_FUNC(void (__fastcall*BTNSACT_BuildTerran)(int action_variable, bool is_shift_used), BTNSACT_BuildTerran, 0x423eb0);
+DECL_FUNC(void (__fastcall*BTNSACT_UseTech)(int action_variable, bool is_shift_used), BTNSACT_UseTech, 0x423f70);
 DECL_FUNC(void (__fastcall*BTNSACT_Patrol)(int a1, bool a2), BTNSACT_Patrol, 0x424140);
-DECL_FUNC(void (__thiscall*BTNSACT_ReaverAttack)(StatusFlags this_), BTNSACT_ReaverAttack, 0x4241a0);
-DECL_FUNC(void (__thiscall*BTNSACT_CarrierAttack)(StatusFlags this_), BTNSACT_CarrierAttack, 0x424200);
-DECL_FUNC(void (__thiscall*BTNSACT_CarrierMove)(StatusFlags this_), BTNSACT_CarrierMove, 0x424260);
-DECL_FUNC(void (__thiscall*BTNSACT_TowerAttack)(StatusFlags this_), BTNSACT_TowerAttack, 0x4242c0);
-DECL_FUNC(void (__thiscall*BTNSACT_AttackUnit)(StatusFlags this_), BTNSACT_AttackUnit, 0x424320);
+DECL_FUNC(void (__fastcall*BTNSACT_ReaverAttack)(int action_variable, bool is_shift_used), BTNSACT_ReaverAttack, 0x4241a0);
+DECL_FUNC(void (__fastcall*BTNSACT_CarrierAttack)(int action_variable, bool is_shift_used), BTNSACT_CarrierAttack, 0x424200);
+DECL_FUNC(void (__fastcall*BTNSACT_CarrierMove)(int action_variable, bool is_shift_used), BTNSACT_CarrierMove, 0x424260);
+DECL_FUNC(void (__fastcall*BTNSACT_TowerAttack)(int action_variable, bool is_shift_used), BTNSACT_TowerAttack, 0x4242c0);
+DECL_FUNC(void (__fastcall*BTNSACT_AttackUnit)(int action_variable, bool is_shift_used), BTNSACT_AttackUnit, 0x424320);
 DECL_FUNC(void (__fastcall*BTNSACT_AttackMove)(int a1, bool a2), BTNSACT_AttackMove, 0x424380);
 DECL_FUNC(void (__fastcall*BTNSACT_Move)(int a1, bool a2), BTNSACT_Move, 0x424440);
-DECL_FUNC(void (__thiscall*BTNSACT_RallyPoint)(StatusFlags this_), BTNSACT_RallyPoint, 0x4244a0);
+DECL_FUNC(void (__fastcall*BTNSACT_RallyPoint)(int action_variable, bool is_shift_used), BTNSACT_RallyPoint, 0x4244a0);
 DECL_FUNC(bool (__cdecl*UnitStatCond_Never)(), UnitStatCond_Never, 0x424500);
 DECL_FUNC(CUnit * (*sub_424510)(), sub_424510, 0x424510);
 DECL_FUNC(bool (__cdecl*UnitStatCond_Powerup)(), UnitStatCond_Powerup, 0x424520);
@@ -4438,7 +4438,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_LurkerStop)(u16 variable, int player_
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_Movement)(u16 variable, int player_id, CUnit *unit), BTNSCOND_Movement, 0x4283c0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLifted)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLifted, 0x4283f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLiftedCanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLiftedCanMove, 0x428420);
-DECL_FUNC(int (__stdcall*BTNSCOND_CanRechargeShields)(int a1), BTNSCOND_CanRechargeShields, 0x428440);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanRechargeShields)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanRechargeShields, 0x428440);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasCargo, 0x428480);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_NoCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_NoCargo, 0x4284b0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsConstructing)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsConstructing, 0x4284e0);
@@ -4451,7 +4451,7 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanAttack)(u16 variable, int playe
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanStop)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanStop, 0x428640);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_SCVCanMove)(u16 variable, int player_id, CUnit *unit), BTNSCOND_SCVCanMove, 0x428670);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasScarabs)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasScarabs, 0x4286a0);
-DECL_FUNC(signed (__stdcall*BTNSCOND_HasInterceptors)(int a1), BTNSCOND_HasInterceptors, 0x4286e0);
+DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HasInterceptors)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HasInterceptors, 0x4286e0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergHasCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergHasCargo, 0x428730);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_ZergNoCargo)(u16 variable, int player_id, CUnit *unit), BTNSCOND_ZergNoCargo, 0x428780);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_IsLanded)(u16 variable, int player_id, CUnit *unit), BTNSCOND_IsLanded, 0x4287d0);
@@ -4497,8 +4497,8 @@ DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMergeArchonTwoSelected)(u16 variab
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMergeArchonOneSelected)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMergeArchonOneSelected, 0x4296f0);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_CanMorphLurker)(u16 variable, int player_id, CUnit *unit), BTNSCOND_CanMorphLurker, 0x429720);
 DECL_FUNC(ButtonState (__fastcall*BTNSCOND_HatcheryLairHiveRally)(u16 variable, int player_id, CUnit *unit), BTNSCOND_HatcheryLairHiveRally, 0x429740);
-DECL_FUNC(void (*BTNSACT_TargetOrderCancel)(), BTNSACT_TargetOrderCancel, 0x429770);
-DECL_FUNC(void (*BTNSACT_CancelPlacement)(), BTNSACT_CancelPlacement, 0x429780);
+DECL_FUNC(void (__fastcall*BTNSACT_TargetOrderCancel)(int action_variable, bool is_shift_used), BTNSACT_TargetOrderCancel, 0x429770);
+DECL_FUNC(void (__fastcall*BTNSACT_CancelPlacement)(int action_variable, bool is_shift_used), BTNSACT_CancelPlacement, 0x429780);
 DECL_FUNC(int (*nullsub_11)(), nullsub_11, 0x4297a0);
 DECL_FUNC(int (__stdcall*sub_4297B0)(int a1), sub_4297B0, 0x4297b0);
 DECL_FUNC(_DWORD (__stdcall*findContourInWork_3)(_DWORD a1, _DWORD a2, _DWORD a3), findContourInWork_3, 0x429800);
@@ -10545,7 +10545,7 @@ void statbtn_BIN_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*BTNSACT_ChangeButtons)(__int16 a1), BTNSACT_ChangeButtons, 0x459af0);
+DECL_FUNC(void (__fastcall*BTNSACT_ChangeButtons)(int action_variable, bool is_shift_used), BTNSACT_ChangeButtons, 0x459af0);
 DECL_FUNC(int (__fastcall*statbtn_DLG_Interact)(dialog *dlg, dlgEvent *evt), statbtn_DLG_Interact, 0x459b00);
 DECL_FUNC(void (*load_statbtn_BIN)(), load_statbtn_BIN, 0x459b90);
 void sub_459D90(DownloadListMaybe *result, int a2, int a3) {
@@ -28073,7 +28073,7 @@ int sub_4DF1E0(const char *a1) {
 }
 DECL_FUNC(int (*DeleteFileIfExists)(), DeleteFileIfExists, 0x4df220);
 DECL_FUNC(void (__fastcall*CMDACT_IncreaseReplaySpeed)(int a1, bool a2), CMDACT_IncreaseReplaySpeed, 0x4df260);
-DECL_FUNC(void (*CMDACT_SetReplaySpeed)(), CMDACT_SetReplaySpeed, 0x4df2c0);
+DECL_FUNC(void (__fastcall*CMDACT_SetReplaySpeed)(int action_variable, bool is_shift_used), CMDACT_SetReplaySpeed, 0x4df2c0);
 DECL_FUNC(void (__fastcall*CMDACT_DecreaseReplaySpeed)(int a1, bool a2), CMDACT_DecreaseReplaySpeed, 0x4df300);
 DECL_FUNC(signed (*replay_leaderboard_Hide)(), replay_leaderboard_Hide, 0x4df360);
 DECL_FUNC(signed (__thiscall*replay_leaderboard_Show)(void *this_), replay_leaderboard_Show, 0x4df3b0);
