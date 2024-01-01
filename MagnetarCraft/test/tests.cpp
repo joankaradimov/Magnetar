@@ -123,7 +123,7 @@ TEST_P(ReplayTest, Replays) {
 }
 
 std::vector<std::filesystem::path> ReadTestCasesFromDisk() {
-	std::string path = "D:\\dev\\work\\MagnetarCraft\\MagnetarCraft\\test\\fixtures";
+	std::string path = "..\\..\\..\\..\\MagnetarCraft\\test\\fixtures";
 	std::vector<std::filesystem::path> result;
 
 	for (const auto& entry : std::filesystem::directory_iterator(path))
