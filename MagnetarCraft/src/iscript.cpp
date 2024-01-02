@@ -195,6 +195,20 @@ void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
 
 FAIL_STUB_PATCH(ISCRIPT_UseWeapon);
 
+void turn_unit_left_(CUnit* unit, char a2)
+{
+    turnUnit(unit, unit->currentDirection1 - 8 * a2);
+}
+
+FAIL_STUB_PATCH(turn_unit_left);
+
+void turn_unit_right_(CUnit* unit, char a2)
+{
+    turnUnit(unit, unit->currentDirection1 + 8 * a2);
+}
+
+FAIL_STUB_PATCH(turn_unit_right);
+
 void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 {
     unit->statusFlags &= ~StatusFlags::NoBrkCodeStart;
@@ -611,7 +625,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
             {
                 break;
             }
-            turn_unit_left(iscript_unit, arg);
+            turn_unit_left_(iscript_unit, arg);
             break;
         }
         case opc_turncwise:
@@ -621,7 +635,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
             {
                 break;
             }
-            turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
+            turn_unit_right_(iscript_unit, arg);
             break;
         }
         case opc_turn1cwise:
@@ -631,7 +645,7 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
             }
             if (iscript_unit->orderTarget.pUnit == nullptr)
             {
-                turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8);
+                turn_unit_right_(iscript_unit, 1);
             }
             break;
         case opc_turnrand:
@@ -643,11 +657,11 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
             }
             if ((RandomizeShort(6) & 3) == 1)
             {
-                turn_unit_left(iscript_unit, arg);
+                turn_unit_left_(iscript_unit, arg);
             }
             else
             {
-                turnUnit(iscript_unit, iscript_unit->currentDirection1 + 8 * arg);
+                turn_unit_right_(iscript_unit, arg);
             }
             break;
         }
