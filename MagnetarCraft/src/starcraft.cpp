@@ -680,7 +680,7 @@ void sub_42D8C0_(CUnit* unit)
 			{
 				int distance_moved = 0;
 				iscript_unit = unit;
-				BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &distance_moved);
+				BWFXN_PlayIscript_noop(unit->sprite->pImagePrimary, &program_state, &distance_moved);
 				iscript_unit = v1;
 				int v5 = 0;
 				if (unit->status.stimTimer)
@@ -740,7 +740,7 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 			if (image->iscript_program.anim != Anims::AE_Death)
 			{
 				init_iscript_program_state(&image->iscript_program, Anims::AE_Death);
-				BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+				BWFXN_PlayIscript_(image, &image->iscript_program);
 			}
 			iscript_flingy->orderSignal |= 1u;
 		}
@@ -860,13 +860,13 @@ void PlayWarpInOverlay_(CImage* image)
 {
 	isValidScript_(image, 193);
 	init_iscript_program_state(&image->iscript_program, Anims::AE_Init);
-	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+	BWFXN_PlayIscript_(image, &image->iscript_program);
 	isValidScript_(image, Images_IscriptEntry[image->imageID]);
 	image->paletteType = 12;
 	image->updateFunction = update_functions[12].update_function;
 	image->renderFunction = (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? render_functions[12].RenderFunction2 : render_functions[12].RenderFunction1;
 	image->flags |= ImageFlags::IF_REDRAW;
-	BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+	BWFXN_PlayIscript_(image, &image->iscript_program);
 }
 
 FAIL_STUB_PATCH(PlayWarpInOverlay);
@@ -883,7 +883,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 				if (image->flags & 0x10)
 				{
 					init_iscript_program_state(&image->iscript_program, Anims::AE_SpecialState1);
-					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+					BWFXN_PlayIscript_(image, &image->iscript_program);
 				}
 			}
 			PlaySound(SFX_Protoss_SHUTTLE_pshBld03, unit, 1, 0);
@@ -909,7 +909,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 				if (image->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS)
 				{
 					init_iscript_program_state(&image->iscript_program, Anims::AE_WarpIn);
-					BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+					BWFXN_PlayIscript_(image, &image->iscript_program);
 				}
 			}
 			unit->orderState = 3;
@@ -929,7 +929,7 @@ void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 					if (image->flags & 0x10)
 					{
 						init_iscript_program_state(&image->iscript_program, Anims::AE_Disable);
-						BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+						BWFXN_PlayIscript_(image, &image->iscript_program);
 					}
 				}
 			}
@@ -1065,7 +1065,7 @@ void GroundAttackInit_(__int16 x, __int16 y)
 		if ((i->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) != 0)
 		{
 			init_iscript_program_state(&i->iscript_program, Anims::AE_GndAttkInit);
-			BWFXN_PlayIscript_(i, &i->iscript_program, 0, 0);
+			BWFXN_PlayIscript_(i, &i->iscript_program);
 		}
 	}
 	wantThingyUpdate = 1;
@@ -9153,7 +9153,7 @@ int sub_42DB50_(CUnit* unit, Position* a4)
 			sub_42D600_(Anims::AE_Walking);
 			CUnit* v43 = iscript_unit;
 			iscript_unit = unit;
-			BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &a5);
+			BWFXN_PlayIscript_noop(unit->sprite->pImagePrimary, &program_state, &a5);
 			iscript_unit = v43;
 		}
 
@@ -9188,7 +9188,7 @@ int sub_42DB50_(CUnit* unit, Position* a4)
 			a5 = 0;
 			CUnit* v42 = iscript_unit;
 			iscript_unit = unit;
-			BWFXN_PlayIscript_(unit->sprite->pImagePrimary, &program_state, 1, &a5);
+			BWFXN_PlayIscript_noop(unit->sprite->pImagePrimary, &program_state, &a5);
 			iscript_unit = v42;
 		}
 	}
@@ -9554,7 +9554,7 @@ void spriteToIscriptLoop_(CSprite* sprite)
 		next_image = image->next;
 
 		image->updateFunction(image);
-		BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+		BWFXN_PlayIscript_(image, &image->iscript_program);
 		if (sprite->pImageHead == nullptr)
 		{
 			int v2 = (__int16)sprite->position.y / 32;

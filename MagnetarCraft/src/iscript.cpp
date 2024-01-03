@@ -230,7 +230,8 @@ void init_iscript_program_state(IScriptProgramState* program_state, Anims animat
     program_state->program_counter = sub_4D4D70_(program_state->iscript_header)->headers[animation];
 }
 
-void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int noop, _DWORD* distance_moved)
+template <int noop>
+void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWORD* distance_moved)
 {
     if (program_state->wait)
     {
@@ -1044,6 +1045,16 @@ void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state, int n
 
 FAIL_STUB_PATCH(BWFXN_PlayIscript);
 
+void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state)
+{
+    BWFXN_PlayIscript__<false>(image, program_state, nullptr);
+}
+
+void BWFXN_PlayIscript_noop(CImage* image, IScriptProgramState* program_state, _DWORD* distance_moved)
+{
+    BWFXN_PlayIscript__<true>(image, program_state, distance_moved);
+}
+
 void PlayIscriptAnim_(CImage* image, Anims new_animation)
 {
     Anims animation = new_animation;
@@ -1066,7 +1077,7 @@ void PlayIscriptAnim_(CImage* image, Anims new_animation)
             }
 
             init_iscript_program_state(&image->iscript_program, animation);
-            BWFXN_PlayIscript_(image, &image->iscript_program, 0, 0);
+            BWFXN_PlayIscript_(image, &image->iscript_program);
         }
     }
 }
