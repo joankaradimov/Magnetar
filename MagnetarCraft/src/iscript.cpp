@@ -1057,23 +1057,25 @@ void BWFXN_PlayIscript_noop(CImage* image, IScriptProgramState* program_state, _
 
 void PlayIscriptAnim_(CImage* image, Anims new_animation)
 {
-    Anims animation = new_animation;
-
     if ((new_animation != Anims::AE_Death || image->iscript_program.anim != Anims::AE_Death) && ((image->flags & ImageFlags::IF_HAS_ISCRIPT_ANIMATIONS) || new_animation == Anims::AE_Init || new_animation == Anims::AE_Death))
     {
-        Anims v3 = image->iscript_program.anim;
-        if (new_animation != v3 || new_animation != AE_Walking && new_animation != Anims::AE_IsWorking)
+        if (new_animation != image->iscript_program.anim || new_animation != AE_Walking && new_animation != Anims::AE_IsWorking)
         {
+            Anims animation = new_animation;
+
             if (new_animation == Anims::AE_GndAttkRpt)
             {
-                if (v3 != Anims::AE_GndAttkRpt && v3 != Anims::AE_GndAttkInit)
+                if (image->iscript_program.anim != Anims::AE_GndAttkRpt && image->iscript_program.anim != Anims::AE_GndAttkInit)
                 {
                     animation = Anims::AE_GndAttkInit;
                 }
             }
-            else if (new_animation == Anims::AE_AirAttkRpt && v3 != Anims::AE_AirAttkRpt && v3 != Anims::AE_AirAttkInit)
+            else if (new_animation == Anims::AE_AirAttkRpt)
             {
-                animation = Anims::AE_AirAttkInit;
+                if (image->iscript_program.anim != Anims::AE_AirAttkRpt && image->iscript_program.anim != Anims::AE_AirAttkInit)
+                {
+                    animation = Anims::AE_AirAttkInit;
+                }
             }
 
             init_iscript_program_state(&image->iscript_program, animation);
