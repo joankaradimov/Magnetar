@@ -734,16 +734,16 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
         {
             char arg = take_iscript_datum<char>(program_state);
             unsigned int v117 = arg << 8;
+            int unit_speed = GetModifiedUnitSpeed(v117, iscript_unit);
             if (distance_moved)
             {
-                *distance_moved = GetModifiedUnitSpeed(v117, iscript_unit);
+                *distance_moved = unit_speed;
             }
             if (noop)
             {
                 break;
             }
-            int v120 = GetModifiedUnitSpeed(v117, iscript_unit);
-            SetUnitMovementSpeed(iscript_unit, v120);
+            SetUnitMovementSpeed(iscript_unit, unit_speed);
             break;
         }
         case opc_gotorepeatattk:
