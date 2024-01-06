@@ -1,0 +1,67 @@
+General:
+- execute from iscript.txt
+- JIT compiler for iscript.bin
+- extend the iscript.bin limits
+- execute iscript.bin scripts in parallel
+- extend dat files
+- create a races.dat (or races.lua) file
+- port the optimizations and limit removal found in Neiv's Teippi: https://github.com/neivv/teippi
+
+Triggers:
+- ExecuteLua - enable it and create an API
+- Make maps with triggers viewable in replays (i.e. game pauses should be handled)
+
+Scenario loading:
+- read DAT fiels upon scenario loading (especially sprites.dat)
+- read DAT fiels from the scenario SCM/SCX
+- implement SC/BW beta scenario loading
+- implement 1.18 scenario loading
+- implement cooperative (multiplayer) custom campaigns
+- implement tournaments (like custom campaigns but with 1vs1 melee instead of UMS)
+
+Content:
+- bundle the 1.16.1 patch and use starcraft.exe from it
+- bundle the Shareware and use the precursor campaigns from there
+- Add maps (StarCraft/Brood War/StarCraft64)
+- take the extended sprites and SFX from Pr0nogo's SCBW Framework: http://www.staredit.net/topic/17547/
+- Expose a new expansion level that uses the expanded sprites 
+
+Tileset work:
+- lift tileset limitations (i.e. vx4ex)
+- 4th elevation level on maps
+- Add new tilesets
+
+Pathfinding:
+- reimplement pathing code and run 512x512 maps
+- water pathfinding and units
+- different map topologies
+- multiple map layers (with different tilesets)
+
+Music:
+- play flac/ogg/mp3
+- play MIDI
+- play MIDI via VST
+- expose a playlist queue in triggers via Lua
+
+Replays:
+- Fix replay issues - https://tl.net/forum/brood-war/86694-1161-repfix-pause-chat
+- fix buffer overflows in replays (https://liquipedia.net/starcraft/Replay_Fix_for_1.16.1)
+- implement seeking
+- save replays asynchronously during gameplay
+- save replay upon crash
+
+UI:
+- CTRL+SHIRT+CLICK - deselect all units of type
+- Split up the race icons on the score screeen into separate GRP files
+- Add a SMK animation for the Precursor campaign
+- Add the Retribution/Insurrection campaigns in the UI
+- implement a StarCraft64-style encyclopedia
+- implement a random map generation UI
+- implement a bounding.net UI
+- Reimplement a glue menu transitioning via a stack
+- DRY up the UI event handling (via some OOP patterns)
+- Reimplement all menu screens in Lua
+
+BWAPI:
+- Implement BWAPI for human players (including UI)
+- Implement BWAPI for computer players (including UI)
