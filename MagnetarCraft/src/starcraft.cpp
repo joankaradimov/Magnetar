@@ -10912,6 +10912,624 @@ void colorCycleInterval_()
 
 FAIL_STUB_PATCH(colorCycleInterval);
 
+
+
+ButtonOrder replay_paused_[] =
+{
+	{ 7, ICON_PLAY_REPLAY, BTNSCOND_ReplayPlayPause, CMDACT_SetReplaySpeed, 0, 0, 0x606, 0 },
+	{ 8, ICON_SLOW_DOWN_REPLAY, BTNSCOND_ReplaySlowDown,CMDACT_DecreaseReplaySpeed, 0, 0, 0x608, 0 },
+	{ 9, ICON_SPEED_UP_REPLAY, BTNSCOND_ReplaySpeedUp, CMDACT_IncreaseReplaySpeed, 0, 0, 0x605, 0 },
+};
+
+ButtonOrder replay_playing_[] =
+{
+	{ 7, ICON_PAUSE_REPLAY, BTNSCOND_ReplayPlayPause, CMDACT_SetReplaySpeed, 0, 0, 0x607, 0 },
+	{ 8, ICON_SLOW_DOWN_REPLAY, BTNSCOND_ReplaySlowDown,CMDACT_DecreaseReplaySpeed, 0, 0, 0x608, 0 },
+	{ 9, ICON_SPEED_UP_REPLAY, BTNSCOND_ReplaySpeedUp, CMDACT_IncreaseReplaySpeed, 0, 0, 0x605, 0 },
+};
+
+ButtonOrder stru_515C60_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_TargetOrderCancel, 0, 0, 0x2B0, 0 },
+};
+
+ButtonOrder stru_515C74_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_CancelPlacement, 0, 0, 0x2B0, 0 },
+};
+
+ButtonOrder stru_515C88_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, CMDACT_CancelConstruction, 0, 0, 0x2B1, 0 },
+};
+
+ButtonOrder stru_515C9C_[] =
+{
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, CMDACT_CancelConstruction, 0, 0, 0x2B1, 0 },
+};
+
+ButtonOrder stru_515CC4_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, CMDACT_CancelConstruction, 0, 0, 0x2B8, 0 },
+};
+
+ButtonOrder stru_515CD8_[] =
+{
+	{ 2, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, CMDACT_CancelConstruction, 0, 0, 0x2B8, 0 },
+};
+
+ButtonOrder stru_515D00_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, BTNSACT_None, 0, 0, 0x2B9, 0 },
+};
+
+ButtonOrder stru_515D14_[] =
+{
+	{ 1, ICON_LARVA, BTNSCOND_HatcheryLairHive, BTNSACT_SelectLarva, 0, 0, 0x2A2, 0 },
+	{ 2, ICON_SET_RALLY_POINT, BTNSCOND_HatcheryLairHiveRally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsConstructing, CMDACT_CancelConstruction, 0, 0, 0x2BA, 0 },
+};
+
+ButtonOrder stru_515D50_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_Always, CMDACT_CancelNuke, 0, 0, 0x2BB, 0 },
+};
+
+ButtonOrder stru_515D68_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_CanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_CanMoveSpecialCase, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_CanMove, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_CanMove, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+};
+
+ButtonOrder button_set_generic_army_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+};
+
+ButtonOrder stru_515E38_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 5, ICON_GATHER, BTNSCOND_NoCargo, BTNSACT_Harvest, 0, 0, 0x2A3, 0 },
+	{ 6, ICON_RETURN_RESOURCES, BTNSCOND_HasCargo, CMDACT_ReturnCargo, 0, 0, 0x2A4, 0 },
+};
+
+ButtonOrder button_set_dropship_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 8, ICON_LOAD_INTO_TRANSPORT, BTNSCOND_HasRoom, BTNSACT_LoadUnit, 0, 0, 0x2AB, 0 },
+	{ 9, ICON_UNLOAD_ALL_FROM_TRANSPORT_BUNKER, BTNSCOND_HasUnit, CMDACT_UnloadAll, 0, 0, 0x2AC, 0 },
+};
+
+ButtonOrder button_set_missile_turret_[] =
+{
+	{ 2, ICON_STOP, BTNSCOND_Stationary, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_Stationary, BTNSACT_TowerAttack, 0, 0, 0x29A, 0 },
+};
+
+ButtonOrder button_set_larva_[] =
+{
+	{ 1, ICON_DRONE, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x29, 0x29, 0x242, 0 },
+	{ 2, ICON_ZERGLING, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x25, 0x25, 0x23F, 0x2E2 },
+	{ 3, ICON_OVERLORD, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2A, 0x2A, 0x243, 0 },
+	{ 4, ICON_HYDRALISK, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x26, 0x26, 0x240, 0x2E3 },
+	{ 5, ICON_MUTALISK, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2B, 0x2B, 0x244, 0x2E5 },
+	{ 6, ICON_SCOURGE, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2F, 0x2F, 0x248, 0x2E9 },
+	{ 7, ICON_QUEEN, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2D, 0x2D, 0x246, 0x2E7 },
+	{ 8, ICON_ULTRALISK, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x27, 0x27, 0x241, 0x2E4 },
+	{ 9, ICON_DEFILER, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2E, 0x2E, 0x247, 0x2E8 },
+};
+
+ButtonOrder button_set_egg_[] =
+{
+	{ 9, ICON_CANCEL, BTNSCOND_Always, CMDACT_CancelUnitMorph, 0, 0, 0x2B7, 0 },
+};
+
+ButtonOrder button_set_drone_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Movement, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_BattleOrders, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 5, ICON_GATHER, BTNSCOND_ZergNoCargo, BTNSACT_Harvest, 0, 0, 0x2A3, 0 },
+	{ 6, ICON_RETURN_RESOURCES, BTNSCOND_ZergHasCargo, CMDACT_ReturnCargo, 0, 0, 0x2A4, 0 },
+	{ 7, ICON_ZERG_BASIC_BUILDINGS, BTNSCOND_ZergBasic, BTNSACT_ChangeButtons, 0, 0x0EE, 0x2A8, 0 },
+	{ 8, ICON_ZERG_ADVANCED_BUILDINGS, BTNSCOND_ZergAdvanced, BTNSACT_ChangeButtons, 0, 0x0F1, 0x2A9, 0 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_basic_zerg_buildings_[] =
+{
+	{ 1, ICON_HATCHERY, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x83, 0x83, 0x265, 0 },
+	{ 2, ICON_CREEP_COLONY, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8F, 0x8F, 0x266, 0 },
+	{ 3, ICON_EXTRACTOR, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x95, 0x95, 0x267, 0 },
+	{ 4, ICON_SPAWNING_POOL, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8E, 0x8E, 0x268, 0x2F4 },
+	{ 5, ICON_EVOLUTION_CHAMBER, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8B, 0x8B, 0x269, 0x2F1 },
+	{ 7, ICON_HYDRALISK_DEN, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x87, 0x87, 0x26A, 0x2ED },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder button_set_advanced_zerg_buildings_[] =
+{
+	{ 1, ICON_SPIRE, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8D, 0x8D, 0x26C, 0x2EE },
+	{ 2, ICON_QUEENS_NEST, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8A, 0x8A, 0x26D, 0x2F0 },
+	{ 3, ICON_NYDUS_CANAL, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x86, 0x86, 0x26B, 0x2EC },
+	{ 4, ICON_ULTRALISK_CAVERN, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x8C, 0x8C, 0x26E, 0x2F2 },
+	{ 5, ICON_DEFILER_MOUND, BTNSCOND_CanBuildUnit, BTNSACT_ZergBuild, 0x88, 0x88, 0x26F, 0x2F3 },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder button_set_zergling_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Movement, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_BattleOrders, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Movement, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Movement, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_hydralisk_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Movement, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_BattleOrders, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Movement, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Movement, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_LURKER, BTNSCOND_CanMorphLurker, CMDACT_Morph, 0x67, 0x67, 0x509, 0x512 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_mutalisk_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_GUARDIAN, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x2C, 0x2C, 0x245, 0x2E6 },
+	{ 8, ICON_DEVOURER, BTNSCOND_CanBuildUnit, CMDACT_Morph, 0x3E, 0x3E, 0x508, 0x511 },
+};
+
+ButtonOrder button_set_lurker_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_LurkerStop, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_IsBurrowed, BTNSACT_AttackMove, 0x0B, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Movement, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Movement, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_queen_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 6, ICON_INFEST_COMMAND_CENTER, BTNSCOND_HasTech, BTNSACT_UseTech, 0x0C, 0x0C, 0x176, 0 },
+	{ 7, ICON_PARASITE, BTNSCOND_HasTech, BTNSACT_UseTech, 0x12, 0x12, 0x179, 0x182 },
+	{ 8, ICON_BROODLING, BTNSCOND_HasTech, BTNSACT_UseTech, 0x0D, 0x0D, 0x177, 0x180 },
+	{ 9, ICON_ENSNARE, BTNSCOND_HasTech, BTNSACT_UseTech, 0x11, 0x11, 0x17D, 0x185 },
+};
+
+ButtonOrder button_set_deflier_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Movement, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Movement, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Movement, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 6, ICON_CONSUME, BTNSCOND_HasTech, BTNSACT_UseTech, 0x10, 0x10, 0x17B, 0x184 },
+	{ 7, ICON_DARK_SWARM, BTNSCOND_HasTech, BTNSACT_UseTech, 0x0E, 0x0E, 0x178, 0x181 },
+	{ 8, ICON_PLAGUE, BTNSCOND_HasTech, BTNSACT_UseTech, 0x0F, 0x0F, 0x17A, 0x183 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_infested_terran_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Movement, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Movement, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_BattleOrders, BTNSACT_AttackUnit, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Movement, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Movement, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 9, ICON_BURROW, BTNSCOND_CanBurrow, CMDACT_Burrow, 0x0B, 0x0B, 0x174, 0x17E },
+	{ 9, ICON_UNBURROW, BTNSCOND_IsBurrowed, CMDACT_Unburrow, 0x0B, 0, 0x175, 0 },
+};
+
+ButtonOrder button_set_infested_kerrigan_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 6, ICON_CONSUME, BTNSCOND_HasTech, BTNSACT_UseTech, 0x10, 0x10, 0x17C, 0 },
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak, CMDACT_Cloak, 0x0A, 0x0A, 0x158, 0 },
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked, CMDACT_Decloak, 0x0A, 0x0A, 0x159, 0 },
+	{ 8, ICON_ENSNARE, BTNSCOND_HasTech, BTNSACT_UseTech, 0x11, 0x11, 0x17D, 0 },
+	{ 9, ICON_PSIONIC_STORM, BTNSCOND_HasTech, BTNSACT_UseTech, 0x13, 0x13, 0x190, 0 },
+};
+
+ButtonOrder button_set_infested_duran_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak, CMDACT_Cloak, 0x0A, 0x0A, 0x158, 0 },
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked, CMDACT_Decloak, 0x0A, 0x0A, 0x159, 0 },
+	{ 8, ICON_LOCKDOWN, BTNSCOND_HasTech, BTNSACT_UseTech, 1, 1, 0x14F, 0x15B },
+	{ 9, ICON_CONSUME, BTNSCOND_HasTech, BTNSACT_UseTech, 0x10, 0x10, 0x17C, 0 },
+};
+
+ButtonOrder button_set_hatchery_[] =
+{
+	{ 1, ICON_LARVA, BTNSCOND_Always, BTNSACT_SelectLarva, 0, 0, 0x2A2, 0 },
+	{ 2, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 3, ICON_BURROW, BTNSCOND_CanResearch, CMDACT_Research, 0x0B, 0x0B, 0x16C, 0 },
+	{ 7, ICON_LAIR, BTNSCOND_CanBuildUnit, CMDACT_BuildingMorph, 0x84, 0x84, 0x270, 0x2EA },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+};
+
+ButtonOrder button_set_lair_[] =
+{
+	{ 1, ICON_LARVA, BTNSCOND_Always, BTNSACT_SelectLarva, 0, 0, 0x2A2, 0 },
+	{ 2, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 3, ICON_BURROW, BTNSCOND_CanResearch, CMDACT_Research, 0x0B, 0x0B, 0x16C, 0 },
+	{ 4, ICON_VENTRAL_SACS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x18, 0x18, 0x1E0, 0 },
+	{ 5, ICON_ANTENNAE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x19, 0x19, 0x1E1, 0 },
+	{ 6, ICON_PNEUMATIZED_CAPARACE, BTNSCOND_CanUpgrade,CMDACT_Upgrade, 0x1A, 0x1A, 0x1E2, 0 },
+	{ 7, ICON_HIVE, BTNSCOND_CanBuildUnit, CMDACT_BuildingMorph, 0x85, 0x85, 0x271, 0x2EB },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_hive_[] =
+{
+	{ 1, ICON_LARVA, BTNSCOND_Always, BTNSACT_SelectLarva, 0, 0, 0x2A2, 0 },
+	{ 2, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 3, ICON_BURROW, BTNSCOND_CanResearch, CMDACT_Research, 0x0B, 0x0B, 0x16C, 0 },
+	{ 4, ICON_VENTRAL_SACS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x18, 0x18, 0x1E0, 0 },
+	{ 5, ICON_ANTENNAE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x19, 0x19, 0x1E1, 0 },
+	{ 6, ICON_PNEUMATIZED_CAPARACE, BTNSCOND_CanUpgrade,CMDACT_Upgrade, 0x1A, 0x1A, 0x1E2, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_nydus_canal_[] =
+{
+	{ 1, ICON_NYDUS_CANAL, BTNSCOND_NoNydusExit, BTNSACT_PlaceNydusExit, 0x86, 0x86, 0x275, 0 },
+};
+
+ButtonOrder button_set_spire_[] =
+{
+	{ 1, ICON_FLYER_ATTACKS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0C, 0x0C, 0x1D4, 0x210 },
+	{ 2, ICON_FLYER_CAPARACE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 4, 4, 0x1CC, 0x213 },
+	{ 7, ICON_GREATER_SPIRE, BTNSCOND_CanBuildUnit, CMDACT_BuildingMorph, 0x89, 0x89, 0x272, 0x2EF },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_greater_spire_[] =
+{
+	{ 1, ICON_FLYER_ATTACKS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0C, 0x0C, 0x1D4, 0x210 },
+	{ 2, ICON_FLYER_CAPARACE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 4, 4, 0x1CC, 0x213 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_spawning_pool_[] =
+{
+	{ 1, ICON_METABOLIC_BOOST, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x1B, 0x1B, 0x1E3, 0 },
+	{ 2, ICON_ADRENAL_GLANDS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x1C, 0x1C, 0x1E4, 0x216 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_creep_colony_[] =
+{
+	{ 7, ICON_SPORE_COLONY, BTNSCOND_CanBuildUnit, CMDACT_BuildingMorph, 0x90, 0x90, 0x273, 0x2F5 },
+	{ 8, ICON_SUNKEN_COLONY, BTNSCOND_CanBuildUnit, CMDACT_BuildingMorph, 0x92, 0x92, 0x274, 0x2F6 },
+};
+
+ButtonOrder button_set_hydralisk_den_[] =
+{
+	{ 1, ICON_MUSCULAR_AUGMENTS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x1D, 0x1D, 0x1E5, 0 },
+	{ 2, ICON_GROOVED_SPINES, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x1E, 0x1E, 0x1E6, 0 },
+	{ 4, ICON_LURKER, BTNSCOND_CanResearch, CMDACT_Research, 0x20, 0x20, 0x4E5, 0x4E6 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+};
+
+ButtonOrder button_set_queens_nest_[] =
+{
+	{ 1, ICON_BROODLING, BTNSCOND_CanResearch, CMDACT_Research, 0x0D, 0x0D, 0x16E, 0 },
+	{ 2, ICON_ENSNARE, BTNSCOND_CanResearch, CMDACT_Research, 0x11, 0x11, 0x172, 0 },
+	{ 3, ICON_GAMETE_MEIOSIS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x1F, 0x1F, 0x1E7, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_defiler_mound_[] =
+{
+	{ 1, ICON_PLAGUE, BTNSCOND_CanResearch, CMDACT_Research, 0x0F, 0x0F, 0x171, 0 },
+	{ 2, ICON_CONSUME, BTNSCOND_CanResearch, CMDACT_Research, 0x10, 0x10, 0x173, 0 },
+	{ 3, ICON_METASYNAPTIC_NODE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x20, 0x20, 0x1E8, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_evolution_chamber_[] =
+{
+	{ 1, ICON_MELEE_ATTACKS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0A, 0x0A, 0x1D2, 0x207 },
+	{ 2, ICON_MISSILE_ATTACKS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0B, 0x0B, 0x1D3, 0x20A },
+	{ 3, ICON_ZERG_CAPARACE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 3, 3, 0x1CB, 0x20D },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_ultralisk_cavern_[] =
+{
+	{ 1, ICON_ANABOLIC_SYNTHESIS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x35, 0x35, 0x503, 0 },
+	{ 2, ICON_CHITINOUS_PLATING, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x34, 0x34, 0x504, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_nexus_[] =
+{
+	{ 1, ICON_PROBE, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x40, 0x40, 0x257, 0 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_probe_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 5, ICON_GATHER, BTNSCOND_NoCargo, BTNSACT_Harvest, 0, 0, 0x2A3, 0 },
+	{ 6, ICON_RETURN_RESOURCES, BTNSCOND_HasCargo, CMDACT_ReturnCargo, 0, 0, 0x2A4, 0 },
+	{ 7, ICON_PROTOSS_BASIC_BUILDINGS, BTNSCOND_ProtossBasic, BTNSACT_ChangeButtons, 0, 0x0F0, 0x2A6, 0 },
+	{ 8, ICON_PROTOSS_ADVANCED_BUILDINGS, BTNSCOND_ProtossAdvanced, BTNSACT_ChangeButtons, 0, 0x0F3, 0x2A7, 0 },
+};
+
+ButtonOrder stru_516D08_[] =
+{
+	{ 1, ICON_NEXUS, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x9A, 0x9A, 0x276, 0 },
+	{ 2, ICON_PYLON, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x9C, 0x9C, 0x277, 0 },
+	{ 3, ICON_ASSIMILATOR, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x9D, 0x9D, 0x278, 0 },
+	{ 4, ICON_GATEWAY, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A0, 0x0A0, 0x279, 0x2D5 },
+	{ 5, ICON_FORGE, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A6, 0x0A6, 0x27A, 0x2D6 },
+	{ 6, ICON_PHOTON_CANNON2, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A2, 0x0A2, 0x27B, 0x2D7 },
+	{ 7, ICON_CYBERNETICS_CORE, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A4, 0x0A4, 0x27C, 0x2D9 },
+	{ 8, ICON_SHIELD_BATTERY, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0AC, 0x0AC, 0x27D, 0x2D8 },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder stru_516DC0_[] =
+{
+	{ 1, ICON_ROBOTICS_FACILITY, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x9B, 0x9B, 0x27E, 0x2DA },
+	{ 2, ICON_STARGATE, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A7, 0x0A7, 0x282, 0x2DB },
+	{ 3, ICON_CITADEL_OF_ADUN, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A3, 0x0A3, 0x280, 0x2DC },
+	{ 4, ICON_ROBOTICS_SUPPORT_BAY, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0AB, 0x0AB, 0x285, 0x2DE },
+	{ 5, ICON_FLEET_BEACON, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A9, 0x0A9, 0x283, 0x2DF },
+	{ 6, ICON_TEMPLAR_ARCHIVES, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0A5, 0x0A5, 0x281, 0x2E0 },
+	{ 7, ICON_OBSERVATORY, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x9F, 0x9F, 0x27F, 0x2DD },
+	{ 8, ICON_ARBITER_TRIBUNAL, BTNSCOND_CanBuildUnit, BTNSACT_BuildProtoss, 0x0AA, 0x0AA, 0x284, 0x2E1 },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder button_set_high_templar_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_PSIONIC_STORM, BTNSCOND_HasTech, BTNSACT_UseTech, 0x13, 0x13, 0x190, 0x195 },
+	{ 8, ICON_HALLUCINATION, BTNSCOND_HasTech, BTNSACT_UseTech, 0x14, 0x14, 0x191, 0x196 },
+	{ 9, ICON_ARCHON, BTNSCOND_CanMergeArchonOneSelected, CMDACT_Stop, 0x17, 0x17, 0x194, 0x199 },
+	{ 9, ICON_ARCHON, BTNSCOND_CanMergeArchonTwoSelected, CMDACT_MergeArchon, 0x44, 0x44, 0x194, 0x19A },
+};
+
+ButtonOrder button_set_dark_templar_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 9, ICON_ARCHON, BTNSCOND_CanMergeDarkArchonOneSelected, CMDACT_Stop, 0x1C, 0x1C, 0x4F0, 0x4F7 },
+	{ 9, ICON_DARK_ARCHON, BTNSCOND_CanMergeDarkArchonTwoSelected, CMDACT_MergeDarkArchon, 0x3F, 0x3F, 0x4F0, 0x4F8 },
+};
+
+ButtonOrder button_set_carrier_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_CarrierMove, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_CarrierStop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_HasInterceptors, BTNSACT_CarrierAttack, 0, 0, 0x29A, 0x2F7 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_INTERCEPTOR, BTNSCOND_TrainingFighter, CMDACT_TrainFighter, 0x49, 0x49, 0x25F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_reaver_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_CarrierMove, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_ReaverStop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_HasScarabs, BTNSACT_ReaverAttack, 0, 0, 0x29A, 0x2F8 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_SCARAB, BTNSCOND_TrainingFighter, CMDACT_TrainFighter, 0x55, 0x55, 0x261, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_arbiter_[] = {
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_RECALL, BTNSCOND_HasTech, BTNSACT_UseTech, 0x15, 0x15, 0x192, 0x197 },
+	{ 8, ICON_STASIS_FIELD, BTNSCOND_HasTech, BTNSACT_UseTech, 0x16, 0x16, 0x193, 0x198 },
+};
+
+ButtonOrder button_set_tassadar_[] = {
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_PSIONIC_STORM, BTNSCOND_HasTech, BTNSACT_UseTech, 0x13, 0x13, 0x190, 0x195 },
+	{ 8, ICON_HALLUCINATION, BTNSCOND_HasTech, BTNSACT_UseTech, 0x14, 0x14, 0x191, 0x196 },
+};
+
+ButtonOrder button_set_corsair_[] = {
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_DISRUPTION_WEB2, BTNSCOND_HasTech, BTNSACT_UseTech, 0x19, 0x19, 0x4F1, 0x4F5 },
+};
+
+ButtonOrder button_set_dark_archon_[] = {
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_FEEDBACK, BTNSCOND_HasTech, BTNSACT_UseTech, 0x1D, 0x1D, 0x4F3, 0x4F9 },
+	{ 8, ICON_MIND_CONTROL, BTNSCOND_HasTech, BTNSACT_UseTech, 0x1B, 0x1B, 0x4F2, 0x4F6 },
+	{ 9, ICON_MAELSTROM, BTNSCOND_HasTech, BTNSACT_UseTech, 0x1F, 0x1F, 0x4F4, 0x4FA },
+};
+
+ButtonOrder button_set_robotics_facility_[] = {
+	{ 1, ICON_SHUTTLE, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x45, 0x45, 0x25B, 0 },
+	{ 2, ICON_REAVER, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x53, 0x53, 0x260, 0x2D3 },
+	{ 3, ICON_OBSERVER, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x54, 0x54, 0x256, 0x2D4 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_gateway_[] = {
+	{ 1, ICON_ZEALOT, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x41, 0x41, 0x258, 0 },
+	{ 2, ICON_DRAGOON, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x42, 0x42, 0x259, 0x2CF },
+	{ 3, ICON_HIGH_TEMPLAR, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x43, 0x43, 0x25A, 0x2D0 },
+	{ 4, ICON_DARK_TEMPLAR_UNIT, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x3D, 0x3D, 0x50D, 0x510 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_stargate_[] =
+{
+	{ 1, ICON_SCOUT, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x46, 0x46, 0x25C, 0 },
+	{ 2, ICON_CARRIER, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x48, 0x48, 0x25E, 0x2D2 },
+	{ 3, ICON_ARBITER, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x47, 0x47, 0x25D, 0x2D1 },
+	{ 4, ICON_CORSAIR, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x3C, 0x3C, 0x50C, 0 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_citadel_of_adun_[] =
+{
+	{ 1, ICON_LEG_ENHANCEMENTS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x22, 0x22, 0x1EA, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_cybernetics_core_[] =
+{
+	{ 1, ICON_AIR_WEAPONS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0E, 0x0E, 0x1D6, 0x21A },
+	{ 2, ICON_AIR_PLATING, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 6, 6, 0x1CE, 0x220 },
+	{ 3, ICON_SINGULARITY_CHARGE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x21, 0x21, 0x1E9, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_templar_archives_[] =
+{
+	{ 1, ICON_PSIONIC_STORM, BTNSCOND_CanResearch, CMDACT_Research, 0x13, 0x13, 0x18B, 0 },
+	{ 2, ICON_HALLUCINATION, BTNSCOND_CanResearch, CMDACT_Research, 0x14, 0x14, 0x18C, 0 },
+	{ 3, ICON_KHAYDARIN_AMULET, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x28, 0x28, 0x1F0, 0 },
+	{ 4, ICON_MIND_CONTROL, BTNSCOND_CanResearch, CMDACT_Research, 0x1B, 0x1B, 0x4ED, 0 },
+	{ 5, ICON_MAELSTROM, BTNSCOND_CanResearch, CMDACT_Research, 0x1F, 0x1F, 0x4EF, 0 },
+	{ 6, ICON_ARGUS_TALISMAN, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x31, 0x31, 0x506, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_forge_[] =
+{
+	{ 1, ICON_GROUND_WEAPONS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0D, 0x0D, 0x1D5, 0x217 },
+	{ 2, ICON_GROUND_ARMOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 5, 5, 0x1CD, 0x21D },
+	{ 3, ICON_PLASMA_SHIELDS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x0F, 0x0F, 0x1D7, 0x223 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_fleet_beacon_[] =
+{
+	{ 1, ICON_APIAL_SENSORS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x29, 0x29, 0x1F1, 0 },
+	{ 2, ICON_GRAVITIC_THRUSTERS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x2A, 0x2A, 0x1F2, 0 },
+	{ 3, ICON_CARRIER_CAPACITY, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x2B, 0x2B, 0x1F3, 0 },
+	{ 4, ICON_DISRUPTION_WEB, BTNSCOND_CanResearch, CMDACT_Research, 0x19, 0x19, 0x4EC, 0 },
+	{ 5, ICON_ARGUS_JEWEL, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x2F, 0x2F, 0x505, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+};
+
+ButtonOrder button_set_arbiter_tribunal_[] =
+{
+	{ 1, ICON_RECALL, BTNSCOND_CanResearch, CMDACT_Research, 0x15, 0x15, 0x18D, 0 },
+	{ 2, ICON_STASIS_FIELD, BTNSCOND_CanResearch, CMDACT_Research, 0x16, 0x16, 0x18E, 0 },
+	{ 3, ICON_KHAYDARIN_CORE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x2C, 0x2C, 0x1F4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_robotics_support_bay_[] =
+{
+	{ 1, ICON_SCARAB_DAMAGE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x23, 0x23, 0x1EB, 0 },
+	{ 2, ICON_REAVER_CAPACITY, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x24, 0x24, 0x1EC, 0 },
+	{ 3, ICON_GRAVITIC_DRIVE, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x25, 0x25, 0x1ED, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_shield_battery_[] =
+{
+	{ 1, ICON_RECHARGE_SHIELDS, BTNSCOND_CanRechargeShields, BTNSACT_RechargeShields, 0, 0, 0x2A1, 0 },
+};
+
+ButtonOrder button_set_observatory_[] =
+{
+	{ 1, ICON_GRAVITIC_BOOSTERS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x27, 0x27, 0x1EF, 0 },
+	{ 2, ICON_SENSOR_ARRAY, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x26, 0x26, 0x1EE, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_wraiths_maybe_[] = {
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak, CMDACT_Cloak, 0, 0, 0x158, 0 },
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked, CMDACT_Decloak, 0, 0, 0x159, 0 },
+};
+
 ButtonOrder button_set_terran_infantry_[] =
 {
 	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
@@ -10922,154 +11540,465 @@ ButtonOrder button_set_terran_infantry_[] =
 	{ 7, ICON_USE_STIMPACK, BTNSCOND_HasTech, CMDACT_Stimpack, 0, 0, 0x14E, 0x15A },
 };
 
+ButtonOrder button_set_medic_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_HEAL, BTNSCOND_HasTech, BTNSACT_Heal, 0x22, 0x22, 0x4DF, 0 },
+	{ 8, ICON_RESTORATION2, BTNSCOND_HasTech, BTNSACT_UseTech, 0x18, 0x18, 0x4E0, 0x4E2 },
+	{ 9, ICON_OPTICAL_FLARE, BTNSCOND_HasTech, BTNSACT_UseTech, 0x1E, 0x1E, 0x4E1, 0x4E3 },
+};
+
+ButtonOrder button_set_scv_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_SCVCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_SCVCanStop, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_SCVCanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_REPAIR, BTNSCOND_CanRepair, BTNSACT_Repair, 0, 0, 0x2A5, 0 },
+	{ 5, ICON_GATHER, BTNSCOND_NoCargoTerran, BTNSACT_Harvest, 0, 0, 0x2A3, 0 },
+	{ 6, ICON_RETURN_RESOURCES, BTNSCOND_HasCargoTerran,CMDACT_ReturnCargo, 0, 0, 0x2A4, 0 },
+	{ 7, ICON_TERRAN_BASIC_BUILDINGS, BTNSCOND_TerranBasic, BTNSACT_ChangeButtons, 0, 0x0EF, 0x2A6, 0 },
+	{ 8, ICON_TERRAN_ADVANCED_BUILDINGS, BTNSCOND_TerranAdvanced, BTNSACT_ChangeButtons, 0, 0x0F2, 0x2A7, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_ScvIsBuilding, CMDACT_Stop, 0, 0, 0x2BC, 0 },
+};
+
+ButtonOrder button_set_basic_terran_buildings_[] =
+{
+	{ 1, ICON_COMMAND_CENTER, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x6A, 0x6A, 0x286, 0 },
+	{ 2, ICON_SUPPLY_DEPOT, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x6D, 0x6D, 0x287, 0 },
+	{ 3, ICON_REFINERY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x6E, 0x6E, 0x288, 0 },
+	{ 4, ICON_BARRACKS, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x6F, 0x6F, 0x289, 0x2C6 },
+	{ 5, ICON_ENGINEERING_BAY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x7A, 0x7A, 0x28A, 0x2CB },
+	{ 6, ICON_MISSILE_TOWER, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x7C, 0x7C, 0x28B, 0x2CD },
+	{ 7, ICON_ACADEMY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x70, 0x70, 0x28C, 0x2C7 },
+	{ 8, ICON_BUNKER, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x7D, 0x7D, 0x28D, 0x2CE },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder button_set_advanced_terran_buildings_[] =
+{
+	{ 1, ICON_FACTORY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x71, 0x71, 0x28E, 0x2C8 },
+	{ 2, ICON_STARPORT, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x72, 0x72, 0x28F, 0x2C9 },
+	{ 3, ICON_SCIENCE_FACILITY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x74, 0x74, 0x290, 0x2CA },
+	{ 4, ICON_ARMORY, BTNSCOND_CanBuildUnit, BTNSACT_BuildTerran, 0x7B, 0x7B, 0x291, 0x2CC },
+	{ 9, ICON_CANCEL, BTNSCOND_Always, BTNSACT_ChangeButtons, 0, 0x0E4, 0x2B0, 0 },
+};
+
+ButtonOrder button_set_ghost_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0},
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak_0, CMDACT_Cloak, 0xA, 0xA, 0x158, 0x163},
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked_0, CMDACT_Decloak, 0xA, 0, 0x159, 0 },
+	{ 8, ICON_LOCKDOWN, BTNSCOND_HasTech, BTNSACT_UseTech, 1, 1, 0x14F, 0x15B},
+	{ 9, ICON_NUCLEAR_STRIKE, BTNSCOND_HasNuke, BTNSACT_UseNuke, 0, 0, 0x2AD, 0x2F9 },
+};
+
+ButtonOrder button_set_ghost_hero_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak_0, CMDACT_Cloak, 0x0A, 0x0A, 0x158, 0x163 },
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked_0, CMDACT_Decloak, 0x0A, 0, 0x159, 0 },
+	{ 8, ICON_LOCKDOWN, BTNSCOND_HasTech, BTNSACT_UseTech, 1, 1, 0x14F, 0x15B },
+};
+
+ButtonOrder button_set_vulture_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_USE_SPIDER_MINES, BTNSCOND_HasSpidermines,BTNSACT_UseTech, 3, 3, 0x150, 0x15C },
+};
+
+ButtonOrder button_set_siege_tank_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_TankMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_TankMove, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_TankMove, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_SEIGE_MODE, BTNSCOND_IsUnsieged, CMDACT_Siege, 5, 5, 0x152, 0x15D },
+	{ 7, ICON_TANK_MODE, BTNSCOND_IsSieged, CMDACT_Unsiege, 5, 0, 0x153, 0 },
+};
+
+ButtonOrder button_set_wraith_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_CLOAK, BTNSCOND_CanCloak_0, CMDACT_Cloak, 9, 9, 0x158, 0x162 },
+	{ 7, ICON_DECLOAK, BTNSCOND_IsCloaked_0, CMDACT_Decloak, 9, 0, 0x159, 0 },
+};
+
+ButtonOrder button_set_science_vessel_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_DEFENSIVE_MATRIX, BTNSCOND_HasTech, BTNSACT_UseTech, 6, 6, 0x154, 0x15E },
+	{ 8, ICON_EMP_SHOCKWAVE, BTNSCOND_HasTech, BTNSACT_UseTech, 2, 2, 0x155, 0x15F },
+	{ 9, ICON_IRRADIATE, BTNSCOND_HasTech, BTNSACT_UseTech, 7, 7, 0x156, 0x160 },
+};
+
+ButtonOrder button_set_battlecruiser_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_YAMATO_GUN, BTNSCOND_HasTech, BTNSACT_UseTech, 8, 8, 0x157, 0x161 },
+};
+
+ButtonOrder button_set_vaynor_vulture_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_Always, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 2, ICON_STOP, BTNSCOND_Always, CMDACT_Stop,0, 0, 0x299, 0 },
+	{ 3, ICON_ATTACK, BTNSCOND_CanAttack, BTNSACT_AttackMove, 0, 0, 0x29A, 0 },
+	{ 4, ICON_PATROL, BTNSCOND_Always, BTNSACT_Patrol, 0, 0, 0x29B, 0 },
+	{ 5, ICON_HOLD_POSITION, BTNSCOND_Always, CMDACT_HoldPosition, 0, 0, 0x29C, 0 },
+	{ 7, ICON_USE_SPIDER_MINES, BTNSCOND_HasTech, BTNSACT_UseTech, 3, 3, 0x150, 0x15C },
+};
+
+ButtonOrder button_set_command_center_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_SCV, BTNSCOND_CanBuildUnit, CMDACT_Train, 7, 7, 0x250, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 7, ICON_COMSAT_STATION, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x6B, 0x6B, 0x292, 0x2C4 },
+	{ 8, ICON_NUCLEAR_SILO, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x6C, 0x6C, 0x293, 0x2C5 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x6A, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsBuildingAddon, CMDACT_CancelAddon, 0, 0, 0x2B6, 0 },
+};
+
+ButtonOrder button_set_comsat_[] =
+{
+	{ 1, ICON_SCANNER_SWEEP, BTNSCOND_HasTech, BTNSACT_UseTech, 4, 4, 0x151, 0 },
+};
+
+ButtonOrder button_set_nuclear_silo_[] =
+{
+	{ 1, ICON_NUCLEAR_MISSILE, BTNSCOND_SiloHasNoNuke, CMDACT_Train, 0x0E, 0x0E, 0x255, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_bunker_[] =
+{
+	{ 8, ICON_LOAD_INTO_TRANSPORT, BTNSCOND_HasRoom, BTNSACT_LoadUnit, 0, 0, 0x2AB, 0 },
+	{ 9, ICON_UNLOAD_ALL_FROM_TRANSPORT_BUNKER, BTNSCOND_HasUnit, CMDACT_UnloadAll, 0, 0, 0x2AC, 0 },
+};
+
+ButtonOrder button_set_barracks_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_MARINE, BTNSCOND_CanBuildUnit, CMDACT_Train, 0, 0, 0x24A, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 2, ICON_FIREBAT, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x20, 0x20, 0x24C, 0x2BE },
+	{ 3, ICON_GHOST, BTNSCOND_CanBuildUnit, CMDACT_Train, 1, 1, 0x24B, 0x2BD },
+	{ 4, ICON_MEDIC, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x22, 0x22, 0x50A, 0x50E },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x6F, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsBuildingAddon, CMDACT_CancelAddon, 0, 0, 0x2B6, 0 },
+};
+
+ButtonOrder button_set_factory_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_VULTURE, BTNSCOND_CanBuildUnit, CMDACT_Train, 2, 2, 0x24D, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 2, ICON_SIEGE_TANK_TANK_MODE, BTNSCOND_CanBuildUnit, CMDACT_Train, 5, 5, 0x24F, 0x2C0 },
+	{ 3, ICON_GOLIATH, BTNSCOND_CanBuildUnit, CMDACT_Train, 3, 3, 0x24E, 0x2BF },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 7, ICON_MACHINE_SHOP, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x78, 0x78, 0x297, 0 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x71, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsBuildingAddon, CMDACT_CancelAddon, 0, 0, 0x2B6, 0 },
+};
+
+ButtonOrder button_set_science_facility_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_EMP_SHOCKWAVE, BTNSCOND_CanResearch, CMDACT_Research, 2, 2, 0x146, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 2, ICON_IRRADIATE, BTNSCOND_CanResearch, CMDACT_Research, 7, 7, 0x14A, 0 },
+	{ 3, ICON_TITAN_REACTOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x13, 0x13, 0x1DB, 0 },
+	{ 7, ICON_COVERT_OPS, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x75, 0x75, 0x295, 0 },
+	{ 8, ICON_PHYSICS_LAB, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x76, 0x76, 0x296, 0 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x74, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsBuildingAddon, CMDACT_CancelAddon, 0, 0, 0x2B6, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_starport_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_WRAITH, BTNSCOND_CanBuildUnit, CMDACT_Train, 8, 8, 0x251, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 2, ICON_DROPSHIP, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x0B, 0x0B, 0x253, 0x2C2 },
+	{ 3, ICON_SCIENCE_VESSEL, BTNSCOND_CanBuildUnit, CMDACT_Train, 9, 9, 0x252, 0x2C1 },
+	{ 4, ICON_BATTLECRUISER, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x0C, 0x0C, 0x254, 0x2C3 },
+	{ 5, ICON_VALKYRIE, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x3A, 0x3A, 0x50B, 0x50F },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 7, ICON_CONTROL_TOWER, BTNSCOND_CanBuildUnit, BTNSACT_PlaceAddon, 0x73, 0x73, 0x294, 0 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x72, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsBuildingAddon, CMDACT_CancelAddon, 0, 0, 0x2B6, 0 },
+};
+
+ButtonOrder button_set_control_tower_[] =
+{
+	{ 1, ICON_CLOAK, BTNSCOND_CanResearch, CMDACT_Research, 9, 9, 0x14C, 0 },
+	{ 2, ICON_APOLLO_REACTOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x16, 0x16, 0x1DE, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_engineering_bay_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_INFANTRY_WEAPONS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 7, 7, 0x1CF, 0x1F8 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 2, ICON_INFANTRY_ARMOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0, 0, 0x1C8, 0x1F5 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x7A, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_covert_ops_[] =
+{
+	{ 1, ICON_LOCKDOWN, BTNSCOND_CanResearch, CMDACT_Research, 1, 1, 0x145, 0 },
+	{ 2, ICON_CLOAK, BTNSCOND_CanResearch, CMDACT_Research, 0x0A, 0x0A, 0x14D, 0 },
+	{ 4, ICON_OCULAR_IMPLANTS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x14, 0x14, 0x1DC, 0 },
+	{ 5, ICON_MOEBIUS_REACTOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x15, 0x15, 0x1DD, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_physics_lab_[] =
+{
+	{ 1, ICON_YAMATO_GUN, BTNSCOND_CanResearch, CMDACT_Research, 8, 8, 0x14B, 0 },
+	{ 2, ICON_COLOSSUS_REACTOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x17, 0x17, 0x1DF, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_armory_[] =
+{
+	{ 1, ICON_VEHICLE_WEAPONS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 8, 8, 0x1D0, 0x1FB },
+	{ 2, ICON_SHIP_WEAPONS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 9, 9, 0x1D1, 0x201 },
+	{ 4, ICON_VEHICLE_ARMOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 1, 1, 0x1C9, 0x1FE },
+	{ 5, ICON_SHIP_PLATING, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 2, 2, 0x1CA, 0x204 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_academy_[] = {
+	{ 1, ICON_U238_SHELLS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x10, 0x10, 0x1D8, 0 },
+	{ 2, ICON_USE_STIMPACK, BTNSCOND_CanResearch, CMDACT_Research, 0, 0, 0x144, 0 },
+	{ 4, ICON_RESTORATION, BTNSCOND_CanResearch, CMDACT_Research, 0x18, 0x18, 0x4DD, 0 },
+	{ 5, ICON_OPTICAL_FLARE, BTNSCOND_CanResearch, CMDACT_Research, 0x1E, 0x1E, 0x4DE, 0 },
+	{ 6, ICON_CADUCEUS_REACTOR, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x33, 0x33, 0x501, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_machine_shop_[] = {
+	{ 1, ICON_ION_THRUSTERS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x11, 0x11, 0x1D9, 0 },
+	{ 2, ICON_USE_SPIDER_MINES, BTNSCOND_CanResearch, CMDACT_Research, 3, 3, 0x147, 0 },
+	{ 3, ICON_SEIGE_MODE, BTNSCOND_CanResearch, CMDACT_Research, 5, 5, 0x148, 0 },
+	{ 4, ICON_CHARON_BOOSTERS, BTNSCOND_CanUpgrade, CMDACT_Upgrade, 0x36, 0x36, 0x502, 0x507 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsResearching, CMDACT_CancelResearch, 0, 0, 0x2B4, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsUpgrading, CMDACT_CancelUpgrade, 0, 0, 0x2B3, 0 },
+};
+
+ButtonOrder button_set_infested_command_center_[] =
+{
+	{ 1, ICON_MOVE, BTNSCOND_IsLiftedCanMove, BTNSACT_Move, 0, 0, 0x298, 0 },
+	{ 1, ICON_INFESTED_TERRAN, BTNSCOND_CanBuildUnit, CMDACT_Train, 0x32, 0x32, 0x249, 0 },
+	{ 2, ICON_STOP, BTNSCOND_IsLiftedCanMove, CMDACT_Stop, 0, 0, 0x299, 0 },
+	{ 6, ICON_SET_RALLY_POINT, BTNSCOND_Rally, BTNSACT_RallyPoint, 0, 0, 0x2A0, 0 },
+	{ 9, ICON_LAND, BTNSCOND_IsLifted, BTNSACT_BuildingLand, 0, 0x82, 0x29E, 0 },
+	{ 9, ICON_LIFT_OFF, BTNSCOND_IsLanded, CMDACT_Lift, 0, 0, 0x29F, 0 },
+	{ 9, ICON_CANCEL, BTNSCOND_IsTraining, CMDACT_CancelTrain, 0, 0x0FE, 0x2B5, 0 },
+};
+
+ButtonOrder button_set_flag_beacon_[] =
+{
+	{ 1, ICON_LAND, BTNSCOND_Always, BTNSACT_PlaceCOP, 0, 0, 0x2AE, 0 },
+};
+
 ButtonSet button_sets_[] = {
 	{_countof(button_set_terran_infantry_), button_set_terran_infantry_, -1, 0},
-	{9, button_set_ghost, -1, 0},
-	{6, button_set_vulture, -1, 0},
-	{5, button_set_generic_army, -1, 0},
+	{_countof(button_set_ghost), button_set_ghost_, -1, 0},
+	{_countof(button_set_vulture_), button_set_vulture_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_siege_tank, -1, 0},
+	{_countof(button_set_siege_tank_), button_set_siege_tank_, -1, 0},
 	{0, 0, -1, 0},
-	{9, button_set_scv, -1, 0},
-	{7, button_set_wraith, -1, 0},
-	{8, button_set_science_vessel, -1, 0},
+	{_countof(button_set_scv_), button_set_scv_, -1, 0},
+	{_countof(button_set_wraith_), button_set_wraith_, -1, 0},
+	{_countof(button_set_science_vessel_), button_set_science_vessel_, -1, 0},
 	{_countof(button_set_terran_infantry_), button_set_terran_infantry_, -1, 0},
-	{7, button_set_dropship, -1, 0},
-	{6, button_set_battlecruiser, -1, 0},
+	{_countof(button_set_dropship_), button_set_dropship_, -1, 0},
+	{_countof(button_set_battlecruiser_), button_set_battlecruiser_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{8, button_set_ghost_hero, 1, 0},
-	{5, button_set_generic_army, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_ghost_hero_), button_set_ghost_hero_, 1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
 	{0, 0, -1, 0},
-	{6, button_set_vaynor_vulture, 2, 0},
+	{_countof(button_set_vaynor_vulture_), button_set_vaynor_vulture_, 2, 0},
 	{_countof(button_set_terran_infantry_), button_set_terran_infantry_, -1, 0},
-	{7, button_set_wraith, -1, 0},
-	{8, button_set_science_vessel, -1, 0},
-	{7, button_set_siege_tank, -1, 0},
+	{_countof(button_set_wraith_), button_set_wraith_, -1, 0},
+	{_countof(button_set_science_vessel_), button_set_science_vessel_, -1, 0},
+	{_countof(button_set_siege_tank_), button_set_siege_tank_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_siege_tank, -1, 0},
+	{_countof(button_set_siege_tank_), button_set_siege_tank_, -1, 0},
 	{0, 0, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{6, button_set_battlecruiser, -1, 0},
-	{6, button_set_battlecruiser, -1, 0},
-	{7, button_set_siege_tank, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_battlecruiser_), button_set_battlecruiser_, -1, 0},
+	{_countof(button_set_battlecruiser_), button_set_battlecruiser_, -1, 0},
+	{_countof(button_set_siege_tank_), button_set_siege_tank_, -1, 0},
 	{0, 0, -1, 0},
 	{_countof(button_set_terran_infantry_), button_set_terran_infantry_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_medic, -1, 0},
-	{9, button_set_larva, -1, 0},
-	{1, button_set_egg, -1, 0},
-	{7, button_set_zergling, -1, 0},
-	{8, button_set_hydralisk, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{9, button_set_drone, -1, 0},
-	{7, button_set_dropship, -1, 0},
-	{7, button_set_mutalisk, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{9, button_set_queen, -1, 0},
-	{9, button_set_deflier, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{9, button_set_queen, -1, 0},
-	{7, button_set_infested_terran, -1, 0},
-	{10, button_set_infested_kerrigan, -1, 0},
-	{9, button_set_deflier, -1, 0},
-	{7, button_set_zergling, -1, 0},
-	{7, button_set_zergling, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_dropship, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{1, button_set_egg, -1, 0},
-	{6, button_set_corsair, -1, 0},
-	{7, button_set_dark_templar, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_dark_archon, -1, 0},
-	{7, button_set_probe, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{8, button_set_high_templar, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_dropship, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_arbiter, -1, 0},
-	{7, button_set_carrier, -1, 0},
-	{0, 0, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_tassadar, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{7, button_set_reaver, -1, 0},
-	{7, button_set_carrier, -1, 0},
-	{7, button_set_reaver, -1, 0},
-	{5, button_set_generic_army, -1, 0},
+	{_countof(button_set_medic_), button_set_medic_, -1, 0},
+	{_countof(button_set_larva_), button_set_larva_, -1, 0},
+	{_countof(button_set_egg_), button_set_egg_, -1, 0},
+	{_countof(button_set_zergling_), button_set_zergling_, -1, 0},
+	{_countof(button_set_hydralisk), button_set_hydralisk_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_drone_), button_set_drone_, -1, 0},
+	{_countof(button_set_dropship_), button_set_dropship_, -1, 0},
+	{_countof(button_set_mutalisk_), button_set_mutalisk_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_queen_), button_set_queen_, -1, 0},
+	{_countof(button_set_deflier_), button_set_deflier_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_queen_), button_set_queen_, -1, 0},
+	{_countof(button_set_infested_terran_), button_set_infested_terran_, -1, 0},
+	{_countof(button_set_infested_kerrigan_), button_set_infested_kerrigan_, -1, 0},
+	{_countof(button_set_deflier_), button_set_deflier_, -1, 0},
+	{_countof(button_set_zergling_), button_set_zergling_, -1, 0},
+	{_countof(button_set_zergling_), button_set_zergling_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_dropship_), button_set_dropship_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_egg_), button_set_egg_, -1, 0},
+	{_countof(button_set_corsair_), button_set_corsair_, -1, 0},
+	{_countof(button_set_dark_templar_), button_set_dark_templar_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_dark_archon_), button_set_dark_archon_, -1, 0},
+	{_countof(button_set_probe_), button_set_probe_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_high_templar_), button_set_high_templar_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_dropship_), button_set_dropship_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_arbiter_), button_set_arbiter_, -1, 0},
+	{_countof(button_set_carrier_), button_set_carrier_, -1, 0},
+	{0, 0, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_tassadar_), button_set_tassadar_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_reaver_), button_set_reaver_, -1, 0},
+	{_countof(button_set_carrier_), button_set_carrier_, -1, 0},
+	{_countof(button_set_reaver_), button_set_reaver_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_arbiter, -1, 0},
-	{7, button_set_tassadar, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
+	{_countof(button_set_arbiter_), button_set_arbiter_, -1, 0},
+	{_countof(button_set_tassadar_), button_set_tassadar_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{5, button_set_generic_army, -1, 0},
-	{1, button_set_egg, -1, 0},
-	{6, button_set_corsair, -1, 0},
-	{8, button_set_ghost_hero, -1, 0},
-	{8, button_set_ghost_hero, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_generic_army_), button_set_generic_army_, -1, 0},
+	{_countof(button_set_egg_), button_set_egg_, -1, 0},
+	{_countof(button_set_corsair_), button_set_corsair_, -1, 0},
+	{_countof(button_set_ghost_hero_), button_set_ghost_hero_, -1, 0},
+	{_countof(button_set_ghost_hero_), button_set_ghost_hero_, -1, 0},
 	{0, 0, -1, 0},
-	{6, button_set_battlecruiser, -1, 0},
-	{7, button_set_lurker, -1, 0},
-	{9, button_set_infested_duran, -1, 0},
+	{_countof(button_set_battlecruiser_), button_set_battlecruiser_, -1, 0},
+	{_countof(button_set_lurker_), button_set_lurker_, -1, 0},
+	{_countof(button_set_infested_duran_), button_set_infested_duran_, -1, 0},
 	{0, 0, -1, 0},
-	{10, button_set_command_center, -1, 0},
-	{1, button_set_comsat, -1, 0},
-	{2, button_set_nuclear_silo, -1, 0},
+	{_countof(button_set_command_center_), button_set_command_center_, -1, 0},
+	{_countof(button_set_comsat_), button_set_comsat_, -1, 0},
+	{_countof(button_set_nuclear_silo_), button_set_nuclear_silo_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{0xB, button_set_barracks, -1, 0},
-	{7, button_set_academy, -1, 0},
-	{0xC, button_set_factory, -1, 0},
-	{0xD, button_set_starport, -1, 0},
-	{4, button_set_control_tower, -1, 0},
-	{0xC, button_set_science_facility, -1, 0},
-	{6, button_set_covert_ops, -1, 0},
-	{4, button_set_physics_lab, -1, 0},
+	{_countof(button_set_barracks_), button_set_barracks_, -1, 0 },
+	{_countof(button_set_academy_), button_set_academy_, -1, 0 },
+	{_countof(button_set_factory_), button_set_factory_, -1, 0 },
+	{_countof(button_set_starport_), button_set_starport_, -1, 0 },
+	{_countof(button_set_control_tower_), button_set_control_tower_, -1, 0 },
+	{_countof(button_set_science_facility_), button_set_science_facility_, -1, 0 },
+	{_countof(button_set_covert_ops_), button_set_covert_ops_, -1, 0 },
+	{_countof(button_set_physics_lab_), button_set_physics_lab_, -1, 0},
 	{0, 0, -1, 0},
-	{6, button_set_machine_shop, -1, 0},
+	{_countof(button_set_machine_shop_), button_set_machine_shop_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_engineering_bay, -1, 0},
-	{5, button_set_armory, -1, 0},
-	{2, button_set_missile_turret, -1, 0},
-	{2, button_set_bunker, -1, 0},
+	{_countof(button_set_engineering_bay_), button_set_engineering_bay_, -1, 0},
+	{_countof(button_set_armory_), button_set_armory_, -1, 0},
+	{_countof(button_set_missile_turret_), button_set_missile_turret_, -1, 0},
+	{_countof(button_set_bunker_), button_set_bunker_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_infested_command_center, -1, 0},
-	{5, button_set_hatchery, -1, 0},
-	{9, button_set_lair, -1, 0},
-	{8, button_set_hive, -1, 0},
-	{1, button_set_nydus_canal, -1, 0},
-	{5, button_set_hydralisk_den, -1, 0},
-	{5, button_set_defiler_mound, -1, 0},
-	{3, button_set_greater_spire, -1, 0},
-	{5, button_set_queens_nest, -1, 0},
-	{4, button_set_evolution_chamber, -1, 0},
-	{3, button_set_ultralisk_cavern, -1, 0},
-	{4, button_set_spire, -1, 0},
-	{3, button_set_spawning_pool, -1, 0},
-	{2, button_set_creep_colony, -1, 0},
-	{2, button_set_missile_turret, -1, 0},
+	{_countof(button_set_infested_command_center_), button_set_infested_command_center_, -1, 0},
+	{_countof(button_set_hatchery_), button_set_hatchery_, -1, 0},
+	{_countof(button_set_lair_), button_set_lair_, -1, 0},
+	{_countof(button_set_hive_), button_set_hive_, -1, 0},
+	{_countof(button_set_nydus_canal_), button_set_nydus_canal_, -1, 0},
+	{_countof(button_set_hydralisk_den_), button_set_hydralisk_den_, -1, 0},
+	{_countof(button_set_defiler_mound_), button_set_defiler_mound_, -1, 0},
+	{_countof(button_set_greater_spire_), button_set_greater_spire_, -1, 0},
+	{_countof(button_set_queens_nest_), button_set_queens_nest_, -1, 0},
+	{_countof(button_set_evolution_chamber_), button_set_evolution_chamber_, -1, 0},
+	{_countof(button_set_ultralisk_cavern_), button_set_ultralisk_cavern_, -1, 0},
+	{_countof(button_set_spire_), button_set_spire_, -1, 0},
+	{_countof(button_set_spawning_pool_), button_set_spawning_pool_, -1, 0},
+	{_countof(button_set_creep_colony_), button_set_creep_colony_, -1, 0},
+	{_countof(button_set_missile_turret_), button_set_missile_turret_, -1, 0},
 	{0, 0, -1, 0},
-	{2, button_set_missile_turret, -1, 0},
+	{_countof(button_set_missile_turret_), button_set_missile_turret_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
@@ -11077,25 +12006,25 @@ ButtonSet button_sets_[] = {
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{3, button_set_nexus, -1, 0},
-	{5, button_set_robotics_facility, -1, 0},
+	{_countof(button_set_nexus_), button_set_nexus_, -1, 0},
+	{_countof(button_set_robotics_facility_), button_set_robotics_facility_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{3, button_set_observatory, -1, 0},
-	{6, button_set_gateway, -1, 0},
+	{_countof(button_set_observatory_), button_set_observatory_, -1, 0},
+	{_countof(button_set_gateway_), button_set_gateway_, -1, 0},
 	{0, 0, -1, 0},
-	{2, button_set_missile_turret, -1, 0},
-	{2, button_set_citadel_of_adun, -1, 0},
-	{4, button_set_cybernetics_core, -1, 0},
-	{8, button_set_templar_archives, -1, 0},
-	{4, button_set_forge, -1, 0},
-	{6, button_set_stargate, -1, 0},
+	{_countof(button_set_missile_turret_), button_set_missile_turret_, -1, 0},
+	{_countof(button_set_citadel_of_adun_), button_set_citadel_of_adun_, -1, 0},
+	{_countof(button_set_cybernetics_core_), button_set_cybernetics_core_, -1, 0},
+	{_countof(button_set_templar_archives_), button_set_templar_archives_, -1, 0},
+	{_countof(button_set_forge_), button_set_forge_, -1, 0},
+	{_countof(button_set_stargate_), button_set_stargate_, -1, 0},
 	{0, 0, -1, 0},
-	{7, button_set_fleet_beacon, -1, 0},
-	{5, button_set_arbiter_tribunal, -1, 0},
-	{4, button_set_robotics_support_bay, -1, 0},
-	{1, button_set_shield_battery, -1, 0},
+	{_countof(button_set_fleet_beacon_), button_set_fleet_beacon_, -1, 0},
+	{_countof(button_set_arbiter_tribunal_), button_set_arbiter_tribunal_, -1, 0},
+	{_countof(button_set_robotics_support_bay_), button_set_robotics_support_bay_, -1, 0},
+	{_countof(button_set_shield_battery_), button_set_shield_battery_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
@@ -11120,9 +12049,9 @@ ButtonSet button_sets_[] = {
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{1, button_set_flag_beacon, -1, 0},
-	{1, button_set_flag_beacon, -1, 0},
-	{1, button_set_flag_beacon, -1, 0},
+	{_countof(button_set_flag_beacon_), button_set_flag_beacon_, -1, 0},
+	{_countof(button_set_flag_beacon_), button_set_flag_beacon_, -1, 0},
+	{_countof(button_set_flag_beacon_), button_set_flag_beacon_, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
@@ -11152,27 +12081,27 @@ ButtonSet button_sets_[] = {
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
 	{0, 0, -1, 0},
-	{1, stru_515C60, -1, 0},
-	{1, stru_515C74, -1, 0},
-	{1, stru_515C88, -1, 0},
-	{2, stru_515C9C, -1, 0},
-	{1, stru_515CC4, -1, 0},
-	{2, stru_515CD8, -1, 0},
-	{1, stru_515D00, -1, 0},
-	{3, stru_515D14, -1, 0},
-	{1, stru_515D50, -1, 0},
-	{7, button_set_basic_zerg_buildings, -1, 0},
-	{9, button_set_basic_terran_buildings, -1, 0},
-	{9, stru_516D08, -1, 0},
-	{6, button_set_advanced_zerg_buildings, -1, 0},
-	{5, button_set_advanced_terran_buildings, -1, 0},
-	{9, stru_516DC0, -1, 0},
-	{5, stru_515D68, -1, 0},
-	{5, stru_515E38, -1, 0},
-	{7, button_set_wraith, -1, 0},
-	{7, button_set_zergling, -1, 0},
-	{3, replay_paused, -1, 0},
-	{3, replay_playing, -1, 0},
+	{_countof(stru_515C60_), stru_515C60_, -1, 0},
+	{_countof(stru_515C74_), stru_515C74_, -1, 0},
+	{_countof(stru_515C88_), stru_515C88_, -1, 0},
+	{_countof(stru_515C9C_), stru_515C9C_, -1, 0},
+	{_countof(stru_515CC4_), stru_515CC4_, -1, 0},
+	{_countof(stru_515CD8_), stru_515CD8_, -1, 0},
+	{_countof(stru_515D00_), stru_515D00_, -1, 0},
+	{_countof(stru_515D14_), stru_515D14_, -1, 0},
+	{_countof(stru_515D50_), stru_515D50_, -1, 0},
+	{_countof(button_set_basic_zerg_buildings_), button_set_basic_zerg_buildings_, -1, 0},
+	{_countof(button_set_basic_terran_buildings_), button_set_basic_terran_buildings_, -1, 0},
+	{_countof(stru_516D08_), stru_516D08_, -1, 0},
+	{_countof(button_set_advanced_zerg_buildings_), button_set_advanced_zerg_buildings_, -1, 0},
+	{_countof(button_set_advanced_terran_buildings_), button_set_advanced_terran_buildings_, -1, 0},
+	{_countof(stru_516DC0_), stru_516DC0_, -1, 0},
+	{_countof(stru_515D68_), stru_515D68_, -1, 0},
+	{_countof(stru_515E38_), stru_515E38_, -1, 0},
+	{_countof(button_set_wraith_), button_set_wraith_, -1, 0},
+	{_countof(button_set_zergling_), button_set_zergling_, -1, 0},
+	{_countof(replay_paused_), replay_paused_, -1, 0},
+	{_countof(replay_playing_), replay_playing_, -1, 0},
 };
 
 void updateButtonSetEx_()
