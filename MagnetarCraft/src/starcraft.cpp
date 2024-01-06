@@ -2909,6 +2909,16 @@ void CommandLineCheck_()
 				{
 					keep_app_active_in_background = true;
 				}
+				else if (!_strnicmp(argument, "-help", argument_length))
+				{
+					// TODO: determine the executable name dynamically
+					printf("Usage: %s\n", "MagnetarCraft.exe [options]");
+					printf(" -help                     Display this information and exit.\n");
+					printf(" -skip-end-mission-prompt  Do not display win/lose/draw prompts upon\n");
+					printf("                           game/replay completion.\n");
+					printf(" -keep-app-active          Keep the game running while in the background.\n");
+					exit(0);
+				}
 			}
 		}
 	}
