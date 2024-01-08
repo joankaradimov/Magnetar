@@ -202,14 +202,9 @@ std::filesystem::path GetExecutablePath()
 	return buffer;
 }
 
-std::filesystem::path GetExecutableFilename()
-{
-	return GetExecutablePath().filename();
-}
-
 std::filesystem::path GetConfigFilename()
 {
-	return GetExecutableFilename().replace_extension("yml");
+	return GetExecutablePath().replace_extension("yml");
 }
 
 YAML::Node LoadConfig(const std::filesystem::path& config_filename)
