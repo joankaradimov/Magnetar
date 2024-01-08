@@ -1242,12 +1242,12 @@ void getSelectedUnitsAtPoint_(int y, int x)
 
 			if (is_keycode_used[VK_SHIFT])
 			{
-				CUnit* a2a[12];
-				memcpy(a2a, PlayerSelection, sizeof(a2a));
-
 				tempUnitsListCurrentArrayCount = tempUnitsListArraysCountsListLastIndex[tempUnitsListArraysCountsListLastIndex[0]--];
 				if (v11)
 				{
+					CUnit* a2a[12];
+					memcpy(a2a, PlayerSelection, sizeof(a2a));
+
 					int v13 = sub_46F290(a2a, unitsToSelect, v11, unit);
 					UI_doSelectUnits_IfAltNotHeld(a2a, v13, 1, 1);
 				}
@@ -1297,10 +1297,9 @@ void getSelectedUnitsAtPoint_(int y, int x)
 			}
 			else if (i < 12)
 			{
-				CUnit* v17 = unitsToSelect[0];
 				if (unit_IsStandardAndMovable(unitsToSelect[0]))
 				{
-					if (unitIsOwnerByCurrentPlayer(v17) && unit_IsStandardAndMovable(unit) && unitIsOwnerByCurrentPlayer(unit))
+					if (unitIsOwnerByCurrentPlayer(unitsToSelect[0]) && unit_IsStandardAndMovable(unit) && unitIsOwnerByCurrentPlayer(unit))
 					{
 						unitsToSelect[i] = unit;
 						UI_doSelectUnits_IfAltNotHeld(unitsToSelect, i + 1, 1, 1);
