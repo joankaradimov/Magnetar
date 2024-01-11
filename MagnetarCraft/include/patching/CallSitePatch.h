@@ -5,7 +5,7 @@
 class CallSitePatch : public BasePatch
 {
 public:
-	CallSitePatch(const char* file, int line, void* destination_address, void* function);
+	CallSitePatch(const char* file, int line, void* destination_address, void* function, std::initializer_list<const char*> tags);
 
 	size_t length();
 	void do_apply();

@@ -4,10 +4,11 @@
 
 #include "patching/BasePatch.h"
 
-BasePatch::BasePatch(const char* file, int line, void* destination_address):
+BasePatch::BasePatch(const char* file, int line, void* destination_address, std::initializer_list<const char*> tags):
 	file(file),
 	line(line),
 	destination_address((BYTE*)destination_address),
+	tags(tags),
 	pending(true)
 {
 	patches().push_back(this);

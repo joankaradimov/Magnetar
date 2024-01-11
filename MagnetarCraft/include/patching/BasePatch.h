@@ -1,11 +1,12 @@
 #pragma once
 
+#include <initializer_list>
 #include <vector>
 #include <Windows.h>
 
 class BasePatch {
 public:
-	BasePatch(const char* file, int line, void* destination_address);
+	BasePatch(const char* file, int line, void* destination_address, std::initializer_list<const char*> tags);
 
 	bool is_pending();
 	virtual size_t length() = 0;
@@ -19,6 +20,7 @@ protected:
 	BYTE* destination_address;
 	const char* file;
 	int line;
+	std::vector<const char*> tags;
 
 private:
 	static std::vector<BasePatch*>& patches();

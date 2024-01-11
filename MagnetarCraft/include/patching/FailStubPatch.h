@@ -5,7 +5,7 @@
 class FailStubPatch : public BasePatch
 {
 public:
-	FailStubPatch(const char* file, int line, void* destination_function);
+	FailStubPatch(const char* file, int line, void* destination_function, std::initializer_list<const char*> tags);
 
 	size_t length();
 	void do_apply();

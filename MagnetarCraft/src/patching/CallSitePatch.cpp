@@ -3,8 +3,8 @@
 
 #include "patching/CallSitePatch.h"
 
-CallSitePatch::CallSitePatch(const char* file, int line, void* destination_address, void* function) :
-	BasePatch(file, line, destination_address),
+CallSitePatch::CallSitePatch(const char* file, int line, void* destination_address, void* function, std::initializer_list<const char*> tags) :
+	BasePatch(file, line, destination_address, tags),
 	function((BYTE*)function)
 {
 }

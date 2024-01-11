@@ -1,7 +1,7 @@
 #include "patching/NopPatch.h"
 
-NopPatch::NopPatch(const char* file, int line, void* destination_address, size_t block_length) :
-	BasePatch(file, line, destination_address),
+NopPatch::NopPatch(const char* file, int line, void* destination_address, size_t block_length, std::initializer_list<const char*> tags) :
+	BasePatch(file, line, destination_address, tags),
 	block_length(block_length)
 {
 }

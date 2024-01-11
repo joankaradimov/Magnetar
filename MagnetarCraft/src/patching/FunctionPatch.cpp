@@ -3,8 +3,8 @@
 
 #include "patching/FunctionPatch.h"
 
-FunctionPatch::FunctionPatch(const char* file, int line, void* destination_function, void* replacement_function) :
-	BasePatch(file, line, destination_function),
+FunctionPatch::FunctionPatch(const char* file, int line, void* destination_function, void* replacement_function, std::initializer_list<const char*> tags) :
+	BasePatch(file, line, destination_function, tags),
 	replacement_function((BYTE*)replacement_function)
 {
 }
