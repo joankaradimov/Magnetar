@@ -9295,6 +9295,29 @@ int UMStartPath_(CUnit* unit)
 
 FAIL_STUB_PATCH(UMStartPath);
 
+int UMRepath_(CUnit* unit)
+{
+	if (struct_path_related* path = unit->path)
+	{
+		dword_6BEE88 = 0;
+		if (int colliding_unit_id = path->colliding_unit_id)
+		{
+			CUnit* v6 = UnitNodeTable + (path->colliding_unit_id & 0x7FF) - 1;
+			if (v6->sprite && (v6->orderID != ORD_DIE || v6->orderState != 1) && v6->uniquenessIdentifier == colliding_unit_id >> 11)
+			{
+				dword_6BEE88 = v6;
+			}
+		}
+
+		reAssignPath(unit);
+	}
+	unit->movementState = UMAnotherPath(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+	dword_6BEE88 = 0;
+	return 1;
+}
+
+FAIL_STUB_PATCH(UMRepath);
+
 int UMRepathMovers_(CUnit* unit)
 {
 	reAssignPath(unit);
@@ -9488,7 +9511,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			unit->movementState = UMAnotherPath(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
 			return;
 		case UnitMovementState::UM_Repath:
-			v2 = UMRepath(unit);
+			v2 = UMRepath_(unit);
 			break;
 		case UnitMovementState::UM_RepathMovers:
 			v2 = UMRepathMovers_(unit);
