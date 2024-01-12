@@ -9246,6 +9246,29 @@ int UMScoutFree_(CUnit* unit)
 
 FAIL_STUB_PATCH(UMScoutFree);
 
+int UMRetryPath_(CUnit* unit)
+{
+	if (DestinationAndCollisionCheck(unit, 0))
+	{
+		return 1;
+	}
+	if (unit->pathingCollisionInterval < 0x14u)
+	{
+		unit->pathingCollisionInterval += 1;
+		return 0;
+	}
+	if (UMAnotherPath(unit, unit->moveTarget.pt))
+	{
+		unit->movementState = UM_FollowPath;
+		return 1;
+	}
+	SetMoveTarget_unit(unit);
+	unit->movementState = UM_AtMoveTarget;
+	return 0;
+}
+
+FAIL_STUB_PATCH(UMRetryPath);
+
 int UMStartPath_(CUnit* unit)
 {
 	if (UMAnotherPath(unit, unit->moveTarget.pt))
@@ -9419,7 +9442,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			unit->movementState = UM_RetryPath;
 			return;
 		case UnitMovementState::UM_RetryPath:
-			v2 = UMRetryPath(unit);
+			v2 = UMRetryPath_(unit);
 			break;
 		case UnitMovementState::UM_StartPath:
 			v2 = UMStartPath_(unit);
