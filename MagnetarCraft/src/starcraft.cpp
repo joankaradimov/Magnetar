@@ -9295,6 +9295,31 @@ int UMStartPath_(CUnit* unit)
 
 FAIL_STUB_PATCH(UMStartPath);
 
+int UMRepathMovers_(CUnit* unit)
+{
+	reAssignPath(unit);
+	points pt = unit->moveTarget.pt;
+	CUnit* pUnit = unit->moveTarget.pUnit;
+	dword_6BEE80 = 1;
+	int v4 = UMAnotherPath(unit, pt);
+	dword_6BEE80 = 0;
+
+	if (v4 && !(unit->statusFlags & UNKNOWN4))
+	{
+		unit->movementState = UnitMovementState::UM_FaceTarget;
+		return 1;
+	}
+	else
+	{
+		unit->moveTarget.pt = pt;
+		unit->moveTarget.pUnit = pUnit;
+		unit->movementState = UnitMovementState::UM_TurnAndStart;
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(UMRepathMovers);
+
 int UMFollowPath_(CUnit* unit)
 {
 	if (DestinationAndCollisionCheck(unit, 1))
@@ -9466,7 +9491,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMRepath(unit);
 			break;
 		case UnitMovementState::UM_RepathMovers:
-			v2 = UMRepathMovers(unit);
+			v2 = UMRepathMovers_(unit);
 			break;
 		case UnitMovementState::UM_FollowPath:
 			v2 = UMFollowPath_(unit);
