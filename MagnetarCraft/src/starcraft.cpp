@@ -9999,6 +9999,146 @@ void orders_Warpin_(CUnit* unit)
 
 FAIL_STUB_PATCH(orders_Warpin);
 
+void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4)
+{
+	if (sfx
+		&& (unsigned int)a2.x < (unsigned __int16)map_width_pixels
+		&& (unsigned int)a2.y < (unsigned __int16)map_height_pixels
+		&& registry_options.Sfx
+		&& a3)
+	{
+		if (InReplay)
+		{
+			if (((unsigned __int8)ReplayVision & (unsigned __int8)~LOBYTE(active_tiles[a2.x / 32
+				+ map_size.width * (a2.y / 32)])) == 0
+				&& !replayShowEntireMap)
+			{
+				return;
+			}
+		}
+		else if (playerVisions & active_tiles[a2.x / 32 + map_size.width * (a2.y / 32)])
+		{
+			return;
+		}
+		int distance = getSfxVolumeFromScreenDistance(a2.x, a2.y);
+		int v5 = (unsigned __int8)SFXData_MuteVolume[sfx];
+		int v6 = distance;
+		if (v6 <= v5)
+		{
+			v6 = v5;
+		}
+		if (a4 <= v6)
+		{
+			if (distance <= v5)
+			{
+				distance = v5;
+			}
+		}
+		else
+		{
+			distance = a4;
+		}
+		if (dword_64086C)
+		{
+			distance /= 5;
+		}
+		if (distance > 10)
+		{
+			int SfxPanFromXDistance = getSfxPanFromXDistance(a2.x);
+			PlayTransmissionLocation(sfx, distance, SfxPanFromXDistance, 0);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(PlaySoundAtPos);
+
+void orders_Recall_(CUnit* a1)
+{
+	if (a1->orderState == 1)
+	{
+		if (!a1->mainOrderTimer)
+		{
+			units_recalled = 0;
+			rect area;
+			area.left = a1->orderTarget.pt.x - 64;
+			area.bottom = a1->orderTarget.pt.y + 64;
+			area.top = a1->orderTarget.pt.y - 64;
+			area.right = a1->orderTarget.pt.x + 64;
+			IterateUnitsAtLocationTargetProc(recallUnitsCB, &area, a1);
+			if (units_recalled)
+			{
+				char v3 = RandomizeShort(18);
+				PlaySound((SfxData)((v3 & 1) + SFX_Protoss_ARBITER_PAbFol02), a1, 1, 0);
+			}
+			toIdle(a1);
+		}
+		return;
+	}
+	if ((GameCheats & CheatFlags::CHEAT_TheGathering) == 0)
+	{
+		u16 energy_cost = Tech_EnergyCost[21] * 256;
+		if (a1->energy < energy_cost)
+		{
+			UnitGroupFlags v5 = (UnitGroupFlags) Unit_GroupFlags[a1->unitType];
+			unsigned __int8 v6;
+			if (v5 & UnitGroupFlags::CLOAK)
+			{
+				v6 = 0;
+			}
+			else if (v5 & UnitGroupFlags::BURROW)
+			{
+				v6 = 1;
+			}
+			else if (v5 & UnitGroupFlags::IN_TRANSIT)
+			{
+				v6 = 2;
+			}
+			else
+			{
+				v6 = 4;
+			}
+
+			const char* v9 = GetTblString(StatTxtTbl.buffer, 864 + v6);
+			if (v9)
+			{
+				if (a1->playerID == g_LocalNationID && dword_51267C == g_LocalHumanID)
+				{
+					setUnitStatTxtErrorMsg(v9);
+				}
+			}
+
+			toIdle(a1);
+			return;
+		}
+
+		a1->energy -= energy_cost;
+	}
+	if (CUnit* order_target = a1->orderTarget.pUnit)
+	{
+		a1->orderTarget.pt.x = order_target->sprite->position.x;
+		a1->orderTarget.pt.y = order_target->sprite->position.y;
+	}
+	CThingy* recall_thingy = CreateThingy(379, a1->orderTarget.pt.x, a1->orderTarget.pt.y, 0);
+	if (recall_thingy)
+	{
+		recall_thingy->sprite->elevationLevel = a1->sprite->elevationLevel + 1;
+		sub_4878F0(recall_thingy);
+	}
+	unsigned v13 = 0;
+	if (IsInGameLoop)
+	{
+		++dword_51C654;
+		++randomCountsTotal;
+		LastRandomNumber = 0x15A4E35 * LastRandomNumber + 1;
+		v13 = ((unsigned)LastRandomNumber >> 16) & 1;
+	}
+	PlaySoundAtPos_(SfxData(v13 + 550), a1->orderTarget.pt, 1, 0);
+	a1->mainOrderTimer = 22;
+	a1->orderState = 1;
+}
+
+FAIL_STUB_PATCH(orders_Recall);
+
 void ordersEntries_(CUnit* unit)
 {
 	switch (unit->orderID)
@@ -10391,7 +10531,7 @@ void ordersEntries_(CUnit* unit)
 					orders_SapLocation(unit);
 					break;
 				case Order::ORD_TELEPORT:
-					orders_Recall(unit);
+					orders_Recall_(unit);
 					break;
 				case Order::ORD_PLACE_SCANNER:
 					orders_PlaceScanner(unit);

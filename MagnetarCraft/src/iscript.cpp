@@ -222,6 +222,14 @@ void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 
 FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd);
 
+void ISCRIPT_PlaySnd_(SfxData sfx, CImage* image)
+{
+    points p = { image->spriteOwner->position.x, image->spriteOwner->position.y };
+    PlaySoundAtPos_(sfx, p, 1, 0);
+}
+
+FAIL_STUB_PATCH(ISCRIPT_PlaySnd);
+
 void init_iscript_program_state(IScriptProgramState* program_state, Anims animation)
 {
     program_state->anim = animation;
@@ -546,12 +554,12 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
         }
         case opc_playsnd:
         {
-            unsigned __int16 sfx = take_iscript_datum<unsigned __int16>(program_state);
+            SfxData sfx = (SfxData) take_iscript_datum<u16>(program_state);
             if (noop)
             {
                 break;
             }
-            ISCRIPT_PlaySnd((SfxData)sfx, image);
+            ISCRIPT_PlaySnd_(sfx, image);
             break;
         }
         case opc_playsndbtwn:
@@ -562,7 +570,7 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
             {
                 break;
             }
-            ISCRIPT_PlaySnd((SfxData)(min + RandomizeShort(5) % ((unsigned int)max - min + 1)), image);
+            ISCRIPT_PlaySnd_((SfxData)(min + RandomizeShort(5) % ((unsigned int)max - min + 1)), image);
             break;
         }
         case opc_domissiledmg:
@@ -587,7 +595,7 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
             {
                 break;
             }
-            ISCRIPT_PlaySnd((SfxData)args[RandomizeShort(4) % arg_count], image);
+            ISCRIPT_PlaySnd_((SfxData) args[RandomizeShort(4) % arg_count], image);
             break;
         }
         case opc_followmaingraphic:
