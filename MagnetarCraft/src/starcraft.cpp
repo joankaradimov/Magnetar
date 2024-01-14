@@ -1325,7 +1325,7 @@ void getSelectedUnitsAtPoint_(int y, int x)
 			}
 			if (unit->playerID == g_ActiveNationID && Unit_IsFactoryBuilding(unit))
 			{
-				sub_468670(unit);
+				sub_468670_(unit);
 			}
 		}
 	}
