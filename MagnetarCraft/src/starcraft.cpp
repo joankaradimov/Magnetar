@@ -9762,11 +9762,11 @@ bool isThingyOnMap_(int x, int y, CThingy* thingy)
 	CSprite* v5 = thingy->sprite;
 	if (v5 && (v5->flags & 0x20) == 0)
 	{
-		__int64 v6 = (__int16)v5->position.x - x / 2;
-		int v8 = ((BYTE4(v6) & 0x1F) + (int)v6) >> 5;
+		int v6 = (__int16)v5->position.x - x / 2;
+		int v8 = (v6 + (v6 < 0 ? 31 : 0)) / 32;
 		int v9 = ((__int16)v5->position.y - y / 2) / 32;
-		int v10 = (unsigned int)(x + 31) >> 5;
-		int v11 = (unsigned int)(y + 31) >> 5;
+		int v10 = (unsigned int)(x + 31) / 32;
+		int v11 = (unsigned int)(y + 31) / 32;
 		if (v8 < 0)
 		{
 			v10 += v8;
