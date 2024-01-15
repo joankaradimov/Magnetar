@@ -9295,6 +9295,48 @@ int UMStartPath_(CUnit* unit)
 
 FAIL_STUB_PATCH(UMStartPath);
 
+int UMTurnAndStart_(CUnit* unit)
+{
+	if (struct_path_related* path = unit->path)
+	{
+		dword_6BEE88 = 0;
+		if (int colliding_unit_id = path->colliding_unit_id)
+		{
+			CUnit* v6 = UnitNodeTable + (path->colliding_unit_id & 0x7FF) - 1;
+			if (v6->sprite && (v6->orderID != ORD_DIE || v6->orderState != 1) && v6->uniquenessIdentifier == colliding_unit_id >> 11)
+			{
+				dword_6BEE88 = v6;
+			}
+		}
+
+		reAssignPath(unit);
+	}
+	CSprite* sprite = unit->sprite;
+	if (unit->moveTarget.pt.x == sprite->position.x && unit->moveTarget.pt.y == sprite->position.y
+		&& ((unit->statusFlags & StatusFlags::UNKNOWN4) != 0) != -1 || (unit->movementFlags & 4) != 0)
+	{
+		unit->movementState = UM_AtMoveTarget;
+		return 1;
+	}
+	else
+	{
+		int v8 = UMAnotherPath(unit, unit->moveTarget.pt);
+		dword_6BEE88 = 0;
+		if (v8)
+		{
+			unit->movementState = UM_FaceTarget;
+			return 0;
+		}
+		else
+		{
+			unit->movementState = UM_FailedPath;
+			return 1;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(UMTurnAndStart);
+
 int UMRepath_(CUnit* unit)
 {
 	if (struct_path_related* path = unit->path)
@@ -9499,7 +9541,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMUIOrderDelay(unit);
 			break;
 		case UnitMovementState::UM_TurnAndStart:
-			v2 = UMTurnAndStart(unit);
+			v2 = UMTurnAndStart_(unit);
 			break;
 		case UnitMovementState::UM_FaceTarget:
 			v2 = UMFaceTarget(unit);
