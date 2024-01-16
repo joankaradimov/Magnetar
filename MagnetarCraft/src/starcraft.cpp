@@ -9218,6 +9218,29 @@ int __stdcall sub_42DB50__(int a2, int a3, Position* a4)
 
 FUNCTION_PATCH((void*)0x42DB50, sub_42DB50__);
 
+int UMAnotherPath_(CUnit* unit, points p)
+{
+	if (isLargePath(unit, p))
+	{
+		return 1;
+	}
+	if ((unit->statusFlags & IsNormal) == 0)
+	{
+		SetMoveTarget_xy(p.x, p.y, unit);
+		getAllocatedPathSingleStep(unit, *(_DWORD*)&p, *(_DWORD*)&p);
+		return 1;
+	}
+	if (sub_42FC10(unit, (Position&)p, &p) || unit->path)
+	{
+		CUnit* waypoint_unit = setNextWaypoint(unit, p.x, p.y);
+		isLargePath(waypoint_unit, p);
+		return 1;
+	}
+	return 0;
+}
+
+FAIL_STUB_PATCH(UMAnotherPath);
+
 int UMInitSeq_(CUnit* unit)
 {
 	if (unit->statusFlags & NoBrkCodeStart)
@@ -9257,7 +9280,7 @@ int UMRetryPath_(CUnit* unit)
 		unit->pathingCollisionInterval += 1;
 		return 0;
 	}
-	if (UMAnotherPath(unit, unit->moveTarget.pt))
+	if (UMAnotherPath_(unit, unit->moveTarget.pt))
 	{
 		unit->movementState = UM_FollowPath;
 		return 1;
@@ -9271,7 +9294,7 @@ FAIL_STUB_PATCH(UMRetryPath);
 
 int UMStartPath_(CUnit* unit)
 {
-	if (UMAnotherPath(unit, unit->moveTarget.pt))
+	if (UMAnotherPath_(unit, unit->moveTarget.pt))
 	{
 		if ((unit->userActionFlags & 2) && unit->flingyMovementType == 2)
 		{
@@ -9320,7 +9343,7 @@ int UMTurnAndStart_(CUnit* unit)
 	}
 	else
 	{
-		int v8 = UMAnotherPath(unit, unit->moveTarget.pt);
+		int v8 = UMAnotherPath_(unit, unit->moveTarget.pt);
 		dword_6BEE88 = 0;
 		if (v8)
 		{
@@ -9353,7 +9376,7 @@ int UMRepath_(CUnit* unit)
 
 		reAssignPath(unit);
 	}
-	unit->movementState = UMAnotherPath(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+	unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
 	dword_6BEE88 = 0;
 	return 1;
 }
@@ -9366,7 +9389,7 @@ int UMRepathMovers_(CUnit* unit)
 	points pt = unit->moveTarget.pt;
 	CUnit* pUnit = unit->moveTarget.pUnit;
 	dword_6BEE80 = 1;
-	int v4 = UMAnotherPath(unit, pt);
+	int v4 = UMAnotherPath_(unit, pt);
 	dword_6BEE80 = 0;
 
 	if (v4 && !(unit->statusFlags & UNKNOWN4))
@@ -9391,7 +9414,7 @@ int UMFollowPath_(CUnit* unit)
 	{
 		return 1;
 	}
-	if (!UMAnotherPath(unit, unit->moveTarget.pt))
+	if (!UMAnotherPath_(unit, unit->moveTarget.pt))
 	{
 		unit->movementState = UnitMovementState::UM_AnotherPath;
 		return 1;
@@ -9550,7 +9573,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMNewMoveTarget(unit);
 			break;
 		case UnitMovementState::UM_AnotherPath:
-			unit->movementState = UMAnotherPath(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+			unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
 			return;
 		case UnitMovementState::UM_Repath:
 			v2 = UMRepath_(unit);
