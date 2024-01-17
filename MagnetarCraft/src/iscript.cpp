@@ -97,7 +97,7 @@ void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
 
     if (Weapon_Graphic[weapon_id])
     {
-        CreateBullet_(unit, weapon_id, x, y, unit->playerID, unit->currentDirection1);
+        CreateBullet_(unit, weapon_id, x, y);
     }
 }
 
@@ -185,10 +185,10 @@ void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
 {
     if (Weapon_Graphic[weapon_type])
     {
-        CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+        CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y);
         if (Weapon_DamageFactor[weapon_type] == 2)
         {
-            CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y, unit->playerID, unit->currentDirection1);
+            CreateBullet_(unit, weapon_type, unit->orderTarget.pt.x, unit->orderTarget.pt.y);
         }
     }
 }

@@ -277,14 +277,14 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
 
 FAIL_STUB_PATCH(InitializeBullet);
 
-void CreateBullet_(CUnit* a1, WeaponType weapon_id, int x, __int16 y, char a5, int a6)
+void CreateBullet_(CUnit* unit, WeaponType weapon_id, int x, __int16 y)
 {
     CBullet* v6 = first_free_bullet;
     if (!first_free_bullet || weapon_id == Halo_Rockets && (unsigned int)bullet_count >= 0x50)
     {
         return;
     }
-    if (a1->statusFlags & StatusFlags::CanNotAttack)
+    if (unit->statusFlags & StatusFlags::CanNotAttack)
     {
         switch (weapon_id)
         {
@@ -316,7 +316,7 @@ void CreateBullet_(CUnit* a1, WeaponType weapon_id, int x, __int16 y, char a5, i
             return;
         }
     }
-    if (!InitializeBullet_(a1, y, a5, first_free_bullet, weapon_id, x, a6))
+    if (!InitializeBullet_(unit, y, unit->playerID, first_free_bullet, weapon_id, x, unit->currentDirection1))
     {
         return;
     }
