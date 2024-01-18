@@ -170,6 +170,22 @@ void FastIndexInit_()
 
 FAIL_STUB_PATCH(FastIndexInit);
 
+std::string LocateStarCraftFromRegistry()
+{
+	CHAR path[MAX_PATH];
+	DWORD path_lenth = sizeof(path);
+	LSTATUS status = RegGetValueA(
+		HKEY_CURRENT_USER,
+		"SOFTWARE\\Blizzard Entertainment\\Starcraft",
+		"InstallPath",
+		RRF_RT_REG_EXPAND_SZ | RRF_RT_REG_MULTI_SZ | RRF_RT_REG_SZ,
+		nullptr,
+		path,
+		&path_lenth);
+
+	return status == ERROR_SUCCESS ? std::string(path) : std::string();
+}
+
 std::string LocateStarCraftManually()
 {
 	BROWSEINFOA browse_Info;
@@ -192,6 +208,16 @@ std::string LocateStarCraftManually()
 	char path[MAX_PATH];
 	SHGetPathFromIDListA(item, path);
 	return path;
+}
+
+std::string LocateStarCraft()
+{
+	std::string starcraft_root = LocateStarCraftFromRegistry();
+	if (!starcraft_root.empty())
+	{
+		return starcraft_root;
+	}
+	return LocateStarCraftManually();
 }
 
 std::filesystem::path GetExecutablePath()
@@ -230,14 +256,12 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 	}
 	catch (const YAML::TypedBadConversion<std::string>& e)
 	{
-		// TODO: try to find StarCraft path in registry, maybe?
-		starcraft_root = LocateStarCraftManually();
+		starcraft_root = LocateStarCraft();
 		starcraft_root_manually_selected = true;
 	}
 	catch (const YAML::InvalidNode& e)
 	{
-		// TODO: try to find StarCraft path in registry, maybe?
-		starcraft_root = LocateStarCraftManually();
+		starcraft_root = LocateStarCraft();
 		starcraft_root_manually_selected = true;
 	}
 

@@ -8,6 +8,7 @@
     * `-skip-end-mission-prompt` - remove the win/lose dialog upon mission completion
     * `-help` - display a help message
   - Hide game type UI elements for directories during custom scenario selection
+  - Attempt to auto-detect the StarCraft installation directory
   - Fix issues with buildability flags in the bottom map corners (introduced in 0.1.0)
   - Fix an issue in units updaing within the game loop (introduced in 0.2.0)
   - Fix an issue in melee unit initialization (introduced in 0.2.0)
