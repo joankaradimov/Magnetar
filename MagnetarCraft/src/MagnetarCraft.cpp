@@ -170,7 +170,7 @@ void FastIndexInit_()
 
 FAIL_STUB_PATCH(FastIndexInit);
 
-std::string LocateStarCraftFromRegistry()
+std::filesystem::path LocateStarCraftFromRegistry()
 {
 	CHAR path[MAX_PATH];
 	DWORD path_lenth = sizeof(path);
@@ -183,10 +183,10 @@ std::string LocateStarCraftFromRegistry()
 		path,
 		&path_lenth);
 
-	return status == ERROR_SUCCESS ? std::string(path) : std::string();
+	return status == ERROR_SUCCESS ? std::filesystem::path(path) : std::filesystem::path();
 }
 
-std::string LocateStarCraftManually()
+std::filesystem::path LocateStarCraftManually()
 {
 	BROWSEINFOA browse_Info;
 	browse_Info.hwndOwner = nullptr;
@@ -205,14 +205,14 @@ std::string LocateStarCraftManually()
 		exit(1);
 	}
 
-	char path[MAX_PATH];
-	SHGetPathFromIDListA(item, path);
+	TCHAR path[MAX_PATH];
+	SHGetPathFromIDList(item, path);
 	return path;
 }
 
-std::string LocateStarCraft()
+std::filesystem::path LocateStarCraft()
 {
-	std::string starcraft_root = LocateStarCraftFromRegistry();
+	std::filesystem::path starcraft_root = LocateStarCraftFromRegistry();
 	if (!starcraft_root.empty())
 	{
 		return starcraft_root;
@@ -248,7 +248,7 @@ YAML::Node LoadConfig(const std::filesystem::path& config_filename)
 StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 {
 	bool starcraft_root_manually_selected = false;
-	std::string starcraft_root;
+	std::filesystem::path starcraft_root;
 
 	try
 	{
@@ -270,9 +270,9 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 	{
 		try
 		{
-			std::string starcraft_exe_path = starcraft_root + "\\StarCraft.exe";
-			SetDllDirectoryA(starcraft_root.c_str());
-			starcraft_exe = new StarCraftExecutable(starcraft_exe_path.c_str());
+			std::filesystem::path starcraft_exe_path = starcraft_root / "StarCraft.exe";
+			SetDllDirectory(starcraft_root.c_str());
+			starcraft_exe = new StarCraftExecutable(starcraft_exe_path);
 
 			// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
 			// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808

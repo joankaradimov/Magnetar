@@ -13,7 +13,7 @@ WORD EXPECTED_PATCH_VERSION = 1;
 #pragma section(".scimg", read, write)
 __declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 2];
 
-StarCraftExecutable::StarCraftExecutable(const char* path) : module(nullptr), file_info(path), executable_path(path)
+StarCraftExecutable::StarCraftExecutable(const std::filesystem::path& path) : module(nullptr), file_info(path), executable_path(path)
 {
 	if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END)
 	{

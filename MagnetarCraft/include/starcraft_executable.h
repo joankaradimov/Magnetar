@@ -7,7 +7,7 @@
 class StarCraftExecutable
 {
 public:
-	StarCraftExecutable(const char* path);
+	StarCraftExecutable(const std::filesystem::path& path);
 	~StarCraftExecutable();
 
 	std::filesystem::path GetParentDirectory();

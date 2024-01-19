@@ -1,13 +1,13 @@
 #include "file_info.h"
 
-FileInfo::FileInfo(const char* path) : version_data(nullptr)
+FileInfo::FileInfo(const std::filesystem::path& path) : version_data(nullptr)
 {
 	DWORD _unused;
-	int version_info_size = GetFileVersionInfoSizeA(path, &_unused);
+	int version_info_size = GetFileVersionInfoSize(path.c_str(), &_unused);
 	if (version_info_size)
 	{
 		version_data = malloc(version_info_size);
-		if (GetFileVersionInfoA(path, 0, version_info_size, version_data))
+		if (GetFileVersionInfo(path.c_str(), 0, version_info_size, version_data))
 		{
 			VS_FIXEDFILEINFO* file_info_buffer;
 			unsigned int file_info_buffer_length;

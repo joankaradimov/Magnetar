@@ -1,9 +1,10 @@
+#include <filesystem>
 #include <Windows.h>
 
 class FileInfo
 {
 public:
-	FileInfo(const char* path);
+	FileInfo(const std::filesystem::path& path);
 	~FileInfo();
 
 	bool is_valid();
