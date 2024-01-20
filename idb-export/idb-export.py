@@ -3,6 +3,7 @@ import collections
 import idautils
 
 from functools import cached_property
+from pathlib import Path
 
 class IdbExportError(Exception):
     pass
@@ -459,6 +460,8 @@ CPP_TEMPLATE = """#include "starcraft_exe/types.h"
 """
 
 def export(root_dir):
+    root_dir = Path(root_dir)
+
     function_declarations = []
     function_definitions = []
     export_functions(function_declarations, function_definitions)
@@ -471,13 +474,13 @@ def export(root_dir):
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
-    with open(root_dir + 'src/starcraft_exe/offsets.cpp', 'wt') as cpp_file:
+    with (root_dir / 'src' / 'starcraft_exe' / 'offsets.cpp').open('wt') as cpp_file:
         cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
 
-    with open(root_dir + 'include/starcraft_exe/offsets.h', 'wt') as header_file:
+    with (root_dir / 'include' / 'starcraft_exe' / 'offsets.h').open('wt') as header_file:
         header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
 
-    with open(root_dir + 'include/starcraft_exe/types.h', 'wt') as types_header_file:
+    with (root_dir / 'include' / 'starcraft_exe' / 'types.h').open('wt') as types_header_file:
         content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 
