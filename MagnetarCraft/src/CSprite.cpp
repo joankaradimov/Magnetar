@@ -78,7 +78,7 @@ int __stdcall ReadSpritesArray_(FILE* a1)
     return 1;
 }
 
-FUNCTION_PATCH(ReadSpritesArray, ReadSpritesArray_);
+FUNCTION_PATCH(ReadSpritesArray, ReadSpritesArray_, "starcraft");
 
 BOOL __stdcall writeSprites_(FILE* file)
 {
@@ -202,4 +202,4 @@ BOOL __stdcall writeSprites_(FILE* file)
     return result;
 }
 
-FUNCTION_PATCH(writeSprites, writeSprites_);
+FUNCTION_PATCH(writeSprites, writeSprites_, "starcraft");

@@ -24,7 +24,7 @@ void gluLoad_CustomCtrlID_(dialog* a1)
 	registerMenuFunctions_(functions, a1, sizeof(functions));
 }
 
-FAIL_STUB_PATCH(gluLoad_CustomCtrlID);
+FAIL_STUB_PATCH(gluLoad_CustomCtrlID, "starcraft");
 
 int __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -51,7 +51,7 @@ int __fastcall gluLoad_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluLoad_Main);
+FAIL_STUB_PATCH(gluLoad_Main, "starcraft");
 
 void loadMenu_gluLoad_()
 {
@@ -73,4 +73,4 @@ void loadMenu_gluLoad_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluLoad);
+FAIL_STUB_PATCH(loadMenu_gluLoad, "starcraft");

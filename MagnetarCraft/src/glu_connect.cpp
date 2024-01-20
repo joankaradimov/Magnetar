@@ -24,7 +24,7 @@ void InitNetProviders_(dialog* dlg)
 	selConn_connectionList_setSelection(dlg);
 }
 
-FAIL_STUB_PATCH(InitNetProviders);
+FAIL_STUB_PATCH(InitNetProviders, "starcraft");
 
 void selConn_connectionList_Create_(dialog* a1)
 {
@@ -38,7 +38,7 @@ void selConn_connectionList_Create_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(selConn_connectionList_Create);
+FAIL_STUB_PATCH(selConn_connectionList_Create, "starcraft");
 
 int __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -61,7 +61,7 @@ int __fastcall selConn_ConnectionList_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericListboxInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(selConn_ConnectionList_Interact);
+FAIL_STUB_PATCH(selConn_ConnectionList_Interact, "starcraft");
 
 int __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 {
@@ -88,7 +88,7 @@ int __fastcall GatewayListProc_(dialog* dlg, dlgEvent* evt)
 	return genericListboxInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(GatewayListProc);
+FAIL_STUB_PATCH(GatewayListProc, "starcraft");
 
 void ConnSel_InitChildren_(dialog* a1)
 {
@@ -122,7 +122,7 @@ void ConnSel_InitChildren_(dialog* a1)
 	registerMenuFunctions_(v2, a1, sizeof(v2));
 }
 
-FAIL_STUB_PATCH(ConnSel_InitChildren);
+FAIL_STUB_PATCH(ConnSel_InitChildren, "starcraft");
 
 int getGameList_(dialog* dlg)
 {
@@ -149,7 +149,7 @@ int getGameList_(dialog* dlg)
 	return LoadGameTemplates_(Template_Constructor);
 }
 
-FAIL_STUB_PATCH(getGameList);
+FAIL_STUB_PATCH(getGameList, "starcraft");
 
 int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -187,7 +187,7 @@ int __fastcall ConnSel_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(ConnSel_Interact);
+FAIL_STUB_PATCH(ConnSel_Interact, "starcraft");
 
 int Begin_BNET_(Char4 network_provider_id)
 {
@@ -206,7 +206,7 @@ int Begin_BNET_(Char4 network_provider_id)
 	return 0;
 }
 
-FAIL_STUB_PATCH(Begin_BNET);
+FAIL_STUB_PATCH(Begin_BNET, "starcraft");
 
 void loadMenu_gluConn_()
 {
@@ -229,4 +229,4 @@ void loadMenu_gluConn_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluConn);
+FAIL_STUB_PATCH(loadMenu_gluConn, "starcraft");

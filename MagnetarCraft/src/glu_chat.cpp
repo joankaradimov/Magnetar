@@ -28,7 +28,7 @@ void sub_4B8D90_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4B8D90);
+FAIL_STUB_PATCH(sub_4B8D90, "starcraft");
 
 void gluChat_init_(dialog* dlg)
 {
@@ -51,7 +51,7 @@ void gluChat_init_(dialog* dlg)
 	DlgSwooshin_(dlg, timers, 0);
 }
 
-FAIL_STUB_PATCH(gluChat_init);
+FAIL_STUB_PATCH(gluChat_init, "starcraft");
 
 void gluChat_CustomCtrlID_(dialog* dlg)
 {
@@ -146,7 +146,7 @@ void gluChat_CustomCtrlID_(dialog* dlg)
 	dword_6D5A38 = 0;
 }
 
-FAIL_STUB_PATCH(gluChat_CustomCtrlID);
+FAIL_STUB_PATCH(gluChat_CustomCtrlID, "starcraft");
 
 void SendLobbyMessage_()
 {
@@ -164,7 +164,7 @@ void SendLobbyMessage_()
 	}
 }
 
-FAIL_STUB_PATCH(SendLobbyMessage);
+FAIL_STUB_PATCH(SendLobbyMessage, "starcraft");
 
 int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 {
@@ -208,7 +208,7 @@ int gluChat_controlActivation_(signed int last_control_id, dialog* dlg)
 	return DLG_SwishOut_(dlg);
 }
 
-FAIL_STUB_PATCH(gluChat_controlActivation);
+FAIL_STUB_PATCH(gluChat_controlActivation, "starcraft");
 
 void __fastcall MinimapPreviewProc_(dialog* a1, __int16 _timer_id)
 {
@@ -223,7 +223,7 @@ void __fastcall MinimapPreviewProc_(dialog* a1, __int16 _timer_id)
 	}
 }
 
-FAIL_STUB_PATCH(MinimapPreviewProc);
+FAIL_STUB_PATCH(MinimapPreviewProc, "starcraft");
 
 void gluChat_HoverMinimapPreview_(dialog* dlg)
 {
@@ -235,7 +235,7 @@ void gluChat_HoverMinimapPreview_(dialog* dlg)
 	SetCallbackTimer(1, dlg, 1000, MinimapPreviewProc_);
 }
 
-FAIL_STUB_PATCH(gluChat_HoverMinimapPreview);
+FAIL_STUB_PATCH(gluChat_HoverMinimapPreview, "starcraft");
 
 bool __fastcall sub_4B9B10_(dialog* lobby_dlg)
 {
@@ -278,7 +278,7 @@ bool __fastcall sub_4B9B10_(dialog* lobby_dlg)
 	return result;
 }
 
-FAIL_STUB_PATCH(sub_4B9B10);
+FAIL_STUB_PATCH(sub_4B9B10, "starcraft");
 
 void sub_4B9BF0_(dialog* dlg)
 {
@@ -292,7 +292,7 @@ void sub_4B9BF0_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4B9BF0);
+FAIL_STUB_PATCH(sub_4B9BF0, "starcraft");
 
 bool IsCursorWithin(pt cursor, rect rectangle)
 {
@@ -366,7 +366,7 @@ int __fastcall gluChat_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluChat_Main);
+FAIL_STUB_PATCH(gluChat_Main, "starcraft");
 
 void loadMenu_gluChat_()
 {
@@ -422,4 +422,4 @@ void loadMenu_gluChat_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluChat);
+FAIL_STUB_PATCH(loadMenu_gluChat, "starcraft");

@@ -54,10 +54,10 @@ CampaignMenuEntryEx epilog(const char* epilog, const MusicTrackDescription* epil
 
 std::unique_ptr<CampaignSet> active_campaign_set;
 
-MEMORY_PATCH(0x4B69CA, (BYTE)sizeof(CampaignMenuEntryEx));
+MEMORY_PATCH(0x4B69CA, (BYTE)sizeof(CampaignMenuEntryEx), "starcraft");
 
 // Switch between building portraits in campaigns (Overmind/Daggoth and Aldaris/Fenix):
-MEMORY_PATCH(0x45E350, (BYTE)EMD_protoss10);
-MEMORY_PATCH(0x45F02A, (BYTE)EMD_protoss10);
-MEMORY_PATCH(0x45E33F, (BYTE)EMD_protoss07);
-MEMORY_PATCH(0x45F019, (BYTE)EMD_protoss07);
+MEMORY_PATCH(0x45E350, (BYTE)EMD_protoss10, "starcraft");
+MEMORY_PATCH(0x45F02A, (BYTE)EMD_protoss10, "starcraft");
+MEMORY_PATCH(0x45E33F, (BYTE)EMD_protoss07, "starcraft");
+MEMORY_PATCH(0x45F019, (BYTE)EMD_protoss07, "starcraft");

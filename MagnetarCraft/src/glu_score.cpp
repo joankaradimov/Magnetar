@@ -73,7 +73,7 @@ int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 	return 1;
 }
 
-FAIL_STUB_PATCH(endgameData);
+FAIL_STUB_PATCH(endgameData, "starcraft");
 
 int __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 {
@@ -130,7 +130,7 @@ int __fastcall gluScore_Tab_(dialog* dlg, dlgEvent* evt)
 	return genericOptionInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluScore_Tab);
+FAIL_STUB_PATCH(gluScore_Tab, "starcraft");
 
 int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 {
@@ -186,7 +186,7 @@ int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 	return 0;
 }
 
-FAIL_STUB_PATCH(gluScore_PlayerRaceIcon);
+FAIL_STUB_PATCH(gluScore_PlayerRaceIcon, "starcraft");
 
 int sub_4B4600_(dialog* a1)
 {
@@ -253,7 +253,7 @@ int sub_4B4600_(dialog* a1)
 	return sub_4B42D0(a1);
 }
 
-FAIL_STUB_PATCH(sub_4B4600);
+FAIL_STUB_PATCH(sub_4B4600, "starcraft");
 
 int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 {
@@ -285,7 +285,7 @@ int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 	return Menu_Generic_Button(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluScore_SaveReplay);
+FAIL_STUB_PATCH(gluScore_SaveReplay, "starcraft");
 
 void gluScore_CustomCtrlID_(dialog* dlg)
 {
@@ -359,7 +359,7 @@ void gluScore_CustomCtrlID_(dialog* dlg)
 	registerMenuFunctions_(gluScore_menu_functions, dlg, sizeof(gluScore_menu_functions));
 }
 
-FAIL_STUB_PATCH(gluScore_CustomCtrlID);
+FAIL_STUB_PATCH(gluScore_CustomCtrlID, "starcraft");
 
 int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -386,7 +386,7 @@ int __fastcall gluScore_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluScore_Main);
+FAIL_STUB_PATCH(gluScore_Main, "starcraft");
 
 const char* victory_screens[] = {
 	"glue\\scoreZv\\",
@@ -472,4 +472,4 @@ void loadMenu_gluScore_()
 	dword_59B618 = 0;
 }
 
-FAIL_STUB_PATCH(loadMenu_gluScore);
+FAIL_STUB_PATCH(loadMenu_gluScore, "starcraft");

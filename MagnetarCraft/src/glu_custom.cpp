@@ -24,7 +24,7 @@ void gluCustm_initSwish_(dialog* dlg)
 	getControlFromIndex_(dlg, 6)->pfcnUpdate = gluCustm_UpdateCB;
 }
 
-FAIL_STUB_PATCH(gluCustm_initSwish);
+FAIL_STUB_PATCH(gluCustm_initSwish, "starcraft");
 
 void InitGlueMapListBox_()
 {
@@ -52,7 +52,7 @@ void InitGlueMapListBox_()
 	}
 }
 
-FAIL_STUB_PATCH(InitGlueMapListBox);
+FAIL_STUB_PATCH(InitGlueMapListBox, "starcraft");
 
 int gluCustmLoadMapFromList_()
 {
@@ -125,7 +125,7 @@ int gluCustmLoadMapFromList_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(gluCustmLoadMapFromList);
+FAIL_STUB_PATCH(gluCustmLoadMapFromList, "starcraft");
 
 int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -160,7 +160,7 @@ int __fastcall gluCustm_FileListbox_Main_(dialog* dlg, dlgEvent* evt)
 	return genericListboxInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCustm_FileListbox_Main);
+FAIL_STUB_PATCH(gluCustm_FileListbox_Main, "starcraft");
 
 void gluCustm_raceDropdown_(dialog* a1)
 {
@@ -194,7 +194,7 @@ void gluCustm_raceDropdown_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(gluCustm_raceDropdown);
+FAIL_STUB_PATCH(gluCustm_raceDropdown, "starcraft");
 
 void gluCustm_typeDropdown_(dialog* dlg)
 {
@@ -229,7 +229,7 @@ void gluCustm_typeDropdown_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(gluCustm_typeDropdown);
+FAIL_STUB_PATCH(gluCustm_typeDropdown, "starcraft");
 
 int __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 {
@@ -252,7 +252,7 @@ int __fastcall gluCustm_PlayerSlot_(dialog* dlg, dlgEvent* evt)
 	return genericComboboxInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCustm_PlayerSlot);
+FAIL_STUB_PATCH(gluCustm_PlayerSlot, "starcraft");
 
 int __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 {
@@ -272,7 +272,7 @@ int __fastcall gluCustm_RaceSlot_(dialog* dlg, dlgEvent* evt)
 	return genericComboboxInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCustm_RaceSlot);
+FAIL_STUB_PATCH(gluCustm_RaceSlot, "starcraft");
 
 void gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 {
@@ -330,7 +330,7 @@ void gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(gluCustm_CustomCtrl_InitializeChildren);
+FAIL_STUB_PATCH(gluCustm_CustomCtrl_InitializeChildren, "starcraft");
 
 int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -389,7 +389,7 @@ int __fastcall gluCustm_Interact_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCustm_Interact);
+FAIL_STUB_PATCH(gluCustm_Interact, "starcraft");
 
 void loadMenu_gluCustm_(int is_multiplayer)
 {
@@ -463,4 +463,4 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	dword_6D5A74 = 0;
 }
 
-FAIL_STUB_PATCH(loadMenu_gluCustm);
+FAIL_STUB_PATCH(loadMenu_gluCustm, "starcraft");

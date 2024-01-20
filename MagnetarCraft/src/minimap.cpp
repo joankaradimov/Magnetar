@@ -21,7 +21,7 @@ void __stdcall MinimapPing_maybe_(unsigned __int16 pos_x, unsigned __int16 pos_y
 	}
 }
 
-FUNCTION_PATCH(MinimapPing_maybe, MinimapPing_maybe_);
+FUNCTION_PATCH(MinimapPing_maybe, MinimapPing_maybe_, "starcraft");
 
 void CreateMinimapSurface_()
 {
@@ -34,7 +34,7 @@ void CreateMinimapSurface_()
 	minimap_surface_no_fog.data = (u8*)SMemAlloc(minimap_surface_width * minimap_surface_height, "Starcraft\\SWAR\\lang\\minimap.cpp", 1636, 0);
 }
 
-FAIL_STUB_PATCH(CreateMinimapSurface);
+FAIL_STUB_PATCH(CreateMinimapSurface, "starcraft");
 
 void sub_4A3A00_()
 {
@@ -47,7 +47,7 @@ void sub_4A3A00_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4A3A00);
+FAIL_STUB_PATCH(sub_4A3A00, "starcraft");
 
 template <int PIXEL_STRIDE>
 void minimapVisionUpdateMegatile(int flags, int x, int y)
@@ -110,16 +110,16 @@ void minimapVisionUpdate_()
 	}
 }
 
-FAIL_STUB_PATCH(minimapVisionUpdate_64);
-FAIL_STUB_PATCH(minimapVisionUpdate_96_128);
-FAIL_STUB_PATCH(minimapVisionUpdate_192_256);
+FAIL_STUB_PATCH(minimapVisionUpdate_64, "starcraft");
+FAIL_STUB_PATCH(minimapVisionUpdate_96_128, "starcraft");
+FAIL_STUB_PATCH(minimapVisionUpdate_192_256, "starcraft");
 
 char sub_4A3D40_(__int16 cell, int minitile_y, int minitile_x)
 {
 	return byte_59CB60[VR4Data->cdata[4 * (VX4Data[cell].wImageRef[minitile_y][minitile_x] & 0xFFFE) + 6][7]];
 }
 
-FAIL_STUB_PATCH(sub_4A3D40);
+FAIL_STUB_PATCH(sub_4A3D40, "starcraft");
 
 void getMinimapCursorPos_(int* x, int* y)
 {
@@ -147,7 +147,7 @@ void getMinimapCursorPos_(int* x, int* y)
 	*y *= word_59CC6C;
 }
 
-FAIL_STUB_PATCH(getMinimapCursorPos);
+FAIL_STUB_PATCH(getMinimapCursorPos, "starcraft");
 
 void minimapGameResetMouseInput_(dialog* dlg)
 {
@@ -162,7 +162,7 @@ void minimapGameResetMouseInput_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(minimapGameResetMouseInput);
+FAIL_STUB_PATCH(minimapGameResetMouseInput, "starcraft");
 
 void sub_4A4150_()
 {
@@ -177,7 +177,7 @@ void sub_4A4150_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4A4150);
+FAIL_STUB_PATCH(sub_4A4150, "starcraft");
 
 template <int PIXEL_STRIDE>
 void minimapSurfaceUpdateMegatile(int x, int y)
@@ -205,9 +205,9 @@ void minimapSurfaceUpdate_()
 	}
 }
 
-FAIL_STUB_PATCH(minimapSurfaceUpdate_64);
-FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128);
-FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256);
+FAIL_STUB_PATCH(minimapSurfaceUpdate_64, "starcraft", "starcraft");
+FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128, "starcraft", "starcraft");
+FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256, "starcraft", "starcraft");
 
 void drawAllMinimapBoxes_()
 {
@@ -270,7 +270,7 @@ void drawAllMinimapBoxes_()
 	dword_6CF4A8 = v0;
 }
 
-FAIL_STUB_PATCH(drawAllMinimapBoxes);
+FAIL_STUB_PATCH(drawAllMinimapBoxes, "starcraft");
 
 void minimapGameUpdate_(dialog* a1)
 {
@@ -288,7 +288,7 @@ void minimapGameUpdate_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(minimapGameUpdate);
+FAIL_STUB_PATCH(minimapGameUpdate, "starcraft");
 
 void minimapGameMouseUpdate_(dialog* dlg)
 {
@@ -320,7 +320,7 @@ void minimapGameMouseUpdate_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(minimapGameMouseUpdate);
+FAIL_STUB_PATCH(minimapGameMouseUpdate, "starcraft");
 
 void setMinimapConstants()
 {
@@ -400,7 +400,7 @@ void setMapSizeConstants_()
 	stru_512D00.bottom = minimap_dialog->rct.top + minimap_surface_height + 314;
 }
 
-FAIL_STUB_PATCH(setMapSizeConstants);
+FAIL_STUB_PATCH(setMapSizeConstants, "starcraft");
 
 void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
 {
@@ -420,7 +420,7 @@ void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
 	HasMegatileUpdate = 0;
 }
 
-FAIL_STUB_PATCH(Minimap_TimerRefresh);
+FAIL_STUB_PATCH(Minimap_TimerRefresh, "starcraft");
 
 void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 {
@@ -452,7 +452,7 @@ void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 	}
 }
 
-FAIL_STUB_PATCH(updateMinimapSurfaceInfoProc);
+FAIL_STUB_PATCH(updateMinimapSurfaceInfoProc, "starcraft");
 
 void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 {
@@ -490,7 +490,7 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 	}
 }
 
-FAIL_STUB_PATCH(updateMinimapSurfaceInfo2Proc);
+FAIL_STUB_PATCH(updateMinimapSurfaceInfo2Proc, "starcraft");
 
 void minimapPreviewUpdateState_()
 {
@@ -504,7 +504,7 @@ void minimapPreviewUpdateState_()
 	}
 }
 
-FAIL_STUB_PATCH(minimapPreviewUpdateState);
+FAIL_STUB_PATCH(minimapPreviewUpdateState, "starcraft");
 
 void MinimapGameRightclickEventMoveto_(dialog* dlg)
 {
@@ -537,7 +537,7 @@ void MinimapGameRightclickEventMoveto_(dialog* dlg)
 	minimapGameMouseUpdate_(dlg);
 }
 
-FAIL_STUB_PATCH(MinimapGameRightclickEventMoveto);
+FAIL_STUB_PATCH(MinimapGameRightclickEventMoveto, "starcraft");
 
 void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 {
@@ -559,7 +559,7 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(MinimapGameClickEvent);
+FAIL_STUB_PATCH(MinimapGameClickEvent, "starcraft");
 
 void minimap_dlg_Activate_(dialog* dlg)
 {
@@ -590,7 +590,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(minimap_dlg_Activate);
+FAIL_STUB_PATCH(minimap_dlg_Activate, "starcraft");
 
 int __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 {
@@ -620,7 +620,7 @@ int __fastcall MinimapButton_EventHandler_(dialog* dlg, dlgEvent* evt)
 	return GenericControlInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(MinimapButton_EventHandler);
+FAIL_STUB_PATCH(MinimapButton_EventHandler, "starcraft");
 
 void MinimapGameTargetOrder_(dlgEvent* event)
 {
@@ -636,7 +636,7 @@ void MinimapGameTargetOrder_(dlgEvent* event)
 	GroundAttackInit_(x, y);
 }
 
-FAIL_STUB_PATCH(MinimapGameTargetOrder);
+FAIL_STUB_PATCH(MinimapGameTargetOrder, "starcraft");
 
 void CMDACT_RightClick_(dlgEvent* dlg);
 
@@ -703,7 +703,7 @@ int __fastcall MinimapImageInteract_(dialog* dlg, dlgEvent* evt)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 }
 
-FAIL_STUB_PATCH(MinimapImageInteract);
+FAIL_STUB_PATCH(MinimapImageInteract, "starcraft");
 
 void updateMinimapPreviewDlg_(dialog* dlg)
 {
@@ -765,7 +765,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(updateMinimapPreviewDlg);
+FAIL_STUB_PATCH(updateMinimapPreviewDlg, "starcraft");
 
 void setMinimapConstants();
 void setMapSizeConstants_();
@@ -855,7 +855,7 @@ int __fastcall MiniMapPreviewInteract_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(MiniMapPreviewInteract);
+FAIL_STUB_PATCH(MiniMapPreviewInteract, "starcraft");
 
 void load_gluMinimap_()
 {
@@ -911,7 +911,7 @@ void load_gluMinimap_()
 	}
 }
 
-FAIL_STUB_PATCH(load_gluMinimap);
+FAIL_STUB_PATCH(load_gluMinimap, "starcraft");
 
 void load_MinimapPreview_()
 {
@@ -919,4 +919,4 @@ void load_MinimapPreview_()
 	InitializeDialog_(minimap_Dlg, MiniMapPreviewInteract_);
 }
 
-FAIL_STUB_PATCH(load_MinimapPreview);
+FAIL_STUB_PATCH(load_MinimapPreview, "starcraft");

@@ -32,7 +32,7 @@ void ISCRIPT_PlayFrame_(CImage* image, int a2)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_PlayFrame);
+FAIL_STUB_PATCH(ISCRIPT_PlayFrame, "starcraft");
 
 void ISCRIPT_setPosition_(CImage* image, char x, char y)
 {
@@ -44,7 +44,7 @@ void ISCRIPT_setPosition_(CImage* image, char x, char y)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_setPosition);
+FAIL_STUB_PATCH(ISCRIPT_setPosition, "starcraft");
 
 void ISCRIPT_UseLOFile_(point* p, CImage* image, OverlayType overlay_type, int a4)
 {
@@ -56,7 +56,7 @@ void ISCRIPT_UseLOFile_(point* p, CImage* image, OverlayType overlay_type, int a
     p->y = (char)v5->y;
 }
 
-FAIL_STUB_PATCH(ISCRIPT_UseLOFile);
+FAIL_STUB_PATCH(ISCRIPT_UseLOFile, "starcraft");
 
 CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x, int y, char elevation_level)
 {
@@ -69,7 +69,7 @@ CThingy* ISCRIPT_CreateSprite_(CImage* image, unsigned __int16 sprite_id, int x,
     return result;
 }
 
-FAIL_STUB_PATCH(ISCRIPT_CreateSprite);
+FAIL_STUB_PATCH(ISCRIPT_CreateSprite, "starcraft");
 
 void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
 {
@@ -101,7 +101,7 @@ void FireUnitWeapon_(CUnit* unit, WeaponType weapon_id)
     }
 }
 
-FAIL_STUB_PATCH(FireUnitWeapon);
+FAIL_STUB_PATCH(FireUnitWeapon, "starcraft");
 
 void ISCRIPT_CastSpell_(WeaponType weapon_id)
 {
@@ -112,7 +112,7 @@ void ISCRIPT_CastSpell_(WeaponType weapon_id)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_CastSpell);
+FAIL_STUB_PATCH(ISCRIPT_CastSpell, "starcraft");
 
 void ISCRIPT_AttackMelee_()
 {
@@ -131,7 +131,7 @@ void ISCRIPT_AttackMelee_()
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_AttackMelee);
+FAIL_STUB_PATCH(ISCRIPT_AttackMelee, "starcraft");
 
 void flipImage_(CImage* image, char is_flipped)
 {
@@ -154,7 +154,7 @@ void flipImage_(CImage* image, char is_flipped)
     }
 }
 
-FAIL_STUB_PATCH(flipImage);
+FAIL_STUB_PATCH(flipImage, "starcraft");
 
 void ISCRIPT_AttackWith_(u8 is_ground_weapon)
 {
@@ -179,7 +179,7 @@ void ISCRIPT_AttackWith_(u8 is_ground_weapon)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_AttackWith);
+FAIL_STUB_PATCH(ISCRIPT_AttackWith, "starcraft");
 
 void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
 {
@@ -193,21 +193,21 @@ void ISCRIPT_UseWeapon_(CUnit* unit, WeaponType weapon_type)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_UseWeapon);
+FAIL_STUB_PATCH(ISCRIPT_UseWeapon, "starcraft");
 
 void turn_unit_left_(CUnit* unit, char a2)
 {
     turnUnit(unit, unit->currentDirection1 - 8 * a2);
 }
 
-FAIL_STUB_PATCH(turn_unit_left);
+FAIL_STUB_PATCH(turn_unit_left, "starcraft");
 
 void turn_unit_right_(CUnit* unit, char a2)
 {
     turnUnit(unit, unit->currentDirection1 + 8 * a2);
 }
 
-FAIL_STUB_PATCH(turn_unit_right);
+FAIL_STUB_PATCH(turn_unit_right, "starcraft");
 
 void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 {
@@ -220,7 +220,7 @@ void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
     }
 }
 
-FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd);
+FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd, "starcraft");
 
 void ISCRIPT_PlaySnd_(SfxData sfx, CImage* image)
 {
@@ -228,7 +228,7 @@ void ISCRIPT_PlaySnd_(SfxData sfx, CImage* image)
     PlaySoundAtPos_(sfx, p, 1, 0);
 }
 
-FAIL_STUB_PATCH(ISCRIPT_PlaySnd);
+FAIL_STUB_PATCH(ISCRIPT_PlaySnd, "starcraft");
 
 void init_iscript_program_state(IScriptProgramState* program_state, Anims animation)
 {
@@ -1051,7 +1051,7 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
     }
 }
 
-FAIL_STUB_PATCH(BWFXN_PlayIscript);
+FAIL_STUB_PATCH(BWFXN_PlayIscript, "starcraft");
 
 void BWFXN_PlayIscript_(CImage* image, IScriptProgramState* program_state)
 {
@@ -1101,4 +1101,4 @@ void __stdcall PlayIscriptAnim__(Anims new_animation)
     PlayIscriptAnim_(image, new_animation);
 }
 
-FUNCTION_PATCH((void*)0x4D8470, PlayIscriptAnim__);
+FUNCTION_PATCH((void*)0x4D8470, PlayIscriptAnim__, "starcraft");

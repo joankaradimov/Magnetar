@@ -11,24 +11,24 @@
 #include "starcraft_executable.h"
 
 // Patch clib functions that use FILE
-FUNCTION_PATCH((void*)0x4116F5, _fread_nolock);
-FUNCTION_PATCH((void*)0x4117DE, fread);
-FUNCTION_PATCH((void*)0x41182A, _fwrite_nolock);
-FUNCTION_PATCH((void*)0x411931, fwrite);
-FUNCTION_PATCH((void*)0x41197D, ftell);
-FUNCTION_PATCH((void*)0x411ADF, fseek);
-FUNCTION_PATCH((void*)0x411B6E, _fseek_nolock);
-FUNCTION_PATCH((void*)0x411BB7, fgetc);
-FUNCTION_PATCH((void*)0x40D3C8, _fsopen);
-FUNCTION_PATCH((void*)0x40D424, fopen);
-FUNCTION_PATCH((void*)0x40D437, fclose);
-FUNCTION_PATCH((void*)0x40D483, _fclose_nolock);
-FUNCTION_PATCH((void*)0x40D983, _lock_file);
-FUNCTION_PATCH((void*)0x40D9D5, _unlock_file);
-FUNCTION_PATCH((void*)0x411619, setvbuf);
-FUNCTION_PATCH((void*)0x40DE57, fflush);
-FUNCTION_PATCH((void*)0x40DF5A, flushall);
-FUNCTION_PATCH((void*)0x40EBA2, fcloseall);
+FUNCTION_PATCH((void*)0x4116F5, _fread_nolock, "starcraft");
+FUNCTION_PATCH((void*)0x4117DE, fread, "starcraft");
+FUNCTION_PATCH((void*)0x41182A, _fwrite_nolock, "starcraft");
+FUNCTION_PATCH((void*)0x411931, fwrite, "starcraft");
+FUNCTION_PATCH((void*)0x41197D, ftell, "starcraft");
+FUNCTION_PATCH((void*)0x411ADF, fseek, "starcraft");
+FUNCTION_PATCH((void*)0x411B6E, _fseek_nolock, "starcraft");
+FUNCTION_PATCH((void*)0x411BB7, fgetc, "starcraft");
+FUNCTION_PATCH((void*)0x40D3C8, _fsopen, "starcraft");
+FUNCTION_PATCH((void*)0x40D424, fopen, "starcraft");
+FUNCTION_PATCH((void*)0x40D437, fclose, "starcraft");
+FUNCTION_PATCH((void*)0x40D483, _fclose_nolock, "starcraft");
+FUNCTION_PATCH((void*)0x40D983, _lock_file, "starcraft");
+FUNCTION_PATCH((void*)0x40D9D5, _unlock_file, "starcraft");
+FUNCTION_PATCH((void*)0x411619, setvbuf, "starcraft");
+FUNCTION_PATCH((void*)0x40DE57, fflush, "starcraft");
+FUNCTION_PATCH((void*)0x40DF5A, flushall, "starcraft");
+FUNCTION_PATCH((void*)0x40EBA2, fcloseall, "starcraft");
 
 void init_stacraftexe_clib()
 {
@@ -123,7 +123,7 @@ int VerifySystemMemory_()
 	}
 }
 
-FAIL_STUB_PATCH(VerifySystemMemory);
+FAIL_STUB_PATCH(VerifySystemMemory, "starcraft");
 
 HWND GetClassWindow_(const char* a1)
 {
@@ -145,7 +145,7 @@ HWND GetClassWindow_(const char* a1)
 	return v1;
 }
 
-FAIL_STUB_PATCH(GetClassWindow);
+FAIL_STUB_PATCH(GetClassWindow, "starcraft");
 
 void FastIndexInit_()
 {
@@ -168,7 +168,7 @@ void FastIndexInit_()
 	dword_6D11DC = v2 != 0;
 }
 
-FAIL_STUB_PATCH(FastIndexInit);
+FAIL_STUB_PATCH(FastIndexInit, "starcraft");
 
 std::filesystem::path LocateStarCraftFromRegistry()
 {

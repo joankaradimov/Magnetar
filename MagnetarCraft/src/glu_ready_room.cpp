@@ -22,7 +22,7 @@ void rdyPFrame_()
 	LoadBriefingFrameImages(v1, v2);
 }
 
-FAIL_STUB_PATCH(rdyPFrame);
+FAIL_STUB_PATCH(rdyPFrame, "starcraft");
 
 void RdyTFrame_()
 {
@@ -43,7 +43,7 @@ void RdyTFrame_()
 	LoadBriefingFrameImages(v1, v2);
 }
 
-FAIL_STUB_PATCH(RdyTFrame);
+FAIL_STUB_PATCH(RdyTFrame, "starcraft");
 
 void RdyZFrame_()
 {
@@ -64,7 +64,7 @@ void RdyZFrame_()
 	LoadBriefingFrameImages(v1, v2);
 }
 
-FAIL_STUB_PATCH(RdyZFrame);
+FAIL_STUB_PATCH(RdyZFrame, "starcraft");
 
 void gluRdy_CustomCtrlID_(dialog* dlg)
 {
@@ -106,9 +106,9 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 	registerMenuFunctions_(functions, dlg, sizeof(functions));
 }
 
-FAIL_STUB_PATCH(gluRdyP_CustomCtrlID);
-FAIL_STUB_PATCH(gluRdyT_CustomCtrlID);
-FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID);
+FAIL_STUB_PATCH(gluRdyP_CustomCtrlID, "starcraft");
+FAIL_STUB_PATCH(gluRdyT_CustomCtrlID, "starcraft");
+FAIL_STUB_PATCH(gluRdyZ_CustomCtrlID, "starcraft");
 
 int sub_46D160_(dialog* dlg)
 {
@@ -129,7 +129,7 @@ int sub_46D160_(dialog* dlg)
 	return (unsigned __int8) DLG_SwishOut(dlg);
 }
 
-FAIL_STUB_PATCH(sub_46D160);
+FAIL_STUB_PATCH(sub_46D160, "starcraft");
 
 int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 {
@@ -168,9 +168,9 @@ int __fastcall gluRdy_BINDLG_Loop(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluRdyT_BINDLG_Loop);
-FAIL_STUB_PATCH(gluRdyZ_BINDLG_Loop);
-FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop);
+FAIL_STUB_PATCH(gluRdyT_BINDLG_Loop, "starcraft");
+FAIL_STUB_PATCH(gluRdyZ_BINDLG_Loop, "starcraft");
+FAIL_STUB_PATCH(gluRdyP_BINDLG_Loop, "starcraft");
 
 void loadMenu_gluRdy(RaceId race)
 {
@@ -216,6 +216,6 @@ void loadMenu_gluRdy(RaceId race)
 	}
 }
 
-FAIL_STUB_PATCH(loadMenu_gluRdyT);
-FAIL_STUB_PATCH(loadMenu_gluRdyZ);
-FAIL_STUB_PATCH(loadMenu_gluRdyP);
+FAIL_STUB_PATCH(loadMenu_gluRdyT, "starcraft");
+FAIL_STUB_PATCH(loadMenu_gluRdyZ, "starcraft");
+FAIL_STUB_PATCH(loadMenu_gluRdyP, "starcraft");

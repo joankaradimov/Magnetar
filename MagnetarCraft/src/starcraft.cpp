@@ -100,7 +100,7 @@ void __cdecl SetGameSpeed_maybe__()
 	SetGameSpeed_maybe_(game_speed, a2, speed_multiplier);
 }
 
-FUNCTION_PATCH((void*)0x4DEB90, SetGameSpeed_maybe__);
+FUNCTION_PATCH((void*)0x4DEB90, SetGameSpeed_maybe__, "starcraft");
 
 void SetCursorClipBounds_()
 {
@@ -119,7 +119,7 @@ void SetCursorClipBounds_()
 	}
 }
 
-FUNCTION_PATCH(SetCursorClipBounds, SetCursorClipBounds_);
+FUNCTION_PATCH(SetCursorClipBounds, SetCursorClipBounds_, "starcraft");
 
 void InitializeInputProcs_()
 {
@@ -141,7 +141,7 @@ void InitializeInputProcs_()
 	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
 }
 
-FAIL_STUB_PATCH(InitializeInputProcs);
+FAIL_STUB_PATCH(InitializeInputProcs, "starcraft");
 
 int IsOutsideGameScreen_(int x, int y)
 {
@@ -163,7 +163,7 @@ int IsOutsideGameScreen_(int x, int y)
 	return cached_game_screen_region_check_result;
 }
 
-FAIL_STUB_PATCH(IsOutsideGameScreen);
+FAIL_STUB_PATCH(IsOutsideGameScreen, "starcraft");
 
 u16 setBuildingSelPortrait_(UnitType unit_type)
 {
@@ -184,7 +184,7 @@ u16 setBuildingSelPortrait_(UnitType unit_type)
 	return portrait_id;
 }
 
-FAIL_STUB_PATCH(setBuildingSelPortrait);
+FAIL_STUB_PATCH(setBuildingSelPortrait, "starcraft");
 
 void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 {
@@ -278,7 +278,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 	return;
 }
 
-FAIL_STUB_PATCH(sub_45EC40);
+FAIL_STUB_PATCH(sub_45EC40, "starcraft");
 
 void keyPress_Escape_()
 {
@@ -305,7 +305,7 @@ void keyPress_Escape_()
 	}
 }
 
-FAIL_STUB_PATCH(keyPress_Escape);
+FAIL_STUB_PATCH(keyPress_Escape, "starcraft");
 
 void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
 {
@@ -319,7 +319,7 @@ void __fastcall input_Game_UserKeyPress_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_Game_UserKeyPress);
+FAIL_STUB_PATCH(input_Game_UserKeyPress, "starcraft");
 
 void sub_496E90_(unsigned __int8 a1)
 {
@@ -327,7 +327,7 @@ void sub_496E90_(unsigned __int8 a1)
 	selectUnitGroup(a1);
 }
 
-FAIL_STUB_PATCH(sub_496E90);
+FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
 void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 {
@@ -599,7 +599,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(CMDACT_Hotkey);
+FAIL_STUB_PATCH(CMDACT_Hotkey, "starcraft");
 
 void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
 {
@@ -624,7 +624,7 @@ void __fastcall input_placeBuilding_LeftMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_placeBuilding_LeftMouseClick);
+FAIL_STUB_PATCH(input_placeBuilding_LeftMouseClick, "starcraft");
 
 void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 {
@@ -635,14 +635,14 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick);
+FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick, "starcraft");
 
 IScriptProgram* sub_4D4D70_(int a1)
 {
 	return (IScriptProgram*)&iscript_data->data[a1];
 }
 
-FAIL_STUB_PATCH(sub_4D4D70);
+FAIL_STUB_PATCH(sub_4D4D70, "starcraft");
 
 int sub_42D600_(Anims animation)
 {
@@ -665,7 +665,7 @@ int sub_42D600_(Anims animation)
 	}
 }
 
-FAIL_STUB_PATCH(sub_42D600);
+FAIL_STUB_PATCH(sub_42D600, "starcraft");
 
 void sub_42D8C0_(CUnit* unit)
 {
@@ -721,7 +721,7 @@ void sub_42D8C0__()
 	sub_42D8C0_(unit);
 }
 
-FUNCTION_PATCH((void*)0x42D8C0, sub_42D8C0__);
+FUNCTION_PATCH((void*)0x42D8C0, sub_42D8C0__, "starcraft");
 
 
 void __fastcall iscriptSomething_Death_(CImage* image)
@@ -752,7 +752,7 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 	}
 }
 
-FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_);
+FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_, "starcraft");
 
 void DLGErrFatal_()
 {
@@ -766,7 +766,7 @@ void DLGErrFatal_()
 	ExitProcess(1);
 }
 
-FAIL_STUB_PATCH(DLGErrFatal);
+FAIL_STUB_PATCH(DLGErrFatal, "starcraft");
 
 bool ErrMessageBox_(__int16 a1, LPCSTR lpText, LPCSTR lpCaption)
 {
@@ -795,7 +795,7 @@ bool ErrMessageBox_(__int16 a1, LPCSTR lpText, LPCSTR lpCaption)
 	return result;
 }
 
-FAIL_STUB_PATCH(ErrMessageBox);
+FAIL_STUB_PATCH(ErrMessageBox, "starcraft");
 
 void BWFXN_DSoundDestroy_();
 
@@ -811,7 +811,7 @@ void sub_421510_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_421510);
+FAIL_STUB_PATCH(sub_421510, "starcraft");
 
 void FatalError_(const char* arg0, ...)
 {
@@ -829,7 +829,7 @@ void FatalError_(const char* arg0, ...)
 	DLGErrFatal_();
 }
 
-FUNCTION_PATCH(FatalError, FatalError_);
+FUNCTION_PATCH(FatalError, FatalError_, "starcraft");
 
 std::unordered_map<u16, u16> iscript_id_to_pc;
 
@@ -854,7 +854,7 @@ void isValidScript__()
 	isValidScript_(image, a2);
 }
 
-FUNCTION_PATCH((void*)0x4D6640, isValidScript__);
+FUNCTION_PATCH((void*)0x4D6640, isValidScript__, "starcraft");
 
 void PlayWarpInOverlay_(CImage* image)
 {
@@ -869,7 +869,7 @@ void PlayWarpInOverlay_(CImage* image)
 	BWFXN_PlayIscript_(image, &image->iscript_program);
 }
 
-FAIL_STUB_PATCH(PlayWarpInOverlay);
+FAIL_STUB_PATCH(PlayWarpInOverlay, "starcraft");
 
 void orders_bldgUnderConstruction_Protoss_(CUnit* unit)
 {
@@ -979,7 +979,7 @@ void orders_bldgUnderConstruction_Protoss__()
 	orders_bldgUnderConstruction_Protoss_(unit);
 }
 
-FUNCTION_PATCH((void*)0x4E4F40, orders_bldgUnderConstruction_Protoss__);
+FUNCTION_PATCH((void*)0x4E4F40, orders_bldgUnderConstruction_Protoss__, "starcraft");
 
 void sub_497A10_(CSprite* sprite, __int16 x, __int16 y)
 {
@@ -1054,7 +1054,7 @@ void __cdecl sub_497A10__()
 	sub_497A10_(sprite, x, y);
 }
 
-FUNCTION_PATCH((void*)0x497A10, sub_497A10__);
+FUNCTION_PATCH((void*)0x497A10, sub_497A10__, "starcraft");
 
 void GroundAttackInit_(__int16 x, __int16 y)
 {
@@ -1071,7 +1071,7 @@ void GroundAttackInit_(__int16 x, __int16 y)
 	wantThingyUpdate = 1;
 }
 
-FAIL_STUB_PATCH(GroundAttackInit);
+FAIL_STUB_PATCH(GroundAttackInit, "starcraft");
 
 CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
 {
@@ -1092,7 +1092,7 @@ CThingy* sub_456490_(__int16 x, __int16 y, CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(sub_456490);
+FAIL_STUB_PATCH(sub_456490, "starcraft");
 
 void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
 {
@@ -1107,7 +1107,7 @@ void __fastcall input_targetOrder_LeftMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_targetOrder_LeftMouseClick);
+FAIL_STUB_PATCH(input_targetOrder_LeftMouseClick, "starcraft");
 
 void __fastcall input_targetOrder_RightMouseClick_(dlgEvent* event)
 {
@@ -1117,7 +1117,7 @@ void __fastcall input_targetOrder_RightMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_targetOrder_RightMouseClick);
+FAIL_STUB_PATCH(input_targetOrder_RightMouseClick, "starcraft");
 
 void setCursorType_(CursorType cursor_type);
 
@@ -1159,7 +1159,7 @@ CursorType getCursorType_()
 	}
 }
 
-FAIL_STUB_PATCH(getCursorType);
+FAIL_STUB_PATCH(getCursorType, "starcraft");
 
 void sub_468670_(CUnit* unit)
 {
@@ -1186,7 +1186,7 @@ void __cdecl sub_468670__()
 	sub_468670_(unit);
 }
 
-FUNCTION_PATCH((void*)0x468670, sub_468670__);
+FUNCTION_PATCH((void*)0x468670, sub_468670__, "starcraft");
 
 void getSelectedUnitsInBox_(Box16* box)
 {
@@ -1221,7 +1221,7 @@ void getSelectedUnitsInBox_(Box16* box)
 	}
 }
 
-FAIL_STUB_PATCH(getSelectedUnitsInBox);
+FAIL_STUB_PATCH(getSelectedUnitsInBox, "starcraft");
 
 void getSelectedUnitsAtPoint_(int y, int x)
 {
@@ -1331,7 +1331,7 @@ void getSelectedUnitsAtPoint_(int y, int x)
 	}
 }
 
-FAIL_STUB_PATCH(getSelectedUnitsAtPoint);
+FAIL_STUB_PATCH(getSelectedUnitsAtPoint, "starcraft");
 
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
@@ -1362,7 +1362,7 @@ void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 	}
 }
 
-FAIL_STUB_PATCH(input_dragSelect_MouseBtnUp);
+FAIL_STUB_PATCH(input_dragSelect_MouseBtnUp, "starcraft");
 
 void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
 {
@@ -1392,14 +1392,14 @@ void __fastcall input_Game_LeftMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_Game_LeftMouseClick);
+FAIL_STUB_PATCH(input_Game_LeftMouseClick, "starcraft");
 
 BYTE sub_4BFA40_()
 {
 	return dword_59724C[0] ? dword_59724C[0]->playerID : -1;
 }
 
-FAIL_STUB_PATCH(sub_4BFA40);
+FAIL_STUB_PATCH(sub_4BFA40, "starcraft");
 
 void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
 {
@@ -1446,7 +1446,7 @@ void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
 	}
 }
 
-FAIL_STUB_PATCH(input_Game_RightMouseClick);
+FAIL_STUB_PATCH(input_Game_RightMouseClick, "starcraft");
 
 void SetInGameInputProcs_()
 {
@@ -1484,7 +1484,7 @@ void SetInGameInputProcs_()
 	}
 }
 
-FUNCTION_PATCH(SetInGameInputProcs, SetInGameInputProcs_);
+FUNCTION_PATCH(SetInGameInputProcs, SetInGameInputProcs_, "starcraft");
 
 dialog* getControlFromIndex_(dialog* dlg, __int16 index)
 {
@@ -1508,7 +1508,7 @@ dialog* __cdecl getControlFromIndex__()
 	return getControlFromIndex_(dlg, index);
 }
 
-FUNCTION_PATCH((void*)0x418080, getControlFromIndex__);
+FUNCTION_PATCH((void*)0x418080, getControlFromIndex__, "starcraft");
 
 int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char player_id, CSprite* sprite)
 {
@@ -1541,7 +1541,7 @@ int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char 
 	return 1;
 }
 
-FAIL_STUB_PATCH(initSpriteData);
+FAIL_STUB_PATCH(initSpriteData, "starcraft");
 
 void SpriteDestructor_(CSprite* sprite)
 {
@@ -1610,7 +1610,7 @@ void __cdecl SpriteDestructor__()
 	SpriteDestructor_(sprite);
 }
 
-FUNCTION_PATCH((void*)0x497B40, SpriteDestructor__);
+FUNCTION_PATCH((void*)0x497B40, SpriteDestructor__, "starcraft");
 
 CSprite* createSprite_(int sprite_id, int position_x, unsigned __int16 position_y, char player_id)
 {
@@ -1698,7 +1698,7 @@ CSprite* __stdcall createSprite__(int sprite_id, int position_x, char player_id)
 	return createSprite_(sprite_id, position_x, position_y, player_id);
 }
 
-FUNCTION_PATCH((void*)0x4990F0, createSprite__);
+FUNCTION_PATCH((void*)0x4990F0, createSprite__, "starcraft");
 
 void SysWarn_FileNotFound_(const char* a1, int last_error)
 {
@@ -1724,7 +1724,7 @@ void __stdcall SysWarn_FileNotFound__(const char* a1)
 	throw FileNotFoundException(a1, last_error);
 }
 
-FUNCTION_PATCH((void*)0x4212C0, SysWarn_FileNotFound__);
+FUNCTION_PATCH((void*)0x4212C0, SysWarn_FileNotFound__, "starcraft");
 
 void FileFatal_(HANDLE a1, int a2)
 {
@@ -1748,7 +1748,7 @@ void FileFatal__()
 	FileFatal_(a1, a2);
 }
 
-FUNCTION_PATCH((void*)0x4D2880, FileFatal__);
+FUNCTION_PATCH((void*)0x4D2880, FileFatal__, "starcraft");
 
 const int app_exit_handles_count = 32;
 
@@ -1770,7 +1770,7 @@ void AppExit_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(AppExit);
+FAIL_STUB_PATCH(AppExit, "starcraft");
 
 int AppAddExit_(AppExitHandle handle)
 {
@@ -1797,7 +1797,7 @@ int AppAddExit_(AppExitHandle handle)
 	return 1;
 }
 
-FAIL_STUB_PATCH(AppAddExit);
+FAIL_STUB_PATCH(AppAddExit, "starcraft");
 
 void __fastcall sub_4C9120_(bool exit_code)
 {
@@ -1809,7 +1809,7 @@ void __fastcall sub_4C9120_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4C9120);
+FAIL_STUB_PATCH(sub_4C9120, "starcraft");
 
 void sub_4C9C40_(const char* a1)
 {
@@ -1838,7 +1838,7 @@ void sub_4C9C40__()
 	sub_4C9C40_(a1);
 }
 
-FUNCTION_PATCH((void*)0x4C9C40, sub_4C9C40__);
+FUNCTION_PATCH((void*)0x4C9C40, sub_4C9C40__, "starcraft");
 
 bool hasMessagesWaiting_(MSG* a1, int a2)
 {
@@ -1869,7 +1869,7 @@ bool hasMessagesWaiting_(MSG* a1, int a2)
 	return GetMessageA(a1, 0, 0, 0) != -1;
 }
 
-FAIL_STUB_PATCH(hasMessagesWaiting);
+FAIL_STUB_PATCH(hasMessagesWaiting, "starcraft");
 
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
@@ -1900,7 +1900,7 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 	return 0;
 }
 
-FAIL_STUB_PATCH(sendInputToAllDialogs);
+FAIL_STUB_PATCH(sendInputToAllDialogs, "starcraft");
 
 void RefreshCursorScreen_()
 {
@@ -1915,7 +1915,7 @@ void RefreshCursorScreen_()
 	}
 }
 
-FAIL_STUB_PATCH(RefreshCursorScreen);
+FAIL_STUB_PATCH(RefreshCursorScreen, "starcraft");
 
 void __cdecl drawCursor_()
 {
@@ -1933,7 +1933,7 @@ void __cdecl drawCursor_()
 	}
 }
 
-FUNCTION_PATCH(drawCursor, drawCursor_);
+FUNCTION_PATCH(drawCursor, drawCursor_, "starcraft");
 
 void UpdateDlgMousePosition_(void)
 {
@@ -1951,7 +1951,7 @@ void UpdateDlgMousePosition_(void)
 	dword_5968EC = 1;
 }
 
-FAIL_STUB_PATCH(UpdateDlgMousePosition);
+FAIL_STUB_PATCH(UpdateDlgMousePosition, "starcraft");
 
 void __fastcall DestroyGluAllStrings_(bool exit_code)
 {
@@ -1961,7 +1961,7 @@ void __fastcall DestroyGluAllStrings_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(DestroyGluAllStrings);
+FAIL_STUB_PATCH(DestroyGluAllStrings, "starcraft");
 
 
 const char* GetTblString(WORD* table, __int16 tbl_entry)
@@ -1985,7 +1985,7 @@ const char* GetNetworkTblString_(__int16 network_tbl_entry)
 	return GetTblString(networkTable, network_tbl_entry);
 }
 
-FAIL_STUB_PATCH(GetNetworkTblString);
+FAIL_STUB_PATCH(GetNetworkTblString, "starcraft");
 
 const char* GetMapTblString(__int16 map_tbl_entry)
 {
@@ -2024,7 +2024,7 @@ char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 	return tbl_entry - 1 < *(_WORD*)gluAllTblData ? (char*)gluAllTblData + *((unsigned __int16*)gluAllTblData + tbl_entry) : "";
 }
 
-FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_);
+FUNCTION_PATCH(get_GluAll_String, get_GluAll_String_, "starcraft");
 
 const MusicTrackDescription* current_music_track = nullptr;
 
@@ -2084,7 +2084,7 @@ void PlayMusic_(const MusicTrackDescription* a1)
 	}
 }
 
-FAIL_STUB_PATCH(PlayMusic);
+FAIL_STUB_PATCH(PlayMusic, "starcraft");
 
 void playNextMusic_()
 {
@@ -2101,7 +2101,7 @@ void playNextMusic_()
 	}
 }
 
-FAIL_STUB_PATCH(playNextMusic);
+FAIL_STUB_PATCH(playNextMusic, "starcraft");
 
 void __stdcall BWFXN_videoLoop_(int flag)
 {
@@ -2158,7 +2158,7 @@ void __stdcall BWFXN_videoLoop_(int flag)
 	}
 }
 
-FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_);
+FUNCTION_PATCH(BWFXN_videoLoop, BWFXN_videoLoop_, "starcraft");
 
 void UpdateVisibilityHash_(int a1)
 {
@@ -2184,7 +2184,7 @@ void UpdateVisibilityHash_(int a1)
 	dword_63FD28 = a1;
 }
 
-FAIL_STUB_PATCH(UpdateVisibilityHash);
+FAIL_STUB_PATCH(UpdateVisibilityHash, "starcraft");
 
 void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
 {
@@ -2210,7 +2210,7 @@ void DoVisibilityUpdate_(int top_row, unsigned int bottom_row)
 	}
 }
 
-FAIL_STUB_PATCH(DoVisibilityUpdate);
+FAIL_STUB_PATCH(DoVisibilityUpdate, "starcraft");
 
 void sub_4BD3A0_()
 {
@@ -2222,7 +2222,7 @@ void sub_4BD3A0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4BD3A0);
+FAIL_STUB_PATCH(sub_4BD3A0, "starcraft");
 
 void updateAllDlgs_()
 {
@@ -2236,7 +2236,7 @@ void updateAllDlgs_()
 	}
 }
 
-FAIL_STUB_PATCH(updateAllDlgs);
+FAIL_STUB_PATCH(updateAllDlgs, "starcraft");
 
 bool realizePalette_()
 {
@@ -2254,7 +2254,7 @@ bool realizePalette_()
 	return true;
 }
 
-FAIL_STUB_PATCH(realizePalette);
+FAIL_STUB_PATCH(realizePalette, "starcraft");
 
 void DoBltUsingMask_()
 {
@@ -2268,7 +2268,7 @@ void DoBltUsingMask_()
 	}
 }
 
-FAIL_STUB_PATCH(DoBltUsingMask);
+FAIL_STUB_PATCH(DoBltUsingMask, "starcraft");
 
 void sub_41E000_()
 {
@@ -2281,7 +2281,7 @@ void sub_41E000_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_41E000);
+FAIL_STUB_PATCH(sub_41E000, "starcraft");
 
 void DirtyArrayHandling_()
 {
@@ -2357,7 +2357,7 @@ void DirtyArrayHandling_()
 	dword_6CF4A8 = 0;
 }
 
-FAIL_STUB_PATCH(DirtyArrayHandling);
+FAIL_STUB_PATCH(DirtyArrayHandling, "starcraft");
 
 void BWFXN_RedrawTarget_()
 {
@@ -2400,7 +2400,7 @@ void BWFXN_RedrawTarget_()
 	}
 }
 
-FUNCTION_PATCH(BWFXN_RedrawTarget, BWFXN_RedrawTarget_);
+FUNCTION_PATCH(BWFXN_RedrawTarget, BWFXN_RedrawTarget_, "starcraft");
 
 HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename, DWORD dwFlags)
 {
@@ -2432,7 +2432,7 @@ HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename,
 	return hMpq;
 }
 
-FAIL_STUB_PATCH(LoadInstallArchiveHD);
+FAIL_STUB_PATCH(LoadInstallArchiveHD, "starcraft");
 
 signed int InitializeCDArchives_(const char *filename, int a2)
 {
@@ -2558,7 +2558,7 @@ void InitializeFontKey_(void)
 	is_spawn = KeyVerification(buff, "sgubon") == 0;
 }
 
-FAIL_STUB_PATCH(InitializeFontKey);
+FAIL_STUB_PATCH(InitializeFontKey, "starcraft");
 
 void LoadMainModuleStringInfo_()
 {
@@ -2591,7 +2591,7 @@ void LoadMainModuleStringInfo_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadMainModuleStringInfo);
+FAIL_STUB_PATCH(LoadMainModuleStringInfo, "starcraft");
 
 void DetectExpansionInstallation_()
 {
@@ -2607,7 +2607,7 @@ void DetectExpansionInstallation_()
 	}
 }
 
-FAIL_STUB_PATCH(DetectExpansionInstallation);
+FAIL_STUB_PATCH(DetectExpansionInstallation, "starcraft");
 
 HANDLE magnetar_mpq;
 
@@ -2680,7 +2680,7 @@ int InitializeArchiveHandles_()
 	return strcat_s(archive_files, stardat_path.generic_string().c_str());
 }
 
-FAIL_STUB_PATCH(InitializeArchiveHandles);
+FAIL_STUB_PATCH(InitializeArchiveHandles, "starcraft");
 
 signed int __stdcall FileIOErrProc_(char *source, int a2, unsigned int a3)
 {
@@ -2756,7 +2756,7 @@ void LoadGameData_(DatLoad* a1, const char* a2)
 	SMemFree(v3, "Starcraft\\SWAR\\lang\\gamedata.cpp", 402, 0);
 }
 
-FAIL_STUB_PATCH(LoadGameData);
+FAIL_STUB_PATCH(LoadGameData, "starcraft");
 
 DatLoad* sfxdataDat_;
 
@@ -2774,19 +2774,19 @@ void LoadSfx_()
 	dword_5999B0 = loadTBL_(1711, 1144, "Starcraft\\SWAR\\lang\\snd.cpp", "arr\\sfxdata.tbl", SFXData_SoundFile);
 }
 
-FAIL_STUB_PATCH(LoadSfx);
+FAIL_STUB_PATCH(LoadSfx, "starcraft");
 
 Campaign* active_campaign;
 int active_campaign_entry_index;
 
 char* MapdataFilenames_[73];
 
-MEMORY_PATCH(0x4280A2, MapdataFilenames_);
-MEMORY_PATCH(0x512BA0, MapdataFilenames_);
-MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_));
+MEMORY_PATCH(0x4280A2, MapdataFilenames_, "starcraft");
+MEMORY_PATCH(0x512BA0, MapdataFilenames_, "starcraft");
+MEMORY_PATCH(0x512BA8, _countof(MapdataFilenames_), "starcraft");
 
-MEMORY_PATCH(0x45A2F7, &active_campaign);
-MEMORY_PATCH(0x45A5ED, &active_campaign);
+MEMORY_PATCH(0x45A2F7, &active_campaign, "starcraft");
+MEMORY_PATCH(0x45A5ED, &active_campaign, "starcraft");
 
 void playRadioFreeZerg_()
 {
@@ -2811,7 +2811,7 @@ void playRadioFreeZerg_()
 	PlayMusic_(v0);
 }
 
-FAIL_STUB_PATCH(playRadioFreeZerg);
+FAIL_STUB_PATCH(playRadioFreeZerg, "starcraft");
 
 bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
 {
@@ -2838,7 +2838,7 @@ bool radioFreeZergCheat_(const void* a2, CheatFlags* cheat_flags)
 	return false;
 }
 
-FAIL_STUB_PATCH(radioFreeZergCheat);
+FAIL_STUB_PATCH(radioFreeZergCheat, "starcraft");
 
 int campaignTypeCheatStrings_(const char* a2);
 
@@ -2874,7 +2874,7 @@ BOOL CommandLineCheatCompare_(CheatFlags* game_cheats, const char* a2)
 	}
 }
 
-FAIL_STUB_PATCH(CommandLineCheatCompare);
+FAIL_STUB_PATCH(CommandLineCheatCompare, "starcraft");
 
 void CommandLineCheck_()
 {
@@ -2923,7 +2923,7 @@ void CommandLineCheck_()
 	}
 }
 
-FAIL_STUB_PATCH(CommandLineCheck);
+FAIL_STUB_PATCH(CommandLineCheck, "starcraft");
 
 void __fastcall FreeNetworkTBLHandle_(bool exit_code)
 {
@@ -2934,7 +2934,7 @@ void __fastcall FreeNetworkTBLHandle_(bool exit_code)
 	networkTable = NULL;
 }
 
-FAIL_STUB_PATCH(FreeNetworkTBLHandle);
+FAIL_STUB_PATCH(FreeNetworkTBLHandle, "starcraft");
 
 void LoadNetworkTBL_()
 {
@@ -2942,7 +2942,7 @@ void LoadNetworkTBL_()
 	networkTable = (WORD*) fastFileRead_(0, 0, "rez\\network.tbl", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 }
 
-FAIL_STUB_PATCH(LoadNetworkTBL);
+FAIL_STUB_PATCH(LoadNetworkTBL, "starcraft");
 
 HACCEL InitLocaleAccelerators_(int a1)
 {
@@ -2959,7 +2959,7 @@ HACCEL InitLocaleAccelerators_(int a1)
 	return result;
 }
 
-FAIL_STUB_PATCH(InitLocaleAccelerators);
+FAIL_STUB_PATCH(InitLocaleAccelerators, "starcraft");
 
 void InitAccelerators_()
 {
@@ -3001,7 +3001,7 @@ void InitAccelerators_()
 	input_procedures[EventNo::EVN_SYSCHAR] = input_standardSysHotkeys;
 }
 
-FAIL_STUB_PATCH(InitAccelerators);
+FAIL_STUB_PATCH(InitAccelerators, "starcraft");
 
 GotFileValues* readTemplate_(const char* template_name, char* got_template_name, char* got_template_label)
 {
@@ -3032,7 +3032,7 @@ GotFileValues* readTemplate_(const char* template_name, char* got_template_name,
 	return result;
 }
 
-FAIL_STUB_PATCH(readTemplate);
+FAIL_STUB_PATCH(readTemplate, "starcraft");
 
 int LoadGameTemplates_(TemplateConstructor template_constructor)
 {
@@ -3072,8 +3072,8 @@ int LoadGameTemplates_(TemplateConstructor template_constructor)
 	return 1;
 }
 
-FAIL_STUB_PATCH(LoadGameTemplates);
-FAIL_STUB_PATCH(sub_4AB970);
+FAIL_STUB_PATCH(LoadGameTemplates, "starcraft");
+FAIL_STUB_PATCH(sub_4AB970, "starcraft");
 
 void InitializeImage_()
 {
@@ -3085,7 +3085,7 @@ void InitializeImage_()
 	stru_6D5DF0.data = (u8*)SMemAlloc(2304, "Starcraft\\SWAR\\lang\\gds\\image.cpp", 141, 0);
 }
 
-FAIL_STUB_PATCH(InitializeImage);
+FAIL_STUB_PATCH(InitializeImage, "starcraft");
 
 void InitializeDialogScreenLayer_()
 {
@@ -3100,7 +3100,7 @@ void InitializeDialogScreenLayer_()
 	ScreenLayers[2].bits = 32;
 }
 
-FAIL_STUB_PATCH(InitializeDialogScreenLayer);
+FAIL_STUB_PATCH(InitializeDialogScreenLayer, "starcraft");
 
 void initializeDefaultPlayerNames_()
 {
@@ -3140,7 +3140,7 @@ void initializeDefaultPlayerNames_()
 	}
 }
 
-FAIL_STUB_PATCH(initializeDefaultPlayerNames);
+FAIL_STUB_PATCH(initializeDefaultPlayerNames, "starcraft");
 
 void setCursor_(grpHead* cursor)
 {
@@ -3151,7 +3151,7 @@ void setCursor_(grpHead* cursor)
 	}
 }
 
-FAIL_STUB_PATCH(setCursor);
+FAIL_STUB_PATCH(setCursor, "starcraft");
 
 void setCursorType_(CursorType cursor_type)
 {
@@ -3162,7 +3162,7 @@ void setCursorType_(CursorType cursor_type)
 	}
 }
 
-FAIL_STUB_PATCH(setCursorType);
+FAIL_STUB_PATCH(setCursorType, "starcraft");
 
 void __fastcall DestroyCursors_(bool exit_code)
 {
@@ -3179,7 +3179,7 @@ void __fastcall DestroyCursors_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(DestroyCursors);
+FAIL_STUB_PATCH(DestroyCursors, "starcraft");
 
 CursorType operator++(CursorType& cursor_type)
 {
@@ -3209,7 +3209,7 @@ void LoadCursors_()
 	dword_597398 = GetTickCount();
 }
 
-FAIL_STUB_PATCH(LoadCursors);
+FAIL_STUB_PATCH(LoadCursors, "starcraft");
 
 DatLoad* weaponsDat_;
 
@@ -3229,7 +3229,7 @@ void __fastcall FreeMapdataTable_(bool exit_code)
 	// TODO: dynamically clean portdataDat memory
 }
 
-FAIL_STUB_PATCH(FreeMapdataTable);
+FAIL_STUB_PATCH(FreeMapdataTable, "starcraft");
 
 void PreInitData_()
 {
@@ -3269,7 +3269,7 @@ void PreInitData_()
 	AppAddExit_(DestroyGameTemplates);
 }
 
-FAIL_STUB_PATCH(PreInitData);
+FAIL_STUB_PATCH(PreInitData, "starcraft");
 
 char *GetErrorString_(LPSTR lpBuffer, DWORD a2, unsigned int a3)
 {
@@ -3321,7 +3321,7 @@ void ErrorDDrawInit_(const char *source_file, const char *function_name, unsigne
 	DLGErrFatal_();
 }
 
-FAIL_STUB_PATCH(ErrorDDrawInit);
+FAIL_STUB_PATCH(ErrorDDrawInit, "starcraft");
 
 BOOL BWFXN_DDrawInitialize_()
 {
@@ -3384,8 +3384,8 @@ BOOL BWFXN_DDrawInitialize_()
 	return SDrawManualInitialize(hWndParent, DDInterface, PrimarySurface, 0, 0, BackSurface, PrimaryPalette, 0);
 }
 
-FAIL_STUB_PATCH(sub_41DDD0);
-FAIL_STUB_PATCH(BWFXN_DDrawInitialize);
+FAIL_STUB_PATCH(sub_41DDD0, "starcraft");
+FAIL_STUB_PATCH(BWFXN_DDrawInitialize, "starcraft");
 
 void BWFXN_updateImageData_()
 {
@@ -3398,7 +3398,7 @@ void BWFXN_updateImageData_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_updateImageData);
+FAIL_STUB_PATCH(BWFXN_updateImageData, "starcraft");
 
 void drawMinitileImageData_(int framebuf_pos, int minitile)
 {
@@ -3417,7 +3417,7 @@ void drawMinitileImageData_(int framebuf_pos, int minitile)
 	}
 }
 
-FAIL_STUB_PATCH(drawMinitileImageData);
+FAIL_STUB_PATCH(drawMinitileImageData, "starcraft");
 
 void renderTerrainGRPToCache_(grpFrame* a1, int a2)
 {
@@ -3483,7 +3483,7 @@ void renderTerrainGRPToCache_(grpFrame* a1, int a2)
 	}
 }
 
-FAIL_STUB_PATCH(renderTerrainGRPToCache);
+FAIL_STUB_PATCH(renderTerrainGRPToCache, "starcraft");
 
 void drawMegatileImageData_(int megatile, int framebuf_position, int x, int y)
 {
@@ -3519,7 +3519,7 @@ void __stdcall drawMegatileImageData__(int x, int y)
 	drawMegatileImageData_(megatile, framebuf_position, x, y);
 }
 
-FUNCTION_PATCH((void*)0x49B9F0, drawMegatileImageData__);
+FUNCTION_PATCH((void*)0x49B9F0, drawMegatileImageData__, "starcraft");
 
 void drawScreenRowTiles_(__int16* a1, TileID* a2, MegatileFlags* a3, int a4, int a5)
 {
@@ -3558,7 +3558,7 @@ void drawScreenRowTiles_(__int16* a1, TileID* a2, MegatileFlags* a3, int a4, int
 	}
 }
 
-FAIL_STUB_PATCH(drawScreenRowTiles);
+FAIL_STUB_PATCH(drawScreenRowTiles, "starcraft");
 
 void BWFXN_drawMapTiles_()
 {
@@ -3594,7 +3594,7 @@ void BWFXN_drawMapTiles_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_drawMapTiles);
+FAIL_STUB_PATCH(BWFXN_drawMapTiles, "starcraft");
 
 void BlitToBitmap_(int a1, int a2, byte* a3)
 {
@@ -3625,7 +3625,7 @@ void BlitToBitmap_(int a1, int a2, byte* a3)
 	}
 }
 
-FAIL_STUB_PATCH(BlitToBitmap);
+FAIL_STUB_PATCH(BlitToBitmap, "starcraft");
 
 void BWFXN_blitMapTiles_()
 {
@@ -3633,7 +3633,7 @@ void BWFXN_blitMapTiles_()
 	BlitToBitmap_((MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE, GAME_AREA_HEIGHT, GameScreenBuffer.data);
 }
 
-FAIL_STUB_PATCH(BWFXN_blitMapTiles);
+FAIL_STUB_PATCH(BWFXN_blitMapTiles, "starcraft");
 
 void refreshImageRange_(int top_row, int bottom_row)
 {
@@ -3646,7 +3646,7 @@ void refreshImageRange_(int top_row, int bottom_row)
 	}
 }
 
-FAIL_STUB_PATCH(refreshImageRange);
+FAIL_STUB_PATCH(refreshImageRange, "starcraft");
 
 void __fastcall BlitTerrainCacheToGameBitmap_(int a0, int a1, int a2, int a3)
 {
@@ -3654,7 +3654,7 @@ void __fastcall BlitTerrainCacheToGameBitmap_(int a0, int a1, int a2, int a3)
 	BlitToBitmap_(a3, 16, &GameScreenBuffer.data[16 * a1 + 16 * a0 * GameScreenBuffer.wid]);
 }
 
-FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap);
+FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap, "starcraft");
 
 void blitTileCacheOnRefresh_()
 {
@@ -3705,7 +3705,7 @@ void blitTileCacheOnRefresh_()
 	}
 }
 
-FAIL_STUB_PATCH(blitTileCacheOnRefresh);
+FAIL_STUB_PATCH(blitTileCacheOnRefresh, "starcraft");
 
 void drawImage_(CImage* a1)
 {
@@ -3722,7 +3722,7 @@ void drawImage_(CImage* a1)
 	a1->flags &= ~ImageFlags::IF_REDRAW;
 }
 
-FAIL_STUB_PATCH(drawImage);
+FAIL_STUB_PATCH(drawImage, "starcraft");
 
 void drawSprite_(CSprite* a1)
 {
@@ -3739,7 +3739,7 @@ void drawSprite_(CSprite* a1)
 	}
 }
 
-FAIL_STUB_PATCH(drawSprite);
+FAIL_STUB_PATCH(drawSprite, "starcraft");
 
 void BWFXN_drawAllSprites_()
 {
@@ -3754,7 +3754,7 @@ void BWFXN_drawAllSprites_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_drawAllSprites);
+FAIL_STUB_PATCH(BWFXN_drawAllSprites, "starcraft");
 
 void updateAllFog_(int a1)
 {
@@ -3788,7 +3788,7 @@ void updateAllFog_(int a1)
 	}
 }
 
-FAIL_STUB_PATCH(updateAllFog);
+FAIL_STUB_PATCH(updateAllFog, "starcraft");
 
 void BWFXN_drawDragSelBox_()
 {
@@ -3807,7 +3807,7 @@ void BWFXN_drawDragSelBox_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_drawDragSelBox);
+FAIL_STUB_PATCH(BWFXN_drawDragSelBox, "starcraft");
 
 void BWFXN_drawAllThingys_()
 {
@@ -3823,21 +3823,21 @@ void BWFXN_drawAllThingys_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_drawAllThingys);
+FAIL_STUB_PATCH(BWFXN_drawAllThingys, "starcraft");
 
-MEMORY_PATCH((void*)0x4D5857, GAME_AREA_WIDTH);
-MEMORY_PATCH((void*)0x4D5888, GAME_AREA_HEIGHT);
+MEMORY_PATCH((void*)0x4D5857, GAME_AREA_WIDTH, "starcraft");
+MEMORY_PATCH((void*)0x4D5888, GAME_AREA_HEIGHT, "starcraft");
 
-MEMORY_PATCH((void*)0x40B168, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B28E, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B252, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B2E6, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B400, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B3CA, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40BC64, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40BC2E, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B5A9, SCREEN_WIDTH * SCREEN_HEIGHT);
-MEMORY_PATCH((void*)0x40B454, SCREEN_WIDTH * SCREEN_HEIGHT);
+MEMORY_PATCH((void*)0x40B168, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B28E, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B252, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B2E6, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B400, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B3CA, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40BC64, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40BC2E, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B5A9, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
+MEMORY_PATCH((void*)0x40B454, SCREEN_WIDTH * SCREEN_HEIGHT, "starcraft");
 
 void __fastcall DrawNullProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2)
 {
@@ -3877,7 +3877,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 	BWFXN_drawAllThingys_();
 }
 
-FAIL_STUB_PATCH(DrawGameProc);
+FAIL_STUB_PATCH(DrawGameProc, "starcraft");
 
 void InitializeGameLayer_()
 {
@@ -3901,7 +3901,7 @@ void InitializeGameLayer_()
 	}
 }
 
-FAIL_STUB_PATCH(InitializeGameLayer);
+FAIL_STUB_PATCH(InitializeGameLayer, "starcraft");
 
 void __cdecl refreshSelectionScreen_()
 {
@@ -3916,7 +3916,7 @@ void __cdecl refreshSelectionScreen_()
 	dword_655C48 = 0;
 }
 
-FUNCTION_PATCH(refreshSelectionScreen, refreshSelectionScreen_);
+FUNCTION_PATCH(refreshSelectionScreen, refreshSelectionScreen_, "starcraft");
 
 int DSoundCreate_(AudioVideoInitializationError* a1)
 {
@@ -3952,7 +3952,7 @@ int DSoundCreate_(AudioVideoInitializationError* a1)
 	}
 }
 
-FAIL_STUB_PATCH(DSoundCreate);
+FAIL_STUB_PATCH(DSoundCreate, "starcraft");
 
 int SetCooperativeLevel_(HWND hwnd, AudioVideoInitializationError* a2)
 {
@@ -3970,7 +3970,7 @@ int SetCooperativeLevel_(HWND hwnd, AudioVideoInitializationError* a2)
 	return 0;
 }
 
-FAIL_STUB_PATCH(SetCooperativeLevel);
+FAIL_STUB_PATCH(SetCooperativeLevel, "starcraft");
 
 int CreateSoundBuffer_(AudioVideoInitializationError* a1)
 {
@@ -3991,7 +3991,7 @@ int CreateSoundBuffer_(AudioVideoInitializationError* a1)
 	return 0;
 }
 
-FAIL_STUB_PATCH(CreateSoundBuffer);
+FAIL_STUB_PATCH(CreateSoundBuffer, "starcraft");
 
 HRESULT SetAudioFormat_()
 {
@@ -4007,7 +4007,7 @@ HRESULT SetAudioFormat_()
 	return soundbuffer->SetFormat(&wave_format);
 }
 
-FAIL_STUB_PATCH(SetAudioFormat);
+FAIL_STUB_PATCH(SetAudioFormat, "starcraft");
 
 void LoadBtnSfxFile_()
 {
@@ -4024,7 +4024,7 @@ void LoadBtnSfxFile_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadBtnSfxFile);
+FAIL_STUB_PATCH(LoadBtnSfxFile, "starcraft");
 
 void DLGMusicFade_(const MusicTrackDescription* music_track)
 {
@@ -4050,7 +4050,7 @@ void DLGMusicFade_(const MusicTrackDescription* music_track)
 	}
 }
 
-FAIL_STUB_PATCH(DLGMusicFade);
+FAIL_STUB_PATCH(DLGMusicFade, "starcraft");
 
 void muteBgm_(RegistryOptions* a1)
 {
@@ -4107,7 +4107,7 @@ void muteBgm__()
 	muteBgm_(a1);
 }
 
-FUNCTION_PATCH((void*)0x4BC320, muteBgm__);
+FUNCTION_PATCH((void*)0x4BC320, muteBgm__, "starcraft");
 
 void initVolume_()
 {
@@ -4124,7 +4124,7 @@ void initVolume_()
 	muteBgm_(&registry_options);
 }
 
-FAIL_STUB_PATCH(initVolume);
+FAIL_STUB_PATCH(initVolume, "starcraft");
 
 void stopMusic_()
 {
@@ -4170,7 +4170,7 @@ void stopMusic_()
 	}
 }
 
-FAIL_STUB_PATCH(stopMusic);
+FAIL_STUB_PATCH(stopMusic, "starcraft");
 
 void stopAllSound_(void)
 {
@@ -4178,7 +4178,7 @@ void stopAllSound_(void)
 	stopMusic_();
 }
 
-FAIL_STUB_PATCH(stopAllSound);
+FAIL_STUB_PATCH(stopAllSound, "starcraft");
 
 unsigned __stdcall DSoundThread_(void* a2)
 {
@@ -4276,7 +4276,7 @@ unsigned __stdcall DSoundThread_(void* a2)
 	return 0;
 }
 
-FAIL_STUB_PATCH(DSoundThread);
+FAIL_STUB_PATCH(DSoundThread, "starcraft");
 
 void BWFXN_DSoundDestroy_()
 {
@@ -4329,7 +4329,7 @@ void BWFXN_DSoundDestroy_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_DSoundDestroy);
+FAIL_STUB_PATCH(BWFXN_DSoundDestroy, "starcraft");
 
 BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 {
@@ -4382,7 +4382,7 @@ BOOL DSoundInit_(AudioVideoInitializationError* a1, HWND a2)
 	return 1;
 }
 
-FAIL_STUB_PATCH(DSoundInit);
+FAIL_STUB_PATCH(DSoundInit, "starcraft");
 
 void __fastcall saveColorSettings_(bool exit_code)
 {
@@ -4394,7 +4394,7 @@ void __fastcall saveColorSettings_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(saveColorSettings);
+FAIL_STUB_PATCH(saveColorSettings, "starcraft");
 
 void loadColorSettings_()
 {
@@ -4434,7 +4434,7 @@ void loadColorSettings_()
 	}
 }
 
-FAIL_STUB_PATCH(loadColorSettings);
+FAIL_STUB_PATCH(loadColorSettings, "starcraft");
 
 void __fastcall sfxdata_cleanup_(bool exit_code)
 {
@@ -4448,14 +4448,14 @@ void __fastcall sfxdata_cleanup_(bool exit_code)
 	dword_5999B0 = 0;
 }
 
-FAIL_STUB_PATCH(sfxdata_cleanup);
+FAIL_STUB_PATCH(sfxdata_cleanup, "starcraft");
 
 void __fastcall j_BWFXN_DSoundDestroy_(bool exit_code)
 {
 	BWFXN_DSoundDestroy_();
 }
 
-FAIL_STUB_PATCH(j_BWFXN_DSoundDestroy);
+FAIL_STUB_PATCH(j_BWFXN_DSoundDestroy, "starcraft");
 
 void audioVideoInit_()
 {
@@ -4481,7 +4481,7 @@ void audioVideoInit_()
 	}
 }
 
-FAIL_STUB_PATCH(audioVideoInit);
+FAIL_STUB_PATCH(audioVideoInit, "starcraft");
 
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
@@ -4526,7 +4526,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 	a1->lFlags &= ~CTRL_VALIGN_BOTTOM;
 }
 
-FAIL_STUB_PATCH(InitializeDialog);
+FAIL_STUB_PATCH(InitializeDialog, "starcraft");
 
 void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
@@ -4589,7 +4589,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	InitializeDialog_(GameMenuDlg, a2);
 }
 
-FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_);
+FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_, "starcraft");
 
 void __fastcall BWFXN_QuitMission_(dialog* dlg);
 
@@ -4622,7 +4622,7 @@ void video_OK_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(video_OK);
+FAIL_STUB_PATCH(video_OK, "starcraft");
 
 void sub_480B90_(dialog* dlg)
 {
@@ -4636,7 +4636,7 @@ void sub_480B90_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(sub_480B90);
+FAIL_STUB_PATCH(sub_480B90, "starcraft");
 
 int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
 {
@@ -4655,7 +4655,7 @@ int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
 	return genericOptionInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(video_PortraitRadioBtns);
+FAIL_STUB_PATCH(video_PortraitRadioBtns, "starcraft");
 
 void video_CustomCTRLID_(dialog* a1)
 {
@@ -4670,7 +4670,7 @@ void video_CustomCTRLID_(dialog* a1)
 	registerUserDialogAction(a1, sizeof(functions), functions);
 }
 
-FAIL_STUB_PATCH(video_CustomCTRLID);
+FAIL_STUB_PATCH(video_CustomCTRLID, "starcraft");
 
 int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -4715,7 +4715,7 @@ int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(video_BINDLG_Main);
+FAIL_STUB_PATCH(video_BINDLG_Main, "starcraft");
 
 void __cdecl sub_481060_()
 {
@@ -4725,7 +4725,7 @@ void __cdecl sub_481060_()
 	BWFXN_OpenGameDialog("rez\\video.bin", video_BINDLG_Main_);
 }
 
-FUNCTION_PATCH(sub_481060, sub_481060_);
+FUNCTION_PATCH(sub_481060, sub_481060_, "starcraft");
 
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
@@ -4766,7 +4766,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	return ++byte_6D1224;
 }
 
-FAIL_STUB_PATCH(gamemenu_CustomCtrlID);
+FAIL_STUB_PATCH(gamemenu_CustomCtrlID, "starcraft");
 
 int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -4804,7 +4804,7 @@ int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FUNCTION_PATCH(gamemenu_Dlg_Interact, gamemenu_Dlg_Interact_);
+FUNCTION_PATCH(gamemenu_Dlg_Interact, gamemenu_Dlg_Interact_, "starcraft");
 
 void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 {
@@ -4840,7 +4840,7 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe);
+FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe, "starcraft");
 
 void sub_460F70_();
 
@@ -4885,7 +4885,7 @@ void __fastcall BWFXN_QuitMission_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_QuitMission);
+FAIL_STUB_PATCH(BWFXN_QuitMission, "starcraft");
 
 void QuitMissionMenu_()
 {
@@ -4901,7 +4901,7 @@ void QuitMissionMenu_()
 	}
 }
 
-FUNCTION_PATCH(QuitMissionMenu, QuitMissionMenu_);
+FUNCTION_PATCH(QuitMissionMenu, QuitMissionMenu_, "starcraft");
 
 void TitlePaletteUpdate_(int a1)
 {
@@ -4928,7 +4928,7 @@ void TitlePaletteUpdate_(int a1)
 	}
 }
 
-FAIL_STUB_PATCH(TitlePaletteUpdate);
+FAIL_STUB_PATCH(TitlePaletteUpdate, "starcraft");
 
 
 
@@ -4975,7 +4975,7 @@ void __stdcall updateImageDirection__(u8 direction)
 	updateImageDirection_(image, direction);
 }
 
-FUNCTION_PATCH((void*)0x4D5EA0, updateImageDirection__);
+FUNCTION_PATCH((void*)0x4D5EA0, updateImageDirection__, "starcraft");
 
 void setImageDirection_(CImage* image, unsigned __int8 direction)
 {
@@ -5020,7 +5020,7 @@ void __stdcall setImageDirection__(u8 direction)
 	setImageDirection_(image, direction);
 }
 
-FUNCTION_PATCH((void*)0x4D5F80, setImageDirection__);
+FUNCTION_PATCH((void*)0x4D5F80, setImageDirection__, "starcraft");
 
 void InitializeImageData_(CImage* image, CSprite* sprite, int image_id, __int8 horizontal_offset, __int8 vertical_offset)
 {
@@ -5069,7 +5069,7 @@ void __stdcall InitializeImageData__(__int8 horizontal_offset, __int8 vertical_o
 	InitializeImageData_(image, sprite, image_id, horizontal_offset, vertical_offset);
 }
 
-FUNCTION_PATCH((void*)0x4D5A50, InitializeImageData__);
+FUNCTION_PATCH((void*)0x4D5A50, InitializeImageData__, "starcraft");
 
 void LoadImageData_()
 {
@@ -5094,7 +5094,7 @@ void LoadImageData_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadImageData);
+FAIL_STUB_PATCH(LoadImageData, "starcraft");
 
 DatLoad* imagesDat_;
 
@@ -5137,7 +5137,7 @@ void LoadInitIscriptBIN_()
 	InitDamageOverlayCounts();
 }
 
-FAIL_STUB_PATCH(LoadInitIscriptBIN);
+FAIL_STUB_PATCH(LoadInitIscriptBIN, "starcraft");
 
 void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 {
@@ -5159,7 +5159,7 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 	delete[] imagesDat_;
 }
 
-FAIL_STUB_PATCH(CleanupIscriptBINHandle);
+FAIL_STUB_PATCH(CleanupIscriptBINHandle, "starcraft");
 
 void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 {
@@ -5197,7 +5197,7 @@ void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 	}
 }
 
-FAIL_STUB_PATCH(CreateInitialMeleeBuildings);
+FAIL_STUB_PATCH(CreateInitialMeleeBuildings, "starcraft");
 
 void CreateInitialMeleeWorker_(RaceId race, unsigned __int8 player_index)
 {
@@ -5212,7 +5212,7 @@ void CreateInitialMeleeWorker_(RaceId race, unsigned __int8 player_index)
 	}
 }
 
-FAIL_STUB_PATCH(CreateInitialMeleeWorker);
+FAIL_STUB_PATCH(CreateInitialMeleeWorker, "starcraft");
 
 void CreateInitialMeleeUnits_()
 {
@@ -5255,7 +5255,7 @@ void CreateInitialMeleeUnits_()
 	}
 }
 
-FAIL_STUB_PATCH(CreateInitialMeleeUnits);
+FAIL_STUB_PATCH(CreateInitialMeleeUnits, "starcraft");
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3);
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3);
@@ -5421,14 +5421,14 @@ ChkLoader chk_loaders_[] = {
 	// 206 - Brood War Remastered (1.21)
 };
 
-MEMORY_PATCH(0x4BF65A, &chk_loaders_->lobby_loader_count);
-MEMORY_PATCH(0x4BF660, &chk_loaders_->lobby_loaders);
-MEMORY_PATCH(0x4CC0CD, chk_loaders_);
-MEMORY_PATCH(0x4CC0E1, &chk_loaders_->requires_expansion);
-MEMORY_PATCH(0x4CCA8A, &chk_loaders_->briefing_loader_count);
-MEMORY_PATCH(0x4CCA90, &chk_loaders_->briefing_loaders);
-MEMORY_PATCH(0x4CCBFC, &chk_loaders_->lobby_loader_count);
-MEMORY_PATCH(0x4CCC02, &chk_loaders_->lobby_loaders);
+MEMORY_PATCH(0x4BF65A, &chk_loaders_->lobby_loader_count, "starcraft");
+MEMORY_PATCH(0x4BF660, &chk_loaders_->lobby_loaders, "starcraft");
+MEMORY_PATCH(0x4CC0CD, chk_loaders_, "starcraft");
+MEMORY_PATCH(0x4CC0E1, &chk_loaders_->requires_expansion, "starcraft");
+MEMORY_PATCH(0x4CCA8A, &chk_loaders_->briefing_loader_count, "starcraft");
+MEMORY_PATCH(0x4CCA90, &chk_loaders_->briefing_loaders, "starcraft");
+MEMORY_PATCH(0x4CCBFC, &chk_loaders_->lobby_loader_count, "starcraft");
+MEMORY_PATCH(0x4CCC02, &chk_loaders_->lobby_loaders, "starcraft");
 
 int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 {
@@ -5470,7 +5470,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 	}
 }
 
-FAIL_STUB_PATCH(sub_413550);
+FAIL_STUB_PATCH(sub_413550, "starcraft");
 
 signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoader* chk_section_loader, void* chk_data, MapChunks* a4)
 {
@@ -5516,7 +5516,7 @@ signed int ReadChunkNodes_(int chk_section_loader_count, int a2, ChkSectionLoade
 	}
 }
 
-FAIL_STUB_PATCH(ReadChunkNodes);
+FAIL_STUB_PATCH(ReadChunkNodes, "starcraft");
 
 int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index, int chk_size)
 {
@@ -5554,7 +5554,7 @@ int ReadMapChunks_(MapChunks* a1, void* chk_data, int* out_version_loader_index,
 	return 0;
 }
 
-FAIL_STUB_PATCH(ReadMapChunks);
+FAIL_STUB_PATCH(ReadMapChunks, "starcraft");
 
 int ReadLobbyChunks(void* chk_data, int chk_size, MapChunks* a4)
 {
@@ -5590,7 +5590,7 @@ int ReadGameChunks(void* chk_data, int chk_size)
 	return ReadChunkNodes_(loader_count, chk_size, loaders, chk_data, 0);
 }
 
-FAIL_STUB_PATCH(sub_4CC2A0);
+FAIL_STUB_PATCH(sub_4CC2A0, "starcraft");
 
 BOOL LoadFileArchiveToSBigBuf_(const char* filename, int* a2, int a3, HANDLE* a4)
 {
@@ -5622,7 +5622,7 @@ BOOL LoadFileArchiveToSBigBuf_(const char* filename, int* a2, int a3, HANDLE* a4
 	return 1;
 }
 
-FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf);
+FAIL_STUB_PATCH(LoadFileArchiveToSBigBuf, "starcraft");
 
 void* sub_4CCAC0_campaign(const char* a1, int* chk_size)
 {
@@ -5659,7 +5659,7 @@ int sub_4CC350_(const char* a2, int* a3, size_t a4)
 	return 0;
 }
 
-FAIL_STUB_PATCH(sub_4CC350);
+FAIL_STUB_PATCH(sub_4CC350, "starcraft");
 
 void* sub_4CCAC0_scm(const char* a1, int* a2, int* chk_size)
 {
@@ -5711,7 +5711,7 @@ BOOL sub_4CC7F0_(char* a1)
 	return result;
 }
 
-FAIL_STUB_PATCH(sub_4CC7F0);
+FAIL_STUB_PATCH(sub_4CC7F0, "starcraft");
 
 int LoadMap_()
 {
@@ -5727,7 +5727,7 @@ int LoadMap_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(LoadMap);
+FAIL_STUB_PATCH(LoadMap, "starcraft");
 
 UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_512778,
@@ -5740,12 +5740,12 @@ UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
 	&stru_51279C,
 };
 
-MEMORY_PATCH(0x4BDD8A, TILESET_PALETTE_RELATED);
-MEMORY_PATCH(0x4C99E4, TILESET_PALETTE_RELATED);
-MEMORY_PATCH(0x4CB56A, TILESET_PALETTE_RELATED);
-MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED);
-MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED);
-MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED);
+MEMORY_PATCH(0x4BDD8A, TILESET_PALETTE_RELATED, "starcraft");
+MEMORY_PATCH(0x4C99E4, TILESET_PALETTE_RELATED, "starcraft");
+MEMORY_PATCH(0x4CB56A, TILESET_PALETTE_RELATED, "starcraft");
+MEMORY_PATCH(0x4CB5DF, TILESET_PALETTE_RELATED, "starcraft");
+MEMORY_PATCH(0x4CBEDA, TILESET_PALETTE_RELATED, "starcraft");
+MEMORY_PATCH(0x4EEEB7, TILESET_PALETTE_RELATED, "starcraft");
 
 void BINDLG_BlitSurface_(dialog* dlg)
 {
@@ -5766,7 +5766,7 @@ void BINDLG_BlitSurface_(dialog* dlg)
 	dword_6CF4A8 = v3;
 }
 
-FAIL_STUB_PATCH(BINDLG_BlitSurface);
+FAIL_STUB_PATCH(BINDLG_BlitSurface, "starcraft");
 
 void showDialog_(dialog* dlg)
 {
@@ -5796,7 +5796,7 @@ void showDialog__()
 	return showDialog_(dlg);
 }
 
-FUNCTION_PATCH((void*)0x4186A0, showDialog__);
+FUNCTION_PATCH((void*)0x4186A0, showDialog__, "starcraft");
 
 void HideDialog_(dialog* dlg)
 {
@@ -5836,7 +5836,7 @@ void __cdecl HideDialog__()
 	return HideDialog_(dlg);
 }
 
-FUNCTION_PATCH((void*)0x418700, HideDialog__);
+FUNCTION_PATCH((void*)0x418700, HideDialog__, "starcraft");
 
 DatLoad* spritesDat_;
 
@@ -5990,7 +5990,7 @@ void InitializePresetImageArrays_()
 	}
 }
 
-FAIL_STUB_PATCH(InitializePresetImageArrays);
+FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
 void InitializeSpriteArray_()
 {
@@ -6032,7 +6032,7 @@ void InitializeSpriteArray_()
 	}
 }
 
-FAIL_STUB_PATCH(InitializeSpriteArray);
+FAIL_STUB_PATCH(InitializeSpriteArray, "starcraft");
 
 void InitializeThingyArray_()
 {
@@ -6094,7 +6094,7 @@ void InitializeThingyArray_()
 	refreshAllVisibleImagesAtScreenPosition(ThingyList_UsedFirst->sprite, 0);
 }
 
-FAIL_STUB_PATCH(InitializeThingyArray);
+FAIL_STUB_PATCH(InitializeThingyArray, "starcraft");
 
 DatLoad* flingyDat_;
 
@@ -6118,7 +6118,7 @@ void InitializeFlingyDat_()
 	dword_63FF34 = 0;
 }
 
-FAIL_STUB_PATCH(InitializeFlingyDat);
+FAIL_STUB_PATCH(InitializeFlingyDat, "starcraft");
 
 void ResetDATFiles_()
 {
@@ -6183,7 +6183,7 @@ void ResetDATFiles_()
 	}
 }
 
-FAIL_STUB_PATCH(ResetDATFiles);
+FAIL_STUB_PATCH(ResetDATFiles, "starcraft");
 
 void resetOrdersUnitsDAT_()
 {
@@ -6242,7 +6242,7 @@ void resetOrdersUnitsDAT_()
 	LOWORD(error_message[0]) = 0;
 }
 
-FAIL_STUB_PATCH(resetOrdersUnitsDAT);
+FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
 void BWFXN_NextFrameHelperFunctionTarget_()
 {
@@ -6269,7 +6269,7 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_NextFrameHelperFunctionTarget);
+FAIL_STUB_PATCH(BWFXN_NextFrameHelperFunctionTarget, "starcraft");
 
 bool __fastcall j_BWFXN_NextFrameHelperFunctionTarget_(dialog*)
 {
@@ -6277,7 +6277,7 @@ bool __fastcall j_BWFXN_NextFrameHelperFunctionTarget_(dialog*)
 	return false;
 }
 
-FAIL_STUB_PATCH(j_BWFXN_NextFrameHelperFunctionTarget);
+FAIL_STUB_PATCH(j_BWFXN_NextFrameHelperFunctionTarget, "starcraft");
 
 void sub_4E4820_(dialog* dlg)
 {
@@ -6321,7 +6321,7 @@ void sub_4E4820_(dialog* dlg)
 	refreshSelectionScreen_();
 }
 
-FAIL_STUB_PATCH(sub_4E4820);
+FAIL_STUB_PATCH(sub_4E4820, "starcraft");
 
 void sub_4E4590_(dialog* dlg)
 {
@@ -6354,7 +6354,7 @@ void sub_4E4590_(dialog* dlg)
 	input_procedures[EventNo::EVN_SYSCHAR] = AcceleratorTables;
 }
 
-FAIL_STUB_PATCH(sub_4E4590);
+FAIL_STUB_PATCH(sub_4E4590, "starcraft");
 
 void sub_4E4670_(dialog* dlg)
 {
@@ -6367,7 +6367,7 @@ void sub_4E4670_(dialog* dlg)
 	ClipCursor(&rect);
 }
 
-FAIL_STUB_PATCH(sub_4E4670);
+FAIL_STUB_PATCH(sub_4E4670, "starcraft");
 
 int __fastcall dlgfatal_loop_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -6394,7 +6394,7 @@ int __fastcall dlgfatal_loop_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(dlgfatal_loop);
+FAIL_STUB_PATCH(dlgfatal_loop, "starcraft");
 
 void load_DLGFatal_BIN_(const char* error_location, const char* a2)
 {
@@ -6451,7 +6451,7 @@ void load_DLGFatal_BIN_(const char* error_location, const char* a2)
 	}
 }
 
-FAIL_STUB_PATCH(load_DLGFatal_BIN);
+FAIL_STUB_PATCH(load_DLGFatal_BIN, "starcraft");
 
 void sub_4AD0E0_(const char* text, const char* caption)
 {
@@ -6463,7 +6463,7 @@ void sub_4AD0E0_(const char* text, const char* caption)
 	BattleErrorDialog(window, text, caption, 0);
 }
 
-FAIL_STUB_PATCH(sub_4AD0E0);
+FAIL_STUB_PATCH(sub_4AD0E0, "starcraft");
 
 void sub_4B6C70_(dialog* dlg)
 {
@@ -6480,7 +6480,7 @@ void sub_4B6C70_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4B6C70);
+FAIL_STUB_PATCH(sub_4B6C70, "starcraft");
 
 int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -6509,7 +6509,7 @@ int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluPEdit_Main);
+FAIL_STUB_PATCH(gluPEdit_Main, "starcraft");
 
 bool __stdcall BWFXN_gluPEdit_MBox_(char* text, char* dest, size_t size, char* restricted)
 {
@@ -6594,7 +6594,7 @@ bool __stdcall BWFXN_gluPEdit_MBox_(char* text, char* dest, size_t size, char* r
 	return 1;
 }
 
-FUNCTION_PATCH(BWFXN_gluPEdit_MBox, BWFXN_gluPEdit_MBox_);
+FUNCTION_PATCH(BWFXN_gluPEdit_MBox, BWFXN_gluPEdit_MBox_, "starcraft");
 
 int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -6622,7 +6622,7 @@ int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(Popup_Main);
+FAIL_STUB_PATCH(Popup_Main, "starcraft");
 
 void BWFXN_gluPOK_MBox_(const char* a1)
 {
@@ -6672,7 +6672,7 @@ void __cdecl BWFXN_gluPOK_MBox__()
 	BWFXN_gluPOK_MBox_(a1);
 }
 
-FUNCTION_PATCH((void*) 0x4B7180, BWFXN_gluPOK_MBox__);
+FUNCTION_PATCH((void*) 0x4B7180, BWFXN_gluPOK_MBox__, "starcraft");
 
 void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 {
@@ -6709,7 +6709,7 @@ void load_gluPOKSplitBINDLG_(const char* a1, const char* a2)
 	gluLoadBINDlg_(dword_6D5A3C, Popup_Main_);
 }
 
-FAIL_STUB_PATCH(load_gluPOKSplitBINDLG);
+FAIL_STUB_PATCH(load_gluPOKSplitBINDLG, "starcraft");
 
 void sub_4B5CC0_(const char* error_message, const char* error_details)
 {
@@ -6765,7 +6765,7 @@ void sub_4B5CC0_(const char* error_message, const char* error_details)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4B5CC0);
+FAIL_STUB_PATCH(sub_4B5CC0, "starcraft");
 
 void doNetTBLError_(int line, const char* error_message, char* file_name, int a4)
 {
@@ -6816,7 +6816,7 @@ void __stdcall doNetTBLError__(int a4)
 	doNetTBLError_(a1, error_message, file_name, a4);
 }
 
-FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__);
+FUNCTION_PATCH((void*)0x4BB300, doNetTBLError__, "starcraft");
 
 void nextLeaveGameMenu_()
 {
@@ -6829,7 +6829,7 @@ void nextLeaveGameMenu_()
 	glGluesMode = MenuPosition::GLUE_GENERIC;
 }
 
-FAIL_STUB_PATCH(nextLeaveGameMenu);
+FAIL_STUB_PATCH(nextLeaveGameMenu, "starcraft");
 
 void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
 {
@@ -6858,7 +6858,7 @@ void BigPacketError_(int a1, const char* a2, char* a3, int a4, int a5)
 	}
 }
 
-FAIL_STUB_PATCH(BigPacketError);
+FAIL_STUB_PATCH(BigPacketError, "starcraft");
 
 void RECV_SetRandomSeed_(int a1, struct_v2* a2)
 {
@@ -6893,7 +6893,7 @@ void __cdecl RECV_SetRandomSeed__()
 	RECV_SetRandomSeed_(a1, a2);
 }
 
-FUNCTION_PATCH((void*)0x472110, RECV_SetRandomSeed__);
+FUNCTION_PATCH((void*)0x472110, RECV_SetRandomSeed__, "starcraft");
 
 int sub_4EEFD0_()
 {
@@ -6930,7 +6930,7 @@ int sub_4EEFD0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4EEFD0);
+FAIL_STUB_PATCH(sub_4EEFD0, "starcraft");
 
 void GameInitAI_()
 {
@@ -6945,7 +6945,7 @@ void GameInitAI_()
 	dword_59CC90 = 6;
 }
 
-FAIL_STUB_PATCH(GameInitAI);
+FAIL_STUB_PATCH(GameInitAI, "starcraft");
 
 u8 illegalTeamCheck_()
 {
@@ -6968,7 +6968,7 @@ u8 illegalTeamCheck_()
 	return 0;
 }
 
-FUNCTION_PATCH(illegalTeamCheck, illegalTeamCheck_);
+FUNCTION_PATCH(illegalTeamCheck, illegalTeamCheck_, "starcraft");
 
 void CreateInitialTeamMeleeUnits_()
 {
@@ -7024,7 +7024,7 @@ void CreateInitialTeamMeleeUnits_()
 	}
 }
 
-FAIL_STUB_PATCH(CreateInitialTeamMeleeUnits);
+FAIL_STUB_PATCH(CreateInitialTeamMeleeUnits, "starcraft");
 
 signed int GameInit_()
 {
@@ -7075,9 +7075,9 @@ signed int GameInit_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(GameInit);
-FAIL_STUB_PATCH(sub_4CD770);
-FAIL_STUB_PATCH(sub_4A13B0);
+FAIL_STUB_PATCH(GameInit, "starcraft");
+FAIL_STUB_PATCH(sub_4CD770, "starcraft");
+FAIL_STUB_PATCH(sub_4A13B0, "starcraft");
 
 GotFileValues* InitUseMapSettingsTemplate_()
 {
@@ -7086,7 +7086,7 @@ GotFileValues* InitUseMapSettingsTemplate_()
 	return readTemplate_("Use Map Settings(1)", ununsed, ununsed);
 }
 
-FAIL_STUB_PATCH(InitUseMapSettingsTemplate);
+FAIL_STUB_PATCH(InitUseMapSettingsTemplate, "starcraft");
 
 int sub_4CCAC0_(const char* a1, MapChunks* a2)
 {
@@ -7114,7 +7114,7 @@ int sub_4CCAC0_(const char* a1, MapChunks* a2)
 	return 0;
 }
 
-FAIL_STUB_PATCH(sub_4CCAC0);
+FAIL_STUB_PATCH(sub_4CCAC0, "starcraft");
 
 void sub_4A91E0_()
 {
@@ -7124,7 +7124,7 @@ void sub_4A91E0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4A91E0);
+FAIL_STUB_PATCH(sub_4A91E0, "starcraft");
 
 HANDLE custom_campaign_mpq = nullptr;
 
@@ -7186,14 +7186,14 @@ int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 	}
 }
 
-FAIL_STUB_PATCH(ReadMapData);
+FAIL_STUB_PATCH(ReadMapData, "starcraft");
 
 bool ReadCampaignMapData_(MapChunks* map_chunks)
 {
 	return ReadMapData_(MapdataFilenames_[CampaignIndex], map_chunks, 1) != 0;
 }
 
-FAIL_STUB_PATCH(ReadCampaignMapData);
+FAIL_STUB_PATCH(ReadCampaignMapData, "starcraft");
 
 void packetErrHandle_(DWORD last_error, int a2, char* a3, int a4, int a5)
 {
@@ -7214,7 +7214,7 @@ void __stdcall packetErrHandle__(int a2, char* a3, int a4, int a5)
 	packetErrHandle_(last_error, a2, a3, a4, a5);
 }
 
-FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__);
+FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__, "starcraft");
 
 void __stdcall BWFXN_GlobalPrintText_(s_evt* evt)
 {
@@ -7228,7 +7228,7 @@ void __stdcall BWFXN_GlobalPrintText_(s_evt* evt)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_GlobalPrintText);
+FAIL_STUB_PATCH(BWFXN_GlobalPrintText, "starcraft");
 
 int InitializeNetworkProvider_(Char4 provider_id)
 {
@@ -7360,7 +7360,7 @@ void cleanBufferCounts_()
 	}
 }
 
-FAIL_STUB_PATCH(cleanBufferCounts);
+FAIL_STUB_PATCH(cleanBufferCounts, "starcraft");
 
 void sub_4D35A0_()
 {
@@ -7374,7 +7374,7 @@ void sub_4D35A0_()
 	LOWORD(dword_66FF30) = 0;
 }
 
-FAIL_STUB_PATCH(sub_4D35A0);
+FAIL_STUB_PATCH(sub_4D35A0, "starcraft");
 
 int CreateGame_(GameData* data)
 {
@@ -7407,7 +7407,7 @@ int CreateGame_(GameData* data)
 	return 0;
 }
 
-FAIL_STUB_PATCH(CreateGame);
+FAIL_STUB_PATCH(CreateGame, "starcraft");
 
 int LevelCheatInitGame_()
 {
@@ -7479,7 +7479,7 @@ int LevelCheatInitGame_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(LevelCheatInitGame);
+FAIL_STUB_PATCH(LevelCheatInitGame, "starcraft");
 
 int LoadGameCreate_()
 {
@@ -7499,7 +7499,7 @@ int LoadGameCreate_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadGameCreate);
+FAIL_STUB_PATCH(LoadGameCreate, "starcraft");
 
 int RestartGame_()
 {
@@ -7533,7 +7533,7 @@ int RestartGame_()
 	}
 }
 
-FAIL_STUB_PATCH(RestartGame);
+FAIL_STUB_PATCH(RestartGame, "starcraft");
 
 int SinglePlayerMeleeInitGame_()
 {
@@ -7556,7 +7556,7 @@ int SinglePlayerMeleeInitGame_()
 	return 1;
 }
 
-FAIL_STUB_PATCH(SinglePlayerMeleeInitGame);
+FAIL_STUB_PATCH(SinglePlayerMeleeInitGame, "starcraft");
 
 IDirectSoundBuffer* sub_4BCA30_(SfxData sfx_id, struct_5* a2)
 {
@@ -7572,7 +7572,7 @@ IDirectSoundBuffer* sub_4BCA30_(SfxData sfx_id, struct_5* a2)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4BCA30);
+FAIL_STUB_PATCH(sub_4BCA30, "starcraft");
 
 void sub_4BCA80_(SfxData a1)
 {
@@ -7605,7 +7605,7 @@ void sub_4BCA80_(SfxData a1)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4BCA80);
+FAIL_STUB_PATCH(sub_4BCA80, "starcraft");
 
 void playsound_init_UI_(u16* a1)
 {
@@ -7642,7 +7642,7 @@ void playsound_init_UI_(u16* a1)
 	dword_6D6388 = a1;
 }
 
-FAIL_STUB_PATCH(playsound_init_UI);
+FAIL_STUB_PATCH(playsound_init_UI, "starcraft");
 
 int COMMON_SFX_COUNT = 113;
 int TERRAN_SFX_COUNT = 299;
@@ -7697,7 +7697,7 @@ void LoadRaceSFX_(char a1)
 	playsound_init_UI_(a1 ? off_513628_[consoleIndex] : 0);
 }
 
-FAIL_STUB_PATCH(LoadRaceSFX);
+FAIL_STUB_PATCH(LoadRaceSFX, "starcraft");
 
 const MusicTrackDescription* current_ingame_music_track = nullptr;
 
@@ -7731,7 +7731,7 @@ void LoadRaceUI_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadRaceUI);
+FAIL_STUB_PATCH(LoadRaceUI, "starcraft");
 
 void hotkeyRemapping_()
 {
@@ -7774,7 +7774,7 @@ void hotkeyRemapping_()
 	load_Stat_txt();
 }
 
-FAIL_STUB_PATCH(hotkeyRemapping);
+FAIL_STUB_PATCH(hotkeyRemapping, "starcraft");
 
 void setup_HUD_();
 
@@ -7802,7 +7802,7 @@ int LoadGameCore_()
 	}
 }
 
-FAIL_STUB_PATCH(LoadGameCore);
+FAIL_STUB_PATCH(LoadGameCore, "starcraft");
 
 GameActionDataBlock* allocateRepGameActionMemory_(GameActionDataBlock* a1)
 {
@@ -7816,7 +7816,7 @@ GameActionDataBlock* allocateRepGameActionMemory_(GameActionDataBlock* a1)
 	return a1;
 }
 
-FAIL_STUB_PATCH(allocateRepGameActionMemory);
+FAIL_STUB_PATCH(allocateRepGameActionMemory, "starcraft");
 
 void __fastcall FreeGameActionData_(bool exit_code)
 {
@@ -7828,14 +7828,14 @@ void __fastcall FreeGameActionData_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(FreeGameActionData);
+FAIL_STUB_PATCH(FreeGameActionData, "starcraft");
 
 void __cdecl sub_4CDFC0_()
 {
 	replayData->field2 = 0;
 }
 
-FAIL_STUB_PATCH(sub_4CDFC0);
+FAIL_STUB_PATCH(sub_4CDFC0, "starcraft");
 
 void sub_4CDFD0_()
 {
@@ -7844,7 +7844,7 @@ void sub_4CDFD0_()
 	replayData->field8 = replayData->net_record_buffer;
 }
 
-FAIL_STUB_PATCH(sub_4CDFD0);
+FAIL_STUB_PATCH(sub_4CDFD0, "starcraft");
 
 void __cdecl createNewGameActionDataBlock_()
 {
@@ -7854,7 +7854,7 @@ void __cdecl createNewGameActionDataBlock_()
 	AppAddExit_(FreeGameActionData_);
 }
 
-FUNCTION_PATCH(createNewGameActionDataBlock, createNewGameActionDataBlock_);
+FUNCTION_PATCH(createNewGameActionDataBlock, createNewGameActionDataBlock_, "starcraft");
 
 bool sub_4CE220_(FILE* file)
 {
@@ -7881,7 +7881,7 @@ bool sub_4CE220_(FILE* file)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4CE220);
+FAIL_STUB_PATCH(sub_4CE220, "starcraft");
 
 int LoadReplayFile_(const char* filename, int* a3)
 {
@@ -7958,7 +7958,7 @@ int __cdecl LoadReplayFile__()
 	return LoadReplayFile_(filename, a3);
 }
 
-FUNCTION_PATCH((void*)0x4DF570, LoadReplayFile__);
+FUNCTION_PATCH((void*)0x4DF570, LoadReplayFile__, "starcraft");
 
 int chooseTRGTemplate_()
 {
@@ -8025,7 +8025,7 @@ int chooseTRGTemplate_()
 	return 1;
 }
 
-FAIL_STUB_PATCH(chooseTRGTemplate);
+FAIL_STUB_PATCH(chooseTRGTemplate, "starcraft");
 
 signed int LoadGameInit_()
 {
@@ -8158,8 +8158,8 @@ signed int LoadGameInit_()
 	return 1;
 }
 
-FAIL_STUB_PATCH(sub_49CC10);
-FAIL_STUB_PATCH(LoadGameInit);
+FAIL_STUB_PATCH(sub_49CC10, "starcraft");
+FAIL_STUB_PATCH(LoadGameInit, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 
@@ -8179,7 +8179,7 @@ int loadOKBIN_(int a1, const char* message, HANDLE a3)
 	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
 }
 
-FAIL_STUB_PATCH(loadOKBIN);
+FAIL_STUB_PATCH(loadOKBIN, "starcraft");
 
 void* getFullMapChunk_(char* filename, int* chk_size)
 {
@@ -8205,7 +8205,7 @@ void* getFullMapChunk_(char* filename, int* chk_size)
 	return v2;
 }
 
-FAIL_STUB_PATCH(getFullMapChunk);
+FAIL_STUB_PATCH(getFullMapChunk, "starcraft");
 
 int SaveReplay_(const char* a1, int a3)
 {
@@ -8273,7 +8273,7 @@ int SaveReplay_(const char* a1, int a3)
 	return v5 != 0;
 }
 
-FAIL_STUB_PATCH(SaveReplay);
+FAIL_STUB_PATCH(SaveReplay, "starcraft");
 
 void __cdecl freeChkFileMem_()
 {
@@ -8284,7 +8284,7 @@ void __cdecl freeChkFileMem_()
 	}
 }
 
-FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_);
+FUNCTION_PATCH(freeChkFileMem, freeChkFileMem_, "starcraft");
 
 struct SAI_PathsEx
 {
@@ -8307,7 +8307,7 @@ void AllocateSAI_Paths_()
 	memset(SAIPathingEx, 0, sizeof(SAI_PathsEx));
 }
 
-FAIL_STUB_PATCH(AllocateSAI_Paths);
+FAIL_STUB_PATCH(AllocateSAI_Paths, "starcraft");
 
 void FreeSAI_Paths_()
 {
@@ -8315,7 +8315,7 @@ void FreeSAI_Paths_()
 	SAIPathingEx = NULL;
 }
 
-FAIL_STUB_PATCH(FreeSAI_Paths);
+FAIL_STUB_PATCH(FreeSAI_Paths, "starcraft");
 
 void destroy_textbox_bin_()
 {
@@ -8326,7 +8326,7 @@ void destroy_textbox_bin_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_textbox_bin);
+FAIL_STUB_PATCH(destroy_textbox_bin, "starcraft");
 
 void destroy_statf10_bin_()
 {
@@ -8337,7 +8337,7 @@ void destroy_statf10_bin_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_statf10_bin);
+FAIL_STUB_PATCH(destroy_statf10_bin, "starcraft");
 
 void destroy_wirefram_grp_()
 {
@@ -8348,7 +8348,7 @@ void destroy_wirefram_grp_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_wirefram_grp);
+FAIL_STUB_PATCH(destroy_wirefram_grp, "starcraft");
 
 void destroyStatdata_()
 {
@@ -8371,7 +8371,7 @@ void destroyStatdata_()
 	}
 }
 
-FAIL_STUB_PATCH(destroyStatdata);
+FAIL_STUB_PATCH(destroyStatdata, "starcraft");
 
 void destroyStatsesBin_()
 {
@@ -8388,7 +8388,7 @@ void destroyStatsesBin_()
 	}
 }
 
-FAIL_STUB_PATCH(destroyStatsesBin);
+FAIL_STUB_PATCH(destroyStatsesBin, "starcraft");
 
 void destroy_statlb_dlg_()
 {
@@ -8399,7 +8399,7 @@ void destroy_statlb_dlg_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_statlb_dlg);
+FAIL_STUB_PATCH(destroy_statlb_dlg, "starcraft");
 
 void destroy_statbtn_BIN_()
 {
@@ -8422,7 +8422,7 @@ void destroy_statbtn_BIN_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_statbtn_BIN);
+FAIL_STUB_PATCH(destroy_statbtn_BIN, "starcraft");
 
 void clearSelectionPortrait_()
 {
@@ -8448,7 +8448,7 @@ void clearSelectionPortrait_()
 	}
 }
 
-FAIL_STUB_PATCH(clearSelectionPortrait);
+FAIL_STUB_PATCH(clearSelectionPortrait, "starcraft");
 
 StatFlufDialog* statfluf_dialogs_[] = {
 	statfluf_zerg,
@@ -8469,7 +8469,7 @@ void destroy_statfluf_bin_()
 	}
 }
 
-FAIL_STUB_PATCH(destroy_statfluf_bin);
+FAIL_STUB_PATCH(destroy_statfluf_bin, "starcraft");
 
 void destroyGameHUD_()
 {
@@ -8511,7 +8511,7 @@ void destroyGameHUD_()
 	memset(ClientSelectionGroup, 0, sizeof(ClientSelectionGroup));
 }
 
-FAIL_STUB_PATCH(destroyGameHUD);
+FAIL_STUB_PATCH(destroyGameHUD, "starcraft");
 
 void DestroyFogSightData_()
 {
@@ -8546,7 +8546,7 @@ void DestroyFogSightData_()
 	}
 }
 
-FAIL_STUB_PATCH(DestroyFogSightData);
+FAIL_STUB_PATCH(DestroyFogSightData, "starcraft");
 
 void DestroyMapData_()
 {
@@ -8630,7 +8630,7 @@ void DestroyMapData_()
 	}
 }
 
-FAIL_STUB_PATCH(DestroyMapData);
+FAIL_STUB_PATCH(DestroyMapData, "starcraft");
 
 void CleanupFlingyDat_()
 {
@@ -8638,7 +8638,7 @@ void CleanupFlingyDat_()
 	delete[] flingyDat_;
 }
 
-FAIL_STUB_PATCH(CleanupFlingyDat);
+FAIL_STUB_PATCH(CleanupFlingyDat, "starcraft");
 
 void CleanupSpritesDat_()
 {
@@ -8646,7 +8646,7 @@ void CleanupSpritesDat_()
 	delete[] spritesDat_;
 }
 
-FAIL_STUB_PATCH(CleanupSpritesDat);
+FAIL_STUB_PATCH(CleanupSpritesDat, "starcraft");
 
 void ReportGameResult_()
 {
@@ -8673,7 +8673,7 @@ void ReportGameResult_()
 	}
 }
 
-FAIL_STUB_PATCH(ReportGameResult);
+FAIL_STUB_PATCH(ReportGameResult, "starcraft");
 
 void sub_460F70_()
 {
@@ -8684,7 +8684,7 @@ void sub_460F70_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_460F70);
+FAIL_STUB_PATCH(sub_460F70, "starcraft");
 
 void sub_484D90_()
 {
@@ -8699,7 +8699,7 @@ void sub_484D90_()
 	SetInGameInputProcs_();
 }
 
-FAIL_STUB_PATCH(sub_484D90);
+FAIL_STUB_PATCH(sub_484D90, "starcraft");
 
 void lmissionDlgActivate_()
 {
@@ -8711,7 +8711,7 @@ void lmissionDlgActivate_()
 	}
 }
 
-FAIL_STUB_PATCH(lmissionDlgActivate);
+FAIL_STUB_PATCH(lmissionDlgActivate, "starcraft");
 
 int __fastcall lmission_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -8759,7 +8759,7 @@ LABEL_4:
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(lmission_DLG_Interact);
+FAIL_STUB_PATCH(lmission_DLG_Interact, "starcraft");
 
 void open_lose_mission_dialog_()
 {
@@ -8783,7 +8783,7 @@ void open_lose_mission_dialog_()
 	}
 }
 
-FAIL_STUB_PATCH(open_lose_mission_dialog);
+FAIL_STUB_PATCH(open_lose_mission_dialog, "starcraft");
 
 void wmissionDlgActivate_()
 {
@@ -8799,7 +8799,7 @@ void wmissionDlgActivate_()
 	}
 }
 
-FAIL_STUB_PATCH(wmissionDlgActivate);
+FAIL_STUB_PATCH(wmissionDlgActivate, "starcraft");
 
 int __fastcall wmission_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -8837,7 +8837,7 @@ int __fastcall wmission_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(wmission_BINDLG_Main);
+FAIL_STUB_PATCH(wmission_BINDLG_Main, "starcraft");
 
 void open_win_mission_dialog_()
 {
@@ -8861,7 +8861,7 @@ void open_win_mission_dialog_()
 	}
 }
 
-FAIL_STUB_PATCH(open_win_mission_dialog);
+FAIL_STUB_PATCH(open_win_mission_dialog, "starcraft");
 
 void load_endmission_()
 {
@@ -8879,7 +8879,7 @@ void load_endmission_()
 	}
 }
 
-FAIL_STUB_PATCH(load_endmission);
+FAIL_STUB_PATCH(load_endmission, "starcraft");
 
 void DestroyGame_()
 {
@@ -9015,7 +9015,7 @@ void DestroyGame_()
 	}
 }
 
-FAIL_STUB_PATCH(DestroyGame);
+FAIL_STUB_PATCH(DestroyGame, "starcraft");
 
 void updateActiveTileInfo_()
 {
@@ -9057,7 +9057,7 @@ void updateActiveTileInfo_()
 	}
 }
 
-FAIL_STUB_PATCH(updateActiveTileInfo);
+FAIL_STUB_PATCH(updateActiveTileInfo, "starcraft");
 
 MegatileFlags VISIBLE_ALL =
 	MegatileFlags::VISIBLE_PLAYER_1 | MegatileFlags::VISIBLE_PLAYER_2 |
@@ -9092,7 +9092,7 @@ void RemoveFoWCheat_()
 	}
 }
 
-FAIL_STUB_PATCH(RemoveFoWCheat);
+FAIL_STUB_PATCH(RemoveFoWCheat, "starcraft");
 
 int sub_42DB50_(CUnit* unit, Position* a4)
 {
@@ -9216,7 +9216,7 @@ int __stdcall sub_42DB50__(int a2, int a3, Position* a4)
 	return sub_42DB50_(unit, a4);
 }
 
-FUNCTION_PATCH((void*)0x42DB50, sub_42DB50__);
+FUNCTION_PATCH((void*)0x42DB50, sub_42DB50__, "starcraft");
 
 int UMAnotherPath_(CUnit* unit, points p)
 {
@@ -9239,7 +9239,7 @@ int UMAnotherPath_(CUnit* unit, points p)
 	return 0;
 }
 
-FAIL_STUB_PATCH(UMAnotherPath);
+FAIL_STUB_PATCH(UMAnotherPath, "starcraft");
 
 int UMInitSeq_(CUnit* unit)
 {
@@ -9251,7 +9251,7 @@ int UMInitSeq_(CUnit* unit)
 	return 1;
 }
 
-FAIL_STUB_PATCH(UMInitSeq);
+FAIL_STUB_PATCH(UMInitSeq, "starcraft");
 
 int UMHidden_()
 {
@@ -9259,7 +9259,7 @@ int UMHidden_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(UMHidden);
+FAIL_STUB_PATCH(UMHidden, "starcraft");
 
 int UMScoutFree_(CUnit* unit)
 {
@@ -9267,7 +9267,7 @@ int UMScoutFree_(CUnit* unit)
 	return 1;
 }
 
-FAIL_STUB_PATCH(UMScoutFree);
+FAIL_STUB_PATCH(UMScoutFree, "starcraft");
 
 int UMRetryPath_(CUnit* unit)
 {
@@ -9290,7 +9290,7 @@ int UMRetryPath_(CUnit* unit)
 	return 0;
 }
 
-FAIL_STUB_PATCH(UMRetryPath);
+FAIL_STUB_PATCH(UMRetryPath, "starcraft");
 
 int UMStartPath_(CUnit* unit)
 {
@@ -9316,7 +9316,7 @@ int UMStartPath_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(UMStartPath);
+FAIL_STUB_PATCH(UMStartPath, "starcraft");
 
 int UMTurnAndStart_(CUnit* unit)
 {
@@ -9358,7 +9358,7 @@ int UMTurnAndStart_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(UMTurnAndStart);
+FAIL_STUB_PATCH(UMTurnAndStart, "starcraft");
 
 int UMRepath_(CUnit* unit)
 {
@@ -9381,7 +9381,7 @@ int UMRepath_(CUnit* unit)
 	return 1;
 }
 
-FAIL_STUB_PATCH(UMRepath);
+FAIL_STUB_PATCH(UMRepath, "starcraft");
 
 int UMRepathMovers_(CUnit* unit)
 {
@@ -9406,7 +9406,7 @@ int UMRepathMovers_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(UMRepathMovers);
+FAIL_STUB_PATCH(UMRepathMovers, "starcraft");
 
 int UMFollowPath_(CUnit* unit)
 {
@@ -9499,7 +9499,7 @@ int UMFollowPath_(CUnit* unit)
 	return 0;
 }
 
-FAIL_STUB_PATCH(UMFollowPath);
+FAIL_STUB_PATCH(UMFollowPath, "starcraft");
 
 void Unit_ExecPathingState_(CUnit* unit)
 {
@@ -9625,7 +9625,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(Unit_ExecPathingState);
+FAIL_STUB_PATCH(Unit_ExecPathingState, "starcraft");
 
 void sub_4EBC30_(CUnit* unit)
 {
@@ -9678,7 +9678,7 @@ void sub_4EBC30_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4EBC30);
+FAIL_STUB_PATCH(sub_4EBC30, "starcraft");
 
 void RefreshUnit_(CUnit* unit)
 {
@@ -9688,7 +9688,7 @@ void RefreshUnit_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(RefreshUnit);
+FAIL_STUB_PATCH(RefreshUnit, "starcraft");
 
 void spriteToIscriptLoop_(CSprite* sprite)
 {
@@ -9766,7 +9766,7 @@ void spriteToIscriptLoop__()
 	spriteToIscriptLoop_(sprite);
 }
 
-FUNCTION_PATCH((void*) 0x497920, spriteToIscriptLoop__);
+FUNCTION_PATCH((void*) 0x497920, spriteToIscriptLoop__, "starcraft");
 
 void sub_4EB5E0_(CUnit* a1)
 {
@@ -9804,7 +9804,7 @@ void sub_4EB5E0_(CUnit* a1)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4EB5E0);
+FAIL_STUB_PATCH(sub_4EB5E0, "starcraft");
 
 u8 getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, __int16 height)
 {
@@ -9820,7 +9820,7 @@ u8 getVisibilityMaskFromPositionAndSize_(__int16 x, __int16 y, __int16 width, __
 	return ~result;
 }
 
-FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize);
+FAIL_STUB_PATCH(getVisibilityMaskFromPositionAndSize, "starcraft");
 
 bool isThingyOnMap_(int x, int y, CThingy* thingy)
 {
@@ -9882,7 +9882,7 @@ bool isThingyOnMap_(int x, int y, CThingy* thingy)
 	return 0;
 }
 
-FAIL_STUB_PATCH(isThingyOnMap);
+FAIL_STUB_PATCH(isThingyOnMap, "starcraft");
 
 void UpdateUnitSpriteInfo_(CUnit* unit)
 {
@@ -9924,7 +9924,7 @@ void UpdateUnitSpriteInfo__()
 	UpdateUnitSpriteInfo_(unit);
 }
 
-FUNCTION_PATCH((void*)0x4EBE10, UpdateUnitSpriteInfo__);
+FUNCTION_PATCH((void*)0x4EBE10, UpdateUnitSpriteInfo__, "starcraft");
 
 void updateUnitTimers_(CUnit* unit)
 {
@@ -10009,7 +10009,7 @@ void updateUnitTimers_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(updateUnitTimers);
+FAIL_STUB_PATCH(updateUnitTimers, "starcraft");
 
 void playSpriteIscript_(CSprite* sprite, Anims animation, int a3)
 {
@@ -10031,7 +10031,7 @@ void __stdcall playSpriteIscript__(Anims animation, int a3)
 	playSpriteIscript_(sprite, animation, a3);
 }
 
-FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__);
+FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__, "starcraft");
 
 void orders_Warpin_(CUnit* unit)
 {
@@ -10062,7 +10062,7 @@ void orders_Warpin_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(orders_Warpin);
+FAIL_STUB_PATCH(orders_Warpin, "starcraft");
 
 void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4)
 {
@@ -10115,7 +10115,7 @@ void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4)
 	}
 }
 
-FAIL_STUB_PATCH(PlaySoundAtPos);
+FAIL_STUB_PATCH(PlaySoundAtPos, "starcraft");
 
 void orders_Recall_(CUnit* a1)
 {
@@ -10202,7 +10202,7 @@ void orders_Recall_(CUnit* a1)
 	a1->orderState = 1;
 }
 
-FAIL_STUB_PATCH(orders_Recall);
+FAIL_STUB_PATCH(orders_Recall, "starcraft");
 
 void ordersEntries_(CUnit* unit)
 {
@@ -10688,7 +10688,7 @@ void ordersEntries_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(ordersEntries);
+FAIL_STUB_PATCH(ordersEntries, "starcraft");
 
 void UpdateUnitOrderData_(CUnit* unit)
 {
@@ -10713,7 +10713,7 @@ void UpdateUnitOrderData_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(UpdateUnitOrderData);
+FAIL_STUB_PATCH(UpdateUnitOrderData, "starcraft");
 
 void unitUpdate_(CUnit* unit)
 {
@@ -10754,7 +10754,7 @@ void unitUpdate_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(unitUpdate);
+FAIL_STUB_PATCH(unitUpdate, "starcraft");
 
 void UpdateUnits_()
 {
@@ -10890,7 +10890,7 @@ void UpdateUnits_()
 	iscript_unit = nullptr;
 }
 
-FAIL_STUB_PATCH(UpdateUnits);
+FAIL_STUB_PATCH(UpdateUnits, "starcraft");
 
 void UpdateImage_(CUnit* unit)
 {
@@ -10966,7 +10966,7 @@ void UpdateImage_(CUnit* unit)
 	}
 }
 
-FAIL_STUB_PATCH(UpdateImage);
+FAIL_STUB_PATCH(UpdateImage, "starcraft");
 
 void UpdateImages_()
 {
@@ -10978,7 +10978,7 @@ void UpdateImages_()
 	}
 }
 
-FAIL_STUB_PATCH(UpdateImages);
+FAIL_STUB_PATCH(UpdateImages, "starcraft");
 
 void sub_488020_(CThingy* thingy)
 {
@@ -11046,7 +11046,7 @@ void sub_488020_(CThingy* thingy)
 	}
 }
 
-FAIL_STUB_PATCH(sub_488020);
+FAIL_STUB_PATCH(sub_488020, "starcraft");
 
 void sub_488350_(CThingy* thingy)
 {
@@ -11099,7 +11099,7 @@ void sub_488350_(CThingy* thingy)
 	}
 }
 
-FAIL_STUB_PATCH(sub_488350);
+FAIL_STUB_PATCH(sub_488350, "starcraft");
 
 void updateThingys_()
 {
@@ -11118,7 +11118,7 @@ void updateThingys_()
 	}
 }
 
-FAIL_STUB_PATCH(updateThingys);
+FAIL_STUB_PATCH(updateThingys, "starcraft");
 
 void GameLoop_()
 {
@@ -11142,7 +11142,7 @@ void GameLoop_()
 	SetInGameLoop(0);
 }
 
-FAIL_STUB_PATCH(GameLoop);
+FAIL_STUB_PATCH(GameLoop, "starcraft");
 
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
@@ -11186,7 +11186,7 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 	return cycle_struct_index;
 }
 
-FAIL_STUB_PATCH(DoCycle);
+FAIL_STUB_PATCH(DoCycle, "starcraft");
 
 void colorCycleInterval_()
 {
@@ -11195,7 +11195,7 @@ void colorCycleInterval_()
 		DoCycle_(&cycle_colors[v0], v0, 0x100u);
 }
 
-FAIL_STUB_PATCH(colorCycleInterval);
+FAIL_STUB_PATCH(colorCycleInterval, "starcraft");
 
 
 
@@ -12450,7 +12450,7 @@ void updateButtonSetEx_()
 	}
 }
 
-FAIL_STUB_PATCH(updateButtonSetEx);
+FAIL_STUB_PATCH(updateButtonSetEx, "starcraft");
 
 void updateButtonSet_()
 {
@@ -12480,7 +12480,7 @@ void updateButtonSet_()
 	}
 }
 
-FAIL_STUB_PATCH(updateButtonSet);
+FAIL_STUB_PATCH(updateButtonSet, "starcraft");
 
 void updateSelectedUnitData_()
 {
@@ -12508,7 +12508,7 @@ void updateSelectedUnitData_()
 	updateButtonSet_();
 }
 
-FAIL_STUB_PATCH(updateSelectedUnitData);
+FAIL_STUB_PATCH(updateSelectedUnitData, "starcraft");
 
 void sub_4591D0_()
 {
@@ -12584,7 +12584,7 @@ void sub_4591D0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4591D0);
+FAIL_STUB_PATCH(sub_4591D0, "starcraft");
 
 void replayStatBtns_(dialog* dlg)
 {
@@ -12661,7 +12661,7 @@ void replayStatBtns_(dialog* dlg)
 	AddTextToDialog(dlg, -47, byte_6CAC10);
 }
 
-FAIL_STUB_PATCH(replayStatBtns);
+FAIL_STUB_PATCH(replayStatBtns, "starcraft");
 
 void updateSelectedUnitPortrait_()
 {
@@ -12685,7 +12685,7 @@ void updateSelectedUnitPortrait_()
 	CanUpdateSelectedUnitPortrait = 0;
 }
 
-FAIL_STUB_PATCH(updateSelectedUnitPortrait);
+FAIL_STUB_PATCH(updateSelectedUnitPortrait, "starcraft");
 
 void updateCurrentButtonset_()
 {
@@ -12751,7 +12751,7 @@ LABEL_14:
 	}
 }
 
-FUNCTION_PATCH(updateCurrentButtonset, updateCurrentButtonset_);
+FUNCTION_PATCH(updateCurrentButtonset, updateCurrentButtonset_, "starcraft");
 
 void __fastcall UnitStatAct_Dropship_(dialog* dlg)
 {
@@ -12779,7 +12779,7 @@ void __fastcall UnitStatAct_Dropship_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(UnitStatAct_Dropship);
+FAIL_STUB_PATCH(UnitStatAct_Dropship, "starcraft");
 
 void __fastcall UnitStatAct_Overlord_(dialog* dlg)
 {
@@ -12803,7 +12803,7 @@ void __fastcall UnitStatAct_Overlord_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(UnitStatAct_Overlord);
+FAIL_STUB_PATCH(UnitStatAct_Overlord, "starcraft");
 
 UnitStat unit_stats_[] =
 {
@@ -13068,7 +13068,7 @@ void sub_458120_()
 	CanUpdateStatDataDialog = 0;
 }
 
-FAIL_STUB_PATCH(sub_458120);
+FAIL_STUB_PATCH(sub_458120, "starcraft");
 
 void sub_4C3B10_()
 {
@@ -13082,7 +13082,7 @@ void sub_4C3B10_()
 	sub_458120_();
 }
 
-FAIL_STUB_PATCH(sub_4C3B10);
+FAIL_STUB_PATCH(sub_4C3B10, "starcraft");
 
 void sub_4D93B0_()
 {
@@ -13097,7 +13097,7 @@ void sub_4D93B0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D93B0);
+FAIL_STUB_PATCH(sub_4D93B0, "starcraft");
 
 void updateHUDInformation_()
 {
@@ -13110,7 +13110,7 @@ void updateHUDInformation_()
 	}
 }
 
-FAIL_STUB_PATCH(updateHUDInformation);
+FAIL_STUB_PATCH(updateHUDInformation, "starcraft");
 
 void DoGameLoop_()
 {
@@ -13120,7 +13120,7 @@ void DoGameLoop_()
 	updateHUDInformation_();
 }
 
-FAIL_STUB_PATCH(DoGameLoop);
+FAIL_STUB_PATCH(DoGameLoop, "starcraft");
 
 void PollInput_()
 {
@@ -13207,7 +13207,7 @@ void PollInput_()
 	}
 }
 
-FAIL_STUB_PATCH(PollInput);
+FAIL_STUB_PATCH(PollInput, "starcraft");
 
 void replayLoop_()
 {
@@ -13255,14 +13255,14 @@ void replayLoop_()
 	}
 }
 
-FAIL_STUB_PATCH(replayLoop);
+FAIL_STUB_PATCH(replayLoop, "starcraft");
 
 int BWFXN_IsPaused_()
 {
 	return IS_GAME_PAUSED;
 }
 
-FAIL_STUB_PATCH(BWFXN_IsPaused);
+FAIL_STUB_PATCH(BWFXN_IsPaused, "starcraft");
 
 void RefreshAllUnits_()
 {
@@ -13272,7 +13272,7 @@ void RefreshAllUnits_()
 	}
 }
 
-FAIL_STUB_PATCH(RefreshAllUnits);
+FAIL_STUB_PATCH(RefreshAllUnits, "starcraft");
 
 void RecvMessage_()
 {
@@ -13299,7 +13299,7 @@ void RecvMessage_()
 	}
 }
 
-FAIL_STUB_PATCH(RecvMessage);
+FAIL_STUB_PATCH(RecvMessage, "starcraft");
 
 void sub_4C4A80_(int a1, int a2)
 {
@@ -13360,7 +13360,7 @@ void sub_4C4A80_(int a1, int a2)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4C4A80);
+FAIL_STUB_PATCH(sub_4C4A80, "starcraft");
 
 void sub_4C4FA0_()
 {
@@ -13384,7 +13384,7 @@ void sub_4C4FA0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4C4FA0);
+FAIL_STUB_PATCH(sub_4C4FA0, "starcraft");
 
 void timeoutProcDropdown_()
 {
@@ -13439,7 +13439,7 @@ void timeoutProcDropdown_()
 	}
 }
 
-FAIL_STUB_PATCH(timeoutProcDropdown);
+FAIL_STUB_PATCH(timeoutProcDropdown, "starcraft");
 
 bool ReceiveTurns_(unsigned int* arraydatabytes, char** arraydata, DWORD* a3, int a4, int arraysize)
 {
@@ -13461,7 +13461,7 @@ bool ReceiveTurns_(unsigned int* arraydatabytes, char** arraydata, DWORD* a3, in
 	}
 }
 
-FAIL_STUB_PATCH(ReceiveTurns);
+FAIL_STUB_PATCH(ReceiveTurns, "starcraft");
 
 bool RecvSaveTurns_()
 {
@@ -13479,7 +13479,7 @@ bool RecvSaveTurns_()
 	}
 }
 
-FAIL_STUB_PATCH(RecvSaveTurns);
+FAIL_STUB_PATCH(RecvSaveTurns, "starcraft");
 
 void GameKeepAlive_()
 {
@@ -13516,7 +13516,7 @@ void GameKeepAlive_()
 	}
 }
 
-FAIL_STUB_PATCH(GameKeepAlive);
+FAIL_STUB_PATCH(GameKeepAlive, "starcraft");
 
 BOOL sub_4C4870_()
 {
@@ -13544,7 +13544,7 @@ BOOL sub_4C4870_()
 	return 0;
 }
 
-FUNCTION_PATCH(sub_4C4870, sub_4C4870_);
+FUNCTION_PATCH(sub_4C4870, sub_4C4870_, "starcraft");
 
 void Cls2RecvFrom_()
 {
@@ -13559,7 +13559,7 @@ void Cls2RecvFrom_()
 	dword_512680 = 8;
 }
 
-FAIL_STUB_PATCH(Cls2RecvFrom);
+FAIL_STUB_PATCH(Cls2RecvFrom, "starcraft");
 
 int gameLoopTurns_()
 {
@@ -13604,7 +13604,7 @@ int gameLoopTurns_()
 	return 1;
 }
 
-FAIL_STUB_PATCH(gameLoopTurns);
+FAIL_STUB_PATCH(gameLoopTurns, "starcraft");
 
 int GameLoopWaitSendTurn_(int* a1)
 {
@@ -13650,7 +13650,7 @@ int GameLoopWaitSendTurn_(int* a1)
 	}
 }
 
-FAIL_STUB_PATCH(GameLoopWaitSendTurn);
+FAIL_STUB_PATCH(GameLoopWaitSendTurn, "starcraft");
 
 void replayFrameComputation_()
 {
@@ -13682,7 +13682,7 @@ void replayFrameComputation_()
 	}
 }
 
-FAIL_STUB_PATCH(replayFrameComputation);
+FAIL_STUB_PATCH(replayFrameComputation, "starcraft");
 
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame);
 
@@ -13758,7 +13758,7 @@ void GameLoop_State_()
 	}
 }
 
-FAIL_STUB_PATCH(GameLoop_State);
+FAIL_STUB_PATCH(GameLoop_State, "starcraft");
 
 void GameLoop_Top_()
 {
@@ -13809,7 +13809,7 @@ void GameLoop_Top_()
 	}
 }
 
-FAIL_STUB_PATCH(GameLoop_Top);
+FAIL_STUB_PATCH(GameLoop_Top, "starcraft");
 
 GamePosition BeginGame_()
 {
@@ -13863,7 +13863,7 @@ GamePosition BeginGame_()
 	return gwNextGameMode;
 }
 
-FAIL_STUB_PATCH(BeginGame);
+FAIL_STUB_PATCH(BeginGame, "starcraft");
 
 void GameRun_()
 {
@@ -13896,7 +13896,7 @@ void GameRun_()
 	gwGameMode = next_game_position;
 }
 
-FAIL_STUB_PATCH(GameRun);
+FAIL_STUB_PATCH(GameRun, "starcraft");
 
 bool statBtn_dlg_CharPress_(dlgEvent* evt)
 {
@@ -13920,7 +13920,7 @@ bool statBtn_dlg_CharPress_(dlgEvent* evt)
 	return interrupting_child->pfcnInteract(interrupting_child, &v2);
 }
 
-FAIL_STUB_PATCH(statBtn_dlg_CharPress);
+FAIL_STUB_PATCH(statBtn_dlg_CharPress, "starcraft");
 
 void sub_458E70_(dialog* a1)
 {
@@ -13929,7 +13929,7 @@ void sub_458E70_(dialog* a1)
 	HideDialog_(a1);
 }
 
-FAIL_STUB_PATCH(sub_458E70);
+FAIL_STUB_PATCH(sub_458E70, "starcraft");
 
 void sub_458BB0_(dialog* dlg)
 {
@@ -13937,7 +13937,7 @@ void sub_458BB0_(dialog* dlg)
 	order->action(order->action_variable, is_keycode_used[VK_SHIFT]);
 }
 
-FAIL_STUB_PATCH(sub_458BB0);
+FAIL_STUB_PATCH(sub_458BB0, "starcraft");
 
 void statflufDlgUpdate_(dialog* dlg)
 {
@@ -13950,7 +13950,7 @@ void statflufDlgUpdate_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(statflufDlgUpdate);
+FAIL_STUB_PATCH(statflufDlgUpdate, "starcraft");
 
 int __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -13980,7 +13980,7 @@ int __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(statfluf_DLG_Interact);
+FAIL_STUB_PATCH(statfluf_DLG_Interact, "starcraft");
 
 void load_statfluf_BIN_()
 {
@@ -13999,7 +13999,7 @@ void load_statfluf_BIN_()
 	}
 }
 
-FAIL_STUB_PATCH(load_statfluf_BIN);
+FAIL_STUB_PATCH(load_statfluf_BIN, "starcraft");
 
 void __fastcall statPortBtnUpdate_(dialog* dlg, int x, int y, rect* dst)
 {
@@ -14029,7 +14029,7 @@ void __fastcall statPortBtnUpdate_(dialog* dlg, int x, int y, rect* dst)
 	BWFXN_PrintIcon(&a1, &stru_68AC78, (unsigned __int16)dlg->rct.left, dlg->rct.top);
 }
 
-FAIL_STUB_PATCH(statPortBtnUpdate);
+FAIL_STUB_PATCH(statPortBtnUpdate, "starcraft");
 
 void sub_45E770_(dialog* dlg)
 {
@@ -14039,7 +14039,7 @@ void sub_45E770_(dialog* dlg)
 	dword_68AC98 = dlg;
 }
 
-FAIL_STUB_PATCH(sub_45E770);
+FAIL_STUB_PATCH(sub_45E770, "starcraft");
 
 void moveScreenToUnit_(CUnit* unit)
 {
@@ -14055,7 +14055,7 @@ void moveScreenToUnit__(__int16 x)
 	moveScreenToUnit_(unit);
 }
 
-FUNCTION_PATCH((void*)0x4E6020, moveScreenToUnit__);
+FUNCTION_PATCH((void*)0x4E6020, moveScreenToUnit__, "starcraft");
 
 int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 {
@@ -14087,7 +14087,7 @@ int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 }
 
-FAIL_STUB_PATCH(statPortBtnInteract);
+FAIL_STUB_PATCH(statPortBtnInteract, "starcraft");
 
 void statport_Buttonpress_(dialog* dlg)
 {
@@ -14131,7 +14131,7 @@ void statport_Buttonpress_(dialog* dlg)
 	dword_68AC88 = getControlFromIndex_(dlg, -10)->pszText;
 }
 
-FAIL_STUB_PATCH(statport_Buttonpress);
+FAIL_STUB_PATCH(statport_Buttonpress, "starcraft");
 
 int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -14160,7 +14160,7 @@ int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(statport_Dlg_Interact);
+FAIL_STUB_PATCH(statport_Dlg_Interact, "starcraft");
 
 void loadPortdata_BINDLG_()
 {
@@ -14208,7 +14208,7 @@ void loadPortdata_BINDLG_()
 	InitializeDialog_(statport_Dlg, statport_Dlg_Interact_);
 }
 
-FAIL_STUB_PATCH(loadPortdata_BINDLG);
+FAIL_STUB_PATCH(loadPortdata_BINDLG, "starcraft");
 
 void load_statlb_()
 {
@@ -14226,7 +14226,7 @@ void load_statlb_()
 	}
 }
 
-FAIL_STUB_PATCH(load_statlb);
+FAIL_STUB_PATCH(load_statlb, "starcraft");
 
 void __stdcall hideLeftmostResource_(int a1)
 {
@@ -14245,7 +14245,7 @@ void __stdcall hideLeftmostResource_(int a1)
 	}
 }
 
-FAIL_STUB_PATCH(hideLeftmostResource);
+FAIL_STUB_PATCH(hideLeftmostResource, "starcraft");
 
 int __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
 {
@@ -14271,7 +14271,7 @@ int __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
 	return 0;
 }
 
-FAIL_STUB_PATCH(StatRes_CustomCtrl);
+FAIL_STUB_PATCH(StatRes_CustomCtrl, "starcraft");
 
 void StatRes_RegisterCustomProcs_(dialog* dlg)
 {
@@ -14291,7 +14291,7 @@ void StatRes_RegisterCustomProcs_(dialog* dlg)
 	hideLeftmostResource_(0);
 }
 
-FAIL_STUB_PATCH(StatRes_RegisterCustomProcs);
+FAIL_STUB_PATCH(StatRes_RegisterCustomProcs, "starcraft");
 
 int __fastcall StatRes_DialogInteract_(dialog* dlg, dlgEvent* evt)
 {
@@ -14323,7 +14323,7 @@ int __fastcall StatRes_DialogInteract_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(StatRes_DialogInteract);
+FAIL_STUB_PATCH(StatRes_DialogInteract, "starcraft");
 
 void load_StatRes_BIN_()
 {
@@ -14335,7 +14335,7 @@ void load_StatRes_BIN_()
 	InitializeDialog_(statres_Dlg, StatRes_DialogInteract_);
 }
 
-FAIL_STUB_PATCH(load_StatRes_BIN);
+FAIL_STUB_PATCH(load_StatRes_BIN, "starcraft");
 
 void ProgressBar_Create_(dialog* a1)
 {
@@ -14355,7 +14355,7 @@ void ProgressBar_Create_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(ProgressBar_Create);
+FAIL_STUB_PATCH(ProgressBar_Create, "starcraft");
 
 int __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
 {
@@ -14374,7 +14374,7 @@ int __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 }
 
-FAIL_STUB_PATCH(statdata_ProgressBarInteract);
+FAIL_STUB_PATCH(statdata_ProgressBarInteract, "starcraft");
 
 int __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 {
@@ -14413,7 +14413,7 @@ int __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evn);
 }
 
-FAIL_STUB_PATCH(statdata_UnitWireframeTransit);
+FAIL_STUB_PATCH(statdata_UnitWireframeTransit, "starcraft");
 
 int __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 {
@@ -14458,7 +14458,7 @@ int __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 }
 
-FAIL_STUB_PATCH(statdata_UnitWireframeSelection);
+FAIL_STUB_PATCH(statdata_UnitWireframeSelection, "starcraft");
 
 void statdata_extendedCtrlID_(dialog* dlg)
 {
@@ -14514,7 +14514,7 @@ void statdata_extendedCtrlID_(dialog* dlg)
 	CanUpdateStatDataDialog = 1;
 }
 
-FAIL_STUB_PATCH(statdata_extendedCtrlID);
+FAIL_STUB_PATCH(statdata_extendedCtrlID, "starcraft");
 
 int __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -14538,7 +14538,7 @@ int __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(statdata_dlg_Interact);
+FAIL_STUB_PATCH(statdata_dlg_Interact, "starcraft");
 
 void load_Statdata_BIN_()
 {
@@ -14553,7 +14553,7 @@ void load_Statdata_BIN_()
 	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact_);
 }
 
-FAIL_STUB_PATCH(load_Statdata_BIN);
+FAIL_STUB_PATCH(load_Statdata_BIN, "starcraft");
 
 int __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -14594,7 +14594,7 @@ int __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
 	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 }
 
-FAIL_STUB_PATCH(statbtn_Btn_Interact);
+FAIL_STUB_PATCH(statbtn_Btn_Interact, "starcraft");
 
 void statbtn_BIN_CustomCtrlID_(dialog* dlg)
 {
@@ -14615,7 +14615,7 @@ void statbtn_BIN_CustomCtrlID_(dialog* dlg)
 	BINDLG_BlitSurface_(dlg);
 }
 
-FAIL_STUB_PATCH(statbtn_BIN_CustomCtrlID);
+FAIL_STUB_PATCH(statbtn_BIN_CustomCtrlID, "starcraft");
 
 int __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -14644,7 +14644,7 @@ int __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(statbtn_DLG_Interact);
+FAIL_STUB_PATCH(statbtn_DLG_Interact, "starcraft");
 
 void load_statbtn_BIN_()
 {
@@ -14667,7 +14667,7 @@ void load_statbtn_BIN_()
 	InitializeDialog_(current_dialog, statbtn_DLG_Interact_);
 }
 
-FAIL_STUB_PATCH(load_statbtn_BIN);
+FAIL_STUB_PATCH(load_statbtn_BIN, "starcraft");
 
 void drawGameMenuContextHelp_(dialog* dlg)
 {
@@ -14685,7 +14685,7 @@ void drawGameMenuContextHelp_(dialog* dlg)
 	CreateContextHelp(dlg->rct.right + dlg->fields.ctrl.pDlg->rct.left, dlg->rct.top + dlg->fields.ctrl.pDlg->rct.top, v1);
 }
 
-FAIL_STUB_PATCH(drawGameMenuContextHelp);
+FAIL_STUB_PATCH(drawGameMenuContextHelp, "starcraft");
 
 void setActiveDlgElement_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -14701,7 +14701,7 @@ void setActiveDlgElement_(dialog* dlg, struct dlgEvent* evt)
 	}
 }
 
-FAIL_STUB_PATCH(setActiveDlgElement);
+FAIL_STUB_PATCH(setActiveDlgElement, "starcraft");
 
 void load_gamemenu_(dialog* dlg)
 {
@@ -14712,7 +14712,7 @@ void load_gamemenu_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(load_gamemenu);
+FAIL_STUB_PATCH(load_gamemenu, "starcraft");
 
 void Statf10_MouseMoveEvt_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -14743,7 +14743,7 @@ void Statf10_MouseMoveEvt_(dialog* dlg, struct dlgEvent* evt)
 	}
 }
 
-FAIL_STUB_PATCH(Statf10_MouseMoveEvt);
+FAIL_STUB_PATCH(Statf10_MouseMoveEvt, "starcraft");
 
 int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 {
@@ -14775,7 +14775,7 @@ int __fastcall statf10_ButtonInteract_(dialog* dlg, dlgEvent* evt)
 	return GenericControlInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(statf10_ButtonInteract);
+FAIL_STUB_PATCH(statf10_ButtonInteract, "starcraft");
 
 void Statf10_RegisterCustomProcs_(dialog* dlg)
 {
@@ -14788,7 +14788,7 @@ void Statf10_RegisterCustomProcs_(dialog* dlg)
 	BINDLG_BlitSurface_(dlg);
 }
 
-FAIL_STUB_PATCH(Statf10_RegisterCustomProcs);
+FAIL_STUB_PATCH(Statf10_RegisterCustomProcs, "starcraft");
 
 int __fastcall Statf10_DialogProc_(dialog* dlg, dlgEvent* evt)
 {
@@ -14828,7 +14828,7 @@ int __fastcall Statf10_DialogProc_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(Statf10_DialogProc);
+FAIL_STUB_PATCH(Statf10_DialogProc, "starcraft");
 
 void load_Statf10_BIN_()
 {
@@ -14836,7 +14836,7 @@ void load_Statf10_BIN_()
 	InitializeDialog_(stat_f10_Dlg, Statf10_DialogProc_);
 }
 
-FAIL_STUB_PATCH(load_Statf10_BIN);
+FAIL_STUB_PATCH(load_Statf10_BIN, "starcraft");
 
 void sendChatMessage_(const char* message)
 {
@@ -14859,7 +14859,7 @@ void sendChatMessage_(const char* message)
 	}
 }
 
-FAIL_STUB_PATCH(sendChatMessage);
+FAIL_STUB_PATCH(sendChatMessage, "starcraft");
 
 void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 {
@@ -14964,8 +14964,8 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D3220);
-FAIL_STUB_PATCH(onSendText);
+FAIL_STUB_PATCH(sub_4D3220, "starcraft");
+FAIL_STUB_PATCH(onSendText, "starcraft");
 
 int __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -14992,7 +14992,7 @@ int __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 	return genericEditInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(textbox_CtrlInteract);
+FAIL_STUB_PATCH(textbox_CtrlInteract, "starcraft");
 
 void textbox_DLG_Init_Evt_(dialog* dlg)
 {
@@ -15043,7 +15043,7 @@ void textbox_DLG_Init_Evt_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(textbox_DLG_Init_Evt);
+FAIL_STUB_PATCH(textbox_DLG_Init_Evt, "starcraft");
 
 int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
@@ -15101,7 +15101,7 @@ int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 	return result;
 }
 
-FAIL_STUB_PATCH(textbox_DLG_Interact);
+FAIL_STUB_PATCH(textbox_DLG_Interact, "starcraft");
 
 void load_textbox_BIN_()
 {
@@ -15111,7 +15111,7 @@ void load_textbox_BIN_()
 	InitializeDialog_(textbox_bin, textbox_DLG_Interact_);
 }
 
-FAIL_STUB_PATCH(load_textbox_BIN);
+FAIL_STUB_PATCH(load_textbox_BIN, "starcraft");
 
 void LoadConsoleImage_()
 {
@@ -15134,7 +15134,7 @@ void LoadConsoleImage_()
 	MainBltMask = BltMask_Constructor(&GameScreenConsole, 0, 0);
 }
 
-FAIL_STUB_PATCH(LoadConsoleImage);
+FAIL_STUB_PATCH(LoadConsoleImage, "starcraft");
 
 void sub_47AAC0_()
 {
@@ -15144,7 +15144,7 @@ void sub_47AAC0_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_47AAC0);
+FAIL_STUB_PATCH(sub_47AAC0, "starcraft");
 
 void setup_HUD_()
 {
@@ -15189,14 +15189,14 @@ void setup_HUD_()
 	CanUpdateStatDataDialog = 1;
 }
 
-FAIL_STUB_PATCH(setup_HUD);
+FAIL_STUB_PATCH(setup_HUD, "starcraft");
 
 bool __stdcall ChkLoader_TYPE_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_TYPE);
+FAIL_STUB_PATCH(ChkLoader_TYPE, "starcraft");
 
 bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15211,7 +15211,7 @@ bool __stdcall ChkLoader_VER_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_VER);
+FAIL_STUB_PATCH(ChkLoader_VER, "starcraft");
 
 bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15227,7 +15227,7 @@ bool __stdcall ChkLoader_DIM_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_DIM);
+FAIL_STUB_PATCH(ChkLoader_DIM, "starcraft");
 
 bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15248,7 +15248,7 @@ bool __stdcall ChkLoader_ERA_(SectionData* section_data, int section_size, MapCh
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_ERA);
+FAIL_STUB_PATCH(ChkLoader_ERA, "starcraft");
 
 bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15273,7 +15273,7 @@ bool __stdcall ChkLoader_STR_(SectionData* section_data, int section_size, MapCh
 	return true;
 }
 
-FAIL_STUB_PATCH(ChkLoader_STR);
+FAIL_STUB_PATCH(ChkLoader_STR, "starcraft");
 
 bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15296,7 +15296,7 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FAIL_STUB_PATCH(ChkLoader_MBRF);
+FAIL_STUB_PATCH(ChkLoader_MBRF, "starcraft");
 
 bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15313,7 +15313,7 @@ bool __stdcall ChkLoader_SPRP_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FAIL_STUB_PATCH(ChkLoader_SPRP);
+FAIL_STUB_PATCH(ChkLoader_SPRP, "starcraft");
 
 bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -15341,7 +15341,7 @@ bool __stdcall ChkLoader_FORC_(SectionData* section_data, int section_size, MapC
 	return true;
 }
 
-FAIL_STUB_PATCH(ChkLoader_FORC);
+FAIL_STUB_PATCH(ChkLoader_FORC, "starcraft");
 
 bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapChunks* a3)
 {
@@ -15379,8 +15379,8 @@ bool __stdcall ChkLoader_VCOD_(SectionData *section_data, int section_size, MapC
 	return Hash_VCOD == Hash_Chk;
 }
 
-FAIL_STUB_PATCH(ChkLoader_VCOD);
-FAIL_STUB_PATCH(CopySectionData);
+FAIL_STUB_PATCH(ChkLoader_VCOD, "starcraft");
+FAIL_STUB_PATCH(CopySectionData, "starcraft");
 
 u16 SAI_GetRegionIdFromPx_(__int16 y, __int16 x)
 {
@@ -15401,7 +15401,7 @@ u16 SAI_GetRegionIdFromPx__(__int16 x)
 	return SAI_GetRegionIdFromPx_(y, x);
 }
 
-FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__);
+FUNCTION_PATCH((void*)0x49C9A0, SAI_GetRegionIdFromPx__, "starcraft");
 
 int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 {
@@ -15442,7 +15442,7 @@ int __stdcall sub_422FA0_(struct_a1_1* a1, int a2)
 	return 1;
 }
 
-FUNCTION_PATCH(sub_422FA0, sub_422FA0_);
+FUNCTION_PATCH(sub_422FA0, sub_422FA0_, "starcraft");
 
 u16 GetRegionIdAtPosEx_(int y, int x)
 {
@@ -15474,7 +15474,7 @@ u16 GetRegionIdAtPosEx__()
 	return GetRegionIdAtPosEx_(y, x);
 }
 
-FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__);
+FUNCTION_PATCH((void*)0x49C9F0, GetRegionIdAtPosEx__, "starcraft");
 
 int sub_422A90_(struct_a1_1* a1, Position* a2)
 {
@@ -15550,7 +15550,7 @@ int __stdcall sub_422A90__(Position* a2)
 	return sub_422A90_(a1, a2);
 }
 
-FUNCTION_PATCH((void*)0x422A90, sub_422A90__);
+FUNCTION_PATCH((void*)0x422A90, sub_422A90__, "starcraft");
 
 void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_PathsEx* a3)
 {
@@ -15563,7 +15563,7 @@ void SAI_PathCreate_Sub3_0_1_(__int16 a1, rect* a2, SAI_PathsEx* a3)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_1);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_1, "starcraft");
 
 void SAI_PathCreate_Sub3_0_2_(int a2, SAI_PathsEx* a3, rect* a4, SaiAccessabilityFlags a5)
 {
@@ -15602,7 +15602,7 @@ void SAI_PathCreate_Sub3_0_2_(int a2, SAI_PathsEx* a3, rect* a4, SaiAccessabilit
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_2);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0_2, "starcraft");
 
 int SAI_PathCreate_Sub3_0_(SAI_PathsEx* a1, Position a2, MapSize size)
 {
@@ -15768,7 +15768,7 @@ int SAI_PathCreate_Sub3_0_(SAI_PathsEx* a1, Position a2, MapSize size)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_0, "starcraft");
 
 void SAI_PathCreate_Sub3_1_0_(SAI_PathsEx* a1)
 {
@@ -15820,7 +15820,7 @@ void SAI_PathCreate_Sub3_1_0_(SAI_PathsEx* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_0, "starcraft");
 
 void SAI_PathCreate_Sub3_1_1_(SAI_PathsEx* a1)
 {
@@ -15837,7 +15837,7 @@ void SAI_PathCreate_Sub3_1_1_(SAI_PathsEx* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1_1, "starcraft");
 
 void SAI_PathCreate_Sub3_1_(int a1, SAI_PathsEx* a2)
 {
@@ -15860,7 +15860,7 @@ void SAI_PathCreate_Sub3_1_(int a1, SAI_PathsEx* a2)
 	SAI_CreateRegionGroupings((SAI_Paths*) a2);
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_1, "starcraft");
 
 void SAI_PathCreate_Sub3_2_(SAI_PathsEx* a1)
 {
@@ -15930,7 +15930,7 @@ void SAI_PathCreate_Sub3_2_(SAI_PathsEx* a1)
 	} while (v17 >= 2500);
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_2);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_2, "starcraft");
 
 void SAI_PathCreate_Sub3_3_(SAI_PathsEx* a1)
 {
@@ -15973,7 +15973,7 @@ void SAI_PathCreate_Sub3_3_(SAI_PathsEx* a1)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3_3, "starcraft");
 
 int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_PathsEx* a2)
 {
@@ -15994,9 +15994,9 @@ int SAI_PathCreate_Sub3_(PathCreateRelated* a1, SAI_PathsEx* a2)
 	return 1;
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub3);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub3, "starcraft");
 
-MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_PathsEx));
+MEMORY_PATCH((void*)0x46EAA0, sizeof(SAI_PathsEx), "starcraft");
 
 void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 {
@@ -16031,7 +16031,7 @@ void SAI_PathCreate_Sub1_(MegatileFlags* megatile_flags)
 	}
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub1);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub1, "starcraft");
 
 void CreateUIUnreachableRegion_(SAI_PathsEx* paths)
 {
@@ -16058,7 +16058,7 @@ void CreateUIUnreachableRegion_(SAI_PathsEx* paths)
 	v2->groupIndex = 0x4000;
 }
 
-FAIL_STUB_PATCH(CreateUIUnreachableRegion);
+FAIL_STUB_PATCH(CreateUIUnreachableRegion, "starcraft");
 
 int SAI_ContoursCreate_1_(BYTE(*a1)[4 * MAX_MAP_DIMENTION], int* a2, int* a3)
 {
@@ -16096,7 +16096,7 @@ int SAI_ContoursCreate_1_(BYTE(*a1)[4 * MAX_MAP_DIMENTION], int* a2, int* a3)
 	return 1;
 }
 
-FAIL_STUB_PATCH(SAI_ContoursCreate_1);
+FAIL_STUB_PATCH(SAI_ContoursCreate_1, "starcraft");
 
 void SAI_ContoursCreate_(SaiContourHub* a1)
 {
@@ -16263,7 +16263,7 @@ void SAI_ContoursCreate_(SaiContourHub* a1)
 	qsort(a1->contours[3], a1->contourCount[3], sizeof(SaiContour), PtFuncCompare);
 }
 
-FAIL_STUB_PATCH(SAI_ContoursCreate);
+FAIL_STUB_PATCH(SAI_ContoursCreate, "starcraft");
 
 void SAI_PathCreate_Sub4_(SAI_PathsEx* a1)
 {
@@ -16276,7 +16276,7 @@ void SAI_PathCreate_Sub4_(SAI_PathsEx* a1)
 	SAI_ContoursCreate_(a1->contours);
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate_Sub4);
+FAIL_STUB_PATCH(SAI_PathCreate_Sub4, "starcraft");
 
 bool SAI_PathCreate_(MegatileFlags* a1)
 {
@@ -16304,7 +16304,7 @@ bool SAI_PathCreate_(MegatileFlags* a1)
 	return true;
 }
 
-FAIL_STUB_PATCH(SAI_PathCreate);
+FAIL_STUB_PATCH(SAI_PathCreate, "starcraft");
 
 bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 {
@@ -16341,8 +16341,8 @@ bool __stdcall ChkLoader_MTXM_(SectionData *section_data, int a2, MapChunks *a3)
 	return SAI_PathCreate_(active_tiles) != 0;
 }
 
-FAIL_STUB_PATCH(ChkLoader_MTXM);
-FAIL_STUB_PATCH(sub_49CC30);
+FAIL_STUB_PATCH(ChkLoader_MTXM, "starcraft");
+FAIL_STUB_PATCH(sub_49CC30, "starcraft");
 
 struct Thingy2Entry
 {
@@ -16399,7 +16399,7 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_THG2);
+FAIL_STUB_PATCH(ChkLoader_THG2, "starcraft");
 
 bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -16418,7 +16418,7 @@ bool __stdcall ChkLoader_MASK_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_MASK);
+FAIL_STUB_PATCH(ChkLoader_MASK, "starcraft");
 
 int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 {
@@ -16437,7 +16437,7 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	return 1;
 }
 
-FAIL_STUB_PATCH(CHK_UNIT_StartLocationSub);
+FAIL_STUB_PATCH(CHK_UNIT_StartLocationSub, "starcraft");
 
 bool IsCritter(UnitType unit_type)
 {
@@ -16466,7 +16466,7 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 	}
 }
 
-FAIL_STUB_PATCH(unitNotNeutral);
+FAIL_STUB_PATCH(unitNotNeutral, "starcraft");
 
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -16518,8 +16518,8 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_UNIT);
-FAIL_STUB_PATCH(sub_4CD090);
+FAIL_STUB_PATCH(ChkLoader_UNIT, "starcraft");
+FAIL_STUB_PATCH(sub_4CD090, "starcraft");
 
 bool __stdcall ChkLoader_UPRP_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -16535,7 +16535,7 @@ bool __stdcall ChkLoader_UPRP_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_UPRP);
+FAIL_STUB_PATCH(ChkLoader_UPRP, "starcraft");
 
 bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapChunks* a3)
 {
@@ -16553,7 +16553,7 @@ bool __stdcall ChkLoader_COLR_(SectionData* section_data, int section_size, MapC
 	return 1;
 }
 
-FAIL_STUB_PATCH(ChkLoader_COLR);
+FAIL_STUB_PATCH(ChkLoader_COLR, "starcraft");
 
 void __fastcall FreeCreepData_(bool exit_code)
 {
@@ -16571,7 +16571,7 @@ void __fastcall FreeCreepData_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(FreeCreepData);
+FAIL_STUB_PATCH(FreeCreepData, "starcraft");
 
 void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, void* a5)
 {
@@ -16609,7 +16609,7 @@ void InitTerrainGraphicsAndCreep_(struct_a1* a1, TileID* a2, int a3, int a4, voi
 	}
 }
 
-FAIL_STUB_PATCH(InitTerrainGraphicsAndCreep);
+FAIL_STUB_PATCH(InitTerrainGraphicsAndCreep, "starcraft");
 
 void loadParallaxStarGfx_(const char* parallaxFile)
 {
@@ -16681,7 +16681,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	}
 }
 
-FAIL_STUB_PATCH(loadParallaxStarGfx);
+FAIL_STUB_PATCH(loadParallaxStarGfx, "starcraft");
 
 void GenerateMegatileDefaultFlags_()
 {
@@ -16747,7 +16747,7 @@ void GenerateMegatileDefaultFlags_()
 	}
 }
 
-FAIL_STUB_PATCH(GenerateMegatileDefaultFlags);
+FAIL_STUB_PATCH(GenerateMegatileDefaultFlags, "starcraft");
 
 void sub_4BDDD0_(const char* tileset_name)
 {
@@ -16768,7 +16768,7 @@ void sub_4BDDD0_(const char* tileset_name)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4BDDD0);
+FAIL_STUB_PATCH(sub_4BDDD0, "starcraft");
 
 void sub_480960_()
 {
@@ -16789,7 +16789,7 @@ void sub_480960_()
 	memset(dword_6D5C18, 0, 5280);
 }
 
-FAIL_STUB_PATCH(sub_480960);
+FAIL_STUB_PATCH(sub_480960, "starcraft");
 
 void initMapData_()
 {
@@ -16852,7 +16852,7 @@ void initMapData_()
 	sub_47D660();
 }
 
-FAIL_STUB_PATCH(initMapData);
+FAIL_STUB_PATCH(initMapData, "starcraft");
 
 unsigned int GetGroundHeightAtPos_(int x, int y)
 {
@@ -16878,7 +16878,7 @@ int GetGroundHeightAtPos__()
 	return GetGroundHeightAtPos_(x, y);
 }
 
-FUNCTION_PATCH((void*)0x4BD0F0, GetGroundHeightAtPos__);
+FUNCTION_PATCH((void*)0x4BD0F0, GetGroundHeightAtPos__, "starcraft");
 
 int isUnitAtHeight_(CUnit* unit, char location_flags)
 {
@@ -16919,7 +16919,7 @@ int __cdecl isUnitAtHeight__()
 	return isUnitAtHeight_(unit, location_flags);
 }
 
-FUNCTION_PATCH((void*)0x45F8D0, isUnitAtHeight__);
+FUNCTION_PATCH((void*)0x45F8D0, isUnitAtHeight__, "starcraft");
 
 int revealSightAtLocation_(int sight_range, MegatileFlags vision_mask, signed int x, signed int y, int reveal_from_air)
 {
@@ -16975,7 +16975,7 @@ int __stdcall revealSightAtLocation__(signed int x, signed int y, int reveal_fro
 	return revealSightAtLocation_(sight_range, vision_mask, x, y, reveal_from_air);
 }
 
-FUNCTION_PATCH((void*)0x4806F0, revealSightAtLocation__);
+FUNCTION_PATCH((void*)0x4806F0, revealSightAtLocation__, "starcraft");
 
 void sub_4CC990_()
 {
@@ -16994,7 +16994,7 @@ void sub_4CC990_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4CC990);
+FAIL_STUB_PATCH(sub_4CC990, "starcraft");
 
 void loadDlgGrp_()
 {
@@ -17010,7 +17010,7 @@ void loadDlgGrp_()
 	}
 }
 
-FAIL_STUB_PATCH(loadDlgGrp);
+FAIL_STUB_PATCH(loadDlgGrp, "starcraft");
 
 void init_gluesounds_()
 {
@@ -17031,7 +17031,7 @@ void init_gluesounds_()
 	ButtonPressSound = buttonMouseOver;
 }
 
-FAIL_STUB_PATCH(init_gluesounds);
+FAIL_STUB_PATCH(init_gluesounds, "starcraft");
 
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 {
@@ -17079,7 +17079,7 @@ int __stdcall gluLoadBINDlg__(FnInteract fn_interact)
 	return gluLoadBINDlg_(dlg, fn_interact);
 }
 
-FUNCTION_PATCH((void*)0x41A080, gluLoadBINDlg__);
+FUNCTION_PATCH((void*)0x41A080, gluLoadBINDlg__, "starcraft");
 
 void AnimateVideos_(dialog* result)
 {
@@ -17092,7 +17092,7 @@ void AnimateVideos_(dialog* result)
 	}
 }
 
-FAIL_STUB_PATCH(AnimateVideos);
+FAIL_STUB_PATCH(AnimateVideos, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size)
 {
@@ -17166,7 +17166,7 @@ void __stdcall registerMenuFunctions__(dialog* a2, int functions_size, int a4)
 
 // TODO: patch the remaining usages:
 // gluModemList_CustomCtrlID, gluModemStatus_CustomCtrlID, gluModemEntry_CustomCtrlID
-FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__);
+FUNCTION_PATCH((void*) 0x4DD9E0, registerMenuFunctions__, "starcraft");
 
 int CreateCampaignGame_(const CampaignMenuEntryEx& campaign_entry)
 {
@@ -17200,7 +17200,7 @@ int CreateCampaignGame_(const CampaignMenuEntryEx& campaign_entry)
 	return 0;
 }
 
-FAIL_STUB_PATCH(CreateCampaignGame);
+FAIL_STUB_PATCH(CreateCampaignGame, "starcraft");
 
 int dword_6D5A48_ex;
 const std::vector<CampaignMenuEntryEx>* dword_6D5A4C_ex;
@@ -17238,7 +17238,7 @@ void gluHist_Create_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(gluHist_Create);
+FAIL_STUB_PATCH(gluHist_Create, "starcraft");
 
 void gluHist_Activate_(dialog* dlg)
 {
@@ -17253,7 +17253,7 @@ void gluHist_Activate_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(gluHist_Activate);
+FAIL_STUB_PATCH(gluHist_Activate, "starcraft");
 
 int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -17300,7 +17300,7 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 	return Popup_Main_(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluHist_Interact);
+FAIL_STUB_PATCH(gluHist_Interact, "starcraft");
 
 BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 {
@@ -17315,7 +17315,7 @@ BOOL sub_4B6530_(Campaign* campaign, unsigned int a2)
 	return i > 1;
 }
 
-FAIL_STUB_PATCH(sub_4B6530);
+FAIL_STUB_PATCH(sub_4B6530, "starcraft");
 
 int loadmenu_GluHist_(int a1, Campaign* campaign)
 {
@@ -17344,7 +17344,7 @@ int loadmenu_GluHist_(int a1, Campaign* campaign)
 	return dword_6D5A48_ex;
 }
 
-FAIL_STUB_PATCH(loadmenu_GluHist);
+FAIL_STUB_PATCH(loadmenu_GluHist, "starcraft");
 
 int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5)
 {
@@ -17387,7 +17387,7 @@ int parseCmpgnCheatTypeString_(Campaign* campaign, char* campaign_index, int* a5
 	return 0;
 }
 
-FAIL_STUB_PATCH(parseCmpgnCheatTypeString);
+FAIL_STUB_PATCH(parseCmpgnCheatTypeString, "starcraft");
 
 void ContinueCampaignWithLevelCheat_(Campaign* campaign, int campaign_menu_entry_index)
 {
@@ -17396,7 +17396,7 @@ void ContinueCampaignWithLevelCheat_(Campaign* campaign, int campaign_menu_entry
 	active_campaign_entry_index = campaign_menu_entry_index;
 }
 
-FAIL_STUB_PATCH(ContinueCampaignWithLevelCheat);
+FAIL_STUB_PATCH(ContinueCampaignWithLevelCheat, "starcraft");
 
 int campaignTypeCheatStrings_(const char* a2)
 {
@@ -17446,7 +17446,7 @@ int campaignTypeCheatStrings_(const char* a2)
 	return 1;
 }
 
-FAIL_STUB_PATCH(campaignTypeCheatStrings);
+FAIL_STUB_PATCH(campaignTypeCheatStrings, "starcraft");
 
 bool LoadCampaignWithCharacter_(Campaign& campaign)
 {
@@ -17496,7 +17496,7 @@ bool LoadCampaignWithCharacter_(Campaign& campaign)
 	return active_campaign_entry_index != -1;
 }
 
-FAIL_STUB_PATCH(LoadCampaignWithCharacter);
+FAIL_STUB_PATCH(LoadCampaignWithCharacter, "starcraft");
 
 bool LoadPrecursorCampaign()
 {
@@ -17589,7 +17589,7 @@ char __stdcall DLG_SwishOut_(dialog* dlg)
 	return 1;
 }
 
-FUNCTION_PATCH(DLG_SwishOut, DLG_SwishOut_);
+FUNCTION_PATCH(DLG_SwishOut, DLG_SwishOut_, "starcraft");
 
 void DlgSwooshin_(dialog* dlg, swishTimer* timers, size_t timers_count, __int16 a4)
 {
@@ -17699,7 +17699,7 @@ void DlgSwooshin_(dialog* dlg, swishTimer* timers, size_t timers_count, __int16 
 	}
 }
 
-FAIL_STUB_PATCH(DlgSwooshin);
+FAIL_STUB_PATCH(DlgSwooshin, "starcraft");
 
 void DLG_SwishIn_(dialog* a1)
 {
@@ -17720,14 +17720,14 @@ void DLG_SwishIn_(dialog* a1)
 	SetCallbackTimer(46, a1, 100, DLGSwishInProc);
 }
 
-FAIL_STUB_PATCH(DLG_SwishIn);
+FAIL_STUB_PATCH(DLG_SwishIn, "starcraft");
 
 dialog* loadFullMenuDLG_(const char* filename, dialog* buffer, int* read, const char* logfilename, int logline)
 {
 	return (dialog*) fastFileRead_(read, 0, filename, (int)buffer, 1, logfilename, logline);
 }
 
-FAIL_STUB_PATCH(loadFullMenuDLG);
+FAIL_STUB_PATCH(loadFullMenuDLG, "starcraft");
 
 dialog* loadAndInitFullMenuDLG_(const char* filename)
 {
@@ -17740,7 +17740,7 @@ dialog* loadAndInitFullMenuDLG_(const char* filename)
 	return dlg;
 }
 
-FAIL_STUB_PATCH(loadAndInitFullMenuDLG);
+FAIL_STUB_PATCH(loadAndInitFullMenuDLG, "starcraft");
 
 void changeMenu_()
 {
@@ -17768,7 +17768,7 @@ void changeMenu_()
 	dialog_count = 0;
 }
 
-FAIL_STUB_PATCH(changeMenu);
+FAIL_STUB_PATCH(changeMenu, "starcraft");
 
 int CreateLadderGame_(GameData* a1, int a2)
 {
@@ -17850,7 +17850,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 	return 0;
 }
 
-FAIL_STUB_PATCH(CreateLadderGame);
+FAIL_STUB_PATCH(CreateLadderGame, "starcraft");
 
 const char* __stdcall get_Tileset_String(Tileset tileset);
 
@@ -17934,7 +17934,7 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 	}
 }
 
-FAIL_STUB_PATCH(FullyLoadMapDirEntry);
+FAIL_STUB_PATCH(FullyLoadMapDirEntry, "starcraft");
 
 void LoadReplayMapDirEntry_(MapDirEntry* replay)
 {
@@ -18021,7 +18021,7 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 	}
 }
 
-FAIL_STUB_PATCH(LoadReplayMapDirEntry);
+FAIL_STUB_PATCH(LoadReplayMapDirEntry, "starcraft");
 
 void sub_4ADB10_()
 {
@@ -18130,7 +18130,7 @@ void sub_4ADB10_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4ADB10);
+FAIL_STUB_PATCH(sub_4ADB10, "starcraft");
 
 void sub_4AE830_(int player_slots)
 {
@@ -18145,7 +18145,7 @@ void sub_4AE830_(int player_slots)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4AE830);
+FAIL_STUB_PATCH(sub_4AE830, "starcraft");
 
 void sub_4A79D0_(MapDirEntry* a1)
 {
@@ -18254,7 +18254,7 @@ void __cdecl sub_4A79D0__()
 	return sub_4A79D0_(a1);
 }
 
-FUNCTION_PATCH((void*)0x4A79D0, sub_4A79D0__);
+FUNCTION_PATCH((void*)0x4A79D0, sub_4A79D0__, "starcraft");
 
 void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 {
@@ -18281,7 +18281,7 @@ void __stdcall sub_4A7F50_(HWND hWnd, UINT a2, UINT uIDEvent, DWORD a4)
 	replay = 0;
 }
 
-FUNCTION_PATCH(sub_4A7F50, sub_4A7F50_);
+FUNCTION_PATCH(sub_4A7F50, sub_4A7F50_, "starcraft");
 
 unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, unsigned __int8 a5, char* dest)
 {
@@ -18503,7 +18503,7 @@ unsigned __stdcall sub_4A8050__(char* source, int a3, unsigned int a4, unsigned 
 	return sub_4A8050_(a1, source, a3, a4, a5, dest);
 }
 
-FUNCTION_PATCH((void*)0x4A8050, sub_4A8050__);
+FUNCTION_PATCH((void*)0x4A8050, sub_4A8050__, "starcraft");
 
 void fileExt_(const char* a1, MapDirEntryFlags flags)
 {
@@ -18543,7 +18543,7 @@ void fileExt_(const char* a1, MapDirEntryFlags flags)
 	}
 }
 
-FAIL_STUB_PATCH(fileExt);
+FAIL_STUB_PATCH(fileExt, "starcraft");
 
 int getMapListEntryCount_(int (__stdcall* callback)(MapDirEntry*, char*, MapDirEntryFlags), MapDirEntryFlags flags, char* directory, char* filename)
 {
@@ -18613,7 +18613,7 @@ int __stdcall getMapListEntryCount__(MapDirEntryFlags flags, char* directory, ch
 	return getMapListEntryCount_(callback, flags, directory, filename);
 }
 
-FUNCTION_PATCH((void*)0x4A73C0, getMapListEntryCount__);
+FUNCTION_PATCH((void*)0x4A73C0, getMapListEntryCount__, "starcraft");
 
 const char* __stdcall getRaceString(RaceId race)
 {
@@ -18654,7 +18654,7 @@ void loadMenu_None_()
 	dword_51C418 = 0;
 }
 
-FAIL_STUB_PATCH(loadMenu_None);
+FAIL_STUB_PATCH(loadMenu_None, "starcraft");
 
 void jmpNoMenu_()
 {
@@ -18664,7 +18664,7 @@ void jmpNoMenu_()
 	}
 }
 
-FAIL_STUB_PATCH(jmpNoMenu);
+FAIL_STUB_PATCH(jmpNoMenu, "starcraft");
 
 int load_gluGameMode_BINDLG_()
 {
@@ -18701,7 +18701,7 @@ int load_gluGameMode_BINDLG_()
 	return gluLoadBINDlg_(dword_6D5A3C, Popup_Main_);
 }
 
-FAIL_STUB_PATCH(load_gluGameMode_BINDLG);
+FAIL_STUB_PATCH(load_gluGameMode_BINDLG, "starcraft");
 
 int BWFXN_gluPOKCancel_MBox_(const char* a1)
 {
@@ -18751,7 +18751,7 @@ int __cdecl BWFXN_gluPOKCancel_MBox__()
 	return BWFXN_gluPOKCancel_MBox_(a1);
 }
 
-FUNCTION_PATCH((void*)0x4B73B0, BWFXN_gluPOKCancel_MBox__);
+FUNCTION_PATCH((void*)0x4B73B0, BWFXN_gluPOKCancel_MBox__, "starcraft");
 
 BOOL BriefingLoopTurns_(int* a1)
 {
@@ -18770,7 +18770,7 @@ BOOL BriefingLoopTurns_(int* a1)
 	return glGluesMode != GLUE_GENERIC;
 }
 
-FAIL_STUB_PATCH(BriefingLoopTurns);
+FAIL_STUB_PATCH(BriefingLoopTurns, "starcraft");
 
 bool __fastcall sub_46D340_(dialog* dlg)
 {
@@ -18805,7 +18805,7 @@ bool __fastcall sub_46D340_(dialog* dlg)
 	return v2;
 }
 
-FAIL_STUB_PATCH(sub_46D340);
+FAIL_STUB_PATCH(sub_46D340, "starcraft");
 
 void sub_46D3C0_(dialog* dlg)
 {
@@ -18823,7 +18823,7 @@ void sub_46D3C0_(dialog* dlg)
 	dlg->fields.dlg.pModalFcn = sub_46D340_;
 }
 
-FAIL_STUB_PATCH(sub_46D3C0);
+FAIL_STUB_PATCH(sub_46D3C0, "starcraft");
 
 int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
 {
@@ -18843,7 +18843,7 @@ int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
 	return 0;
 }
 
-FAIL_STUB_PATCH(gluRdyZ_Secret);
+FAIL_STUB_PATCH(gluRdyZ_Secret, "starcraft");
 
 void loadPortdataDAT_()
 {
@@ -18866,7 +18866,7 @@ void loadPortdataDAT_()
 	dword_68F528[3] = (int)portdataDat[3].address;
 }
 
-FAIL_STUB_PATCH(loadPortdataDAT);
+FAIL_STUB_PATCH(loadPortdataDAT, "starcraft");
 
 void ShowPortrait_(unsigned __int8 a1, int a2, UnitType unit_type)
 {
@@ -18884,7 +18884,7 @@ void ShowPortrait_(unsigned __int8 a1, int a2, UnitType unit_type)
 	StartUnitPortrait(v6);
 }
 
-FAIL_STUB_PATCH(ShowPortrait);
+FAIL_STUB_PATCH(ShowPortrait, "starcraft");
 
 int __fastcall BRFACT_SkipTutorial_(Action* action, BYTE action_index)
 {
@@ -18895,7 +18895,7 @@ int __fastcall BRFACT_SkipTutorial_(Action* action, BYTE action_index)
 	return 1;
 }
 
-FUNCTION_PATCH(BRFACT_SkipTutorial, BRFACT_SkipTutorial_);
+FUNCTION_PATCH(BRFACT_SkipTutorial, BRFACT_SkipTutorial_, "starcraft");
 
 int __fastcall BRFACT_ShowPortrait_(Action* action, BYTE action_index)
 {
@@ -18903,7 +18903,7 @@ int __fastcall BRFACT_ShowPortrait_(Action* action, BYTE action_index)
 	return 1;
 }
 
-FUNCTION_PATCH(BRFACT_ShowPortrait, BRFACT_ShowPortrait_);
+FUNCTION_PATCH(BRFACT_ShowPortrait, BRFACT_ShowPortrait_, "starcraft");
 
 int __fastcall BRFACT_PlayWAV_(Action* action, BYTE action_index)
 {
@@ -18928,7 +18928,7 @@ int __fastcall BRFACT_PlayWAV_(Action* action, BYTE action_index)
 	return 1;
 }
 
-FUNCTION_PATCH(BRFACT_PlayWAV, BRFACT_PlayWAV_);
+FUNCTION_PATCH(BRFACT_PlayWAV, BRFACT_PlayWAV_, "starcraft");
 
 void BriefingStart_(dialog* dlg, int buffer)
 {
@@ -18957,7 +18957,7 @@ void BriefingStart_(dialog* dlg, int buffer)
 	}
 }
 
-FAIL_STUB_PATCH(BriefingStart);
+FAIL_STUB_PATCH(BriefingStart, "starcraft");
 
 void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
 {
@@ -18979,7 +18979,7 @@ void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
 	}
 }
 
-FAIL_STUB_PATCH(MissionBriefingLoop);
+FAIL_STUB_PATCH(MissionBriefingLoop, "starcraft");
 
 void sub_46D220_(dialog* a1)
 {
@@ -19007,7 +19007,7 @@ void sub_46D220_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(sub_46D220);
+FAIL_STUB_PATCH(sub_46D220, "starcraft");
 
 void sub_46D200_(const MusicTrackDescription* music_track)
 {
@@ -19015,7 +19015,7 @@ void sub_46D200_(const MusicTrackDescription* music_track)
 	DLGMusicFade_(music_track);
 }
 
-FAIL_STUB_PATCH(sub_46D200);
+FAIL_STUB_PATCH(sub_46D200, "starcraft");
 
 MenuPosition BWFXN_NetSelectReturnMenu_()
 {
@@ -19033,14 +19033,14 @@ MenuPosition BWFXN_NetSelectReturnMenu_()
 	return MenuPosition::GLUE_MAIN_MENU;
 }
 
-FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu);
+FAIL_STUB_PATCH(BWFXN_NetSelectReturnMenu, "starcraft");
 
 void sub_46D1F0_()
 {
 	sub_46D200_(&title_music);
 }
 
-FAIL_STUB_PATCH(sub_46D1F0);
+FAIL_STUB_PATCH(sub_46D1F0, "starcraft");
 
 
 void gluModem_CustomCtrlID_(dialog* a1)
@@ -19072,7 +19072,7 @@ void gluModem_CustomCtrlID_(dialog* a1)
 	DlgSwooshin_(a1, timers, 0);
 }
 
-FAIL_STUB_PATCH(gluModem_CustomCtrlID);
+FAIL_STUB_PATCH(gluModem_CustomCtrlID, "starcraft");
 
 int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -19132,7 +19132,7 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluModem_Main);
+FAIL_STUB_PATCH(gluModem_Main, "starcraft");
 
 void loadMenu_gluModem_()
 {
@@ -19156,7 +19156,7 @@ void loadMenu_gluModem_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluModem);
+FAIL_STUB_PATCH(loadMenu_gluModem, "starcraft");
 
 void CreateRaceDropdown_(dialog* dlg, RaceId race)
 {
@@ -19227,7 +19227,7 @@ void __stdcall CreateRaceDropdown__(RaceId race)
 	CreateRaceDropdown_(dlg, race);
 }
 
-FUNCTION_PATCH((void*)0x450AB0, CreateRaceDropdown__);
+FUNCTION_PATCH((void*)0x450AB0, CreateRaceDropdown__, "starcraft");
 
 int killTimerFunc_()
 {
@@ -19248,7 +19248,7 @@ int killTimerFunc_()
 	}
 }
 
-FAIL_STUB_PATCH(killTimerFunc);
+FAIL_STUB_PATCH(killTimerFunc, "starcraft");
 
 void CALLBACK TimerFunc_(HWND a2, UINT a3, UINT_PTR a4, DWORD a5)
 {
@@ -19267,7 +19267,7 @@ void CALLBACK TimerFunc_(HWND a2, UINT a3, UINT_PTR a4, DWORD a5)
 	}
 }
 
-FAIL_STUB_PATCH(TimerFunc);
+FAIL_STUB_PATCH(TimerFunc, "starcraft");
 
 void __cdecl SetTimerFunc_()
 {
@@ -19280,7 +19280,7 @@ void __cdecl SetTimerFunc_()
 	}
 }
 
-FUNCTION_PATCH(SetTimerFunc, SetTimerFunc_);
+FUNCTION_PATCH(SetTimerFunc, SetTimerFunc_, "starcraft");
 
 void sub_4D3860_()
 {
@@ -19310,7 +19310,7 @@ void sub_4D3860_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D3860);
+FAIL_STUB_PATCH(sub_4D3860, "starcraft");
 
 BOOL extensionIsValidMap_(const char* path)
 {
@@ -19334,7 +19334,7 @@ BOOL __cdecl extensionIsValidMap__()
 	return extensionIsValidMap_(path);
 }
 
-FUNCTION_PATCH((void*)0x459FB0, extensionIsValidMap__);
+FUNCTION_PATCH((void*)0x459FB0, extensionIsValidMap__, "starcraft");
 
 bool userHasMap_()
 {
@@ -19372,7 +19372,7 @@ bool userHasMap_()
 	return map_download;
 }
 
-FAIL_STUB_PATCH(userHasMap);
+FAIL_STUB_PATCH(userHasMap, "starcraft");
 
 signed int sub_4D4130_()
 {
@@ -19461,7 +19461,7 @@ signed int sub_4D4130_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D4130);
+FAIL_STUB_PATCH(sub_4D4130, "starcraft");
 
 bool LobbyLoopTurns_()
 {
@@ -19487,7 +19487,7 @@ bool LobbyLoopTurns_()
 	return gameState == 9;
 }
 
-FAIL_STUB_PATCH(LobbyLoopTurns);
+FAIL_STUB_PATCH(LobbyLoopTurns, "starcraft");
 
 int LobbyLoopCnt_()
 {
@@ -19510,7 +19510,7 @@ int LobbyLoopCnt_()
 	return 83;
 }
 
-FAIL_STUB_PATCH(LobbyLoopCnt);
+FAIL_STUB_PATCH(LobbyLoopCnt, "starcraft");
 
 int sub_4EE210_()
 {
@@ -19547,7 +19547,7 @@ int sub_4EE210_()
 	return 1;
 }
 
-FAIL_STUB_PATCH(sub_4EE210);
+FAIL_STUB_PATCH(sub_4EE210, "starcraft");
 
 void saveGame_Create_(dialog* dlg)
 {
@@ -19580,7 +19580,7 @@ void saveGame_Create_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(saveGame_Create);
+FAIL_STUB_PATCH(saveGame_Create, "starcraft");
 
 void savegameBIN_CustomCtrlID_(dialog* dlg)
 {
@@ -19595,7 +19595,7 @@ void savegameBIN_CustomCtrlID_(dialog* dlg)
 	saveGame_InitChildren(dlg);
 }
 
-FAIL_STUB_PATCH(savegameBIN_CustomCtrlID);
+FAIL_STUB_PATCH(savegameBIN_CustomCtrlID, "starcraft");
 
 int __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -19625,7 +19625,7 @@ int __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(savegameBIN_Main);
+FAIL_STUB_PATCH(savegameBIN_Main, "starcraft");
 
 int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
 {
@@ -19643,7 +19643,7 @@ int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
 	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
 }
 
-FAIL_STUB_PATCH(loadOKCancelBIN);
+FAIL_STUB_PATCH(loadOKCancelBIN, "starcraft");
 
 int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 {
@@ -19665,7 +19665,7 @@ int ConfirmReplayOverwrite_(char* filename, __int16 a2)
 	return loadOKCancelBIN_(1, buff, dword_6D0F2C) == -2;
 }
 
-FAIL_STUB_PATCH(ConfirmReplayOverwrite);
+FAIL_STUB_PATCH(ConfirmReplayOverwrite, "starcraft");
 
 int CopyLastReplayTo_(char* a1)
 {
@@ -19684,7 +19684,7 @@ int CopyLastReplayTo_(char* a1)
 	return CopyLastReplay(a1);
 }
 
-FAIL_STUB_PATCH(CopyLastReplayTo);
+FAIL_STUB_PATCH(CopyLastReplayTo, "starcraft");
 
 int LoadSaveGameBIN_Main_(int a1, RaceId a2)
 {
@@ -19737,7 +19737,7 @@ int LoadSaveGameBIN_Main_(int a1, RaceId a2)
 	return 0;
 }
 
-FAIL_STUB_PATCH(LoadSaveGameBIN_Main);
+FAIL_STUB_PATCH(LoadSaveGameBIN_Main, "starcraft");
 
 void sub_4DBEE0_(CampaignMenuEntryEx* a1)
 {
@@ -19759,7 +19759,7 @@ void sub_4DBEE0_(CampaignMenuEntryEx* a1)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4DBEE0);
+FAIL_STUB_PATCH(sub_4DBEE0, "starcraft");
 
 void sub_4DBF80_()
 {
@@ -19772,7 +19772,7 @@ void sub_4DBF80_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4DBF80);
+FAIL_STUB_PATCH(sub_4DBF80, "starcraft");
 
 void SelectGame_()
 {
@@ -19815,7 +19815,7 @@ void SelectGame_()
 	}
 }
 
-FAIL_STUB_PATCH(SelectGame);
+FAIL_STUB_PATCH(SelectGame, "starcraft");
 
 void loadMenu_gluBNRes_()
 {
@@ -19832,7 +19832,7 @@ void loadMenu_gluBNRes_()
 	dword_50E064 = -1;
 }
 
-FAIL_STUB_PATCH(loadMenu_gluBNRes);
+FAIL_STUB_PATCH(loadMenu_gluBNRes, "starcraft");
 
 int SwitchMenu_()
 {
@@ -20016,7 +20016,7 @@ LABEL_28:
 	return sub_4DC870();
 }
 
-FAIL_STUB_PATCH(SwitchMenu);
+FAIL_STUB_PATCH(SwitchMenu, "starcraft");
 
 void Game_Close_()
 {
@@ -20043,7 +20043,7 @@ void Game_Close_()
 	}
 }
 
-FAIL_STUB_PATCH(Game_Close);
+FAIL_STUB_PATCH(Game_Close, "starcraft");
 
 void GameShowCursor_(bool show_cursor)
 {
@@ -20063,7 +20063,7 @@ void GameShowCursor_(bool show_cursor)
 	}
 }
 
-FAIL_STUB_PATCH(GameShowCursor);
+FAIL_STUB_PATCH(GameShowCursor, "starcraft");
 
 void doCursorClip_(int a1)
 {
@@ -20081,7 +20081,7 @@ void doCursorClip_(int a1)
 	}
 }
 
-FAIL_STUB_PATCH(doCursorClip);
+FAIL_STUB_PATCH(doCursorClip, "starcraft");
 
 void Game_NumLockInit_()
 {
@@ -20105,7 +20105,7 @@ void Game_NumLockInit_()
 	is_keycode_used[VK_DOWN] = 0;
 }
 
-FAIL_STUB_PATCH(Game_NumLockInit);
+FAIL_STUB_PATCH(Game_NumLockInit, "starcraft");
 
 void TakeScreenshot_()
 {
@@ -20132,7 +20132,7 @@ void TakeScreenshot_()
 	}
 }
 
-FAIL_STUB_PATCH(TakeScreenshot);
+FAIL_STUB_PATCH(TakeScreenshot, "starcraft");
 
 void BWFXN_Game_ButtonDown_(int a1, EventNo a4, LPARAM lParam)
 {
@@ -20154,7 +20154,7 @@ void BWFXN_Game_ButtonDown_(int a1, EventNo a4, LPARAM lParam)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_Game_ButtonDown);
+FAIL_STUB_PATCH(BWFXN_Game_ButtonDown, "starcraft");
 
 void BWFXN_Game_ButtonUp_(int a1, EventNo a4, LPARAM lParam)
 {
@@ -20177,7 +20177,7 @@ void BWFXN_Game_ButtonUp_(int a1, EventNo a4, LPARAM lParam)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_Game_ButtonUp);
+FAIL_STUB_PATCH(BWFXN_Game_ButtonUp, "starcraft");
 
 void Game_BtnDoubleClick_(int a1, EventNo a4, LPARAM lParam)
 {
@@ -20199,7 +20199,7 @@ void Game_BtnDoubleClick_(int a1, EventNo a4, LPARAM lParam)
 	}
 }
 
-FAIL_STUB_PATCH(Game_BtnDoubleClick);
+FAIL_STUB_PATCH(Game_BtnDoubleClick, "starcraft");
 
 void Game_MouseWheel_(EventNo wNo, int a2)
 {
@@ -20219,7 +20219,7 @@ void Game_MouseWheel_(EventNo wNo, int a2)
 	}
 }
 
-FAIL_STUB_PATCH(Game_MouseWheel);
+FAIL_STUB_PATCH(Game_MouseWheel, "starcraft");
 
 void Game_Capturechanged_()
 {
@@ -20237,7 +20237,7 @@ void Game_Capturechanged_()
 	}
 }
 
-FAIL_STUB_PATCH(Game_Capturechanged);
+FAIL_STUB_PATCH(Game_Capturechanged, "starcraft");
 
 LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
@@ -20533,7 +20533,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 	return DefWindowProcA(hWnd, Msg, wParam, lParam);
 }
 
-FAIL_STUB_PATCH(MainWindowProc);
+FAIL_STUB_PATCH(MainWindowProc, "starcraft");
 
 void CreateMainWindow_()
 {
@@ -20582,9 +20582,9 @@ void CreateMainWindow_()
 	}
 }
 
-FAIL_STUB_PATCH(CreateMainWindow);
-FAIL_STUB_PATCH(PlayMovieWithIntro);
-FAIL_STUB_PATCH(playActiveCinematic);
+FAIL_STUB_PATCH(CreateMainWindow, "starcraft");
+FAIL_STUB_PATCH(PlayMovieWithIntro, "starcraft");
+FAIL_STUB_PATCH(playActiveCinematic, "starcraft");
 
 int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 {
@@ -20608,7 +20608,7 @@ int sub_4DBD20_(const char* a1, size_t a2, int* a3)
 	return 0;
 }
 
-FAIL_STUB_PATCH(sub_4DBD20);
+FAIL_STUB_PATCH(sub_4DBD20, "starcraft");
 
 int sub_4DBDA0_(const char* a1)
 {
@@ -20632,7 +20632,7 @@ int sub_4DBDA0_(const char* a1)
 	return active_campaign_entry_index;
 }
 
-FAIL_STUB_PATCH(sub_4DBDA0);
+FAIL_STUB_PATCH(sub_4DBDA0, "starcraft");
 
 struct EstablishingShotPositionEx
 {
@@ -20669,7 +20669,7 @@ void creditsEndPage_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(creditsEndPage);
+FAIL_STUB_PATCH(creditsEndPage, "starcraft");
 
 void sub_4D8840_(int element_length, char* element_start)
 {
@@ -20695,7 +20695,7 @@ void sub_4D8840_(int element_length, char* element_start)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4D8840);
+FAIL_STUB_PATCH(sub_4D8840, "starcraft");
 
 int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 {
@@ -20787,7 +20787,7 @@ int runCreditsScriptCommands_(char* tag, unsigned int tag_length, dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(runCreditsScriptCommands);
+FAIL_STUB_PATCH(runCreditsScriptCommands, "starcraft");
 
 int runCredits_(dialog* a1)
 {
@@ -20819,7 +20819,7 @@ int runCredits_(dialog* a1)
 	return 0;
 }
 
-FAIL_STUB_PATCH(runCredits);
+FAIL_STUB_PATCH(runCredits, "starcraft");
 
 int credits_keyDwn_(dialog* dlg, dlgEvent* evt)
 {
@@ -20837,7 +20837,7 @@ int credits_keyDwn_(dialog* dlg, dlgEvent* evt)
 	}
 }
 
-FAIL_STUB_PATCH(credits_keyDwn);
+FAIL_STUB_PATCH(credits_keyDwn, "starcraft");
 
 int credits_idle_(dialog* dlg)
 {
@@ -20857,7 +20857,7 @@ int credits_idle_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(credits_idle);
+FAIL_STUB_PATCH(credits_idle, "starcraft");
 
 void __fastcall sub_4D8930_(dialog* dlg, int x, int y, rect* dst)
 {
@@ -20873,7 +20873,7 @@ void __fastcall sub_4D8930_(dialog* dlg, int x, int y, rect* dst)
 	DlgDrawText(0, dlg, 0, 0);
 }
 
-FAIL_STUB_PATCH(sub_4D8930);
+FAIL_STUB_PATCH(sub_4D8930, "starcraft");
 
 int creditsDlgInit_(dialog* dlg)
 {
@@ -20892,7 +20892,7 @@ int creditsDlgInit_(dialog* dlg)
 	return runCredits_(dlg);
 }
 
-FAIL_STUB_PATCH(creditsDlgInit);
+FAIL_STUB_PATCH(creditsDlgInit, "starcraft");
 
 void creditsDlgDestroy_(dialog* dlg)
 {
@@ -20915,7 +20915,7 @@ void creditsDlgDestroy_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(creditsDlgDestroy);
+FAIL_STUB_PATCH(creditsDlgDestroy, "starcraft");
 
 int __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -20959,7 +20959,7 @@ int __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(creditsDlgInteract);
+FAIL_STUB_PATCH(creditsDlgInteract, "starcraft");
 
 void loadInitCreditsBIN_(const char* a1)
 {
@@ -20977,7 +20977,7 @@ void loadInitCreditsBIN_(const char* a1)
 	dword_51CEB0 = 0;
 }
 
-FAIL_STUB_PATCH(loadInitCreditsBIN);
+FAIL_STUB_PATCH(loadInitCreditsBIN, "starcraft");
 
 unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 game_speed)
 {
@@ -21048,7 +21048,7 @@ unsigned LoadScenarioSingle_(char* a1, int a2, const char* a3, unsigned __int8 g
 	}
 }
 
-FAIL_STUB_PATCH(LoadScenarioSingle);
+FAIL_STUB_PATCH(LoadScenarioSingle, "starcraft");
 
 int CreateNextCampaignGame_()
 {
@@ -21097,7 +21097,7 @@ int CreateNextCampaignGame_()
 	return 0;
 }
 
-FAIL_STUB_PATCH(CreateNextCampaignGame);
+FAIL_STUB_PATCH(CreateNextCampaignGame, "starcraft");
 
 int ContinueCampaign_(int a1)
 {
@@ -21155,11 +21155,11 @@ int ContinueCampaign_(int a1)
 	return 0;
 }
 
-FAIL_STUB_PATCH(DisplayMissionEpilog);
-FAIL_STUB_PATCH(sub_4D8F90);
-FAIL_STUB_PATCH(getCampaignIndex);
-FAIL_STUB_PATCH(updateActiveCampaignMission);
-FAIL_STUB_PATCH(ContinueCampaign);
+FAIL_STUB_PATCH(DisplayMissionEpilog, "starcraft");
+FAIL_STUB_PATCH(sub_4D8F90, "starcraft");
+FAIL_STUB_PATCH(getCampaignIndex, "starcraft");
+FAIL_STUB_PATCH(updateActiveCampaignMission, "starcraft");
+FAIL_STUB_PATCH(ContinueCampaign, "starcraft");
 
 void BeginEpilog_()
 {
@@ -21207,7 +21207,7 @@ void BeginEpilog_()
 	registry_options.Music = v0;
 }
 
-FAIL_STUB_PATCH(BeginEpilog);
+FAIL_STUB_PATCH(BeginEpilog, "starcraft");
 
 void BeginCredits_()
 {
@@ -21241,9 +21241,9 @@ void BeginCredits_()
 	registry_options.Music = v0;
 }
 
-FAIL_STUB_PATCH(BeginCredits);
-FAIL_STUB_PATCH(sub_4A60D0);
-FAIL_STUB_PATCH(sub_48EB90);
+FAIL_STUB_PATCH(BeginCredits, "starcraft");
+FAIL_STUB_PATCH(sub_4A60D0, "starcraft");
+FAIL_STUB_PATCH(sub_48EB90, "starcraft");
 
 void GameMainLoop_()
 {
@@ -21383,9 +21383,9 @@ void GameMainLoop_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4DA790);
-FAIL_STUB_PATCH(sub_481CF0);
-FAIL_STUB_PATCH(GameMainLoop);
+FAIL_STUB_PATCH(sub_4DA790, "starcraft");
+FAIL_STUB_PATCH(sub_481CF0, "starcraft");
+FAIL_STUB_PATCH(GameMainLoop, "starcraft");
 
 unsigned int LocalGetLang_()
 {
@@ -21398,7 +21398,7 @@ unsigned int LocalGetLang_()
 		return 1033;
 }
 
-FUNCTION_PATCH(LocalGetLang, LocalGetLang_);
+FUNCTION_PATCH(LocalGetLang, LocalGetLang_, "starcraft");
 
 void __fastcall FreeLocalDLL_(bool exit_code)
 {
@@ -21409,7 +21409,7 @@ void __fastcall FreeLocalDLL_(bool exit_code)
 	}
 }
 
-FAIL_STUB_PATCH(FreeLocalDLL);
+FAIL_STUB_PATCH(FreeLocalDLL, "starcraft");
 
 void localDll_Init_(HINSTANCE a1)
 {
@@ -21443,7 +21443,7 @@ void localDll_Init_(HINSTANCE a1)
 	AppAddExit_(FreeLocalDLL_);
 }
 
-FAIL_STUB_PATCH(localDll_Init);
+FAIL_STUB_PATCH(localDll_Init, "starcraft");
 
 void DisplayEstablishingShot_()
 {
@@ -21470,7 +21470,7 @@ void DisplayEstablishingShot_()
 	}
 }
 
-FAIL_STUB_PATCH(DisplayEstablishingShot);
+FAIL_STUB_PATCH(DisplayEstablishingShot, "starcraft");
 
 const char* __stdcall get_Tileset_String(Tileset tileset)
 {
@@ -21489,7 +21489,7 @@ signed int __fastcall packColorShifts_(int a1, void* a2)
 	return 0;
 }
 
-FUNCTION_PATCH(packColorShifts, packColorShifts_);
+FUNCTION_PATCH(packColorShifts, packColorShifts_, "starcraft");
 
 void UpdateCountdownTimer_()
 {
@@ -21506,7 +21506,7 @@ void UpdateCountdownTimer_()
 	setCountdownTimerString(buff);
 }
 
-FAIL_STUB_PATCH(UpdateCountdownTimer);
+FAIL_STUB_PATCH(UpdateCountdownTimer, "starcraft");
 
 void DisableCountdownTimer_()
 {
@@ -21514,7 +21514,7 @@ void DisableCountdownTimer_()
 	HideDialog_(v1);
 }
 
-FAIL_STUB_PATCH(DisableCountdownTimer);
+FAIL_STUB_PATCH(DisableCountdownTimer, "starcraft");
 
 void countdownTimersExecute_(unsigned int a2)
 {
@@ -21573,14 +21573,14 @@ void countdownTimersExecute_(unsigned int a2)
 	}
 }
 
-FAIL_STUB_PATCH(countdownTimersExecute);
+FAIL_STUB_PATCH(countdownTimersExecute, "starcraft");
 
 int __fastcall TriggerAction_NoAction_(Action* a1)
 {
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_NoAction);
+FAIL_STUB_PATCH(TriggerAction_NoAction, "starcraft");
 
 int __fastcall TriggerAction_Victory_(Action* a1)
 {
@@ -21592,7 +21592,7 @@ int __fastcall TriggerAction_Victory_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_Victory);
+FAIL_STUB_PATCH(TriggerAction_Victory, "starcraft");
 
 int __fastcall TriggerAction_Defeat_(Action* a1)
 {
@@ -21608,7 +21608,7 @@ int __fastcall TriggerAction_Defeat_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_Defeat);
+FAIL_STUB_PATCH(TriggerAction_Defeat, "starcraft");
 
 int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
 {
@@ -21616,7 +21616,7 @@ int __fastcall TriggerAction_PreserveTrigger_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_PreserveTrigger);
+FAIL_STUB_PATCH(TriggerAction_PreserveTrigger, "starcraft");
 
 int __fastcall TriggerAction_Wait_(Action* a1)
 {
@@ -21639,7 +21639,7 @@ int __fastcall TriggerAction_Wait_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_Wait);
+FAIL_STUB_PATCH(TriggerAction_Wait, "starcraft");
 
 int __fastcall TriggerAction_PauseGame_(Action* a1)
 {
@@ -21661,7 +21661,7 @@ int __fastcall TriggerAction_PauseGame_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_PauseGame);
+FAIL_STUB_PATCH(TriggerAction_PauseGame, "starcraft");
 
 int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 {
@@ -21692,7 +21692,7 @@ int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_UnpauseGame);
+FAIL_STUB_PATCH(TriggerAction_UnpauseGame, "starcraft");
 
 unsigned int getTextDisplayTime_(const char* text)
 {
@@ -21704,7 +21704,7 @@ unsigned int getTextDisplayTime_(const char* text)
 	return max(strlen(text) * 50, 4000);
 }
 
-FAIL_STUB_PATCH(getTextDisplayTime);
+FAIL_STUB_PATCH(getTextDisplayTime, "starcraft");
 
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
@@ -21726,7 +21726,7 @@ int __fastcall TriggerAction_PlayWav_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_PlayWav);
+FAIL_STUB_PATCH(TriggerAction_PlayWav, "starcraft");
 
 int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 {
@@ -21744,7 +21744,7 @@ int DisplayTalkingPortrait_maybe_(int a2, UnitType unit_type, int x, int y)
 	return 1;
 }
 
-FAIL_STUB_PATCH(DisplayTalkingPortrait_maybe);
+FAIL_STUB_PATCH(DisplayTalkingPortrait_maybe, "starcraft");
 
 void __fastcall sub_45EF50_(dialog* dlg, __int16 a2)
 {
@@ -21769,7 +21769,7 @@ void __fastcall sub_45EF50_(dialog* dlg, __int16 a2)
 	}
 }
 
-FAIL_STUB_PATCH(sub_45EF50);
+FAIL_STUB_PATCH(sub_45EF50, "starcraft");
 
 void DoUnitEventNotify_(CUnit* unit, char a2, int a3, int* a4, unsigned int a5)
 {
@@ -21810,7 +21810,7 @@ void __stdcall DoUnitEventNotify__(int* a4, unsigned int a5)
 	DoUnitEventNotify_(unit, a2, a3, a4, a5);
 }
 
-FUNCTION_PATCH((void*)0x45EFE0, DoUnitEventNotify__);
+FUNCTION_PATCH((void*)0x45EFE0, DoUnitEventNotify__, "starcraft");
 
 int __fastcall TriggerAction_Transmission_(Action* a1)
 {
@@ -21880,7 +21880,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 	return 0;
 }
 
-FAIL_STUB_PATCH(TriggerAction_Transmission);
+FAIL_STUB_PATCH(TriggerAction_Transmission, "starcraft");
 
 int __fastcall TriggerAction_SetMissionObjectives_(Action* a1)
 {
@@ -21888,7 +21888,7 @@ int __fastcall TriggerAction_SetMissionObjectives_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetMissionObjectives);
+FAIL_STUB_PATCH(TriggerAction_SetMissionObjectives, "starcraft");
 
 int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 {
@@ -21907,7 +21907,7 @@ int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_DisplayTextMessage);
+FAIL_STUB_PATCH(TriggerAction_DisplayTextMessage, "starcraft");
 
 int __fastcall TriggerAction_CenterView_(Action* a1)
 {
@@ -21963,7 +21963,7 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 	return 0;
 }
 
-FAIL_STUB_PATCH(TriggerAction_CenterView);
+FAIL_STUB_PATCH(TriggerAction_CenterView, "starcraft");
 
 void EnableSwitch(unsigned index)
 {
@@ -22024,7 +22024,7 @@ int __fastcall TriggerAction_SetSwitch_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetSwitch);
+FAIL_STUB_PATCH(TriggerAction_SetSwitch, "starcraft");
 
 int __fastcall TriggerAction_SetCountdownTimer_(Action* a1)
 {
@@ -22047,7 +22047,7 @@ int __fastcall TriggerAction_SetCountdownTimer_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetCountdownTimer);
+FAIL_STUB_PATCH(TriggerAction_SetCountdownTimer, "starcraft");
 
 int __fastcall TriggerAction_RunAiScript_(Action* a1)
 {
@@ -22063,7 +22063,7 @@ int __fastcall TriggerAction_RunAiScript_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_RunAiScript);
+FAIL_STUB_PATCH(TriggerAction_RunAiScript, "starcraft");
 
 int __fastcall TriggerAction_RunAiScriptAtLocation_(Action* a1)
 {
@@ -22082,7 +22082,7 @@ int __fastcall TriggerAction_RunAiScriptAtLocation_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_RunAiScriptAtLocation);
+FAIL_STUB_PATCH(TriggerAction_RunAiScriptAtLocation, "starcraft");
 
 int __fastcall TriggerAction_LeaderBoard_(Action* a1)
 {
@@ -22111,7 +22111,7 @@ int __fastcall TriggerAction_LeaderBoard_(Action* a1)
 	return 1;
 }
 
-FUNCTION_PATCH(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_);
+FUNCTION_PATCH(TriggerAction_LeaderBoard, TriggerAction_LeaderBoard_, "starcraft");
 
 int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
 {
@@ -22130,7 +22130,7 @@ int __fastcall TriggerAction_LeaderBoardComputerPlayers_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_LeaderBoardComputerPlayers);
+FAIL_STUB_PATCH(TriggerAction_LeaderBoardComputerPlayers, "starcraft");
 
 int __fastcall TriggerAction_KillUnit_(Action* a1)
 {
@@ -22140,7 +22140,7 @@ int __fastcall TriggerAction_KillUnit_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_KillUnit);
+FAIL_STUB_PATCH(TriggerAction_KillUnit, "starcraft");
 
 int __fastcall TriggerAction_KillUnitAtLocation_(Action* a1)
 {
@@ -22153,7 +22153,7 @@ int __fastcall TriggerAction_KillUnitAtLocation_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_KillUnitAtLocation);
+FAIL_STUB_PATCH(TriggerAction_KillUnitAtLocation, "starcraft");
 
 int __fastcall TriggerAction_RemoveUnit_(Action* a1)
 {
@@ -22163,7 +22163,7 @@ int __fastcall TriggerAction_RemoveUnit_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_RemoveUnit);
+FAIL_STUB_PATCH(TriggerAction_RemoveUnit, "starcraft");
 
 int __fastcall TriggerAction_RemoveUnitAtLocation_(Action* a1)
 {
@@ -22176,7 +22176,7 @@ int __fastcall TriggerAction_RemoveUnitAtLocation_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_RemoveUnitAtLocation);
+FAIL_STUB_PATCH(TriggerAction_RemoveUnitAtLocation, "starcraft");
 
 int __fastcall TriggerAction_SetResources_(Action* a1)
 {
@@ -22195,7 +22195,7 @@ int __fastcall TriggerAction_SetResources_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetResources);
+FAIL_STUB_PATCH(TriggerAction_SetResources, "starcraft");
 
 int __fastcall TriggerAction_SetScore_(Action* a1)
 {
@@ -22214,7 +22214,7 @@ int __fastcall TriggerAction_SetScore_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetScore);
+FAIL_STUB_PATCH(TriggerAction_SetScore, "starcraft");
 
 int __fastcall TriggerAction_MinimapPing_(Action* a1)
 {
@@ -22226,7 +22226,7 @@ int __fastcall TriggerAction_MinimapPing_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_MinimapPing);
+FAIL_STUB_PATCH(TriggerAction_MinimapPing, "starcraft");
 
 int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
 {
@@ -22237,7 +22237,7 @@ int __fastcall TriggerAction_TalkingPortrait_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_TalkingPortrait);
+FAIL_STUB_PATCH(TriggerAction_TalkingPortrait, "starcraft");
 
 int __fastcall TriggerAction_MuteUnitSpeech_(Action* a1)
 {
@@ -22248,7 +22248,7 @@ int __fastcall TriggerAction_MuteUnitSpeech_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_MuteUnitSpeech);
+FAIL_STUB_PATCH(TriggerAction_MuteUnitSpeech, "starcraft");
 
 int __fastcall TriggerAction_UnmuteUnitSpeech_(Action* a1)
 {
@@ -22267,7 +22267,7 @@ int __fastcall TriggerAction_UnmuteUnitSpeech_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_UnmuteUnitSpeech);
+FAIL_STUB_PATCH(TriggerAction_UnmuteUnitSpeech, "starcraft");
 
 int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 {
@@ -22278,7 +22278,7 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetNextScenario);
+FAIL_STUB_PATCH(TriggerAction_SetNextScenario, "starcraft");
 
 int __fastcall TriggerAction_SetDoodadState_(Action* a1)
 {
@@ -22309,7 +22309,7 @@ int __fastcall TriggerAction_SetDoodadState_(Action* a1)
 	}
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetDoodadState);
+FAIL_STUB_PATCH(TriggerAction_SetDoodadState, "starcraft");
 
 int __fastcall TriggerAction_SetDeaths_(Action* a1)
 {
@@ -22328,7 +22328,7 @@ int __fastcall TriggerAction_SetDeaths_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetDeaths);
+FAIL_STUB_PATCH(TriggerAction_SetDeaths, "starcraft");
 
 int __fastcall TriggerAction_PauseTimer_(Action* a1)
 {
@@ -22336,7 +22336,7 @@ int __fastcall TriggerAction_PauseTimer_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_PauseTimer);
+FAIL_STUB_PATCH(TriggerAction_PauseTimer, "starcraft");
 
 int __fastcall TriggerAction_UnpauseTimer_(Action* a1)
 {
@@ -22344,7 +22344,7 @@ int __fastcall TriggerAction_UnpauseTimer_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_UnpauseTimer);
+FAIL_STUB_PATCH(TriggerAction_UnpauseTimer, "starcraft");
 
 int __fastcall TriggerAction_Draw_(Action* a1)
 {
@@ -22360,7 +22360,7 @@ int __fastcall TriggerAction_Draw_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_Draw);
+FAIL_STUB_PATCH(TriggerAction_Draw, "starcraft");
 
 int __fastcall TriggerAction_SetAllianceStatus_(Action* a1)
 {
@@ -22373,7 +22373,7 @@ int __fastcall TriggerAction_SetAllianceStatus_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_SetAllianceStatus);
+FAIL_STUB_PATCH(TriggerAction_SetAllianceStatus, "starcraft");
 
 int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
 {
@@ -22381,7 +22381,7 @@ int __fastcall TriggerAction_DisableDebugMode_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_DisableDebugMode);
+FAIL_STUB_PATCH(TriggerAction_DisableDebugMode, "starcraft");
 
 int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 {
@@ -22389,7 +22389,7 @@ int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 	return 1;
 }
 
-FAIL_STUB_PATCH(TriggerAction_EnableDebugMode);
+FAIL_STUB_PATCH(TriggerAction_EnableDebugMode, "starcraft");
 
 #include <sol/sol.hpp>
 
@@ -22523,7 +22523,7 @@ void ExecuteTriggerActions_(TriggerListEntry* a1)
 	}
 }
 
-FAIL_STUB_PATCH(ExecuteTriggerActions);
+FAIL_STUB_PATCH(ExecuteTriggerActions, "starcraft");
 
 void executeGameTrigger_(TriggerList* a1)
 {
@@ -22552,7 +22552,7 @@ void executeGameTrigger_(TriggerList* a1)
 	}
 }
 
-FAIL_STUB_PATCH(executeGameTrigger);
+FAIL_STUB_PATCH(executeGameTrigger, "starcraft");
 
 void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 {
@@ -22592,7 +22592,7 @@ void BWFXN_ExecuteGameTriggers_(signed int dwMillisecondsPerFrame)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers);
+FAIL_STUB_PATCH(BWFXN_ExecuteGameTriggers, "starcraft");
 
 ButtonState CanUseTech_(CUnit* unit, Tech2 tech_id, int player_id)
 {
@@ -22657,7 +22657,7 @@ ButtonState __stdcall CanUseTech__(int player_id)
 	return CanUseTech_(unit, tech_id, player_id);
 }
 
-FUNCTION_PATCH((void*)0x46DD80, CanUseTech__);
+FUNCTION_PATCH((void*)0x46DD80, CanUseTech__, "starcraft");
 
 void BWFXN_sendTurn_()
 {
@@ -22677,7 +22677,7 @@ void BWFXN_sendTurn_()
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_sendTurn);
+FAIL_STUB_PATCH(BWFXN_sendTurn, "starcraft");
 
 void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size)
 {
@@ -22711,7 +22711,7 @@ void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size
 	sgdwBytesInCmdQueue += buffer_size;
 }
 
-FUNCTION_PATCH(BWFXN_QueueCommand, BWFXN_QueueCommand_);
+FUNCTION_PATCH(BWFXN_QueueCommand, BWFXN_QueueCommand_, "starcraft");
 
 void CMDACT_RightClick_(dlgEvent* dlg)
 {
@@ -22744,7 +22744,7 @@ void CMDACT_RightClick_(dlgEvent* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(CMDACT_RightClick);
+FAIL_STUB_PATCH(CMDACT_RightClick, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ReplayPlayPause_(u16 variable, int player_id, CUnit* unit)
 {
@@ -22758,7 +22758,7 @@ ButtonState __fastcall BTNSCOND_ReplayPlayPause_(u16 variable, int player_id, CU
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_ReplayPlayPause, BTNSCOND_ReplayPlayPause_);
+FUNCTION_PATCH(BTNSCOND_ReplayPlayPause, BTNSCOND_ReplayPlayPause_, "starcraft");
 
 void CMDACT_SetReplaySpeed_()
 {
@@ -22771,7 +22771,7 @@ void CMDACT_SetReplaySpeed_()
 	BWFXN_QueueCommand__(command);
 }
 
-FUNCTION_PATCH(CMDACT_SetReplaySpeed, CMDACT_SetReplaySpeed_);
+FUNCTION_PATCH(CMDACT_SetReplaySpeed, CMDACT_SetReplaySpeed_, "starcraft");
 
 const int MAX_REPLAY_SPEED = 1 << 16;
 
@@ -22791,7 +22791,7 @@ ButtonState __fastcall BTNSCOND_ReplaySlowDown_(u16 variable, int player_id, CUn
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_ReplaySlowDown, BTNSCOND_ReplaySlowDown_);
+FUNCTION_PATCH(BTNSCOND_ReplaySlowDown, BTNSCOND_ReplaySlowDown_, "starcraft");
 
 void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 {
@@ -22832,7 +22832,7 @@ void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 	BWFXN_QueueCommand__(command);
 }
 
-FUNCTION_PATCH(CMDACT_DecreaseReplaySpeed, CMDACT_DecreaseReplaySpeed_);
+FUNCTION_PATCH(CMDACT_DecreaseReplaySpeed, CMDACT_DecreaseReplaySpeed_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ReplaySpeedUp_(u16 variable, int player_id, CUnit* unit)
 {
@@ -22850,7 +22850,7 @@ ButtonState __fastcall BTNSCOND_ReplaySpeedUp_(u16 variable, int player_id, CUni
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_ReplaySpeedUp, BTNSCOND_ReplaySpeedUp_);
+FUNCTION_PATCH(BTNSCOND_ReplaySpeedUp, BTNSCOND_ReplaySpeedUp_, "starcraft");
 
 void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 {
@@ -22891,14 +22891,14 @@ void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 	BWFXN_QueueCommand__(command);
 }
 
-FUNCTION_PATCH(CMDACT_IncreaseReplaySpeed, CMDACT_IncreaseReplaySpeed_);
+FUNCTION_PATCH(CMDACT_IncreaseReplaySpeed, CMDACT_IncreaseReplaySpeed_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_Always_(u16 variable, int player_id, CUnit* unit)
 {
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_Always, BTNSCOND_Always_);
+FUNCTION_PATCH(BTNSCOND_Always, BTNSCOND_Always_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_Rally_(u16 variable, int player_id, CUnit* unit)
 {
@@ -22942,14 +22942,14 @@ ButtonState __fastcall BTNSCOND_Rally_(u16 variable, int player_id, CUnit* unit)
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_Rally, BTNSCOND_Rally_);
+FUNCTION_PATCH(BTNSCOND_Rally, BTNSCOND_Rally_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsConstructing_(u16 variable, int player_id, CUnit* unit)
 {
 	return (unit->statusFlags & StatusFlags::Completed) ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsConstructing, BTNSCOND_IsConstructing_);
+FUNCTION_PATCH(BTNSCOND_IsConstructing, BTNSCOND_IsConstructing_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HatcheryLairHive_(u16 variable, int player_id, CUnit* unit)
 {
@@ -22964,7 +22964,7 @@ ButtonState __fastcall BTNSCOND_HatcheryLairHive_(u16 variable, int player_id, C
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_HatcheryLairHive, BTNSCOND_HatcheryLairHive_);
+FUNCTION_PATCH(BTNSCOND_HatcheryLairHive, BTNSCOND_HatcheryLairHive_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HatcheryLairHiveRally_(u16 variable, int player_id, CUnit* unit)
 {
@@ -22979,7 +22979,7 @@ ButtonState __fastcall BTNSCOND_HatcheryLairHiveRally_(u16 variable, int player_
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_HatcheryLairHiveRally, BTNSCOND_HatcheryLairHiveRally_);
+FUNCTION_PATCH(BTNSCOND_HatcheryLairHiveRally, BTNSCOND_HatcheryLairHiveRally_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMove_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23011,7 +23011,7 @@ ButtonState __fastcall BTNSCOND_CanMove_(u16 variable, int player_id, CUnit* uni
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMove, BTNSCOND_CanMove_);
+FUNCTION_PATCH(BTNSCOND_CanMove, BTNSCOND_CanMove_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMoveSpecialCase_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23035,7 +23035,7 @@ ButtonState __fastcall BTNSCOND_CanMoveSpecialCase_(u16 variable, int player_id,
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMoveSpecialCase, BTNSCOND_CanMoveSpecialCase_);
+FUNCTION_PATCH(BTNSCOND_CanMoveSpecialCase, BTNSCOND_CanMoveSpecialCase_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanAttack_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23056,7 +23056,7 @@ ButtonState __fastcall BTNSCOND_CanAttack_(u16 variable, int player_id, CUnit* u
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanAttack, BTNSCOND_CanAttack_);
+FUNCTION_PATCH(BTNSCOND_CanAttack, BTNSCOND_CanAttack_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_NoCargo_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23073,7 +23073,7 @@ ButtonState __fastcall BTNSCOND_NoCargo_(u16 variable, int player_id, CUnit* uni
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_NoCargo, BTNSCOND_NoCargo_);
+FUNCTION_PATCH(BTNSCOND_NoCargo, BTNSCOND_NoCargo_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasCargo_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23088,7 +23088,7 @@ ButtonState __fastcall BTNSCOND_HasCargo_(u16 variable, int player_id, CUnit* un
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasCargo, BTNSCOND_HasCargo_);
+FUNCTION_PATCH(BTNSCOND_HasCargo, BTNSCOND_HasCargo_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasRoom_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23118,7 +23118,7 @@ ButtonState __fastcall BTNSCOND_HasRoom_(u16 variable, int player_id, CUnit* uni
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasRoom, BTNSCOND_HasRoom_);
+FUNCTION_PATCH(BTNSCOND_HasRoom, BTNSCOND_HasRoom_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasUnit_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23133,7 +23133,7 @@ ButtonState __fastcall BTNSCOND_HasUnit_(u16 variable, int player_id, CUnit* uni
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasUnit, BTNSCOND_HasUnit_);
+FUNCTION_PATCH(BTNSCOND_HasUnit, BTNSCOND_HasUnit_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_Stationary_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23151,7 +23151,7 @@ ButtonState __fastcall BTNSCOND_Stationary_(u16 variable, int player_id, CUnit* 
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_Stationary, BTNSCOND_Stationary_);
+FUNCTION_PATCH(BTNSCOND_Stationary, BTNSCOND_Stationary_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanBuildUnit_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23165,7 +23165,7 @@ ButtonState __fastcall BTNSCOND_CanBuildUnit_(u16 variable, int player_id, CUnit
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_CanBuildUnit, BTNSCOND_CanBuildUnit_);
+FUNCTION_PATCH(BTNSCOND_CanBuildUnit, BTNSCOND_CanBuildUnit_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_Movement_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23180,7 +23180,7 @@ ButtonState __fastcall BTNSCOND_Movement_(u16 variable, int player_id, CUnit* un
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_Movement, BTNSCOND_Movement_);
+FUNCTION_PATCH(BTNSCOND_Movement, BTNSCOND_Movement_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_BattleOrders_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23195,7 +23195,7 @@ ButtonState __fastcall BTNSCOND_BattleOrders_(u16 variable, int player_id, CUnit
 	return BTNSCOND_CanAttack(variable, player_id, unit) != ButtonState::BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_BattleOrders, BTNSCOND_BattleOrders_);
+FUNCTION_PATCH(BTNSCOND_BattleOrders, BTNSCOND_BattleOrders_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ZergNoCargo_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23210,7 +23210,7 @@ ButtonState __fastcall BTNSCOND_ZergNoCargo_(u16 variable, int player_id, CUnit*
 	return BTNSCOND_NoCargo(variable, player_id, unit) != BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ZergNoCargo, BTNSCOND_ZergNoCargo_);
+FUNCTION_PATCH(BTNSCOND_ZergNoCargo, BTNSCOND_ZergNoCargo_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ZergHasCargo_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23225,7 +23225,7 @@ ButtonState __fastcall BTNSCOND_ZergHasCargo_(u16 variable, int player_id, CUnit
 	return BTNSCOND_HasCargo(variable, player_id, unit) != BTNST_HIDDEN ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ZergHasCargo, BTNSCOND_ZergHasCargo_);
+FUNCTION_PATCH(BTNSCOND_ZergHasCargo, BTNSCOND_ZergHasCargo_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ZergBasic_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23245,7 +23245,7 @@ ButtonState __fastcall BTNSCOND_ZergBasic_(u16 variable, int player_id, CUnit* u
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ZergBasic, BTNSCOND_ZergBasic_);
+FUNCTION_PATCH(BTNSCOND_ZergBasic, BTNSCOND_ZergBasic_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ZergAdvanced_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23264,7 +23264,7 @@ ButtonState __fastcall BTNSCOND_ZergAdvanced_(u16 variable, int player_id, CUnit
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ZergAdvanced, BTNSCOND_ZergAdvanced_);
+FUNCTION_PATCH(BTNSCOND_ZergAdvanced, BTNSCOND_ZergAdvanced_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23291,7 +23291,7 @@ ButtonState __fastcall BTNSCOND_CanBurrow_(u16 variable, int player_id, CUnit* u
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanBurrow, BTNSCOND_CanBurrow_);
+FUNCTION_PATCH(BTNSCOND_CanBurrow, BTNSCOND_CanBurrow_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23321,14 +23321,14 @@ ButtonState __fastcall BTNSCOND_IsBurrowed_(u16 variable, int player_id, CUnit* 
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsBurrowed, BTNSCOND_IsBurrowed_);
+FUNCTION_PATCH(BTNSCOND_IsBurrowed, BTNSCOND_IsBurrowed_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMorphLurker_(u16 variable, int player_id, CUnit* unit)
 {
 	return CanUseTech_(unit, TECH2_lurker_aspect, player_id);
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMorphLurker, BTNSCOND_CanMorphLurker_);
+FUNCTION_PATCH(BTNSCOND_CanMorphLurker, BTNSCOND_CanMorphLurker_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_LurkerStop_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23346,14 +23346,14 @@ ButtonState __fastcall BTNSCOND_LurkerStop_(u16 variable, int player_id, CUnit* 
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_LurkerStop, BTNSCOND_LurkerStop_);
+FUNCTION_PATCH(BTNSCOND_LurkerStop, BTNSCOND_LurkerStop_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasTech_(u16 variable, int player_id, CUnit* unit)
 {
 	return CanUseTech_(unit, (Tech2)variable, player_id);
 }
 
-FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_);
+FUNCTION_PATCH(BTNSCOND_HasTech, BTNSCOND_HasTech_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanCloak_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23390,7 +23390,7 @@ ButtonState __fastcall BTNSCOND_CanCloak_(u16 variable, int player_id, CUnit* un
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanCloak, BTNSCOND_CanCloak_);
+FUNCTION_PATCH(BTNSCOND_CanCloak, BTNSCOND_CanCloak_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsCloaked_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23431,49 +23431,49 @@ ButtonState __fastcall BTNSCOND_IsCloaked_(u16 variable, int player_id, CUnit* u
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsCloaked, BTNSCOND_IsCloaked_);
+FUNCTION_PATCH(BTNSCOND_IsCloaked, BTNSCOND_IsCloaked_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanResearch_(u16 variable, int player_id, CUnit* unit)
 {
 	return ReasearchAllowed((Tech2)variable, player_id, unit);
 }
 
-FUNCTION_PATCH(BTNSCOND_CanResearch, BTNSCOND_CanResearch_);
+FUNCTION_PATCH(BTNSCOND_CanResearch, BTNSCOND_CanResearch_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsResearching_(u16 variable, int player_id, CUnit* unit)
 {
 	return unit->fields1.building.techType != Tech::TECH_none ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsResearching, BTNSCOND_IsResearching_);
+FUNCTION_PATCH(BTNSCOND_IsResearching, BTNSCOND_IsResearching_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanUpgrade_(u16 variable, int player_id, CUnit* unit)
 {
 	return UpgradeAllowed((Tech2)variable, player_id, unit);
 }
 
-FUNCTION_PATCH(BTNSCOND_CanUpgrade, BTNSCOND_CanUpgrade_);
+FUNCTION_PATCH(BTNSCOND_CanUpgrade, BTNSCOND_CanUpgrade_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsUpgrading_(u16 variable, int player_id, CUnit* unit)
 {
 	return unit->fields1.building.upgradeType != 61 ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsUpgrading, BTNSCOND_IsUpgrading_);
+FUNCTION_PATCH(BTNSCOND_IsUpgrading, BTNSCOND_IsUpgrading_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_NoNydusExit_(u16 variable, int player_id, CUnit* unit)
 {
 	return unit->fields2.nydus.exit ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_NoNydusExit, BTNSCOND_NoNydusExit_);
+FUNCTION_PATCH(BTNSCOND_NoNydusExit, BTNSCOND_NoNydusExit_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsTraining_(u16 variable, int player_id, CUnit* unit)
 {
 	return unit->buildQueue[unit->buildQueueSlot % 5] <= 105 ? ButtonState::BTNST_ENABLED : ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsTraining, BTNSCOND_IsTraining_);
+FUNCTION_PATCH(BTNSCOND_IsTraining, BTNSCOND_IsTraining_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_TrainingFighter_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23497,7 +23497,7 @@ ButtonState __fastcall BTNSCOND_TrainingFighter_(u16 variable, int player_id, CU
 	return result;
 }
 
-FUNCTION_PATCH(BTNSCOND_TrainingFighter, BTNSCOND_TrainingFighter_);
+FUNCTION_PATCH(BTNSCOND_TrainingFighter, BTNSCOND_TrainingFighter_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ProtossBasic_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23519,7 +23519,7 @@ ButtonState __fastcall BTNSCOND_ProtossBasic_(u16 variable, int player_id, CUnit
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ProtossBasic, BTNSCOND_ProtossBasic_);
+FUNCTION_PATCH(BTNSCOND_ProtossBasic, BTNSCOND_ProtossBasic_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ProtossAdvanced_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23541,14 +23541,14 @@ ButtonState __fastcall BTNSCOND_ProtossAdvanced_(u16 variable, int player_id, CU
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_ProtossAdvanced, BTNSCOND_ProtossAdvanced_);
+FUNCTION_PATCH(BTNSCOND_ProtossAdvanced, BTNSCOND_ProtossAdvanced_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMergeArchonOneSelected_(u16 variable, int player_id, CUnit* unit)
 {
 	return CanUseTech(unit, (Tech2)(u8)variable, player_id) != BTNST_DISABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_DISABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMergeArchonOneSelected, BTNSCOND_CanMergeArchonOneSelected_);
+FUNCTION_PATCH(BTNSCOND_CanMergeArchonOneSelected, BTNSCOND_CanMergeArchonOneSelected_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMergeArchonTwoSelected_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23566,14 +23566,14 @@ ButtonState __fastcall BTNSCOND_CanMergeArchonTwoSelected_(u16 variable, int pla
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMergeArchonTwoSelected, BTNSCOND_CanMergeArchonTwoSelected_);
+FUNCTION_PATCH(BTNSCOND_CanMergeArchonTwoSelected, BTNSCOND_CanMergeArchonTwoSelected_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMergeDarkArchonOneSelected_(u16 variable, int player_id, CUnit* unit)
 {
 	return CanUseTech(unit, (Tech2)(u8)variable, player_id) != BTNST_DISABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_DISABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonOneSelected, BTNSCOND_CanMergeDarkArchonOneSelected_);
+FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonOneSelected, BTNSCOND_CanMergeDarkArchonOneSelected_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanMergeDarkArchonTwoSelected_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23591,7 +23591,7 @@ ButtonState __fastcall BTNSCOND_CanMergeDarkArchonTwoSelected_(u16 variable, int
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonTwoSelected, BTNSCOND_CanMergeDarkArchonTwoSelected_);
+FUNCTION_PATCH(BTNSCOND_CanMergeDarkArchonTwoSelected, BTNSCOND_CanMergeDarkArchonTwoSelected_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasScarabs_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23612,7 +23612,7 @@ ButtonState __fastcall BTNSCOND_HasScarabs_(u16 variable, int player_id, CUnit* 
 	return BTNST_DISABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasScarabs, BTNSCOND_HasScarabs_);
+FUNCTION_PATCH(BTNSCOND_HasScarabs, BTNSCOND_HasScarabs_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ScvIsBuilding_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23630,17 +23630,17 @@ ButtonState __fastcall BTNSCOND_ScvIsBuilding_(u16 variable, int player_id, CUni
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_ScvIsBuilding, BTNSCOND_ScvIsBuilding_);
+FUNCTION_PATCH(BTNSCOND_ScvIsBuilding, BTNSCOND_ScvIsBuilding_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_ScvNotConstructing(u16 variable, int player_id, CUnit* unit)
 {
 	return BTNSCOND_ScvIsBuilding_(variable, player_id, unit) == ButtonState::BTNST_ENABLED ? ButtonState::BTNST_HIDDEN : ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_SCVCanMove, BTNSCOND_ScvNotConstructing);
-FUNCTION_PATCH(BTNSCOND_SCVCanStop, BTNSCOND_ScvNotConstructing);
-FUNCTION_PATCH(BTNSCOND_SCVCanAttack, BTNSCOND_ScvNotConstructing);
-FUNCTION_PATCH(BTNSCOND_CanRepair, BTNSCOND_ScvNotConstructing);
+FUNCTION_PATCH(BTNSCOND_SCVCanMove, BTNSCOND_ScvNotConstructing, "starcraft");
+FUNCTION_PATCH(BTNSCOND_SCVCanStop, BTNSCOND_ScvNotConstructing, "starcraft");
+FUNCTION_PATCH(BTNSCOND_SCVCanAttack, BTNSCOND_ScvNotConstructing, "starcraft");
+FUNCTION_PATCH(BTNSCOND_CanRepair, BTNSCOND_ScvNotConstructing, "starcraft");
 
 ButtonState __fastcall BTNSCOND_NoCargoTerran_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23651,7 +23651,7 @@ ButtonState __fastcall BTNSCOND_NoCargoTerran_(u16 variable, int player_id, CUni
 	return BTNSCOND_ScvNotConstructing(variable, player_id, unit);
 }
 
-FUNCTION_PATCH(BTNSCOND_NoCargoTerran, BTNSCOND_NoCargoTerran_);
+FUNCTION_PATCH(BTNSCOND_NoCargoTerran, BTNSCOND_NoCargoTerran_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasCargoTerran_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23662,7 +23662,7 @@ ButtonState __fastcall BTNSCOND_HasCargoTerran_(u16 variable, int player_id, CUn
 	return BTNSCOND_ScvNotConstructing(variable, player_id, unit);
 }
 
-FUNCTION_PATCH(BTNSCOND_HasCargoTerran, BTNSCOND_HasCargoTerran_);
+FUNCTION_PATCH(BTNSCOND_HasCargoTerran, BTNSCOND_HasCargoTerran_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_TerranBasic_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23687,7 +23687,7 @@ ButtonState __fastcall BTNSCOND_TerranBasic_(u16 variable, int player_id, CUnit*
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_TerranBasic, BTNSCOND_TerranBasic_);
+FUNCTION_PATCH(BTNSCOND_TerranBasic, BTNSCOND_TerranBasic_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_TerranAdvanced_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23708,7 +23708,7 @@ ButtonState __fastcall BTNSCOND_TerranAdvanced_(u16 variable, int player_id, CUn
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_TerranAdvanced, BTNSCOND_TerranAdvanced_);
+FUNCTION_PATCH(BTNSCOND_TerranAdvanced, BTNSCOND_TerranAdvanced_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_CanCloak_0_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23731,7 +23731,7 @@ ButtonState __fastcall BTNSCOND_CanCloak_0_(u16 variable, int player_id, CUnit* 
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_CanCloak_0, BTNSCOND_CanCloak_0_);
+FUNCTION_PATCH(BTNSCOND_CanCloak_0, BTNSCOND_CanCloak_0_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsCloaked_0_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23757,7 +23757,7 @@ ButtonState __fastcall BTNSCOND_IsCloaked_0_(u16 variable, int player_id, CUnit*
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsCloaked_0, BTNSCOND_IsCloaked_0_);
+FUNCTION_PATCH(BTNSCOND_IsCloaked_0, BTNSCOND_IsCloaked_0_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasNuke_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23771,7 +23771,7 @@ ButtonState __fastcall BTNSCOND_HasNuke_(u16 variable, int player_id, CUnit* uni
 	return ButtonState::BTNST_DISABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasNuke, BTNSCOND_HasNuke_);
+FUNCTION_PATCH(BTNSCOND_HasNuke, BTNSCOND_HasNuke_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_HasSpidermines_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23795,7 +23795,7 @@ ButtonState __fastcall BTNSCOND_HasSpidermines_(u16 variable, int player_id, CUn
 	return v7;
 }
 
-FUNCTION_PATCH(BTNSCOND_HasSpidermines, BTNSCOND_HasSpidermines_);
+FUNCTION_PATCH(BTNSCOND_HasSpidermines, BTNSCOND_HasSpidermines_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_TankMove_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23813,7 +23813,7 @@ ButtonState __fastcall BTNSCOND_TankMove_(u16 variable, int player_id, CUnit* un
 	return ButtonState::BTNST_ENABLED;
 }
 
-FUNCTION_PATCH(BTNSCOND_TankMove, BTNSCOND_TankMove_);
+FUNCTION_PATCH(BTNSCOND_TankMove, BTNSCOND_TankMove_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsUnsieged_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23836,7 +23836,7 @@ ButtonState __fastcall BTNSCOND_IsUnsieged_(u16 variable, int player_id, CUnit* 
 	return button_state;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsUnsieged, BTNSCOND_IsUnsieged_);
+FUNCTION_PATCH(BTNSCOND_IsUnsieged, BTNSCOND_IsUnsieged_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *unit)
 {
@@ -23858,7 +23858,7 @@ ButtonState __fastcall BTNSCOND_IsSieged_(u16 variable, int player_id, CUnit *un
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsSieged, BTNSCOND_IsSieged_);
+FUNCTION_PATCH(BTNSCOND_IsSieged, BTNSCOND_IsSieged_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsLiftedCanMove_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23872,7 +23872,7 @@ ButtonState __fastcall BTNSCOND_IsLiftedCanMove_(u16 variable, int player_id, CU
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_IsLiftedCanMove, BTNSCOND_IsLiftedCanMove_);
+FUNCTION_PATCH(BTNSCOND_IsLiftedCanMove, BTNSCOND_IsLiftedCanMove_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsLifted_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23886,7 +23886,7 @@ ButtonState __fastcall BTNSCOND_IsLifted_(u16 variable, int player_id, CUnit* un
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_IsLifted, BTNSCOND_IsLifted_);
+FUNCTION_PATCH(BTNSCOND_IsLifted, BTNSCOND_IsLifted_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsLanded_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23900,7 +23900,7 @@ ButtonState __fastcall BTNSCOND_IsLanded_(u16 variable, int player_id, CUnit* un
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_IsLanded, BTNSCOND_IsLanded_);
+FUNCTION_PATCH(BTNSCOND_IsLanded, BTNSCOND_IsLanded_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsBuildingAddon_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23914,7 +23914,7 @@ ButtonState __fastcall BTNSCOND_IsBuildingAddon_(u16 variable, int player_id, CU
 	return ButtonState::BTNST_HIDDEN;
 }
 
-FUNCTION_PATCH(BTNSCOND_IsBuildingAddon, BTNSCOND_IsBuildingAddon_);
+FUNCTION_PATCH(BTNSCOND_IsBuildingAddon, BTNSCOND_IsBuildingAddon_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_SiloHasNoNuke_(u16 variable, int player_id, CUnit* unit)
 {
@@ -23928,4 +23928,4 @@ ButtonState __fastcall BTNSCOND_SiloHasNoNuke_(u16 variable, int player_id, CUni
 	}
 }
 
-FUNCTION_PATCH(BTNSCOND_SiloHasNoNuke, BTNSCOND_SiloHasNoNuke_);
+FUNCTION_PATCH(BTNSCOND_SiloHasNoNuke, BTNSCOND_SiloHasNoNuke_, "starcraft");

@@ -150,7 +150,7 @@ int __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
 	return genericLightupBtnInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCmpgn_CampaignButton);
+FAIL_STUB_PATCH(gluCmpgn_CampaignButton, "starcraft");
 
 void gluCmpgn_CustomCtrlID_(dialog* dlg)
 {
@@ -177,7 +177,7 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 	DlgSwooshin_(dlg, timers, 0);
 }
 
-FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID);
+FAIL_STUB_PATCH(gluCmpgn_CustomCtrlID, "starcraft");
 
 bool sub_4B27A0_(Campaign& campaign)
 {
@@ -194,7 +194,7 @@ bool sub_4B27A0_(Campaign& campaign)
 	return LoadCampaignWithCharacter_(campaign);
 }
 
-FAIL_STUB_PATCH(sub_4B27A0);
+FAIL_STUB_PATCH(sub_4B27A0, "starcraft");
 
 bool sub_4B2810_(dialog* a1)
 {
@@ -232,7 +232,7 @@ bool sub_4B2810_(dialog* a1)
 	return DLG_SwishOut_(a1);
 }
 
-FAIL_STUB_PATCH(sub_4B2810);
+FAIL_STUB_PATCH(sub_4B2810, "starcraft");
 
 int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 {
@@ -257,7 +257,7 @@ int __fastcall gluCmpgn_Main_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluCmpgn_Main);
+FAIL_STUB_PATCH(gluCmpgn_Main, "starcraft");
 
 void loadMenu_gluCmpgn_()
 {
@@ -299,4 +299,4 @@ void loadMenu_gluCmpgn_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluCmpgn);
+FAIL_STUB_PATCH(loadMenu_gluCmpgn, "starcraft");

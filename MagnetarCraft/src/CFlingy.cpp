@@ -13,7 +13,7 @@ void AppearOnTarget_(CFlingy* flingy, __int16 x, __int16 y)
     sub_497A10_(flingy->sprite, x, y);
 }
 
-FAIL_STUB_PATCH(AppearOnTarget);
+FAIL_STUB_PATCH(AppearOnTarget, "starcraft");
 
 void sub_4958C0_(CFlingy* flingy)
 {
@@ -36,4 +36,4 @@ void sub_4958C0_(CFlingy* flingy)
     }
 }
 
-FAIL_STUB_PATCH(sub_4958C0);
+FAIL_STUB_PATCH(sub_4958C0, "starcraft");

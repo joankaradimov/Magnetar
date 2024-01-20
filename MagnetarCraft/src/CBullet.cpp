@@ -23,7 +23,7 @@ void ProgressBulletMovement_(CBullet* bullet)
     sub_4958C0_((CFlingy*) bullet);
 }
 
-FAIL_STUB_PATCH(ProgressBulletMovement);
+FAIL_STUB_PATCH(ProgressBulletMovement, "starcraft");
 
 void ProgressBulletState_(CBullet* bullet);
 
@@ -77,7 +77,7 @@ void BulletBehaviour_ReAssign_(CBullet* bullet)
     }
 }
 
-FAIL_STUB_PATCH(BulletBehaviour_ReAssign);
+FAIL_STUB_PATCH(BulletBehaviour_ReAssign, "starcraft");
 
 void BulletBehaviour_Fly_(CBullet* bullet)
 {
@@ -102,7 +102,7 @@ void BulletBehaviour_Fly_(CBullet* bullet)
     }
 }
 
-FAIL_STUB_PATCH(BulletBehaviour_Fly);
+FAIL_STUB_PATCH(BulletBehaviour_Fly, "starcraft");
 
 void BulletBehaviour_Bounce_(CBullet* bullet)
 {
@@ -139,7 +139,7 @@ void BulletBehaviour_Bounce_(CBullet* bullet)
     }
 }
 
-FAIL_STUB_PATCH(BulletBehaviour_Bounce);
+FAIL_STUB_PATCH(BulletBehaviour_Bounce, "starcraft");
 
 int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, WeaponType weapon_type, int a6, int a7)
 {
@@ -275,7 +275,7 @@ int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, 
     return 0;
 }
 
-FAIL_STUB_PATCH(InitializeBullet);
+FAIL_STUB_PATCH(InitializeBullet, "starcraft");
 
 void CreateBullet_(CUnit* unit, WeaponType weapon_id, int x, __int16 y)
 {
@@ -360,7 +360,7 @@ void CreateBullet_(CUnit* unit, WeaponType weapon_id, int x, __int16 y)
     ++bullet_count;
 }
 
-FAIL_STUB_PATCH(CreateBullet);
+FAIL_STUB_PATCH(CreateBullet, "starcraft");
 
 void ProgressBulletState_(CBullet* bullet)
 {
@@ -391,7 +391,7 @@ void ProgressBulletState_(CBullet* bullet)
     }
 }
 
-FAIL_STUB_PATCH(ProgressBulletState);
+FAIL_STUB_PATCH(ProgressBulletState, "starcraft");
 
 void spriteToIscriptLoop_(CSprite* sprite);
 
@@ -423,4 +423,4 @@ void ImageDrawingBulletDrawing_()
     iscript_bullet = nullptr;
 }
 
-FAIL_STUB_PATCH(ImageDrawingBulletDrawing);
+FAIL_STUB_PATCH(ImageDrawingBulletDrawing, "starcraft");

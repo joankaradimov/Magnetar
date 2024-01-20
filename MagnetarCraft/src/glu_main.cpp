@@ -8,7 +8,7 @@ void gluMainDestroy_(dialog* dlg)
 	SMemFree(v1->pszText, "Starcraft\\SWAR\\lang\\gluMain.cpp", 452, 0);
 }
 
-FAIL_STUB_PATCH(gluMainDestroy);
+FAIL_STUB_PATCH(gluMainDestroy, "starcraft");
 
 BOOL cmpgn_WaitForCDRom_(GluAllTblEntry a2, char* filename)
 {
@@ -49,7 +49,7 @@ LABEL_11:
 	return cd_archive_mpq && SFileExists(filename, cd_archive_mpq);
 }
 
-FAIL_STUB_PATCH(cmpgn_WaitForCDRom);
+FAIL_STUB_PATCH(cmpgn_WaitForCDRom, "starcraft");
 
 int SelGameMode_(int a2)
 {
@@ -86,9 +86,9 @@ int SelGameMode_(int a2)
 	}
 }
 
-FAIL_STUB_PATCH(SelGameMode);
-FAIL_STUB_PATCH(sub_4DB6A0);
-FAIL_STUB_PATCH(sub_4DB6C0);
+FAIL_STUB_PATCH(SelGameMode, "starcraft");
+FAIL_STUB_PATCH(sub_4DB6A0, "starcraft");
+FAIL_STUB_PATCH(sub_4DB6C0, "starcraft");
 
 int gluMain_DisplayCDRomErrorBinDlg_()
 {
@@ -98,7 +98,7 @@ int gluMain_DisplayCDRomErrorBinDlg_()
 	return result;
 }
 
-FAIL_STUB_PATCH(gluMain_DisplayCDRomErrorBinDlg);
+FAIL_STUB_PATCH(gluMain_DisplayCDRomErrorBinDlg, "starcraft");
 
 signed int loadStareditProcess_(dialog* a1)
 {
@@ -143,7 +143,7 @@ signed int loadStareditProcess_(dialog* a1)
 	}
 }
 
-FAIL_STUB_PATCH(loadStareditProcess);
+FAIL_STUB_PATCH(loadStareditProcess, "starcraft");
 
 void gluMain_CustomCtrlID_(dialog* a1)
 {
@@ -164,7 +164,7 @@ void gluMain_CustomCtrlID_(dialog* a1)
 	registerMenuFunctions_(functions, a1, sizeof(functions));
 }
 
-FAIL_STUB_PATCH(gluMain_CustomCtrlID);
+FAIL_STUB_PATCH(gluMain_CustomCtrlID, "starcraft");
 
 int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -252,7 +252,7 @@ int __fastcall gluMain_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluMain_Dlg_Interact);
+FAIL_STUB_PATCH(gluMain_Dlg_Interact, "starcraft");
 
 void loadMenu_gluMain_()
 {
@@ -308,4 +308,4 @@ void loadMenu_gluMain_()
 	}
 }
 
-FAIL_STUB_PATCH(loadMenu_gluMain);
+FAIL_STUB_PATCH(loadMenu_gluMain, "starcraft");

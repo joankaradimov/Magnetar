@@ -10,17 +10,17 @@
 #define CONCAT_IMPL4(a, b, c, d) a ## _ ## b ## _ ## c ## _ ## d
 #define CONCAT4(a, b, c, d) CONCAT_IMPL4(a, b, c, d)
 
-#define FUNCTION_PATCH(destination, replacement) \
-        FunctionPatch CONCAT3(function_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, replacement, {"starcraft"})
+#define FUNCTION_PATCH(destination, replacement, tag, __VA_ARGS__) \
+        FunctionPatch CONCAT3(function_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, replacement, {tag, __VA_ARGS__})
 
-#define FAIL_STUB_PATCH(destination) \
-        FailStubPatch CONCAT4(fail_stub_patch, destination, __BASE_FILE__, __LINE__)(__FILE__, __LINE__, destination, {"starcraft"})
+#define FAIL_STUB_PATCH(destination, tag, __VA_ARGS__) \
+        FailStubPatch CONCAT4(fail_stub_patch, destination, __BASE_FILE__, __LINE__)(__FILE__, __LINE__, destination, {tag, __VA_ARGS__})
 
-#define CALL_SITE_PATCH(destination, function) \
-        CallSitePatch CONCAT3(call_site_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, function, {"starcraft"})
+#define CALL_SITE_PATCH(destination, function, tag, __VA_ARGS__) \
+        CallSitePatch CONCAT3(call_site_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, function, {tag, __VA_ARGS__})
 
-#define NOP_PATCH(destination, block_length) \
-        NopPatch CONCAT3(nop_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, block_length, {"starcraft"})
+#define NOP_PATCH(destination, block_length, tag, __VA_ARGS__) \
+        NopPatch CONCAT3(nop_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, block_length, {tag, __VA_ARGS__})
 
-#define MEMORY_PATCH(destination, data) \
-        MemoryPatch CONCAT3(memory_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, data, {"starcraft"})
+#define MEMORY_PATCH(destination, data, tag, __VA_ARGS__) \
+        MemoryPatch CONCAT3(memory_patch, __LINE__, __COUNTER__)(__FILE__, __LINE__, destination, data, {tag, __VA_ARGS__})

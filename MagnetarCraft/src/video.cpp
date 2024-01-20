@@ -13,7 +13,7 @@ void sub_4D4440_()
 	dword_5967F0 = 0;
 }
 
-FAIL_STUB_PATCH(sub_4D4440);
+FAIL_STUB_PATCH(sub_4D4440, "starcraft");
 
 void PlayMovie_(const char* cinematic, StormVideoFlags flags)
 {
@@ -47,4 +47,4 @@ void PlayMovie_(const struct CampaignMenuEntryEx& entry)
 	PlayMovie_(cinematics[entry.cinematic], entry.video_flags);
 }
 
-FAIL_STUB_PATCH(PlayMovie);
+FAIL_STUB_PATCH(PlayMovie, "starcraft");

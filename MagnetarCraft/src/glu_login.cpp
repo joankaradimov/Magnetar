@@ -26,7 +26,7 @@ void gluLogin_CustomCtrlID_(dialog* dlg)
 	DlgSwooshin_(dlg, timers, 0);
 }
 
-FAIL_STUB_PATCH(gluLogin_CustomCtrlID);
+FAIL_STUB_PATCH(gluLogin_CustomCtrlID, "starcraft");
 
 int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -102,7 +102,7 @@ int __fastcall gluLogin_Main_(dialog* dlg, struct dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(gluLogin_Main);
+FAIL_STUB_PATCH(gluLogin_Main, "starcraft");
 
 void loadMenu_gluLogin_()
 {
@@ -135,4 +135,4 @@ void loadMenu_gluLogin_()
 	changeMenu_();
 }
 
-FAIL_STUB_PATCH(loadMenu_gluLogin);
+FAIL_STUB_PATCH(loadMenu_gluLogin, "starcraft");

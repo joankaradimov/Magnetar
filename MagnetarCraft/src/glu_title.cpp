@@ -16,7 +16,7 @@ void DrawBINDialog_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(DrawBINDialog);
+FAIL_STUB_PATCH(DrawBINDialog, "starcraft");
 
 void titleInit_(dialog* dlg)
 {
@@ -53,7 +53,7 @@ void titleInit_(dialog* dlg)
 	TitleBlitAndLoop(dlg);
 }
 
-FAIL_STUB_PATCH(titleInit);
+FAIL_STUB_PATCH(titleInit, "starcraft");
 
 int __fastcall TitleDlgProc_(dialog* dlg, dlgEvent* evt)
 {
@@ -72,7 +72,7 @@ int __fastcall TitleDlgProc_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FAIL_STUB_PATCH(TitleDlgProc);
+FAIL_STUB_PATCH(TitleDlgProc, "starcraft");
 
 void LoadTitle_()
 {
@@ -80,4 +80,4 @@ void LoadTitle_()
 	InitializeDialog_(load_screen, TitleDlgProc_);
 }
 
-FAIL_STUB_PATCH(LoadTitle);
+FAIL_STUB_PATCH(LoadTitle, "starcraft");
