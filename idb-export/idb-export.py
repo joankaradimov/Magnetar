@@ -459,7 +459,7 @@ CPP_TEMPLATE = """#include "starcraft_exe/types.h"
 #undef DECL_FUNC
 """
 
-def export(root_dir):
+def export(root_dir, executable_name):
     root_dir = Path(root_dir)
 
     function_declarations = []
@@ -474,13 +474,13 @@ def export(root_dir):
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
-    with (root_dir / 'src' / 'starcraft_exe' / 'offsets.cpp').open('wt') as cpp_file:
+    with (root_dir / 'src' / executable_name / 'offsets.cpp').open('wt') as cpp_file:
         cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
 
-    with (root_dir / 'include' / 'starcraft_exe' / 'offsets.h').open('wt') as header_file:
+    with (root_dir / 'include' / executable_name / 'offsets.h').open('wt') as header_file:
         header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
 
-    with (root_dir / 'include' / 'starcraft_exe' / 'types.h').open('wt') as types_header_file:
+    with (root_dir / 'include' / executable_name / 'types.h').open('wt') as types_header_file:
         content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 
@@ -873,4 +873,4 @@ def sort_topologically(local_types):
                     yield local_type
                     break
 
-export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""")
+export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""", 'starcraft_exe')
