@@ -309,7 +309,7 @@ void StartMagnetar()
 	std::ofstream(config_filename) << config;
 
 	init_stacraftexe_clib();
-	BasePatch::apply_pending_patches();
+	BasePatch::apply_pending_patches({"starcraft"});
 
 	ScrSize.right = SCREEN_WIDTH;
 	ScrSize.bottom = SCREEN_HEIGHT;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <initializer_list>
+#include <string>
 #include <vector>
 #include <Windows.h>
 
@@ -12,8 +13,9 @@ public:
 	virtual size_t length() = 0;
 	void apply();
 	virtual void do_apply() = 0;
+	bool has_tags(const std::initializer_list<std::string>& tags);
 
-	static void apply_pending_patches();
+	static void apply_pending_patches(const std::initializer_list<std::string>& tags);
 
 protected:
 	bool pending;

@@ -24,12 +24,37 @@ void BasePatch::apply() {
 	do_apply();
 }
 
-void BasePatch::apply_pending_patches() {
+bool BasePatch::has_tags(const std::initializer_list<std::string>& tags)
+{
+	for (const std::string& patch_tag : this->tags)
+	{
+		for (const std::string& tag : tags)
+		{
+			if (patch_tag == tag)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void BasePatch::apply_pending_patches(const std::initializer_list<std::string>& tags) {
 	// TODO: batch calls to `VirtualProtect` together
 	BasePatch* previous_patch = nullptr;
 
-	std::sort(patches().begin(), patches().end(), [](auto a, auto b) {return a->destination_address < b->destination_address; });
+	std::vector<BasePatch*> tagged_patches;
 	for (BasePatch* patch : patches())
+	{
+		if (patch->has_tags(tags))
+		{
+			tagged_patches.push_back(patch);
+		}
+	}
+
+	std::sort(tagged_patches.begin(), tagged_patches.end(), [](auto a, auto b) {return a->destination_address < b->destination_address; });
+	for (BasePatch* patch : tagged_patches)
 	{
 		if (previous_patch && patch->destination_address < previous_patch->destination_address + previous_patch->length())
 		{

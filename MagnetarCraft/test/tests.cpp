@@ -58,7 +58,7 @@ public:
 		SFileDestroy();
 
 		init_stacraftexe_clib();
-		BasePatch::apply_pending_patches();
+		BasePatch::apply_pending_patches({"starcraft"});
 
 		hInst = starcraft_exe->GetModule();
 		main_thread_id = GetCurrentThreadId();
