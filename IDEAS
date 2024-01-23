@@ -8,6 +8,9 @@ IScript:
 - JIT compiler for iscript.bin
 - extend the iscript.bin limits
 - execute iscript.bin scripts in parallel
+- optimze iscript binary layout (do not interleave headers between code)
+- split up iscript into multiple files
+- implement additional opcodes (https://gitlab.com/the-no-frauds-club/tools/Cosmonarchy-aise)
 
 Triggers:
 - ExecuteLua - enable it and create an API
