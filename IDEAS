@@ -1,11 +1,13 @@
 General:
+- extend dat files
+- create a races.dat (or races.lua) file
+- port the optimizations and limit removal found in Neiv's Teippi: https://github.com/neivv/teippi
+
+IScript:
 - execute from iscript.txt
 - JIT compiler for iscript.bin
 - extend the iscript.bin limits
 - execute iscript.bin scripts in parallel
-- extend dat files
-- create a races.dat (or races.lua) file
-- port the optimizations and limit removal found in Neiv's Teippi: https://github.com/neivv/teippi
 
 Triggers:
 - ExecuteLua - enable it and create an API
