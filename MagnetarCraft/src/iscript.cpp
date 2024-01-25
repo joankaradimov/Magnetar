@@ -502,18 +502,18 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
         }
         case opc_sprul:
         {
-            unsigned __int16 v61 = take_iscript_datum<_WORD>(program_state);
-            char v63 = take_iscript_datum<char>(program_state);
-            char v64 = take_iscript_datum<char>(program_state);
+            unsigned __int16 sprite_id = take_iscript_datum<_WORD>(program_state);
+            char x = take_iscript_datum<char>(program_state);
+            char y = take_iscript_datum<char>(program_state);
             if (noop)
             {
                 break;
             }
-            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[v61]])
+            if (iscript_unit && (iscript_unit->statusFlags & (StatusFlags::Cloaked | StatusFlags::RequiresDetection)) && !Image_DrawIfCloaked[Sprites_Image[sprite_id]])
             {
                 break;
             }
-            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, v61, v63, v64, image->spriteOwner->elevationLevel - 1))
+            if (CThingy* thingy = ISCRIPT_CreateSprite_(image, sprite_id, x, y, image->spriteOwner->elevationLevel - 1))
             {
                 setAllOverlayDirectionsGeneric(thingy, (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? 32 - image->direction : image->direction);
             }
