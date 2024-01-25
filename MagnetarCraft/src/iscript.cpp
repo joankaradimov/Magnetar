@@ -730,12 +730,12 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
             break;
         case opc_useweapon:
         {
-            char arg = take_iscript_datum<char>(program_state);
+            WeaponType weapon_id = take_iscript_datum<WeaponType>(program_state);
             if (noop)
             {
                 break;
             }
-            ISCRIPT_UseWeapon_(iscript_unit, (WeaponType)arg);
+            ISCRIPT_UseWeapon_(iscript_unit, weapon_id);
             break;
         }
         case opc_move:
