@@ -5,6 +5,7 @@
 #include <process.h>
 #include "CBullet.h"
 #include "CSprite.h"
+#include "file_info.h"
 #include "iscript.h"
 #include "starcraft.h"
 #include "race.h"
@@ -2565,25 +2566,15 @@ void LoadMainModuleStringInfo_()
 	int result = GetModuleFileNameA(hInst, tstrFilename, MAX_PATH);
 	if (result)
 	{
-		DWORD dwHandle;
-		int v1 = GetFileVersionInfoSizeA(tstrFilename, &dwHandle);
-		if (v1)
-		{
-			void* v2 = SMemAlloc(v1, "Starcraft\\SWAR\\lang\\init.cpp", 345, 0);
-			if (GetFileVersionInfoA(tstrFilename, 0, v1, (LPVOID)v2))
-			{
-				VS_FIXEDFILEINFO* lpBuffer;
-				unsigned int puLen;
-				if (VerQueryValueA(v2, "\\", (LPVOID*)&lpBuffer, &puLen))
-					sprintf_s(
-						aInternalVersio,
-						"Version %d.%d.%d",
-						HIWORD(lpBuffer->dwProductVersionMS),
-						LOWORD(lpBuffer->dwProductVersionMS),
-						HIWORD(lpBuffer->dwProductVersionLS));
-			}
-			SMemFree(v2, "Starcraft\\SWAR\\lang\\init.cpp", 408, 0);
-		}
+		FileInfo starcraft_file_info(tstrFilename);
+
+		sprintf_s(
+			aInternalVersio,
+			"Version %d.%d.%d",
+			HIWORD(starcraft_file_info->dwProductVersionMS),
+			LOWORD(starcraft_file_info->dwProductVersionMS),
+			HIWORD(starcraft_file_info->dwProductVersionLS)
+		);
 	}
 	else
 	{
