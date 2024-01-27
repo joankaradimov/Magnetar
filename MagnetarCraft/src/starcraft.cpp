@@ -2563,8 +2563,11 @@ FAIL_STUB_PATCH(InitializeFontKey, "starcraft");
 
 void LoadMainModuleStringInfo_()
 {
-	int result = GetModuleFileNameA(hInst, tstrFilename, MAX_PATH);
-	if (result)
+	if (!GetModuleFileNameA(hInst, tstrFilename, MAX_PATH))
+	{
+		tstrFilename[0] = 0;
+	}
+	else
 	{
 		FileInfo starcraft_file_info(tstrFilename);
 
@@ -2575,10 +2578,6 @@ void LoadMainModuleStringInfo_()
 			LOWORD(starcraft_file_info->dwProductVersionMS),
 			HIWORD(starcraft_file_info->dwProductVersionLS)
 		);
-	}
-	else
-	{
-		tstrFilename[0] = 0;
 	}
 }
 
