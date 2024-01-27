@@ -2563,17 +2563,23 @@ FAIL_STUB_PATCH(InitializeFontKey, "starcraft");
 
 void LoadMainModuleStringInfo_()
 {
+	TCHAR magnetar_exe_path[MAX_PATH];
+
 	if (!GetModuleFileNameA(hInst, tstrFilename, MAX_PATH))
 	{
 		tstrFilename[0] = 0;
 	}
-	else
+	else if (GetModuleFileName(nullptr, magnetar_exe_path, MAX_PATH))
 	{
+		FileInfo magnetar_file_info(magnetar_exe_path);
 		FileInfo starcraft_file_info(tstrFilename);
 
 		sprintf_s(
 			aInternalVersio,
-			"Version %d.%d.%d",
+			"Magnetar %d.%d.%d / StarCraft %d.%d.%d",
+			HIWORD(magnetar_file_info->dwProductVersionMS),
+			LOWORD(magnetar_file_info->dwProductVersionMS),
+			HIWORD(magnetar_file_info->dwProductVersionLS),
 			HIWORD(starcraft_file_info->dwProductVersionMS),
 			LOWORD(starcraft_file_info->dwProductVersionMS),
 			HIWORD(starcraft_file_info->dwProductVersionLS)
