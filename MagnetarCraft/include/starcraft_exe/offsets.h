@@ -7682,7 +7682,7 @@ extern CampaignMenuEntry *(&expcampaign_menu_entries)[3];
 extern Cinematic& active_cinematic;
 extern char(&campaignFirstMission)[4];
 extern char(&xCampaignFirstMission)[8];
-extern char(&aInternalVersio)[25];
+extern char(&aInternalVersio)[260];
 extern char(&aRegistration_block_2)[19];
 extern char(&aRegistration_table)[19];
 extern int& is_spawn;
