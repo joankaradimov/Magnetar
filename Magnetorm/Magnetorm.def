@@ -120,6 +120,15 @@ EXPORTS
     ;SFile298 = StormLibFile298 @298
     ;SFileAuthenticateArchiveEx = StormLibFileAuthenticateArchiveEx @299
     ;SFileOpenPathAsArchive = StormLibFileOpenPathAsArchive @300
+    SLFileOpenArchive = SFileOpenArchive
+    SLFileGetFileSize = SFileGetFileSize
+    SLFileOpenFileEx = SFileOpenFileEx
+    SLFileGetFileSize = SFileGetFileSize
+    SLFileReadFile = SFileReadFile
+    SLFileSetFilePointer = SFileSetFilePointer
+    SLFileCloseFile = SFileCloseFile
+    SLFileExtractFile = SFileExtractFile
+    SLFileCloseArchive = SFileCloseArchive
 
     StormDestroy = StormLibStormDestroy @301
     StormGetInstance = StormLibGetInstance @302
