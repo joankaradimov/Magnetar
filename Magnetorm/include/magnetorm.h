@@ -102,8 +102,8 @@ BOOL __stdcall SGdi393(char* string, int, int);
 void* __stdcall SMemAlloc(int amount, const char* logfilename, int logline, int defaultValue);
 int __stdcall SMemZero(void* location, size_t length);
 int __stdcall SMemFill(void* location, size_t length, char fillWith);
-int __stdcall SMemCmp(void* location1, void* location2, size_t size);
-BOOL __stdcall SMemFree(void* location, char* logfilename, int logline, char defaultValue);
+int __stdcall SMemCmp(const void* location1, const void* location2, size_t size);
+BOOL __stdcall SMemFree(const void* location, char* logfilename, int logline, char defaultValue);
 void __stdcall SMemCopy(void* dest, const void* source, size_t size);
 
 BOOL __stdcall SRegSaveString(char* keyname, char* valuename, BYTE flags, char* string);
