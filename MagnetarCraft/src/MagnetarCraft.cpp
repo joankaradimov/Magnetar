@@ -50,7 +50,7 @@ void init_stacraftexe_clib()
 		exit(v6);
 }
 
-void report_error(const char* error_message)
+void report_error(const char* error_message, ...)
 {
 	va_list myargs;
 	va_start(myargs, error_message);

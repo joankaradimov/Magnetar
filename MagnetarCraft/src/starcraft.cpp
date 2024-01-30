@@ -2008,7 +2008,7 @@ const char* GetMapTblString(__int16 map_tbl_entry)
 	}
 }
 
-char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
+const char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry)
 {
 	if (!gluAllTblDataLoaded)
 	{

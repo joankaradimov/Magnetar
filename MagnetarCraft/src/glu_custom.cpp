@@ -202,7 +202,7 @@ void gluCustm_typeDropdown_(dialog* dlg)
 	dlg->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 	for (const auto& player_type : singleTypeSelect_)
 	{
-		char* v4 = get_GluAll_String_(player_type.tbl_entry);
+		const char* v4 = get_GluAll_String_(player_type.tbl_entry);
 		u8 v5 = ListBox_AddEntry(v4, dlg, 0);
 		if (v5 == 0xFF)
 		{

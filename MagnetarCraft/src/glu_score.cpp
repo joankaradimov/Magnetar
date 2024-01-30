@@ -270,7 +270,7 @@ int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_ACTIVATE:
 			if (LoadSaveGameBIN_Main_(dword_59B75C, Players[g_LocalNationID].nRace))
 			{
-				dlg->pszText = get_GluAll_String_((GluAllTblEntry)177);
+				dlg->pszText = (char*) get_GluAll_String_((GluAllTblEntry)177); // TODO: fix this cast
 				if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 				{
 					dlg->lFlags = dlg->lFlags | DialogFlags::CTRL_UPDATE;

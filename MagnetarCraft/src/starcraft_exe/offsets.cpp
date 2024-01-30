@@ -1116,9 +1116,9 @@ int AreaFixup_Destructor(_DWORD *a1, int a2) {
     }
     return result_;
 }
-int pathcalc_downHeap(int a1, int a2) {
+int * pathcalc_downHeap(int a1, struct_a2_1 *a2) {
     int address = 0x404920;
-    int result_;
+    int * result_;
     __asm {
         xor eax, eax
         mov ecx, a2
@@ -3704,7 +3704,7 @@ int sub_41FC20(char *a1, int a2) {
     }
     return result_;
 }
-int getMessageWidth(char *a1) {
+int getMessageWidth(const char *a1) {
     int address = 0x41fc80;
     int result_;
     __asm {
@@ -7853,12 +7853,12 @@ DECL_FUNC(_DWORD (__stdcall*excludeNonAIOwnedSpots)(_DWORD a1, _DWORD a2), exclu
 DECL_FUNC(int (__stdcall*excludePlacementSpotsOutsideRegion)(int a1, Position position), excludePlacementSpotsOutsideRegion, 0x443900);
 DECL_FUNC(int (__thiscall*AI_GetNumWorkersForMinerals)(_DWORD a1), AI_GetNumWorkersForMinerals, 0x4439b0);
 DECL_FUNC(int (__fastcall*AI_AlliesWatchInit)(_DWORD a1, _DWORD a2), AI_AlliesWatchInit, 0x443a00);
-signed getClosestBaseFromStartLocation(int a1, int a2, int a3) {
+unsigned getClosestBaseFromStartLocation(int a1, int a2, int y) {
     int address = 0x443a20;
-    signed result_;
+    unsigned result_;
     __asm {
         xor eax, eax
-        push dword ptr a3
+        push dword ptr y
         push dword ptr a2
         mov eax, a1
         call address
@@ -34610,7 +34610,7 @@ int& dword_68AC70 = * ((decltype(&dword_68AC70)) 0x68ac70);
 char& CanUpdateSelectedUnitPortrait = * ((decltype(&CanUpdateSelectedUnitPortrait)) 0x68ac74);
 Bitmap& stru_68AC78 = * ((decltype(&stru_68AC78)) 0x68ac78);
 Bitmap& stru_68AC80 = * ((decltype(&stru_68AC80)) 0x68ac80);
-char *& dword_68AC88 = * ((decltype(&dword_68AC88)) 0x68ac88);
+const char *& dword_68AC88 = * ((decltype(&dword_68AC88)) 0x68ac88);
 dialog *& statport_Dlg = * ((decltype(&statport_Dlg)) 0x68ac8c);
 int& dword_68AC90 = * ((decltype(&dword_68AC90)) 0x68ac90);
 int& dword_68AC94 = * ((decltype(&dword_68AC94)) 0x68ac94);
@@ -34968,9 +34968,7 @@ char(&byte_6CAB08)[260] = * ((decltype(&byte_6CAB08)) 0x6cab08);
 __int16& userInterfaceEnergy = * ((decltype(&userInterfaceEnergy)) 0x6cac0c);
 char(&byte_6CAC10)[104] = * ((decltype(&byte_6CAC10)) 0x6cac10);
 char(&byte_6CAC78)[260] = * ((decltype(&byte_6CAC78)) 0x6cac78);
-int(&dword_6CAD98)[] = * ((decltype(&dword_6CAD98)) 0x6cad98);
-int& dword_6CAD9C = * ((decltype(&dword_6CAD9C)) 0x6cad9c);
-int& dword_6CAF90 = * ((decltype(&dword_6CAF90)) 0x6caf90);
+struct_a2_1& stru_6CAD98 = * ((decltype(&stru_6CAD98)) 0x6cad98);
 int& dword_6CAF94 = * ((decltype(&dword_6CAF94)) 0x6caf94);
 int& dword_6CAF98 = * ((decltype(&dword_6CAF98)) 0x6caf98);
 int(&dword_6CAFA0)[2688] = * ((decltype(&dword_6CAFA0)) 0x6cafa0);

@@ -85,7 +85,7 @@ void* fastFileRead_(int* bytes_read, int searchScope, const char* filename, int 
 dialog* getControlFromIndex_(dialog* dlg, __int16 index);
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact);
 GotFileValues* InitUseMapSettingsTemplate_();
-char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry);
+const char* __stdcall get_GluAll_String_(GluAllTblEntry tbl_entry);
 int ContinueCampaign_(int a1);
 void sub_4BCA80_(SfxData a1);
 void sub_4DBF80_();
