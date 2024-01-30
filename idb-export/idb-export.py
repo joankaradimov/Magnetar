@@ -745,7 +745,8 @@ def keywords(*keywords):
 class EnumType(Type):
     @cached_property
     def declaration(self):
-        return self.definition_without_body
+        local_type_oneline = self.definition.replace('\n', '')
+        return self.body_pattern.sub(';\n', local_type_oneline)
 
     @cached_property
     def dependencies(self):
