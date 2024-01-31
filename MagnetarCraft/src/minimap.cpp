@@ -205,9 +205,9 @@ void minimapSurfaceUpdate_()
 	}
 }
 
-FAIL_STUB_PATCH(minimapSurfaceUpdate_64, "starcraft", "starcraft");
-FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128, "starcraft", "starcraft");
-FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256, "starcraft", "starcraft");
+FAIL_STUB_PATCH(minimapSurfaceUpdate_64, "starcraft");
+FAIL_STUB_PATCH(minimapSurfaceUpdate_96_128, "starcraft");
+FAIL_STUB_PATCH(minimapSurfaceUpdate_192_256, "starcraft");
 
 void drawAllMinimapBoxes_()
 {
