@@ -64,7 +64,7 @@ int gluCustmLoadMapFromList_()
 			GluAllTblEntry error_tbl_entry;
 			MapDirEntry* directory_entry = (MapDirEntry*)map_listbox->fields.list.pdwData[v0];
 			auto flags = (unsigned __int8)selectedGameType | ((((unsigned __int16)selectedGameTypeParam << 8) | (unsigned __int8)byte_59BA65) << 8);
-			int error_code = sub_4A8050_(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
+			unsigned error_code = sub_4A8050_(directory_entry, playerName, 0, flags, byte_59BB6C, CurrentMapFolder);
 
 			switch (error_code)
 			{
