@@ -224,7 +224,7 @@ FAIL_STUB_PATCH(ISCRIPT_NoBrkCodeEnd, "starcraft");
 
 void ISCRIPT_PlaySnd_(SfxData sfx, CImage* image)
 {
-    points p = { image->spriteOwner->position.x, image->spriteOwner->position.y };
+    points p = { (short) image->spriteOwner->position.x, (short) image->spriteOwner->position.y };
     PlaySoundAtPos_(sfx, p, 1, 0);
 }
 

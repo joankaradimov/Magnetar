@@ -547,7 +547,7 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 		int y = event->cursor.y;
 		getMinimapCursorPos_(&x, &y);
 
-		MinimapPingCommand command = { CommandId::CMD_MinimapPing, x, y };
+		MinimapPingCommand command = { CommandId::CMD_MinimapPing, (__int16) x, (__int16) y };
 		BWFXN_QueueCommand__(command);
 	}
 	else
