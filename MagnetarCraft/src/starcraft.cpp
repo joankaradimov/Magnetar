@@ -10770,6 +10770,117 @@ void UpdateUnitOrderData_(CUnit* unit)
 
 FAIL_STUB_PATCH(UpdateUnitOrderData, "starcraft");
 
+void ordersIDCases_(CUnit* unit)
+{
+	int orderID = unit->orderID;
+	switch (unit->orderID)
+	{
+	case Order::ORD_DIE:
+		BWFXN_KillUnitTarget(unit);
+		break;
+	case Order::ORD_GUARD_PLAY:
+	case Order::ORD_TURRET_GUARD:
+	case Order::ORD_TURRET_ATTACK:
+	case Order::ORD_ENTER_TRANSPORT:
+		orderComputer_cl(unit, (Order)((unit->statusFlags & InBuilding) != 0 ? ORD_GUARD_BUNKER : ORD_NOTHING));
+		break;
+	case Order::ORD_POWERUP0:
+		orders_Powerup1(unit);
+		break;
+	case Order::ORD_NOTHING:
+	case Order::ORD_NOTHING2:
+	case Order::ORD_NEUTRAL:
+	case Order::ORD_MEDIC:
+	case Order::ORD_MEDIC_HEAL:
+		return;
+	case Order::ORD_QUEEN_INFEST:
+		orders_InfestMine4(unit);
+		break;
+	case Order::ORD_IN_GAS:
+		orders_EnterExitGas(unit);
+		break;
+	case Order::ORD_POWERUP:
+		orders_Powerup2(unit);
+		break;
+	case Order::ORD_NUKE_LAUNCH:
+		orders_nuke_launch(unit);
+		break;
+	case Order::ORD_UNDO_FLYER:
+		orders_ResetCollision1(unit);
+		break;
+	case Order::ORD_UNDO_TRANSPARENT_WORKER:
+		orders_ResetCollision2(unit);
+		break;
+	default:
+		u8 orderQueueTimer = unit->orderQueueTimer;
+		unit->orderQueueTimer = orderQueueTimer - 1;
+		if (!orderQueueTimer)
+		{
+			unit->orderQueueTimer = 8;
+			switch (orderID)
+			{
+
+			case Order::ORD_PICK_UP_UNK:
+				orders_Pickup4_0(unit);
+				break;
+			case Order::ORD_COMP_AI:
+				if ((unit->statusFlags & InBuilding) == 0)
+				{
+					break;
+				}
+				[[fallthrough]];
+			case Order::ORD_GUARD_BUNKER:
+				
+				if (unit->unitType == Terran_Marine
+					|| unit->unitType == Hero_Jim_Raynor_Marine
+					|| unit->unitType == Terran_Ghost
+					|| unit->unitType == Hero_Sarah_Kerrigan
+					|| unit->unitType == Hero_Alexei_Stukov
+					|| unit->unitType == Hero_Samir_Duran
+					|| unit->unitType == Hero_Infested_Duran
+					|| unit->unitType == Terran_Firebat
+					|| unit->unitType == Hero_Gui_Montag)
+				{
+					unit->statusFlags |= HoldingPosition;
+					if (CUnit* subUnit = unit->subUnit)
+					{
+						subUnit->statusFlags |= HoldingPosition;
+					}
+					if (attackApplyCooldown(unit))
+					{
+						int x = unit->orderTarget.pt.x;
+						int y = unit->orderTarget.pt.y;
+						if (x != (__int16)unit->nextTargetWaypoint.x || y != (__int16)unit->nextTargetWaypoint.y)
+						{
+							unit->nextTargetWaypoint.x = x;
+							unit->nextTargetWaypoint.y = y;
+						}
+					}
+					else if (!unit->mainOrderTimer)
+					{
+						unit->mainOrderTimer = 15;
+						CUnit* RandomAttackTarget = (struct CUnit*)getRandomAttackTarget(unit);
+						unit->orderTarget.pUnit = RandomAttackTarget;
+						if (RandomAttackTarget)
+						{
+							unit->orderQueueTimer = 0;
+						}
+					}
+				}
+				break;
+			case Order::ORD_RESCUE_PASSIVE:
+				orders_RescuePassive(unit);
+				break;
+			default:
+				return;
+			}
+		}
+		break;
+	}
+}
+
+FAIL_STUB_PATCH(ordersIDCases, "starcraft");
+
 void unitUpdate_(CUnit* unit)
 {
 	if (unit->subUnit && (Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
@@ -10780,7 +10891,7 @@ void unitUpdate_(CUnit* unit)
 	}
 	Unit_ExecPathingState_(unit);
 	updateUnitTimers_(unit);
-	ordersIDCases(unit);
+	ordersIDCases_(unit);
 
 	switch (unit->secondaryOrderID)
 	{
