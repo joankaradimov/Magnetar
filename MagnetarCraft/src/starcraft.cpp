@@ -5453,7 +5453,7 @@ int sub_413550_(ChkSectionLoader* loader, ChunkNode* a2, int a3, MapChunks* a4)
 		while (1)
 		{
 			v6 = a2->f2;
-			if (v6 > NULL)
+			if ((intptr_t) v6 > NULL)
 				break;
 		LABEL_8:
 			++v4;
@@ -22582,7 +22582,7 @@ FAIL_STUB_PATCH(ExecuteTriggerActions, "starcraft");
 
 void executeGameTrigger_(TriggerList* a1)
 {
-	if (a1->begin <= 0)
+	if ((intptr_t) a1->begin <= 0)
 	{
 		return;
 	}
