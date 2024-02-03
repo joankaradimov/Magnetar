@@ -10213,6 +10213,31 @@ void orders_Recall_(CUnit* a1)
 
 FAIL_STUB_PATCH(orders_Recall, "starcraft");
 
+void interceptorTargets_(CUnit* unit)
+{
+	rect r;
+
+	u16 y = unit->sprite->position.y;
+	_WORD x = unit->sprite->position.x;
+	r.left = x - 640;
+	r.right = x + 640;
+	r.top = y - 640;
+	r.bottom = y + 640;
+	dword_6957AC = 0;
+	IterateUnitsAtLocationTargetProc(compareGeneralTarget, &r, unit);
+
+	u16 v4 = unit->sprite->position.y;
+	_WORD v5 = unit->sprite->position.x;
+	r.left = v5 - 1280;
+	r.right = v5 + 1280;
+	r.top = v4 - 1280;
+	r.bottom = v4 + 1280;
+	dword_6957AC = 1;
+	IterateUnitsAtLocationTargetProc(compareGeneralTarget, &r, unit);
+}
+
+FAIL_STUB_PATCH(interceptorTargets, "starcraft");
+
 void getTargetSomething_(CUnit* unit)
 {
 	if (unit->status.acidSporeCount < 4)
@@ -10221,14 +10246,14 @@ void getTargetSomething_(CUnit* unit)
 		{
 			if (CUnit* carrier = unit->fields1.fighter.parent)
 			{
-				interceptorTargets(carrier);
+				interceptorTargets_(carrier);
 				dword_6957D0 = 1;
 			}
 		}
 	}
 	else
 	{
-		interceptorTargets(unit);
+		interceptorTargets_(unit);
 	}
 }
 
