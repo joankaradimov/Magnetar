@@ -2574,16 +2574,29 @@ void LoadMainModuleStringInfo_()
 		FileInfo magnetar_file_info(magnetar_exe_path);
 		FileInfo starcraft_file_info(tstrFilename);
 
-		sprintf_s(
-			aInternalVersio,
-			"Magnetar %d.%d.%d / StarCraft %d.%d.%d",
-			HIWORD(magnetar_file_info->dwProductVersionMS),
-			LOWORD(magnetar_file_info->dwProductVersionMS),
-			HIWORD(magnetar_file_info->dwProductVersionLS),
-			HIWORD(starcraft_file_info->dwProductVersionMS),
-			LOWORD(starcraft_file_info->dwProductVersionMS),
-			HIWORD(starcraft_file_info->dwProductVersionLS)
-		);
+		if (magnetar_file_info.is_valid())
+		{
+			sprintf_s(
+				aInternalVersio,
+				"Magnetar %d.%d.%d / StarCraft %d.%d.%d",
+				HIWORD(magnetar_file_info->dwProductVersionMS),
+				LOWORD(magnetar_file_info->dwProductVersionMS),
+				HIWORD(magnetar_file_info->dwProductVersionLS),
+				HIWORD(starcraft_file_info->dwProductVersionMS),
+				LOWORD(starcraft_file_info->dwProductVersionMS),
+				HIWORD(starcraft_file_info->dwProductVersionLS)
+			);
+		}
+		else
+		{
+			sprintf_s(
+				aInternalVersio,
+				"StarCraft % d. % d. % d",
+				HIWORD(starcraft_file_info->dwProductVersionMS),
+				LOWORD(starcraft_file_info->dwProductVersionMS),
+				HIWORD(starcraft_file_info->dwProductVersionLS)
+			);
+		}
 	}
 }
 
@@ -10200,6 +10213,27 @@ void orders_Recall_(CUnit* a1)
 
 FAIL_STUB_PATCH(orders_Recall, "starcraft");
 
+void getTargetSomething_(CUnit* unit)
+{
+	if (unit->status.acidSporeCount < 4)
+	{
+		if (!dword_6957D0 && unit->unitType == Protoss_Interceptor)
+		{
+			if (CUnit* carrier = unit->fields1.fighter.parent)
+			{
+				interceptorTargets(carrier);
+				dword_6957D0 = 1;
+			}
+		}
+	}
+	else
+	{
+		interceptorTargets(unit);
+	}
+}
+
+FAIL_STUB_PATCH(getTargetSomething, "starcraft");
+
 void ordersEntries_(CUnit* unit)
 {
 	switch (unit->orderID)
@@ -10344,7 +10378,7 @@ void ordersEntries_(CUnit* unit)
 			if (!unit->orderQueueTimer--)
 			{
 				unit->orderQueueTimer = 8;
-				getTargetSomething(unit);
+				getTargetSomething_(unit);
 				unit->AIActionFlag = 0;
 				switch (unit->orderID)
 				{
