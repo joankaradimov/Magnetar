@@ -679,9 +679,7 @@ class Type(object):
 
     keyword_constructor = {}
 
-    def __new__(cls, type_ordinal):
-        type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE | PRTYPE_PRAGMA).strip()
-
+    def __new__(cls, type_definition):
         type_definition_lines = type_definition.split('\n')
         if type_definition_lines[0].startswith('#pragma') and type_definition_lines[-1].startswith('#pragma'):
             type_prologue = type_definition_lines[0] + '\n'
@@ -818,7 +816,8 @@ def export_types(declarations, definitions):
             existing_type_names.add(type_name)
 
         try:
-            local_type = Type(type_ordinal)
+            type_definition = GetLocalType(type_ordinal, PRTYPE_MULTI | PRTYPE_TYPE | PRTYPE_PRAGMA).strip()
+            local_type = Type(type_definition)
             local_types[local_type.name] = local_type
         except IdbExportError as error:
             print(error)
