@@ -474,13 +474,19 @@ def export(root_dir, executable_name):
     type_definitions = []
     export_types(type_declarations, type_definitions)
 
-    with (root_dir / 'src' / executable_name / 'offsets.cpp').open('wt') as cpp_file:
+    src_directory = root_dir / 'src' / executable_name
+    include_directory = root_dir / 'include' / executable_name
+
+    src_directory.mkdir(parents=True, exist_ok=True)
+    include_directory.mkdir(parents=True, exist_ok=True)
+
+    with (src_directory / 'offsets.cpp').open('wt') as cpp_file:
         cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
 
-    with (root_dir / 'include' / executable_name / 'offsets.h').open('wt') as header_file:
+    with (include_directory / 'offsets.h').open('wt') as header_file:
         header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
 
-    with (root_dir / 'include' / executable_name / 'types.h').open('wt') as types_header_file:
+    with (include_directory / 'types.h').open('wt') as types_header_file:
         content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
         types_header_file.write(content)
 
