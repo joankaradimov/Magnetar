@@ -511,6 +511,7 @@ def is_blacklisted(text):
         'FlsGetValue',
         'FlsSetValue',
         'FlsFree',
+        '_PVFV',
     ]
 
     for identifier in blacklisted_identifiers:
@@ -570,11 +571,15 @@ def is_type_blacklisted(type_ordinal):
     local_type_name = get_numbered_type_name(type_ordinal)
     if local_type_name == None:
         return False # TODO: determine when this happens
-    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128', 'tm', 'tagPALETTEENTRY', 'type_info', '_PMD', '_RTTIBaseClassDescriptor'}:
+    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128', 'wchar_t', 'tm', 'tagPALETTEENTRY', 'type_info', '_PMD', '_PVFV', '_RTTIBaseClassDescriptor'}:
         return True
     if local_type_name.startswith('IDirectDraw'):
         return True
     if local_type_name.endswith('_Ref_count_base'):
+        return True
+    if local_type_name.startswith('_SYSTEM_INFO'):
+        return True
+    if local_type_name.startswith('_OVERLAPPED'):
         return True
     if local_type_name == 'VirtualKey':
         return True
