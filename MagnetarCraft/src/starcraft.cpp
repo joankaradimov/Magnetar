@@ -10044,11 +10044,12 @@ FUNCTION_PATCH((void*)0x499D00, playSpriteIscript__, "starcraft");
 
 void orders_Warpin_(CUnit* unit)
 {
-	if (unit->orderState == 0)
+	if (unit->orderSignal & 1)
 	{
-		if (unit->orderSignal & 1)
+		unit->orderSignal &= ~1;
+
+		if (unit->orderState == 0)
 		{
-			unit->orderSignal &= 0xFE;
 			ReplaceSpriteOverlayImage(unit->sprite, Sprites_Image[unit->sprite->spriteID], unit->currentDirection1);
 			for (CImage* i = unit->sprite->pImageHead; i; i = i->next)
 			{
@@ -10056,12 +10057,8 @@ void orders_Warpin_(CUnit* unit)
 			}
 			unit->orderState = 1;
 		}
-	}
-	else if (unit->orderState == 1)
-	{
-		if (unit->orderSignal & 1)
+		else if (unit->orderState == 1)
 		{
-			unit->orderSignal &= 0xFE;
 			if (Unit_PrototypeFlags[unit->unitType] & PermanentCloak)
 			{
 				PlaySoundFromDirect(unit, SFX_Terran_PHOENIX_TPhClo00);
