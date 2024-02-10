@@ -435,6 +435,8 @@ TYPES_HEADER_TEMPLATE = """#pragma once
 #define SWORD6(x)   SWORDn(x,  6)
 #define SWORD7(x)   SWORDn(x,  7)
 
+namespace {namespace}
+{{
 typedef __int8 _BYTE;
 typedef __int16 _WORD;
 typedef __int32 _DWORD;
@@ -443,23 +445,32 @@ typedef __int8 _TBYTE;
 
 {declarations}
 
-{definitions}"""
+{definitions}
+}}
+"""
 
 HEADER_TEMPLATE = """#pragma once
 
 #include "types.h"
 
-{declarations}"""
+namespace {namespace}
+{{
+{declarations}
+}}
+"""
 
 CPP_TEMPLATE = """#include "starcraft_exe/types.h"
 
+namespace {namespace}
+{{
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
 {definitions}
 #undef DECL_FUNC
+}}
 """
 
-def export(root_dir, executable_name):
+def export(root_dir, executable_name, namespace):
     root_dir = Path(root_dir)
 
     function_declarations = []
@@ -481,13 +492,25 @@ def export(root_dir, executable_name):
     include_directory.mkdir(parents=True, exist_ok=True)
 
     with (src_directory / 'offsets.cpp').open('wt') as cpp_file:
-        cpp_file.write(CPP_TEMPLATE.format(definitions = '\n'.join(function_definitions + data_definitions)))
+        content = CPP_TEMPLATE.format(
+            namespace=namespace,
+            definitions = '\n'.join(function_definitions + data_definitions),
+        )
+        cpp_file.write(content)
 
     with (include_directory / 'offsets.h').open('wt') as header_file:
-        header_file.write(HEADER_TEMPLATE.format(declarations = '\n'.join(function_declarations + data_declarations)))
+        content = HEADER_TEMPLATE.format(
+            namespace=namespace,
+            declarations = '\n'.join(function_declarations + data_declarations),
+        )
+        header_file.write(content)
 
     with (include_directory / 'types.h').open('wt') as types_header_file:
-        content = TYPES_HEADER_TEMPLATE.format(declarations = ''.join(type_declarations), definitions = ''.join(type_definitions))
+        content = TYPES_HEADER_TEMPLATE.format(
+            namespace=namespace,
+            declarations=''.join(type_declarations),
+            definitions=''.join(type_definitions),
+        )
         types_header_file.write(content)
 
     print('Exported %d function symbols' % len(function_declarations))
@@ -884,4 +907,4 @@ def sort_topologically(local_types):
                     yield local_type
                     break
 
-export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""", 'starcraft_exe')
+export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""", 'starcraft_exe', 'game::starcraft')
