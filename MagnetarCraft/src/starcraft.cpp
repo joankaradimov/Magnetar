@@ -3,11 +3,15 @@
 #include <fstream>
 #include <ddraw.h>
 #include <process.h>
+
+#include "starcraft.h"
+
+using namespace game::starcraft; // TODO: reorganize the headers
+
 #include "CBullet.h"
 #include "CSprite.h"
 #include "file_info.h"
 #include "iscript.h"
-#include "starcraft.h"
 #include "race.h"
 #include "magnetorm.h"
 #include "tbl_file.h"

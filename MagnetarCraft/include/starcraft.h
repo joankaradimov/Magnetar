@@ -9,6 +9,8 @@
 #include "starcraft_exe/types.h"
 #include "starcraft_exe/offsets.h"
 
+using namespace game::starcraft;
+
 #define MAX_MAP_DIMENTION 256
 
 const int SCREEN_WIDTH = 640;

@@ -2,6 +2,8 @@
 
 #include "types.h"
 
+namespace game::starcraft
+{
 extern void (__cdecl*type_info_destructor_dealloc)(void *location);
 ListNodeUnknown * _Unknown_Destructor(ListNodeUnknown *a1, char a2);
 void HiddenCtrl_Destructor(ListNodeUnknown *a1);
@@ -1228,7 +1230,7 @@ extern unsigned (__stdcall*sub_43F990)(int a1);
 void AI_CaptainTownUpdate(int a1, int player_id);
 extern int (__fastcall*compareGeneralTarget)(CUnit *a1, CUnit *a2);
 extern void (__cdecl*AIScriptLoopEnd)();
-CUnit * interceptorTargets(CUnit *a1);
+void interceptorTargets(CUnit *unit);
 void getMaelstromTarget(CUnit *unit);
 void getTargetSomething(CUnit *unit);
 extern void (__stdcall*AI_AttackUnit)(CUnit *a1);
@@ -2611,7 +2613,7 @@ void orders_comp_return(CUnit *unit);
 signed OrderAttackBehaviour(CUnit *unit);
 void orders_SapUnit(CUnit *a1);
 void orders_SapLocation(CUnit *unit);
-bool attackApplyCooldown(CUnit *a1);
+int attackApplyCooldown(CUnit *unit);
 void orders_hold_position(CUnit *unit);
 void orders_AttackMoveEP(CUnit *a1);
 void orders_HarassMove(CUnit *unit);
@@ -5408,7 +5410,7 @@ extern void (__thiscall*sub_4EBC30)(CUnit *unit);
 void sub_4EBDB0(CUnit *a1);
 void RefreshUnit(CUnit *unit);
 void UpdateUnitSpriteInfo(CUnit *unit);
-void ordersIDCases(CUnit *a1);
+void ordersIDCases(CUnit *unit);
 void ProgressSecondaryOrder_Hidden(CUnit *a1);
 void performSecondaryOrders(CUnit *a1);
 void updateUnitTimers(CUnit *unit);
@@ -10227,3 +10229,4 @@ extern int& dword_6DD684;
 extern void *& dword_6DD688;
 extern int& dword_6DD68C;
 extern int& dword_6DD690;
+}

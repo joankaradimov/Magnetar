@@ -1,5 +1,7 @@
 #include "starcraft_exe/types.h"
 
+namespace game::starcraft
+{
 #define DECL_FUNC(decl, func, offset) decl = (decltype(func)) offset;
 
 DECL_FUNC(void (__cdecl*type_info_destructor_dealloc)(void *location), type_info_destructor_dealloc, 0x401000);
@@ -7193,16 +7195,12 @@ void AI_CaptainTownUpdate(int a1, int player_id) {
 }
 DECL_FUNC(int (__fastcall*compareGeneralTarget)(CUnit *a1, CUnit *a2), compareGeneralTarget, 0x43fcf0);
 DECL_FUNC(void (__cdecl*AIScriptLoopEnd)(), AIScriptLoopEnd, 0x43fd80);
-CUnit * interceptorTargets(CUnit *a1) {
+void interceptorTargets(CUnit *unit) {
     int address = 0x43fe50;
-    CUnit * result_;
     __asm {
-        xor eax, eax
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void getMaelstromTarget(CUnit *unit) {
     int address = 0x43ff00;
@@ -15428,14 +15426,14 @@ void orders_SapLocation(CUnit *unit) {
         call address
     }
 }
-bool attackApplyCooldown(CUnit *a1) {
+int attackApplyCooldown(CUnit *unit) {
     int address = 0x478b40;
-    bool result_;
+    int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, unit
         call address
-        mov result_, al
+        mov result_, eax
     }
     return result_;
 }
@@ -29982,10 +29980,10 @@ void UpdateUnitSpriteInfo(CUnit *unit) {
         call address
     }
 }
-void ordersIDCases(CUnit *a1) {
+void ordersIDCases(CUnit *unit) {
     int address = 0x4ebed0;
     __asm {
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -35717,3 +35715,4 @@ void *& dword_6DD688 = * ((decltype(&dword_6DD688)) 0x6dd688);
 int& dword_6DD68C = * ((decltype(&dword_6DD68C)) 0x6dd68c);
 int& dword_6DD690 = * ((decltype(&dword_6DD690)) 0x6dd690);
 #undef DECL_FUNC
+}
