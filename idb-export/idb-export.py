@@ -465,7 +465,7 @@ namespace {namespace}
 }}
 """
 
-CPP_TEMPLATE = """#include "starcraft_exe/types.h"
+CPP_TEMPLATE = """#include "{executable_name}/types.h"
 
 namespace {namespace}
 {{
@@ -500,6 +500,7 @@ def export(root_dir, executable_name, namespace):
     with (src_directory / 'offsets.cpp').open('wt') as cpp_file:
         content = CPP_TEMPLATE.format(
             namespace=namespace,
+            executable_name=executable_name,
             definitions = '\n'.join(function_definitions + data_definitions),
         )
         cpp_file.write(content)

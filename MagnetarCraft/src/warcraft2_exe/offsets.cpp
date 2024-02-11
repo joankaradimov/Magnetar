@@ -1,4 +1,4 @@
-#include "starcraft_exe/types.h"
+#include "warcraft2_exe/types.h"
 
 namespace game::warcraft2
 {
