@@ -3197,7 +3197,7 @@ void playMorphingCompleteSound(CUnit *a1);
 void PlayWorkerActionSound(CUnit *a1);
 void playBuildingLandSound(CUnit *a1);
 void playBuildPlacementSound(CUnit *a1);
-void PlayWorkerErrorSound(CUnit *a1, int a2);
+void PlayWorkerErrorSound(CUnit *unit, int a2);
 void SetWorkerError(CUnit *a1, int a2);
 void PlayBuildingLiftoffSound(CUnit *a1);
 extern void (__stdcall*selectBuildingSFX)(CUnit *a1);

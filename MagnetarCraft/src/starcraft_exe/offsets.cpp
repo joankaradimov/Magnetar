@@ -18190,11 +18190,11 @@ void playBuildPlacementSound(CUnit *a1) {
         call address
     }
 }
-void PlayWorkerErrorSound(CUnit *a1, int a2) {
+void PlayWorkerErrorSound(CUnit *unit, int a2) {
     int address = 0x48f6c0;
     __asm {
         push dword ptr a2
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
