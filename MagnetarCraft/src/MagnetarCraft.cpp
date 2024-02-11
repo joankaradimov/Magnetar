@@ -3,6 +3,7 @@
 #include <mbstring.h>
 #include <stdio.h>
 #include "starcraft.h"
+#include "warcraft2.h"
 #include "magnetorm.h"
 #include <filesystem>
 #include <fstream>

@@ -14,6 +14,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/patching/FunctionPatch.cpp
 	src/patching/NopPatch.cpp
 	src/starcraft_exe/offsets.cpp
+	src/warcraft2_exe/offsets.cpp
 	src/campaign.cpp
 	src/CBullet.cpp
 	src/CFlingy.cpp
