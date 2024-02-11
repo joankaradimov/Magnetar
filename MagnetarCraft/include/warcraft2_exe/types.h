@@ -90,87 +90,54 @@ typedef __int32 _DWORD;
 typedef __int64 _QWORD;
 typedef __int8 _TBYTE;
 
-struct HWND__;
-struct HBRUSH__;
-struct HINSTANCE__;
-struct _iobuf;
 struct _LIST_ENTRY;
+struct _iobuf;
+struct HICON__;
+struct HINSTANCE__;
 struct _SCOPETABLE_ENTRY;
 struct HDC__;
-struct HICON__;
+struct HBRUSH__;
+struct HWND__;
 struct tagPAINTSTRUCT;
-struct _DCB;
-struct _FILETIME;
 struct tagPOINT;
-struct _EH3_EXCEPTION_REGISTRATION;
-struct _SYSTEMTIME;
-struct tagTEXTMETRICA;
-struct WSAData;
-struct tagRECT;
 struct _SECURITY_ATTRIBUTES;
-struct _OSVERSIONINFOA;
-struct _COMMTIMEOUTS;
-struct _RTL_CRITICAL_SECTION;
+struct WSAData;
+struct _SYSTEMTIME;
+struct _EH3_EXCEPTION_REGISTRATION;
+struct tagTEXTMETRICA;
+struct tagRECT;
 struct tagSIZE;
 struct _cpinfo;
+struct _OSVERSIONINFOA;
+struct _DCB;
+struct _FILETIME;
+struct _RTL_CRITICAL_SECTION;
+struct _COMMTIMEOUTS;
 struct _STARTUPINFOA;
-struct sockaddr;
+struct _MEMORY_BASIC_INFORMATION;
 struct CPPEH_RECORD;
+struct tagMSG;
+struct sockaddr;
 struct _RTL_CRITICAL_SECTION_DEBUG;
 struct _MEMORYSTATUS;
-struct _MEMORY_BASIC_INFORMATION;
-struct tagMSG;
 struct _TIME_ZONE_INFORMATION;
 struct _WIN32_FIND_DATAA;
 struct tagWNDCLASSA;
 
 
 
-struct HWND__
+typedef void *LPVOID;
+
+struct _LIST_ENTRY
 {
-  int unused;
+  _LIST_ENTRY *Flink;
+  _LIST_ENTRY *Blink;
 };
-static_assert(sizeof(HWND__) == 4, "Incorrect size for type `HWND__`. Expected: 4");
+static_assert(sizeof(_LIST_ENTRY) == 8, "Incorrect size for type `_LIST_ENTRY`. Expected: 8");
 
 typedef int LONG;
 
-struct HBRUSH__
-{
-  int unused;
-};
-static_assert(sizeof(HBRUSH__) == 4, "Incorrect size for type `HBRUSH__`. Expected: 4");
-
 typedef char CHAR;
-
-typedef HWND__ *HWND;
-
-typedef unsigned int UINT;
-
-typedef unsigned __int16 USHORT;
-
-typedef HDC__ *HDC;
-
-typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
-
-typedef unsigned int UINT_PTR;
-
-typedef unsigned int DWORD;
-
-typedef void *HANDLE;
-
-typedef HINSTANCE__ *HINSTANCE;
-
-typedef wchar_t WCHAR;
-
-typedef void *LPVOID;
-
-typedef int BOOL;
-
-struct HINSTANCE__
-{
-  int unused;
-};
-static_assert(sizeof(HINSTANCE__) == 4, "Incorrect size for type `HINSTANCE__`. Expected: 4");
 
 struct _iobuf
 {
@@ -185,18 +152,39 @@ struct _iobuf
 };
 static_assert(sizeof(_iobuf) == 32, "Incorrect size for type `_iobuf`. Expected: 32");
 
-typedef int LONG_PTR;
+typedef HINSTANCE__ *HINSTANCE;
+
+typedef HDC__ *HDC;
+
+struct HICON__
+{
+  int unused;
+};
+static_assert(sizeof(HICON__) == 4, "Incorrect size for type `HICON__`. Expected: 4");
 
 typedef _RTL_CRITICAL_SECTION_DEBUG *PRTL_CRITICAL_SECTION_DEBUG;
 
-typedef void *PVOID;
+typedef unsigned __int8 BYTE;
 
-struct _LIST_ENTRY
+typedef unsigned int ULONG_PTR;
+
+typedef void *HANDLE;
+
+typedef int BOOL;
+
+typedef unsigned int UINT;
+
+typedef HICON__ *HICON;
+
+struct HINSTANCE__
 {
-  _LIST_ENTRY *Flink;
-  _LIST_ENTRY *Blink;
+  int unused;
 };
-static_assert(sizeof(_LIST_ENTRY) == 8, "Incorrect size for type `_LIST_ENTRY`. Expected: 8");
+static_assert(sizeof(HINSTANCE__) == 4, "Incorrect size for type `HINSTANCE__`. Expected: 4");
+
+typedef unsigned int DWORD;
+
+typedef HWND__ *HWND;
 
 struct _SCOPETABLE_ENTRY
 {
@@ -206,9 +194,19 @@ struct _SCOPETABLE_ENTRY
 };
 static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPETABLE_ENTRY`. Expected: 12");
 
-typedef unsigned __int8 BYTE;
+typedef void *PVOID;
+
+typedef int LONG_PTR;
+
+typedef unsigned int UINT_PTR;
+
+typedef wchar_t WCHAR;
 
 typedef unsigned __int16 WORD;
+
+typedef HBRUSH__ *HBRUSH;
+
+typedef unsigned __int16 USHORT;
 
 struct HDC__
 {
@@ -216,21 +214,23 @@ struct HDC__
 };
 static_assert(sizeof(HDC__) == 4, "Incorrect size for type `HDC__`. Expected: 4");
 
-struct HICON__
+struct HBRUSH__
 {
   int unused;
 };
-static_assert(sizeof(HICON__) == 4, "Incorrect size for type `HICON__`. Expected: 4");
-
-typedef HICON__ *HICON;
-
-typedef unsigned int ULONG_PTR;
+static_assert(sizeof(HBRUSH__) == 4, "Incorrect size for type `HBRUSH__`. Expected: 4");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION *PEH3_EXCEPTION_REGISTRATION;
 
-typedef HBRUSH__ *HBRUSH;
+struct HWND__
+{
+  int unused;
+};
+static_assert(sizeof(HWND__) == 4, "Incorrect size for type `HWND__`. Expected: 4");
 
-typedef CHAR *LPSTR;
+typedef struct _SCOPETABLE_ENTRY *PSCOPETABLE_ENTRY;
+
+typedef ULONG_PTR DWORD_PTR;
 
 struct tagPAINTSTRUCT
 {
@@ -242,6 +242,129 @@ struct tagPAINTSTRUCT
   BYTE rgbReserved[32];
 };
 static_assert(sizeof(tagPAINTSTRUCT) == 64, "Incorrect size for type `tagPAINTSTRUCT`. Expected: 64");
+
+struct tagPOINT
+{
+  LONG x;
+  LONG y;
+};
+static_assert(sizeof(tagPOINT) == 8, "Incorrect size for type `tagPOINT`. Expected: 8");
+
+typedef _iobuf FILE;
+
+typedef UINT_PTR WPARAM;
+
+struct _SECURITY_ATTRIBUTES
+{
+  DWORD nLength;
+  LPVOID lpSecurityDescriptor;
+  BOOL bInheritHandle;
+};
+static_assert(sizeof(_SECURITY_ATTRIBUTES) == 12, "Incorrect size for type `_SECURITY_ATTRIBUTES`. Expected: 12");
+
+struct WSAData
+{
+  WORD wVersion;
+  WORD wHighVersion;
+  char szDescription[257];
+  char szSystemStatus[129];
+  unsigned __int16 iMaxSockets;
+  unsigned __int16 iMaxUdpDg;
+  char *lpVendorInfo;
+};
+static_assert(sizeof(WSAData) == 400, "Incorrect size for type `WSAData`. Expected: 400");
+
+struct _SYSTEMTIME
+{
+  WORD wYear;
+  WORD wMonth;
+  WORD wDayOfWeek;
+  WORD wDay;
+  WORD wHour;
+  WORD wMinute;
+  WORD wSecond;
+  WORD wMilliseconds;
+};
+static_assert(sizeof(_SYSTEMTIME) == 16, "Incorrect size for type `_SYSTEMTIME`. Expected: 16");
+
+struct _EH3_EXCEPTION_REGISTRATION
+{
+  struct _EH3_EXCEPTION_REGISTRATION *Next;
+  PVOID ExceptionHandler;
+  PSCOPETABLE_ENTRY ScopeTable;
+  DWORD TryLevel;
+};
+static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
+
+#pragma pack(push, 4)
+struct tagTEXTMETRICA
+{
+  LONG tmHeight;
+  LONG tmAscent;
+  LONG tmDescent;
+  LONG tmInternalLeading;
+  LONG tmExternalLeading;
+  LONG tmAveCharWidth;
+  LONG tmMaxCharWidth;
+  LONG tmWeight;
+  LONG tmOverhang;
+  LONG tmDigitizedAspectX;
+  LONG tmDigitizedAspectY;
+  BYTE tmFirstChar;
+  BYTE tmLastChar;
+  BYTE tmDefaultChar;
+  BYTE tmBreakChar;
+  BYTE tmItalic;
+  BYTE tmUnderlined;
+  BYTE tmStruckOut;
+  BYTE tmPitchAndFamily;
+  BYTE tmCharSet;
+};
+#pragma pack(pop)
+static_assert(sizeof(tagTEXTMETRICA) == 56, "Incorrect size for type `tagTEXTMETRICA`. Expected: 56");
+
+typedef _LIST_ENTRY LIST_ENTRY;
+
+struct tagRECT
+{
+  LONG left;
+  LONG top;
+  LONG right;
+  LONG bottom;
+};
+static_assert(sizeof(tagRECT) == 16, "Incorrect size for type `tagRECT`. Expected: 16");
+
+struct tagSIZE
+{
+  LONG cx;
+  LONG cy;
+};
+static_assert(sizeof(tagSIZE) == 8, "Incorrect size for type `tagSIZE`. Expected: 8");
+
+typedef HICON HCURSOR;
+
+typedef LONG_PTR LRESULT;
+
+struct _cpinfo
+{
+  UINT MaxCharSize;
+  BYTE DefaultChar[2];
+  BYTE LeadByte[12];
+};
+static_assert(sizeof(_cpinfo) == 20, "Incorrect size for type `_cpinfo`. Expected: 20");
+
+typedef LONG_PTR LPARAM;
+
+struct _OSVERSIONINFOA
+{
+  DWORD dwOSVersionInfoSize;
+  DWORD dwMajorVersion;
+  DWORD dwMinorVersion;
+  DWORD dwBuildNumber;
+  DWORD dwPlatformId;
+  CHAR szCSDVersion[128];
+};
+static_assert(sizeof(_OSVERSIONINFOA) == 148, "Incorrect size for type `_OSVERSIONINFOA`. Expected: 148");
 
 struct _DCB
 {
@@ -276,132 +399,14 @@ struct _DCB
 };
 static_assert(sizeof(_DCB) == 28, "Incorrect size for type `_DCB`. Expected: 28");
 
+typedef BYTE *LPBYTE;
+
 struct _FILETIME
 {
   DWORD dwLowDateTime;
   DWORD dwHighDateTime;
 };
 static_assert(sizeof(_FILETIME) == 8, "Incorrect size for type `_FILETIME`. Expected: 8");
-
-struct tagPOINT
-{
-  LONG x;
-  LONG y;
-};
-static_assert(sizeof(tagPOINT) == 8, "Incorrect size for type `tagPOINT`. Expected: 8");
-
-struct _EH3_EXCEPTION_REGISTRATION
-{
-  struct _EH3_EXCEPTION_REGISTRATION *Next;
-  PVOID ExceptionHandler;
-  PSCOPETABLE_ENTRY ScopeTable;
-  DWORD TryLevel;
-};
-static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
-
-typedef ULONG_PTR DWORD_PTR;
-
-typedef LONG_PTR LPARAM;
-
-struct _SYSTEMTIME
-{
-  WORD wYear;
-  WORD wMonth;
-  WORD wDayOfWeek;
-  WORD wDay;
-  WORD wHour;
-  WORD wMinute;
-  WORD wSecond;
-  WORD wMilliseconds;
-};
-static_assert(sizeof(_SYSTEMTIME) == 16, "Incorrect size for type `_SYSTEMTIME`. Expected: 16");
-
-#pragma pack(push, 4)
-struct tagTEXTMETRICA
-{
-  LONG tmHeight;
-  LONG tmAscent;
-  LONG tmDescent;
-  LONG tmInternalLeading;
-  LONG tmExternalLeading;
-  LONG tmAveCharWidth;
-  LONG tmMaxCharWidth;
-  LONG tmWeight;
-  LONG tmOverhang;
-  LONG tmDigitizedAspectX;
-  LONG tmDigitizedAspectY;
-  BYTE tmFirstChar;
-  BYTE tmLastChar;
-  BYTE tmDefaultChar;
-  BYTE tmBreakChar;
-  BYTE tmItalic;
-  BYTE tmUnderlined;
-  BYTE tmStruckOut;
-  BYTE tmPitchAndFamily;
-  BYTE tmCharSet;
-};
-#pragma pack(pop)
-static_assert(sizeof(tagTEXTMETRICA) == 56, "Incorrect size for type `tagTEXTMETRICA`. Expected: 56");
-
-struct WSAData
-{
-  WORD wVersion;
-  WORD wHighVersion;
-  char szDescription[257];
-  char szSystemStatus[129];
-  unsigned __int16 iMaxSockets;
-  unsigned __int16 iMaxUdpDg;
-  char *lpVendorInfo;
-};
-static_assert(sizeof(WSAData) == 400, "Incorrect size for type `WSAData`. Expected: 400");
-
-typedef USHORT ADDRESS_FAMILY;
-
-typedef HICON HCURSOR;
-
-typedef BYTE *LPBYTE;
-
-struct tagRECT
-{
-  LONG left;
-  LONG top;
-  LONG right;
-  LONG bottom;
-};
-static_assert(sizeof(tagRECT) == 16, "Incorrect size for type `tagRECT`. Expected: 16");
-
-struct _SECURITY_ATTRIBUTES
-{
-  DWORD nLength;
-  LPVOID lpSecurityDescriptor;
-  BOOL bInheritHandle;
-};
-static_assert(sizeof(_SECURITY_ATTRIBUTES) == 12, "Incorrect size for type `_SECURITY_ATTRIBUTES`. Expected: 12");
-
-typedef _LIST_ENTRY LIST_ENTRY;
-
-struct _OSVERSIONINFOA
-{
-  DWORD dwOSVersionInfoSize;
-  DWORD dwMajorVersion;
-  DWORD dwMinorVersion;
-  DWORD dwBuildNumber;
-  DWORD dwPlatformId;
-  CHAR szCSDVersion[128];
-};
-static_assert(sizeof(_OSVERSIONINFOA) == 148, "Incorrect size for type `_OSVERSIONINFOA`. Expected: 148");
-
-struct _COMMTIMEOUTS
-{
-  DWORD ReadIntervalTimeout;
-  DWORD ReadTotalTimeoutMultiplier;
-  DWORD ReadTotalTimeoutConstant;
-  DWORD WriteTotalTimeoutMultiplier;
-  DWORD WriteTotalTimeoutConstant;
-};
-static_assert(sizeof(_COMMTIMEOUTS) == 20, "Incorrect size for type `_COMMTIMEOUTS`. Expected: 20");
-
-typedef LONG_PTR LRESULT;
 
 #pragma pack(push, 8)
 struct _RTL_CRITICAL_SECTION
@@ -416,28 +421,23 @@ struct _RTL_CRITICAL_SECTION
 #pragma pack(pop)
 static_assert(sizeof(_RTL_CRITICAL_SECTION) == 24, "Incorrect size for type `_RTL_CRITICAL_SECTION`. Expected: 24");
 
-typedef UINT_PTR WPARAM;
-
-struct tagSIZE
-{
-  LONG cx;
-  LONG cy;
-};
-static_assert(sizeof(tagSIZE) == 8, "Incorrect size for type `tagSIZE`. Expected: 8");
-
-struct _cpinfo
-{
-  UINT MaxCharSize;
-  BYTE DefaultChar[2];
-  BYTE LeadByte[12];
-};
-static_assert(sizeof(_cpinfo) == 20, "Incorrect size for type `_cpinfo`. Expected: 20");
-
 typedef const CHAR *LPCSTR;
 
-typedef _iobuf FILE;
+typedef CHAR *LPSTR;
+
+struct _COMMTIMEOUTS
+{
+  DWORD ReadIntervalTimeout;
+  DWORD ReadTotalTimeoutMultiplier;
+  DWORD ReadTotalTimeoutConstant;
+  DWORD WriteTotalTimeoutMultiplier;
+  DWORD WriteTotalTimeoutConstant;
+};
+static_assert(sizeof(_COMMTIMEOUTS) == 20, "Incorrect size for type `_COMMTIMEOUTS`. Expected: 20");
 
 typedef ULONG_PTR SIZE_T;
+
+typedef USHORT ADDRESS_FAMILY;
 
 struct _STARTUPINFOA
 {
@@ -462,12 +462,19 @@ struct _STARTUPINFOA
 };
 static_assert(sizeof(_STARTUPINFOA) == 68, "Incorrect size for type `_STARTUPINFOA`. Expected: 68");
 
-struct sockaddr
+struct _MEMORY_BASIC_INFORMATION
 {
-  ADDRESS_FAMILY sa_family;
-  CHAR sa_data[14];
+  PVOID BaseAddress;
+  PVOID AllocationBase;
+  DWORD AllocationProtect;
+  SIZE_T RegionSize;
+  DWORD State;
+  DWORD Protect;
+  DWORD Type;
 };
-static_assert(sizeof(sockaddr) == 16, "Incorrect size for type `sockaddr`. Expected: 16");
+static_assert(sizeof(_MEMORY_BASIC_INFORMATION) == 28, "Incorrect size for type `_MEMORY_BASIC_INFORMATION`. Expected: 28");
+
+typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
 
 struct CPPEH_RECORD
 {
@@ -477,9 +484,27 @@ struct CPPEH_RECORD
 };
 static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
 
-typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
+typedef _SYSTEMTIME SYSTEMTIME;
 
-typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
+struct tagMSG
+{
+  HWND hwnd;
+  UINT message;
+  WPARAM wParam;
+  LPARAM lParam;
+  DWORD time;
+  POINT pt;
+};
+static_assert(sizeof(tagMSG) == 28, "Incorrect size for type `tagMSG`. Expected: 28");
+
+typedef _FILETIME FILETIME;
+
+struct sockaddr
+{
+  ADDRESS_FAMILY sa_family;
+  CHAR sa_data[14];
+};
+static_assert(sizeof(sockaddr) == 16, "Incorrect size for type `sockaddr`. Expected: 16");
 
 struct _RTL_CRITICAL_SECTION_DEBUG
 {
@@ -495,7 +520,7 @@ struct _RTL_CRITICAL_SECTION_DEBUG
 };
 static_assert(sizeof(_RTL_CRITICAL_SECTION_DEBUG) == 32, "Incorrect size for type `_RTL_CRITICAL_SECTION_DEBUG`. Expected: 32");
 
-typedef _FILETIME FILETIME;
+typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
 struct _MEMORYSTATUS
 {
@@ -509,31 +534,6 @@ struct _MEMORYSTATUS
   SIZE_T dwAvailVirtual;
 };
 static_assert(sizeof(_MEMORYSTATUS) == 32, "Incorrect size for type `_MEMORYSTATUS`. Expected: 32");
-
-struct _MEMORY_BASIC_INFORMATION
-{
-  PVOID BaseAddress;
-  PVOID AllocationBase;
-  DWORD AllocationProtect;
-  SIZE_T RegionSize;
-  DWORD State;
-  DWORD Protect;
-  DWORD Type;
-};
-static_assert(sizeof(_MEMORY_BASIC_INFORMATION) == 28, "Incorrect size for type `_MEMORY_BASIC_INFORMATION`. Expected: 28");
-
-struct tagMSG
-{
-  HWND hwnd;
-  UINT message;
-  WPARAM wParam;
-  LPARAM lParam;
-  DWORD time;
-  POINT pt;
-};
-static_assert(sizeof(tagMSG) == 28, "Incorrect size for type `tagMSG`. Expected: 28");
-
-typedef _SYSTEMTIME SYSTEMTIME;
 
 struct _TIME_ZONE_INFORMATION
 {
