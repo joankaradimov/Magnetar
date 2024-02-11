@@ -234,6 +234,12 @@ class Function:
         'di': 'edi',
         'dil': 'edi',
         'dih': 'edi',
+
+        'ebp': 'ebp',
+        'bp': 'ebp',
+
+        'esp': 'esp',
+        'sp': 'esp',
     }
 
     def get_usercall_wrapper(self):
