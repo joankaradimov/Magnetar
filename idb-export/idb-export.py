@@ -907,4 +907,6 @@ def sort_topologically(local_types):
                     yield local_type
                     break
 
-export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""", 'starcraft_exe', 'game::starcraft')
+idb_path = Path(get_idb_path())
+project_name = idb_path.stem.lower().replace(' ', '')
+export("""C:\dev\work\MagnetarCraft\MagnetarCraft\\""", f'{project_name}_exe', f'game::{project_name}')
