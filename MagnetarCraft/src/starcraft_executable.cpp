@@ -107,7 +107,7 @@ BOOL StarCraftExecutable::VirtualFree(LPVOID address, SIZE_T size, DWORD freeTyp
 HCUSTOMMODULE StarCraftExecutable::LoadLibrary(LPCSTR filename, void* userdata)
 {
 	UNREFERENCED_PARAMETER(userdata);
-	if (!strcmp(filename, "storm.dll"))
+	if (!strcmpi(filename, "storm.dll"))
 	{
 		filename = "Magnetorm.dll";
 	}
