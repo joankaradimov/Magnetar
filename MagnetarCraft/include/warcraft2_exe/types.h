@@ -93,8 +93,10 @@ typedef __int8 _TBYTE;
 struct _LIST_ENTRY;
 struct _iobuf;
 struct HICON__;
+struct _FILETIME;
 struct HINSTANCE__;
 struct _SCOPETABLE_ENTRY;
+struct _COMMTIMEOUTS;
 struct HDC__;
 struct HBRUSH__;
 struct HWND__;
@@ -110,19 +112,16 @@ struct tagSIZE;
 struct _cpinfo;
 struct _OSVERSIONINFOA;
 struct _DCB;
-struct _FILETIME;
 struct _RTL_CRITICAL_SECTION;
-struct _COMMTIMEOUTS;
 struct _STARTUPINFOA;
 struct _MEMORY_BASIC_INFORMATION;
 struct CPPEH_RECORD;
 struct tagMSG;
-struct sockaddr;
-struct _RTL_CRITICAL_SECTION_DEBUG;
-struct _MEMORYSTATUS;
-struct _TIME_ZONE_INFORMATION;
 struct _WIN32_FIND_DATAA;
+struct sockaddr;
 struct tagWNDCLASSA;
+struct _RTL_CRITICAL_SECTION_DEBUG;
+struct _TIME_ZONE_INFORMATION;
 
 
 
@@ -152,8 +151,6 @@ struct _iobuf
 };
 static_assert(sizeof(_iobuf) == 32, "Incorrect size for type `_iobuf`. Expected: 32");
 
-typedef HINSTANCE__ *HINSTANCE;
-
 typedef HDC__ *HDC;
 
 struct HICON__
@@ -174,17 +171,18 @@ typedef int BOOL;
 
 typedef unsigned int UINT;
 
-typedef HICON__ *HICON;
+struct _FILETIME
+{
+  DWORD dwLowDateTime;
+  DWORD dwHighDateTime;
+};
+static_assert(sizeof(_FILETIME) == 8, "Incorrect size for type `_FILETIME`. Expected: 8");
 
 struct HINSTANCE__
 {
   int unused;
 };
 static_assert(sizeof(HINSTANCE__) == 4, "Incorrect size for type `HINSTANCE__`. Expected: 4");
-
-typedef unsigned int DWORD;
-
-typedef HWND__ *HWND;
 
 struct _SCOPETABLE_ENTRY
 {
@@ -196,15 +194,23 @@ static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPET
 
 typedef void *PVOID;
 
-typedef int LONG_PTR;
-
 typedef unsigned int UINT_PTR;
+
+typedef int LONG_PTR;
 
 typedef wchar_t WCHAR;
 
 typedef unsigned __int16 WORD;
 
-typedef HBRUSH__ *HBRUSH;
+struct _COMMTIMEOUTS
+{
+  DWORD ReadIntervalTimeout;
+  DWORD ReadTotalTimeoutMultiplier;
+  DWORD ReadTotalTimeoutConstant;
+  DWORD WriteTotalTimeoutMultiplier;
+  DWORD WriteTotalTimeoutConstant;
+};
+static_assert(sizeof(_COMMTIMEOUTS) == 20, "Incorrect size for type `_COMMTIMEOUTS`. Expected: 20");
 
 typedef unsigned __int16 USHORT;
 
@@ -341,8 +347,6 @@ struct tagSIZE
 };
 static_assert(sizeof(tagSIZE) == 8, "Incorrect size for type `tagSIZE`. Expected: 8");
 
-typedef HICON HCURSOR;
-
 typedef LONG_PTR LRESULT;
 
 struct _cpinfo
@@ -401,13 +405,6 @@ static_assert(sizeof(_DCB) == 28, "Incorrect size for type `_DCB`. Expected: 28"
 
 typedef BYTE *LPBYTE;
 
-struct _FILETIME
-{
-  DWORD dwLowDateTime;
-  DWORD dwHighDateTime;
-};
-static_assert(sizeof(_FILETIME) == 8, "Incorrect size for type `_FILETIME`. Expected: 8");
-
 #pragma pack(push, 8)
 struct _RTL_CRITICAL_SECTION
 {
@@ -425,15 +422,7 @@ typedef const CHAR *LPCSTR;
 
 typedef CHAR *LPSTR;
 
-struct _COMMTIMEOUTS
-{
-  DWORD ReadIntervalTimeout;
-  DWORD ReadTotalTimeoutMultiplier;
-  DWORD ReadTotalTimeoutConstant;
-  DWORD WriteTotalTimeoutMultiplier;
-  DWORD WriteTotalTimeoutConstant;
-};
-static_assert(sizeof(_COMMTIMEOUTS) == 20, "Incorrect size for type `_COMMTIMEOUTS`. Expected: 20");
+typedef _FILETIME FILETIME;
 
 typedef ULONG_PTR SIZE_T;
 
@@ -474,8 +463,6 @@ struct _MEMORY_BASIC_INFORMATION
 };
 static_assert(sizeof(_MEMORY_BASIC_INFORMATION) == 28, "Incorrect size for type `_MEMORY_BASIC_INFORMATION`. Expected: 28");
 
-typedef LRESULT (__stdcall *WNDPROC)(HWND, UINT, WPARAM, LPARAM);
-
 struct CPPEH_RECORD
 {
   DWORD old_esp;
@@ -497,7 +484,20 @@ struct tagMSG
 };
 static_assert(sizeof(tagMSG) == 28, "Incorrect size for type `tagMSG`. Expected: 28");
 
-typedef _FILETIME FILETIME;
+struct _WIN32_FIND_DATAA
+{
+  DWORD dwFileAttributes;
+  FILETIME ftCreationTime;
+  FILETIME ftLastAccessTime;
+  FILETIME ftLastWriteTime;
+  DWORD nFileSizeHigh;
+  DWORD nFileSizeLow;
+  DWORD dwReserved0;
+  DWORD dwReserved1;
+  CHAR cFileName[260];
+  CHAR cAlternateFileName[14];
+};
+static_assert(sizeof(_WIN32_FIND_DATAA) == 320, "Incorrect size for type `_WIN32_FIND_DATAA`. Expected: 320");
 
 struct sockaddr
 {
@@ -505,6 +505,21 @@ struct sockaddr
   CHAR sa_data[14];
 };
 static_assert(sizeof(sockaddr) == 16, "Incorrect size for type `sockaddr`. Expected: 16");
+
+struct tagWNDCLASSA
+{
+  UINT style;
+  WNDPROC lpfnWndProc;
+  int cbClsExtra;
+  int cbWndExtra;
+  HINSTANCE hInstance;
+  HICON hIcon;
+  HCURSOR hCursor;
+  HBRUSH hbrBackground;
+  LPCSTR lpszMenuName;
+  LPCSTR lpszClassName;
+};
+static_assert(sizeof(tagWNDCLASSA) == 40, "Incorrect size for type `tagWNDCLASSA`. Expected: 40");
 
 struct _RTL_CRITICAL_SECTION_DEBUG
 {
@@ -522,19 +537,6 @@ static_assert(sizeof(_RTL_CRITICAL_SECTION_DEBUG) == 32, "Incorrect size for typ
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
-struct _MEMORYSTATUS
-{
-  DWORD dwLength;
-  DWORD dwMemoryLoad;
-  SIZE_T dwTotalPhys;
-  SIZE_T dwAvailPhys;
-  SIZE_T dwTotalPageFile;
-  SIZE_T dwAvailPageFile;
-  SIZE_T dwTotalVirtual;
-  SIZE_T dwAvailVirtual;
-};
-static_assert(sizeof(_MEMORYSTATUS) == 32, "Incorrect size for type `_MEMORYSTATUS`. Expected: 32");
-
 struct _TIME_ZONE_INFORMATION
 {
   LONG Bias;
@@ -546,37 +548,5 @@ struct _TIME_ZONE_INFORMATION
   LONG DaylightBias;
 };
 static_assert(sizeof(_TIME_ZONE_INFORMATION) == 172, "Incorrect size for type `_TIME_ZONE_INFORMATION`. Expected: 172");
-
-struct _WIN32_FIND_DATAA
-{
-  DWORD dwFileAttributes;
-  FILETIME ftCreationTime;
-  FILETIME ftLastAccessTime;
-  FILETIME ftLastWriteTime;
-  DWORD nFileSizeHigh;
-  DWORD nFileSizeLow;
-  DWORD dwReserved0;
-  DWORD dwReserved1;
-  CHAR cFileName[260];
-  CHAR cAlternateFileName[14];
-};
-static_assert(sizeof(_WIN32_FIND_DATAA) == 320, "Incorrect size for type `_WIN32_FIND_DATAA`. Expected: 320");
-
-struct tagWNDCLASSA
-{
-  UINT style;
-  WNDPROC lpfnWndProc;
-  int cbClsExtra;
-  int cbWndExtra;
-  HINSTANCE hInstance;
-  HICON hIcon;
-  HCURSOR hCursor;
-  HBRUSH hbrBackground;
-  LPCSTR lpszMenuName;
-  LPCSTR lpszClassName;
-};
-static_assert(sizeof(tagWNDCLASSA) == 40, "Incorrect size for type `tagWNDCLASSA`. Expected: 40");
-
-typedef tagWNDCLASSA WNDCLASSA;
 
 }
