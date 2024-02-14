@@ -597,11 +597,22 @@ def export_data(declarations, definitions):
         declarations.append(datum.declaration)
         definitions.append(datum.definition)
 
+BLACKLISTED_TYPES = {
+    'DWORD',
+    'RECT', 'POINT', '_GUID',
+    '__int128', 'wchar_t',
+    'tm', 'tagPALETTEENTRY', 'type_info',
+    '_PMD', '_PVFV', '_RTTIBaseClassDescriptor',
+    'HCURSOR', 'HICON', 'HMODULE', 'HINSTANCE', 'HWND',
+    'WNDCLASSA', 'HBRUSH', 'WNDPROC', 'LPMEMORYSTATUS',
+    '_MEMORYSTATUS',
+}
+
 def is_type_blacklisted(type_ordinal):
     local_type_name = get_numbered_type_name(type_ordinal)
     if local_type_name == None:
         return False # TODO: determine when this happens
-    if local_type_name in {'RECT', 'POINT', '_GUID', '__int128', 'wchar_t', 'tm', 'tagPALETTEENTRY', 'type_info', '_PMD', '_PVFV', '_RTTIBaseClassDescriptor'}:
+    if local_type_name in BLACKLISTED_TYPES:
         return True
     if local_type_name.startswith('IDirectDraw'):
         return True
