@@ -165,8 +165,6 @@ typedef unsigned __int8 BYTE;
 
 typedef unsigned int ULONG_PTR;
 
-typedef void *HANDLE;
-
 typedef int BOOL;
 
 typedef unsigned int UINT;

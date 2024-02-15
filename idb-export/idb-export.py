@@ -605,7 +605,7 @@ BLACKLISTED_TYPES = {
     '_PMD', '_PVFV', '_RTTIBaseClassDescriptor',
     'HCURSOR', 'HICON', 'HMODULE', 'HINSTANCE', 'HWND',
     'WNDCLASSA', 'HBRUSH', 'WNDPROC', 'LPMEMORYSTATUS',
-    '_MEMORYSTATUS',
+    '_MEMORYSTATUS', 'HANDLE',
 }
 
 def is_type_blacklisted(type_ordinal):

@@ -5813,7 +5813,7 @@ extern int& dword_4B36C0;
 extern char *& dword_4B36C4;
 extern int& dword_4B36C8;
 extern int& dword_4B36CC;
-extern int& dword_4B36D0;
+extern HANDLE& dword_4B36D0;
 extern int& dword_4B36D4;
 extern CHAR& tstrFilename;
 extern int& dword_4B38E0;
