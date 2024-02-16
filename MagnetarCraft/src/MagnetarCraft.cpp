@@ -272,14 +272,7 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 		try
 		{
 			std::filesystem::path starcraft_exe_path = starcraft_root / "StarCraft.exe";
-			SetDllDirectory(starcraft_root.c_str());
-			starcraft_exe = new StarCraftExecutable(starcraft_exe_path);
-
-			// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
-			// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808
-			SFileDestroy();
-
-			return starcraft_exe;
+			return new StarCraftExecutable(starcraft_exe_path);
 		}
 		catch (const std::exception& e)
 		{
@@ -304,6 +297,13 @@ void StartMagnetar()
 	YAML::Node config = LoadConfig(config_filename);
 
 	StarCraftExecutable* starcraft_exe = LocateStarCraftExecutable(config);
+
+	SetDllDirectory(starcraft_exe->GetParentDirectory().c_str());
+
+	// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
+	// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808
+	SFileDestroy();
+
 	starcraft_exe->check();
 
 	config["starcraft-root"] = starcraft_exe->GetParentDirectory().generic_string();
