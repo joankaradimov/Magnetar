@@ -113,3 +113,35 @@ HCUSTOMMODULE StarCraftExecutable::LoadLibrary(LPCSTR filename, void* userdata)
 	}
 	return LoadLibraryA(filename);
 }
+
+WarCraft2Executable::WarCraft2Executable(const std::filesystem::path& path): StarCraftExecutable(path)
+{
+}
+
+void WarCraft2Executable::check()
+{
+	if (!file_info.is_valid())
+	{
+		std::ostringstream error_message;
+		error_message << "Could not retrieve version info for " << executable_path.filename();
+		throw std::exception(error_message.str().c_str());
+	}
+
+	if (HIWORD(file_info->dwProductVersionMS) != 2 ||
+		LOWORD(file_info->dwProductVersionMS) != 0 ||
+		HIWORD(file_info->dwProductVersionLS) != 2)
+	{
+		std::ostringstream error_message;
+		error_message << "Expected " << executable_path.filename() << ' ' << EXPECTED_MAJOR_VERSION << '.' << EXPECTED_MINOR_VERSION << '.' << EXPECTED_PATCH_VERSION;
+		error_message << "; found " << HIWORD(file_info->dwProductVersionMS) << '.' << LOWORD(file_info->dwProductVersionMS) << '.' << HIWORD(file_info->dwProductVersionLS);
+		throw std::exception(error_message.str().c_str());
+	}
+
+	HMEMORYMODULE starcraftModule = MemoryLoadLibraryEx(module, STARCRAFT_IMAGE_SIZE, VirtualAlloc, VirtualFree, LoadLibrary, MemoryDefaultGetProcAddress, MemoryDefaultFreeLibrary, NULL);
+	if (starcraftModule == NULL)
+	{
+		std::ostringstream error_message;
+		error_message << "Could not initialize " << executable_path.filename() << " as a library";
+		throw std::exception(error_message.str().c_str());
+	}
+}

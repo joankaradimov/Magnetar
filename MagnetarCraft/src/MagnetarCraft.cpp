@@ -31,6 +31,32 @@ FUNCTION_PATCH((void*)0x40DE57, fflush, "starcraft");
 FUNCTION_PATCH((void*)0x40DF5A, flushall, "starcraft");
 FUNCTION_PATCH((void*)0x40EBA2, fcloseall, "starcraft");
 
+void init_warcraft2_exe_clib()
+{
+	using namespace game::warcraft2;
+
+	int(*_ioinit)() = (int(*)())0x481905;
+	int(*_mtinit)() = (int(*)())0x47F63C;
+	int(*_heap_init)(int) = (int(*)(int))0x481C36;
+	int(*_cinit)(int) = (int(*)(int))0x47FE5F;
+	int(*_setargv)() = (int(*)())0x481586;
+	int(*_setenvp)() = (int(*)())0x4814CD;
+
+	if (!_heap_init(1))
+		exit(0x1Cu);
+	if (!_mtinit())
+		exit(0x10u);
+	//dword_4D85EC = GetCommandLineA();
+	//dword_4D4554 = GetEnvironmentStrings();
+	//_setargv();
+	//_setenvp();
+	if (_ioinit() < 0)
+		exit(0x1Bu);
+	//int v6 = _cinit(1);
+	//if (v6)
+	//	exit(v6);
+}
+
 void init_stacraftexe_clib()
 {
 	int(*_ioinit)() = (int(*)())0x405725;
@@ -293,6 +319,23 @@ StarCraftExecutable* LocateStarCraftExecutable(const YAML::Node& config)
 
 void StartMagnetar()
 {
+	/*
+	std::filesystem::path warcraft2_exe_path = "D:\\Games\\Warcraft II BNE\\Warcraft II BNE.exe";
+	WarCraft2Executable* executable = new WarCraft2Executable(warcraft2_exe_path);
+	executable->check();
+
+	SetDllDirectory(executable->GetParentDirectory().c_str());
+
+	// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
+	// see: https://github.com/bwapi/bwapi/issues/375#issuecomment-233162808
+	SFileDestroy();
+
+	init_warcraft2_exe_clib();
+	BasePatch::apply_pending_patches({ "warcraft2" });
+
+	game::warcraft2::_WinMain(executable->GetModule(), nullptr, "", 0);
+	*/
+
 	std::filesystem::path config_filename = GetConfigFilename();
 	YAML::Node config = LoadConfig(config_filename);
 

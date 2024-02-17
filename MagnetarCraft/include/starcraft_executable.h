@@ -12,9 +12,9 @@ public:
 
 	std::filesystem::path GetParentDirectory();
 	HMODULE GetModule();
-	void check();
+	virtual void check();
 
-private:
+protected:
 	static LPVOID VirtualAlloc(LPVOID address, SIZE_T size, DWORD allocationType, DWORD protect, void* userdata);
 	static BOOL VirtualFree(LPVOID address, SIZE_T size, DWORD freeType, void* userdata);
 	static HCUSTOMMODULE LoadLibrary(LPCSTR filename, void* userdata);
@@ -22,4 +22,14 @@ private:
 	std::filesystem::path executable_path; // e.g. "C:\\Program Files\\StarCraft.exe"
 	HMODULE module;
 	FileInfo file_info;
+};
+
+// TODO: fix this horrbile hack
+// There should be a base class for StarCraft/WarCraft2 executables
+// And all these StarCraft-specific global constants should be class-level
+class WarCraft2Executable : public StarCraftExecutable
+{
+public:
+	WarCraft2Executable(const std::filesystem::path& path);
+	virtual void check();
 };
