@@ -39,6 +39,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/glu_score.cpp
 	src/glu_title.cpp
 	src/video.cpp
+	src/warcraft2.cpp
 )
 
 add_subdirectory(src)
