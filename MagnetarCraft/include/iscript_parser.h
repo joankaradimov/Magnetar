@@ -1,3 +1,3 @@
 #include "starcraft_exe/types.h"
 
-void parse_iscript_txt();
+bool parse_iscript_txt();

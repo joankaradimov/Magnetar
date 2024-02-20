@@ -1,6 +1,8 @@
 #include <peglib.h>
 
-void parse_iscript_txt()
+#include "starcraft.h"
+
+bool parse_iscript_txt()
 {
     peg::parser iscript_parser(R"(
         ROOT <- _ CODE_BLOCK (NL _ CODE_BLOCK)*
@@ -149,4 +151,10 @@ void parse_iscript_txt()
         ~_  <- [ \t]*
         ~__ <- [ \t]+
     )");
+
+    int size = 0;
+    const char* iscript_txt = (const char*)fastFileRead_(&size, 0, "scripts\\iscript.txt", 0, 0, __FILE__, __LINE__);
+
+    bool result = iscript_parser.parse(iscript_txt);
+    return result;
 }
