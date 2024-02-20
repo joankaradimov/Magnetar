@@ -17,6 +17,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
 if (MSVC)
     # This is needed for errors to be clickable in the VisualStudio UI
     add_compile_options ("-FC")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /Zc:__cplusplus")
 endif ()
 
 set(CMAKE_CXX_STANDARD 17)
@@ -52,3 +53,10 @@ FetchContent_Declare(
 # For Windows: Prevent overriding the parent project's compiler/linker settings
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
+
+FetchContent_Declare(
+  cpp-peglib
+  GIT_REPOSITORY https://github.com/yhirose/cpp-peglib.git
+  GIT_TAG v1.8.6
+)
+FetchContent_MakeAvailable(cpp-peglib)

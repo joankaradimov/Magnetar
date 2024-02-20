@@ -4,7 +4,7 @@ add_definitions(-D_UNICODE)
 if (MSVC)
 	add_link_options ("/INCREMENTAL:NO") # MSVC can be buggy https://stackoverflow.com/a/2487756/7913479
 	add_link_options ("/FIXED")
-	add_link_options ("/BASE:0x140000")
+	add_link_options ("/BASE:0x60000")
 endif ()
 
 add_library(MagnetarCraftObject OBJECT
@@ -20,6 +20,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/CFlingy.cpp
 	src/CSprite.cpp
 	src/iscript.cpp
+	src/iscript_parser.cpp
 	src/file_info.cpp
 	src/MagnetarCraft.cpp
 	src/race.cpp
@@ -49,6 +50,7 @@ include_directories("./include")
 include_directories(${MemoryModule_SOURCE_DIR})
 include_directories(${YAML_CPP_INCLUDE_DIRS})
 include_directories(${MAGNETORM_INCLUDE_DIRS})
+include_directories(${peglib_SOURCE_DIR})
 include_directories("${sol2_SOURCE_DIR}/include")
 include_directories("${luajit_SOURCE_DIR}/src")
 

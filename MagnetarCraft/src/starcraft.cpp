@@ -12,6 +12,7 @@ using namespace game::starcraft; // TODO: reorganize the headers
 #include "CSprite.h"
 #include "file_info.h"
 #include "iscript.h"
+#include "iscript_parser.h"
 #include "race.h"
 #include "magnetorm.h"
 #include "tbl_file.h"
@@ -5113,6 +5114,8 @@ DatLoad* imagesDat_;
 
 void LoadInitIscriptBIN_()
 {
+	parse_iscript_txt(); // TODO: populate 'iscript_data' by parsing 'scripts\\iscript.txt'
+
 	int iscript_bin_size;
 	iscript_data = (IScript*) fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
