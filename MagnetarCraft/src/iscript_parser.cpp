@@ -147,8 +147,8 @@ bool parse_iscript_txt()
 
         ~EOF <- !.
         ~NL  <- ('\n' | '\r\n' | '\r')
-        ~_   <- [ \t]*
-        ~__  <- [ \t]+
+        ~_   <- [ \t]* # Optional whitespace
+        ~__  <- [ \t]+ # Mandatory whitespace
     )");
 
     int size = 0;
