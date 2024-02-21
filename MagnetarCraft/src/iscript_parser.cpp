@@ -5,13 +5,11 @@
 bool parse_iscript_txt()
 {
     peg::parser iscript_parser(R"(
-        ROOT <- _ CODE_BLOCK (NL _ CODE_BLOCK)*
+        ROOT <- (_ (NL / COMMENT NL / HEADER / LABEL / OP _ COMMENT? NL))* EOF
 
-        CODE_BLOCK <- HEADER / CODE_LINE
-        HEADER     <- '.headerstart' _ NL+ (_ HEADER_LINE? _ NL)* _ '.headerend' _
-        CODE_LINE  <- LABEL? _ OP? _ COMMENT?
-        ~COMMENT   <- '#' [^\r\n]*
-        LABEL      <- ID _ ':'
+        HEADER   <- '.headerstart' _ NL _ (!'.' HEADER_LINE? _ NL _)* '.headerend' _ NL
+        ~COMMENT <- '#' [^\r\n]*
+        LABEL    <- <ID> _ ':' _ NL?
 
         # header rules:
         HEADER_IS_ID            <- 'IsId' __ INT               { no_ast_opt }
@@ -147,9 +145,10 @@ bool parse_iscript_txt()
         ID_MAYBE <- ID / '[none]'i
         INT      <- '0x' [0-9a-fA-F][0-9a-fA-F]* / [1-9][0-9]* / '0'
 
-        ~NL <- ('\n' | '\r\n' | '\r')
-        ~_  <- [ \t]*
-        ~__ <- [ \t]+
+        ~EOF <- !.
+        ~NL  <- ('\n' | '\r\n' | '\r')
+        ~_   <- [ \t]*
+        ~__  <- [ \t]+
     )");
 
     int size = 0;
