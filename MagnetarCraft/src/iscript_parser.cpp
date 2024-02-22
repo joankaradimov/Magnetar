@@ -177,7 +177,9 @@ bool parse_iscript_txt()
 
         ID       <- [_a-zA-Z][_a-zA-Z0-9]*
         ID_MAYBE <- ID / '[none]'i
-        INT      <- '0x' [0-9a-fA-F][0-9a-fA-F]* / [1-9][0-9]* / '0'
+        DEC      <- [1-9][0-9]* / '0'
+        HEX      <- '0x' [0-9a-fA-F]+
+        INT      <- HEX / DEC
 
         ~EOF <- !.
         ~NL  <- ('\n' | '\r\n' | '\r')
@@ -193,8 +195,20 @@ bool parse_iscript_txt()
         return vs.token();
     };
 
-    iscript_parser["INT"] = [](const peg::SemanticValues& vs) {
-        return vs.token_to_number<int>(); // TODO: handle hex numbers
+    iscript_parser["DEC"] = [](const peg::SemanticValues& vs) {
+        return vs.token_to_number<int>();
+    };
+
+    iscript_parser["HEX"] = [](const peg::SemanticValues& vs) {
+        int result = 0;
+        std::string_view hex_digits = vs.token().substr(2); // skip the initial "0x"
+
+        for (auto digit : hex_digits)
+        {
+            // This abuses the ASCII order a bit... but it's fine.
+            result = 0x10 * result + (digit >= 'a' ? digit - 'a' + 10 : digit >= 'A' ? digit - 'A' + 10 : digit - '0');
+        }
+        return result;
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
