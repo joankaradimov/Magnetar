@@ -1,6 +1,40 @@
 #include <peglib.h>
+#include <unordered_map>
+#include <string>
 
 #include "starcraft.h"
+
+class IScriptBuilder
+{
+public:
+    template <typename T> IScriptBuilder& operator<<(T data)
+    {
+        for (int i = 0; i < sizeof(T); i++)
+        {
+            bytes.append(1, std::byte(BYTEn(data, i)));
+        }
+        return *this;
+    }
+
+    int current_offset() const
+    {
+        return bytes.size();
+    }
+
+    const std::basic_string<std::byte>& iscript_bin() const
+    {
+        return bytes;
+    }
+
+    void set_label(const std::string& label, int offset)
+    {
+        label_offsets[label] = offset;
+    }
+
+private:
+    std::basic_string<std::byte> bytes;
+    std::unordered_map<std::string, intptr_t> label_offsets;
+};
 
 bool parse_iscript_txt()
 {
@@ -150,6 +184,408 @@ bool parse_iscript_txt()
         ~_   <- [ \t]* # Optional whitespace
         ~__  <- [ \t]+ # Mandatory whitespace
     )");
+
+    IScriptBuilder builder;
+
+    // TODO: handle headers
+
+    iscript_parser["ID"] = [](const peg::SemanticValues& vs) {
+        return vs.token();
+    };
+
+    iscript_parser["INT"] = [](const peg::SemanticValues& vs) {
+        return vs.token_to_number<int>(); // TODO: handle hex numbers
+    };
+
+    iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
+        std::string label_name = (std::string) std::any_cast<std::string_view>(vs[0]);
+        int label_address = builder.current_offset();
+        builder.set_label(label_name, label_address);
+    };
+
+    iscript_parser["OPC_PLAYFRAM"] = [&builder](const peg::SemanticValues& vs) {
+        u16 frame = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_playfram << frame;
+    };
+
+    iscript_parser["OPC_PLAYFRAMTILE"] = [&builder](const peg::SemanticValues& vs) {
+        u16 frame = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_playframtile << frame;
+    };
+
+    iscript_parser["OPC_SETHORPOS"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_sethorpos << arg;
+    };
+
+    iscript_parser["OPC_SETVERTPOS"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_setvertpos << arg;
+    };
+
+    iscript_parser["OPC_SETPOS"] = [&builder](const peg::SemanticValues& vs) {
+        u8 x = std::any_cast<int>(vs[0]);
+        u8 y = std::any_cast<int>(vs[1]);
+
+        builder << IScriptOpcodes::opc_setpos << x << y;
+    };
+
+    iscript_parser["OPC_WAIT"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_wait << arg;
+    };
+
+    iscript_parser["OPC_WAITRAND"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg1 = std::any_cast<int>(vs[0]);
+        u8 arg2 = std::any_cast<int>(vs[1]);
+
+        builder << IScriptOpcodes::opc_waitrand << arg1 << arg2;
+    };
+
+    iscript_parser["OPC_GOTO"] = [&builder](const peg::SemanticValues& vs) {
+        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+
+        builder << IScriptOpcodes::opc_goto << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_IMGOL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 image_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_imgol << image_id << x << y;
+    };
+
+    iscript_parser["OPC_IMGUL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 image_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_imgul << image_id << x << y;
+    };
+
+    iscript_parser["OPC_IMGOLORIG"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_imgolorig << arg;
+    };
+
+    iscript_parser["OPC_SWITCHUL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_switchul << arg;
+    };
+
+    // iscript_parser["OPC___0C"] = [&builder](const peg::SemanticValues& vs) {
+    //     u16 arg = std::any_cast<int>(vs[0]);
+    //
+    //     builder << IScriptOpcodes::opc___0c << arg;
+    // };
+
+    iscript_parser["OPC_IMGOLUSELO"] = [&builder](const peg::SemanticValues& vs) {
+        u16 image_id = std::any_cast<int>(vs[0]);
+        OverlayType x = (OverlayType)std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_imgoluselo << image_id << x << y;
+    };
+
+
+    iscript_parser["OPC_IMGULUSELO"] = [&builder](const peg::SemanticValues& vs) {
+        u16 image_id = std::any_cast<int>(vs[0]);
+        OverlayType x = (OverlayType)std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_imguluselo << image_id << x << y;
+    };
+
+    iscript_parser["OPC_SPROL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_sprol << sprite_id << x << y;
+    };
+
+    //iscript_parser["OPC_HIGHSPROL"] = [&builder](const peg::SemanticValues& vs) {
+    //    u16 sprite_id = std::any_cast<int>(vs[0]);
+    //    u8 x = std::any_cast<int>(vs[1]);
+    //    u8 y = std::any_cast<int>(vs[2]);
+    //
+    //    builder << IScriptOpcodes::opc_highsprol << sprite_id << x << y;
+    //};
+
+    iscript_parser["OPC_LOWSPRUL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_lowsprul << sprite_id << x << y;
+    };
+
+    //iscript_parser["OPC_UFLUNSTABLE"] = [&builder](const peg::SemanticValues& vs) {
+    //    u16 flingy_id = std::any_cast<int>(vs[0]);
+    //
+    //    builder << IScriptOpcodes::opc_uflunstable << flingy_id;
+    //};
+
+    iscript_parser["OPC_SPRULUSELO"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_spruluselo << sprite_id << x << y;
+    };
+
+    iscript_parser["OPC_SPRUL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_sprul << sprite_id << x << y;
+    };
+
+    iscript_parser["OPC_SPROLUSELO"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        OverlayType overlay_type = (OverlayType) std::any_cast<int>(vs[1]);
+        builder << IScriptOpcodes::opc_sproluselo << sprite_id << overlay_type;
+    };
+
+    iscript_parser["OPC_END"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_end;
+    };
+
+    //iscript_parser["OPC_SETFLIPSTATE"] = [&builder](const peg::SemanticValues& vs) {
+    //    u8 arg = std::any_cast<int>(vs[0]);
+    //    builder << IScriptOpcodes::opc_setflipstate << arg;
+    //};
+
+    iscript_parser["OPC_PLAYSND"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_playsnd << arg;
+    };
+
+    iscript_parser["OPC_PLAYSNDRAND"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_playsndrand; // TODO: varargs
+    };
+
+    iscript_parser["OPC_PLAYSNDBTWN"] = [&builder](const peg::SemanticValues& vs) {
+        u16 min = std::any_cast<int>(vs[0]);
+        u16 max = std::any_cast<int>(vs[1]);
+        builder << IScriptOpcodes::opc_playsndbtwn << min << max;
+    };
+
+    iscript_parser["OPC_DOMISSILEDMG"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_domissiledmg;
+    };
+
+    iscript_parser["OPC_ATTACKMELEE"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_attackmelee; // TODO: varargs
+    };
+
+    iscript_parser["OPC_FOLLOWMAINGRAPHIC"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_followmaingraphic;
+    };
+
+    iscript_parser["OPC_RANDCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+        std::string_view label = std::any_cast<std::string_view>(vs[1]);
+
+        builder << IScriptOpcodes::opc_randcondjmp << arg << short(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_TURNCCWISE"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_turnccwise << arg;
+    };
+
+    iscript_parser["OPC_TURNCWISE"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_turncwise << arg;
+    };
+
+    iscript_parser["OPC_TURN1CWISE"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_turn1cwise;
+    };
+
+    iscript_parser["OPC_TURNRAND"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_turnrand << arg;
+    };
+
+    iscript_parser["OPC_SETSPAWNFRAME"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_setspawnframe << arg;
+    };
+
+    iscript_parser["OPC_SIGORDER"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_sigorder << arg;
+    };
+
+    iscript_parser["OPC_ATTACKWITH"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_attackwith << arg;
+    };
+
+    iscript_parser["OPC_ATTACK"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_attack;
+    };
+
+    iscript_parser["OPC_CASTSPELL"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_castspell;
+    };
+
+    iscript_parser["OPC_USEWEAPON"] = [&builder](const peg::SemanticValues& vs) {
+        WeaponType weapon_Id = (WeaponType) std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_useweapon << weapon_Id;
+    };
+
+    iscript_parser["OPC_MOVE"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_move << arg;
+    };
+
+    iscript_parser["OPC_GOTOREPEATATTK"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_gotorepeatattk;
+    };
+
+    iscript_parser["OPC_ENGFRAME"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_engframe << arg;
+    };
+
+    iscript_parser["OPC_ENGSET"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_engset << arg;
+    };
+
+    iscript_parser["OPC___2D"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc___2d;
+    };
+
+    iscript_parser["OPC_NOBRKCODESTART"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_nobrkcodestart;
+    };
+
+    iscript_parser["OPC_NOBRKCODEEND"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_nobrkcodeend;
+    };
+
+    iscript_parser["OPC_IGNOREREST"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_ignorerest;
+    };
+
+    iscript_parser["OPC_ATTKSHIFTPROJ"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_attkshiftproj << arg;
+    };
+
+    iscript_parser["OPC_TMPRMGRAPHICSTART"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_tmprmgraphicstart;
+    };
+
+    iscript_parser["OPC_TMPRMGRAPHICEND"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_tmprmgraphicend;
+    };
+
+    iscript_parser["OPC_SETFLDIRECT"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_setfldirect << arg;
+    };
+
+    iscript_parser["OPC_CALL"] = [&builder](const peg::SemanticValues& vs) {
+        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        builder << IScriptOpcodes::opc_call << u16(0); // TODO: fix label
+    };
+
+    iscript_parser["OPC_RETURN"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_return;
+    };
+
+    iscript_parser["OPC_SETFLSPEED"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_setflspeed << arg;
+    };
+
+    iscript_parser["OPC_CREATEGASOVERLAYS"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_creategasoverlays << arg;
+    };
+
+    iscript_parser["OPC_PWRUPCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        builder << IScriptOpcodes::opc_pwrupcondjmp << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_TRGTRANGECONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+        std::string_view label = std::any_cast<std::string_view>(vs[1]);
+        builder << IScriptOpcodes::opc_trgtrangecondjmp << arg << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_TRGTARCCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg1 = std::any_cast<int>(vs[0]);
+        u16 arg2 = std::any_cast<int>(vs[1]);
+        std::string_view label = std::any_cast<std::string_view>(vs[2]);
+        builder << IScriptOpcodes::opc_trgtarccondjmp << arg1 << arg2 << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_CURDIRECTCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg1 = std::any_cast<int>(vs[0]);
+        u16 arg2 = std::any_cast<int>(vs[1]);
+        std::string_view label = std::any_cast<std::string_view>(vs[2]);
+        builder << IScriptOpcodes::opc_curdirectcondjmp << arg1 << arg2 << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_IMGULNEXTID"] = [&builder](const peg::SemanticValues& vs) {
+        u8 x = std::any_cast<int>(vs[0]);
+        u8 y = std::any_cast<int>(vs[1]);
+
+        builder << IScriptOpcodes::opc_imgulnextid << x << y;
+    };
+
+    // iscript_parser["OPC___3E"] = [&builder](const peg::SemanticValues& vs) {
+    //     builder << IScriptOpcodes::opc___3e;
+    // };
+
+    iscript_parser["OPC_LIFTOFFCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
+        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        builder << IScriptOpcodes::opc_liftoffcondjmp << u16(0); // TODO: handle label
+    };
+
+    iscript_parser["OPC_WARPOVERLAY"] = [&builder](const peg::SemanticValues& vs) {
+        u16 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_warpoverlay << arg;
+    };
+
+    iscript_parser["OPC_ORDERDONE"] = [&builder](const peg::SemanticValues& vs) {
+        u8 arg = std::any_cast<int>(vs[0]);
+
+        builder << IScriptOpcodes::opc_orderdone << arg;
+    };
+
+    iscript_parser["OPC_GRDSPROL"] = [&builder](const peg::SemanticValues& vs) {
+        u16 sprite_id = std::any_cast<int>(vs[0]);
+        u8 x = std::any_cast<int>(vs[1]);
+        u8 y = std::any_cast<int>(vs[2]);
+
+        builder << IScriptOpcodes::opc_grdsprol << sprite_id << x << y;
+    };
+
+    // iscript_parser["OPC___43"] = [&builder](const peg::SemanticValues& vs) {
+    //     builder << IScriptOpcodes::opc___43;
+    // };
+
+    iscript_parser["OPC_DOGRDDAMAGE"] = [&builder](const peg::SemanticValues& vs) {
+        builder << IScriptOpcodes::opc_dogrddamage;
+    };
 
     int size = 0;
     const char* iscript_txt = (const char*)fastFileRead_(&size, 0, "scripts\\iscript.txt", 0, 0, __FILE__, __LINE__);
