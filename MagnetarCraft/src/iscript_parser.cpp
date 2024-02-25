@@ -1,8 +1,27 @@
 #include <peglib.h>
+#include <array>
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 #include "starcraft.h"
+
+struct AnimationHeader
+{
+    AnimationHeader()
+    {
+        is_id = 0;
+        type = 0;
+        for (int i = 0; i < Anims::AE_COUNT; i++)
+        {
+            animations[i] = std::string_view();
+        }
+    }
+
+    unsigned __int16 is_id;
+    unsigned __int16 type;
+    std::array<std::string_view, Anims::AE_COUNT> animations;
+};
 
 class IScriptBuilder
 {
@@ -31,15 +50,25 @@ public:
         label_offsets[label] = offset;
     }
 
+    void append_header()
+    {
+        headers.emplace_back();
+    }
+
+    AnimationHeader& get_last_header()
+    {
+        return headers.back();
+    }
 private:
     std::basic_string<std::byte> bytes;
     std::unordered_map<std::string, intptr_t> label_offsets;
+    std::vector<AnimationHeader> headers;
 };
 
 bool parse_iscript_txt()
 {
     peg::parser iscript_parser(R"(
-        ROOT <- (_ (NL / COMMENT NL / HEADER / LABEL / OP _ COMMENT? NL))* EOF
+        ROOT <- (_ (NL / &'#' COMMENT NL / &'.' HEADER / LABEL / OP _ COMMENT? NL))* EOF
 
         HEADER   <- '.headerstart' _ NL _ (!'.' HEADER_LINE? _ NL _)* '.headerend' _ NL
         ~COMMENT <- '#' [^\r\n]*
@@ -145,7 +174,7 @@ bool parse_iscript_txt()
               { error_message "Unrecognized instruction" }
 
         ID       <- [_a-zA-Z][_a-zA-Z0-9]*
-        ID_MAYBE <- ID / '[none]'i
+        ID_MAYBE <- '[none]'i / ID
         DEC      <- [1-9][0-9]* / '0'
         HEX      <- '0x' [0-9a-fA-F]+
         INT      <- HEX / DEC
@@ -158,10 +187,12 @@ bool parse_iscript_txt()
 
     IScriptBuilder builder;
 
-    // TODO: handle headers
-
     iscript_parser["ID"] = [](const peg::SemanticValues& vs) {
         return vs.token();
+    };
+
+    iscript_parser["ID_MAYBE"] = [](const peg::SemanticValues& vs) {
+        return vs.choice() == 0 ? std::string_view() : vs.token();
     };
 
     iscript_parser["DEC"] = [](const peg::SemanticValues& vs) {
@@ -178,6 +209,33 @@ bool parse_iscript_txt()
             result = 0x10 * result + (digit >= 'a' ? digit - 'a' + 10 : digit >= 'A' ? digit - 'A' + 10 : digit - '0');
         }
         return result;
+    };
+
+    iscript_parser["HEADER"].enter = [&builder](const peg::Context& context, const char* s, size_t n, std::any& dt) {
+        builder.append_header();
+    };
+
+    iscript_parser["ANIMATION"] = [&builder](const peg::SemanticValues& vs) {
+        return (Anims) vs.choice();
+    };
+
+    iscript_parser["HEADER_IS_ID"] = [&builder](const peg::SemanticValues& vs) {
+        auto arg = std::any_cast<int>(vs[0]);
+
+        builder.get_last_header().is_id = arg;
+    };
+
+    iscript_parser["HEADER_TYPE"] = [&builder](const peg::SemanticValues& vs) {
+        auto arg = std::any_cast<int>(vs[0]);
+
+        builder.get_last_header().type = arg;
+    };
+
+    iscript_parser["HEADER_ANIMATION"] = [&builder](const peg::SemanticValues& vs) {
+        auto animation = std::any_cast<Anims>(vs[0]);
+        auto label = std::any_cast<std::string_view>(vs[1]);
+
+        builder.get_last_header().animations[animation] = label; // TODO: handle labels
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
