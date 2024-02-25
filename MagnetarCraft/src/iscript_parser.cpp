@@ -46,47 +46,17 @@ bool parse_iscript_txt()
         LABEL    <- <ID> _ ':' _ NL?
 
         # header rules:
-        HEADER_IS_ID            <- 'IsId' __ INT               { no_ast_opt }
-        HEADER_TYPE             <- 'Type' __ INT               { no_ast_opt }
-        HEADER_INIT             <- 'Init' __ ID_MAYBE          { no_ast_opt }
-        HEADER_DEATH            <- 'Death' __ ID_MAYBE         { no_ast_opt }
-        HEADER_GND_ATTK_INIT    <- 'GndAttkInit' __ ID_MAYBE   { no_ast_opt }
-        HEADER_AIR_ATTK_INIT    <- 'AirAttkInit' __ ID_MAYBE   { no_ast_opt }
-        HEADER_UNUSED1          <- 'Unused1' __ ID_MAYBE       { no_ast_opt }
-        HEADER_GND_ATTK_RPT     <- 'GndAttkRpt' __ ID_MAYBE    { no_ast_opt }
-        HEADER_AIR_ATTK_RPT     <- 'AirAttkRpt' __ ID_MAYBE    { no_ast_opt }
-        HEADER_CAST_SPELL       <- 'CastSpell' __ ID_MAYBE     { no_ast_opt }
-        HEADER_GND_ATTK_TO_IDLE <- 'GndAttkToIdle' __ ID_MAYBE { no_ast_opt }
-        HEADER_AIR_ATTK_TO_IDLE <- 'AirAttkToIdle' __ ID_MAYBE { no_ast_opt }
-        HEADER_UNUSED2          <- 'Unused2' __ ID_MAYBE       { no_ast_opt }
-        HEADER_WALKING          <- 'Walking' __ ID_MAYBE       { no_ast_opt }
-        HEADER_WALKING_TO_IDLE  <- 'WalkingToIdle' __ ID_MAYBE { no_ast_opt }
-        HEADER_SPECIAL_STATE1   <- 'SpecialState1' __ ID_MAYBE { no_ast_opt }
-        HEADER_SPECIAL_STATE2   <- 'SpecialState2' __ ID_MAYBE { no_ast_opt }
-        HEADER_ALMOST_BUILT     <- 'AlmostBuilt' __ ID_MAYBE   { no_ast_opt }
-        HEADER_BUILT            <- 'Built' __ ID_MAYBE         { no_ast_opt }
-        HEADER_LANDING          <- 'Landing' __ ID_MAYBE       { no_ast_opt }
-        HEADER_LIFTOFF          <- 'LiftOff' __ ID_MAYBE       { no_ast_opt }
-        HEADER_IS_WORKING       <- 'IsWorking' __ ID_MAYBE     { no_ast_opt }
-        HEADER_WORKING_TO_IDLE  <- 'WorkingToIdle' __ ID_MAYBE { no_ast_opt }
-        HEADER_WARP_IN          <- 'WarpIn' __ ID_MAYBE        { no_ast_opt }
-        HEADER_UNUSED3          <- 'Unused3' __ ID_MAYBE       { no_ast_opt }
-        HEADER_START_EDIT_INIT  <- 'StarEditInit' __ ID_MAYBE  { no_ast_opt }
-        HEADER_DISABLE          <- 'Disable' __ ID_MAYBE       { no_ast_opt }
-        HEADER_BURROW           <- 'Burrow' __ ID_MAYBE        { no_ast_opt }
-        HEADER_UNBURROW         <- 'UnBurrow' __ ID_MAYBE      { no_ast_opt }
-        HEADER_ENABLE           <- 'Enable' __ ID_MAYBE        { no_ast_opt }
-        HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_INIT / HEADER_DEATH /
-                       HEADER_GND_ATTK_INIT / HEADER_AIR_ATTK_INIT / HEADER_UNUSED1 /
-                       HEADER_GND_ATTK_RPT / HEADER_AIR_ATTK_RPT / HEADER_CAST_SPELL /
-                       HEADER_GND_ATTK_TO_IDLE / HEADER_AIR_ATTK_TO_IDLE / HEADER_UNUSED2 /
-                       HEADER_WALKING / HEADER_WALKING_TO_IDLE /
-                       HEADER_SPECIAL_STATE1 / HEADER_SPECIAL_STATE2 /
-                       HEADER_ALMOST_BUILT / HEADER_BUILT /
-                       HEADER_LANDING / HEADER_LIFTOFF / HEADER_IS_WORKING / HEADER_WORKING_TO_IDLE /
-                       HEADER_WARP_IN / HEADER_UNUSED3 / HEADER_START_EDIT_INIT /
-                       HEADER_DISABLE / HEADER_BURROW / HEADER_UNBURROW / HEADER_ENABLE /
-                       { error_message "Unrecognized animation" }
+        HEADER_IS_ID     <- 'IsId' __ INT         { no_ast_opt }
+        HEADER_TYPE      <- 'Type' __ INT         { no_ast_opt }
+        HEADER_ANIMATION <- ANIMATION __ ID_MAYBE { no_ast_opt }
+
+        ANIMATION <- 'Init' / 'Death' / 'GndAttkInit' / 'AirAttkInit' / 'Unused1' / 'GndAttkRpt' /
+                     'AirAttkRpt' / 'CastSpell' / 'GndAttkToIdle' / 'AirAttkToIdle' / 'Unused2' /
+                     !'WalkingTo' 'Walking' / 'WalkingToIdle' / 'SpecialState1' / 'SpecialState2' /
+                     'AlmostBuilt' / 'Built' / 'Landing' / 'LiftOff' / 'IsWorking' / 'WorkingToIdle' /
+                     'WarpIn' / 'Unused3' / 'StarEditInit' / 'Disable' / 'Burrow' / 'UnBurrow' / 'Enable'
+
+        HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
 
         # opcode rules
         OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT           { no_ast_opt }
