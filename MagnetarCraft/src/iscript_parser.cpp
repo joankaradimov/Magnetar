@@ -35,7 +35,24 @@ public:
         return *this;
     }
 
-    int current_offset() const
+    IScriptBuilder& operator<<(std::string_view label)
+    {
+        if (label_offsets.find(label) != label_offsets.end())
+        {
+            auto label_offset = label_offsets[label];
+            return *this << label_offset;
+        }
+
+        if (label_backpatch_list.find(label) == label_backpatch_list.end())
+        {
+            label_backpatch_list[label] = std::vector<unsigned __int16>();
+        }
+        label_backpatch_list[label].push_back(current_offset());
+
+        return *this << (unsigned __int16) 0xDEAD;
+    }
+
+    unsigned __int16 current_offset() const
     {
         return bytes.size();
     }
@@ -45,9 +62,10 @@ public:
         return bytes;
     }
 
-    void set_label(const std::string& label, int offset)
+    void mark_label(const std::string_view& label)
     {
-        label_offsets[label] = offset;
+        label_offsets[label] = current_offset();
+        // TODO: backpatch here
     }
 
     void append_header()
@@ -61,7 +79,8 @@ public:
     }
 private:
     std::basic_string<std::byte> bytes;
-    std::unordered_map<std::string, intptr_t> label_offsets;
+    std::unordered_map<std::string_view, unsigned __int16> label_offsets;
+    std::unordered_map<std::string_view, std::vector<unsigned __int16>> label_backpatch_list;
     std::vector<AnimationHeader> headers;
 };
 
@@ -239,9 +258,9 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
-        std::string label_name = (std::string) std::any_cast<std::string_view>(vs[0]);
+        std::string_view label_name = std::any_cast<std::string_view>(vs[0]);
         int label_address = builder.current_offset();
-        builder.set_label(label_name, label_address);
+        builder.mark_label(label_name);
     };
 
     iscript_parser["OPC_PLAYFRAM"] = [&builder](const peg::SemanticValues& vs) {
@@ -291,7 +310,7 @@ bool parse_iscript_txt()
     iscript_parser["OPC_GOTO"] = [&builder](const peg::SemanticValues& vs) {
         std::string_view label = std::any_cast<std::string_view>(vs[0]);
 
-        builder << IScriptOpcodes::opc_goto << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_goto << label;
     };
 
     iscript_parser["OPC_IMGOL"] = [&builder](const peg::SemanticValues& vs) {
@@ -437,7 +456,7 @@ bool parse_iscript_txt()
         u16 arg = std::any_cast<int>(vs[0]);
         std::string_view label = std::any_cast<std::string_view>(vs[1]);
 
-        builder << IScriptOpcodes::opc_randcondjmp << arg << short(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_randcondjmp << arg << label;
     };
 
     iscript_parser["OPC_TURNCCWISE"] = [&builder](const peg::SemanticValues& vs) {
@@ -542,7 +561,7 @@ bool parse_iscript_txt()
 
     iscript_parser["OPC_CALL"] = [&builder](const peg::SemanticValues& vs) {
         std::string_view label = std::any_cast<std::string_view>(vs[0]);
-        builder << IScriptOpcodes::opc_call << u16(0); // TODO: fix label
+        builder << IScriptOpcodes::opc_call << label;
     };
 
     iscript_parser["OPC_RETURN"] = [&builder](const peg::SemanticValues& vs) {
@@ -561,27 +580,27 @@ bool parse_iscript_txt()
 
     iscript_parser["OPC_PWRUPCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         std::string_view label = std::any_cast<std::string_view>(vs[0]);
-        builder << IScriptOpcodes::opc_pwrupcondjmp << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_pwrupcondjmp << label;
     };
 
     iscript_parser["OPC_TRGTRANGECONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg = std::any_cast<int>(vs[0]);
         std::string_view label = std::any_cast<std::string_view>(vs[1]);
-        builder << IScriptOpcodes::opc_trgtrangecondjmp << arg << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_trgtrangecondjmp << arg << label;
     };
 
     iscript_parser["OPC_TRGTARCCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg1 = std::any_cast<int>(vs[0]);
         u16 arg2 = std::any_cast<int>(vs[1]);
         std::string_view label = std::any_cast<std::string_view>(vs[2]);
-        builder << IScriptOpcodes::opc_trgtarccondjmp << arg1 << arg2 << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_trgtarccondjmp << arg1 << arg2 << label;
     };
 
     iscript_parser["OPC_CURDIRECTCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg1 = std::any_cast<int>(vs[0]);
         u16 arg2 = std::any_cast<int>(vs[1]);
         std::string_view label = std::any_cast<std::string_view>(vs[2]);
-        builder << IScriptOpcodes::opc_curdirectcondjmp << arg1 << arg2 << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_curdirectcondjmp << arg1 << arg2 << label;
     };
 
     iscript_parser["OPC_IMGULNEXTID"] = [&builder](const peg::SemanticValues& vs) {
@@ -597,7 +616,7 @@ bool parse_iscript_txt()
 
     iscript_parser["OPC_LIFTOFFCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         std::string_view label = std::any_cast<std::string_view>(vs[0]);
-        builder << IScriptOpcodes::opc_liftoffcondjmp << u16(0); // TODO: handle label
+        builder << IScriptOpcodes::opc_liftoffcondjmp << label;
     };
 
     iscript_parser["OPC_WARPOVERLAY"] = [&builder](const peg::SemanticValues& vs) {
