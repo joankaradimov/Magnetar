@@ -64,8 +64,15 @@ public:
 
     void mark_label(const std::string_view& label)
     {
-        label_offsets[label] = current_offset();
-        // TODO: backpatch here
+        unsigned __int16 label_offset = current_offset();
+        label_offsets[label] = label_offset;
+
+        for (unsigned __int16 address : label_backpatch_list[label])
+        {
+            bytes[address + 0] = (std::byte)BYTEn(label_offset, 0);
+            bytes[address + 1] = (std::byte)BYTEn(label_offset, 1);
+        }
+        label_backpatch_list.erase(label);
     }
 
     void append_header()
