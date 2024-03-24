@@ -100,9 +100,9 @@ bool parse_iscript_txt()
         LABEL  <- <ID> _ ':' _ NL?
 
         # header rules:
-        HEADER_IS_ID     <- 'IsId' __ INT         { no_ast_opt }
-        HEADER_TYPE      <- 'Type' __ INT         { no_ast_opt }
-        HEADER_ANIMATION <- ANIMATION __ ID_MAYBE { no_ast_opt }
+        HEADER_IS_ID     <- 'IsId' __ INT
+        HEADER_TYPE      <- 'Type' __ INT
+        HEADER_ANIMATION <- ANIMATION __ ID_MAYBE
 
         ANIMATION <- 'Init' / 'Death' / 'GndAttkInit' / 'AirAttkInit' / 'Unused1' / 'GndAttkRpt' /
                      'AirAttkRpt' / 'CastSpell' / 'GndAttkToIdle' / 'AirAttkToIdle' / 'Unused2' /
@@ -113,70 +113,70 @@ bool parse_iscript_txt()
         HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
 
         # opcode rules
-        OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT           { no_ast_opt }
-        OPC_IMGULNEXTID       <- 'imgulnextid' __ INT __ INT            { no_ast_opt }
-        OPC_IMGULUSELO        <- 'imguluselo' __ INT __ INT __ INT      { no_ast_opt }
-        OPC_IMGOL             <- 'imgol' __ INT __ INT __ INT           { no_ast_opt }
-        OPC_IMGOLORIG         <- 'imgolorig' __ INT                     { no_ast_opt }
-        OPC_IMGOLUSELO        <- 'imgoluselo' __ INT __ INT __ INT      { no_ast_opt }
-        OPC_SPROL             <- 'sprol' __ INT __ INT __ INT           { no_ast_opt }
-        OPC_SPROLUSELO        <- 'sproluselo' __ INT __ INT             { no_ast_opt }
-        OPC_SPRUL             <- 'sprul' __ INT __ INT __ INT           { no_ast_opt }
-        OPC_SPRULUSELO        <- 'spruluselo' __ INT __ INT __ INT      { no_ast_opt }
-        OPC_GRDSPROL          <- 'grdsprol' __ INT __ INT __ INT        { no_ast_opt }
-        OPC_WARPOVERLAY       <- 'warpoverlay' __ INT                   { no_ast_opt }
-        OPC_SWITCHUL          <- 'switchul' __ INT                      { no_ast_opt }
-        OPC_WAITRAND          <- 'waitrand' __ INT __ INT               { no_ast_opt }
-        OPC_SETVERTPOS        <- 'setvertpos' __ INT                    { no_ast_opt }
-        OPC_GOTO              <- 'goto' __ ID                           { no_ast_opt }
-        OPC_WAIT              <- 'wait' __ INT                          { no_ast_opt }
-        OPC_PLAYFRAM          <- 'playfram' __ INT                      { no_ast_opt }
-        OPC_PLAYFRAMTILE      <- 'playframtile' __ INT                  { no_ast_opt }
-        OPC_ENGFRAME          <- 'engframe' __ INT                      { no_ast_opt }
-        OPC_PLAYSND           <- 'playsnd' __ INT                       { no_ast_opt }
-        OPC_END               <- 'end'                                  { no_ast_opt }
-        OPC_ATTACKWITH        <- 'attackwith' __ INT                    { no_ast_opt }
-        OPC_LOWSPRUL          <- 'lowsprul' __ INT __ INT __ INT        { no_ast_opt }
-        OPC_NOBRKCODESTART    <- 'nobrkcodestart'                       { no_ast_opt }
-        OPC_NOBRKCODEEND      <- 'nobrkcodeend'                         { no_ast_opt }
-        OPC_ATTACKMELEE       <- 'attackmelee' __ INT (__ INT)*         { no_ast_opt }
-        OPC_GOTOREPEATATTK    <- 'gotorepeatattk'                       { no_ast_opt }
-        OPC_CALL              <- 'call' __ ID                           { no_ast_opt }
-        OPC_RETURN            <- 'return'                               { no_ast_opt }
-        OPC_IGNOREREST        <- 'ignorerest'                           { no_ast_opt }
-        OPC_RANDCONDJMP       <- 'randcondjmp' __ INT __ ID             { no_ast_opt }
-        OPC_LIFTOFFCONDJMP    <- 'liftoffcondjmp' __ ID                 { no_ast_opt }
-        OPC_TRGTARCCONDJMP    <- 'trgtarccondjmp' __ INT __ INT __ ID   { no_ast_opt }
-        OPC_TRGTRANGECONDJMP  <- 'trgtrangecondjmp' __ INT __ ID        { no_ast_opt }
-        OPC_CURDIRECTCONDJMP  <- 'curdirectcondjmp' __ INT __ INT __ ID { no_ast_opt }
-        OPC_PWRUPCONDJMP      <- 'pwrupcondjmp' __ ID                   { no_ast_opt }
-        OPC_MOVE              <- 'move' __ INT                          { no_ast_opt }
-        OPC_SETFLDIRECT       <- 'setfldirect' __ INT                   { no_ast_opt }
-        OPC_SIGORDER          <- 'sigorder' __ INT                      { no_ast_opt }
-        OPC_ORDERDONE         <- 'orderdone' __ INT                     { no_ast_opt }
-        OPC_ATTACK            <- 'attack'                               { no_ast_opt }
-        OPC_ATTKSHIFTPROJ     <- 'attkshiftproj' __ INT                 { no_ast_opt }
-        OPC_CASTSPELL         <- 'castspell'                            { no_ast_opt }
-        OPC_USEWEAPON         <- 'useweapon' __ INT                     { no_ast_opt }
-        OPC_DOMISSILEDMG      <- 'domissiledmg'                         { no_ast_opt }
-        OPC_DOGRDDAMAGE       <- 'dogrddamage'                          { no_ast_opt }
-        OPC_FOLLOWMAINGRAPHIC <- 'followmaingraphic'                    { no_ast_opt }
-        OPC_TURN1CWISE        <- 'turn1cwise'                           { no_ast_opt }
-        OPC_TURNCWISE         <- 'turncwise' __ INT                     { no_ast_opt }
-        OPC_TURNCCWISE        <- 'turnccwise' __ INT                    { no_ast_opt }
-        OPC_TURNRAND          <- 'turnrand' __ INT                      { no_ast_opt }
-        OPC_SETFLSPEED        <- 'setflspeed' __ INT                    { no_ast_opt }
-        OPC_TMPRMGRAPHICSTART <- 'tmprmgraphicstart'                    { no_ast_opt }
-        OPC_TMPRMGRAPHICEND   <- 'tmprmgraphicend'                      { no_ast_opt }
-        OPC_PLAYSNDBTWN       <- 'playsndbtwn' __ INT __ INT            { no_ast_opt }
-        OPC_PLAYSNDRAND       <- 'playsndrand' __ INT (__ INT)+         { no_ast_opt }
-        OPC_CREATEGASOVERLAYS <- 'creategasoverlays' __ INT             { no_ast_opt }
-        OPC_ENGSET            <- 'engset' __ INT                        { no_ast_opt }
-        OPC_SETFILPSTATE      <- 'setflipstate' __ INT                  { no_ast_opt }
-        OPC_SETPOS            <- 'setpos' __ INT __ INT                 { no_ast_opt }
-        OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT                 { no_ast_opt }
-        OPC_SETHORPOS         <- 'sethorpos' __ INT                     { no_ast_opt }
-        OPC___2D              <- '__2d'                                 { no_ast_opt }
+        OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
+        OPC_IMGULNEXTID       <- 'imgulnextid' __ INT __ INT
+        OPC_IMGULUSELO        <- 'imguluselo' __ INT __ INT __ INT
+        OPC_IMGOL             <- 'imgol' __ INT __ INT __ INT
+        OPC_IMGOLORIG         <- 'imgolorig' __ INT
+        OPC_IMGOLUSELO        <- 'imgoluselo' __ INT __ INT __ INT
+        OPC_SPROL             <- 'sprol' __ INT __ INT __ INT
+        OPC_SPROLUSELO        <- 'sproluselo' __ INT __ INT
+        OPC_SPRUL             <- 'sprul' __ INT __ INT __ INT
+        OPC_SPRULUSELO        <- 'spruluselo' __ INT __ INT __ INT
+        OPC_GRDSPROL          <- 'grdsprol' __ INT __ INT __ INT
+        OPC_WARPOVERLAY       <- 'warpoverlay' __ INT
+        OPC_SWITCHUL          <- 'switchul' __ INT
+        OPC_WAITRAND          <- 'waitrand' __ INT __ INT
+        OPC_SETVERTPOS        <- 'setvertpos' __ INT
+        OPC_GOTO              <- 'goto' __ ID
+        OPC_WAIT              <- 'wait' __ INT
+        OPC_PLAYFRAM          <- 'playfram' __ INT
+        OPC_PLAYFRAMTILE      <- 'playframtile' __ INT
+        OPC_ENGFRAME          <- 'engframe' __ INT
+        OPC_PLAYSND           <- 'playsnd' __ INT
+        OPC_END               <- 'end'
+        OPC_ATTACKWITH        <- 'attackwith' __ INT
+        OPC_LOWSPRUL          <- 'lowsprul' __ INT __ INT __ INT
+        OPC_NOBRKCODESTART    <- 'nobrkcodestart'
+        OPC_NOBRKCODEEND      <- 'nobrkcodeend'
+        OPC_ATTACKMELEE       <- 'attackmelee' __ INT (__ INT)*
+        OPC_GOTOREPEATATTK    <- 'gotorepeatattk'
+        OPC_CALL              <- 'call' __ ID
+        OPC_RETURN            <- 'return'
+        OPC_IGNOREREST        <- 'ignorerest'
+        OPC_RANDCONDJMP       <- 'randcondjmp' __ INT __ ID
+        OPC_LIFTOFFCONDJMP    <- 'liftoffcondjmp' __ ID
+        OPC_TRGTARCCONDJMP    <- 'trgtarccondjmp' __ INT __ INT __ ID
+        OPC_TRGTRANGECONDJMP  <- 'trgtrangecondjmp' __ INT __ ID
+        OPC_CURDIRECTCONDJMP  <- 'curdirectcondjmp' __ INT __ INT __ ID
+        OPC_PWRUPCONDJMP      <- 'pwrupcondjmp' __ ID
+        OPC_MOVE              <- 'move' __ INT
+        OPC_SETFLDIRECT       <- 'setfldirect' __ INT
+        OPC_SIGORDER          <- 'sigorder' __ INT
+        OPC_ORDERDONE         <- 'orderdone' __ INT
+        OPC_ATTACK            <- 'attack'
+        OPC_ATTKSHIFTPROJ     <- 'attkshiftproj' __ INT
+        OPC_CASTSPELL         <- 'castspell'
+        OPC_USEWEAPON         <- 'useweapon' __ INT
+        OPC_DOMISSILEDMG      <- 'domissiledmg'
+        OPC_DOGRDDAMAGE       <- 'dogrddamage'
+        OPC_FOLLOWMAINGRAPHIC <- 'followmaingraphic'
+        OPC_TURN1CWISE        <- 'turn1cwise'
+        OPC_TURNCWISE         <- 'turncwise' __ INT
+        OPC_TURNCCWISE        <- 'turnccwise' __ INT
+        OPC_TURNRAND          <- 'turnrand' __ INT
+        OPC_SETFLSPEED        <- 'setflspeed' __ INT
+        OPC_TMPRMGRAPHICSTART <- 'tmprmgraphicstart'
+        OPC_TMPRMGRAPHICEND   <- 'tmprmgraphicend'
+        OPC_PLAYSNDBTWN       <- 'playsndbtwn' __ INT __ INT
+        OPC_PLAYSNDRAND       <- 'playsndrand' __ INT (__ INT)*
+        OPC_CREATEGASOVERLAYS <- 'creategasoverlays' __ INT
+        OPC_ENGSET            <- 'engset' __ INT
+        OPC_SETFILPSTATE      <- 'setflipstate' __ INT
+        OPC_SETPOS            <- 'setpos' __ INT __ INT
+        OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT
+        OPC_SETHORPOS         <- 'sethorpos' __ INT
+        OPC___2D              <- '__2d'
         OP <- OPC_WAIT / OPC_PLAYFRAM / OPC_GOTO / OPC_END / OPC_MOVE / OPC_PLAYFRAMTILE /
               OPC_IMGUL / OPC_IMGULNEXTID / OPC_IMGULUSELO /
               OPC_IMGOL / OPC_IMGOLUSELO / OPC_IMGOLORIG /
