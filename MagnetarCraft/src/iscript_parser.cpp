@@ -94,11 +94,10 @@ private:
 bool parse_iscript_txt()
 {
     peg::parser iscript_parser(R"(
-        ROOT <- (_ (NL / &'#' COMMENT NL / &'.' HEADER / LABEL / OP _ COMMENT? NL))* EOF
+        ROOT <- (_ (EOL / &'.' HEADER / LABEL / OP _ EOL))* EOF
 
-        HEADER   <- '.headerstart' _ NL _ (!'.' HEADER_LINE? _ NL _)* '.headerend' _ NL
-        ~COMMENT <- '#' [^\r\n]*
-        LABEL    <- <ID> _ ':' _ NL?
+        HEADER <- '.headerstart' _ EOL _ (!'.' HEADER_LINE? _ EOL _)* '.headerend' _ EOL
+        LABEL  <- <ID> _ ':' _ NL?
 
         # header rules:
         HEADER_IS_ID     <- 'IsId' __ INT         { no_ast_opt }
@@ -205,10 +204,12 @@ bool parse_iscript_txt()
         HEX      <- '0x' [0-9a-fA-F]+
         INT      <- HEX / DEC
 
-        ~EOF <- !.
-        ~NL  <- ('\n' | '\r\n' | '\r')
-        ~_   <- [ \t]* # Optional whitespace
-        ~__  <- [ \t]+ # Mandatory whitespace
+        ~EOF     <- !.
+        ~EOL     <- &'#' COMMENT NL / NL
+        ~COMMENT <- '#' [^\r\n]*
+        ~NL      <- ('\n' | '\r\n' | '\r')
+        ~_       <- [ \t]* # Optional whitespace
+        ~__      <- [ \t]+ # Mandatory whitespace
     )");
 
     IScriptBuilder builder;
