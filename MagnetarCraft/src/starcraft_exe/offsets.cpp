@@ -5305,9 +5305,9 @@ s32 * unkUnitRelManyFinderEx(__int16 a1, int a2, int a3) {
     return result_;
 }
 DECL_FUNC(CUnit ** (__stdcall*FindAllUnits)(Box16 *box), FindAllUnits, 0x4308a0);
-int findAllUnitsInBoundsUsing(int a1, int (__fastcall *a2)(_DWORD, _DWORD), int a3) {
+CUnit ** findAllUnitsInBoundsUsing(rect *a1, int (__fastcall *a2)(_DWORD, _DWORD), int a3) {
     int address = 0x430b00;
-    int result_;
+    CUnit ** result_;
     __asm {
         xor eax, eax
         push dword ptr a3
@@ -34137,7 +34137,7 @@ int& dword_59CC90 = * ((decltype(&dword_59CC90)) 0x59cc90);
 int& dword_59CC94 = * ((decltype(&dword_59CC94)) 0x59cc94);
 CUnit *& dword_59CC98 = * ((decltype(&dword_59CC98)) 0x59cc98);
 CUnit *& UnitNodeList_VisibleUnit_Last = * ((decltype(&UnitNodeList_VisibleUnit_Last)) 0x59cc9c);
-int(&error_message)[1] = * ((decltype(&error_message)) 0x59cca0);
+WORD& error_message = * ((decltype(&error_message)) 0x59cca0);
 int& dword_59CCA4 = * ((decltype(&dword_59CCA4)) 0x59cca4);
 CUnit(&UnitNodeTable)[1700] = * ((decltype(&UnitNodeTable)) 0x59cca8);
 int& dword_6283E8 = * ((decltype(&dword_6283E8)) 0x6283e8);

@@ -6255,7 +6255,7 @@ void resetOrdersUnitsDAT_()
 	UnitOrderingCount[0] = 0;
 	memset(UnitOrderingY, 0xFFu, sizeof(UnitOrderingY));
 	resetUnitBoundsLists_GetMaxUnitTypeSize();
-	LOWORD(error_message[0]) = 0;
+	error_message = 0;
 }
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
