@@ -57,6 +57,6 @@ FetchContent_MakeAvailable(googletest)
 FetchContent_Declare(
   cpp-peglib
   GIT_REPOSITORY https://github.com/yhirose/cpp-peglib.git
-  GIT_TAG v1.8.6
+  GIT_TAG v1.8.5
 )
 FetchContent_MakeAvailable(cpp-peglib)
