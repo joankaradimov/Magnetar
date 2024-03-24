@@ -1,6 +1,7 @@
 #include <peglib.h>
 #include <array>
 #include <unordered_map>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
@@ -11,11 +12,23 @@ struct AnimationHeader
     AnimationHeader()
     {
         is_id = 0;
-        type = 0;
+        type = Anims::AE_COUNT - 2;
         for (int i = 0; i < Anims::AE_COUNT; i++)
         {
             animations[i] = std::string_view();
         }
+    }
+
+    int infer_type() const
+    {
+        for (int i = Anims::AE_COUNT - 1; i > 0; i--)
+        {
+            if (!animations[i].empty())
+            {
+                return i - 1;
+            }
+        }
+        return 0;
     }
 
     unsigned __int16 is_id;
@@ -60,6 +73,46 @@ public:
     const std::basic_string<std::byte>& iscript_bin() const
     {
         return bytes;
+    }
+
+    const std::vector<unsigned __int16> build_headers() const
+    {
+        std::vector<unsigned __int16> result;
+
+        for (const auto& header : headers)
+        {
+            int inferred_type = header.infer_type();
+
+            if (inferred_type > header.type)
+            {
+                // TODO: report line
+                std::string error_messge = "IScript error: labels defined outside the type limitations";
+                error_messge += " (IsId: " + std::to_string(header.is_id) + ')';
+                throw std::runtime_error(error_messge);
+            }
+
+            result.push_back(header.is_id);
+            for (int i = 0; i < inferred_type + 2; i++)
+            {
+                std::string_view label = header.animations[i];
+                if (label.empty())
+                {
+                    result.push_back(0);
+                }
+                else if (label_offsets.find(label) == label_offsets.end())
+                {
+                    // TODO: report line
+                    std::string error_messge = "IScript error: label '" + std::string(label) + "' not found";
+                    throw std::runtime_error(error_messge);
+                }
+                else
+                {
+                    result.push_back(label_offsets.at(label));
+                }
+            }
+        }
+
+        return result;
     }
 
     void mark_label(const std::string_view& label)
@@ -262,7 +315,7 @@ bool parse_iscript_txt()
         auto animation = std::any_cast<Anims>(vs[0]);
         auto label = std::any_cast<std::string_view>(vs[1]);
 
-        builder.get_last_header().animations[animation] = label; // TODO: handle labels
+        builder.get_last_header().animations[animation] = label;
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
