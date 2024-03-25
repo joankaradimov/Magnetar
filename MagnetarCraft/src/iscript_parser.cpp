@@ -94,11 +94,6 @@ public:
         return *this << (unsigned __int16) 0xDEAD;
     }
 
-    unsigned __int16 current_offset() const
-    {
-        return bytes.size();
-    }
-
     const std::basic_string<std::byte>& iscript_bin() const
     {
         for (const auto& label_backpatches : label_backpatch_list)
@@ -183,7 +178,13 @@ public:
     {
         return headers.back();
     }
+
 private:
+    unsigned __int16 current_offset() const
+    {
+        return bytes.size();
+    }
+
     std::basic_string<std::byte> bytes;
     std::unordered_map<std::string_view, unsigned __int16> label_offsets;
     std::unordered_map<std::string_view, std::vector<std::pair<unsigned __int16, LabelReference>>> label_backpatch_list;
@@ -366,7 +367,6 @@ bool parse_iscript_txt()
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
         auto label = std::any_cast<LabelReference>(vs[0]);
-        int label_address = builder.current_offset();
         builder.mark_label(label);
     };
 
