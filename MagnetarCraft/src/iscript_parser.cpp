@@ -7,15 +7,41 @@
 
 #include "starcraft.h"
 
+struct LabelReference
+{
+    LabelReference() : LabelReference(std::string_view(), std::pair(0, 0))
+    {
+    }
+
+    LabelReference(std::string_view name, std::pair<size_t, size_t> line_info):
+        name(name), line(line_info.first), column(line_info.second)
+    {
+    }
+
+    const LabelReference& operator=(const LabelReference& other)
+    {
+        name = other.name;
+        line = other.line;
+        column = other.column;
+
+        return *this;
+    }
+
+    size_t line;
+    size_t column;
+    std::string_view name;
+};
+
 struct AnimationHeader
 {
-    AnimationHeader()
+    AnimationHeader(std::pair<size_t, size_t> line_info) :
+        line(line_info.first), column(line_info.second)
     {
         is_id = 0;
         type = Anims::AE_COUNT - 2;
         for (int i = 0; i < Anims::AE_COUNT; i++)
         {
-            animations[i] = std::string_view();
+            animations[i] = LabelReference();
         }
     }
 
@@ -23,7 +49,7 @@ struct AnimationHeader
     {
         for (int i = Anims::AE_COUNT - 1; i > 0; i--)
         {
-            if (!animations[i].empty())
+            if (!animations[i].name.empty())
             {
                 return i - 1;
             }
@@ -31,9 +57,12 @@ struct AnimationHeader
         return 0;
     }
 
+    size_t line;
+    size_t column;
     unsigned __int16 is_id;
     unsigned __int16 type;
-    std::array<std::string_view, Anims::AE_COUNT> animations;
+    std::array<LabelReference, Anims::AE_COUNT> animations;
+
 };
 
 class IScriptBuilder
@@ -48,19 +77,19 @@ public:
         return *this;
     }
 
-    IScriptBuilder& operator<<(std::string_view label)
+    IScriptBuilder& operator<<(LabelReference label)
     {
-        if (label_offsets.find(label) != label_offsets.end())
+        if (label_offsets.find(label.name) != label_offsets.end())
         {
-            auto label_offset = label_offsets[label];
+            auto label_offset = label_offsets[label.name];
             return *this << label_offset;
         }
 
-        if (label_backpatch_list.find(label) == label_backpatch_list.end())
+        if (label_backpatch_list.find(label.name) == label_backpatch_list.end())
         {
-            label_backpatch_list[label] = std::vector<unsigned __int16>();
+            label_backpatch_list[label.name] = std::vector<std::pair<unsigned __int16, LabelReference>>();
         }
-        label_backpatch_list[label].push_back(current_offset());
+        label_backpatch_list[label.name].push_back(std::pair(current_offset(), label));
 
         return *this << (unsigned __int16) 0xDEAD;
     }
@@ -72,6 +101,19 @@ public:
 
     const std::basic_string<std::byte>& iscript_bin() const
     {
+        for (const auto& label_backpatches : label_backpatch_list)
+        {
+            for (const auto& backpatch_item : label_backpatches.second)
+            {
+                const auto& label = backpatch_item.second;
+
+                std::string error_messge = "IScript error: label '" + std::string(label.name) + "' not found\n";
+                error_messge += "\nline: " + std::to_string(label.line);
+                error_messge += "\ncolumn: " + std::to_string(label.column);
+                throw std::runtime_error(error_messge);
+            }
+        }
+
         return bytes;
     }
 
@@ -85,29 +127,32 @@ public:
 
             if (inferred_type > header.type)
             {
-                // TODO: report line
-                std::string error_messge = "IScript error: labels defined outside the type limitations";
-                error_messge += " (IsId: " + std::to_string(header.is_id) + ')';
+                std::string error_messge = "IScript error: labels defined outside the type limitations\n";
+                error_messge += "\nIsId: " + std::to_string(header.is_id);
+                error_messge += "\nline: " + std::to_string(header.line);
+                error_messge += "\ncolumn: " + std::to_string(header.column);
                 throw std::runtime_error(error_messge);
             }
 
             result.push_back(header.is_id);
             for (int i = 0; i < inferred_type + 2; i++)
             {
-                std::string_view label = header.animations[i];
-                if (label.empty())
+                LabelReference label = header.animations[i];
+                if (label.name.empty())
                 {
                     result.push_back(0);
                 }
-                else if (label_offsets.find(label) == label_offsets.end())
+                else if (label_offsets.find(label.name) == label_offsets.end())
                 {
-                    // TODO: report line
-                    std::string error_messge = "IScript error: label '" + std::string(label) + "' not found";
+                    std::string error_messge = "IScript error: label '" + std::string(label.name) + "' not found\n";
+                    error_messge += "\nIsId: " + std::to_string(header.is_id);
+                    error_messge += "\nline: " + std::to_string(label.line);
+                    error_messge += "\ncolumn: " + std::to_string(label.column);
                     throw std::runtime_error(error_messge);
                 }
                 else
                 {
-                    result.push_back(label_offsets.at(label));
+                    result.push_back(label_offsets.at(label.name));
                 }
             }
         }
@@ -115,22 +160,23 @@ public:
         return result;
     }
 
-    void mark_label(const std::string_view& label)
+    void mark_label(const LabelReference& label)
     {
         unsigned __int16 label_offset = current_offset();
-        label_offsets[label] = label_offset;
+        label_offsets[label.name] = label_offset;
 
-        for (unsigned __int16 address : label_backpatch_list[label])
+        for (const auto& item: label_backpatch_list[label.name])
         {
+            unsigned __int16 address = item.first;
             bytes[address + 0] = (std::byte)BYTEn(label_offset, 0);
             bytes[address + 1] = (std::byte)BYTEn(label_offset, 1);
         }
-        label_backpatch_list.erase(label);
+        label_backpatch_list.erase(label.name);
     }
 
-    void append_header()
+    void append_header(std::pair<size_t, size_t> line_info)
     {
-        headers.emplace_back();
+        headers.emplace_back(line_info);
     }
 
     AnimationHeader& get_last_header()
@@ -140,7 +186,7 @@ public:
 private:
     std::basic_string<std::byte> bytes;
     std::unordered_map<std::string_view, unsigned __int16> label_offsets;
-    std::unordered_map<std::string_view, std::vector<unsigned __int16>> label_backpatch_list;
+    std::unordered_map<std::string_view, std::vector<std::pair<unsigned __int16, LabelReference>>> label_backpatch_list;
     std::vector<AnimationHeader> headers;
 };
 
@@ -268,11 +314,11 @@ bool parse_iscript_txt()
     IScriptBuilder builder;
 
     iscript_parser["ID"] = [](const peg::SemanticValues& vs) {
-        return vs.token();
+        return LabelReference(vs.token(), vs.line_info());
     };
 
     iscript_parser["ID_MAYBE"] = [](const peg::SemanticValues& vs) {
-        return vs.choice() == 0 ? std::string_view() : vs.token();
+        return LabelReference(vs.choice() == 0 ? std::string_view() : vs.token(), vs.line_info());
     };
 
     iscript_parser["DEC"] = [](const peg::SemanticValues& vs) {
@@ -292,7 +338,7 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["HEADER"].enter = [&builder](const peg::Context& context, const char* s, size_t n, std::any& dt) {
-        builder.append_header();
+        builder.append_header(context.line_info(s));
     };
 
     iscript_parser["ANIMATION"] = [&builder](const peg::SemanticValues& vs) {
@@ -313,15 +359,15 @@ bool parse_iscript_txt()
 
     iscript_parser["HEADER_ANIMATION"] = [&builder](const peg::SemanticValues& vs) {
         auto animation = std::any_cast<Anims>(vs[0]);
-        auto label = std::any_cast<std::string_view>(vs[1]);
+        auto label = std::any_cast<LabelReference>(vs[1]);
 
         builder.get_last_header().animations[animation] = label;
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
-        std::string_view label_name = std::any_cast<std::string_view>(vs[0]);
+        auto label = std::any_cast<LabelReference>(vs[0]);
         int label_address = builder.current_offset();
-        builder.mark_label(label_name);
+        builder.mark_label(label);
     };
 
     iscript_parser["OPC_PLAYFRAM"] = [&builder](const peg::SemanticValues& vs) {
@@ -369,7 +415,7 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_GOTO"] = [&builder](const peg::SemanticValues& vs) {
-        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        auto label = std::any_cast<LabelReference>(vs[0]);
 
         builder << IScriptOpcodes::opc_goto << label;
     };
@@ -515,7 +561,7 @@ bool parse_iscript_txt()
 
     iscript_parser["OPC_RANDCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg = std::any_cast<int>(vs[0]);
-        std::string_view label = std::any_cast<std::string_view>(vs[1]);
+        auto label = std::any_cast<LabelReference>(vs[1]);
 
         builder << IScriptOpcodes::opc_randcondjmp << arg << label;
     };
@@ -621,7 +667,7 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_CALL"] = [&builder](const peg::SemanticValues& vs) {
-        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        auto label = std::any_cast<LabelReference>(vs[0]);
         builder << IScriptOpcodes::opc_call << label;
     };
 
@@ -640,27 +686,27 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_PWRUPCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
-        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        auto label = std::any_cast<LabelReference>(vs[0]);
         builder << IScriptOpcodes::opc_pwrupcondjmp << label;
     };
 
     iscript_parser["OPC_TRGTRANGECONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg = std::any_cast<int>(vs[0]);
-        std::string_view label = std::any_cast<std::string_view>(vs[1]);
+        auto label = std::any_cast<LabelReference>(vs[1]);
         builder << IScriptOpcodes::opc_trgtrangecondjmp << arg << label;
     };
 
     iscript_parser["OPC_TRGTARCCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg1 = std::any_cast<int>(vs[0]);
         u16 arg2 = std::any_cast<int>(vs[1]);
-        std::string_view label = std::any_cast<std::string_view>(vs[2]);
+        auto label = std::any_cast<LabelReference>(vs[2]);
         builder << IScriptOpcodes::opc_trgtarccondjmp << arg1 << arg2 << label;
     };
 
     iscript_parser["OPC_CURDIRECTCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
         u16 arg1 = std::any_cast<int>(vs[0]);
         u16 arg2 = std::any_cast<int>(vs[1]);
-        std::string_view label = std::any_cast<std::string_view>(vs[2]);
+        auto label = std::any_cast<LabelReference>(vs[2]);
         builder << IScriptOpcodes::opc_curdirectcondjmp << arg1 << arg2 << label;
     };
 
@@ -676,7 +722,7 @@ bool parse_iscript_txt()
     // };
 
     iscript_parser["OPC_LIFTOFFCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
-        std::string_view label = std::any_cast<std::string_view>(vs[0]);
+        auto label = std::any_cast<LabelReference>(vs[0]);
         builder << IScriptOpcodes::opc_liftoffcondjmp << label;
     };
 
