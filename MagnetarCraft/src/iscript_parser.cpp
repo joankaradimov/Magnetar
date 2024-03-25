@@ -174,9 +174,19 @@ public:
         headers.emplace_back(line_info);
     }
 
-    AnimationHeader& get_last_header()
+    void set_current_is_id(int is_id)
     {
-        return headers.back();
+        current_header().is_id = is_id;
+    }
+
+    void set_current_type(int type)
+    {
+        current_header().type = type;
+    }
+
+    void set_animation_label(Anims animation, LabelReference label)
+    {
+        current_header().animations[animation] = label;
     }
 
 private:
@@ -185,10 +195,16 @@ private:
         return bytes.size();
     }
 
+    AnimationHeader& current_header()
+    {
+        return headers.back();
+    }
+
     std::basic_string<std::byte> bytes;
     std::unordered_map<std::string_view, unsigned __int16> label_offsets;
     std::unordered_map<std::string_view, std::vector<std::pair<unsigned __int16, LabelReference>>> label_backpatch_list;
     std::vector<AnimationHeader> headers;
+    int max_is_id;
 };
 
 bool parse_iscript_txt()
@@ -349,20 +365,20 @@ bool parse_iscript_txt()
     iscript_parser["HEADER_IS_ID"] = [&builder](const peg::SemanticValues& vs) {
         auto arg = std::any_cast<int>(vs[0]);
 
-        builder.get_last_header().is_id = arg;
+        builder.set_current_is_id(arg);
     };
 
     iscript_parser["HEADER_TYPE"] = [&builder](const peg::SemanticValues& vs) {
         auto arg = std::any_cast<int>(vs[0]);
 
-        builder.get_last_header().type = arg;
+        builder.set_current_type(arg);
     };
 
     iscript_parser["HEADER_ANIMATION"] = [&builder](const peg::SemanticValues& vs) {
         auto animation = std::any_cast<Anims>(vs[0]);
         auto label = std::any_cast<LabelReference>(vs[1]);
 
-        builder.get_last_header().animations[animation] = label;
+        builder.set_animation_label(animation, label);
     };
 
     iscript_parser["LABEL"] = [&builder](const peg::SemanticValues& vs) {
