@@ -214,126 +214,128 @@ private:
 
 std::vector<IScriptAnimationSet> animation_sets;
 
+const char* ISCRIPT_GRAMMAR = R"(
+    ROOT <- (_ (EOL / &'.' HEADER / LABEL / OP _ EOL))* EOF
+
+    HEADER <- '.headerstart' _ EOL _ (!'.' HEADER_LINE? _ EOL _)* '.headerend' _ EOL
+    LABEL  <- <ID> _ ':' _ NL?
+
+    # header rules:
+    HEADER_IS_ID     <- 'IsId' __ INT
+    HEADER_TYPE      <- 'Type' __ INT
+    HEADER_ANIMATION <- ANIMATION __ ID_MAYBE
+
+    ANIMATION <- 'Init' / 'Death' / 'GndAttkInit' / 'AirAttkInit' / 'Unused1' / 'GndAttkRpt' /
+                 'AirAttkRpt' / 'CastSpell' / 'GndAttkToIdle' / 'AirAttkToIdle' / 'Unused2' /
+                 !'WalkingTo' 'Walking' / 'WalkingToIdle' / 'SpecialState1' / 'SpecialState2' /
+                 'AlmostBuilt' / 'Built' / 'Landing' / 'LiftOff' / 'IsWorking' / 'WorkingToIdle' /
+                 'WarpIn' / 'Unused3' / 'StarEditInit' / 'Disable' / 'Burrow' / 'UnBurrow' / 'Enable'
+
+    HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
+
+    # opcode rules
+    OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
+    OPC_IMGULNEXTID       <- 'imgulnextid' __ INT __ INT
+    OPC_IMGULUSELO        <- 'imguluselo' __ INT __ INT __ INT
+    OPC_IMGOL             <- 'imgol' __ INT __ INT __ INT
+    OPC_IMGOLORIG         <- 'imgolorig' __ INT
+    OPC_IMGOLUSELO        <- 'imgoluselo' __ INT __ INT __ INT
+    OPC_SPROL             <- 'sprol' __ INT __ INT __ INT
+    OPC_SPROLUSELO        <- 'sproluselo' __ INT __ INT
+    OPC_SPRUL             <- 'sprul' __ INT __ INT __ INT
+    OPC_SPRULUSELO        <- 'spruluselo' __ INT __ INT __ INT
+    OPC_GRDSPROL          <- 'grdsprol' __ INT __ INT __ INT
+    OPC_WARPOVERLAY       <- 'warpoverlay' __ INT
+    OPC_SWITCHUL          <- 'switchul' __ INT
+    OPC_WAITRAND          <- 'waitrand' __ INT __ INT
+    OPC_SETVERTPOS        <- 'setvertpos' __ INT
+    OPC_GOTO              <- 'goto' __ ID
+    OPC_WAIT              <- 'wait' __ INT
+    OPC_PLAYFRAM          <- 'playfram' __ INT
+    OPC_PLAYFRAMTILE      <- 'playframtile' __ INT
+    OPC_ENGFRAME          <- 'engframe' __ INT
+    OPC_PLAYSND           <- 'playsnd' __ INT
+    OPC_END               <- 'end'
+    OPC_ATTACKWITH        <- 'attackwith' __ INT
+    OPC_LOWSPRUL          <- 'lowsprul' __ INT __ INT __ INT
+    OPC_NOBRKCODESTART    <- 'nobrkcodestart'
+    OPC_NOBRKCODEEND      <- 'nobrkcodeend'
+    OPC_ATTACKMELEE       <- 'attackmelee' __ INT (__ INT)*
+    OPC_GOTOREPEATATTK    <- 'gotorepeatattk'
+    OPC_CALL              <- 'call' __ ID
+    OPC_RETURN            <- 'return'
+    OPC_IGNOREREST        <- 'ignorerest'
+    OPC_RANDCONDJMP       <- 'randcondjmp' __ INT __ ID
+    OPC_LIFTOFFCONDJMP    <- 'liftoffcondjmp' __ ID
+    OPC_TRGTARCCONDJMP    <- 'trgtarccondjmp' __ INT __ INT __ ID
+    OPC_TRGTRANGECONDJMP  <- 'trgtrangecondjmp' __ INT __ ID
+    OPC_CURDIRECTCONDJMP  <- 'curdirectcondjmp' __ INT __ INT __ ID
+    OPC_PWRUPCONDJMP      <- 'pwrupcondjmp' __ ID
+    OPC_MOVE              <- 'move' __ INT
+    OPC_SETFLDIRECT       <- 'setfldirect' __ INT
+    OPC_SIGORDER          <- 'sigorder' __ INT
+    OPC_ORDERDONE         <- 'orderdone' __ INT
+    OPC_ATTACK            <- 'attack'
+    OPC_ATTKSHIFTPROJ     <- 'attkshiftproj' __ INT
+    OPC_CASTSPELL         <- 'castspell'
+    OPC_USEWEAPON         <- 'useweapon' __ INT
+    OPC_DOMISSILEDMG      <- 'domissiledmg'
+    OPC_DOGRDDAMAGE       <- 'dogrddamage'
+    OPC_FOLLOWMAINGRAPHIC <- 'followmaingraphic'
+    OPC_TURN1CWISE        <- 'turn1cwise'
+    OPC_TURNCWISE         <- 'turncwise' __ INT
+    OPC_TURNCCWISE        <- 'turnccwise' __ INT
+    OPC_TURNRAND          <- 'turnrand' __ INT
+    OPC_SETFLSPEED        <- 'setflspeed' __ INT
+    OPC_TMPRMGRAPHICSTART <- 'tmprmgraphicstart'
+    OPC_TMPRMGRAPHICEND   <- 'tmprmgraphicend'
+    OPC_PLAYSNDBTWN       <- 'playsndbtwn' __ INT __ INT
+    OPC_PLAYSNDRAND       <- 'playsndrand' __ INT (__ INT)*
+    OPC_CREATEGASOVERLAYS <- 'creategasoverlays' __ INT
+    OPC_ENGSET            <- 'engset' __ INT
+    OPC_SETFILPSTATE      <- 'setflipstate' __ INT
+    OPC_SETPOS            <- 'setpos' __ INT __ INT
+    OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT
+    OPC_SETHORPOS         <- 'sethorpos' __ INT
+    OPC___2D              <- '__2d'
+    OP <- OPC_WAIT / OPC_PLAYFRAM / OPC_GOTO / OPC_END / OPC_MOVE / OPC_PLAYFRAMTILE /
+          OPC_IMGUL / OPC_IMGULNEXTID / OPC_IMGULUSELO /
+          OPC_IMGOL / OPC_IMGOLUSELO / OPC_IMGOLORIG /
+          OPC_SPROL / OPC_SPROLUSELO / OPC_SPRUL / OPC_SPRULUSELO / OPC_GRDSPROL /
+          OPC_WARPOVERLAY / OPC_SWITCHUL / OPC_WAITRAND /
+          OPC_SETVERTPOS / OPC_RANDCONDJMP / OPC_PLAYSND /
+          OPC_LOWSPRUL / OPC_NOBRKCODESTART / OPC_NOBRKCODEEND /
+          OPC_GOTOREPEATATTK / OPC_CALL / OPC_RETURN / OPC_IGNOREREST /
+          OPC_LIFTOFFCONDJMP / OPC_TRGTARCCONDJMP / OPC_TRGTRANGECONDJMP /
+          OPC_CURDIRECTCONDJMP / OPC_PWRUPCONDJMP /
+          OPC_SIGORDER / OPC_ORDERDONE /
+          OPC_ATTACKMELEE / OPC_ATTACKWITH / OPC_ATTACK / OPC_ATTKSHIFTPROJ /
+          OPC_CASTSPELL / OPC_USEWEAPON / OPC_DOMISSILEDMG / OPC_DOGRDDAMAGE /
+          OPC_FOLLOWMAINGRAPHIC / OPC_SETFLDIRECT / OPC_CREATEGASOVERLAYS /
+          OPC_TURN1CWISE / OPC_TURNCWISE / OPC_TURNCCWISE / OPC_TURNRAND /
+          OPC_SETFLSPEED / OPC_TMPRMGRAPHICSTART / OPC_TMPRMGRAPHICEND /
+          OPC_PLAYSNDBTWN / OPC_PLAYSNDRAND / OPC_ENGSET / OPC_ENGFRAME /
+          OPC_SETFILPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
+          OPC___2D /
+          { error_message "Unrecognized instruction" }
+
+    ID       <- [_a-zA-Z][_a-zA-Z0-9]*
+    ID_MAYBE <- '[none]'i / ID
+    DEC      <- '-'? [1-9][0-9]* / '-'? '0'
+    HEX      <- '0x' [0-9a-fA-F]+
+    INT      <- HEX / DEC
+
+    ~EOF     <- !.
+    ~EOL     <- &'#' COMMENT NL / NL
+    ~COMMENT <- '#' [^\r\n]*
+    ~NL      <- ('\n' | '\r\n' | '\r')
+    ~_       <- [ \t]* # Optional whitespace
+    ~__      <- [ \t]+ # Mandatory whitespace
+)";
+
 bool parse_iscript_txt()
 {
-    peg::parser iscript_parser(R"(
-        ROOT <- (_ (EOL / &'.' HEADER / LABEL / OP _ EOL))* EOF
-
-        HEADER <- '.headerstart' _ EOL _ (!'.' HEADER_LINE? _ EOL _)* '.headerend' _ EOL
-        LABEL  <- <ID> _ ':' _ NL?
-
-        # header rules:
-        HEADER_IS_ID     <- 'IsId' __ INT
-        HEADER_TYPE      <- 'Type' __ INT
-        HEADER_ANIMATION <- ANIMATION __ ID_MAYBE
-
-        ANIMATION <- 'Init' / 'Death' / 'GndAttkInit' / 'AirAttkInit' / 'Unused1' / 'GndAttkRpt' /
-                     'AirAttkRpt' / 'CastSpell' / 'GndAttkToIdle' / 'AirAttkToIdle' / 'Unused2' /
-                     !'WalkingTo' 'Walking' / 'WalkingToIdle' / 'SpecialState1' / 'SpecialState2' /
-                     'AlmostBuilt' / 'Built' / 'Landing' / 'LiftOff' / 'IsWorking' / 'WorkingToIdle' /
-                     'WarpIn' / 'Unused3' / 'StarEditInit' / 'Disable' / 'Burrow' / 'UnBurrow' / 'Enable'
-
-        HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
-
-        # opcode rules
-        OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
-        OPC_IMGULNEXTID       <- 'imgulnextid' __ INT __ INT
-        OPC_IMGULUSELO        <- 'imguluselo' __ INT __ INT __ INT
-        OPC_IMGOL             <- 'imgol' __ INT __ INT __ INT
-        OPC_IMGOLORIG         <- 'imgolorig' __ INT
-        OPC_IMGOLUSELO        <- 'imgoluselo' __ INT __ INT __ INT
-        OPC_SPROL             <- 'sprol' __ INT __ INT __ INT
-        OPC_SPROLUSELO        <- 'sproluselo' __ INT __ INT
-        OPC_SPRUL             <- 'sprul' __ INT __ INT __ INT
-        OPC_SPRULUSELO        <- 'spruluselo' __ INT __ INT __ INT
-        OPC_GRDSPROL          <- 'grdsprol' __ INT __ INT __ INT
-        OPC_WARPOVERLAY       <- 'warpoverlay' __ INT
-        OPC_SWITCHUL          <- 'switchul' __ INT
-        OPC_WAITRAND          <- 'waitrand' __ INT __ INT
-        OPC_SETVERTPOS        <- 'setvertpos' __ INT
-        OPC_GOTO              <- 'goto' __ ID
-        OPC_WAIT              <- 'wait' __ INT
-        OPC_PLAYFRAM          <- 'playfram' __ INT
-        OPC_PLAYFRAMTILE      <- 'playframtile' __ INT
-        OPC_ENGFRAME          <- 'engframe' __ INT
-        OPC_PLAYSND           <- 'playsnd' __ INT
-        OPC_END               <- 'end'
-        OPC_ATTACKWITH        <- 'attackwith' __ INT
-        OPC_LOWSPRUL          <- 'lowsprul' __ INT __ INT __ INT
-        OPC_NOBRKCODESTART    <- 'nobrkcodestart'
-        OPC_NOBRKCODEEND      <- 'nobrkcodeend'
-        OPC_ATTACKMELEE       <- 'attackmelee' __ INT (__ INT)*
-        OPC_GOTOREPEATATTK    <- 'gotorepeatattk'
-        OPC_CALL              <- 'call' __ ID
-        OPC_RETURN            <- 'return'
-        OPC_IGNOREREST        <- 'ignorerest'
-        OPC_RANDCONDJMP       <- 'randcondjmp' __ INT __ ID
-        OPC_LIFTOFFCONDJMP    <- 'liftoffcondjmp' __ ID
-        OPC_TRGTARCCONDJMP    <- 'trgtarccondjmp' __ INT __ INT __ ID
-        OPC_TRGTRANGECONDJMP  <- 'trgtrangecondjmp' __ INT __ ID
-        OPC_CURDIRECTCONDJMP  <- 'curdirectcondjmp' __ INT __ INT __ ID
-        OPC_PWRUPCONDJMP      <- 'pwrupcondjmp' __ ID
-        OPC_MOVE              <- 'move' __ INT
-        OPC_SETFLDIRECT       <- 'setfldirect' __ INT
-        OPC_SIGORDER          <- 'sigorder' __ INT
-        OPC_ORDERDONE         <- 'orderdone' __ INT
-        OPC_ATTACK            <- 'attack'
-        OPC_ATTKSHIFTPROJ     <- 'attkshiftproj' __ INT
-        OPC_CASTSPELL         <- 'castspell'
-        OPC_USEWEAPON         <- 'useweapon' __ INT
-        OPC_DOMISSILEDMG      <- 'domissiledmg'
-        OPC_DOGRDDAMAGE       <- 'dogrddamage'
-        OPC_FOLLOWMAINGRAPHIC <- 'followmaingraphic'
-        OPC_TURN1CWISE        <- 'turn1cwise'
-        OPC_TURNCWISE         <- 'turncwise' __ INT
-        OPC_TURNCCWISE        <- 'turnccwise' __ INT
-        OPC_TURNRAND          <- 'turnrand' __ INT
-        OPC_SETFLSPEED        <- 'setflspeed' __ INT
-        OPC_TMPRMGRAPHICSTART <- 'tmprmgraphicstart'
-        OPC_TMPRMGRAPHICEND   <- 'tmprmgraphicend'
-        OPC_PLAYSNDBTWN       <- 'playsndbtwn' __ INT __ INT
-        OPC_PLAYSNDRAND       <- 'playsndrand' __ INT (__ INT)*
-        OPC_CREATEGASOVERLAYS <- 'creategasoverlays' __ INT
-        OPC_ENGSET            <- 'engset' __ INT
-        OPC_SETFILPSTATE      <- 'setflipstate' __ INT
-        OPC_SETPOS            <- 'setpos' __ INT __ INT
-        OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT
-        OPC_SETHORPOS         <- 'sethorpos' __ INT
-        OPC___2D              <- '__2d'
-        OP <- OPC_WAIT / OPC_PLAYFRAM / OPC_GOTO / OPC_END / OPC_MOVE / OPC_PLAYFRAMTILE /
-              OPC_IMGUL / OPC_IMGULNEXTID / OPC_IMGULUSELO /
-              OPC_IMGOL / OPC_IMGOLUSELO / OPC_IMGOLORIG /
-              OPC_SPROL / OPC_SPROLUSELO / OPC_SPRUL / OPC_SPRULUSELO / OPC_GRDSPROL /
-              OPC_WARPOVERLAY / OPC_SWITCHUL / OPC_WAITRAND /
-              OPC_SETVERTPOS / OPC_RANDCONDJMP / OPC_PLAYSND /
-              OPC_LOWSPRUL / OPC_NOBRKCODESTART / OPC_NOBRKCODEEND /
-              OPC_GOTOREPEATATTK / OPC_CALL / OPC_RETURN / OPC_IGNOREREST /
-              OPC_LIFTOFFCONDJMP / OPC_TRGTARCCONDJMP / OPC_TRGTRANGECONDJMP /
-              OPC_CURDIRECTCONDJMP / OPC_PWRUPCONDJMP /
-              OPC_SIGORDER / OPC_ORDERDONE /
-              OPC_ATTACKMELEE / OPC_ATTACKWITH / OPC_ATTACK / OPC_ATTKSHIFTPROJ /
-              OPC_CASTSPELL / OPC_USEWEAPON / OPC_DOMISSILEDMG / OPC_DOGRDDAMAGE /
-              OPC_FOLLOWMAINGRAPHIC / OPC_SETFLDIRECT / OPC_CREATEGASOVERLAYS /
-              OPC_TURN1CWISE / OPC_TURNCWISE / OPC_TURNCCWISE / OPC_TURNRAND /
-              OPC_SETFLSPEED / OPC_TMPRMGRAPHICSTART / OPC_TMPRMGRAPHICEND /
-              OPC_PLAYSNDBTWN / OPC_PLAYSNDRAND / OPC_ENGSET / OPC_ENGFRAME /
-              OPC_SETFILPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
-              OPC___2D /
-              { error_message "Unrecognized instruction" }
-
-        ID       <- [_a-zA-Z][_a-zA-Z0-9]*
-        ID_MAYBE <- '[none]'i / ID
-        DEC      <- '-'? [1-9][0-9]* / '-'? '0'
-        HEX      <- '0x' [0-9a-fA-F]+
-        INT      <- HEX / DEC
-
-        ~EOF     <- !.
-        ~EOL     <- &'#' COMMENT NL / NL
-        ~COMMENT <- '#' [^\r\n]*
-        ~NL      <- ('\n' | '\r\n' | '\r')
-        ~_       <- [ \t]* # Optional whitespace
-        ~__      <- [ \t]+ # Mandatory whitespace
-    )");
+    peg::parser iscript_parser(ISCRIPT_GRAMMAR);
 
     IScriptBuilder builder;
 
