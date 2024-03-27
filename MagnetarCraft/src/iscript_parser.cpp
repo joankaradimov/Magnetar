@@ -554,7 +554,13 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_PLAYSNDRAND"] = [&builder](const peg::SemanticValues& vs) {
-        builder << IScriptOpcodes::opc_playsndrand; // TODO: varargs
+        u8 arg_count = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_playsndrand << arg_count;
+        for (int i = 0; i < arg_count; i++)
+        {
+            u16 sound_id = std::any_cast<int>(vs[i + 1]);
+            builder << sound_id;
+        }
     };
 
     iscript_parser["OPC_PLAYSNDBTWN"] = [&builder](const peg::SemanticValues& vs) {
@@ -568,7 +574,13 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_ATTACKMELEE"] = [&builder](const peg::SemanticValues& vs) {
-        builder << IScriptOpcodes::opc_attackmelee; // TODO: varargs
+        u8 arg_count = std::any_cast<int>(vs[0]);
+        builder << IScriptOpcodes::opc_attackmelee << arg_count;
+        for (int i = 0; i < arg_count; i++)
+        {
+            u16 sound_id = std::any_cast<int>(vs[i + 1]);
+            builder << sound_id;
+        }
     };
 
     iscript_parser["OPC_FOLLOWMAINGRAPHIC"] = [&builder](const peg::SemanticValues& vs) {
