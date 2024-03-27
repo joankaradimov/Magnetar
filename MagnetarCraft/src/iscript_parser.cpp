@@ -588,7 +588,7 @@ bool parse_iscript_txt()
     };
 
     iscript_parser["OPC_RANDCONDJMP"] = [&builder](const peg::SemanticValues& vs) {
-        u16 arg = std::any_cast<int>(vs[0]);
+        u8 arg = std::any_cast<int>(vs[0]);
         auto label = std::any_cast<LabelReference>(vs[1]);
 
         builder << IScriptOpcodes::opc_randcondjmp << arg << label;
