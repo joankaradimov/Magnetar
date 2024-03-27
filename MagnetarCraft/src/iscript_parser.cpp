@@ -316,7 +316,7 @@ bool parse_iscript_txt()
 
         ID       <- [_a-zA-Z][_a-zA-Z0-9]*
         ID_MAYBE <- '[none]'i / ID
-        DEC      <- [1-9][0-9]* / '0'
+        DEC      <- '-'? [1-9][0-9]* / '-'? '0'
         HEX      <- '0x' [0-9a-fA-F]+
         INT      <- HEX / DEC
 
