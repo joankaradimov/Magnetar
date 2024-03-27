@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 
+#include "iscript_parser.h"
 #include "starcraft.h"
 
 struct LabelReference
@@ -62,12 +63,15 @@ struct AnimationHeader
     unsigned __int16 is_id;
     unsigned __int16 type;
     std::array<LabelReference, Anims::AE_COUNT> animations;
-
 };
 
 class IScriptBuilder
 {
 public:
+    IScriptBuilder() : max_is_id(0)
+    {
+    }
+
     template <typename T> IScriptBuilder& operator<<(T data)
     {
         for (int i = 0; i < sizeof(T); i++)
@@ -94,7 +98,7 @@ public:
         return *this << (unsigned __int16) 0xDEAD;
     }
 
-    const std::basic_string<std::byte>& iscript_bin() const
+    const std::vector<IScriptAnimationSet> build_animation_sets() const
     {
         for (const auto& label_backpatches : label_backpatch_list)
         {
@@ -109,12 +113,10 @@ public:
             }
         }
 
-        return bytes;
-    }
+        auto opcodes = std::shared_ptr<std::byte>(new std::byte[bytes.size()], std::default_delete<std::byte[]>());
+        memcpy_s(opcodes.get(), bytes.size(), bytes.c_str(), bytes.size());
 
-    const std::vector<unsigned __int16> build_headers() const
-    {
-        std::vector<unsigned __int16> result;
+        std::vector<IScriptAnimationSet> result(max_is_id + 1);
 
         for (const auto& header : headers)
         {
@@ -129,13 +131,14 @@ public:
                 throw std::runtime_error(error_messge);
             }
 
-            result.push_back(header.is_id);
+            IScriptAnimationSet animation_set;
+            animation_set.opcodes = opcodes;
             for (int i = 0; i < inferred_type + 2; i++)
             {
                 LabelReference label = header.animations[i];
                 if (label.name.empty())
                 {
-                    result.push_back(0);
+                    continue;
                 }
                 else if (label_offsets.find(label.name) == label_offsets.end())
                 {
@@ -147,9 +150,10 @@ public:
                 }
                 else
                 {
-                    result.push_back(label_offsets.at(label.name));
+                    animation_set.animations[i] = label_offsets.at(label.name);
                 }
             }
+            result[header.is_id] = animation_set;
         }
 
         return result;
@@ -177,6 +181,7 @@ public:
     void set_current_is_id(int is_id)
     {
         current_header().is_id = is_id;
+        max_is_id = max(max_is_id, is_id);
     }
 
     void set_current_type(int type)
@@ -206,6 +211,8 @@ private:
     std::vector<AnimationHeader> headers;
     int max_is_id;
 };
+
+std::vector<IScriptAnimationSet> animation_sets;
 
 bool parse_iscript_txt()
 {
@@ -785,6 +792,9 @@ bool parse_iscript_txt()
     int size = 0;
     const char* iscript_txt = (const char*)fastFileRead_(&size, 0, "scripts\\iscript.txt", 0, 0, __FILE__, __LINE__);
 
-    bool result = iscript_parser.parse(iscript_txt);
+    int result = iscript_parser.parse(iscript_txt);
+
+    animation_sets = builder.build_animation_sets();
+
     return result;
 }
