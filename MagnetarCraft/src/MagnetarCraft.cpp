@@ -341,6 +341,8 @@ void StartMagnetar()
 
 	StarCraftExecutable* starcraft_exe = LocateStarCraftExecutable(config);
 
+	// TODO: storm.dll shipped with WarCraft 2 BNE is buggy; find a way to fix it
+	// see here: https://qstuff.blogspot.com/2006/01/real-life-fun-sbltrop3-bug.html
 	SetDllDirectory(starcraft_exe->GetParentDirectory().c_str());
 
 	// An initial call to SFileDestroy is needed to avoid corruptions in SFile* functions
