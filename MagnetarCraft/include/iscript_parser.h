@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include <peglib.h>
+
 #include "starcraft_exe/types.h"
 
 struct IScriptAnimationSet
@@ -22,4 +24,12 @@ struct IScriptAnimationSet
 
 extern std::vector<IScriptAnimationSet> animation_sets;
 
-bool parse_iscript_txt();
+class IScriptParser
+{
+public:
+    IScriptParser();
+    bool parse(const char* iscript_path);
+
+private:
+    peg::parser iscript_parser;
+};

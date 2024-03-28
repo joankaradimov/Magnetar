@@ -333,10 +333,8 @@ const char* ISCRIPT_GRAMMAR = R"(
     ~__      <- [ \t]+ # Mandatory whitespace
 )";
 
-bool parse_iscript_txt()
+IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
 {
-    peg::parser iscript_parser(ISCRIPT_GRAMMAR);
-
     iscript_parser["ID"] = [](const peg::SemanticValues& vs) {
         return LabelReference(vs.token(), vs.line_info());
     };
@@ -863,9 +861,12 @@ bool parse_iscript_txt()
         auto builder = std::any_cast<IScriptBuilder*>(dt);
         *builder << IScriptOpcodes::opc_dogrddamage;
     };
+}
 
+bool IScriptParser::parse(const char* iscript_path)
+{
     int size = 0;
-    const char* iscript_txt = (const char*)fastFileRead_(&size, 0, "scripts\\iscript.txt", 0, 0, __FILE__, __LINE__);
+    const char* iscript_txt = (const char*)fastFileRead_(&size, 0, iscript_path, 0, 0, __FILE__, __LINE__);
 
     IScriptBuilder builder;
     int result = iscript_parser.parse(iscript_txt, std::any(&builder));
