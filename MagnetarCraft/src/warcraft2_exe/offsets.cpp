@@ -97,7 +97,19 @@ DECL_FUNC(int (__cdecl*sub_4054B0)(int a1, int a2), sub_4054B0, 0x4054b0);
 DECL_FUNC(int (__cdecl*sub_4055A0)(int a1), sub_4055A0, 0x4055a0);
 DECL_FUNC(int (__cdecl*sub_405610)(int a1), sub_405610, 0x405610);
 DECL_FUNC(int (__cdecl*sub_405720)(int a1, int a2, int a3), sub_405720, 0x405720);
-DECL_FUNC(int (__cdecl*sub_405990)(int a1), sub_405990, 0x405990);
+char * sub_405990(int a1, int a2) {
+    int address = 0x405990;
+    char * result_;
+    __asm {
+        xor eax, eax
+        push dword ptr a2
+        mov ebx, a1
+        call address
+        mov result_, eax
+        add esp, 4
+    }
+    return result_;
+}
 DECL_FUNC(int (*sub_405C00)(), sub_405C00, 0x405c00);
 DECL_FUNC(int (__cdecl*sub_405C30)(int a1, int a2), sub_405C30, 0x405c30);
 DECL_FUNC(int (__cdecl*sub_405CC0)(int a1), sub_405CC0, 0x405cc0);
@@ -394,7 +406,7 @@ DECL_FUNC(int (__cdecl*sub_415940)(int a1), sub_415940, 0x415940);
 DECL_FUNC(int (__cdecl*sub_415BF0)(int a1, char a2), sub_415BF0, 0x415bf0);
 DECL_FUNC(int (__cdecl*sub_415D50)(char a1, char a2, char ArgList), sub_415D50, 0x415d50);
 DECL_FUNC(int (*sub_415EB0)(), sub_415EB0, 0x415eb0);
-DECL_FUNC(char (__cdecl*sub_415EC0)(int a1, const char *a2), sub_415EC0, 0x415ec0);
+DECL_FUNC(void (__cdecl*sub_415EC0)(int a1, const char *a2), sub_415EC0, 0x415ec0);
 DECL_FUNC(int (*sub_416240)(), sub_416240, 0x416240);
 DECL_FUNC(BOOL (__cdecl*sub_416250)(char *String1, int a2), sub_416250, 0x416250);
 DECL_FUNC(BOOL (__cdecl*sub_4167E0)(unsigned __int8 *a1, int a2), sub_4167E0, 0x4167e0);
@@ -433,9 +445,9 @@ DECL_FUNC(int (__cdecl*sub_417D00)(int a1, _WORD *a2), sub_417D00, 0x417d00);
 DECL_FUNC(int (*sub_417EB0)(), sub_417EB0, 0x417eb0);
 DECL_FUNC(int (*sub_417EE0)(), sub_417EE0, 0x417ee0);
 DECL_FUNC(int (__cdecl*sub_417EF0)(int a1), sub_417EF0, 0x417ef0);
-int sub_417F30(int a1, int a2, int a3, int a4) {
+char sub_417F30(int a1, int a2, int a3, int a4) {
     int address = 0x417f30;
-    int result_;
+    char result_;
     __asm {
         xor eax, eax
         mov esi, a4
@@ -443,7 +455,7 @@ int sub_417F30(int a1, int a2, int a3, int a4) {
         mov ebp, a2
         mov ebx, a1
         call address
-        mov result_, eax
+        mov result_, al
     }
     return result_;
 }
@@ -530,7 +542,7 @@ DECL_FUNC(int (*sub_41BF00)(), sub_41BF00, 0x41bf00);
 DECL_FUNC(int (*sub_41C270)(), sub_41C270, 0x41c270);
 DECL_FUNC(int (*sub_41C4F0)(), sub_41C4F0, 0x41c4f0);
 DECL_FUNC(int (*sub_41C500)(), sub_41C500, 0x41c500);
-DECL_FUNC(int (__cdecl*sub_41C510)(int a1), sub_41C510, 0x41c510);
+DECL_FUNC(const char * (__cdecl*sub_41C510)(int a1), sub_41C510, 0x41c510);
 DECL_FUNC(int (*sub_41C530)(), sub_41C530, 0x41c530);
 DECL_FUNC(int (*sub_41C560)(), sub_41C560, 0x41c560);
 DECL_FUNC(int (*sub_41C590)(), sub_41C590, 0x41c590);
@@ -569,10 +581,10 @@ DECL_FUNC(int (__cdecl*sub_41DCD0)(int a1, int a2), sub_41DCD0, 0x41dcd0);
 DECL_FUNC(int (__cdecl*sub_41DD40)(int a1), sub_41DD40, 0x41dd40);
 DECL_FUNC(int (__cdecl*sub_41DDD0)(int a1), sub_41DDD0, 0x41ddd0);
 DECL_FUNC(int (*sub_41DED0)(), sub_41DED0, 0x41ded0);
-DECL_FUNC(int (__cdecl*sub_41DF50)(int a1, int a2, int a3, int a4, int a5, int a6, int a7), sub_41DF50, 0x41df50);
-DECL_FUNC(int (__cdecl*sub_41E1F0)(int a1, int a2), sub_41E1F0, 0x41e1f0);
+DECL_FUNC(int (__cdecl*sub_41DF50)(char *source, int a2, int a3, int a4, int a5), sub_41DF50, 0x41df50);
+DECL_FUNC(int (__cdecl*sub_41E1F0)(char *base), sub_41E1F0, 0x41e1f0);
 DECL_FUNC(int (__cdecl*sub_41E220)(int a1, int a2, int a3, int a4, int a5), sub_41E220, 0x41e220);
-DECL_FUNC(int (__cdecl*sub_41E290)(int a1, int a2, int a3, int a4), sub_41E290, 0x41e290);
+DECL_FUNC(int (__cdecl*sub_41E290)(char *source, int a2, int a3), sub_41E290, 0x41e290);
 DECL_FUNC(int (*sub_41E3A0)(), sub_41E3A0, 0x41e3a0);
 DECL_FUNC(int (*sub_41E3B0)(), sub_41E3B0, 0x41e3b0);
 DECL_FUNC(int (__cdecl*sub_41E430)(int a1, int a2), sub_41E430, 0x41e430);
@@ -852,15 +864,12 @@ DECL_FUNC(int (__cdecl*sub_428020)(int a1), sub_428020, 0x428020);
 DECL_FUNC(int (__cdecl*sub_428460)(_DWORD a1), sub_428460, 0x428460);
 DECL_FUNC(char * (__cdecl*sub_428470)(char *String), sub_428470, 0x428470);
 DECL_FUNC(int (*sub_428520)(), sub_428520, 0x428520);
-int sub_428530(int a1, int a2, int a3, int a4) {
+int sub_428530(int a1) {
     int address = 0x428530;
     int result_;
     __asm {
         xor eax, eax
-        mov ebp, a4
-        mov esi, a3
-        mov edi, a2
-        mov ebx, a1
+        mov ebp, a1
         call address
         mov result_, eax
     }
@@ -872,25 +881,10 @@ DECL_FUNC(int (*sub_428B90)(), sub_428B90, 0x428b90);
 DECL_FUNC(int (*sub_428BF0)(), sub_428BF0, 0x428bf0);
 DECL_FUNC(int (*sub_428C00)(), sub_428C00, 0x428c00);
 DECL_FUNC(int (*sub_428C10)(), sub_428C10, 0x428c10);
-int sub_428C60(int a1, int a2, char *a3, int a4, int a5) {
-    int address = 0x428c60;
-    int result_;
-    __asm {
-        xor eax, eax
-        push dword ptr a5
-        push dword ptr a4
-        push dword ptr a3
-        push dword ptr a2
-        mov esi, a1
-        call address
-        mov result_, eax
-        add esp, 16
-    }
-    return result_;
-}
+DECL_FUNC(HANDLE (__cdecl*sub_428C60)(int a1, char *a2, int a3, int a4), sub_428C60, 0x428c60);
 DECL_FUNC(int (__cdecl*sub_428D30)(int a1, int a2, int a3, int a4), sub_428D30, 0x428d30);
-DECL_FUNC(int (__cdecl*sub_428DB0)(int a1, int a2), sub_428DB0, 0x428db0);
-DECL_FUNC(int (*sub_428FE0)(), sub_428FE0, 0x428fe0);
+DECL_FUNC(int (__cdecl*sub_428DB0)(int a1, const char *szFileName), sub_428DB0, 0x428db0);
+DECL_FUNC(HANDLE (*sub_428FE0)(), sub_428FE0, 0x428fe0);
 DECL_FUNC(DWORD (*sub_428FF0)(), sub_428FF0, 0x428ff0);
 DECL_FUNC(int (__cdecl*sub_4290D0)(char *ArgList), sub_4290D0, 0x4290d0);
 DECL_FUNC(int (*sub_429200)(), sub_429200, 0x429200);
@@ -916,7 +910,7 @@ DECL_FUNC(int (__cdecl*sub_42A1B0)(int a1, int a2), sub_42A1B0, 0x42a1b0);
 DECL_FUNC(int (*sub_42A1F0)(), sub_42A1F0, 0x42a1f0);
 DECL_FUNC(int (*sub_42A200)(), sub_42A200, 0x42a200);
 DECL_FUNC(int (*sub_42A230)(), sub_42A230, 0x42a230);
-void GameMainLoop(int a1, int a2, int a3) {
+void GameMainLoop(BOOL (__stdcall *a1)(const MSG *lpMsg), int (__stdcall *a2)(HWND hWnd, HACCEL hAccTable, LPMSG lpMsg), BOOL (__stdcall *a3)(LPMSG lpMsg, HWND hWnd, UINT wMsgFilterMin, UINT wMsgFilterMax, UINT wRemoveMsg)) {
     int address = 0x42a240;
     __asm {
         mov esi, a3
@@ -965,21 +959,7 @@ DECL_FUNC(int (*sub_42C990)(void), sub_42C990, 0x42c990);
 DECL_FUNC(int (*sub_42C9B0)(), sub_42C9B0, 0x42c9b0);
 DECL_FUNC(BOOL (*sub_42CA30)(), sub_42CA30, 0x42ca30);
 DECL_FUNC(void (__cdecl*sub_42CA40)(const char *a1, unsigned __int8 a2, unsigned int a3), sub_42CA40, 0x42ca40);
-int sub_42CB50(int a1, const char *a2, char a3, int a4) {
-    int address = 0x42cb50;
-    int result_;
-    __asm {
-        xor eax, eax
-        push dword ptr a4
-        push dword ptr a3
-        push dword ptr a2
-        mov edi, a1
-        call address
-        mov result_, eax
-        add esp, 12
-    }
-    return result_;
-}
+DECL_FUNC(char (__cdecl*sub_42CB50)(const char *source, char a2, int a3), sub_42CB50, 0x42cb50);
 DECL_FUNC(int (__cdecl*sub_42CD00)(int a1, int a2), sub_42CD00, 0x42cd00);
 DECL_FUNC(int (*sub_42CD30)(), sub_42CD30, 0x42cd30);
 DECL_FUNC(__int16 (*sub_42CD40)(), sub_42CD40, 0x42cd40);
@@ -1229,7 +1209,17 @@ DECL_FUNC(int (*sub_436DF0)(), sub_436DF0, 0x436df0);
 DECL_FUNC(int (*sub_436ED0)(), sub_436ED0, 0x436ed0);
 DECL_FUNC(int (*sub_436EE0)(), sub_436EE0, 0x436ee0);
 DECL_FUNC(int (*sub_436FA0)(), sub_436FA0, 0x436fa0);
-DECL_FUNC(int (*sub_437030)(), sub_437030, 0x437030);
+char sub_437030(int a1) {
+    int address = 0x437030;
+    char result_;
+    __asm {
+        xor eax, eax
+        mov ebx, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
 char sub_437040(int a1, char a2) {
     int address = 0x437040;
     char result_;
@@ -1351,7 +1341,7 @@ DECL_FUNC(int (__cdecl*sub_43CF60)(__int16 a1), sub_43CF60, 0x43cf60);
 DECL_FUNC(int (__cdecl*sub_43D040)(__int16 a1), sub_43D040, 0x43d040);
 DECL_FUNC(int (*sub_43D090)(void), sub_43D090, 0x43d090);
 DECL_FUNC(int (__cdecl*sub_43D0B0)(char a1, int a2), sub_43D0B0, 0x43d0b0);
-DECL_FUNC(int (__cdecl*sub_43D1A0)(int a1, int a2, int a3, int a4), sub_43D1A0, 0x43d1a0);
+DECL_FUNC(int (__cdecl*sub_43D1A0)(char *source, int a2, int a3, int a4), sub_43D1A0, 0x43d1a0);
 DECL_FUNC(int (*sub_43D260)(), sub_43D260, 0x43d260);
 DECL_FUNC(int (__cdecl*sub_43D4F0)(int a1, int a2), sub_43D4F0, 0x43d4f0);
 DECL_FUNC(int (__cdecl*sub_43D580)(int a1), sub_43D580, 0x43d580);
@@ -1419,8 +1409,8 @@ DECL_FUNC(int (__cdecl*sub_43F8D0)(int a1, char *Buffer), sub_43F8D0, 0x43f8d0);
 DECL_FUNC(int (__cdecl*sub_43F930)(int a1, char *Buffer), sub_43F930, 0x43f930);
 DECL_FUNC(int (__cdecl*sub_43F970)(char *FileName, void *Buffer), sub_43F970, 0x43f970);
 DECL_FUNC(int (__cdecl*sub_43FA30)(char *FullPath), sub_43FA30, 0x43fa30);
-DECL_FUNC(int (__cdecl*sub_43FB30)(int a1, int a2, int a3), sub_43FB30, 0x43fb30);
-DECL_FUNC(int (__cdecl*sub_43FC40)(int a1, int a2, int a3, int a4), sub_43FC40, 0x43fc40);
+DECL_FUNC(int (__cdecl*sub_43FB30)(int a1, char *dest, int max_length), sub_43FB30, 0x43fb30);
+DECL_FUNC(int (__cdecl*sub_43FC40)(char *source, int a2, int a3, int a4), sub_43FC40, 0x43fc40);
 DECL_FUNC(int (*sub_43FDC0)(), sub_43FDC0, 0x43fdc0);
 DECL_FUNC(int (*sub_43FDD0)(), sub_43FDD0, 0x43fdd0);
 DECL_FUNC(void (__cdecl*sub_43FDF0)(), sub_43FDF0, 0x43fdf0);
@@ -1438,12 +1428,12 @@ DECL_FUNC(int (__cdecl*sub_4409E0)(int a1), sub_4409E0, 0x4409e0);
 DECL_FUNC(int (__cdecl*sub_440AD0)(int a1, char ArgList, int a3), sub_440AD0, 0x440ad0);
 DECL_FUNC(int (*sub_440D10)(), sub_440D10, 0x440d10);
 DECL_FUNC(int (*sub_440E70)(), sub_440E70, 0x440e70);
-DECL_FUNC(int (__cdecl*sub_440EA0)(int a1), sub_440EA0, 0x440ea0);
+DECL_FUNC(void (__cdecl*sub_440EA0)(int a1), sub_440EA0, 0x440ea0);
 DECL_FUNC(void (__stdcall*TimerFunc)(HWND a1, UINT a2, UINT_PTR a3, DWORD a4), TimerFunc, 0x4410c0);
 DECL_FUNC(int (*sub_441130)(), sub_441130, 0x441130);
 DECL_FUNC(char (__cdecl*sub_441220)(unsigned __int16 a1), sub_441220, 0x441220);
-DECL_FUNC(int (*sub_441250)(), sub_441250, 0x441250);
-DECL_FUNC(int (*sub_4413A0)(), sub_4413A0, 0x4413a0);
+DECL_FUNC(HANDLE (*sub_441250)(), sub_441250, 0x441250);
+DECL_FUNC(HANDLE (*sub_4413A0)(), sub_4413A0, 0x4413a0);
 DECL_FUNC(int (*sub_4413E0)(), sub_4413E0, 0x4413e0);
 DECL_FUNC(int (*sub_441430)(void), sub_441430, 0x441430);
 DECL_FUNC(int (__thiscall*sub_4414A0)(_DWORD a1), sub_4414A0, 0x4414a0);
@@ -2036,7 +2026,7 @@ DECL_FUNC(int (__stdcall*sub_460A50)(char *EndPtr), sub_460A50, 0x460a50);
 DECL_FUNC(int (*sub_460B10)(), sub_460B10, 0x460b10);
 DECL_FUNC(int (*sub_460CF0)(), sub_460CF0, 0x460cf0);
 DECL_FUNC(int (__cdecl*sub_460D00)(_BYTE *a1, unsigned int a2, int a3), sub_460D00, 0x460d00);
-DECL_FUNC(int (__cdecl*sub_460EA0)(int a1, int a2), sub_460EA0, 0x460ea0);
+DECL_FUNC(_DWORD * (__cdecl*sub_460EA0)(int a1, int a2), sub_460EA0, 0x460ea0);
 DECL_FUNC(int (*sub_460FA0)(), sub_460FA0, 0x460fa0);
 DECL_FUNC(int (__cdecl*sub_460FB0)(int a1, int a2), sub_460FB0, 0x460fb0);
 DECL_FUNC(int (__cdecl*sub_4610E0)(int a1, int a2), sub_4610E0, 0x4610e0);
@@ -2049,7 +2039,7 @@ DECL_FUNC(int (__cdecl*sub_4613B0)(int a1), sub_4613B0, 0x4613b0);
 DECL_FUNC(int (*sub_461400)(), sub_461400, 0x461400);
 DECL_FUNC(int (__cdecl*sub_4614D0)(int a1), sub_4614D0, 0x4614d0);
 DECL_FUNC(int (*sub_461510)(void), sub_461510, 0x461510);
-DECL_FUNC(int (__cdecl*sub_4615A0)(char a1, int a2, int a3, int a4, int a5), sub_4615A0, 0x4615a0);
+DECL_FUNC(int (__cdecl*sub_4615A0)(char a1, int a2, int a3, char *source, char *a5), sub_4615A0, 0x4615a0);
 DECL_FUNC(int (__cdecl*sub_461680)(int a1, int a2, int a3), sub_461680, 0x461680);
 DECL_FUNC(int (*sub_461740)(), sub_461740, 0x461740);
 DECL_FUNC(int (*sub_461750)(), sub_461750, 0x461750);
@@ -2085,20 +2075,18 @@ DECL_FUNC(int (*sub_462B20)(), sub_462B20, 0x462b20);
 DECL_FUNC(void (__cdecl*sub_462B40)(), sub_462B40, 0x462b40);
 DECL_FUNC(char (*sub_462B50)(), sub_462B50, 0x462b50);
 DECL_FUNC(int (*sub_462BA0)(), sub_462BA0, 0x462ba0);
-DECL_FUNC(int (__stdcall*sub_462BB0)(int a1, int a2, int a3), sub_462BB0, 0x462bb0);
+DECL_FUNC(int (__stdcall*sub_462BB0)(char *source, int a2, int a3), sub_462BB0, 0x462bb0);
 DECL_FUNC(int (__cdecl*sub_462C10)(const char *ArgList, int a2, int a3), sub_462C10, 0x462c10);
 DECL_FUNC(int (__cdecl*sub_462C40)(const char *ArgList, int a2, int a3, int a4, int a5, int a6, int a7), sub_462C40, 0x462c40);
 DECL_FUNC(int (*sub_462E50)(), sub_462E50, 0x462e50);
 DECL_FUNC(int (__cdecl*sub_462E60)(int a1, int a2, int a3), sub_462E60, 0x462e60);
 DECL_FUNC(int (__cdecl*sub_462E80)(const char *ArgList, int a2, int a3), sub_462E80, 0x462e80);
 DECL_FUNC(int (__stdcall*sub_462EE0)(int a1), sub_462EE0, 0x462ee0);
-int sub_462F00(int a1, int a2, const char *ArgList, int a4, int a5, int a6, int a7, int a8) {
+int sub_462F00(int a1, int a2, const char *ArgList, int a4, int a5, int a6) {
     int address = 0x462f00;
     int result_;
     __asm {
         xor eax, eax
-        push dword ptr a8
-        push dword ptr a7
         push dword ptr a6
         push dword ptr a5
         push dword ptr a4
@@ -2107,21 +2095,18 @@ int sub_462F00(int a1, int a2, const char *ArgList, int a4, int a5, int a6, int 
         mov ebx, a1
         call address
         mov result_, eax
-        add esp, 24
+        add esp, 16
     }
     return result_;
 }
 DECL_FUNC(int (__cdecl*sub_4630A0)(int ArgList, int a2, int a3, int a4, int a5), sub_4630A0, 0x4630a0);
 DECL_FUNC(int (__cdecl*sub_463300)(char ArgList, int a2), sub_463300, 0x463300);
 DECL_FUNC(int (__cdecl*sub_4634C0)(int ArgList, int a2, int a3), sub_4634C0, 0x4634c0);
-int sub_463650(int a1, int a2, int a3, int ArgList, int a5, int a6, int a7, int a8, int a9, int a10, int a11) {
+int sub_463650(int a1, int a2, int a3, int ArgList, int a5, int a6, int a7, int a8) {
     int address = 0x463650;
     int result_;
     __asm {
         xor eax, eax
-        push dword ptr a11
-        push dword ptr a10
-        push dword ptr a9
         push dword ptr a8
         push dword ptr a7
         push dword ptr a6
@@ -2132,7 +2117,7 @@ int sub_463650(int a1, int a2, int a3, int ArgList, int a5, int a6, int a7, int 
         mov ebx, a1
         call address
         mov result_, eax
-        add esp, 32
+        add esp, 20
     }
     return result_;
 }
@@ -2269,7 +2254,7 @@ DECL_FUNC(int (__cdecl*sub_46CBB0)(int a1, int a2), sub_46CBB0, 0x46cbb0);
 DECL_FUNC(int (__cdecl*sub_46CBD0)(int a1, int a2), sub_46CBD0, 0x46cbd0);
 DECL_FUNC(int (__cdecl*sub_46CC40)(int a1, int a2), sub_46CC40, 0x46cc40);
 DECL_FUNC(int (__cdecl*sub_46CD40)(int a1, int a2), sub_46CD40, 0x46cd40);
-DECL_FUNC(int (__cdecl*sub_46CDA0)(int a1, int a2), sub_46CDA0, 0x46cda0);
+DECL_FUNC(int (__cdecl*sub_46CDA0)(int a1, char *source), sub_46CDA0, 0x46cda0);
 DECL_FUNC(int (__cdecl*sub_46D090)(int a1), sub_46D090, 0x46d090);
 DECL_FUNC(int (*sub_46D190)(), sub_46D190, 0x46d190);
 DECL_FUNC(int (__cdecl*sub_46D1A0)(char ArgList), sub_46D1A0, 0x46d1a0);
@@ -2320,14 +2305,14 @@ DECL_FUNC(int (*sub_46F880)(void), sub_46F880, 0x46f880);
 DECL_FUNC(int (*sub_46FA20)(), sub_46FA20, 0x46fa20);
 DECL_FUNC(int (*sub_46FA60)(), sub_46FA60, 0x46fa60);
 DECL_FUNC(int (*sub_46FA90)(), sub_46FA90, 0x46fa90);
-DECL_FUNC(int (__cdecl*sub_46FAA0)(int a1), sub_46FAA0, 0x46faa0);
+DECL_FUNC(int (__cdecl*sub_46FAA0)(char *source), sub_46FAA0, 0x46faa0);
 DECL_FUNC(int (__cdecl*sub_46FAC0)(int a1, int a2, int a3), sub_46FAC0, 0x46fac0);
 DECL_FUNC(int (*sub_46FB60)(void), sub_46FB60, 0x46fb60);
 DECL_FUNC(int (__cdecl*sub_46FCC0)(int a1, int a2), sub_46FCC0, 0x46fcc0);
 DECL_FUNC(int (__cdecl*sub_46FDB0)(char a1, int a2, int a3, char *String1), sub_46FDB0, 0x46fdb0);
 DECL_FUNC(int (__cdecl*sub_470170)(char *String2, char *String1), sub_470170, 0x470170);
 DECL_FUNC(int (__cdecl*sub_470430)(char *String1, char *String2), sub_470430, 0x470430);
-DECL_FUNC(int (__cdecl*sub_4704D0)(char a1, int a2, int a3), sub_4704D0, 0x4704d0);
+DECL_FUNC(int (__cdecl*sub_4704D0)(char a1, char *source, char *new_), sub_4704D0, 0x4704d0);
 DECL_FUNC(int (*sub_470780)(), sub_470780, 0x470780);
 DECL_FUNC(int (__cdecl*sub_470990)(char *String2, int a2), sub_470990, 0x470990);
 DECL_FUNC(int (__cdecl*sub_470AE0)(int a1), sub_470AE0, 0x470ae0);
@@ -2358,8 +2343,8 @@ DECL_FUNC(char * (__cdecl*sub_472A00)(__int16 *a1, _WORD *a2), sub_472A00, 0x472
 DECL_FUNC(unsigned (__cdecl*sub_472EF0)(unsigned __int16 *a1, _WORD *a2, unsigned __int16 *a3), sub_472EF0, 0x472ef0);
 DECL_FUNC(int (*sub_473140)(), sub_473140, 0x473140);
 DECL_FUNC(int (*sub_473150)(), sub_473150, 0x473150);
-DECL_FUNC(int (__cdecl*sub_473170)(int a1, int a2, int a3), sub_473170, 0x473170);
-DECL_FUNC(int (__cdecl*sub_4731A0)(int a1, int a2, int *a3), sub_4731A0, 0x4731a0);
+DECL_FUNC(unsigned (__cdecl*sub_473170)(int a1, int a2, int a3), sub_473170, 0x473170);
+DECL_FUNC(char * (__cdecl*sub_4731A0)(int a1, int a2, int *a3), sub_4731A0, 0x4731a0);
 DECL_FUNC(int (__cdecl*sub_473290)(char *Str, int a2, int a3, int a4, int a5), sub_473290, 0x473290);
 DECL_FUNC(int (__cdecl*sub_473380)(int a1), sub_473380, 0x473380);
 DECL_FUNC(int (__cdecl*sub_4733B0)(char *Str, int a2), sub_4733B0, 0x4733b0);
@@ -2370,7 +2355,7 @@ DECL_FUNC(int (*sub_473680)(), sub_473680, 0x473680);
 DECL_FUNC(int (*sub_473690)(), sub_473690, 0x473690);
 DECL_FUNC(int (*sub_4736C0)(), sub_4736C0, 0x4736c0);
 DECL_FUNC(int (__cdecl*sub_473720)(char *String1), sub_473720, 0x473720);
-DECL_FUNC(int (__cdecl*sub_473760)(int a1), sub_473760, 0x473760);
+DECL_FUNC(int (__cdecl*sub_473760)(char *source), sub_473760, 0x473760);
 DECL_FUNC(int (*sub_473790)(), sub_473790, 0x473790);
 DECL_FUNC(int (*sub_4737B0)(), sub_4737B0, 0x4737b0);
 DECL_FUNC(int (__stdcall*sub_4737C0)(int a1, int a2, int a3), sub_4737C0, 0x4737c0);
@@ -2418,11 +2403,11 @@ DECL_FUNC(int (*sub_475500)(void), sub_475500, 0x475500);
 DECL_FUNC(int (__cdecl*sub_475550)(int a1), sub_475550, 0x475550);
 DECL_FUNC(int (*sub_4755E0)(), sub_4755E0, 0x4755e0);
 DECL_FUNC(int (__cdecl*sub_4755F0)(int a1), sub_4755F0, 0x4755f0);
-DECL_FUNC(int (__cdecl*sub_475620)(int a1), sub_475620, 0x475620);
-DECL_FUNC(int (__cdecl*sub_475680)(int a1, int a2), sub_475680, 0x475680);
+DECL_FUNC(int (__cdecl*sub_475620)(char *source), sub_475620, 0x475620);
+DECL_FUNC(int (__cdecl*sub_475680)(char *source, int a2), sub_475680, 0x475680);
 DECL_FUNC(int (__cdecl*sub_475760)(int a1, char a2), sub_475760, 0x475760);
 DECL_FUNC(int (*sub_4757B0)(), sub_4757B0, 0x4757b0);
-DECL_FUNC(int (__cdecl*sub_475B20)(int a1), sub_475B20, 0x475b20);
+DECL_FUNC(int (__cdecl*sub_475B20)(char *source), sub_475B20, 0x475b20);
 DECL_FUNC(int (__cdecl*sub_475BF0)(int a1, int a2), sub_475BF0, 0x475bf0);
 DECL_FUNC(int (__cdecl*sub_475C70)(int a1), sub_475C70, 0x475c70);
 DECL_FUNC(int (*sub_475D30)(), sub_475D30, 0x475d30);
@@ -2456,9 +2441,9 @@ DECL_FUNC(int (*sub_476540)(), sub_476540, 0x476540);
 DECL_FUNC(int (*sub_476560)(), sub_476560, 0x476560);
 DECL_FUNC(int (__cdecl*sub_476570)(char a1, int a2), sub_476570, 0x476570);
 DECL_FUNC(int (__cdecl*sub_4765F0)(int a1), sub_4765F0, 0x4765f0);
-DECL_FUNC(int (__cdecl*sub_476620)(int a1), sub_476620, 0x476620);
+DECL_FUNC(int (__cdecl*sub_476620)(char *source), sub_476620, 0x476620);
 DECL_FUNC(int (__cdecl*sub_476680)(int a1), sub_476680, 0x476680);
-DECL_FUNC(int (__cdecl*sub_4766F0)(int a1, int a2), sub_4766F0, 0x4766f0);
+DECL_FUNC(int (__cdecl*sub_4766F0)(int a1, char *source), sub_4766F0, 0x4766f0);
 DECL_FUNC(int (__cdecl*sub_476740)(int a1), sub_476740, 0x476740);
 DECL_FUNC(int (*sub_4767A0)(void), sub_4767A0, 0x4767a0);
 DECL_FUNC(int (*sub_4767F0)(), sub_4767F0, 0x4767f0);
@@ -2605,7 +2590,7 @@ DECL_FUNC(int (__cdecl*sub_47B520)(int a1, int a2), sub_47B520, 0x47b520);
 DECL_FUNC(int (*sub_47B660)(), sub_47B660, 0x47b660);
 DECL_FUNC(int (*sub_47B670)(), sub_47B670, 0x47b670);
 DECL_FUNC(_DWORD * (__cdecl*sub_47B690)(int a1, _DWORD *a2), sub_47B690, 0x47b690);
-DECL_FUNC(_DWORD * (__cdecl*sub_47B6C0)(int a1, const void *a2, _DWORD *a3), sub_47B6C0, 0x47b6c0);
+DECL_FUNC(int * (__cdecl*sub_47B6C0)(int a1, const void *a2, _DWORD *a3), sub_47B6C0, 0x47b6c0);
 DECL_FUNC(int (__cdecl*sub_47B730)(int *a1), sub_47B730, 0x47b730);
 DECL_FUNC(_DWORD * (__cdecl*sub_47B940)(int a1), sub_47B940, 0x47b940);
 DECL_FUNC(int (*sub_47B980)(), sub_47B980, 0x47b980);
@@ -2623,20 +2608,24 @@ DECL_FUNC(int (*sub_47BD00)(), sub_47BD00, 0x47bd00);
 DECL_FUNC(int (__cdecl*sub_47BD10)(int a1), sub_47BD10, 0x47bd10);
 DECL_FUNC(int (*sub_47BD40)(), sub_47BD40, 0x47bd40);
 DECL_FUNC(int (*sub_47BD60)(), sub_47BD60, 0x47bd60);
-DECL_FUNC(int (__stdcall*StormLibMemFree)(int a1, int a2, int a3, int a4), StormLibMemFree, 0x47be50);
-DECL_FUNC(int (__stdcall*StormLibMemAlloc)(int a1, int a2, int a3, int a4), StormLibMemAlloc, 0x47be56);
-DECL_FUNC(int (__stdcall*StormLibStrCopy)(int a1, int a2, int a3), StormLibStrCopy, 0x47be5c);
+DECL_FUNC(int (__stdcall*SMemFree)(int a1, int a2, int a3, int a4), SMemFree, 0x47be50);
+DECL_FUNC(int (__stdcall*SMemAlloc)(int a1, int a2, int a3, int a4), SMemAlloc, 0x47be56);
+DECL_FUNC(int (__stdcall*SStrCopy)(char *dest, const char *source, size_t size_), SStrCopy, 0x47be5c);
 DECL_FUNC(int (__stdcall*StormLibStrLen)(int a1), StormLibStrLen, 0x47be62);
-DECL_FUNC(int (__stdcall*StormLibStrNCat)(int a1, int a2, int a3), StormLibStrNCat, 0x47be68);
-DECL_FUNC(int (__stdcall*StormLibStrCmpI)(int a1, int a2, int a3), StormLibStrCmpI, 0x47be6e);
-DECL_FUNC(int (__stdcall*StormLibFileCloseArchive)(int a1), StormLibFileCloseArchive, 0x47be80);
-DECL_FUNC(int (__stdcall*StormLibFileOpenArchive)(int a1, int a2, int a3, int a4), StormLibFileOpenArchive, 0x47be86);
-DECL_FUNC(int (__stdcall*StormLibFileCloseFile)(int a1), StormLibFileCloseFile, 0x47be8c);
-DECL_FUNC(int (__stdcall*StormLibFileOpenFileEx)(int a1, int a2, int a3, int a4), StormLibFileOpenFileEx, 0x47be92);
-DECL_FUNC(int (__stdcall*StormLibRegLoadString)(int a1, int a2, int a3, int a4, int a5), StormLibRegLoadString, 0x47be98);
+DECL_FUNC(int (__stdcall*SStrNCat)(char *base, const char *new_, int max_length), SStrNCat, 0x47be68);
+DECL_FUNC(int (__stdcall*SStrCmpI)(int a1, int a2, int a3), SStrCmpI, 0x47be6e);
+DECL_FUNC(int (*SStrChrR)(), SStrChrR, 0x47be74);
+DECL_FUNC(int (*SNetGetProviderCaps)(), SNetGetProviderCaps, 0x47be7a);
+DECL_FUNC(int (__stdcall*SFileCloseArchive)(HANDLE a1), SFileCloseArchive, 0x47be80);
+DECL_FUNC(int (__stdcall*SFileOpenArchive)(const char *archivename, DWORD dwPriority, DWORD dwFlags, HANDLE handle), SFileOpenArchive, 0x47be86);
+DECL_FUNC(int (__stdcall*SFileCloseFile)(HANDLE a1), SFileCloseFile, 0x47be8c);
+DECL_FUNC(int (__stdcall*SFileOpenFileEx)(HANDLE hMpq, const char *szFileName, DWORD dwSearchScope, HANDLE *phFile), SFileOpenFileEx, 0x47be92);
+DECL_FUNC(int (__stdcall*SRegLoadString)(char *keyname, char *valuename, BYTE flags, char *buffer, size_t buffersize_), SRegLoadString, 0x47be98);
+DECL_FUNC(int (*StormLibVidPlayContinueSingle)(), StormLibVidPlayContinueSingle, 0x47beaa);
 DECL_FUNC(int (__stdcall*StormLibRegLoadValue)(int a1, int a2, int a3, int a4), StormLibRegLoadValue, 0x47beb6);
 DECL_FUNC(int (__stdcall*StormLibFileDdaEnd)(int a1), StormLibFileDdaEnd, 0x47bebc);
 DECL_FUNC(int (__stdcall*StormLibFileDdaSetVolume)(int a1, int a2, int a3), StormLibFileDdaSetVolume, 0x47bec2);
+DECL_FUNC(int (*StormLibFileDdaInitialize)(), StormLibFileDdaInitialize, 0x47bece);
 DECL_FUNC(int (__stdcall*StormLibFileDdaGetPos)(int a1, int a2, int a3), StormLibFileDdaGetPos, 0x47bee0);
 DECL_FUNC(int (__stdcall*StormLibFileDdaBeginEx)(int a1, int a2, int a3, int a4, int a5, int a6, int a7), StormLibFileDdaBeginEx, 0x47bee6);
 DECL_FUNC(int (__stdcall*StormLibStrChr)(int a1, int a2), StormLibStrChr, 0x47beec);
@@ -2659,7 +2648,7 @@ DECL_FUNC(int (__stdcall*StormLibRegSaveString)(int a1, int a2, int a3, int a4),
 DECL_FUNC(int (__stdcall*StormLibNetGetGameInfo)(_DWORD a1, _DWORD a2, _DWORD a3, _DWORD a4), StormLibNetGetGameInfo, 0x47bfd6);
 DECL_FUNC(int (__stdcall*StormLibStrCmp)(int a1, int a2, int a3), StormLibStrCmp, 0x47bfe2);
 DECL_FUNC(int (__stdcall*StormLibErrGetErrorStr)(int a1, int a2, int a3), StormLibErrGetErrorStr, 0x47bffa);
-DECL_FUNC(int (*StormLibNetDestroy)(void), StormLibNetDestroy, 0x47c018);
+DECL_FUNC(int (*StormLibNetDestroy)(), StormLibNetDestroy, 0x47c018);
 DECL_FUNC(int (__stdcall*StormLibNetSetGameMode)(_DWORD a1), StormLibNetSetGameMode, 0x47c03c);
 DECL_FUNC(int (__stdcall*StormLibNetGetNumPlayers)(_DWORD a1, _DWORD a2, _DWORD a3), StormLibNetGetNumPlayers, 0x47c042);
 DECL_FUNC(int (__stdcall*StormLibNetLeaveGame)(int a1), StormLibNetLeaveGame, 0x47c048);
@@ -2672,7 +2661,7 @@ DECL_FUNC(int (*sub_47F357)(), sub_47F357, 0x47f357);
 DECL_FUNC(LPVOID (__cdecl*sub_47FD63)(unsigned int a1), sub_47FD63, 0x47fd63);
 DECL_FUNC(void * (__cdecl*sub_48057B)(LPVOID lpMem, SIZE_T dwBytes), sub_48057B, 0x48057b);
 DECL_FUNC(int (__cdecl*sub_4808AA)(LPCVOID lpMem), sub_4808AA, 0x4808aa);
-DECL_FUNC(int (__cdecl*sub_480998)(int a1, int a2), sub_480998, 0x480998);
+DECL_FUNC(void * (__cdecl*sub_480998)(int a1, int a2), sub_480998, 0x480998);
 DECL_FUNC(int (__cdecl*sub_481AC1)(int a1), sub_481AC1, 0x481ac1);
 DECL_FUNC(int (*sub_481AEE)(void), sub_481AEE, 0x481aee);
 DECL_FUNC(int (__cdecl*_heap_init)(int a1), _heap_init, 0x481c36);
@@ -2687,11 +2676,11 @@ DECL_FUNC(void ** (*sub_48378D)(), sub_48378D, 0x48378d);
 DECL_FUNC(void ** (__cdecl*sub_4838D1)(LPVOID lpMem), sub_4838D1, 0x4838d1);
 DECL_FUNC(void (__cdecl*sub_483927)(int a1), sub_483927, 0x483927);
 DECL_FUNC(unsigned (__cdecl*sub_4839E9)(unsigned int a1, void ***a2, unsigned int *a3), sub_4839E9, 0x4839e9);
-DECL_FUNC(_DWORD * (__cdecl*sub_483A40)(int a1, int a2, _BYTE *a3), sub_483A40, 0x483a40);
+DECL_FUNC(void (__cdecl*sub_483A40)(int a1, int a2, _BYTE *a3), sub_483A40, 0x483a40);
 DECL_FUNC(_DWORD * (__cdecl*sub_483A85)(unsigned int a1), sub_483A85, 0x483a85);
 DECL_FUNC(int (__cdecl*sub_483C8D)(int a1, unsigned int a2, unsigned int a3), sub_483C8D, 0x483c8d);
 DECL_FUNC(int (__cdecl*sub_483DB1)(int a1, _DWORD *a2, _BYTE *a3, unsigned int a4), sub_483DB1, 0x483db1);
-DECL_FUNC(char (__fastcall*sub_4860C0)(int a1), sub_4860C0, 0x4860c0);
+DECL_FUNC(char (*sub_4860C0)(), sub_4860C0, 0x4860c0);
 DECL_FUNC(__int16 (__cdecl*sub_4861A0)(__int16 a1, __int16 a2, __int16 a3, __int16 a4), sub_4861A0, 0x4861a0);
 DECL_FUNC(int (__cdecl*sub_486290)(int a1), sub_486290, 0x486290);
 DECL_FUNC(__int16 (__cdecl*sub_4862B0)(unsigned __int8 a1), sub_4862B0, 0x4862b0);
@@ -2720,7 +2709,7 @@ DECL_FUNC(int (*sub_486B00)(), sub_486B00, 0x486b00);
 DECL_FUNC(char (__cdecl*sub_486B10)(int a1), sub_486B10, 0x486b10);
 DECL_FUNC(int (*sub_486B80)(), sub_486B80, 0x486b80);
 DECL_FUNC(int (__cdecl*sub_486B90)(char a1), sub_486B90, 0x486b90);
-DECL_FUNC(_BYTE * (__cdecl*sub_486C00)(_BYTE *a1), sub_486C00, 0x486c00);
+DECL_FUNC(unsigned (__cdecl*sub_486C00)(_BYTE *a1), sub_486C00, 0x486c00);
 DECL_FUNC(int (__cdecl*sub_486DA0)(int a1, int a2, int a3), sub_486DA0, 0x486da0);
 DECL_FUNC(int (__cdecl*sub_4873C0)(int a1, int a2, char *Format, char ArgList), sub_4873C0, 0x4873c0);
 DECL_FUNC(int (__cdecl*sub_487400)(int a1, int a2, int a3), sub_487400, 0x487400);
@@ -2813,7 +2802,7 @@ DECL_FUNC(int (__cdecl*sub_489B50)(FILE *Stream), sub_489B50, 0x489b50);
 DECL_FUNC(int (__cdecl*sub_489B60)(void *Buffer, size_t ElementSize, FILE *Stream), sub_489B60, 0x489b60);
 DECL_FUNC(int (__cdecl*sub_489B80)(void *Buffer, size_t ElementSize, FILE *Stream), sub_489B80, 0x489b80);
 DECL_FUNC(char * (__cdecl*sub_489BA0)(char *Source, char *Destination, int a3), sub_489BA0, 0x489ba0);
-DECL_FUNC(int (__cdecl*sub_489BE0)(int a1, int a2, int a3), sub_489BE0, 0x489be0);
+DECL_FUNC(int (__cdecl*sub_489BE0)(char *base, char *source, char *new_), sub_489BE0, 0x489be0);
 DECL_FUNC(int (__cdecl*sub_489C50)(int a1, int a2), sub_489C50, 0x489c50);
 DECL_FUNC(int (*sub_489CB0)(), sub_489CB0, 0x489cb0);
 DECL_FUNC(BOOL (__cdecl*sub_489CC0)(LPCSTR lpFileName, int a2, int a3, int a4), sub_489CC0, 0x489cc0);
@@ -3124,10 +3113,10 @@ __int16& word_4912F8 = * ((decltype(&word_4912F8)) 0x4912f8);
 int& dword_49131C = * ((decltype(&dword_49131C)) 0x49131c);
 __int16(&word_491320)[] = * ((decltype(&word_491320)) 0x491320);
 char(&byte_491322)[] = * ((decltype(&byte_491322)) 0x491322);
-const int& off_491344 = * ((decltype(&off_491344)) 0x491344);
-char *(&off_491348)[3] = * ((decltype(&off_491348)) 0x491348);
-char *(&off_49134C)[2] = * ((decltype(&off_49134C)) 0x49134c);
-const int& off_491350 = * ((decltype(&off_491350)) 0x491350);
+char *const& off_491344 = * ((decltype(&off_491344)) 0x491344);
+char *const& off_491348 = * ((decltype(&off_491348)) 0x491348);
+char *const& off_49134C = * ((decltype(&off_49134C)) 0x49134c);
+char *const& off_491350 = * ((decltype(&off_491350)) 0x491350);
 int& dword_491354 = * ((decltype(&dword_491354)) 0x491354);
 int& dword_491358 = * ((decltype(&dword_491358)) 0x491358);
 int& dword_49135C = * ((decltype(&dword_49135C)) 0x49135c);
@@ -3866,7 +3855,7 @@ char(&asc_4965AC)[3] = * ((decltype(&asc_4965AC)) 0x4965ac);
 char(&asc_4965B0)[2] = * ((decltype(&asc_4965B0)) 0x4965b0);
 char(&asc_4965B4)[5] = * ((decltype(&asc_4965B4)) 0x4965b4);
 char(&aRezFileflt2Tbl)[17] = * ((decltype(&aRezFileflt2Tbl)) 0x4965bc);
-char(&asc_4965D0)[4] = * ((decltype(&asc_4965D0)) 0x4965d0);
+char(&asc_4965D0)[] = * ((decltype(&asc_4965D0)) 0x4965d0);
 int (__cdecl *(&off_4965D4)[48])(int, int) = * ((decltype(&off_4965D4)) 0x4965d4);
 int (__cdecl *(&off_496618)[31])(int, int) = * ((decltype(&off_496618)) 0x496618);
 char(&aRezAllyfltrBin)[17] = * ((decltype(&aRezAllyfltrBin)) 0x496694);
@@ -4235,12 +4224,12 @@ char(&aRezDataversion)[20] = * ((decltype(&aRezDataversion)) 0x49db90);
 char(&aInstallExe)[] = * ((decltype(&aInstallExe)) 0x49dba4);
 char(&aWar2patchMpq)[15] = * ((decltype(&aWar2patchMpq)) 0x49dbb0);
 char(&aWar2datMpq_0)[] = * ((decltype(&aWar2datMpq_0)) 0x49dbc0);
-char(&aWar2datMpq)[13] = * ((decltype(&aWar2datMpq)) 0x49dbcc);
+char(&aWar2datMpq)[] = * ((decltype(&aWar2datMpq)) 0x49dbcc);
 char(&aSignal1)[] = * ((decltype(&aSignal1)) 0x49dbdc);
 char(&aRezCdversionTx)[18] = * ((decltype(&aRezCdversionTx)) 0x49dbe8);
-char(&aInstallExe_0)[13] = * ((decltype(&aInstallExe_0)) 0x49dbfc);
-char(&aWarcraftIiBne)[16] = * ((decltype(&aWarcraftIiBne)) 0x49dc0c);
-char(&aWar2cd)[7] = * ((decltype(&aWar2cd)) 0x49dc1c);
+char(&aInstallExe_0)[] = * ((decltype(&aInstallExe_0)) 0x49dbfc);
+char(&keyname)[] = * ((decltype(&keyname)) 0x49dc0c);
+char(&valuename)[] = * ((decltype(&valuename)) 0x49dc1c);
 char(&aWarcraftIiBneV)[] = * ((decltype(&aWarcraftIiBneV)) 0x49dc24);
 __int16& word_49DC40 = * ((decltype(&word_49DC40)) 0x49dc40);
 int& dword_49DC44 = * ((decltype(&dword_49DC44)) 0x49dc44);
@@ -4631,7 +4620,7 @@ int (*(&funcs_43B8E8)[7])() = * ((decltype(&funcs_43B8E8)) 0x4a1520);
 char(&aID)[] = * ((decltype(&aID)) 0x4a153c);
 char(&aFindChunkRead)[] = * ((decltype(&aFindChunkRead)) 0x4a1544);
 int (__cdecl *(&off_4A1558)[3])(int, int) = * ((decltype(&off_4A1558)) 0x4a1558);
-char *(&off_4A1564)[22] = * ((decltype(&off_4A1564)) 0x4a1564);
+char *& off_4A1564 = * ((decltype(&off_4A1564)) 0x4a1564);
 char(&aLpt9)[5] = * ((decltype(&aLpt9)) 0x4a15bc);
 char(&aLpt8)[5] = * ((decltype(&aLpt8)) 0x4a15c4);
 char(&aLpt7)[5] = * ((decltype(&aLpt7)) 0x4a15cc);
@@ -4654,7 +4643,7 @@ char(&aAux)[4] = * ((decltype(&aAux)) 0x4a164c);
 char(&aPrn)[4] = * ((decltype(&aPrn)) 0x4a1650);
 char(&aCon)[4] = * ((decltype(&aCon)) 0x4a1654);
 char(&aNul)[4] = * ((decltype(&aNul)) 0x4a1658);
-char(&aSave)[6] = * ((decltype(&aSave)) 0x4a165c);
+char(&aSave)[] = * ((decltype(&aSave)) 0x4a165c);
 char(&aCWar2bneLangSo_46)[36] = * ((decltype(&aCWar2bneLangSo_46)) 0x4a1664);
 char(&aMlt_0)[] = * ((decltype(&aMlt_0)) 0x4a1688);
 char(&aNet_0)[] = * ((decltype(&aNet_0)) 0x4a1690);
@@ -4664,7 +4653,7 @@ char(&aRezLoadgamtBin)[17] = * ((decltype(&aRezLoadgamtBin)) 0x4a16b4);
 char(&aArtO192x128Bmp)[17] = * ((decltype(&aArtO192x128Bmp)) 0x4a16c8);
 char(&aArtH192x128Bmp)[17] = * ((decltype(&aArtH192x128Bmp)) 0x4a16dc);
 char(&aRezSavegameBin)[17] = * ((decltype(&aRezSavegameBin)) 0x4a16f0);
-char(&asc_4A1704)[2] = * ((decltype(&asc_4A1704)) 0x4a1704);
+char(&asc_4A1704)[] = * ((decltype(&asc_4A1704)) 0x4a1704);
 int (__cdecl *(&off_4A1708)[2])(int, int) = * ((decltype(&off_4A1708)) 0x4a1708);
 char(&aRezIntrfaceBin)[17] = * ((decltype(&aRezIntrfaceBin)) 0x4a172c);
 char(&aCWar2bneLangSo_47)[36] = * ((decltype(&aCWar2bneLangSo_47)) 0x4a1740);
@@ -4825,7 +4814,7 @@ char(&aRezWmissionBin)[17] = * ((decltype(&aRezWmissionBin)) 0x4a48fc);
 char(&aRezLmissionBin)[17] = * ((decltype(&aRezLmissionBin)) 0x4a4910);
 char(&aCWar2bneLangSo_44)[35] = * ((decltype(&aCWar2bneLangSo_44)) 0x4a4924);
 char(&aCWar2bneNetMod)[25] = * ((decltype(&aCWar2bneNetMod)) 0x4a4948);
-char(&asc_4A4964)[10] = * ((decltype(&asc_4A4964)) 0x4a4964);
+char(&asc_4A4964)[] = * ((decltype(&asc_4A4964)) 0x4a4964);
 char(&aCommDatamodem)[15] = * ((decltype(&aCommDatamodem)) 0x4a4970);
 int& dword_4A4980 = * ((decltype(&dword_4A4980)) 0x4a4980);
 int& dword_4A4984 = * ((decltype(&dword_4A4984)) 0x4a4984);
@@ -4950,7 +4939,7 @@ char(&aCWar2bneBattle_23)[34] = * ((decltype(&aCWar2bneBattle_23)) 0x4a581c);
 char(&aBne_0)[] = * ((decltype(&aBne_0)) 0x4a5840);
 char(&aPud_0)[] = * ((decltype(&aPud_0)) 0x4a5844);
 char(&aAutfdUser)[15] = * ((decltype(&aAutfdUser)) 0x4a5850);
-char(&aUnknown)[10] = * ((decltype(&aUnknown)) 0x4a5860);
+char(&aUnknown)[] = * ((decltype(&aUnknown)) 0x4a5860);
 char(&aCWar2bneBattle)[35] = * ((decltype(&aCWar2bneBattle)) 0x4a586c);
 char(&aU)[] = * ((decltype(&aU)) 0x4a5890);
 char(&aCWar2bneBattle_1)[35] = * ((decltype(&aCWar2bneBattle_1)) 0x4a5894);
@@ -5018,7 +5007,7 @@ char(&aCWar2bneBattle_3)[36] = * ((decltype(&aCWar2bneBattle_3)) 0x4a5e84);
 char(&aIcon)[5] = * ((decltype(&aIcon)) 0x4a5ea8);
 char(&aGlueBattleNetI_0)[37] = * ((decltype(&aGlueBattleNetI_0)) 0x4a5eb0);
 char(&aGlueBattleNetI)[33] = * ((decltype(&aGlueBattleNetI)) 0x4a5ed8);
-char(&asc_4A5EFC)[3] = * ((decltype(&asc_4A5EFC)) 0x4a5efc);
+char(&asc_4A5EFC)[] = * ((decltype(&asc_4A5EFC)) 0x4a5efc);
 int& dword_4A5F00 = * ((decltype(&dword_4A5F00)) 0x4a5f00);
 int(&dword_4A5F04)[5] = * ((decltype(&dword_4A5F04)) 0x4a5f04);
 char *(&off_4A5F18)[2] = * ((decltype(&off_4A5F18)) 0x4a5f18);
@@ -5033,8 +5022,8 @@ char(&aGameType)[10] = * ((decltype(&aGameType)) 0x4a6068);
 char(&aTileset)[8] = * ((decltype(&aTileset)) 0x4a6074);
 char(&aCWar2bneBattle_18)[38] = * ((decltype(&aCWar2bneBattle_18)) 0x4a607c);
 char(&aDialogCreateGa)[19] = * ((decltype(&aDialogCreateGa)) 0x4a60a4);
-char(&asc_4A60B8)[2] = * ((decltype(&asc_4A60B8)) 0x4a60b8);
-char(&aGameSpeed)[11] = * ((decltype(&aGameSpeed)) 0x4a60bc);
+char(&asc_4A60B8)[] = * ((decltype(&asc_4A60B8)) 0x4a60b8);
+char(&aGameSpeed)[] = * ((decltype(&aGameSpeed)) 0x4a60bc);
 char(&aGlueBattleNetG_2)[46] = * ((decltype(&aGlueBattleNetG_2)) 0x4a60c8);
 char(&aCheck)[6] = * ((decltype(&aCheck)) 0x4a60f8);
 char(&aGlueBattleNetG_1)[47] = * ((decltype(&aGlueBattleNetG_1)) 0x4a6100);
@@ -5107,7 +5096,7 @@ char *& off_4A66C4 = * ((decltype(&off_4A66C4)) 0x4a66c4);
 int& dword_4A66C8 = * ((decltype(&dword_4A66C8)) 0x4a66c8);
 char(&aProfileSex_0)[12] = * ((decltype(&aProfileSex_0)) 0x4a6934);
 char(&a0)[2] = * ((decltype(&a0)) 0x4a6940);
-char(&aAt)[5] = * ((decltype(&aAt)) 0x4a6944);
+char(&aAt)[] = * ((decltype(&aAt)) 0x4a6944);
 CHAR(&Format)[] = * ((decltype(&Format)) 0x4a694c);
 char(&aCWar2bneBattle_5)[39] = * ((decltype(&aCWar2bneBattle_5)) 0x4a6954);
 char(&aDialogStaticPr_0)[22] = * ((decltype(&aDialogStaticPr_0)) 0x4a697c);
@@ -5139,12 +5128,12 @@ char(&aCWar2bneBattle_0)[32] = * ((decltype(&aCWar2bneBattle_0)) 0x4a6ee4);
 char(&aInvalidGlueScr)[] = * ((decltype(&aInvalidGlueScr)) 0x4a6f04);
 char(&aCWar2bneBattle_20)[33] = * ((decltype(&aCWar2bneBattle_20)) 0x4a6f2c);
 char(&aAulistentry)[16] = * ((decltype(&aAulistentry)) 0x4a6f58);
-char(&asc_4A6F68)[2] = * ((decltype(&asc_4A6F68)) 0x4a6f68);
-char(&asc_4A6F6C)[2] = * ((decltype(&asc_4A6F6C)) 0x4a6f6c);
+char(&asc_4A6F68)[] = * ((decltype(&asc_4A6F68)) 0x4a6f68);
+char(&asc_4A6F6C)[] = * ((decltype(&asc_4A6F6C)) 0x4a6f6c);
 char(&aRecentMaps)[12] = * ((decltype(&aRecentMaps)) 0x4a6f70);
 char(&asc_4A6F7C)[] = * ((decltype(&asc_4A6F7C)) 0x4a6f7c);
 char(&aErrorInMapEraX)[] = * ((decltype(&aErrorInMapEraX)) 0x4a6f80);
-char(&asc_4A6F98)[4] = * ((decltype(&asc_4A6F98)) 0x4a6f98);
+char(&asc_4A6F98)[] = * ((decltype(&asc_4A6F98)) 0x4a6f98);
 char(&aUS_0)[] = * ((decltype(&aUS_0)) 0x4a6f9c);
 char(&aUS)[] = * ((decltype(&aUS)) 0x4a6fa4);
 int& dword_4A6FAC = * ((decltype(&dword_4A6FAC)) 0x4a6fac);
@@ -5177,7 +5166,7 @@ char(&aOninitdata)[13] = * ((decltype(&aOninitdata)) 0x4a7178);
 char(&aCreategameMult)[25] = * ((decltype(&aCreategameMult)) 0x4a7188);
 char(&aCWar2bneBattle_11)[34] = * ((decltype(&aCWar2bneBattle_11)) 0x4a71a4);
 char(&aCWar2bneBattle_13)[35] = * ((decltype(&aCWar2bneBattle_13)) 0x4a71c8);
-char(&aDownload)[11] = * ((decltype(&aDownload)) 0x4a71ec);
+char(&aDownload)[] = * ((decltype(&aDownload)) 0x4a71ec);
 char(&aCWar2bneBattle_15)[37] = * ((decltype(&aCWar2bneBattle_15)) 0x4a71f8);
 char(&aWar2bne)[8] = * ((decltype(&aWar2bne)) 0x4a7220);
 char(&asc_4A7228)[4] = * ((decltype(&asc_4A7228)) 0x4a7228);
@@ -5273,59 +5262,59 @@ char(&aCWar2bneGdsVid)[28] = * ((decltype(&aCWar2bneGdsVid)) 0x4aa9d0);
 int& dword_4AA9EC = * ((decltype(&dword_4AA9EC)) 0x4aa9ec);
 char(&aUnknownError0x)[] = * ((decltype(&aUnknownError0x)) 0x4aa9f0);
 char(&aMmsysError0xX)[17] = * ((decltype(&aMmsysError0xX)) 0x4aaa08);
-char(&aDderrNotpalett)[20] = * ((decltype(&aDderrNotpalett)) 0x4aaa1c);
-char(&aDderrUnsupport_0)[22] = * ((decltype(&aDderrUnsupport_0)) 0x4aaa30);
-char(&aDdOk)[6] = * ((decltype(&aDdOk)) 0x4aaa48);
+char(&aDderrNotpalett)[] = * ((decltype(&aDderrNotpalett)) 0x4aaa1c);
+char(&aDderrUnsupport_0)[] = * ((decltype(&aDderrUnsupport_0)) 0x4aaa30);
+char(&aDdOk)[] = * ((decltype(&aDdOk)) 0x4aaa48);
 char(&aDderrUnknown0x)[19] = * ((decltype(&aDderrUnknown0x)) 0x4aaa50);
-char(&aDderrWrongmode)[16] = * ((decltype(&aDderrWrongmode)) 0x4aaa64);
-char(&aDderrNodc)[11] = * ((decltype(&aDderrNodc)) 0x4aaa74);
-char(&aDderrCantcreat)[19] = * ((decltype(&aDderrCantcreat)) 0x4aaa80);
-char(&aDderrExclusive)[30] = * ((decltype(&aDderrExclusive)) 0x4aaa94);
-char(&aDderrNopalette_0)[18] = * ((decltype(&aDderrNopalette_0)) 0x4aaab4);
-char(&aDderrNopalette)[24] = * ((decltype(&aDderrNopalette)) 0x4aaac8);
-char(&aDderrHwndalrea)[21] = * ((decltype(&aDderrHwndalrea)) 0x4aaae0);
-char(&aDderrHwndsubcl)[21] = * ((decltype(&aDderrHwndsubcl)) 0x4aaaf8);
-char(&aDderrNohwnd)[13] = * ((decltype(&aDderrNohwnd)) 0x4aab10);
-char(&aDderrNoemulati)[18] = * ((decltype(&aDderrNoemulati)) 0x4aab20);
-char(&aDderrPrimarysu)[34] = * ((decltype(&aDderrPrimarysu)) 0x4aab34);
-char(&aDderrNodirectd_0)[21] = * ((decltype(&aDderrNodirectd_0)) 0x4aab58);
-char(&aDderrDirectdra)[31] = * ((decltype(&aDderrDirectdra)) 0x4aab70);
-char(&aDderrInvaliddi)[28] = * ((decltype(&aDderrInvaliddi)) 0x4aab90);
-char(&aDderrWasstilld)[22] = * ((decltype(&aDderrWasstilld)) 0x4aabac);
-char(&aDderrVerticalb)[30] = * ((decltype(&aDderrVerticalb)) 0x4aabc4);
-char(&aDderrUnsupport)[24] = * ((decltype(&aDderrUnsupport)) 0x4aabe4);
-char(&aDderrSurfacelo)[18] = * ((decltype(&aDderrSurfacelo)) 0x4aabfc);
-char(&aDderrCantlocks)[22] = * ((decltype(&aDderrCantlocks)) 0x4aac10);
-char(&aDderrSurfacebu)[18] = * ((decltype(&aDderrSurfacebu)) 0x4aac28);
-char(&aDderrPalettebu)[18] = * ((decltype(&aDderrPalettebu)) 0x4aac3c);
-char(&aDderrOutofvide)[23] = * ((decltype(&aDderrOutofvide)) 0x4aac50);
-char(&aDderrNotfound)[15] = * ((decltype(&aDderrNotfound)) 0x4aac68);
-char(&aDderrNoexclusi)[22] = * ((decltype(&aDderrNoexclusi)) 0x4aac78);
-char(&aDderrNodirectd)[26] = * ((decltype(&aDderrNodirectd)) 0x4aac90);
-char(&aDderrLockedsur)[21] = * ((decltype(&aDderrLockedsur)) 0x4aacac);
-char(&aDderrInvalidre)[18] = * ((decltype(&aDderrInvalidre)) 0x4aacc4);
-char(&aDderrInvalidpi)[25] = * ((decltype(&aDderrInvalidpi)) 0x4aacd8);
-char(&aDderrInvalidmo)[18] = * ((decltype(&aDderrInvalidmo)) 0x4aacf4);
-char(&aDderrCurrently)[24] = * ((decltype(&aDderrCurrently)) 0x4aad08);
-char(&aDderrCannotdet)[26] = * ((decltype(&aDderrCannotdet)) 0x4aad20);
-char(&aDderrCannotatt)[26] = * ((decltype(&aDderrCannotatt)) 0x4aad3c);
-char(&aDderrIncompati)[26] = * ((decltype(&aDderrIncompati)) 0x4aad58);
-char(&aDderrException)[16] = * ((decltype(&aDderrException)) 0x4aad74);
-char(&aDderrAlreadyin)[25] = * ((decltype(&aDderrAlreadyin)) 0x4aad84);
-char(&aDserrBufferlos)[17] = * ((decltype(&aDserrBufferlos)) 0x4aada0);
-char(&aDsOk)[6] = * ((decltype(&aDsOk)) 0x4aadb4);
+char(&aDderrWrongmode)[] = * ((decltype(&aDderrWrongmode)) 0x4aaa64);
+char(&aDderrNodc)[] = * ((decltype(&aDderrNodc)) 0x4aaa74);
+char(&aDderrCantcreat)[] = * ((decltype(&aDderrCantcreat)) 0x4aaa80);
+char(&aDderrExclusive)[] = * ((decltype(&aDderrExclusive)) 0x4aaa94);
+char(&aDderrNopalette_0)[] = * ((decltype(&aDderrNopalette_0)) 0x4aaab4);
+char(&aDderrNopalette)[] = * ((decltype(&aDderrNopalette)) 0x4aaac8);
+char(&aDderrHwndalrea)[] = * ((decltype(&aDderrHwndalrea)) 0x4aaae0);
+char(&aDderrHwndsubcl)[] = * ((decltype(&aDderrHwndsubcl)) 0x4aaaf8);
+char(&aDderrNohwnd)[] = * ((decltype(&aDderrNohwnd)) 0x4aab10);
+char(&aDderrNoemulati)[] = * ((decltype(&aDderrNoemulati)) 0x4aab20);
+char(&aDderrPrimarysu)[] = * ((decltype(&aDderrPrimarysu)) 0x4aab34);
+char(&aDderrNodirectd_0)[] = * ((decltype(&aDderrNodirectd_0)) 0x4aab58);
+char(&aDderrDirectdra)[] = * ((decltype(&aDderrDirectdra)) 0x4aab70);
+char(&aDderrInvaliddi)[] = * ((decltype(&aDderrInvaliddi)) 0x4aab90);
+char(&aDderrWasstilld)[] = * ((decltype(&aDderrWasstilld)) 0x4aabac);
+char(&aDderrVerticalb)[] = * ((decltype(&aDderrVerticalb)) 0x4aabc4);
+char(&aDderrUnsupport)[] = * ((decltype(&aDderrUnsupport)) 0x4aabe4);
+char(&aDderrSurfacelo)[] = * ((decltype(&aDderrSurfacelo)) 0x4aabfc);
+char(&aDderrCantlocks)[] = * ((decltype(&aDderrCantlocks)) 0x4aac10);
+char(&aDderrSurfacebu)[] = * ((decltype(&aDderrSurfacebu)) 0x4aac28);
+char(&aDderrPalettebu)[] = * ((decltype(&aDderrPalettebu)) 0x4aac3c);
+char(&aDderrOutofvide)[] = * ((decltype(&aDderrOutofvide)) 0x4aac50);
+char(&aDderrNotfound)[] = * ((decltype(&aDderrNotfound)) 0x4aac68);
+char(&aDderrNoexclusi)[] = * ((decltype(&aDderrNoexclusi)) 0x4aac78);
+char(&aDderrNodirectd)[] = * ((decltype(&aDderrNodirectd)) 0x4aac90);
+char(&aDderrLockedsur)[] = * ((decltype(&aDderrLockedsur)) 0x4aacac);
+char(&aDderrInvalidre)[] = * ((decltype(&aDderrInvalidre)) 0x4aacc4);
+char(&aDderrInvalidpi)[] = * ((decltype(&aDderrInvalidpi)) 0x4aacd8);
+char(&aDderrInvalidmo)[] = * ((decltype(&aDderrInvalidmo)) 0x4aacf4);
+char(&aDderrCurrently)[] = * ((decltype(&aDderrCurrently)) 0x4aad08);
+char(&aDderrCannotdet)[] = * ((decltype(&aDderrCannotdet)) 0x4aad20);
+char(&aDderrCannotatt)[] = * ((decltype(&aDderrCannotatt)) 0x4aad3c);
+char(&aDderrIncompati)[] = * ((decltype(&aDderrIncompati)) 0x4aad58);
+char(&aDderrException)[] = * ((decltype(&aDderrException)) 0x4aad74);
+char(&aDderrAlreadyin)[] = * ((decltype(&aDderrAlreadyin)) 0x4aad84);
+char(&aDserrBufferlos)[] = * ((decltype(&aDserrBufferlos)) 0x4aada0);
+char(&aDsOk)[] = * ((decltype(&aDsOk)) 0x4aadb4);
 char(&aDserrUnknown0x)[19] = * ((decltype(&aDserrUnknown0x)) 0x4aadbc);
-char(&aDserrAlreadyin)[25] = * ((decltype(&aDserrAlreadyin)) 0x4aadd0);
-char(&aDserrPriolevel)[22] = * ((decltype(&aDserrPriolevel)) 0x4aadec);
-char(&aDserrBadformat)[16] = * ((decltype(&aDserrBadformat)) 0x4aae04);
-char(&aDserrNodriver)[15] = * ((decltype(&aDserrNodriver)) 0x4aae14);
-char(&aDserrInvalidca)[18] = * ((decltype(&aDserrInvalidca)) 0x4aae24);
-char(&aDserrAllocated)[16] = * ((decltype(&aDserrAllocated)) 0x4aae38);
-char(&aDserrControlun)[21] = * ((decltype(&aDserrControlun)) 0x4aae48);
-char(&aDserrInvalidpa)[19] = * ((decltype(&aDserrInvalidpa)) 0x4aae60);
-char(&aENointerface)[14] = * ((decltype(&aENointerface)) 0x4aae74);
-char(&aDserrNoaggrega)[20] = * ((decltype(&aDserrNoaggrega)) 0x4aae84);
-char(&aDserrOutofmemo)[18] = * ((decltype(&aDserrOutofmemo)) 0x4aae98);
+char(&aDserrAlreadyin)[] = * ((decltype(&aDserrAlreadyin)) 0x4aadd0);
+char(&aDserrPriolevel)[] = * ((decltype(&aDserrPriolevel)) 0x4aadec);
+char(&aDserrBadformat)[] = * ((decltype(&aDserrBadformat)) 0x4aae04);
+char(&aDserrNodriver)[] = * ((decltype(&aDserrNodriver)) 0x4aae14);
+char(&aDserrInvalidca)[] = * ((decltype(&aDserrInvalidca)) 0x4aae24);
+char(&aDserrAllocated)[] = * ((decltype(&aDserrAllocated)) 0x4aae38);
+char(&aDserrControlun)[] = * ((decltype(&aDserrControlun)) 0x4aae48);
+char(&aDserrInvalidpa)[] = * ((decltype(&aDserrInvalidpa)) 0x4aae60);
+char(&aENointerface)[] = * ((decltype(&aENointerface)) 0x4aae74);
+char(&aDserrNoaggrega)[] = * ((decltype(&aDserrNoaggrega)) 0x4aae84);
+char(&aDserrOutofmemo)[] = * ((decltype(&aDserrOutofmemo)) 0x4aae98);
 char(&aSSLineDS)[] = * ((decltype(&aSSLineDS)) 0x4aaeac);
 __int16& word_4AAEC0 = * ((decltype(&word_4AAEC0)) 0x4aaec0);
 char(&aCWar2bneGdsApp_0)[26] = * ((decltype(&aCWar2bneGdsApp_0)) 0x4aaec4);
@@ -5334,8 +5323,8 @@ HANDLE& hFile = * ((decltype(&hFile)) 0x4aaee4);
 int& dword_4AAEE8 = * ((decltype(&dword_4AAEE8)) 0x4aaee8);
 char(&aSS02u02u02uErr)[] = * ((decltype(&aSS02u02u02uErr)) 0x4aaeec);
 char(&aSerrors)[] = * ((decltype(&aSerrors)) 0x4aaf04);
-char(&aInternal)[9] = * ((decltype(&aInternal)) 0x4aaf10);
-char(&aDebugLogPath)[15] = * ((decltype(&aDebugLogPath)) 0x4aaf1c);
+char(&aInternal)[] = * ((decltype(&aInternal)) 0x4aaf10);
+char(&aDebugLogPath)[] = * ((decltype(&aDebugLogPath)) 0x4aaf1c);
 char(&aProgra)[] = * ((decltype(&aProgra)) 0x4aaf2c);
 char(&aCreatebacksurf)[18] = * ((decltype(&aCreatebacksurf)) 0x4aafe0);
 char(&aSetpalette)[11] = * ((decltype(&aSetpalette)) 0x4aaff4);
@@ -5457,7 +5446,7 @@ __int16& word_4AB9F4 = * ((decltype(&word_4AB9F4)) 0x4ab9f4);
 __int16& word_4AB9F6 = * ((decltype(&word_4AB9F6)) 0x4ab9f6);
 int& dword_4ABA14 = * ((decltype(&dword_4ABA14)) 0x4aba14);
 char& byte_4ABA54 = * ((decltype(&byte_4ABA54)) 0x4aba54);
-int& dword_4ABB14 = * ((decltype(&dword_4ABB14)) 0x4abb14);
+int(&dword_4ABB14)[] = * ((decltype(&dword_4ABB14)) 0x4abb14);
 int& dword_4ABB18 = * ((decltype(&dword_4ABB18)) 0x4abb18);
 int& dword_4ABB54 = * ((decltype(&dword_4ABB54)) 0x4abb54);
 int& dword_4ABB58 = * ((decltype(&dword_4ABB58)) 0x4abb58);
@@ -5469,7 +5458,7 @@ int& dword_4ABB88 = * ((decltype(&dword_4ABB88)) 0x4abb88);
 char& byte_4ABB8F = * ((decltype(&byte_4ABB8F)) 0x4abb8f);
 char& byte_4ABB90 = * ((decltype(&byte_4ABB90)) 0x4abb90);
 __int16& word_4ABB94 = * ((decltype(&word_4ABB94)) 0x4abb94);
-int& dword_4ABBF8 = * ((decltype(&dword_4ABBF8)) 0x4abbf8);
+int(&dword_4ABBF8)[] = * ((decltype(&dword_4ABBF8)) 0x4abbf8);
 int& dword_4ABBFC = * ((decltype(&dword_4ABBFC)) 0x4abbfc);
 int& dword_4ABC38 = * ((decltype(&dword_4ABC38)) 0x4abc38);
 int& dword_4ABC3C = * ((decltype(&dword_4ABC3C)) 0x4abc3c);
@@ -5524,8 +5513,8 @@ int& dword_4AC104 = * ((decltype(&dword_4AC104)) 0x4ac104);
 __int16& word_4AC108 = * ((decltype(&word_4AC108)) 0x4ac108);
 int& dword_4ACB28 = * ((decltype(&dword_4ACB28)) 0x4acb28);
 int& dword_4ACB64 = * ((decltype(&dword_4ACB64)) 0x4acb64);
-int& dword_4ACB68 = * ((decltype(&dword_4ACB68)) 0x4acb68);
-int& dword_4ACB6C = * ((decltype(&dword_4ACB6C)) 0x4acb6c);
+int(&dword_4ACB68)[] = * ((decltype(&dword_4ACB68)) 0x4acb68);
+int(&dword_4ACB6C)[] = * ((decltype(&dword_4ACB6C)) 0x4acb6c);
 int& dword_4ACBA8 = * ((decltype(&dword_4ACBA8)) 0x4acba8);
 int& dword_4ACBAC = * ((decltype(&dword_4ACBAC)) 0x4acbac);
 int& dword_4ACBB0 = * ((decltype(&dword_4ACBB0)) 0x4acbb0);
@@ -5611,6 +5600,7 @@ int& dword_4AD3AC = * ((decltype(&dword_4AD3AC)) 0x4ad3ac);
 int& dword_4AD3B0 = * ((decltype(&dword_4AD3B0)) 0x4ad3b0);
 char& byte_4AD3B4 = * ((decltype(&byte_4AD3B4)) 0x4ad3b4);
 __int16& word_4AD3B8 = * ((decltype(&word_4AD3B8)) 0x4ad3b8);
+char(&byte_4AD3D8)[32] = * ((decltype(&byte_4AD3D8)) 0x4ad3d8);
 int& dword_4AD3F8 = * ((decltype(&dword_4AD3F8)) 0x4ad3f8);
 int& dword_4AD438 = * ((decltype(&dword_4AD438)) 0x4ad438);
 int& dword_4AD458 = * ((decltype(&dword_4AD458)) 0x4ad458);
@@ -5679,7 +5669,7 @@ int& dword_4AD960 = * ((decltype(&dword_4AD960)) 0x4ad960);
 int& dword_4AD964 = * ((decltype(&dword_4AD964)) 0x4ad964);
 int& dword_4AD968 = * ((decltype(&dword_4AD968)) 0x4ad968);
 int& dword_4AD96C = * ((decltype(&dword_4AD96C)) 0x4ad96c);
-char& byte_4AD970 = * ((decltype(&byte_4AD970)) 0x4ad970);
+char& source = * ((decltype(&source)) 0x4ad970);
 char& byte_4AD993 = * ((decltype(&byte_4AD993)) 0x4ad993);
 char& byte_4AD9C0 = * ((decltype(&byte_4AD9C0)) 0x4ad9c0);
 char& byte_4AD9C1 = * ((decltype(&byte_4AD9C1)) 0x4ad9c1);
@@ -5960,10 +5950,10 @@ int& dword_4B36CC = * ((decltype(&dword_4B36CC)) 0x4b36cc);
 HANDLE& dword_4B36D0 = * ((decltype(&dword_4B36D0)) 0x4b36d0);
 int& dword_4B36D4 = * ((decltype(&dword_4B36D4)) 0x4b36d4);
 CHAR& tstrFilename = * ((decltype(&tstrFilename)) 0x4b36d8);
-int& dword_4B38E0 = * ((decltype(&dword_4B38E0)) 0x4b38e0);
-char(&byte_4B38E4)[260] = * ((decltype(&byte_4B38E4)) 0x4b38e4);
-int& dword_4B3AEC = * ((decltype(&dword_4B3AEC)) 0x4b3aec);
-char(&byte_4B3AF0)[32] = * ((decltype(&byte_4B3AF0)) 0x4b3af0);
+HANDLE& dword_4B38E0 = * ((decltype(&dword_4B38E0)) 0x4b38e0);
+char(&base)[] = * ((decltype(&base)) 0x4b38e4);
+HANDLE& dword_4B3AEC = * ((decltype(&dword_4B3AEC)) 0x4b3aec);
+char(&new_)[32] = * ((decltype(&new_)) 0x4b3af0);
 int& dword_4B3B10 = * ((decltype(&dword_4B3B10)) 0x4b3b10);
 int& dword_4B3B14 = * ((decltype(&dword_4B3B14)) 0x4b3b14);
 int& dword_4B3B18 = * ((decltype(&dword_4B3B18)) 0x4b3b18);
@@ -5974,7 +5964,7 @@ int& dword_4B3B28 = * ((decltype(&dword_4B3B28)) 0x4b3b28);
 int& dword_4B3B2C = * ((decltype(&dword_4B3B2C)) 0x4b3b2c);
 int& dword_4B3B30 = * ((decltype(&dword_4B3B30)) 0x4b3b30);
 int& dword_4B3B34 = * ((decltype(&dword_4B3B34)) 0x4b3b34);
-char& Str = * ((decltype(&Str)) 0x4b3b38);
+char& dest = * ((decltype(&dest)) 0x4b3b38);
 __int16& word_4B3C3C = * ((decltype(&word_4B3C3C)) 0x4b3c3c);
 char(&byte_4B3C40)[260] = * ((decltype(&byte_4B3C40)) 0x4b3c40);
 int& dword_4B3E48 = * ((decltype(&dword_4B3E48)) 0x4b3e48);
@@ -6007,7 +5997,7 @@ int& dword_4B3FCC = * ((decltype(&dword_4B3FCC)) 0x4b3fcc);
 int& dword_4B3FD4 = * ((decltype(&dword_4B3FD4)) 0x4b3fd4);
 int(&dword_4B3FD8)[] = * ((decltype(&dword_4B3FD8)) 0x4b3fd8);
 int(&dword_4B3FDC)[] = * ((decltype(&dword_4B3FDC)) 0x4b3fdc);
-int& dword_4B4004 = * ((decltype(&dword_4B4004)) 0x4b4004);
+char *& dword_4B4004 = * ((decltype(&dword_4B4004)) 0x4b4004);
 int& dword_4B4008 = * ((decltype(&dword_4B4008)) 0x4b4008);
 int& dword_4B400C = * ((decltype(&dword_4B400C)) 0x4b400c);
 char& byte_4B4010 = * ((decltype(&byte_4B4010)) 0x4b4010);
@@ -6255,7 +6245,7 @@ int& dword_4BDB68 = * ((decltype(&dword_4BDB68)) 0x4bdb68);
 int& dword_4BDB6C = * ((decltype(&dword_4BDB6C)) 0x4bdb6c);
 char& byte_4BDB70 = * ((decltype(&byte_4BDB70)) 0x4bdb70);
 int& dword_4BDB74 = * ((decltype(&dword_4BDB74)) 0x4bdb74);
-int& dword_4BDB78 = * ((decltype(&dword_4BDB78)) 0x4bdb78);
+HANDLE& phFile = * ((decltype(&phFile)) 0x4bdb78);
 int& dword_4BDB7C = * ((decltype(&dword_4BDB7C)) 0x4bdb7c);
 int& dword_4BDB80 = * ((decltype(&dword_4BDB80)) 0x4bdb80);
 int& dword_4BDB84 = * ((decltype(&dword_4BDB84)) 0x4bdb84);
@@ -6592,11 +6582,13 @@ int& dword_4D0300 = * ((decltype(&dword_4D0300)) 0x4d0300);
 int& dword_4D0304 = * ((decltype(&dword_4D0304)) 0x4d0304);
 int& dword_4D0308 = * ((decltype(&dword_4D0308)) 0x4d0308);
 int& dword_4D030C = * ((decltype(&dword_4D030C)) 0x4d030c);
+char(&byte_4D0310)[260] = * ((decltype(&byte_4D0310)) 0x4d0310);
 char& byte_4D0414 = * ((decltype(&byte_4D0414)) 0x4d0414);
 int& dword_4D0420 = * ((decltype(&dword_4D0420)) 0x4d0420);
 int& dword_4D0430 = * ((decltype(&dword_4D0430)) 0x4d0430);
 char& byte_4D0434 = * ((decltype(&byte_4D0434)) 0x4d0434);
 int& dword_4D0438 = * ((decltype(&dword_4D0438)) 0x4d0438);
+char(&byte_4D043C)[260] = * ((decltype(&byte_4D043C)) 0x4d043c);
 int& dword_4D0540 = * ((decltype(&dword_4D0540)) 0x4d0540);
 int& dword_4D0544 = * ((decltype(&dword_4D0544)) 0x4d0544);
 int& dword_4D0548 = * ((decltype(&dword_4D0548)) 0x4d0548);
@@ -6769,6 +6761,7 @@ int& dword_4D1F44 = * ((decltype(&dword_4D1F44)) 0x4d1f44);
 int& dword_4D1F48 = * ((decltype(&dword_4D1F48)) 0x4d1f48);
 int& dword_4D1F4C = * ((decltype(&dword_4D1F4C)) 0x4d1f4c);
 int& dword_4D2000 = * ((decltype(&dword_4D2000)) 0x4d2000);
+char(&byte_4D34A0)[36] = * ((decltype(&byte_4D34A0)) 0x4d34a0);
 int& dword_4D3724 = * ((decltype(&dword_4D3724)) 0x4d3724);
 int& dword_4D3728 = * ((decltype(&dword_4D3728)) 0x4d3728);
 int& dword_4D3730 = * ((decltype(&dword_4D3730)) 0x4d3730);
@@ -6846,6 +6839,7 @@ char& byte_4D3CC7 = * ((decltype(&byte_4D3CC7)) 0x4d3cc7);
 __int16& word_4D3CC8 = * ((decltype(&word_4D3CC8)) 0x4d3cc8);
 __int16& word_4D3CCA = * ((decltype(&word_4D3CCA)) 0x4d3cca);
 int& dword_4D3CD0 = * ((decltype(&dword_4D3CD0)) 0x4d3cd0);
+char(&byte_4D3CED)[32] = * ((decltype(&byte_4D3CED)) 0x4d3ced);
 __int16& word_4D3D0D = * ((decltype(&word_4D3D0D)) 0x4d3d0d);
 __int16& word_4D3D0F = * ((decltype(&word_4D3D0F)) 0x4d3d0f);
 char& byte_4D3D15 = * ((decltype(&byte_4D3D15)) 0x4d3d15);
@@ -6971,7 +6965,7 @@ __int16& word_4D48EE = * ((decltype(&word_4D48EE)) 0x4d48ee);
 int& dword_4D48F0 = * ((decltype(&dword_4D48F0)) 0x4d48f0);
 char& byte_4D48F8 = * ((decltype(&byte_4D48F8)) 0x4d48f8);
 char(&byte_4D48F9)[] = * ((decltype(&byte_4D48F9)) 0x4d48f9);
-int& dword_4D48FA = * ((decltype(&dword_4D48FA)) 0x4d48fa);
+int(&dword_4D48FA)[] = * ((decltype(&dword_4D48FA)) 0x4d48fa);
 int(&dword_4D48FE)[] = * ((decltype(&dword_4D48FE)) 0x4d48fe);
 int& dword_4D4904 = * ((decltype(&dword_4D4904)) 0x4d4904);
 int& dword_4D4908 = * ((decltype(&dword_4D4908)) 0x4d4908);

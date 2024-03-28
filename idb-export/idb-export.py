@@ -606,6 +606,7 @@ BLACKLISTED_TYPES = {
     'HCURSOR', 'HICON', 'HMODULE', 'HINSTANCE', 'HWND',
     'WNDCLASSA', 'HBRUSH', 'WNDPROC', 'LPMEMORYSTATUS',
     '_MEMORYSTATUS', 'HANDLE',
+    'tagMSG', 'LPMSG',
 }
 
 def is_type_blacklisted(type_ordinal):
