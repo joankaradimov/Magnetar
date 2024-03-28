@@ -47,8 +47,8 @@ int __stdcall ReadSpritesArray_(FILE* a1)
     int v11 = map_size.height;
     while (v11)
     {
-        CSprite* v12 = _SpritesOnTileRow.heads[v11];
         v11--;
+        CSprite* v12 = _SpritesOnTileRow.heads[v11];
         if (v12)
         {
             v12 = (CSprite*)&dword_629D74[9 * (_DWORD)v12];
