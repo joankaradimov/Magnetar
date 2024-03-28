@@ -863,7 +863,7 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
     };
 }
 
-bool IScriptParser::parse(const char* iscript_path)
+bool IScriptParser::parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path)
 {
     int size = 0;
     const char* iscript_txt = (const char*)fastFileRead_(&size, 0, iscript_path, 0, 0, __FILE__, __LINE__);
@@ -871,7 +871,30 @@ bool IScriptParser::parse(const char* iscript_path)
     IScriptBuilder builder;
     int result = iscript_parser.parse(iscript_txt, std::any(&builder));
 
-    animation_sets = builder.build_animation_sets();
+    auto new_animation_sets = builder.build_animation_sets();
+    merge_animation_sets(animation_sets, new_animation_sets);
 
     return result;
+}
+
+void IScriptParser::merge_animation_sets(std::vector<IScriptAnimationSet>& destination, const std::vector<IScriptAnimationSet>& source)
+{
+    destination.resize(std::max(destination.size(), source.size()));
+
+    for (int is_id = 0; is_id < source.size(); is_id++)
+    {
+        if (source[is_id].is_used())
+        {
+            if (destination[is_id].is_used())
+            {
+                std::string error_messge = "IScript error: multiple animations with the same IsId found\n";
+                error_messge += "\nIsId: " + std::to_string(is_id);
+                throw std::runtime_error(error_messge);
+            }
+            else
+            {
+                destination[is_id] = source[is_id];
+            }
+        }
+    }
 }

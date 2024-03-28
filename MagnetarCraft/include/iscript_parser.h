@@ -10,12 +10,17 @@
 
 struct IScriptAnimationSet
 {
-    IScriptAnimationSet()
+    IScriptAnimationSet() : opcodes(nullptr)
     {
         for (int i = 0; i < animations.size(); i++)
         {
             animations[i] = 0xFFFF;
         }
+    }
+
+    bool is_used() const
+    {
+        return opcodes != nullptr;
     }
 
     std::shared_ptr<std::byte> opcodes;
@@ -28,8 +33,10 @@ class IScriptParser
 {
 public:
     IScriptParser();
-    bool parse(const char* iscript_path);
+    bool parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path);
 
 private:
+    static void merge_animation_sets(std::vector<IScriptAnimationSet>& destination, const std::vector<IScriptAnimationSet>& source);
+
     peg::parser iscript_parser;
 };
