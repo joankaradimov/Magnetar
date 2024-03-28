@@ -333,7 +333,7 @@ void StartMagnetar()
 	init_warcraft2_exe_clib();
 	BasePatch::apply_pending_patches({ "warcraft2" });
 
-	game::warcraft2::_WinMain(executable->GetModule(), nullptr, "", 0);
+	game::warcraft2::WinMain_(executable->GetModule(), nullptr);
 	*/
 
 	std::filesystem::path config_filename = GetConfigFilename();
