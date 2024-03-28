@@ -2180,7 +2180,7 @@ void UpdateVisibilityHash_(int a1)
 		}
 	}
 
-	int v4 = min(a1 + 13, MAX_MAP_DIMENTION - 1);
+	int v4 = std::min(a1 + 13, MAX_MAP_DIMENTION - 1);
 	int v5 = 0;
 	for (int k = a1; k <= v4; ++k)
 	{
@@ -2222,8 +2222,8 @@ void sub_4BD3A0_()
 {
 	if (GameState)
 	{
-		dword_5993A4 = max(MoveToTile.y - 4, 0);
-		dword_5993C0 = min(MoveToTile.y + 404, map_size.height - 1);
+		dword_5993A4 = std::max(MoveToTile.y - 4, 0);
+		dword_5993C0 = std::min(MoveToTile.y + 404, map_size.height - 1);
 		DoVisibilityUpdate_(dword_5993A4, dword_5993C0);
 	}
 }
@@ -3542,7 +3542,7 @@ void drawScreenRowTiles_(__int16* a1, TileID* a2, MegatileFlags* a3, int a4, int
 		int v8 = 0;
 		int v6 = MoveToTile.x;
 
-		for (int i = 0; i < min(map_size.width - MoveToTile.x, RENDER_AREA_TILE_COLUMNS); i++)
+		for (int i = 0; i < std::min(map_size.width - MoveToTile.x, RENDER_AREA_TILE_COLUMNS); i++)
 		{
 			if (InReplay ? (ReplayVision & ~a3[i]) : (playerVisions & a3[i]) == 0)
 			{
@@ -4433,7 +4433,7 @@ void loadColorSettings_()
 
 	if (SRegLoadValue("Starcraft", "UnitPortraits", 0, &UnitPortraits))
 	{
-		UnitPortraits = min(UnitPortraits, 2);
+		UnitPortraits = std::min(UnitPortraits, 2);
 	}
 	else
 	{
@@ -11346,8 +11346,8 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 				CyclePaletteAdvanced(cycle_struct_index);
 			}
 			CyclePalette(cycle_struct_index);
-			v4 = max(v4, cycle_struct->palette_entry_high);
-			v5 = min(cycle_struct->palette_entry_low, v5);
+			v4 = std::max<int>(v4, cycle_struct->palette_entry_high);
+			v5 = std::min<int>(cycle_struct->palette_entry_low, v5);
 		}
 		++cycle_struct;
 		++cycle_struct_index;
@@ -16601,8 +16601,8 @@ int CHK_UNIT_StartLocationSub_(Position* a1, ChunkUnitEntry* a2)
 	bool v3 = InReplay ? MoveToTile.x == 0xFFFF : a2->properties.player == g_LocalNationID;
 	if (v3)
 	{
-		MoveToTile.x = max(a2->position.x - SCREEN_WIDTH / 2, 0) / TILE_WIDTH;
-		MoveToTile.y = max(a2->position.y - (SCREEN_HEIGHT - INTERFACE_HEIGHT) / 2, 0) / TILE_HEIGHT;
+		MoveToTile.x = std::max(a2->position.x - SCREEN_WIDTH / 2, 0) / TILE_WIDTH;
+		MoveToTile.y = std::max(a2->position.y - (SCREEN_HEIGHT - INTERFACE_HEIGHT) / 2, 0) / TILE_HEIGHT;
 	}
 	return 1;
 }
@@ -17033,7 +17033,7 @@ unsigned int GetGroundHeightAtPos_(int x, int y)
 	u16 v2 = MiniTileFlags->tile[v1].miniTile[4 * ((y >> 3) & 3) + ((x >> 3) & 3)];
 
 	int ground_height = (v2 & 6) >> 1;
-	return min(ground_height, 2); // TODO: allow a fourth ground height level
+	return std::min(ground_height, 2); // TODO: allow a fourth ground height level
 }
 
 int GetGroundHeightAtPos__()
@@ -17803,7 +17803,7 @@ void DlgSwooshin_(dialog* dlg, swishTimer* timers, size_t timers_count, __int16 
 		}
 		word_51C480[v6] = v9;
 		v8->wUser = v9;
-		a1a = max(a1a, v9);
+		a1a = std::max(a1a, v9);
 		if ((__int16)timers[v6].wIndex > v20)
 		{
 			v20 = timers[v6].wIndex;
@@ -20314,8 +20314,8 @@ void BWFXN_Game_ButtonDown_(int a1, EventNo a4, LPARAM lParam)
 		dlgEvent event;
 		event.wNo = a4;
 
-		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
-		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+		Mouse.x = event.cursor.x = std::min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = std::min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
 		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
@@ -20337,8 +20337,8 @@ void BWFXN_Game_ButtonUp_(int a1, EventNo a4, LPARAM lParam)
 		dlgEvent event;
 		event.wNo = a4;
 
-		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
-		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+		Mouse.x = event.cursor.x = std::min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = std::min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
 		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
@@ -20359,8 +20359,8 @@ void Game_BtnDoubleClick_(int a1, EventNo a4, LPARAM lParam)
 		dlgEvent event;
 		event.wNo = a4;
 
-		Mouse.x = event.cursor.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
-		Mouse.y = event.cursor.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+		Mouse.x = event.cursor.x = std::min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = event.cursor.y = std::min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 
 		if (!sendInputToAllDialogs_(&event) && input_procedures[a4])
 		{
@@ -20644,8 +20644,8 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 		return 0;
 	case WM_MOUSEMOVE:
 		LOBYTE(InputFlags) = InputFlags | 1;
-		Mouse.x = min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
-		Mouse.y = min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
+		Mouse.x = std::min(GET_X_LPARAM(lParam), SCREEN_WIDTH - 1);
+		Mouse.y = std::min(GET_Y_LPARAM(lParam), SCREEN_HEIGHT - 1);
 		return 1;
 	case WM_LBUTTONDOWN:
 		BWFXN_Game_ButtonDown_(2, EventNo::EVN_LBUTTONDOWN, lParam);
@@ -21871,7 +21871,7 @@ unsigned int getTextDisplayTime_(const char* text)
 		return 0;
 	}
 
-	return max(strlen(text) * 50, 4000);
+	return std::max<size_t>(strlen(text) * 50, 4000);
 }
 
 FAIL_STUB_PATCH(getTextDisplayTime, "starcraft");
@@ -22016,7 +22016,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			v7 = a1->time + a1->number;
 			break;
 		case 9:
-			v7 = max(a1->time - a1->number, 0);
+			v7 = std::max(a1->time - a1->number, 0u);
 			break;
 		default:
 			v7 = a1->time;
@@ -22042,7 +22042,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			if ((registry_options.field_18 & 0x400) || (a1->flags & 4))
 			{
 				const char* text_message = get_chk_String(a1->string);
-				unsigned display_time = max(v7, getTextDisplayTime_(text_message));
+				unsigned display_time = std::max(v7, getTextDisplayTime_(text_message));
 				createTextMessageWithTimer(text_message, display_time);
 			}
 		}

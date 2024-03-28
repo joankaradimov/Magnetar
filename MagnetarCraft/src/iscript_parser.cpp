@@ -181,7 +181,7 @@ public:
     void set_current_is_id(int is_id)
     {
         current_header().is_id = is_id;
-        max_is_id = max(max_is_id, is_id);
+        max_is_id = std::max(max_is_id, is_id);
     }
 
     void set_current_type(int type)
