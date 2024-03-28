@@ -3458,7 +3458,7 @@ size_t GameResultText(int *a1, char **player_names, const char *a3, const char *
 extern unsigned (*sub_499E00)();
 extern char * (*GetLeagueTimestamp)();
 int createLeagueFile(char *a1);
-extern int (__stdcall*StoreString)(int a1);
+extern int (__stdcall*StoreString)(char *source);
 extern void * (*sub_49A060)();
 BOOL IsHumanPlayerOnSameTeam(int a1);
 int sub_49A170(CUnit *a1, int player);
@@ -8691,8 +8691,7 @@ extern int& map_height_pixels;
 extern CUnit *(&PlayerSelection)[12];
 extern CUnit *(&playersSelections)[8][12];
 extern char(&validation_replay_path)[3072];
-extern char& league_maybe;
-extern CSprite *(&dword_629284)[];
+extern char(&league_maybe)[30];
 extern SpriteTileData& SpritesOnTileRow;
 extern char(&byte_629A88)[520];
 extern char(&byte_629C90)[256];

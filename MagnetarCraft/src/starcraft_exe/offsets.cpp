@@ -19904,7 +19904,7 @@ int createLeagueFile(char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*StoreString)(int a1), StoreString, 0x49a040);
+DECL_FUNC(int (__stdcall*StoreString)(char *source), StoreString, 0x49a040);
 DECL_FUNC(void * (*sub_49A060)(), sub_49A060, 0x49a060);
 BOOL IsHumanPlayerOnSameTeam(int a1) {
     int address = 0x49a110;
@@ -34176,8 +34176,7 @@ int& map_height_pixels = * ((decltype(&map_height_pixels)) 0x6284b4);
 CUnit *(&PlayerSelection)[12] = * ((decltype(&PlayerSelection)) 0x6284b8);
 CUnit *(&playersSelections)[8][12] = * ((decltype(&playersSelections)) 0x6284e8);
 char(&validation_replay_path)[3072] = * ((decltype(&validation_replay_path)) 0x628668);
-char& league_maybe = * ((decltype(&league_maybe)) 0x629268);
-CSprite *(&dword_629284)[] = * ((decltype(&dword_629284)) 0x629284);
+char(&league_maybe)[30] = * ((decltype(&league_maybe)) 0x629268);
 SpriteTileData& SpritesOnTileRow = * ((decltype(&SpritesOnTileRow)) 0x629288);
 char(&byte_629A88)[520] = * ((decltype(&byte_629A88)) 0x629a88);
 char(&byte_629C90)[256] = * ((decltype(&byte_629C90)) 0x629c90);
