@@ -18,8 +18,8 @@ Triggers:
 - Make maps with triggers viewable in replays (i.e. game pauses should be handled)
 
 Scenario loading:
-- read DAT fiels upon scenario loading (especially sprites.dat)
-- read DAT fiels from the scenario SCM/SCX
+- read DAT fields upon scenario loading (especially sprites.dat)
+- read DAT fields from the scenario SCM/SCX
 - implement SC/BW beta scenario loading
 - implement 1.18 scenario loading
 - implement cooperative (multiplayer) custom campaigns
