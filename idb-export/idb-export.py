@@ -598,7 +598,7 @@ def export_data(declarations, definitions):
         definitions.append(datum.definition)
 
 BLACKLISTED_TYPES = {
-    'DWORD',
+    'DWORD', '_DWORD',
     'RECT', 'POINT', '_GUID',
     '__int128', 'wchar_t',
     'tm', 'tagPALETTEENTRY', 'type_info',
