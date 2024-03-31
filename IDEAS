@@ -3,6 +3,8 @@ General:
 - create a races.dat (or races.lua) file
 - port the optimizations and limit removal found in Neiv's Teippi: https://github.com/neivv/teippi
 - SNP using libp2p/DHT/QUIC
+- use march=native in tests
+- migrate to clang
 
 IScript:
 - execute from iscript.txt
