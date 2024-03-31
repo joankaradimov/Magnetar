@@ -38,7 +38,7 @@ void init_warcraft2_exe_clib()
 	int(*_ioinit)() = (int(*)())0x481905;
 	int(*_mtinit)() = (int(*)())0x47F63C;
 	int(*_heap_init)(int) = (int(*)(int))0x481C36;
-	int(*_cinit)(int) = (int(*)(int))0x47FE5F;
+	void(*_cinit)() = (void(*)())0x47FE5F;
 	int(*_setargv)() = (int(*)())0x481586;
 	int(*_setenvp)() = (int(*)())0x4814CD;
 
@@ -46,15 +46,12 @@ void init_warcraft2_exe_clib()
 		exit(0x1Cu);
 	if (!_mtinit())
 		exit(0x10u);
-	//dword_4D85EC = GetCommandLineA();
+	_ioinit();
+	dword_4D85EC = GetCommandLineA();
 	//dword_4D4554 = GetEnvironmentStrings();
-	//_setargv();
+	_setargv();
 	//_setenvp();
-	if (_ioinit() < 0)
-		exit(0x1Bu);
-	//int v6 = _cinit(1);
-	//if (v6)
-	//	exit(v6);
+	_cinit();
 }
 
 void init_stacraftexe_clib()
