@@ -644,22 +644,11 @@ void __fastcall input_placeBuilding_RightMouseClick_(dlgEvent* event)
 
 FAIL_STUB_PATCH(input_placeBuilding_RightMouseClick, "starcraft");
 
-IScriptProgram* sub_4D4D70_(int a1)
-{
-	return (IScriptProgram*)&iscript_data->data[a1];
-}
-
-FAIL_STUB_PATCH(sub_4D4D70, "starcraft");
-
 int sub_42D600_(Anims animation)
 {
-	IScriptProgram* program = sub_4D4D70_(program_state.iscript_header);
+	const auto& program = animation_sets[program_state.iscript_header];
 	program_state.anim = animation;
-	if (animation > program->scpe_magic)
-	{
-		return 0;
-	}
-	program_state.program_counter = program->headers[animation];
+	program_state.program_counter = program.animations[animation];
 	if (program_state.program_counter)
 	{
 		program_state.wait = 0;
@@ -672,6 +661,7 @@ int sub_42D600_(Anims animation)
 	}
 }
 
+FAIL_STUB_PATCH(sub_4D4D70, "starcraft");
 FAIL_STUB_PATCH(sub_42D600, "starcraft");
 
 void sub_42D8C0_(CUnit* unit)
@@ -838,16 +828,13 @@ void FatalError_(const char* arg0, ...)
 
 FUNCTION_PATCH(FatalError, FatalError_, "starcraft");
 
-std::unordered_map<u16, u16> iscript_id_to_pc;
-
 void isValidScript_(CImage* image, int iscript_id)
 {
-	auto pc_iterator = iscript_id_to_pc.find(iscript_id);
-	if (pc_iterator == iscript_id_to_pc.end())
+	if (iscript_id >= animation_sets.size() && !animation_sets[iscript_id].is_used())
 	{
 		FatalError("script %d does not exist", iscript_id);
 	}
-	image->iscript_program.iscript_header = pc_iterator->second;
+	image->iscript_program.iscript_header = iscript_id;
 }
 
 void isValidScript__()
@@ -5166,15 +5153,6 @@ void LoadInitIscriptBIN_()
 	//parser.parse(animation_sets, "scripts\\iscript.txt");
 
 	int iscript_bin_size;
-	iscript_data = (IScript*) fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
-
-	iscript_id_to_pc.clear();
-	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);
-	while (v2[0] != 0xFFFF)
-	{
-		iscript_id_to_pc[v2[0]] = v2[1];
-		v2 += 2;
-	}
 
 	// TODO: dynamically allocate imagesDat memory
 	imagesDat_ = new DatLoad[] {
@@ -5206,11 +5184,7 @@ FAIL_STUB_PATCH(LoadInitIscriptBIN, "starcraft");
 
 void __fastcall CleanupIscriptBINHandle_(bool exit_code)
 {
-	if (iscript_data)
-	{
-		SMemFree(iscript_data, "Starcraft\\SWAR\\lang\\CImage.cpp", 1626, 0);
-		iscript_data = NULL;
-	}
+	animation_sets.clear();
 
 	sub_47AB40((LO_Header**)ImageGrpGraphics, 999);
 	sub_47AB40(lo_files.overlays[OverlayType::OT_ATTACK], 999);
