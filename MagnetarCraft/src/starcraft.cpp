@@ -21420,7 +21420,7 @@ void GameMainLoop_()
 {
 	HANDLE phFile;
 
-	gwGameMode = GAME_GLUES;
+	gwGameMode = GamePosition::GAME_GLUES;
 	PreInitData_();
 	InitializeInputProcs_();
 	CreateMainWindow_();
@@ -21482,23 +21482,23 @@ void GameMainLoop_()
 			IsExpansion = 0;
 		switch (gwGameMode)
 		{
-		case GAME_RUN:
+		case GamePosition::GAME_RUN:
 			GameRun_();
 			break;
-		case GAME_CINEMATIC:
+		case GamePosition::GAME_CINEMATIC:
 			PlayMovie_(active_campaign->entries[active_campaign_entry_index]);
-			if (gwGameMode == GAME_CINEMATIC)
+			if (gwGameMode == GamePosition::GAME_CINEMATIC)
 				ContinueCampaign_(1);
 			break;
-		case GAME_RESTART:
+		case GamePosition::GAME_RESTART:
 			next_campaign_mission = 1;
 			[[fallthrough]];
-		case GAME_RUNINIT:
+		case GamePosition::GAME_RUNINIT:
 			gwGameMode = GAME_RUN;
 			break;
-		case GAME_INTRO:
+		case GamePosition::GAME_INTRO:
 			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
-			if (gwGameMode == GAME_INTRO)
+			if (gwGameMode == GamePosition::GAME_INTRO)
 			{
 				if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
 				{
@@ -21521,26 +21521,26 @@ void GameMainLoop_()
 					{
 					}
 				}
-				if (gwGameMode == GAME_INTRO)
-					gwGameMode = GAME_GLUES;
+				if (gwGameMode == GamePosition::GAME_INTRO)
+					gwGameMode = GamePosition::GAME_GLUES;
 			}
 			break;
-		case GAME_GLUES:
-		case GAME_WIN:
-		case GAME_LOSE:
+		case GamePosition::GAME_GLUES:
+		case GamePosition::GAME_WIN:
+		case GamePosition::GAME_LOSE:
 			SwitchMenu_();
 			break;
-		case GAME_CREDITS:
+		case GamePosition::GAME_CREDITS:
 			BeginCredits_();
-			if (gwGameMode == GAME_CREDITS)
+			if (gwGameMode == GamePosition::GAME_CREDITS)
 			{
-				gwGameMode = GAME_GLUES;
+				gwGameMode = GamePosition::GAME_GLUES;
 				glGluesMode = GLUE_MAIN_MENU;
 			}
 			break;
-		case GAME_EPILOG:
+		case GamePosition::GAME_EPILOG:
 			BeginEpilog_();
-			if (gwGameMode == GAME_EPILOG)
+			if (gwGameMode == GamePosition::GAME_EPILOG)
 			{
 				ContinueCampaign_(1);
 			}
