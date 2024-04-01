@@ -225,11 +225,11 @@ const char* ISCRIPT_GRAMMAR = R"(
     HEADER_TYPE      <- 'Type' __ INT
     HEADER_ANIMATION <- ANIMATION __ ID_MAYBE
 
-    ANIMATION <- 'Init' / 'Death' / 'GndAttkInit' / 'AirAttkInit' / 'Unused1' / 'GndAttkRpt' /
-                 'AirAttkRpt' / 'CastSpell' / 'GndAttkToIdle' / 'AirAttkToIdle' / 'Unused2' /
-                 !'WalkingTo' 'Walking' / 'WalkingToIdle' / 'SpecialState1' / 'SpecialState2' /
-                 'AlmostBuilt' / 'Built' / 'Landing' / 'LiftOff' / 'IsWorking' / 'WorkingToIdle' /
-                 'WarpIn' / 'Unused3' / 'StarEditInit' / 'Disable' / 'Burrow' / 'UnBurrow' / 'Enable'
+    ANIMATION <- 'Init' | 'Death' | 'GndAttkInit' | 'AirAttkInit' | 'Unused1' | 'GndAttkRpt' |
+                 'AirAttkRpt' | 'CastSpell' | 'GndAttkToIdle' | 'AirAttkToIdle' | 'Unused2' |
+                 'Walking' | 'WalkingToIdle' | 'SpecialState1' | 'SpecialState2' |
+                 'AlmostBuilt' | 'Built' | 'Landing' | 'LiftOff' | 'IsWorking' | 'WorkingToIdle' |
+                 'WarpIn' | 'Unused3' | 'StarEditInit' | 'Disable' | 'Burrow' | 'UnBurrow' | 'Enable'
 
     HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
 
