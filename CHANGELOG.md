@@ -2,6 +2,8 @@
 
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
+
+## 0.3.0 - Committed Corsair
   - Allow raw CHK files to be loaded as custom scenarios
   - Add command line arguments:
     * `-keep-app-active` - keep the app active while in the background
