@@ -7762,7 +7762,7 @@ void hotkeyRemapping_()
 	if (!loadGameFileHandle)
 	{
 		sub_4AABF0();
-		memset(dword_57FE60, 0, 0x1B00u);
+		memset(stru_57FE60, 0, sizeof(stru_57FE60));
 		memset(word_63FE40, 0, 0x80u);
 		byte_597280 = -1;
 		sub_4C3ED0();

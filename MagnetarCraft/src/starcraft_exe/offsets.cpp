@@ -494,17 +494,14 @@ char updateUnitTransportData(CUnit *a1) {
     }
     return result_;
 }
-__int16 fixTargetLocation(unsigned __int16 a1, __int16 *a2) {
+void fixTargetLocation(UnitType unit_type, Position *a2) {
     int address = 0x401fa0;
-    __int16 result_;
     __asm {
         xor eax, eax
         mov edx, a2
-        mov ax, a1
+        mov ax, unit_type
         call address
-        mov result_, ax
     }
-    return result_;
 }
 void getAbsoluteUnitBounds(CUnit *a1, rect *rectangle) {
     int address = 0x402020;
@@ -12164,7 +12161,7 @@ signed carrierReaverIdle(CUnit *a1, int a2, int a3) {
     }
     return result_;
 }
-int getNextStrafePosition(CUnit *a1, unsigned __int8 a2, int a3) {
+int getNextStrafePosition(CUnit *a1, unsigned __int8 a2, UnitDimentions a3) {
     int address = 0x465d30;
     int result_;
     __asm {
@@ -17744,14 +17741,14 @@ DECL_FUNC(void (__cdecl*CancelTargetOrder)(), CancelTargetOrder, 0x48ca10);
 DECL_FUNC(char (__stdcall*sub_48CA90)(int a1, __int16 a2), sub_48CA90, 0x48ca90);
 DECL_FUNC(char (__stdcall*sub_48CAC0)(int a1), sub_48CAC0, 0x48cac0);
 DECL_FUNC(void (*j_CancelTargetOrder)(), j_CancelTargetOrder, 0x48cae0);
-void issueTriTargetOrder(char a1, char a2, char a3) {
+void issueTriTargetOrder(char a1, Order order, char a3) {
     int address = 0x48caf0;
     __asm {
         xor ecx, ecx
         xor eax, eax
         xor edx, edx
         mov dl, a3
-        mov al, a2
+        mov al, order
         mov cl, a1
         call address
     }
@@ -19118,10 +19115,10 @@ void turn_unit_right(CUnit *unit, char a2) {
         call address
     }
 }
-void sub_4961B0(CUnit *a1) {
+void sub_4961B0(CUnit *unit) {
     int address = 0x4961b0;
     __asm {
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -19167,10 +19164,10 @@ CFlingy * ISCRIPT_CreateFlingy(char a1, __int16 a2, int a3, FlingyID flingy_id) 
 }
 DECL_FUNC(void (__cdecl*InitializeFlingyDat)(), InitializeFlingyDat, 0x496520);
 DECL_FUNC(char (__fastcall*sub_496560)(int a1), sub_496560, 0x496560);
-DECL_FUNC(int (*sub_4965A0)(), sub_4965A0, 0x4965a0);
-int sub_4965D0(unsigned __int8 a1, int a2) {
+DECL_FUNC(void (__cdecl*sub_4965A0)(), sub_4965A0, 0x4965a0);
+BYTE * sub_4965D0(unsigned __int8 a1, int a2) {
     int address = 0x4965d0;
-    int result_;
+    BYTE * result_;
     __asm {
         xor eax, eax
         push dword ptr a2
@@ -19183,7 +19180,7 @@ int sub_4965D0(unsigned __int8 a1, int a2) {
 DECL_FUNC(int (*sub_4967A0)(), sub_4967A0, 0x4967a0);
 DECL_FUNC(void (__fastcall*centerviewUnitGroup)(unsigned __int8 a1), centerviewUnitGroup, 0x4967e0);
 DECL_FUNC(__int16 (__stdcall*sub_496940)(unsigned __int8 a1), sub_496940, 0x496940);
-DECL_FUNC(void (__stdcall*selectUnitGroup)(unsigned __int8 a1), selectUnitGroup, 0x496b40);
+DECL_FUNC(void (__stdcall*selectUnitGroup)(unsigned __int8 index), selectUnitGroup, 0x496b40);
 DECL_FUNC(int (__stdcall*selectSingleUnitFromID)(int a1), selectSingleUnitFromID, 0x496d30);
 void sub_496E90(unsigned __int8 a1) {
     int address = 0x496e90;
@@ -19983,7 +19980,7 @@ signed sub_49A480(Order a1, CUnit *a2) {
     }
     return result_;
 }
-DECL_FUNC(__int16 (__stdcall*GetFormationMovementTarget)(CUnit *unit, int a2), GetFormationMovementTarget, 0x49a500);
+DECL_FUNC(void (__stdcall*GetFormationMovementTarget)(CUnit *unit, int a2), GetFormationMovementTarget, 0x49a500);
 char sub_49A740(int a1) {
     int address = 0x49a740;
     char result_;
@@ -29255,11 +29252,11 @@ BOOL canUnload(int a1, CUnit *unit, Position *outPos) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*orders_MoveUnload)(CUnit *a1), orders_MoveUnload, 0x4e7700);
-void sub_4E78E0(CUnit *a1, CUnit *a2) {
+void sub_4E78E0(CUnit *transport, CUnit *a2) {
     int address = 0x4e78e0;
     __asm {
         mov ecx, a2
-        mov eax, a1
+        mov eax, transport
         call address
     }
 }
@@ -29936,9 +29933,8 @@ void SetUnitPosition(CUnit *unit, __int16 pos_x, __int16 pos_y) {
         call address
     }
 }
-__int16 MoveUnit(CUnit *unit, __int16 pos_x, __int16 pos_y) {
+void MoveUnit(CUnit *unit, __int16 pos_x, __int16 pos_y) {
     int address = 0x4ebae0;
-    __int16 result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
@@ -29946,9 +29942,7 @@ __int16 MoveUnit(CUnit *unit, __int16 pos_x, __int16 pos_y) {
         mov ax, pos_x
         mov edx, unit
         call address
-        mov result_, ax
     }
-    return result_;
 }
 void RefreshSprite(CSprite *a1, unsigned __int8 a2) {
     int address = 0x4ebbd0;
@@ -33872,7 +33866,7 @@ int& dword_57FD34 = * ((decltype(&dword_57FD34)) 0x57fd34);
 int& dword_57FD38 = * ((decltype(&dword_57FD38)) 0x57fd38);
 char(&CurrentMapFileName)[260] = * ((decltype(&CurrentMapFileName)) 0x57fd3c);
 char(&CurrentMapName)[32] = * ((decltype(&CurrentMapName)) 0x57fe40);
-int(&dword_57FE60)[] = * ((decltype(&dword_57FE60)) 0x57fe60);
+UnitGroupRelated(&stru_57FE60)[8] = * ((decltype(&stru_57FE60)) 0x57fe60);
 char& byte_581D60 = * ((decltype(&byte_581D60)) 0x581d60);
 char& lossType = * ((decltype(&lossType)) 0x581d61);
 char(&playerHasLeft)[] = * ((decltype(&playerHasLeft)) 0x581d62);
