@@ -1062,6 +1062,53 @@ void __cdecl sub_497A10__()
 
 FUNCTION_PATCH((void*)0x497A10, sub_497A10__, "starcraft");
 
+int __stdcall sub_496030_(CUnit* a1)
+{
+	int result = a1->position.x != (_WORD)dword_63FED4 || a1->position.y != (_WORD)dword_63FECC ? 1 : 0;
+
+	word_63FEC4 = a1->position.x;
+	word_63FED0 = a1->position.y;
+	a1->velocityDirection1 = a1->currentDirection2;
+	a1->position.x = dword_63FED4;
+	a1->position.y = dword_63FECC;
+	a1->movementFlags = byte_63FEC0;
+	a1->current_speed2 = a1->current_speed1;
+	a1->halt.x = dword_63FED8;
+	a1->halt.y = dword_63FF40;
+	sub_497A10_(a1->sprite, a1->position.x, a1->position.y);
+	sub_494FE0(a1);
+
+	CImage* pImageHead;
+	unsigned __int8 current_direction = a1->currentDirection1;
+	for (pImageHead = a1->sprite->pImageHead; pImageHead; pImageHead = pImageHead->next)
+	{
+		setImageDirection(pImageHead, current_direction);
+	}
+
+	if (byte_63FEC1)
+	{
+		CSprite* v13 = a1->sprite;
+		for (CImage* v14 = v13->pImageHead; v14; v14 = v14->next)
+		{
+			if ((v13->flags & 0x80) == 0)
+			{
+				PlayIscriptAnim(v14, AE_WalkingToIdle);
+			}
+		}
+	}
+	else if (byte_63FF30)
+	{
+		for (CImage* j = a1->sprite->pImageHead; j; j = j->next)
+		{
+			PlayIscriptAnim(j, AE_Walking);
+		}
+	}
+
+	return result;
+}
+
+FUNCTION_PATCH(sub_496030, sub_496030_, "starcraft");
+
 void GroundAttackInit_(__int16 x, __int16 y)
 {
 	wantThingyUpdate = 0;
