@@ -215,7 +215,7 @@ private:
 std::vector<IScriptAnimationSet> animation_sets;
 
 const char* ISCRIPT_GRAMMAR = R"(
-    ROOT <- (_ (EOL / &'.' HEADER / LABEL / OP _ EOL))* EOF
+    ROOT <- (_ (EOL / &'.' HEADER / LABEL / &. OP _ EOL))* EOF
 
     HEADER <- '.headerstart' _ EOL _ (!'.' HEADER_LINE? _ EOL _)* '.headerend' _ EOL
     LABEL  <- <ID> _ ':' _ NL?
@@ -231,7 +231,7 @@ const char* ISCRIPT_GRAMMAR = R"(
                  'AlmostBuilt' | 'Built' | 'Landing' | 'LiftOff' | 'IsWorking' | 'WorkingToIdle' |
                  'WarpIn' | 'Unused3' | 'StarEditInit' | 'Disable' | 'Burrow' | 'UnBurrow' | 'Enable'
 
-    HEADER_LINE <- HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION / { error_message "Unrecognized animation" }
+    HEADER_LINE <- (HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION) ^ HEADER_ERROR
 
     # opcode rules
     OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
@@ -298,26 +298,27 @@ const char* ISCRIPT_GRAMMAR = R"(
     OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT
     OPC_SETHORPOS         <- 'sethorpos' __ INT
     OPC___2D              <- '__2d'
-    OP <- OPC_WAIT / OPC_PLAYFRAM / OPC_GOTO / OPC_END / OPC_MOVE / OPC_PLAYFRAMTILE /
-          OPC_IMGUL / OPC_IMGULNEXTID / OPC_IMGULUSELO /
-          OPC_IMGOL / OPC_IMGOLUSELO / OPC_IMGOLORIG /
-          OPC_SPROL / OPC_SPROLUSELO / OPC_SPRUL / OPC_SPRULUSELO / OPC_GRDSPROL /
-          OPC_WARPOVERLAY / OPC_SWITCHUL / OPC_WAITRAND /
-          OPC_SETVERTPOS / OPC_RANDCONDJMP / OPC_PLAYSND /
-          OPC_LOWSPRUL / OPC_NOBRKCODESTART / OPC_NOBRKCODEEND /
-          OPC_GOTOREPEATATTK / OPC_CALL / OPC_RETURN / OPC_IGNOREREST /
-          OPC_LIFTOFFCONDJMP / OPC_TRGTARCCONDJMP / OPC_TRGTRANGECONDJMP /
-          OPC_CURDIRECTCONDJMP / OPC_PWRUPCONDJMP /
-          OPC_SIGORDER / OPC_ORDERDONE /
-          OPC_ATTACKMELEE / OPC_ATTACKWITH / OPC_ATTACK / OPC_ATTKSHIFTPROJ /
-          OPC_CASTSPELL / OPC_USEWEAPON / OPC_DOMISSILEDMG / OPC_DOGRDDAMAGE /
-          OPC_FOLLOWMAINGRAPHIC / OPC_SETFLDIRECT / OPC_CREATEGASOVERLAYS /
-          OPC_TURN1CWISE / OPC_TURNCWISE / OPC_TURNCCWISE / OPC_TURNRAND /
-          OPC_SETFLSPEED / OPC_TMPRMGRAPHICSTART / OPC_TMPRMGRAPHICEND /
-          OPC_PLAYSNDBTWN / OPC_PLAYSNDRAND / OPC_ENGSET / OPC_ENGFRAME /
-          OPC_SETFILPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
-          OPC___2D /
-          { error_message "Unrecognized instruction" }
+    OP <- (
+        OPC_WAIT / OPC_PLAYFRAM / OPC_GOTO / OPC_END / OPC_MOVE / OPC_PLAYFRAMTILE /
+        OPC_IMGUL / OPC_IMGULNEXTID / OPC_IMGULUSELO /
+        OPC_IMGOL / OPC_IMGOLUSELO / OPC_IMGOLORIG /
+        OPC_SPROL / OPC_SPROLUSELO / OPC_SPRUL / OPC_SPRULUSELO / OPC_GRDSPROL /
+        OPC_WARPOVERLAY / OPC_SWITCHUL / OPC_WAITRAND /
+        OPC_SETVERTPOS / OPC_RANDCONDJMP / OPC_PLAYSND /
+        OPC_LOWSPRUL / OPC_NOBRKCODESTART / OPC_NOBRKCODEEND /
+        OPC_GOTOREPEATATTK / OPC_CALL / OPC_RETURN / OPC_IGNOREREST /
+        OPC_LIFTOFFCONDJMP / OPC_TRGTARCCONDJMP / OPC_TRGTRANGECONDJMP /
+        OPC_CURDIRECTCONDJMP / OPC_PWRUPCONDJMP /
+        OPC_SIGORDER / OPC_ORDERDONE /
+        OPC_ATTACKMELEE / OPC_ATTACKWITH / OPC_ATTACK / OPC_ATTKSHIFTPROJ /
+        OPC_CASTSPELL / OPC_USEWEAPON / OPC_DOMISSILEDMG / OPC_DOGRDDAMAGE /
+        OPC_FOLLOWMAINGRAPHIC / OPC_SETFLDIRECT / OPC_CREATEGASOVERLAYS /
+        OPC_TURN1CWISE / OPC_TURNCWISE / OPC_TURNCCWISE / OPC_TURNRAND /
+        OPC_SETFLSPEED / OPC_TMPRMGRAPHICSTART / OPC_TMPRMGRAPHICEND /
+        OPC_PLAYSNDBTWN / OPC_PLAYSNDRAND / OPC_ENGSET / OPC_ENGFRAME /
+        OPC_SETFILPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
+        OPC___2D
+    ) ^ OPCODE_ERROR
 
     ID       <- [_a-zA-Z][_a-zA-Z0-9]*
     ID_MAYBE <- '[none]'i / ID
@@ -331,6 +332,10 @@ const char* ISCRIPT_GRAMMAR = R"(
     ~NL      <- ('\n' | '\r\n' | '\r')
     ~_       <- [ \t]* # Optional whitespace
     ~__      <- [ \t]+ # Mandatory whitespace
+
+    # Error recovery:
+    ~OPCODE_ERROR <- [^\n\r#]* { error_message "Unrecognized instruction" }
+    ~HEADER_ERROR <- ID _ ID_MAYBE { error_message "Unrecognized animation" }
 )";
 
 IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
@@ -863,18 +868,33 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
     };
 }
 
-bool IScriptParser::parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path)
+void IScriptParser::parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path)
 {
     int size = 0;
     const char* iscript_txt = (const char*)fastFileRead_(&size, 0, iscript_path, 0, 0, __FILE__, __LINE__);
 
+    std::string error_log = "IScript error:\n\n";
+    iscript_parser.set_logger([&error_log, &iscript_path](size_t line, size_t col, const std::string& msg) {
+        error_log += iscript_path;
+        error_log += ':';
+        error_log += std::to_string(line);
+        error_log += ':';
+        error_log += std::to_string(col);
+        error_log += "    ";
+        error_log += msg;
+        error_log += '\n';
+    });
+
     IScriptBuilder builder;
-    int result = iscript_parser.parse(iscript_txt, std::any(&builder));
+    bool success = iscript_parser.parse(iscript_txt, std::any(&builder));
+
+    if (!success)
+    {
+        throw std::runtime_error(error_log);
+    }
 
     auto new_animation_sets = builder.build_animation_sets();
     merge_animation_sets(animation_sets, new_animation_sets);
-
-    return result;
 }
 
 void IScriptParser::merge_animation_sets(std::vector<IScriptAnimationSet>& destination, const std::vector<IScriptAnimationSet>& source)

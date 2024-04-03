@@ -33,7 +33,7 @@ class IScriptParser
 {
 public:
     IScriptParser();
-    bool parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path);
+    void parse(std::vector<IScriptAnimationSet>& animation_sets, const char* iscript_path);
 
 private:
     static void merge_animation_sets(std::vector<IScriptAnimationSet>& destination, const std::vector<IScriptAnimationSet>& source);
