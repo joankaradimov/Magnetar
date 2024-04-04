@@ -133,6 +133,7 @@ void minimapPreviewUpdateState_();
 bool LoadPrecursorCampaign();
 bool LoadCampaignWithCharacter_(Campaign& campaign);
 void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4);
+unsigned int getTextDisplayTime_(const char* text);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

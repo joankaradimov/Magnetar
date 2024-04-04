@@ -8,6 +8,7 @@ if (MSVC)
 endif ()
 
 add_library(MagnetarCraftObject OBJECT
+	src/lua/trigger_action_state.cpp
 	src/patching/BasePatch.cpp
 	src/patching/CallSitePatch.cpp
 	src/patching/FailStubPatch.cpp

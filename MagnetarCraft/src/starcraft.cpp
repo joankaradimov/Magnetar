@@ -32,6 +32,7 @@ using namespace game::starcraft; // TODO: reorganize the headers
 #include "exception.h"
 #include "minimap.h"
 #include "video.h"
+#include "lua/trigger_action_state.h"
 
 std::function<void()> on_end_game = nullptr;
 bool frame_capping = true;
@@ -22616,24 +22617,12 @@ int __fastcall TriggerAction_EnableDebugMode_(Action* a1)
 
 FAIL_STUB_PATCH(TriggerAction_EnableDebugMode, "starcraft");
 
-#include <sol/sol.hpp>
-
-void lua_print(const char* message)
+int __fastcall TriggerAction_ExecuteLua(Action* action)
 {
-	if (active_trigger_player == g_LocalNationID && message)
-	{
-		int display_time = getTextDisplayTime_(message);
-		PrintText(message, 2, display_time + GetTickCount(), 1);
-	}
-}
+	const char* code = GetMapTblString(action->string);
+	TriggerActionState state;
 
-int __fastcall TriggerAction_ExecuteLua(Action* a1)
-{
-	const char* script = GetMapTblString(a1->string);
-
-	sol::state lua;
-	lua.set_function("print", lua_print);
-	lua.script(script);
+	state.script(code);
 
 	return 1;
 }
