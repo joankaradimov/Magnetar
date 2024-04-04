@@ -7797,6 +7797,15 @@ void LoadRaceUI_()
 
 FAIL_STUB_PATCH(LoadRaceUI, "starcraft");
 
+void sub_4965A0_()
+{
+	memset(stru_57FE60, 0, sizeof(stru_57FE60));
+	memset(word_63FE40, 0, 0x80u);
+	byte_597280 = -1;
+}
+
+FAIL_STUB_PATCH(sub_4965A0, "starcraft");
+
 void hotkeyRemapping_()
 {
 	sub_49BB90();
@@ -7809,9 +7818,7 @@ void hotkeyRemapping_()
 	if (!loadGameFileHandle)
 	{
 		sub_4AABF0();
-		memset(stru_57FE60, 0, sizeof(stru_57FE60));
-		memset(word_63FE40, 0, 0x80u);
-		byte_597280 = -1;
+		sub_4965A0_();
 		sub_4C3ED0();
 		for (int i = 0; i < _countof(byte_58D718); i++)
 		{
