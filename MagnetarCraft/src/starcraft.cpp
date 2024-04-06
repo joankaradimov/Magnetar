@@ -22038,6 +22038,17 @@ void __stdcall DoUnitEventNotify__(int* a4, unsigned int a5)
 
 FUNCTION_PATCH((void*)0x45EFE0, DoUnitEventNotify__, "starcraft");
 
+void createTextMessageWithTimer_(const char* text_message, int display_time)
+{
+	if (text_message)
+	{
+		int TickCount = GetTickCount();
+		PrintText(text_message, 2, display_time + TickCount, 1);
+	}
+}
+
+FAIL_STUB_PATCH(createTextMessageWithTimer, "starcraft");
+
 int __fastcall TriggerAction_Transmission_(Action* a1)
 {
 	if (a1->location == 0)
@@ -22099,7 +22110,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			{
 				const char* text_message = get_chk_String(a1->string);
 				unsigned display_time = std::max(v7, getTextDisplayTime_(text_message));
-				createTextMessageWithTimer(text_message, display_time);
+				createTextMessageWithTimer_(text_message, display_time);
 			}
 		}
 	}
