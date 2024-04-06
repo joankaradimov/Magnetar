@@ -2,6 +2,9 @@
 
 ## Unreleased
   - Add a new trigger action: "Execute Lua"
+    * Implement a `Scenario` type
+    * Implement a `Player` type
+    * Implement a `Race` type
 
 ## 0.3.0 - Committed Corsair
   - Allow raw CHK files to be loaded as custom scenarios

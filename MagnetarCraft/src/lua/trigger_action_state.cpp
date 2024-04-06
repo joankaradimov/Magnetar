@@ -1,5 +1,6 @@
 #include "lua/trigger_action_state.h"
 
+#include "race.h"
 #include "starcraft.h"
 
 class Scenario
@@ -20,9 +21,43 @@ public:
 
 TriggerActionState::TriggerActionState()
 {
+	state.new_usertype<Race>("Race",
+		"new", sol::no_constructor,
+
+		"id", sol::property([](Race& race) { return race.id; })
+
+		// TODO: expose default music playlist
+	);
+
+	state.new_usertype<PlayerInfo>("Player",
+		"new", sol::no_constructor,
+
+		"name", sol::property([](PlayerInfo& player) {
+			return player.szName; // TODO: fix indeterminisim by computer player name localizations
+		}),
+
+		"race", sol::property([](PlayerInfo& player) { return Race::races()[player.nRace]; })
+
+		// TODO: expose force/team
+		// TODO: expose type (human/computer/neutral)
+		// TODO: expose music playlist
+		// TODO: expose color, maybe?
+	);
+
 	state.new_usertype<Scenario>("Scenario",
 		"new", sol::no_constructor,
-		"next_scenario", sol::property(&Scenario::get_next_scenario, &Scenario::set_next_scenario)
+
+		"next_scenario", sol::property(&Scenario::get_next_scenario, &Scenario::set_next_scenario),
+
+		"players", sol::property([this](Scenario& scenario) {
+			// TODO: avoid all this copying
+			auto result = state.create_table();
+			for (int i = 0; i < _countof(Players); i++)
+			{
+				result[i] = std::ref(Players[i]);
+			}
+			return result;
+		})
 	);
 
 	state.set_function("print", [this](sol::object obj) {
