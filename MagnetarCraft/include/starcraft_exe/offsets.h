@@ -3133,7 +3133,7 @@ void createTextMessageWithTimer(const char *text_message, int display_time);
 extern void (*sub_48CF40)();
 extern void (*BWFXN_DrawHighTarget)();
 void InfoMessage(int timeout_ms, const char *text);
-void UnitPlacementError(const char *a1, u8 a2);
+void display_error(const char *a1, u8 a2);
 void BWFXN_PrintText(int player, char *string, int replay_recorded_message);
 extern void * (*freePlaceboxBuffer)();
 extern int (*sub_48D5A0)();

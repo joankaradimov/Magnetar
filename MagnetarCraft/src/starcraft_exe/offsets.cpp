@@ -17808,7 +17808,7 @@ void InfoMessage(int timeout_ms, const char *text) {
         call address
     }
 }
-void UnitPlacementError(const char *a1, u8 a2) {
+void display_error(const char *a1, u8 a2) {
     int address = 0x48d140;
     __asm {
         push dword ptr a2
