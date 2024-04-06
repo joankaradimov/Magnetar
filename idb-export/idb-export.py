@@ -891,10 +891,10 @@ from itertools import takewhile, count
 def sort_topologically(local_types):
     graph = collections.OrderedDict()
     levels_by_name = collections.OrderedDict()
-    names_by_level = defaultdict(set)
+    names_by_level = collections.OrderedDict()
 
     for local_type in local_types.values():
-        graph[local_type.name] = set()
+        graph[local_type.name] = []
         for dependency in local_type.dependencies:
             dependency_type = dependency.replace('*', '')
             if dependency_type not in local_types:
@@ -903,7 +903,7 @@ def sort_topologically(local_types):
             if '*' in dependency and local_types[dependency_type].declaration != '':
                 continue # No need to depend on the definition when a declaration is sufficient
 
-            graph[local_type.name].add(dependency_type)
+            graph[local_type.name].append(dependency_type)
 
     def walk_depth_first(name):
         if name in levels_by_name:
@@ -911,7 +911,7 @@ def sort_topologically(local_types):
         children = graph.get(name, None)
         level = 0 if not children else (1 + max(walk_depth_first(lname) for lname in children))
         levels_by_name[name] = level
-        names_by_level[level].add(name)
+        names_by_level.setdefault(level, default=[]).append(name)
         return level
 
     for name in graph:
