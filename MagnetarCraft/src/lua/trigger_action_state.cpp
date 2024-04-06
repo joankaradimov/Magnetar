@@ -2,11 +2,35 @@
 
 #include "starcraft.h"
 
+class Scenario
+{
+public:
+	Scenario() {}
+
+	std::string get_next_scenario()
+	{
+		return next_scenario;
+	}
+
+	void set_next_scenario(const char* scenario)
+	{
+		strcpy_s(next_scenario, scenario);
+	}
+};
+
 TriggerActionState::TriggerActionState()
 {
+	state.new_usertype<Scenario>("Scenario",
+		"new", sol::no_constructor,
+		"next_scenario", sol::property(&Scenario::get_next_scenario, &Scenario::set_next_scenario)
+	);
+
 	state.set_function("print", [this](sol::object obj) {
 		print(obj);
 	});
+
+	// TODO: tweak the 'globals' metatable so that this can't be overwriten
+	state.globals()["scenario"] = Scenario();
 }
 
 void TriggerActionState::script(std::string_view code)
