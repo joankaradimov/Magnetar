@@ -22633,7 +22633,16 @@ int __fastcall TriggerAction_ExecuteLua(Action* action)
 	const char* code = GetMapTblString(action->string);
 	TriggerActionState state;
 
-	state.script(code);
+	try
+	{
+		state.script(code);
+	}
+	catch (const sol::error& exception)
+	{
+		// TODO: display for longer duration (indefinite, maybe?)
+		// TODO: hint at what trigger is causing the error
+		display_error(exception.what(), Color::COLOR_RED);
+	}
 
 	return 1;
 }
