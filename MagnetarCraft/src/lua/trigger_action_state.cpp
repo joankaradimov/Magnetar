@@ -6,9 +6,7 @@
 class Scenario
 {
 public:
-	Scenario() {}
-
-	std::string get_next_scenario()
+	auto get_next_scenario()
 	{
 		return next_scenario;
 	}
