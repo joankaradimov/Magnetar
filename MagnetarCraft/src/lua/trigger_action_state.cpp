@@ -15,6 +15,11 @@ public:
 	{
 		strcpy_s(next_scenario, scenario);
 	}
+
+	std::string to_string()
+	{
+		return "<Scenario>";
+	}
 };
 
 TriggerActionState::TriggerActionState()
@@ -24,6 +29,10 @@ TriggerActionState::TriggerActionState()
 	state.new_usertype<Race>("Race",
 		"new", sol::no_constructor,
 
+		"__tostring", [](Race& race) {
+			return (std::string)"<Race '" + race.id + "'>"; // TODO: use the full race name
+		},
+
 		"id", sol::property([](Race& race) { return race.id; })
 
 		// TODO: expose default music playlist
@@ -31,6 +40,10 @@ TriggerActionState::TriggerActionState()
 
 	state.new_usertype<PlayerInfo>("Player",
 		"new", sol::no_constructor,
+
+		"__tostring", [](PlayerInfo& player) {
+			return (std::string)"<Player " + std::to_string(player.dwPlayerID + 1) + '>';
+		},
 
 		"name", sol::property([](PlayerInfo& player) {
 			return player.szName; // TODO: fix indeterminisim by computer player name localizations
@@ -50,6 +63,7 @@ TriggerActionState::TriggerActionState()
 		"next_scenario", sol::property(&Scenario::get_next_scenario, &Scenario::set_next_scenario),
 
 		"players", sol::property([this](Scenario& scenario) {
+			// TODO: fix indeterminism caused by the string representation including an address
 			// TODO: avoid all this copying
 			auto result = state.create_table();
 			for (int i = 0; i < _countof(Players); i++)
@@ -75,7 +89,6 @@ void TriggerActionState::script(std::string_view code)
 
 void TriggerActionState::print(const sol::object& obj)
 {
-	// TODO: this may include addresss; fix this indeterminism
 	std::string message = state["tostring"](obj);
 	print(message);
 }
