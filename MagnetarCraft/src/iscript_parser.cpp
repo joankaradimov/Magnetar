@@ -7,6 +7,7 @@
 
 #include "iscript_parser.h"
 #include "starcraft.h"
+#include "magnetorm.h"
 
 struct LabelReference
 {
@@ -895,6 +896,8 @@ void IScriptParser::parse(std::vector<IScriptAnimationSet>& animation_sets, cons
 
     auto new_animation_sets = builder.build_animation_sets();
     merge_animation_sets(animation_sets, new_animation_sets);
+
+    SMemFree(iscript_txt, __FILE__, __LINE__, 0);
 }
 
 void IScriptParser::merge_animation_sets(std::vector<IScriptAnimationSet>& destination, const std::vector<IScriptAnimationSet>& source)
