@@ -19,6 +19,8 @@ public:
 
 TriggerActionState::TriggerActionState()
 {
+	state.open_libraries();
+
 	state.new_usertype<Race>("Race",
 		"new", sol::no_constructor,
 
