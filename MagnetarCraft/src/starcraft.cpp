@@ -4789,6 +4789,55 @@ void __cdecl sub_481060_()
 
 FUNCTION_PATCH(sub_481060, sub_481060_, "starcraft");
 
+void checkSaveGameDialog_(dialog* dlg)
+{
+	dialog* pFirstChild = getControlFromIndex_(dlg, 2);
+	HideDialog(pFirstChild);
+
+	dialog* v5 = getControlFromIndex_(dlg, 1);
+	if (getActivePlayerId() != playerid || gameData.got_file_values.tournament_mode || InReplay)
+	{
+		HideDialog(v5);
+	}
+	else if (isSaveGameTimerReady())
+	{
+		EnableControl(v5);
+	}
+	else
+	{
+		DisableControl(v5);
+	}
+
+	dialog* v10 = getControlFromIndex_(dlg, 7);
+	if (InReplay || multiPlayerMode
+		&& ((unsigned __int8)gameState < 9 || Players[g_LocalHumanID].nType != PT_Human || !byte_58D718[g_LocalHumanID])
+		|| IS_GAME_PAUSED)
+	{
+		HideDialog(v10);
+	}
+	else
+	{
+		showDialog(v10);
+	}
+
+	dialog* v13 = getControlFromIndex_(dlg, 8);
+	if (!InReplay && Players[g_LocalHumanID].nType == PT_Human && IS_GAME_PAUSED)
+	{
+		showDialog(v13);
+	}
+	else
+	{
+		HideDialog(v13);
+	}
+
+	if (!InReplay)
+	{
+		SetCallbackTimer(1, dlg, 200, saveGameCBProc);
+	}
+}
+
+FAIL_STUB_PATCH(checkSaveGameDialog, "starcraft");
+
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] =
@@ -4814,7 +4863,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	}
 	if (dword_6D1234 == sub_4CA450 && (multiPlayerMode || InReplay))
 	{
-		checkSaveGameDialog(dlg);
+		checkSaveGameDialog_(dlg);
 	}
 	if (dword_6D1234 == BWFXN_QuitMission_)
 	{
