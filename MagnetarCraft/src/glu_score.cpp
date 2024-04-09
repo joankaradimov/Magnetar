@@ -6,6 +6,20 @@
 #include "race.h"
 #include "exception.h"
 
+unsigned getElapsedGameTimeSeconds_()
+{
+	if (isInGame)
+	{
+		return (GetTickCount() - dword_59CC7C) / 1000 + elapstedTimeModifier;
+	}
+	else
+	{
+		return (countdownTimeTickCount_0 - dword_59CC7C) / 1000u + elapstedTimeModifier;
+	}
+}
+
+FUNCTION_PATCH(getElapsedGameTimeSeconds, getElapsedGameTimeSeconds_, "starcraft");
+
 int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 {
 	if (!a1 || !buff || !dword_59B618)
@@ -44,7 +58,7 @@ int endgameData_(char* a1, size_t a2, char* buff, size_t a4)
 	int leagueID = 0;
 	SNetGetLeagueName(&leagueID);
 	char v14[256] = { 0 };
-	unsigned elapsed_time = getElapsedGameTimeSeconds();
+	unsigned elapsed_time = getElapsedGameTimeSeconds_();
 	sub_4B2FC0(0xFFu, v14, elapsed_time);
 	const char* v7 = GetNetworkTblString_(v4);
 	_snprintf(buff, a4, "<leagueid>%d</leagueid>\n<gameid>0x%08x</gameid>\n<race>%s</race>\n<time>%u</time>\n", leagueID, game_id_hash, v7, elapsed_time);
