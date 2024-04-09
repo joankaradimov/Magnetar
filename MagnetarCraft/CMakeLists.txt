@@ -4,7 +4,7 @@ add_definitions(-D_UNICODE)
 if (MSVC)
 	add_link_options ("/INCREMENTAL:NO") # MSVC can be buggy https://stackoverflow.com/a/2487756/7913479
 	add_link_options ("/FIXED")
-	add_link_options ("/BASE:0x60000")
+	add_link_options ("/BASE:0x50000")
 endif ()
 
 add_library(MagnetarCraftObject OBJECT
