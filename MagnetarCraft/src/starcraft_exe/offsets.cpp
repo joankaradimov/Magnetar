@@ -24118,7 +24118,7 @@ DECL_FUNC(grpFrame * (*sub_4BDF80)(), sub_4BDF80, 0x4bdf80);
 DECL_FUNC(void (__fastcall*cursorUpdateProc)(int a1, int a2, Bitmap *a3, bounds *a4), cursorUpdateProc, 0x4bdfa0);
 DECL_FUNC(signed (*cursorRefresh)(), cursorRefresh, 0x4be060);
 DECL_FUNC(BYTE (*RefreshCursor_0)(), RefreshCursor_0, 0x4be0b0);
-DECL_FUNC(DWORD (*sub_4BE100)(), sub_4BE100, 0x4be100);
+DECL_FUNC(void (__cdecl*sub_4BE100)(), sub_4BE100, 0x4be100);
 DECL_FUNC(void (__cdecl*drawCursor)(), drawCursor, 0x4be120);
 DECL_FUNC(void (__fastcall*updateCursorImage)(int a1, int a2, Bitmap *a3), updateCursorImage, 0x4be1a0);
 void setCursor(grpHead *a1) {
@@ -25163,10 +25163,10 @@ int j_options_Cancel(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(signed (*sub_4C99C0)(), sub_4C99C0, 0x4c99c0);
-void checkSaveGameDialog(dialog *a1) {
+void checkSaveGameDialog(dialog *dlg) {
     int address = 0x4c9a90;
     __asm {
-        mov edi, a1
+        mov edi, dlg
         call address
     }
 }
@@ -34124,6 +34124,8 @@ __int16& word_59CC6C = * ((decltype(&word_59CC6C)) 0x59cc6c);
 __int16& word_59CC70 = * ((decltype(&word_59CC70)) 0x59cc70);
 int& minimap_surface_width = * ((decltype(&minimap_surface_width)) 0x59cc74);
 int& countdownTimeRemaining = * ((decltype(&countdownTimeRemaining)) 0x59cc78);
+int& dword_59CC7C = * ((decltype(&dword_59CC7C)) 0x59cc7c);
+unsigned int& dword_59CC80 = * ((decltype(&dword_59CC80)) 0x59cc80);
 int& dword_59CC84 = * ((decltype(&dword_59CC84)) 0x59cc84);
 int& countdownTimeTickCount_0 = * ((decltype(&countdownTimeTickCount_0)) 0x59cc88);
 int& dword_59CC8C = * ((decltype(&dword_59CC8C)) 0x59cc8c);

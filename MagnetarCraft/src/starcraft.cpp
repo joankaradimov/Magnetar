@@ -13500,6 +13500,28 @@ void RefreshAllUnits_()
 
 FAIL_STUB_PATCH(RefreshAllUnits, "starcraft");
 
+void loadTimeoutDlg_()
+{
+	if (GetTickCount() > countdownTimeRemaining + 120000)
+	{
+		dword_59CC80 = 45;
+	}
+	else if (dword_59CC80 < 2)
+	{
+		dword_59CC80 = 0;
+	}
+	else
+	{
+		dword_59CC80 = std::min<unsigned>(dword_59CC80 - 2, 45);
+	}
+
+	BWFXN_OpenGameDialog("rez\\timeout.bin", Timeout_BINDLG);
+	byte_6D1224 = 0;
+	BWFXN_RedrawTarget();
+}
+
+FAIL_STUB_PATCH(loadTimeoutDlg, "starcraft");
+
 void RecvMessage_()
 {
 	DWORD senderplayerid;
@@ -13617,7 +13639,7 @@ void timeoutProcDropdown_()
 	if (!byte_6D5BC2)
 	{
 		byte_6D5BC2 = 1;
-		loadTimeoutDlg();
+		loadTimeoutDlg_();
 		dword_59CC84 = 0;
 		DWORD v3 = GetTickCount();
 		while (!byte_57EE78)
@@ -17342,6 +17364,22 @@ void AnimateVideos_(dialog* result)
 
 FAIL_STUB_PATCH(AnimateVideos, "starcraft");
 
+void __fastcall sub_4DCEA0_(dialog* a1, __int16 a2)
+{
+	if (last_cursor && last_cursor->wFrames != 1)
+	{
+		DWORD TickCount = GetTickCount();
+		if (TickCount >= dword_597398)
+		{
+			dword_597398 = TickCount + 100;
+			++dword_597390;
+			drawCursor();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4DCEA0, "starcraft");
+
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size)
 {
 	AnimateVideos_(a2);
@@ -17380,7 +17418,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		sub_419290(v11);
 		grpHead* v12 = stru_50E06C[v10].grp_head;
 		setCursor_(v12);
-		SetCallbackTimer(24, a2, 50, sub_4DCEA0);
+		SetCallbackTimer(24, a2, 50, sub_4DCEA0_);
 		dword_6D5E20 = &a2->srcBits;
 		dword_51C418 = a2;
 		checkLastFileError();

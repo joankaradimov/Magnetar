@@ -95,15 +95,15 @@ struct RTTIClassHierarchyDescriptor;
 struct RTTICompleteObjectLocator;
 struct RTCI;
 struct _SCOPETABLE_ENTRY;
-enum DialogFlags;
 struct dialog_ctrl;
+enum DialogFlags;
 enum DialogType : unsigned __int16;
 struct struct_1;
 struct struct_2;
 struct __declspec(align(2)) DatLoad;
 struct ForceName;
-enum RaceId : __int8;
 enum PlayerType : __int8;
+enum RaceId : __int8;
 struct PlayerResources;
 struct PlayerAlliance;
 struct __declspec(align(1)) swishTimer;
@@ -118,8 +118,8 @@ struct __declspec(align(4)) point;
 enum Order : unsigned __int8;
 enum UnitMovementState : __int8;
 struct CUnitFighter;
-enum Tech : __int8;
 enum UnitType : unsigned __int16;
+enum Tech : __int8;
 struct CUnitNydus;
 struct CUnitGhost;
 struct CUnitPylon;
@@ -163,14 +163,14 @@ struct UnitDimentions;
 enum MapData4 : __int32;
 enum Tech2 : __int16;
 enum SfxData;
-enum FogOfWar : unsigned __int8;
-enum StartingUnits : unsigned __int8;
 enum UnitStats : unsigned __int8;
-enum StartingPositions : unsigned __int8;
-enum PlayerTypes : unsigned __int8;
 enum VictoryConditions : unsigned __int8;
-enum ResourceType : unsigned __int8;
+enum FogOfWar : unsigned __int8;
+enum StartingPositions : unsigned __int8;
 enum GameType : __int8;
+enum ResourceType : unsigned __int8;
+enum StartingUnits : unsigned __int8;
+enum PlayerTypes : unsigned __int8;
 struct struct_5;
 struct __declspec(align(2)) AudioVideoInitializationError;
 struct __declspec(align(4)) CharacterData;
@@ -244,12 +244,12 @@ struct struct_v4_1;
 struct struct_a2_1;
 struct RTTIBaseClassDescriptor;
 struct _EH3_EXCEPTION_REGISTRATION;
-struct Bitmap;
-struct __declspec(align(2)) rect;
-struct dialog_dlg;
-struct dialog_scroll;
 struct dialog_optn;
+struct dialog_scroll;
+struct dialog_dlg;
+struct __declspec(align(2)) rect;
 struct dialog_edit;
+struct Bitmap;
 struct PlayerInfo;
 struct __declspec(align(1)) Position;
 struct pt;
@@ -271,8 +271,8 @@ struct __declspec(align(2)) CUnitBuilding;
 struct CUnitWorker;
 struct CUnitResource;
 struct CUnitPowerup;
-struct CUnitRally;
 struct CUnitFinder;
+struct CUnitRally;
 struct CUnitStatus;
 struct SuppliesPerRace;
 struct Counts;
@@ -363,8 +363,8 @@ struct __declspec(align(1)) MinimapPingCommand;
 struct __declspec(align(1)) GroupUnitsCommand;
 struct UnitGroupRelatedInner;
 struct CPPEH_RECORD;
-struct __declspec(align(1)) dialog_list;
 struct dialog_btn;
+struct __declspec(align(1)) dialog_list;
 struct dlgEvent;
 struct __declspec(align(4)) CSprite;
 struct __declspec(align(4)) CImage;
@@ -475,11 +475,23 @@ struct _SCOPETABLE_ENTRY
 };
 static_assert(sizeof(_SCOPETABLE_ENTRY) == 12, "Incorrect size for type `_SCOPETABLE_ENTRY`. Expected: 12");
 
-typedef unsigned __int16 u16;
+typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
+
+struct dialog_ctrl
+{
+  dialog *pDlg;
+};
+static_assert(sizeof(dialog_ctrl) == 4, "Incorrect size for type `dialog_ctrl`. Expected: 4");
 
 typedef unsigned __int8 u8;
 
+typedef unsigned __int16 u16;
+
+typedef unsigned __int32 u32;
+
 typedef __int16 s16;
+
+typedef int (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
 
 enum DialogFlags
 {
@@ -518,14 +530,6 @@ enum DialogFlags
   CTRL_LBOX_NORECALC = 0x80000000,
 };
 
-typedef unsigned __int32 u32;
-
-struct dialog_ctrl
-{
-  dialog *pDlg;
-};
-static_assert(sizeof(dialog_ctrl) == 4, "Incorrect size for type `dialog_ctrl`. Expected: 4");
-
 enum DialogType : unsigned __int16
 {
   cDLG = 0x0,
@@ -544,10 +548,6 @@ enum DialogType : unsigned __int16
   cCOMBO = 0xD,
   cFLCBTN = 0xE,
 };
-
-typedef int (__fastcall *FnInteract)(dialog *dlg, dlgEvent *evt);
-
-typedef void (__fastcall *FnUpdate)(dialog *dlg, int x, int y, rect *dst);
 
 #pragma pack(push, 1)
 struct struct_1
@@ -587,19 +587,6 @@ struct ForceName
 };
 static_assert(sizeof(ForceName) == 30, "Incorrect size for type `ForceName`. Expected: 30");
 
-enum RaceId : __int8
-{
-  RACE_Zerg = 0x0,
-  RACE_Terran = 0x1,
-  RACE_Protoss = 0x2,
-  RACE_Other = 0x3,
-  RACE_Unused = 0x4,
-  RACE_Select = 0x5,
-  RACE_Random = 0x6,
-  RACE_None = 0x7,
-  RACE_Unknown = 0x8,
-};
-
 enum PlayerType : __int8
 {
   PT_NotUsed = 0x0,
@@ -614,6 +601,19 @@ enum PlayerType : __int8
   PT_Unknown1 = 0x9,
   PT_HumanDefeated = 0xA,
   PT_ComputerDefeated = 0xB,
+};
+
+enum RaceId : __int8
+{
+  RACE_Zerg = 0x0,
+  RACE_Terran = 0x1,
+  RACE_Protoss = 0x2,
+  RACE_Other = 0x3,
+  RACE_Unused = 0x4,
+  RACE_Select = 0x5,
+  RACE_Random = 0x6,
+  RACE_None = 0x7,
+  RACE_Unknown = 0x8,
 };
 
 struct PlayerResources
@@ -1015,55 +1015,6 @@ struct CUnitFighter
 };
 static_assert(sizeof(CUnitFighter) == 16, "Incorrect size for type `CUnitFighter`. Expected: 16");
 
-enum Tech : __int8
-{
-  TECH_stim_packs = 0x0,
-  TECH_lockdown = 0x1,
-  TECH_emp_shockwave = 0x2,
-  TECH_spider_mines = 0x3,
-  TECH_scanner_sweep = 0x4,
-  TECH_tank_siege_mode = 0x5,
-  TECH_defensive_matrix = 0x6,
-  TECH_irradiate = 0x7,
-  TECH_yamato_gun = 0x8,
-  TECH_cloaking_field = 0x9,
-  TECH_personnel_cloaking = 0xA,
-  TECH_burrowing = 0xB,
-  TECH_infestation = 0xC,
-  TECH_spawn_broodlings = 0xD,
-  TECH_dark_swarm = 0xE,
-  TECH_plague = 0xF,
-  TECH_consume = 0x10,
-  TECH_ensnare = 0x11,
-  TECH_parasite = 0x12,
-  TECH_psionic_storm = 0x13,
-  TECH_hallucination = 0x14,
-  TECH_recall = 0x15,
-  TECH_stasis_field = 0x16,
-  TECH_archon_warp = 0x17,
-  TECH_restoration = 0x18,
-  TECH_disruption_web = 0x19,
-  TECH_unknown_tech26 = 0x1A,
-  TECH_mind_control = 0x1B,
-  TECH_dark_archon_meld = 0x1C,
-  TECH_feedback = 0x1D,
-  TECH_optical_flare = 0x1E,
-  TECH_maelstorm = 0x1F,
-  TECH_lurker_aspect = 0x20,
-  TECH_unknown_tech33 = 0x21,
-  TECH_healing = 0x22,
-  TECH_unknown_tech35 = 0x23,
-  TECH_unknown_tech36 = 0x24,
-  TECH_unknown_tech37 = 0x25,
-  TECH_unknown_tech38 = 0x26,
-  TECH_unknown_tech39 = 0x27,
-  TECH_unknown_tech40 = 0x28,
-  TECH_unknown_tech41 = 0x29,
-  TECH_unknown_tech42 = 0x2A,
-  TECH_unknown_tech43 = 0x2B,
-  TECH_none = 0x2C,
-};
-
 enum UnitType : unsigned __int16
 {
   Terran_Marine = 0x0,
@@ -1295,6 +1246,55 @@ enum UnitType : unsigned __int16
   Powerup_Terran_Gas_Tank_Type_1 = 0xE2,
   Powerup_Terran_Gas_Tank_Type_2 = 0xE3,
   UT_MAX = 0xE4,
+};
+
+enum Tech : __int8
+{
+  TECH_stim_packs = 0x0,
+  TECH_lockdown = 0x1,
+  TECH_emp_shockwave = 0x2,
+  TECH_spider_mines = 0x3,
+  TECH_scanner_sweep = 0x4,
+  TECH_tank_siege_mode = 0x5,
+  TECH_defensive_matrix = 0x6,
+  TECH_irradiate = 0x7,
+  TECH_yamato_gun = 0x8,
+  TECH_cloaking_field = 0x9,
+  TECH_personnel_cloaking = 0xA,
+  TECH_burrowing = 0xB,
+  TECH_infestation = 0xC,
+  TECH_spawn_broodlings = 0xD,
+  TECH_dark_swarm = 0xE,
+  TECH_plague = 0xF,
+  TECH_consume = 0x10,
+  TECH_ensnare = 0x11,
+  TECH_parasite = 0x12,
+  TECH_psionic_storm = 0x13,
+  TECH_hallucination = 0x14,
+  TECH_recall = 0x15,
+  TECH_stasis_field = 0x16,
+  TECH_archon_warp = 0x17,
+  TECH_restoration = 0x18,
+  TECH_disruption_web = 0x19,
+  TECH_unknown_tech26 = 0x1A,
+  TECH_mind_control = 0x1B,
+  TECH_dark_archon_meld = 0x1C,
+  TECH_feedback = 0x1D,
+  TECH_optical_flare = 0x1E,
+  TECH_maelstorm = 0x1F,
+  TECH_lurker_aspect = 0x20,
+  TECH_unknown_tech33 = 0x21,
+  TECH_healing = 0x22,
+  TECH_unknown_tech35 = 0x23,
+  TECH_unknown_tech36 = 0x24,
+  TECH_unknown_tech37 = 0x25,
+  TECH_unknown_tech38 = 0x26,
+  TECH_unknown_tech39 = 0x27,
+  TECH_unknown_tech40 = 0x28,
+  TECH_unknown_tech41 = 0x29,
+  TECH_unknown_tech42 = 0x2A,
+  TECH_unknown_tech43 = 0x2B,
+  TECH_none = 0x2C,
 };
 
 struct CUnitNydus
@@ -3430,39 +3430,10 @@ enum SfxData
   SFX_MAX = 0x478,
 };
 
-enum FogOfWar : unsigned __int8
-{
-  FOW_OFF = 0x0,
-  FOW_WARCRAFT1 = 0x1,
-  FOW_ON = 0x2,
-};
-
-enum StartingUnits : unsigned __int8
-{
-  SU_MAP_DEFAULT = 0x0,
-  SU_WORKER_ONLY = 0x1,
-  SU_WORKER_AND_CENTER = 0x2,
-};
-
 enum UnitStats : unsigned __int8
 {
   US_MAP_DEFALUT = 0x0,
   US_STANDARD = 0x1,
-};
-
-enum StartingPositions : unsigned __int8
-{
-  SP_RANDOM = 0x0,
-  SP_FIXED = 0x1,
-};
-
-enum PlayerTypes : unsigned __int8
-{
-  PT_NO_SINGLE = 0x0,
-  PT_NO_COMPUTERS = 0x1,
-  PT_NO_SINGLE_WITH_COMPUTERS = 0x2,
-  PT_SINGLE_NO_COMPUTERS = 0x3,
-  PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
 
 enum VictoryConditions : unsigned __int8
@@ -3477,14 +3448,17 @@ enum VictoryConditions : unsigned __int8
   VC_ONE_ON_ONE = 0x7,
 };
 
-enum ResourceType : unsigned __int8
+enum FogOfWar : unsigned __int8
 {
-  RT_MAP_DEFALUT = 0x0,
-  RT_FIXED_VALUE = 0x1,
-  RT_LOW = 0x2,
-  RT_MEDIUM = 0x3,
-  RT_HIGH = 0x4,
-  RT_INCOME = 0x5,
+  FOW_OFF = 0x0,
+  FOW_WARCRAFT1 = 0x1,
+  FOW_ON = 0x2,
+};
+
+enum StartingPositions : unsigned __int8
+{
+  SP_RANDOM = 0x0,
+  SP_FIXED = 0x1,
 };
 
 enum GameType : __int8
@@ -3502,6 +3476,32 @@ enum GameType : __int8
   GT_TeamFreeForAll = 0xC,
   GT_TeamCTF = 0xD,
   GT_TopVsBottom = 0xF,
+};
+
+enum ResourceType : unsigned __int8
+{
+  RT_MAP_DEFALUT = 0x0,
+  RT_FIXED_VALUE = 0x1,
+  RT_LOW = 0x2,
+  RT_MEDIUM = 0x3,
+  RT_HIGH = 0x4,
+  RT_INCOME = 0x5,
+};
+
+enum StartingUnits : unsigned __int8
+{
+  SU_MAP_DEFAULT = 0x0,
+  SU_WORKER_ONLY = 0x1,
+  SU_WORKER_AND_CENTER = 0x2,
+};
+
+enum PlayerTypes : unsigned __int8
+{
+  PT_NO_SINGLE = 0x0,
+  PT_NO_COMPUTERS = 0x1,
+  PT_NO_SINGLE_WITH_COMPUTERS = 0x2,
+  PT_SINGLE_NO_COMPUTERS = 0x3,
+  PT_SINGLE_WITH_COMPUTERS = 0x4,
 };
 
 #pragma pack(push, 1)
@@ -5041,35 +5041,12 @@ struct _EH3_EXCEPTION_REGISTRATION
 };
 static_assert(sizeof(_EH3_EXCEPTION_REGISTRATION) == 16, "Incorrect size for type `_EH3_EXCEPTION_REGISTRATION`. Expected: 16");
 
-struct Bitmap
+struct dialog_optn
 {
-  u16 wid;
-  u16 ht;
-  u8 *data;
+  dialog *pDlg;
+  u8 bEnabled;
 };
-static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
-
-struct __declspec(align(2)) rect
-{
-  s16 left;
-  s16 top;
-  s16 right;
-  s16 bottom;
-};
-static_assert(sizeof(rect) == 8, "Incorrect size for type `rect`. Expected: 8");
-
-struct dialog_dlg
-{
-  u32 dwUnk_0x32;
-  u16 dstBits_wid;
-  u16 dstBits_ht;
-  u8 *dstBits_data;
-  dialog *pActiveElement;
-  dialog *pFirstChild;
-  dialog *pMouseElement;
-  bool (__fastcall *pModalFcn)(dialog *);
-};
-static_assert(sizeof(dialog_dlg) == 28, "Incorrect size for type `dialog_dlg`. Expected: 28");
+static_assert(sizeof(dialog_optn) == 8, "Incorrect size for type `dialog_optn`. Expected: 8");
 
 struct dialog_scroll
 {
@@ -5089,14 +5066,29 @@ struct dialog_scroll
 };
 static_assert(sizeof(dialog_scroll) == 32, "Incorrect size for type `dialog_scroll`. Expected: 32");
 
-typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
-
-struct dialog_optn
+struct dialog_dlg
 {
-  dialog *pDlg;
-  u8 bEnabled;
+  u32 dwUnk_0x32;
+  u16 dstBits_wid;
+  u16 dstBits_ht;
+  u8 *dstBits_data;
+  dialog *pActiveElement;
+  dialog *pFirstChild;
+  dialog *pMouseElement;
+  bool (__fastcall *pModalFcn)(dialog *);
 };
-static_assert(sizeof(dialog_optn) == 8, "Incorrect size for type `dialog_optn`. Expected: 8");
+static_assert(sizeof(dialog_dlg) == 28, "Incorrect size for type `dialog_dlg`. Expected: 28");
+
+struct __declspec(align(2)) rect
+{
+  s16 left;
+  s16 top;
+  s16 right;
+  s16 bottom;
+};
+static_assert(sizeof(rect) == 8, "Incorrect size for type `rect`. Expected: 8");
+
+typedef void (__fastcall *FnDrawItem)(struct dialog *dlg, u8 selectedIndex, rect *dstRect, int x, int y);
 
 struct dialog_edit
 {
@@ -5110,6 +5102,14 @@ struct dialog_edit
   u8 bCursorPos;
 };
 static_assert(sizeof(dialog_edit) == 16, "Incorrect size for type `dialog_edit`. Expected: 16");
+
+struct Bitmap
+{
+  u16 wid;
+  u16 ht;
+  u8 *data;
+};
+static_assert(sizeof(Bitmap) == 8, "Incorrect size for type `Bitmap`. Expected: 8");
 
 struct PlayerInfo
 {
@@ -5299,13 +5299,6 @@ struct CUnitPowerup
 };
 static_assert(sizeof(CUnitPowerup) == 4, "Incorrect size for type `CUnitPowerup`. Expected: 4");
 
-struct CUnitRally
-{
-  points position;
-  CUnit *unit;
-};
-static_assert(sizeof(CUnitRally) == 8, "Incorrect size for type `CUnitRally`. Expected: 8");
-
 struct CUnitFinder
 {
   u32 left;
@@ -5314,6 +5307,13 @@ struct CUnitFinder
   u32 bottom;
 };
 static_assert(sizeof(CUnitFinder) == 16, "Incorrect size for type `CUnitFinder`. Expected: 16");
+
+struct CUnitRally
+{
+  points position;
+  CUnit *unit;
+};
+static_assert(sizeof(CUnitRally) == 8, "Incorrect size for type `CUnitRally`. Expected: 8");
 
 struct CUnitStatus
 {
@@ -6195,6 +6195,18 @@ struct CPPEH_RECORD
 };
 static_assert(sizeof(CPPEH_RECORD) == 24, "Incorrect size for type `CPPEH_RECORD`. Expected: 24");
 
+struct dialog_btn
+{
+  dialog *pDlg;
+  rect responseRct;
+  u16 wHighlight;
+  u16 wUnknown_0x40;
+  void *pSmk;
+  rect textRct;
+  u16 wAlignment;
+};
+static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
+
 #pragma pack(push, 1)
 struct __declspec(align(1)) dialog_list
 {
@@ -6218,18 +6230,6 @@ struct __declspec(align(1)) dialog_list
 };
 #pragma pack(pop)
 static_assert(sizeof(dialog_list) == 36, "Incorrect size for type `dialog_list`. Expected: 36");
-
-struct dialog_btn
-{
-  dialog *pDlg;
-  rect responseRct;
-  u16 wHighlight;
-  u16 wUnknown_0x40;
-  void *pSmk;
-  rect textRct;
-  u16 wAlignment;
-};
-static_assert(sizeof(dialog_btn) == 32, "Incorrect size for type `dialog_btn`. Expected: 32");
 
 struct dlgEvent
 {
