@@ -7909,6 +7909,28 @@ void __cdecl sub_4CDFC0_()
 
 FAIL_STUB_PATCH(sub_4CDFC0, "starcraft");
 
+void TickCounterInit_()
+{
+	dword_59CC7C = GetTickCount();
+	countdownTimeTickCount_0 = dword_59CC7C;
+	isInGame = 1;
+	elapstedTimeModifier = 0;
+	countdownTimeRemaining = dword_59CC7C - 120000;
+}
+
+FAIL_STUB_PATCH(TickCounterInit, "starcraft");
+
+void TickCounterDestroy_()
+{
+	if (isInGame)
+	{
+		countdownTimeTickCount_0 = GetTickCount();
+		isInGame = 0;
+	}
+}
+
+FAIL_STUB_PATCH(TickCounterDestroy, "starcraft");
+
 void sub_4CDFD0_()
 {
 	replayData->field1 = 0;
@@ -8208,7 +8230,7 @@ signed int LoadGameInit_()
 	}
 	sub_4B2DF0();
 	if (!LOBYTE(multiPlayerMode))
-		TickCounterInit();
+		TickCounterInit_();
 	saveLoadSuccess = (unsigned __int8)mapStarted;
 	elapstedTimeModifier = mapStarted != 0 ? savedElapsedSeconds : 0;
 	SetGameSpeed_maybe(registry_options.GameSpeed, 0, 1u);
@@ -8955,11 +8977,7 @@ FAIL_STUB_PATCH(load_endmission, "starcraft");
 
 void DestroyGame_()
 {
-	if (isInGame)
-	{
-		countdownTimeTickCount_0 = GetTickCount();
-		isInGame = 0;
-	}
+	TickCounterDestroy_();
 	if (multiPlayerMode && NetMode.as_number == 'BNET')
 	{
 		ReportGameResult_();

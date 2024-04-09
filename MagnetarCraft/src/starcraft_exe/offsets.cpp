@@ -1879,7 +1879,7 @@ int sub_415D20(unsigned __int16 a1, dialog *a2, int a3) {
 DECL_FUNC(int (__thiscall*sub_415D60)(Timer *this_), sub_415D60, 0x415d60);
 DECL_FUNC(BOOL (__thiscall*sub_415D70)(Timer *this_), sub_415D70, 0x415d70);
 DECL_FUNC(BOOL (__thiscall*sub_415D90)(Timer *this_), sub_415D90, 0x415d90);
-DECL_FUNC(signed (*iterateTimers)(), iterateTimers, 0x415dc0);
+DECL_FUNC(void (__cdecl*iterateTimers)(), iterateTimers, 0x415dc0);
 void freeTimers(dialog *a1) {
     int address = 0x415f30;
     __asm {
@@ -11528,7 +11528,7 @@ DECL_FUNC(int (*nullsub_25)(), nullsub_25, 0x4616d0);
 DECL_FUNC(int (*sub_4616E0)(), sub_4616E0, 0x4616e0);
 DECL_FUNC(signed (__fastcall*sub_4616F0)(int a1, const char *a2), sub_4616F0, 0x4616f0);
 DECL_FUNC(BOOL (*isSaveGameTimerReady)(), isSaveGameTimerReady, 0x461720);
-DECL_FUNC(DWORD (*sub_461750)(), sub_461750, 0x461750);
+DECL_FUNC(void (__cdecl*sub_461750)(), sub_461750, 0x461750);
 int PrintfNetworkTblString(__int16 network_tbl_entry, char *buff, size_t size_, int a4) {
     int address = 0x461760;
     int result_;
@@ -16333,7 +16333,7 @@ DECL_FUNC(void (*loadParallaxStarGfx)(), loadParallaxStarGfx, 0x47f2c0);
 DECL_FUNC(int (__thiscall*getLastWhisperPlayerIDIfStrEqual)(size_t a1, char *a2, int a3), getLastWhisperPlayerIDIfStrEqual, 0x47f440);
 DECL_FUNC(int (__fastcall*verifyChatCommand)(size_t a1, char *a2, int a3, int a4), verifyChatCommand, 0x47f4d0);
 DECL_FUNC(void (*sub_47F580)(), sub_47F580, 0x47f580);
-DECL_FUNC(char (*LeagueChatFilter)(), LeagueChatFilter, 0x47f590);
+DECL_FUNC(void (__cdecl*LeagueChatFilter)(), LeagueChatFilter, 0x47f590);
 DECL_FUNC(char (__stdcall*AUTBNETMESSAGE)(const char *a1), AUTBNETMESSAGE, 0x47f670);
 DECL_FUNC(void (__stdcall*BWFXN_GlobalPrintText)(s_evt *evt), BWFXN_GlobalPrintText, 0x47f750);
 void sendWhisper(int result, const char *a2) {
@@ -17808,11 +17808,11 @@ void InfoMessage(int timeout_ms, const char *text) {
         call address
     }
 }
-void display_error(const char *a1, Color color) {
+void display_error(const char *error_message, Color color) {
     int address = 0x48d140;
     __asm {
         push dword ptr color
-        mov esi, a1
+        mov esi, error_message
         call address
     }
 }
@@ -21227,7 +21227,7 @@ int sub_4A2BC0(int result) {
     }
     return result_;
 }
-DECL_FUNC(DWORD (*sub_4A2BD0)(), sub_4A2BD0, 0x4a2bd0);
+DECL_FUNC(void (__cdecl*TickCounterDestroy)(), TickCounterDestroy, 0x4a2bd0);
 DECL_FUNC(void (*TickCounterInit)(void), TickCounterInit, 0x4a2bf0);
 void randomizePlayerValues(unsigned int a1, const void *a2) {
     int address = 0x4a2c20;
