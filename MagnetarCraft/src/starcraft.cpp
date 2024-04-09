@@ -4789,6 +4789,43 @@ void __cdecl sub_481060_()
 
 FUNCTION_PATCH(sub_481060, sub_481060_, "starcraft");
 
+void __fastcall saveGameCBProc_(dialog* dlg, __int16 _unused)
+{
+	dialog* v5 = getControlFromIndex_(dlg, 7);
+	if (multiPlayerMode
+		&& ((unsigned __int8)gameState < 9 || Players[g_LocalHumanID].nType != PT_Human || !byte_58D718[g_LocalHumanID])
+		|| IS_GAME_PAUSED)
+	{
+		HideDialog(v5);
+	}
+	else
+	{
+		showDialog(v5);
+	}
+
+	dialog* v8 = getControlFromIndex_(dlg, 8);
+	if (IS_GAME_PAUSED)
+	{
+		showDialog(v8);
+	}
+	else
+	{
+		HideDialog(v8);
+	}
+
+	dialog* v11 = getControlFromIndex_(dlg, 1);
+	if (multiPlayerMode && GetTickCount() <= dword_685164 + 120000)
+	{
+		DisableControl(v11);
+	}
+	else
+	{
+		EnableControl(v11);
+	}
+}
+
+FAIL_STUB_PATCH(saveGameCBProc, "starcraft");
+
 void checkSaveGameDialog_(dialog* dlg)
 {
 	dialog* pFirstChild = getControlFromIndex_(dlg, 2);
@@ -4832,7 +4869,7 @@ void checkSaveGameDialog_(dialog* dlg)
 
 	if (!InReplay)
 	{
-		SetCallbackTimer(1, dlg, 200, saveGameCBProc);
+		SetCallbackTimer(1, dlg, 200, saveGameCBProc_);
 	}
 }
 
