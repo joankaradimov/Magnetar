@@ -78,6 +78,12 @@ TriggerActionState::TriggerActionState()
 		print(obj);
 	});
 
+	state.set_function("require", [this](sol::object obj) {
+		std::string module_name = obj.as<std::string>();
+		const char* code = (const char*)fastFileRead_(nullptr, 0, module_name.c_str(), 0, 0, __FILE__, __LINE__);
+		return state.require_script(module_name, code);
+	});
+
 	// TODO: tweak the 'globals' metatable so that this can't be overwriten
 	state.globals()["scenario"] = Scenario();
 }

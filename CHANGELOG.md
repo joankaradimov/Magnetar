@@ -5,6 +5,7 @@
     * Implement a `Scenario` type
     * Implement a `Player` type
     * Implement a `Race` type
+    * Implement a global `require` function
 
 ## 0.3.0 - Committed Corsair
   - Allow raw CHK files to be loaded as custom scenarios
