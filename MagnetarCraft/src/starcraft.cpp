@@ -17238,6 +17238,28 @@ void loadDlgGrp_()
 
 FAIL_STUB_PATCH(loadDlgGrp, "starcraft");
 
+void __stdcall buttonMouseOver_(int a1)
+{
+	if (a1)
+	{
+		if (a1 == 1)
+		{
+			playSoundId(SFX_glue_mousedown2);
+		}
+	}
+	else
+	{
+		DWORD TickCount = GetTickCount();
+		if (TickCount - dword_6D6368 >= 0xC8)
+		{
+			playSoundId(SFX_glue_mouseover);
+			dword_6D6368 = TickCount;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(buttonMouseOver, "starcraft");
+
 void init_gluesounds_()
 {
 	if (!dword_6D6364)
@@ -17254,7 +17276,7 @@ void init_gluesounds_()
 		dword_6D6364 = 1;
 	}
 	playsound_init_UI_(word_6DC2AC);
-	ButtonPressSound = buttonMouseOver;
+	ButtonPressSound = buttonMouseOver_;
 }
 
 FAIL_STUB_PATCH(init_gluesounds, "starcraft");
