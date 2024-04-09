@@ -22043,7 +22043,7 @@ void createTextMessageWithTimer_(const char* text_message, int display_time)
 	if (text_message)
 	{
 		int TickCount = GetTickCount();
-		PrintText(text_message, 2, display_time + TickCount, 1);
+		PrintText(text_message, Color::COLOR_CYAN2, display_time + TickCount, 1);
 	}
 }
 
@@ -22138,7 +22138,7 @@ int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 		if (text_message)
 		{
 			int display_time = getTextDisplayTime_(text_message);
-			PrintText(text_message, 2u, display_time + GetTickCount(), 1);
+			PrintText(text_message, Color::COLOR_CYAN2, display_time + GetTickCount(), 1);
 		}
 	}
 	return 1;

@@ -10850,7 +10850,7 @@ int sub_45ABE0(size_t size_, char *dest, int result) {
     return result_;
 }
 DECL_FUNC(signed (__thiscall*sub_45AC10)(u8 *this_), sub_45AC10, 0x45ac10);
-DECL_FUNC(int (*GetEmptiestTeam)(), GetEmptiestTeam, 0x45ad20);
+DECL_FUNC(unsigned (*GetEmptiestTeam)(), GetEmptiestTeam, 0x45ad20);
 DECL_FUNC(void (__cdecl*updatePlayerForce)(), updatePlayerForce, 0x45ad90);
 DECL_FUNC(int (__fastcall*GetFreeSlotFromEmptiestTeam)(_DWORD a1, _DWORD a2), GetFreeSlotFromEmptiestTeam, 0x45ade0);
 void sub_45AE20(int a1) {
@@ -17771,7 +17771,7 @@ void setUnitStatTxtErrorMsg(const char *message) {
     }
 }
 DECL_FUNC(void (__cdecl*refreshGameTextIfFlagIsSet)(), refreshGameTextIfFlagIsSet, 0x48ccf0);
-void PrintText(const char *text, u8 color, int tick_count, char flags) {
+void PrintText(const char *text, Color color, int tick_count, char flags) {
     int address = 0x48cd30;
     __asm {
         push dword ptr flags
@@ -17808,10 +17808,10 @@ void InfoMessage(int timeout_ms, const char *text) {
         call address
     }
 }
-void display_error(const char *a1, u8 a2) {
+void display_error(const char *a1, Color color) {
     int address = 0x48d140;
     __asm {
-        push dword ptr a2
+        push dword ptr color
         mov esi, a1
         call address
     }

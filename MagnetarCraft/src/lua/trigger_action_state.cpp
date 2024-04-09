@@ -104,6 +104,6 @@ void TriggerActionState::print(const std::string& message)
 	if (active_trigger_player == g_LocalNationID && !message.empty())
 	{
 		int display_time = getTextDisplayTime_(message.c_str());
-		PrintText(message.c_str(), 2, display_time + GetTickCount(), 1);
+		PrintText(message.c_str(), Color::COLOR_CYAN2, 2 * display_time + GetTickCount(), 1);
 	}
 }
