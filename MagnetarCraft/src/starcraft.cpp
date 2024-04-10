@@ -3248,6 +3248,15 @@ CursorType operator++(CursorType& cursor_type)
 	return CursorType(++reinterpret_cast<int&>(cursor_type));
 }
 
+void sub_4BE100_()
+{
+	ScreenLayers[0].buffers = 0;
+	ScreenLayers[0].pUpdate = cursorUpdateProc;
+	dword_597398 = GetTickCount();
+}
+
+FAIL_STUB_PATCH(sub_4BE100, "starcraft");
+
 void LoadCursors_()
 {
 	AppAddExit_(DestroyCursors_);
@@ -3266,9 +3275,7 @@ void LoadCursors_()
 		cursor_graphics[i] = v1;
 	}
 	setCursorType_(CUR_ARROW);
-	ScreenLayers[0].buffers = 0;
-	ScreenLayers[0].pUpdate = cursorUpdateProc;
-	dword_597398 = GetTickCount();
+	sub_4BE100_();
 }
 
 FAIL_STUB_PATCH(LoadCursors, "starcraft");
