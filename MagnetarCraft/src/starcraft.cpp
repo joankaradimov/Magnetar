@@ -336,6 +336,22 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void savegameMenu_()
+{
+	if (getActivePlayerId() == playerid
+		&& !gameData.got_file_values.tournament_mode
+		&& (!multiPlayerMode || GetTickCount() > dword_685164 + 120000)
+		&& !InReplay)
+	{
+		byte_68516A = 0;
+		dword_68516C = 0;
+		SaveGameFile[0] = 0;
+		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact);
+	}
+}
+
+FAIL_STUB_PATCH(savegameMenu, "starcraft");
+
 void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 {
 	int wVirtKey = (__int16)event->wVirtKey;
@@ -376,7 +392,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			ToggleLeaderboardList();
 			break;
 		case -25482:
-			savegameMenu();
+			savegameMenu_();
 			break;
 		case -25481:
 			LoadGame_DlgCreate();
@@ -4892,7 +4908,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		DestroyDialog(dlg);
 		break;
 	case 1:
-		savegameMenu();
+		savegameMenu_();
 		break;
 	case 2:
 		LoadGame_DlgCreate();
