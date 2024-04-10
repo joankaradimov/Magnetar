@@ -336,6 +336,41 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+int __fastcall savegameBIN_DLG_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			DLG_loadsave_Create(dlg, evt);
+			return 1;
+		case EventUser::USER_DESTROY:
+			DLG_loadsave_Destroy(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			DLG_Loadsave_Activate(dlg);
+			return 1;
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(savegameBIN_DLG_Interact, savegameBIN_DLG_Interact_, "starcraft");
+
 void savegameMenu_()
 {
 	if (getActivePlayerId() == playerid
@@ -346,7 +381,7 @@ void savegameMenu_()
 		byte_68516A = 0;
 		dword_68516C = 0;
 		SaveGameFile[0] = 0;
-		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact);
+		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact_);
 	}
 }
 
