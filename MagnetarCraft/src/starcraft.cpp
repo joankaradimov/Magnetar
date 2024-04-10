@@ -8350,6 +8350,18 @@ FAIL_STUB_PATCH(LoadGameInit, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 
+void sub_4F5990_(dialog* dlg)
+{
+	DestroyDialog(dlg);
+	if (dword_6D124C)
+	{
+		dword_6D124C(LastControlID);
+	}
+	dword_6D124C = nullptr;
+}
+
+FAIL_STUB_PATCH(sub_4F5990, "starcraft");
+
 int __fastcall okcancel_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -8376,7 +8388,7 @@ int __fastcall okcancel_Interact_(dialog* dlg, struct dlgEvent* evt)
 			sub_4F59E0(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			sub_4F5990(dlg);
+			sub_4F5990_(dlg);
 			return 1;
 		case EventUser::USER_UNK_7:
 			sub_4CD9C0(dlg);
