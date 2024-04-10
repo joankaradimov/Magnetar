@@ -4882,6 +4882,48 @@ void checkSaveGameDialog_(dialog* dlg)
 
 FAIL_STUB_PATCH(checkSaveGameDialog, "starcraft");
 
+void __fastcall sub_4CA450_(dialog* dlg)
+{
+	dword_6D1234 = 0;
+	switch (LastControlID)
+	{
+	case -3:
+		byte_6D1224 = 0;
+		DestroyDialog(dlg);
+		break;
+	case 1:
+		savegameMenu();
+		break;
+	case 2:
+		LoadGame_DlgCreate();
+		break;
+	case 3:
+		loadoptionsMenu();
+		return;
+	case 4:
+		HelpMenu();
+		return;
+	case 5:
+		BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG);
+		break;
+	case 6:
+		sub_4CA430();
+		return;
+	case 7:
+		CMDACT_PauseGame();
+		dword_6D1234 = sub_4CA450_;
+		break;
+	case 8:
+		CMDACT_ResumeGame();
+		dword_6D1234 = sub_4CA450_;
+		break;
+	default:
+		return;
+	}
+}
+
+FUNCTION_PATCH(sub_4CA450, sub_4CA450_, "starcraft");
+
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] =
@@ -4905,7 +4947,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	{
 		sub_4C9440(dlg);
 	}
-	if (dword_6D1234 == sub_4CA450 && (multiPlayerMode || InReplay))
+	if ((dword_6D1234 == sub_4CA450_ || dword_6D1234 == sub_4CA450) && (multiPlayerMode || InReplay))
 	{
 		checkSaveGameDialog_(dlg);
 	}
@@ -15117,7 +15159,7 @@ void load_gamemenu_(dialog* dlg)
 {
 	if (dlg->wIndex == 1)
 	{
-		dword_6D1234 = sub_4CA450;
+		dword_6D1234 = sub_4CA450_;
 		BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
 	}
 }
