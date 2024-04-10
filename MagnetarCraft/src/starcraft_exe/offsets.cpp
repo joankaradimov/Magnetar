@@ -11589,14 +11589,14 @@ int sub_461980(char *a1) {
     }
     return result_;
 }
-void sub_4619A0(int a1) {
+void sub_4619A0(dialog *a1) {
     int address = 0x4619a0;
     __asm {
         mov eax, a1
         call address
     }
 }
-void DLG_loadsave_Act(dialog **result) {
+void DLG_loadsave_Act(dialog *result) {
     int address = 0x461a30;
     __asm {
         mov eax, result
@@ -11646,12 +11646,12 @@ char DLG_loadsave_Create(dialog *dlg, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(bool (__fastcall*DLG_LoadGame_Interact)(dialog *a1, dlgEvent *a2), DLG_LoadGame_Interact, 0x462060);
-DECL_FUNC(void (*loadSaveGameBIN)(), loadSaveGameBIN, 0x4620e0);
+DECL_FUNC(int (__fastcall*DLG_LoadGame_Interact)(dialog *a1, dlgEvent *a2), DLG_LoadGame_Interact, 0x462060);
+DECL_FUNC(int (__fastcall*loadSaveGameBIN)(__int16 _unused), loadSaveGameBIN, 0x4620e0);
 DECL_FUNC(void (*LoadGame_DlgCreate)(), LoadGame_DlgCreate, 0x462100);
 DECL_FUNC(signed (__fastcall*okBIN)(__int16 a1), okBIN, 0x462150);
-DECL_FUNC(signed (__fastcall*savegameBIN)(__int16 a1), savegameBIN, 0x4621f0);
-void sub_4622A0(__int16 a1, int a2, int (__thiscall *a3)(_DWORD)) {
+DECL_FUNC(int (__fastcall*savegameBIN)(__int16 a1), savegameBIN, 0x4621f0);
+void sub_4622A0(__int16 a1, int a2, int (__fastcall *a3)(__int16)) {
     int address = 0x4622a0;
     __asm {
         xor eax, eax
@@ -14269,13 +14269,13 @@ BOOL sub_473410(int a1, int a2, int a3) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*UnitIsResourceContainer)(CUnit *a1, CUnit *a2), UnitIsResourceContainer, 0x473490);
-bool * sub_4734B0(__int16 a1, __int16 a2, __int16 a3) {
+CUnit * sub_4734B0(__int16 a1, __int16 a2, UnitType unit_type) {
     int address = 0x4734b0;
-    bool * result_;
+    CUnit * result_;
     __asm {
         xor eax, eax
         xor ecx, ecx
-        push dword ptr a3
+        push dword ptr unit_type
         mov cx, a2
         mov ax, a1
         call address
@@ -14397,7 +14397,7 @@ int sub_473EF0(unsigned __int16 a1, __int16 a2, int a3, unsigned __int8 a4, int 
     }
     return result_;
 }
-DECL_FUNC(signed (__stdcall*canBuildOnTileLocation)(CUnit *a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9), canBuildOnTileLocation, 0x473fb0);
+DECL_FUNC(signed (__stdcall*canBuildOnTileLocation)(CUnit *a1, int a2, int a3, int a4, UnitType a5, int a6, int a7, int a8, int a9), canBuildOnTileLocation, 0x473fb0);
 signed sub_4741A0(__int16 a1, int a2, int a3, int a4, int a5) {
     int address = 0x4741a0;
     signed result_;
@@ -15724,7 +15724,17 @@ void * readImageFile(int *overlay_index, unsigned __int16 *a2, int image_id, HAN
 }
 DECL_FUNC(void (__stdcall*loadImagesData_lowMem)(grpHead **a1, int *a2, u16 *images_tbl, int a4, LPOVERLAPPED a5, void *a6), loadImagesData_lowMem, 0x47ae30);
 DECL_FUNC(void (__stdcall*loadImagesData)(LO_Header **a1, int *a2, unsigned __int16 *images_tbl, int a4, LPOVERLAPPED a5, _DWORD *a6), loadImagesData, 0x47af30);
-DECL_FUNC(int (*unit_isRefineryUnit)(void), unit_isRefineryUnit, 0x47afe0);
+BOOL unit_isRefineryUnit(UnitType unit_type) {
+    int address = 0x47afe0;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov ax, unit_type
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(int (*sub_47B000)(), sub_47B000, 0x47b000);
 DECL_FUNC(int (*sub_47B030)(), sub_47B030, 0x47b030);
 DECL_FUNC(int (*unitIsFloorTrap)(void), unitIsFloorTrap, 0x47b070);
@@ -24501,8 +24511,8 @@ void CMDACT_UseCheat(CheatFlags a1) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*CMDACT_ResumeGame)(int a1), CMDACT_ResumeGame, 0x4c0420);
-DECL_FUNC(void (__fastcall*CMDACT_PauseGame)(int a1), CMDACT_PauseGame, 0x4c0450);
+DECL_FUNC(void (__fastcall*CMDACT_ResumeGame)(), CMDACT_ResumeGame, 0x4c0420);
+DECL_FUNC(void (__fastcall*CMDACT_PauseGame)(), CMDACT_PauseGame, 0x4c0450);
 DECL_FUNC(void (__stdcall*CMDACT_ChangeGameSpeed)(char a1), CMDACT_ChangeGameSpeed, 0x4c0480);
 void sub_4C04B0(int a1) {
     int address = 0x4c04b0;
@@ -25149,7 +25159,7 @@ int options_Cancel(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(void (__fastcall*saveGameCBProc)(dialog *a1, __int16 a2), saveGameCBProc, 0x4c9890);
+DECL_FUNC(void (__fastcall*saveGameCBProc)(dialog *dlg, __int16 a2), saveGameCBProc, 0x4c9890);
 int j_options_Cancel(dialog *a1, dlgEvent *a2) {
     int address = 0x4c99b0;
     int result_;
@@ -25197,7 +25207,7 @@ char setObjctDlgBtnString(dialog *a1) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*loadoptionsMenu)(), loadoptionsMenu, 0x4c9f60);
-DECL_FUNC(bool (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
+DECL_FUNC(int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
 DECL_FUNC(void (__thiscall*helpmenu_lastBINDLG)(dialog *a1), helpmenu_lastBINDLG, 0x4ca010);
 DECL_FUNC(void (*sub_4CA090)(), sub_4CA090, 0x4ca090);
 DECL_FUNC(void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_), MainMenuOptionsCustomInteract, 0x4ca0a0);
@@ -30794,10 +30804,10 @@ DECL_FUNC(void (__stdcall*msgfltr_Cancel)(char a1), msgfltr_Cancel, 0x4f5700);
 DECL_FUNC(void (__fastcall*genericPopupDlgInteract)(dialog *a1, dlgEvent *a2), genericPopupDlgInteract, 0x4f5760);
 DECL_FUNC(void (__fastcall*BWFXN_OpenGameDialog)(char *a1, FnInteract a2), BWFXN_OpenGameDialog, 0x4f57a0);
 DECL_FUNC(void (*HidePopupDialog)(), HidePopupDialog, 0x4f5930);
-void sub_4F5990(dialog *a1) {
+void sub_4F5990(dialog *dlg) {
     int address = 0x4f5990;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -30860,38 +30870,30 @@ int loadOKBIN(int a1, const char *a2, HANDLE phFile) {
     }
     return result_;
 }
-void loadOKCancelDialog(const char *a1, int (__thiscall *a2)(_DWORD), char *a3) {
+void loadOKCancelDialog(const char *esi0, int (__fastcall *a2)(__int16), char *a3) {
     int address = 0x4f6050;
     __asm {
         push dword ptr a3
         push dword ptr a2
-        mov esi, a1
+        mov esi, esi0
         call address
     }
 }
-void ** sub_4F60E0(int (__thiscall *a1)(_DWORD), const char *a2) {
+void sub_4F60E0(int (__fastcall *a1)(__int16), const char *a2) {
     int address = 0x4f60e0;
-    void ** result_;
     __asm {
-        xor eax, eax
         mov esi, a2
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-void ** sub_4F60F0(int (__thiscall *a1)(_DWORD), const char *a2) {
+void sub_4F60F0(int (__fastcall *a1)(__int16), const char *a2) {
     int address = 0x4f60f0;
-    void ** result_;
     __asm {
-        xor eax, eax
         mov esi, a2
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 signed AppAddExit(AppExitHandle a1) {
     int address = 0x4f6100;
@@ -31688,7 +31690,7 @@ char(&aReplay)[] = * ((decltype(&aReplay)) 0x501654);
 char(&aSMapsReplaysS_)[] = * ((decltype(&aSMapsReplaysS_)) 0x501660);
 char(&a_)[] = * ((decltype(&a_)) 0x501678);
 CHAR(&String)[] = * ((decltype(&String)) 0x50167c);
-char(&aRezSavegame_bi)[] = * ((decltype(&aRezSavegame_bi)) 0x501680);
+char(&a1)[] = * ((decltype(&a1)) 0x501680);
 char(&aStarcraftSw_50)[] = * ((decltype(&aStarcraftSw_50)) 0x501694);
 char(&aRep)[] = * ((decltype(&aRep)) 0x5016b4);
 char(&a__1)[] = * ((decltype(&a__1)) 0x5016b8);
@@ -34232,7 +34234,7 @@ int& dword_640878 = * ((decltype(&dword_640878)) 0x640878);
 int& dword_64087C = * ((decltype(&dword_64087C)) 0x64087c);
 int& is_placing_building = * ((decltype(&is_placing_building)) 0x640880);
 int& isPlacingAddon = * ((decltype(&isPlacingAddon)) 0x640884);
-__int16(&placeBuildBaseType)[] = * ((decltype(&placeBuildBaseType)) 0x640888);
+UnitType& placeBuildBaseType = * ((decltype(&placeBuildBaseType)) 0x640888);
 UnitType& placeBuildingUnitType = * ((decltype(&placeBuildingUnitType)) 0x64088a);
 char& _placementRelated = * ((decltype(&_placementRelated)) 0x64088c);
 char& byte_64088D = * ((decltype(&byte_64088D)) 0x64088d);
@@ -35146,7 +35148,7 @@ char *& okcancel_message = * ((decltype(&okcancel_message)) 0x6d123c);
 void *& dword_6D1240 = * ((decltype(&dword_6D1240)) 0x6d1240);
 int& dword_6D1244 = * ((decltype(&dword_6D1244)) 0x6d1244);
 HANDLE& dword_6D1248 = * ((decltype(&dword_6D1248)) 0x6d1248);
-int (__thiscall *&dword_6D124C)(_DWORD) = *((decltype(&dword_6D124C)) 0x6d124c);
+int (__fastcall *&dword_6D124C)(_DWORD) = *((decltype(&dword_6D124C)) 0x6d124c);
 void *& dword_6D1250 = * ((decltype(&dword_6D1250)) 0x6d1250);
 void *& dword_6D1254 = * ((decltype(&dword_6D1254)) 0x6d1254);
 void *& dword_6D1258 = * ((decltype(&dword_6D1258)) 0x6d1258);
