@@ -1,6 +1,7 @@
 # Changelog
 
 ## Unreleased
+  - Reimplement ~15% of the functions in StarCraft 1.16.1
   - Add a new trigger action: "Execute Lua"
     * Implement a `Scenario` type
     * Implement a `Player` type
