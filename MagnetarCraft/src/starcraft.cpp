@@ -8350,6 +8350,45 @@ FAIL_STUB_PATCH(LoadGameInit, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 
+int __fastcall okcancel_Interact_(dialog* dlg, struct dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_4F5B70(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			sub_4F59E0(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			sub_4F5990(dlg);
+			return 1;
+		case EventUser::USER_UNK_7:
+			sub_4CD9C0(dlg);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FUNCTION_PATCH(okcancel_Interact, okcancel_Interact_, "starcraft");
+
 int loadOKBIN_(int a1, const char* message, HANDLE a3)
 {
 	dword_6D1244 = a1;
@@ -8363,7 +8402,7 @@ int loadOKBIN_(int a1, const char* message, HANDLE a3)
 
 	dialog* okcancel_bin = LoadDialog("ok.bin");
 	registerMenuFunctions_(0, okcancel_bin, 0);
-	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
+	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact_);
 }
 
 FAIL_STUB_PATCH(loadOKBIN, "starcraft");
@@ -20037,7 +20076,7 @@ int loadOKCancelBIN_(int a1, char* message, HANDLE a3)
 
 	dialog* okcancel_bin = LoadDialog("rez\\okcancel.bin");
 	registerMenuFunctions_(0, okcancel_bin, 0);
-	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact);
+	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact_);
 }
 
 FAIL_STUB_PATCH(loadOKCancelBIN, "starcraft");
