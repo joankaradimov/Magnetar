@@ -14111,6 +14111,26 @@ void Cls2RecvFrom_()
 
 FAIL_STUB_PATCH(Cls2RecvFrom, "starcraft");
 
+void pauseSetPaletteToGreyscale_()
+{
+	PALETTEENTRY v5[256];
+
+	for (int i = 0; i < _countof(v5); i++)
+	{
+		BYTE v4 = 28 * GamePalette[i].peBlue / 256 + 77 * GamePalette[i].peRed / 256 + 151 * GamePalette[i].peGreen / 256;
+		v5[i].peBlue = v4;
+		v5[i].peGreen = v4;
+		v5[i].peRed = v4;
+		v5[i].peFlags = GamePalette[i].peFlags;
+	}
+
+	memcpy(stru_6CEB40, v5, sizeof(stru_6CEB40));
+	GetTickCount(); // TODO: wtf? get rid if this, maybe?
+	setPaletteGamma(1, 1);
+}
+
+FAIL_STUB_PATCH(pauseSetPaletteToGreyscale, "starcraft");
+
 void __cdecl CMDRECV_PauseGame_()
 {
 	if (!IS_GAME_PAUSED
@@ -14118,7 +14138,7 @@ void __cdecl CMDRECV_PauseGame_()
 	{
 		byte_6D5BED = 1;
 		PauseGame_maybe();
-		pauseSetPaletteToGreyscale();
+		pauseSetPaletteToGreyscale_();
 
 		if (multiPlayerMode)
 		{
