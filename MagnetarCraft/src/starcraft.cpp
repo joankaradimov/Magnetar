@@ -336,6 +336,13 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+BOOL isSaveGameTimerReady_()
+{
+	return !multiPlayerMode || GetTickCount() > dword_685164 + 120000;
+}
+
+FAIL_STUB_PATCH(isSaveGameTimerReady, "starcraft");
+
 void DLG_Loadsave_Activate_(dialog* dlg)
 {
 	char v1;
@@ -404,10 +411,7 @@ FUNCTION_PATCH(savegameBIN_DLG_Interact, savegameBIN_DLG_Interact_, "starcraft")
 
 void savegameMenu_()
 {
-	if (getActivePlayerId() == playerid
-		&& !gameData.got_file_values.tournament_mode
-		&& (!multiPlayerMode || GetTickCount() > dword_685164 + 120000)
-		&& !InReplay)
+	if (getActivePlayerId() == playerid && !gameData.got_file_values.tournament_mode && isSaveGameTimerReady_() && !InReplay)
 	{
 		byte_68516A = 0;
 		dword_68516C = 0;
@@ -4923,13 +4927,13 @@ void __fastcall saveGameCBProc_(dialog* dlg, __int16 _unused)
 	}
 
 	dialog* v11 = getControlFromIndex_(dlg, 1);
-	if (multiPlayerMode && GetTickCount() <= dword_685164 + 120000)
+	if (isSaveGameTimerReady_())
 	{
-		DisableControl(v11);
+		EnableControl(v11);
 	}
 	else
 	{
-		EnableControl(v11);
+		DisableControl(v11);
 	}
 }
 
@@ -4945,7 +4949,7 @@ void checkSaveGameDialog_(dialog* dlg)
 	{
 		HideDialog(v5);
 	}
-	else if (isSaveGameTimerReady())
+	else if (isSaveGameTimerReady_())
 	{
 		EnableControl(v5);
 	}
