@@ -14111,6 +14111,32 @@ void Cls2RecvFrom_()
 
 FAIL_STUB_PATCH(Cls2RecvFrom, "starcraft");
 
+void PauseGame_maybe_(void)
+{
+	if (!IS_GAME_PAUSED)
+	{
+		IS_GAME_PAUSED = 1;
+		if (byte_66FF5C)
+		{
+			BWFXN_RefreshTarget(
+				(__int16)stru_66FF50.left,
+				(__int16)stru_66FF50.bottom,
+				(__int16)stru_66FF50.top,
+				(__int16)stru_66FF50.right);
+			byte_66FF5C = 0;
+			SetInGameInputProcs_();
+		}
+		dword_6509C8[0] = GetTickCount();
+		if (InReplay)
+		{
+			dword_6D5BE8 = is_replay_paused;
+			SetGameSpeed_maybe_(registry_options.GameSpeed, 1, replay_speed_multiplier);
+		}
+	}
+}
+
+FUNCTION_PATCH(PauseGame_maybe, PauseGame_maybe_, "starcraft");
+
 void pauseSetPaletteToGreyscale_()
 {
 	PALETTEENTRY v5[256];
@@ -14137,7 +14163,7 @@ void __cdecl CMDRECV_PauseGame_()
 		&& (!multiPlayerMode || gameState >= 9 && Players[dword_51267C].nType == PlayerType::PT_Human && byte_58D718[dword_51267C]))
 	{
 		byte_6D5BED = 1;
-		PauseGame_maybe();
+		PauseGame_maybe_();
 		pauseSetPaletteToGreyscale_();
 
 		if (multiPlayerMode)
