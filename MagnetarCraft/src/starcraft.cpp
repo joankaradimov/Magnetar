@@ -4634,6 +4634,26 @@ void audioVideoInit_()
 
 FAIL_STUB_PATCH(audioVideoInit, "starcraft");
 
+void __stdcall TickCountSomething_(int a1)
+{
+	if (IS_GAME_PAUSED)
+	{
+		if (a1 && isInGame)
+		{
+			DWORD v1 = (GetTickCount() - dword_6509C8[0]) / 1000;
+			elapstedTimeModifier -= v1;
+		}
+
+		IS_GAME_PAUSED = 0;
+		if (InReplay && !dword_6D5BE8)
+		{
+			SetGameSpeed_maybe(registry_options.GameSpeed, 0, replay_speed_multiplier);
+		}
+	}
+}
+
+FUNCTION_PATCH(TickCountSomething, TickCountSomething_, "starcraft");
+
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
 	dlgEvent event;
@@ -4683,7 +4703,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
 	if (!multiPlayerMode)
 	{
-		TickCountSomething(1);
+		TickCountSomething_(1);
 	}
 	if (GameMenuDlg)
 	{
@@ -6693,7 +6713,7 @@ void load_DLGFatal_BIN_(const char* error_location, const char* a2)
 		}
 		if (!multiPlayerMode)
 		{
-			TickCountSomething(1);
+			TickCountSomething_(1);
 		}
 		if (GameMenuDlg)
 		{
@@ -9258,7 +9278,7 @@ void DestroyGame_()
 	memset(cycle_colors, 0, sizeof(cycle_colors));
 	if (!multiPlayerMode)
 	{
-		TickCountSomething(1);
+		TickCountSomething_(1);
 	}
 	if (GameMenuDlg)
 	{
@@ -14443,7 +14463,7 @@ GamePosition BeginGame_()
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
 	GameState = 1;
-	TickCountSomething(0);
+	TickCountSomething_(0);
 	DoGameLoop_();
 	RefreshLayer5();
 	setCursorType_(getCursorType_());
