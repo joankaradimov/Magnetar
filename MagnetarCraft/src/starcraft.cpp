@@ -336,6 +336,37 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void DLG_Loadsave_Activate_(dialog* dlg)
+{
+	char v1;
+
+	switch (LastControlID)
+	{
+	case 3:
+		sub_462310(dlg);
+		break;
+	case -2:
+		byte_6D1224 = 0;
+		sub_4623C0(dlg);
+		break;
+	case -3:
+		v1 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v1 - 1;
+			dword_6D1234 = sub_4CA450;
+			BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+		break;
+	}
+}
+
+FAIL_STUB_PATCH(DLG_Loadsave_Activate, "starcraft");
+
 int __fastcall savegameBIN_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -362,7 +393,7 @@ int __fastcall savegameBIN_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 			DLG_loadsave_Destroy(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			DLG_Loadsave_Activate(dlg);
+			DLG_Loadsave_Activate_(dlg);
 			return 1;
 		}
 	}
