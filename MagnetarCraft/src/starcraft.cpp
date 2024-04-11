@@ -13617,7 +13617,7 @@ void refreshGameTextIfCounterActive_()
 
 	for (int i = 0; i < _countof(Chat_GameText); i++)
 	{
-		if (Chat_GameText[i].chars[0] && current_tick >= dword_640B24[i])
+		if (Chat_GameText[i].chars[0] && current_tick >= chat_line_expiration[i])
 		{
 			Chat_GameText[i].chars[0] = 0;
 			updateTextDisplay(i);

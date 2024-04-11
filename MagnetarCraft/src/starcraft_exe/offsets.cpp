@@ -2697,7 +2697,13 @@ void assignNextActiveDlgElement(dialog *dlg, int a2) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*SetActivationDelay_maybe)(dialog *a1, dialog *a2), SetActivationDelay_maybe, 0x4196f0);
+void SetActivationDelay_maybe(dialog *dlg) {
+    int address = 0x4196f0;
+    __asm {
+        mov edx, dlg
+        call address
+    }
+}
 DECL_FUNC(void (__cdecl*pressGlobalDlgHotkey)(), pressGlobalDlgHotkey, 0x419740);
 DlgGrp * DlgGrp_Constructor(int a1, char *a2, const char *grp_path, grpHead *(__fastcall *a4)(const char *, int, const char *, int)) {
     int address = 0x4197b0;
@@ -11543,7 +11549,7 @@ int PrintfNetworkTblString(__int16 network_tbl_entry, char *buff, size_t size_, 
     }
     return result_;
 }
-ListNode ** sub_4617C0(const unsigned __int8 *a1) {
+ListNode ** sub_4617C0(const char *a1) {
     int address = 0x4617c0;
     ListNode ** result_;
     __asm {
@@ -11604,15 +11610,15 @@ void DLG_loadsave_Act(dialog *result) {
     }
 }
 DECL_FUNC(void (__thiscall*sub_461A90)(dialog *this_), sub_461A90, 0x461a90);
-bool DLG_loadsave_Destroy(dialog *a1, dlgEvent *a2) {
+int DLG_loadsave_Destroy(dialog *pDlg, dlgEvent *a2) {
     int address = 0x461ae0;
-    bool result_;
+    int result_;
     __asm {
         xor eax, eax
         push dword ptr a2
-        mov eax, a1
+        mov eax, pDlg
         call address
-        mov result_, al
+        mov result_, eax
     }
     return result_;
 }
@@ -13967,7 +13973,7 @@ unsigned RECV_SwapPlayers(int a1, int a2) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*ProgressCountdown)(), ProgressCountdown, 0x4719d0);
-DECL_FUNC(char (*JoinGame)(), JoinGame, 0x471a50);
+DECL_FUNC(void (__cdecl*JoinGame)(), JoinGame, 0x471a50);
 int sub_471CD0(int a1, int result) {
     int address = 0x471cd0;
     int result_;
@@ -16874,7 +16880,7 @@ DECL_FUNC(int (*sub_4858B0)(), sub_4858B0, 0x4858b0);
 DECL_FUNC(void (*sub_485900)(), sub_485900, 0x485900);
 DECL_FUNC(int (*sub_485920)(), sub_485920, 0x485920);
 DECL_FUNC(int (*sub_485930)(), sub_485930, 0x485930);
-int isStringValid(unsigned int a1, unsigned int a2, int a3, unsigned __int8 *a4, int a5) {
+int isStringValid(unsigned int a1, unsigned int a2, int a3, const char *a4, int a5) {
     int address = 0x485980;
     int result_;
     __asm {
@@ -24577,8 +24583,8 @@ void CMDACT_HotkeyUnit(char a1, char a2, const void *a3, unsigned __int8 a4) {
 DECL_FUNC(void (__stdcall*selectUnits)(int count, CUnit **unitsToSelect), selectUnits, 0x4c0860);
 DECL_FUNC(void (__fastcall*CMDRECV_UseCheat)(int a1, int a2), CMDRECV_UseCheat, 0x4c0ad0);
 DECL_FUNC(void (*CMDRECV_ResumeGame)(), CMDRECV_ResumeGame, 0x4c0b00);
-DECL_FUNC(void (*CMDRECV_PauseGame)(), CMDRECV_PauseGame, 0x4c0bc0);
-DECL_FUNC(char (*CMDRECV_MergeDarkArchon)(), CMDRECV_MergeDarkArchon, 0x4c0cd0);
+DECL_FUNC(void (__cdecl*CMDRECV_PauseGame)(), CMDRECV_PauseGame, 0x4c0bc0);
+DECL_FUNC(CUnit * (*CMDRECV_MergeDarkArchon)(), CMDRECV_MergeDarkArchon, 0x4c0cd0);
 DECL_FUNC(char (*CMDRECV_MergeArchon)(), CMDRECV_MergeArchon, 0x4c0e90);
 DECL_FUNC(CUnit * (*CMDRECV_Nothing)(), CMDRECV_Nothing, 0x4c1050);
 DECL_FUNC(CUnit * (*CMDRECV_ReaverStop)(), CMDRECV_ReaverStop, 0x4c1240);
@@ -28452,12 +28458,11 @@ BOOL PlayVidInRect(int a1) {
     }
     return result_;
 }
-int MenuGenericBtnUserEventHandler(dialog *a1, dlgEvent *a2, dialog *a3) {
+int MenuGenericBtnUserEventHandler(dialog *a1, dlgEvent *a2) {
     int address = 0x4e1390;
     int result_;
     __asm {
         xor eax, eax
-        mov ecx, a3
         mov edx, a2
         mov eax, a1
         call address
@@ -34247,7 +34252,7 @@ char(&algn_64095E)[2] = * ((decltype(&algn_64095E)) 0x64095e);
 struct_0(&placement_boxes)[2] = * ((decltype(&placement_boxes)) 0x640960);
 PlayerInfo(&playerReplayWatchers)[12] = * ((decltype(&playerReplayWatchers)) 0x640970);
 int& Chat_IncrementY = * ((decltype(&Chat_IncrementY)) 0x640b20);
-int(&dword_640B24)[12] = * ((decltype(&dword_640B24)) 0x640b24);
+int(&chat_line_expiration)[12] = * ((decltype(&chat_line_expiration)) 0x640b24);
 int& info_message_remove_tick = * ((decltype(&info_message_remove_tick)) 0x640b54);
 u8& Chat_NextLine = * ((decltype(&Chat_NextLine)) 0x640b58);
 Chat_TextLine(&Chat_GameText)[13] = * ((decltype(&Chat_GameText)) 0x640b60);
@@ -34532,7 +34537,7 @@ char& byte_66FBF6 = * ((decltype(&byte_66FBF6)) 0x66fbf6);
 char& countdown_seconds = * ((decltype(&countdown_seconds)) 0x66fbf7);
 char& countdown_finished_maybe = * ((decltype(&countdown_finished_maybe)) 0x66fbf8);
 char& download_percentage = * ((decltype(&download_percentage)) 0x66fbf9);
-char& gameState = * ((decltype(&gameState)) 0x66fbfa);
+unsigned __int8& gameState = * ((decltype(&gameState)) 0x66fbfa);
 int& countdownTimerInterval = * ((decltype(&countdownTimerInterval)) 0x66fbfc);
 int (__stdcall *&SendMapDlCommand)(_DWORD, _DWORD, _DWORD) = *((decltype(&SendMapDlCommand)) 0x66fc00);
 char(&mapsFolder)[264] = * ((decltype(&mapsFolder)) 0x66fc08);
@@ -34578,7 +34583,7 @@ int& dword_685140 = * ((decltype(&dword_685140)) 0x685140);
 int& dword_685144 = * ((decltype(&dword_685144)) 0x685144);
 char(&SaveGameFile)[28] = * ((decltype(&SaveGameFile)) 0x685148);
 int& dword_685164 = * ((decltype(&dword_685164)) 0x685164);
-__int16& word_685168 = * ((decltype(&word_685168)) 0x685168);
+unsigned __int16& word_685168 = * ((decltype(&word_685168)) 0x685168);
 char& byte_68516A = * ((decltype(&byte_68516A)) 0x68516a);
 int& dword_68516C = * ((decltype(&dword_68516C)) 0x68516c);
 void *& dword_685170 = * ((decltype(&dword_685170)) 0x685170);
