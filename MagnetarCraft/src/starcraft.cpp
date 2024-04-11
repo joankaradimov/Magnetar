@@ -13611,6 +13611,22 @@ void sub_4D93B0_()
 
 FAIL_STUB_PATCH(sub_4D93B0, "starcraft");
 
+void refreshGameTextIfCounterActive_()
+{
+	DWORD current_tick = GetTickCount();
+
+	for (int i = 0; i < _countof(Chat_GameText); i++)
+	{
+		if (Chat_GameText[i].chars[0] && current_tick >= dword_640B24[i])
+		{
+			Chat_GameText[i].chars[0] = 0;
+			updateTextDisplay(i);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(refreshGameTextIfCounterActive, "starcraft");
+
 void updateHUDInformation_()
 {
 	if (has_hud)
@@ -13618,7 +13634,7 @@ void updateHUDInformation_()
 		sub_4C3B10_();
 		refreshScreen();
 		sub_4D93B0_();
-		refreshGameTextIfCounterActive();
+		refreshGameTextIfCounterActive_();
 	}
 }
 
