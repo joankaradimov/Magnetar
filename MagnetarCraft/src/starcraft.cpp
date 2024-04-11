@@ -14111,6 +14111,33 @@ void Cls2RecvFrom_()
 
 FAIL_STUB_PATCH(Cls2RecvFrom, "starcraft");
 
+void __cdecl CMDRECV_PauseGame_()
+{
+	if (!IS_GAME_PAUSED
+		&& (!multiPlayerMode || gameState >= 9 && Players[dword_51267C].nType == PlayerType::PT_Human && byte_58D718[dword_51267C]))
+	{
+		byte_6D5BED = 1;
+		PauseGame_maybe();
+		pauseSetPaletteToGreyscale();
+
+		if (multiPlayerMode)
+		{
+			if (byte_58D718[dword_51267C]) // TODO: rename to remaining_pauses
+			{
+				byte_58D718[dword_51267C] -= 1;
+			}
+		}
+
+		const char* v4 = GetNetworkTblString_(57);
+		char* szName = InReplay ? playerReplayWatchers[dword_51267C].szName : Players[dword_51267C].szName;
+		char buff[128];
+		_snprintf(buff, sizeof(buff), v4, szName, byte_58D718[dword_51267C]);
+		InfoMessage(0, buff);
+	}
+}
+
+FUNCTION_PATCH(CMDRECV_PauseGame, CMDRECV_PauseGame_, "starcraft");
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
