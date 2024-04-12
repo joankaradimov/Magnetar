@@ -394,7 +394,7 @@ FAIL_STUB_PATCH(gluCustm_Interact, "starcraft");
 void loadMenu_gluCustm_(int is_multiplayer)
 {
 	dword_59B844 = is_multiplayer;
-	const char* v2 = LOBYTE(multiPlayerMode) ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
+	const char* v2 = multiPlayerMode ? "rez\\gluCreat.bin" : "rez\\gluCustm.bin";
 	RaceId race;
 
 	gluCreateOrCustm_bin = loadAndInitFullMenuDLG_(v2);
@@ -403,7 +403,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	switch (gluLoadBINDlg_(gluCreateOrCustm_bin, gluCustm_Interact_))
 	{
 	case 12:
-		if (LOBYTE(multiPlayerMode))
+		if (multiPlayerMode)
 		{
 			glGluesMode = GLUE_CHAT;
 		}
@@ -428,7 +428,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 		InReplay = 0;
 		freeChkFileMem_();
 
-		if (!LOBYTE(multiPlayerMode))
+		if (!multiPlayerMode)
 		{
 			glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
 		}

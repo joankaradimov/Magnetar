@@ -8546,7 +8546,7 @@ signed int LoadGameInit_()
 		}
 	}
 	sub_4B2DF0();
-	if (!LOBYTE(multiPlayerMode))
+	if (!multiPlayerMode)
 		TickCounterInit_();
 	saveLoadSuccess = (unsigned __int8)mapStarted;
 	elapstedTimeModifier = mapStarted != 0 ? savedElapsedSeconds : 0;
