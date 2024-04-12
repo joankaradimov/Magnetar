@@ -343,6 +343,31 @@ BOOL isSaveGameTimerReady_()
 
 FAIL_STUB_PATCH(isSaveGameTimerReady, "starcraft");
 
+int __fastcall savegameBIN_(__int16 a1)
+{
+	if (a1 != -2)
+	{
+		byte_6D1224 = 0;
+		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact);
+		return 1;
+	}
+	else if (sub_4CF820(SaveGameFile))
+	{
+		CMDACT_SaveGame(SaveGameFile);
+		dword_685164 = GetTickCount();
+		return 0;
+	}
+	else
+	{
+		char buff[256];
+		_snprintf(buff, sizeof(buff), GetNetworkTblString_(2), SaveGameFile);
+		loadOKCancelDialog(buff, loadSaveGameBIN, "rez\\ok.bin");
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(savegameBIN, "starcraft");
+
 void sub_4623C0_(dialog* dlg)
 {
 	SStrCopy(SaveGameFile, getControlFromIndex_(dlg, 2)->pszText, ~0x80000000);
@@ -360,7 +385,7 @@ void sub_4623C0_(dialog* dlg)
 		char buff[256];
 		dword_68516C = v4->unk0;
 		_snprintf(buff, sizeof(buff), GetNetworkTblString_(3), SaveGameFile);
-		loadOKCancelDialog(buff, savegameBIN, "rez\\okcancel.bin");
+		loadOKCancelDialog(buff, savegameBIN_, "rez\\okcancel.bin");
 	}
 	else if (word_685168 >= 0x80u)
 	{
