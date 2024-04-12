@@ -909,7 +909,7 @@ def sort_topologically(local_types):
         if name in levels_by_name:
             return levels_by_name[name]
         children = graph.get(name, None)
-        level = 0 if not children else (1 + max(walk_depth_first(lname) for lname in children))
+        level = 0 if not children else (1 + max(walk_depth_first(lname) for lname in sorted(children)))
         levels_by_name[name] = level
         names_by_level.setdefault(level, default=[]).append(name)
         return level
