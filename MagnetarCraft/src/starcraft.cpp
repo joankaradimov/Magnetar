@@ -8636,7 +8636,7 @@ int loadOKBIN_(int a1, const char* message, HANDLE a3)
 
 	dword_6D1248 = a3;
 
-	dialog* okcancel_bin = LoadDialog("ok.bin");
+	dialog* okcancel_bin = LoadDialog("rez\\ok.bin");
 	registerMenuFunctions_(0, okcancel_bin, 0);
 	return gluLoadBINDlg_(okcancel_bin, okcancel_Interact_);
 }
@@ -8669,7 +8669,7 @@ void* getFullMapChunk_(char* filename, int* chk_size)
 
 FAIL_STUB_PATCH(getFullMapChunk, "starcraft");
 
-int SaveReplay_(const char* a1, int a3)
+int SaveReplay_(const char* a1)
 {
 	CHAR FileName[MAX_PATH];
 	if (!getDirectoryPath(FileName, sizeof(FileName), a1))
@@ -8677,7 +8677,7 @@ int SaveReplay_(const char* a1, int a3)
 		return 0;
 	}
 
-	if (a3 && !DeleteFileA(FileName) && GetFileAttributesA(FileName) != -1)
+	if (!DeleteFileA(FileName) && GetFileAttributesA(FileName) != -1)
 	{
 		char buff[256];
 		const char* var = GetNetworkTblString_(2);
@@ -8699,7 +8699,7 @@ int SaveReplay_(const char* a1, int a3)
 	replay_header.game_data.is_replay = 1;
 	replay_header.is_expansion = IsExpansion;
 	memcpy(&a1a, &replay_header, sizeof(ReplayHeader));
-	a3 = 'SRer';
+	int a3 = 'SRer';
 	v5 = CompressWrite(&a3, 4, v4);
 	if (v5)
 	{
@@ -9462,7 +9462,7 @@ void DestroyGame_()
 	}
 	else
 	{
-		SaveReplay_("LastReplay", 1);
+		SaveReplay_("LastReplay");
 		if (league_maybe)
 		{
 			char a1[260];
