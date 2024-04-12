@@ -17737,14 +17737,7 @@ FAIL_STUB_PATCH(loadDlgGrp, "starcraft");
 
 void __stdcall buttonMouseOver_(int a1)
 {
-	if (a1)
-	{
-		if (a1 == 1)
-		{
-			playSoundId(SFX_glue_mousedown2);
-		}
-	}
-	else
+	if (a1 == 0)
 	{
 		DWORD TickCount = GetTickCount();
 		if (TickCount - dword_6D6368 >= 0xC8)
@@ -17752,6 +17745,10 @@ void __stdcall buttonMouseOver_(int a1)
 			playSoundId(SFX_glue_mouseover);
 			dword_6D6368 = TickCount;
 		}
+	}
+	else if (a1 == 1)
+	{
+		playSoundId(SFX_glue_mousedown2);
 	}
 }
 
