@@ -343,6 +343,22 @@ BOOL isSaveGameTimerReady_()
 
 FAIL_STUB_PATCH(isSaveGameTimerReady, "starcraft");
 
+void sub_461750_()
+{
+	dword_685164 = GetTickCount();
+}
+
+FAIL_STUB_PATCH(sub_461750, "starcraft");
+
+int sub_461980_(char* filename)
+{
+	CMDACT_SaveGame(filename);
+	sub_461750_();
+	return 1;
+}
+
+FAIL_STUB_PATCH(sub_461980, "starcraft");
+
 int __fastcall savegameBIN_(__int16 a1)
 {
 	if (a1 != -2)
@@ -353,8 +369,7 @@ int __fastcall savegameBIN_(__int16 a1)
 	}
 	else if (sub_4CF820(SaveGameFile))
 	{
-		CMDACT_SaveGame(SaveGameFile);
-		dword_685164 = GetTickCount();
+		sub_461980_(SaveGameFile);
 		return 0;
 	}
 	else
@@ -393,8 +408,7 @@ void sub_4623C0_(dialog* dlg)
 	}
 	else if (!isBadName(0, SaveGameFile, sizeof(SaveGameFile)))
 	{
-		CMDACT_SaveGame(SaveGameFile);
-		dword_685164 = GetTickCount();
+		sub_461980_(SaveGameFile);
 		DestroyDialog(dlg);
 	}
 	else
