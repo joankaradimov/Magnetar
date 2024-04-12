@@ -11549,9 +11549,9 @@ int PrintfNetworkTblString(__int16 network_tbl_entry, char *buff, size_t size_, 
     }
     return result_;
 }
-ListNode ** sub_4617C0(const char *a1) {
+TSAVEGAME * sub_4617C0(const char *a1) {
     int address = 0x4617c0;
-    ListNode ** result_;
+    TSAVEGAME * result_;
     __asm {
         xor eax, eax
         mov edi, a1
@@ -26046,8 +26046,22 @@ int getSavePath(char *base, unsigned int eax0, int a3, const char *a4) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*enumSaveLoadFiles)(char *a1, const char *edx0, int (__fastcall *a3)(char *, struct _WIN32_FIND_DATAA *, int, int), int a4, int a5, int a6, int a7), enumSaveLoadFiles, 0x4cf330);
-DECL_FUNC(_DWORD (__stdcall*createSaveLoadList)(_DWORD a1, _DWORD a2), createSaveLoadList, 0x4cf5a0);
+DECL_FUNC(int (__fastcall*enumSaveLoadFiles)(char *a1, const char *filename_pattern, int (__fastcall *a3)(char *, struct _WIN32_FIND_DATAA *, const char *, int *), int a4, int a5, const char *a6, int *a7), enumSaveLoadFiles, 0x4cf330);
+unsigned createSaveLoadList(int a1, int a2, char *a3, int a4, int a5) {
+    int address = 0x4cf5a0;
+    unsigned result_;
+    __asm {
+        xor eax, eax
+        push dword ptr a5
+        push dword ptr a4
+        mov ecx, a3
+        mov edx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(signed (*sub_4CF5F0)(), sub_4CF5F0, 0x4cf5f0);
 signed sub_4CF7B0(char *a1) {
     int address = 0x4cf7b0;
@@ -30117,8 +30131,19 @@ BOOL sub_4EDEC0(const char *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_4EDEF0)(int a1), sub_4EDEF0, 0x4edef0);
+DECL_FUNC(int (__thiscall*sub_4EDEF0)(void *this_, char *a2), sub_4EDEF0, 0x4edef0);
 DECL_FUNC(int (__stdcall*sub_4EDF20)(int csidl, const char *a2), sub_4EDF20, 0x4edf20);
+int sub_4EDFC0(const char *a1) {
+    int address = 0x4edfc0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 DECL_FUNC(void (__fastcall*destroyFileFindIndexer)(bool exit_code), destroyFileFindIndexer, 0x4edfe0);
 DECL_FUNC(void (__cdecl*FastIndexInit)(), FastIndexInit, 0x4ee070);
 DECL_FUNC(void (__stdcall*mouseOver_Loading_CB)(int a1), mouseOver_Loading_CB, 0x4ee0f0);
@@ -33495,7 +33520,7 @@ void *& dword_51A30C = * ((decltype(&dword_51A30C)) 0x51a30c);
 void *& off_51A314 = * ((decltype(&off_51A314)) 0x51a314);
 int& dword_51A318 = * ((decltype(&dword_51A318)) 0x51a318);
 ListNode& stru_51A31C = * ((decltype(&stru_51A31C)) 0x51a31c);
-_DWORD& dword_51A324 = * ((decltype(&dword_51A324)) 0x51a324);
+TSAVEGAME *& dword_51A324 = * ((decltype(&dword_51A324)) 0x51a324);
 ListNode& stru_51A328 = * ((decltype(&stru_51A328)) 0x51a328);
 int& dword_51A330 = * ((decltype(&dword_51A330)) 0x51a330);
 ListNode& TransMaskVector = * ((decltype(&TransMaskVector)) 0x51a334);
