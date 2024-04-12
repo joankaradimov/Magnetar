@@ -343,6 +343,43 @@ BOOL isSaveGameTimerReady_()
 
 FAIL_STUB_PATCH(isSaveGameTimerReady, "starcraft");
 
+void sub_4623C0_(dialog* dlg)
+{
+	SStrCopy(SaveGameFile, getControlFromIndex_(dlg, 2)->pszText, ~0x80000000);
+	for (int i = strlen(SaveGameFile) - 1; i >= 0; SaveGameFile[i + 1] = 0)
+	{
+		if (SaveGameFile[i] != ' ')
+		{
+			break;
+		}
+		--i;
+	}
+
+	if (TSAVEGAME* v4 = sub_4617C0(SaveGameFile))
+	{
+		char buff[256];
+		dword_68516C = v4->unk0;
+		_snprintf(buff, sizeof(buff), GetNetworkTblString_(3), SaveGameFile);
+		loadOKCancelDialog(buff, savegameBIN, "rez\\okcancel.bin");
+	}
+	else if (word_685168 >= 0x80u)
+	{
+		loadOKCancelDialog(GetNetworkTblString_(5), loadSaveGameBIN, "rez\\ok.bin");
+	}
+	else if (!isBadName(0, SaveGameFile, sizeof(SaveGameFile)))
+	{
+		CMDACT_SaveGame(SaveGameFile);
+		dword_685164 = GetTickCount();
+		DestroyDialog(dlg);
+	}
+	else
+	{
+		loadOKCancelDialog(GetNetworkTblString_(6), loadSaveGameBIN, "rez\\ok.bin");
+	}
+}
+
+FAIL_STUB_PATCH(sub_4623C0, "starcraft");
+
 void DLG_Loadsave_Activate_(dialog* dlg)
 {
 	char v1;
@@ -354,7 +391,7 @@ void DLG_Loadsave_Activate_(dialog* dlg)
 		break;
 	case -2:
 		byte_6D1224 = 0;
-		sub_4623C0(dlg);
+		sub_4623C0_(dlg);
 		break;
 	case -3:
 		v1 = --byte_6D1224;
