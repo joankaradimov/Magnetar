@@ -14251,7 +14251,6 @@ void pauseSetPaletteToGreyscale_()
 	}
 
 	memcpy(stru_6CEB40, v5, sizeof(stru_6CEB40));
-	GetTickCount(); // TODO: wtf? get rid if this, maybe?
 	setPaletteGamma(1, 1);
 }
 
