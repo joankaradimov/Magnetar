@@ -4564,7 +4564,7 @@ void checkSaveGameDialog(dialog *dlg);
 void sub_4C9C40(const char *a1);
 void sub_4C9CC0(dialog *a1, const char *a2);
 char setObjctDlgBtnString(dialog *a1);
-extern void (__cdecl*loadoptionsMenu)();
+extern void (__cdecl*open_options_menu)();
 extern int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt);
 extern void (__fastcall*helpmenu_lastBINDLG)(dialog *dlg);
 extern void (*open_mission_objectives_dialog)();

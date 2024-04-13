@@ -336,6 +336,14 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void open_options_menu_()
+{
+	dword_6D1234 = MainMenuOptionsCustomInteract;
+	BWFXN_OpenGameDialog_("rez\\options.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_options_menu, "starcraft");
+
 void __fastcall helpmenu_lastBINDLG_(dialog* dlg)
 {
 	char v1;
@@ -659,7 +667,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			open_quit_mission_menu_();
 			break;
 		case -25489:
-			loadoptionsMenu();
+			open_options_menu_();
 			return;
 		case -25484:
 			open_help_menu_();
@@ -5018,8 +5026,7 @@ void video_OK_(dialog* dlg)
 	if (byte_6D1224)
 	{
 		byte_6D1224 = v7 - 1;
-		dword_6D1234 = MainMenuOptionsCustomInteract;
-		BWFXN_OpenGameDialog("rez\\options.bin", gamemenu_Dlg_Interact);
+		open_options_menu_();
 	}
 	else
 	{
@@ -5411,7 +5418,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		LoadGame_DlgCreate_();
 		break;
 	case 3:
-		loadoptionsMenu();
+		open_options_menu_();
 		return;
 	case 4:
 		open_help_menu_();

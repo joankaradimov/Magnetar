@@ -25212,7 +25212,7 @@ char setObjctDlgBtnString(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(void (__cdecl*loadoptionsMenu)(), loadoptionsMenu, 0x4c9f60);
+DECL_FUNC(void (__cdecl*open_options_menu)(), open_options_menu, 0x4c9f60);
 DECL_FUNC(int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
 DECL_FUNC(void (__fastcall*helpmenu_lastBINDLG)(dialog *dlg), helpmenu_lastBINDLG, 0x4ca010);
 DECL_FUNC(void (*open_mission_objectives_dialog)(), open_mission_objectives_dialog, 0x4ca090);
