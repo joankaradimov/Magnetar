@@ -4554,7 +4554,7 @@ void sub_4C9440(dialog *a1);
 void sub_4C94F0(dialog *a1);
 extern void (__fastcall*CMDACT_RestartGame)(dialog *a1);
 extern void (__fastcall*BWFXN_QuitMission)(dialog *dlg);
-extern void (__thiscall*quit_lastBINDLG)(dialog *this_);
+extern void (__fastcall*quit_lastBINDLG)(dialog *this_);
 extern void (__stdcall*sub_4C9780)(dialog *a1);
 int options_Cancel(dialog *a1, dlgEvent *a2);
 extern void (__fastcall*saveGameCBProc)(dialog *dlg, __int16 a2);

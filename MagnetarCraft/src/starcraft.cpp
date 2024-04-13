@@ -336,6 +336,14 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void ExitGameMenu_()
+{
+	dword_6D1234 = quit_lastBINDLG;
+	BWFXN_OpenGameDialog("rez\\quit.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(ExitGameMenu, "starcraft");
+
 BOOL isSaveGameTimerReady_()
 {
 	return !multiPlayerMode || GetTickCount() > dword_685164 + 120000;
@@ -590,7 +598,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 		switch (wVirtKey)
 		{
 		case -25493:
-			ExitGameMenu();
+			ExitGameMenu_();
 			break;
 		case -25491:
 			QuitMissionMenu();
