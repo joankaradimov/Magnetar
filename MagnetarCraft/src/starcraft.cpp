@@ -5096,6 +5096,13 @@ void checkSaveGameDialog_(dialog* dlg)
 
 FAIL_STUB_PATCH(checkSaveGameDialog, "starcraft");
 
+void open_mission_objectives_dialog_()
+{
+	BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG);
+}
+
+FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
+
 void __fastcall sub_4CA450_(dialog* dlg)
 {
 	dword_6D1234 = 0;
@@ -5118,7 +5125,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		HelpMenu();
 		return;
 	case 5:
-		BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG);
+		open_mission_objectives_dialog_();
 		break;
 	case 6:
 		sub_4CA430();
