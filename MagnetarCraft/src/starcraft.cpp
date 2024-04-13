@@ -336,9 +336,49 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void __fastcall MainMenuOptionsCustomInteract_(dialog* dlg)
+{
+	char v1;
+
+	dword_6D1234 = 0;
+	switch (LastControlID)
+	{
+	case -3:
+		v1 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v1 - 1;
+			dword_6D1234 = sub_4CA450_;
+			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+		break;
+	case 1:
+		dword_655C3C = CpuThrottle;
+		BWFXN_OpenGameDialog_("rez\\spd_dlg.bin", spd_dlg_Interact);
+		break;
+	case 2:
+		BWFXN_OpenGameDialog_("rez\\snd_dlg.bin", snd_dlg_BINDLG_Main);
+		break;
+	case 3:
+		sub_481060();
+		break;
+	case 4:
+		BWFXN_OpenGameDialog_("rez\\netdlg.bin", netdlg_BINDLG_Main);
+		break;
+	default:
+		return;
+	}
+}
+
+FUNCTION_PATCH(MainMenuOptionsCustomInteract, MainMenuOptionsCustomInteract_, "starcraft");
+
 void open_options_menu_()
 {
-	dword_6D1234 = MainMenuOptionsCustomInteract;
+	dword_6D1234 = MainMenuOptionsCustomInteract_;
 	BWFXN_OpenGameDialog_("rez\\options.bin", gamemenu_Dlg_Interact);
 }
 
@@ -5476,7 +5516,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 		dialog* v3 = getControlFromIndex_(dlg, 1);
 		HideDialog_(v3);
 	}
-	if (dword_6D1234 == MainMenuOptionsCustomInteract)
+	if (dword_6D1234 == MainMenuOptionsCustomInteract || dword_6D1234 == MainMenuOptionsCustomInteract_)
 	{
 		sub_4C94F0(dlg);
 	}

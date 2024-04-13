@@ -11506,7 +11506,7 @@ void load_Options_BIN(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*snd_dlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), snd_dlg_BINDLG_Main, 0x460e20);
+DECL_FUNC(int (__fastcall*snd_dlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), snd_dlg_BINDLG_Main, 0x460e20);
 DECL_FUNC(void (*sub_460F10)(), sub_460F10, 0x460f10);
 DECL_FUNC(int (*sub_460F20)(), sub_460F20, 0x460f20);
 DECL_FUNC(void (__cdecl*lmissionDlgActivate)(), lmissionDlgActivate, 0x460f30);
@@ -16565,7 +16565,7 @@ void CMDACT_GameSpeed(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
+DECL_FUNC(int (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
 DECL_FUNC(void (*sub_482070)(), sub_482070, 0x482070);
 void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a1, int x, int y, UnknownPathRelated *result) {
     int address = 0x482090;
@@ -25216,7 +25216,7 @@ DECL_FUNC(void (__cdecl*open_options_menu)(), open_options_menu, 0x4c9f60);
 DECL_FUNC(int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
 DECL_FUNC(void (__fastcall*helpmenu_lastBINDLG)(dialog *dlg), helpmenu_lastBINDLG, 0x4ca010);
 DECL_FUNC(void (*open_mission_objectives_dialog)(), open_mission_objectives_dialog, 0x4ca090);
-DECL_FUNC(void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_), MainMenuOptionsCustomInteract, 0x4ca0a0);
+DECL_FUNC(void (__fastcall*MainMenuOptionsCustomInteract)(dialog *dlg), MainMenuOptionsCustomInteract, 0x4ca0a0);
 char gamemenu_CustomCtrlID(dialog *a1) {
     int address = 0x4ca160;
     char result_;
@@ -29497,7 +29497,7 @@ void CMDACT_SetLatency(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*netdlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), netdlg_BINDLG_Main, 0x4e8ae0);
+DECL_FUNC(int (__fastcall*netdlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), netdlg_BINDLG_Main, 0x4e8ae0);
 DECL_FUNC(void (*sub_4E8BB0)(), sub_4E8BB0, 0x4e8bb0);
 unsigned pixelPosHasCreep(__int16 a1, __int16 a2) {
     int address = 0x4e8bc0;
