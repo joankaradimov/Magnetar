@@ -137,6 +137,7 @@ unsigned int getTextDisplayTime_(const char* text);
 void __fastcall sub_4CA450_(dialog* dlg);
 int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt);
 void __fastcall gameMenu_BINDLG_(dialog* dlg);
+void open_exit_game_menu_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

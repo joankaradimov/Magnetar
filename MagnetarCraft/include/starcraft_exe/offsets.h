@@ -4573,7 +4573,7 @@ char gamemenu_CustomCtrlID(dialog *a1);
 extern int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt);
 extern void (*open_restart_game_menu)();
 extern void (__cdecl*QuitMissionMenu)();
-extern void (__cdecl*ExitGameMenu)();
+extern void (__cdecl*open_exit_game_menu)();
 extern void (__cdecl*HelpMenu)();
 extern void (__fastcall*gameMenu_BINDLG)(dialog *dlg);
 extern void (__cdecl*open_abort_menu)();

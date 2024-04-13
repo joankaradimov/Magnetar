@@ -336,14 +336,6 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
-void ExitGameMenu_()
-{
-	dword_6D1234 = quit_lastBINDLG;
-	BWFXN_OpenGameDialog("rez\\quit.bin", gamemenu_Dlg_Interact);
-}
-
-FAIL_STUB_PATCH(ExitGameMenu, "starcraft");
-
 BOOL isSaveGameTimerReady_()
 {
 	return !multiPlayerMode || GetTickCount() > dword_685164 + 120000;
@@ -598,7 +590,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 		switch (wVirtKey)
 		{
 		case -25493:
-			ExitGameMenu_();
+			open_exit_game_menu_();
 			break;
 		case -25491:
 			QuitMissionMenu();
@@ -5255,6 +5247,14 @@ void open_restart_game_menu_()
 
 FAIL_STUB_PATCH(open_restart_game_menu, "starcraft");
 
+void open_exit_game_menu_()
+{
+	dword_6D1234 = quit_lastBINDLG;
+	BWFXN_OpenGameDialog_("rez\\quit.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_exit_game_menu, "starcraft");
+
 void __fastcall gameMenu_BINDLG_(dialog* dlg)
 {
 	char v2;
@@ -5282,8 +5282,7 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 		QuitMissionMenu();
 		break;
 	case 3:
-		dword_6D1234 = quit_lastBINDLG;
-		BWFXN_OpenGameDialog_("rez\\quit.bin", gamemenu_Dlg_Interact);
+		open_exit_game_menu_();
 		break;
 	}
 }
