@@ -5222,9 +5222,34 @@ void open_mission_objectives_dialog_()
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
 
+void __fastcall CMDACT_RestartGame_(dialog* a1)
+{
+	dword_6D1234 = nullptr;
+	if (LastControlID == -3)
+	{
+		char v2 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v2 - 1;
+			dword_6D1234 = gameMenu_BINDLG_;
+			BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
+			return;
+		}
+	}
+	else
+	{
+		RestarGameCommand command;
+		command.command_id = CommandId::CMD_RestarGame;
+		BWFXN_QueueCommand(&command, 1);
+	}
+	DestroyDialog(a1);
+}
+
+FAIL_STUB_PATCH(CMDACT_RestartGame, "starcraft");
+
 void open_restart_game_menu_()
 {
-	dword_6D1234 = CMDACT_RestartGame;
+	dword_6D1234 = CMDACT_RestartGame_;
 	BWFXN_OpenGameDialog_("rez\\restart.bin", gamemenu_Dlg_Interact);
 }
 

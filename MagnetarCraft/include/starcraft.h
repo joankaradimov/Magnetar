@@ -136,6 +136,7 @@ void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4);
 unsigned int getTextDisplayTime_(const char* text);
 void __fastcall sub_4CA450_(dialog* dlg);
 int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt);
+void __fastcall gameMenu_BINDLG_(dialog* dlg);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
