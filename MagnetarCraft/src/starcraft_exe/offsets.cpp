@@ -25214,7 +25214,7 @@ char setObjctDlgBtnString(dialog *a1) {
 }
 DECL_FUNC(void (__cdecl*loadoptionsMenu)(), loadoptionsMenu, 0x4c9f60);
 DECL_FUNC(int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt), objctdlg_BINDLG, 0x4c9f80);
-DECL_FUNC(void (__thiscall*helpmenu_lastBINDLG)(dialog *a1), helpmenu_lastBINDLG, 0x4ca010);
+DECL_FUNC(void (__fastcall*helpmenu_lastBINDLG)(dialog *a1), helpmenu_lastBINDLG, 0x4ca010);
 DECL_FUNC(void (*open_mission_objectives_dialog)(), open_mission_objectives_dialog, 0x4ca090);
 DECL_FUNC(void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_), MainMenuOptionsCustomInteract, 0x4ca0a0);
 char gamemenu_CustomCtrlID(dialog *a1) {
@@ -25232,7 +25232,7 @@ DECL_FUNC(int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt), ga
 DECL_FUNC(void (*open_restart_game_menu)(), open_restart_game_menu, 0x4ca2d0);
 DECL_FUNC(void (__cdecl*open_quit_mission_menu)(), open_quit_mission_menu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*open_exit_game_menu)(), open_exit_game_menu, 0x4ca330);
-DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);
+DECL_FUNC(void (__cdecl*open_help_menu)(), open_help_menu, 0x4ca350);
 DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);
 DECL_FUNC(void (__cdecl*open_abort_menu)(), open_abort_menu, 0x4ca430);
 DECL_FUNC(void (__fastcall*sub_4CA450)(dialog *dlg), sub_4CA450, 0x4ca450);

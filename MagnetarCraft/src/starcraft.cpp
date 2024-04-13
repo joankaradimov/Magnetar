@@ -336,6 +336,14 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void open_help_menu_()
+{
+	dword_6D1234 = helpmenu_lastBINDLG;
+	BWFXN_OpenGameDialog_("rez\\helpmenu.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_help_menu, "starcraft");
+
 BOOL isSaveGameTimerReady_()
 {
 	return !multiPlayerMode || GetTickCount() > dword_685164 + 120000;
@@ -623,7 +631,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			loadoptionsMenu();
 			return;
 		case -25484:
-			HelpMenu();
+			open_help_menu_();
 			return;
 		case -25483:
 			ToggleLeaderboardList();
@@ -5375,7 +5383,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		loadoptionsMenu();
 		return;
 	case 4:
-		HelpMenu();
+		open_help_menu_();
 		return;
 	case 5:
 		open_mission_objectives_dialog_();
