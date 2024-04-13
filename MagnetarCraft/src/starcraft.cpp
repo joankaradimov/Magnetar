@@ -5096,6 +5096,23 @@ void checkSaveGameDialog_(dialog* dlg)
 
 FAIL_STUB_PATCH(checkSaveGameDialog, "starcraft");
 
+void options_OK_(dialog* dlg)
+{
+	char v1 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v1 - 1;
+		dword_6D1234 = sub_4CA450_;
+		BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(options_OK, "starcraft");
+
 int __fastcall objctdlg_BINDLG_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -5122,7 +5139,7 @@ int __fastcall objctdlg_BINDLG_(dialog* dlg, dlgEvent* evt)
 			options_Cancel(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			options_OK(dlg);
+			options_OK_(dlg);
 			return 1;
 		}
 	}
