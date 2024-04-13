@@ -5476,7 +5476,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 	}
 }
 
-FUNCTION_PATCH(sub_4CA450, sub_4CA450_, "starcraft");
+FAIL_STUB_PATCH(sub_4CA450, "starcraft");
 
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
@@ -5501,7 +5501,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	{
 		sub_4C9440(dlg);
 	}
-	if ((dword_6D1234 == sub_4CA450_ || dword_6D1234 == sub_4CA450) && (multiPlayerMode || InReplay))
+	if (dword_6D1234 == sub_4CA450_ && (multiPlayerMode || InReplay))
 	{
 		checkSaveGameDialog_(dlg);
 	}
