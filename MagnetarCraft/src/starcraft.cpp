@@ -498,6 +498,14 @@ void savegameMenu_()
 
 FAIL_STUB_PATCH(savegameMenu, "starcraft");
 
+void __cdecl gameMenu_()
+{
+	dword_6D1234 = sub_4CA450_;
+	BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
+}
+
+FAIL_STUB_PATCH(gameMenu, "starcraft");
+
 void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 {
 	int wVirtKey = (__int16)event->wVirtKey;
@@ -544,7 +552,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			LoadGame_DlgCreate();
 			break;
 		case -25477:
-			gameMenu();
+			gameMenu_();
 			return;
 		default:
 			break;
