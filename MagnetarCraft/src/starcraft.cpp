@@ -336,6 +336,39 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void change_speed_options_(dialog* dlg)
+{
+	if (LastControlID == -2)
+	{
+		dialog* v1 = getControlFromIndex_(dlg, 1);
+		if ((v1->lFlags & CTRL_DISABLED) == 0)
+		{
+			char buffer[2];
+			buffer[0] = CMD_SetSpeed;
+			buffer[1] = (char)v1->fields.edit.wUnk_0x3A; // TODO: use the correct union field
+			BWFXN_QueueCommand(buffer, 2);
+		}
+	}
+	else
+	{
+		CpuThrottle = dword_655C3C;
+	}
+
+	sub_4C9780(dlg);
+	char v4 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v4 - 1;
+		open_options_menu_();
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(change_speed_options, "starcraft");
+
 int __fastcall spd_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -362,7 +395,7 @@ int __fastcall spd_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 			destroySpdDlg(dlg, evt);
 			return 1;
 		case USER_ACTIVATE:
-			change_speed_options(dlg);
+			change_speed_options_(dlg);
 			return 1;
 		case USER_INIT:
 			registerUserDialogAction(dlg, sizeof(off_51ABB0), off_51ABB0);

@@ -142,6 +142,7 @@ void open_exit_game_menu_();
 void open_abort_menu_();
 void open_quit_mission_menu_();
 void open_options_menu_();
+void __fastcall options_menu_handler_(dialog* dlg);
 void __fastcall quit_mission_menu_handler_(dialog* dlg);
 void ReportGameResult_();
 
