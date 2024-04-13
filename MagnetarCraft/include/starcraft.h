@@ -134,13 +134,14 @@ bool LoadPrecursorCampaign();
 bool LoadCampaignWithCharacter_(Campaign& campaign);
 void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4);
 unsigned int getTextDisplayTime_(const char* text);
-void __fastcall sub_4CA450_(dialog* dlg);
+void __fastcall game_menu_handler_(dialog* dlg);
 int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt);
 void __fastcall gameMenu_BINDLG_(dialog* dlg);
 void open_game_menu_();
 void open_exit_game_menu_();
 void open_abort_menu_();
 void open_quit_mission_menu_();
+void __fastcall quit_mission_menu_handler_(dialog* dlg);
 void ReportGameResult_();
 
 template <size_t TIMERS_COUNT>

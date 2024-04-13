@@ -353,7 +353,7 @@ struct __declspec(align(1)) BuildingMorphCommand;
 struct UnloadAllCommand;
 struct RightClickCommand;
 struct SetLatencyCommand;
-struct RestarGameCommand;
+struct RestartGameCommand;
 struct TimerRelated;
 struct UnknownPathRelated;
 struct BytePair;
@@ -6115,11 +6115,11 @@ struct SetLatencyCommand
 };
 static_assert(sizeof(SetLatencyCommand) == 2, "Incorrect size for type `SetLatencyCommand`. Expected: 2");
 
-struct RestarGameCommand
+struct RestartGameCommand
 {
   CommandId command_id;
 };
-static_assert(sizeof(RestarGameCommand) == 1, "Incorrect size for type `RestarGameCommand`. Expected: 1");
+static_assert(sizeof(RestartGameCommand) == 1, "Incorrect size for type `RestartGameCommand`. Expected: 1");
 
 struct TimerRelated
 {

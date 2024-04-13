@@ -336,11 +336,11 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
-void __fastcall MainMenuOptionsCustomInteract_(dialog* dlg)
+void __fastcall options_menu_handler_(dialog* dlg)
 {
 	char v1;
 
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	switch (LastControlID)
 	{
 	case -3:
@@ -373,20 +373,20 @@ void __fastcall MainMenuOptionsCustomInteract_(dialog* dlg)
 	}
 }
 
-FUNCTION_PATCH(MainMenuOptionsCustomInteract, MainMenuOptionsCustomInteract_, "starcraft");
+FUNCTION_PATCH(options_menu_handler, options_menu_handler_, "starcraft");
 
 void open_options_menu_()
 {
-	dword_6D1234 = MainMenuOptionsCustomInteract_;
+	active_menu_handler = options_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\options.bin", gamemenu_Dlg_Interact);
 }
 
 FAIL_STUB_PATCH(open_options_menu, "starcraft");
 
-void __fastcall helpmenu_lastBINDLG_(dialog* dlg)
+void __fastcall help_menu_handler_(dialog* dlg)
 {
 	char v1;
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	switch (LastControlID)
 	{
 	case -3:
@@ -411,11 +411,11 @@ void __fastcall helpmenu_lastBINDLG_(dialog* dlg)
 	}
 }
 
-FUNCTION_PATCH(helpmenu_lastBINDLG, helpmenu_lastBINDLG_, "starcraft");
+FUNCTION_PATCH(help_menu_handler, help_menu_handler_, "starcraft");
 
 void open_help_menu_()
 {
-	dword_6D1234 = helpmenu_lastBINDLG_;
+	active_menu_handler = help_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\helpmenu.bin", gamemenu_Dlg_Interact);
 }
 
@@ -666,7 +666,7 @@ FAIL_STUB_PATCH(LoadGame_DlgCreate, "starcraft");
 
 void open_game_menu_()
 {
-	dword_6D1234 = sub_4CA450_;
+	active_menu_handler = game_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
 }
 
@@ -5040,8 +5040,6 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_, "starcraft");
 
-void __fastcall BWFXN_QuitMission_(dialog* dlg);
-
 void video_OK_(dialog* dlg)
 {
 	if (LastControlID != -2)
@@ -5319,9 +5317,9 @@ void open_mission_objectives_dialog_()
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
 
-void __fastcall CMDACT_RestartGame_(dialog* a1)
+void __fastcall restart_game_menu_handler_(dialog* a1)
 {
-	dword_6D1234 = nullptr;
+	active_menu_handler = nullptr;
 	if (LastControlID == -3)
 	{
 		char v2 = --byte_6D1224;
@@ -5334,26 +5332,27 @@ void __fastcall CMDACT_RestartGame_(dialog* a1)
 	}
 	else
 	{
-		RestarGameCommand command;
+		// TODO: call CMDACT_restart_game
+		RestartGameCommand command;
 		command.command_id = CommandId::CMD_RestarGame;
 		BWFXN_QueueCommand(&command, 1);
 	}
 	DestroyDialog(a1);
 }
 
-FAIL_STUB_PATCH(CMDACT_RestartGame, "starcraft");
+FAIL_STUB_PATCH(restart_game_menu_handler, "starcraft");
 
 void open_restart_game_menu_()
 {
-	dword_6D1234 = CMDACT_RestartGame_;
+	active_menu_handler = restart_game_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\restart.bin", gamemenu_Dlg_Interact);
 }
 
 FAIL_STUB_PATCH(open_restart_game_menu, "starcraft");
 
-void __fastcall quit_lastBINDLG_(dialog* dlg)
+void __fastcall exit_game_menu_handler_(dialog* dlg)
 {
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	if (LastControlID == -2)
 	{
 		if (multiPlayerMode && NetMode.as_number == 'BNET' && !dword_685174)
@@ -5385,20 +5384,20 @@ void __fastcall quit_lastBINDLG_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(quit_lastBINDLG, "starcraft");
+FAIL_STUB_PATCH(exit_game_menu_handler, "starcraft");
 
 void open_exit_game_menu_()
 {
-	dword_6D1234 = quit_lastBINDLG_;
+	active_menu_handler = exit_game_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\quit.bin", gamemenu_Dlg_Interact);
 }
 
 FAIL_STUB_PATCH(open_exit_game_menu, "starcraft");
 
-void __fastcall gameMenu_BINDLG_(dialog* dlg)
+void __fastcall abort_menu_handler_(dialog* dlg)
 {
 	char v2;
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	waitLoopCntd(10, dlg);
 	switch (LastControlID)
 	{
@@ -5426,19 +5425,19 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(gameMenu_BINDLG, "starcraft");
+FAIL_STUB_PATCH(abort_menu_handler, "starcraft");
 
 void open_abort_menu_()
 {
-	dword_6D1234 = gameMenu_BINDLG_;
+	active_menu_handler = abort_menu_handler_;
 	BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
 }
 
 FAIL_STUB_PATCH(open_abort_menu, "starcraft");
 
-void __fastcall sub_4CA450_(dialog* dlg)
+void __fastcall game_menu_handler_(dialog* dlg)
 {
-	dword_6D1234 = 0;
+	active_menu_handler = 0;
 	switch (LastControlID)
 	{
 	case -3:
@@ -5465,18 +5464,18 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		return;
 	case 7:
 		CMDACT_PauseGame();
-		dword_6D1234 = sub_4CA450_;
+		active_menu_handler = game_menu_handler_;
 		break;
 	case 8:
 		CMDACT_ResumeGame();
-		dword_6D1234 = sub_4CA450_;
+		active_menu_handler = game_menu_handler_;
 		break;
 	default:
 		return;
 	}
 }
 
-FAIL_STUB_PATCH(sub_4CA450, "starcraft");
+FAIL_STUB_PATCH(game_menu_handler, "starcraft");
 
 char gamemenu_CustomCtrlID_(dialog* dlg)
 {
@@ -5497,20 +5496,20 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	registerUserDialogAction(dlg, sizeof(functions), functions);
 	UpdateOKButton(dlg, 4, CTRL_USELOCALGRAPHIC);
 	UpdateCancelButton(dlg, 4, CTRL_USELOCALGRAPHIC);
-	if (dword_6D1234 == gameMenu_BINDLG_)
+	if (active_menu_handler == abort_menu_handler_)
 	{
 		sub_4C9440(dlg);
 	}
-	if (dword_6D1234 == sub_4CA450_ && (multiPlayerMode || InReplay))
+	if (active_menu_handler == game_menu_handler_ && (multiPlayerMode || InReplay))
 	{
 		checkSaveGameDialog_(dlg);
 	}
-	if (dword_6D1234 == BWFXN_QuitMission_)
+	if (active_menu_handler == quit_mission_menu_handler_)
 	{
 		dialog* v3 = getControlFromIndex_(dlg, 1);
 		HideDialog_(v3);
 	}
-	if (dword_6D1234 == MainMenuOptionsCustomInteract || dword_6D1234 == MainMenuOptionsCustomInteract_)
+	if (active_menu_handler == options_menu_handler || active_menu_handler == options_menu_handler_)
 	{
 		sub_4C94F0(dlg);
 	}
@@ -5533,7 +5532,7 @@ int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 			options_Cancel(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			dword_6D1234(dlg);
+			active_menu_handler(dlg);
 			return 1;
 		default:
 			break;
@@ -5557,9 +5556,9 @@ int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt)
 
 FUNCTION_PATCH(gamemenu_Dlg_Interact, gamemenu_Dlg_Interact_, "starcraft");
 
-void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
+void __fastcall quit_replay_handler_(dialog* dlg)
 {
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	if (LastControlID == -2)
 	{
 		GameState = 0;
@@ -5590,13 +5589,13 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_QuitReplay_maybe, "starcraft");
+FAIL_STUB_PATCH(quit_replay_handler, "starcraft");
 
 void sub_460F70_();
 
-void __fastcall BWFXN_QuitMission_(dialog* dlg)
+void __fastcall quit_mission_menu_handler_(dialog* dlg)
 {
-	dword_6D1234 = 0;
+	active_menu_handler = nullptr;
 	if (LastControlID == -2)
 	{
 		sub_460F70_();
@@ -5634,18 +5633,18 @@ void __fastcall BWFXN_QuitMission_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(BWFXN_QuitMission, "starcraft");
+FAIL_STUB_PATCH(quit_mission_menu_handler, "starcraft");
 
 void open_quit_mission_menu_()
 {
 	if (InReplay)
 	{
-		dword_6D1234 = BWFXN_QuitReplay_maybe_;
+		active_menu_handler = quit_replay_handler_;
 		BWFXN_OpenGameDialog_("rez\\quitrepl.bin", gamemenu_Dlg_Interact_);
 	}
 	else
 	{
-		dword_6D1234 = BWFXN_QuitMission_;
+		active_menu_handler = quit_mission_menu_handler_;
 		BWFXN_OpenGameDialog_("rez\\quit2mnu.bin", gamemenu_Dlg_Interact_);
 	}
 }
@@ -15484,7 +15483,7 @@ int __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 			dlg->lUser = 0;
 			break;
 		case EventUser::USER_ACTIVATE:
-			CMDACT_Unload((CUnit*) dlg->lUser);
+			CMDACT_unload((CUnit*) dlg->lUser);
 			return 1;
 		case EventUser::USER_MOUSEMOVE:
 			if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
