@@ -383,7 +383,7 @@ int __fastcall savegameBIN_(__int16 a1)
 
 FAIL_STUB_PATCH(savegameBIN, "starcraft");
 
-void sub_4623C0_(dialog* dlg)
+void dlg_loadsave_overwrite_(dialog* dlg)
 {
 	SStrCopy(SaveGameFile, getControlFromIndex_(dlg, 2)->pszText, ~0x80000000);
 	for (int i = strlen(SaveGameFile) - 1; i >= 0; SaveGameFile[i + 1] = 0)
@@ -417,7 +417,7 @@ void sub_4623C0_(dialog* dlg)
 	}
 }
 
-FAIL_STUB_PATCH(sub_4623C0, "starcraft");
+FAIL_STUB_PATCH(dlg_loadsave_overwrite, "starcraft");
 
 void DLG_Loadsave_Activate_(dialog* dlg)
 {
@@ -426,11 +426,11 @@ void DLG_Loadsave_Activate_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case 3:
-		sub_462310(dlg);
+		dlg_loadsave_delete(dlg);
 		break;
 	case -2:
 		byte_6D1224 = 0;
-		sub_4623C0_(dlg);
+		dlg_loadsave_overwrite_(dlg);
 		break;
 	case -3:
 		v1 = --byte_6D1224;

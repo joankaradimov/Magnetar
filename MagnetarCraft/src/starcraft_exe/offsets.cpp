@@ -11652,7 +11652,7 @@ char DLG_loadsave_Create(dialog *dlg, dlgEvent *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*DLG_LoadGame_Interact)(dialog *a1, dlgEvent *a2), DLG_LoadGame_Interact, 0x462060);
+DECL_FUNC(int (__fastcall*DLG_LoadGame_Interact)(dialog *dlg, dlgEvent *evt), DLG_LoadGame_Interact, 0x462060);
 DECL_FUNC(int (__fastcall*loadSaveGameBIN)(__int16 _unused), loadSaveGameBIN, 0x4620e0);
 DECL_FUNC(void (*LoadGame_DlgCreate)(), LoadGame_DlgCreate, 0x462100);
 DECL_FUNC(signed (__fastcall*okBIN)(__int16 a1), okBIN, 0x462150);
@@ -11667,14 +11667,14 @@ void sub_4622A0(__int16 a1, int a2, int (__fastcall *a3)(__int16)) {
         call address
     }
 }
-void sub_462310(dialog *a1) {
+void dlg_loadsave_delete(dialog *a1) {
     int address = 0x462310;
     __asm {
         mov eax, a1
         call address
     }
 }
-void sub_4623C0(dialog *dlg) {
+void dlg_loadsave_overwrite(dialog *dlg) {
     int address = 0x4623c0;
     __asm {
         mov eax, dlg
@@ -24827,7 +24827,7 @@ DECL_FUNC(void (*sub_4C3ED0)(), sub_4C3ED0, 0x4c3ed0);
 DECL_FUNC(char (*GetActivePlayerCount)(), GetActivePlayerCount, 0x4c40f0);
 DECL_FUNC(BOOL (*sub_4C4140)(), sub_4C4140, 0x4c4140);
 DECL_FUNC(void (__stdcall*UpdateGameMode)(int a1), UpdateGameMode, 0x4c4160);
-DECL_FUNC(int (*sub_4C41E0)(), sub_4C41E0, 0x4c41e0);
+DECL_FUNC(BOOL (*sub_4C41E0)(), sub_4C41E0, 0x4c41e0);
 DECL_FUNC(BOOL (*isMultiplayerModeBNET)(), isMultiplayerModeBNET, 0x4c4200);
 int ApplyGameVictoryStatus(_DWORD *a1, _DWORD *a2) {
     int address = 0x4c4220;
@@ -25110,10 +25110,10 @@ int sub_4C90C0(dialog *a1) {
 DECL_FUNC(void (__fastcall*sub_4C9120)(bool exit_code), sub_4C9120, 0x4c9120);
 DECL_FUNC(void (__fastcall*sub_4C9150)(dialog *dlg, __int16 a2), sub_4C9150, 0x4c9150);
 DECL_FUNC(void (__fastcall*BWFXN_QuitReplay_maybe)(dialog *dlg), BWFXN_QuitReplay_maybe, 0x4c9280);
-void options_OK(dialog *a1) {
+void options_OK(dialog *dlg) {
     int address = 0x4c9360;
     __asm {
-        mov esi, a1
+        mov esi, dlg
         call address
     }
 }
@@ -25149,7 +25149,7 @@ void sub_4C94F0(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(void (__thiscall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
+DECL_FUNC(void (__fastcall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
 DECL_FUNC(void (__fastcall*BWFXN_QuitMission)(dialog *dlg), BWFXN_QuitMission, 0x4c95a0);
 DECL_FUNC(void (__thiscall*quit_lastBINDLG)(dialog *this_), quit_lastBINDLG, 0x4c96d0);
 DECL_FUNC(void (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
@@ -25585,14 +25585,15 @@ char setHangerCount(CUnit *a1, CUnit *a2, unsigned __int8 a3) {
     }
     return result_;
 }
-CUnit * CreateUnitAtPos(__int16 player_id, unsigned int unit_type, __int16 x, __int16 y) {
+CUnit * CreateUnitAtPos(__int16 player_id, UnitType unit_type, __int16 x, __int16 y) {
     int address = 0x4cd360;
     CUnit * result_;
     __asm {
         xor eax, eax
+        xor ecx, ecx
         push dword ptr y
         push dword ptr x
-        mov ecx, unit_type
+        mov cx, unit_type
         mov ax, player_id
         call address
         mov result_, eax
