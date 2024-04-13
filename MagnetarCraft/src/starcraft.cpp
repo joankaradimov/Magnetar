@@ -5096,9 +5096,44 @@ void checkSaveGameDialog_(dialog* dlg)
 
 FAIL_STUB_PATCH(checkSaveGameDialog, "starcraft");
 
+int __fastcall objctdlg_BINDLG_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			setObjctDlgBtnString(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			options_Cancel(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			options_OK(dlg);
+			return 1;
+		}
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(objctdlg_BINDLG, "starcraft");
+
 void open_mission_objectives_dialog_()
 {
-	BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG);
+	BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG_);
 }
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
