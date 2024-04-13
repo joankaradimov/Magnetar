@@ -5246,9 +5246,45 @@ void open_restart_game_menu_()
 
 FAIL_STUB_PATCH(open_restart_game_menu, "starcraft");
 
+void __fastcall quit_lastBINDLG_(dialog* dlg)
+{
+	dword_6D1234 = 0;
+	if (LastControlID == -2)
+	{
+		if (multiPlayerMode && NetMode.as_number == 'BNET' && !dword_685174)
+		{
+			dword_685174 = 1;
+			ReportGameResult_();
+		}
+		GameState = 0;
+		gwNextGameMode = GAME_EXIT;
+		if (!InReplay)
+		{
+			replay_header.ReplayFrames = ElapsedTimeFrames;
+		}
+		DestroyDialog(dlg);
+		SNetLeagueLogout(playerName);
+	}
+	else
+	{
+		char v2 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v2 - 1;
+			open_abort_menu_();
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(quit_lastBINDLG, "starcraft");
+
 void open_exit_game_menu_()
 {
-	dword_6D1234 = quit_lastBINDLG;
+	dword_6D1234 = quit_lastBINDLG_;
 	BWFXN_OpenGameDialog_("rez\\quit.bin", gamemenu_Dlg_Interact);
 }
 

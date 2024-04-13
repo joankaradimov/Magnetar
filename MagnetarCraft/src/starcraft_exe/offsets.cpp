@@ -25151,7 +25151,7 @@ void sub_4C94F0(dialog *a1) {
 }
 DECL_FUNC(void (__fastcall*CMDACT_RestartGame)(dialog *a1), CMDACT_RestartGame, 0x4c9530);
 DECL_FUNC(void (__fastcall*BWFXN_QuitMission)(dialog *dlg), BWFXN_QuitMission, 0x4c95a0);
-DECL_FUNC(void (__fastcall*quit_lastBINDLG)(dialog *this_), quit_lastBINDLG, 0x4c96d0);
+DECL_FUNC(void (__fastcall*quit_lastBINDLG)(dialog *dlg), quit_lastBINDLG, 0x4c96d0);
 DECL_FUNC(void (__stdcall*sub_4C9780)(dialog *a1), sub_4C9780, 0x4c9780);
 int options_Cancel(dialog *a1, dlgEvent *a2) {
     int address = 0x4c9800;
