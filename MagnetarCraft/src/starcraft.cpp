@@ -5222,6 +5222,14 @@ void open_mission_objectives_dialog_()
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
 
+void open_restart_game_menu_()
+{
+	dword_6D1234 = CMDACT_RestartGame;
+	BWFXN_OpenGameDialog_("rez\\restart.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_restart_game_menu, "starcraft");
+
 void __fastcall gameMenu_BINDLG_(dialog* dlg)
 {
 	char v2;
@@ -5243,8 +5251,7 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 		}
 		break;
 	case 1:
-		dword_6D1234 = CMDACT_RestartGame;
-		BWFXN_OpenGameDialog_("rez\\restart.bin", gamemenu_Dlg_Interact);
+		open_restart_game_menu_();
 		break;
 	case 2:
 		QuitMissionMenu();

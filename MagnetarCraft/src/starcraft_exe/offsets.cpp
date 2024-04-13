@@ -25229,7 +25229,7 @@ char gamemenu_CustomCtrlID(dialog *a1) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt), gamemenu_Dlg_Interact, 0x4ca240);
-DECL_FUNC(void (*sub_4CA2D0)(), sub_4CA2D0, 0x4ca2d0);
+DECL_FUNC(void (*open_restart_game_menu)(), open_restart_game_menu, 0x4ca2d0);
 DECL_FUNC(void (__cdecl*QuitMissionMenu)(), QuitMissionMenu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*ExitGameMenu)(), ExitGameMenu, 0x4ca330);
 DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);

@@ -4571,7 +4571,7 @@ extern void (*open_mission_objectives_dialog)();
 extern void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_);
 char gamemenu_CustomCtrlID(dialog *a1);
 extern int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt);
-extern void (*sub_4CA2D0)();
+extern void (*open_restart_game_menu)();
 extern void (__cdecl*QuitMissionMenu)();
 extern void (__cdecl*ExitGameMenu)();
 extern void (__cdecl*HelpMenu)();
