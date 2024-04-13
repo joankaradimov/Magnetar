@@ -5322,7 +5322,7 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 	}
 }
 
-FUNCTION_PATCH(gameMenu_BINDLG, gameMenu_BINDLG_, "starcraft");
+FAIL_STUB_PATCH(gameMenu_BINDLG, "starcraft");
 
 void open_abort_menu_()
 {
@@ -5393,7 +5393,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	registerUserDialogAction(dlg, sizeof(functions), functions);
 	UpdateOKButton(dlg, 4, CTRL_USELOCALGRAPHIC);
 	UpdateCancelButton(dlg, 4, CTRL_USELOCALGRAPHIC);
-	if (dword_6D1234 == gameMenu_BINDLG || dword_6D1234 == gameMenu_BINDLG_)
+	if (dword_6D1234 == gameMenu_BINDLG_)
 	{
 		sub_4C9440(dlg);
 	}
