@@ -336,10 +336,49 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+int __fastcall spd_dlg_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			copyOptionsInfoToDialog(dlg);
+			break;
+		case USER_DESTROY:
+			destroySpdDlg(dlg, evt);
+			return 1;
+		case USER_ACTIVATE:
+			change_speed_options(dlg);
+			return 1;
+		case USER_INIT:
+			registerUserDialogAction(dlg, sizeof(off_51ABB0), off_51ABB0);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(spd_dlg_Interact, "starcraft");
+
 void open_speed_options_menu_()
 {
 	dword_655C3C = CpuThrottle;
-	BWFXN_OpenGameDialog_("rez\\spd_dlg.bin", spd_dlg_Interact);
+	BWFXN_OpenGameDialog_("rez\\spd_dlg.bin", spd_dlg_Interact_);
 }
 
 FAIL_STUB_PATCH(open_speed_options_menu, "starcraft");

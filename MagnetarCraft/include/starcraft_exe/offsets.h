@@ -2863,7 +2863,7 @@ extern bool (__fastcall*spd_speedSlider)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__fastcall*spd_CPUThrottleCheckbox)(dialog *dlg, dlgEvent *evt);
 void sub_481E60(dialog *a1);
 char copyOptionsInfoToDialog(dialog *a1);
-void CMDACT_GameSpeed(dialog *a1);
+void change_speed_options(dialog *a1);
 extern int (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt);
 extern void (*open_speed_options_menu)();
 void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a1, int x, int y, UnknownPathRelated *result);

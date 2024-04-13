@@ -16558,7 +16558,7 @@ char copyOptionsInfoToDialog(dialog *a1) {
     }
     return result_;
 }
-void CMDACT_GameSpeed(dialog *a1) {
+void change_speed_options(dialog *a1) {
     int address = 0x481ef0;
     __asm {
         mov eax, a1
