@@ -498,6 +498,42 @@ void savegameMenu_()
 
 FAIL_STUB_PATCH(savegameMenu, "starcraft");
 
+int __fastcall DLG_LoadGame_Interact_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			DLG_loadsave_Create(dlg, evt);
+			return 1;
+		case EventUser::USER_DESTROY:
+			DLG_loadsave_Destroy(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			DLG_loadsave_Act(dlg);
+			return 1;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(DLG_LoadGame_Interact, "starcraft");
+
 void LoadGame_DlgCreate_()
 {
 	if (!multiPlayerMode && !InReplay)
@@ -505,7 +541,7 @@ void LoadGame_DlgCreate_()
 		byte_68516A = 0;
 		dword_68516C = 0;
 		SaveGameFile[0] = 0;
-		BWFXN_OpenGameDialog_("rez\\loadgame.bin", DLG_LoadGame_Interact);
+		BWFXN_OpenGameDialog_("rez\\loadgame.bin", DLG_LoadGame_Interact_);
 		if (gwGameMode == GamePosition::GAME_GLUES)
 		{
 			BWFXN_RedrawTarget_();
