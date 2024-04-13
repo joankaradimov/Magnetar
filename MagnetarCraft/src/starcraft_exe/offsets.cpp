@@ -11602,10 +11602,10 @@ void sub_4619A0(dialog *a1) {
         call address
     }
 }
-void DLG_loadsave_Act(dialog *result) {
+void DLG_loadsave_Act(dialog *dlg) {
     int address = 0x461a30;
     __asm {
-        mov eax, result
+        mov eax, dlg
         call address
     }
 }
@@ -25230,7 +25230,7 @@ char gamemenu_CustomCtrlID(dialog *a1) {
 }
 DECL_FUNC(int (__fastcall*gamemenu_Dlg_Interact)(dialog *dlg, dlgEvent *evt), gamemenu_Dlg_Interact, 0x4ca240);
 DECL_FUNC(void (*open_restart_game_menu)(), open_restart_game_menu, 0x4ca2d0);
-DECL_FUNC(void (__cdecl*QuitMissionMenu)(), QuitMissionMenu, 0x4ca2f0);
+DECL_FUNC(void (__cdecl*open_quit_mission_menu)(), open_quit_mission_menu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*open_exit_game_menu)(), open_exit_game_menu, 0x4ca330);
 DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);
 DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);

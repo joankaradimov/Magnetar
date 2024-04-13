@@ -498,6 +498,30 @@ void savegameMenu_()
 
 FAIL_STUB_PATCH(savegameMenu, "starcraft");
 
+void DLG_loadsave_Act_(dialog* dlg)
+{
+	if (LastControlID == -2)
+	{
+		sub_4619A0(dlg);
+	}
+	else if (LastControlID == -3)
+	{
+		char v1 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v1 - 1;
+			dword_6D1234 = sub_4CA450_;
+			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(DLG_loadsave_Act, "starcraft");
+
 int __fastcall DLG_LoadGame_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -524,7 +548,7 @@ int __fastcall DLG_LoadGame_Interact_(dialog* dlg, dlgEvent* evt)
 			DLG_loadsave_Destroy(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			DLG_loadsave_Act(dlg);
+			DLG_loadsave_Act_(dlg);
 			return 1;
 		}
 	}
@@ -593,7 +617,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			open_exit_game_menu_();
 			break;
 		case -25491:
-			QuitMissionMenu();
+			open_quit_mission_menu_();
 			break;
 		case -25489:
 			loadoptionsMenu();
@@ -5314,7 +5338,7 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 		open_restart_game_menu_();
 		break;
 	case 2:
-		QuitMissionMenu();
+		open_quit_mission_menu_();
 		break;
 	case 3:
 		open_exit_game_menu_();
@@ -5532,7 +5556,7 @@ void __fastcall BWFXN_QuitMission_(dialog* dlg)
 
 FAIL_STUB_PATCH(BWFXN_QuitMission, "starcraft");
 
-void QuitMissionMenu_()
+void open_quit_mission_menu_()
 {
 	if (InReplay)
 	{
@@ -5546,7 +5570,7 @@ void QuitMissionMenu_()
 	}
 }
 
-FUNCTION_PATCH(QuitMissionMenu, QuitMissionMenu_, "starcraft");
+FAIL_STUB_PATCH(open_quit_mission_menu, "starcraft");
 
 void TitlePaletteUpdate_(int a1)
 {

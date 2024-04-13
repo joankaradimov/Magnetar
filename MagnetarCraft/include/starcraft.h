@@ -139,6 +139,7 @@ int __fastcall gamemenu_Dlg_Interact_(dialog* dlg, dlgEvent* evt);
 void __fastcall gameMenu_BINDLG_(dialog* dlg);
 void open_exit_game_menu_();
 void open_abort_menu_();
+void open_quit_mission_menu_();
 void ReportGameResult_();
 
 template <size_t TIMERS_COUNT>
