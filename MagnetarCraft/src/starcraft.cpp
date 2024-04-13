@@ -498,6 +498,29 @@ void savegameMenu_()
 
 FAIL_STUB_PATCH(savegameMenu, "starcraft");
 
+void LoadGame_DlgCreate_()
+{
+	if (!multiPlayerMode && !InReplay)
+	{
+		byte_68516A = 0;
+		dword_68516C = 0;
+		SaveGameFile[0] = 0;
+		BWFXN_OpenGameDialog_("rez\\loadgame.bin", DLG_LoadGame_Interact);
+		if (gwGameMode == GamePosition::GAME_GLUES)
+		{
+			BWFXN_RedrawTarget_();
+			int v0 = dword_6D5EB4;
+			do
+			{
+				BWFXN_videoLoop_(3);
+				BWFXN_RedrawTarget_();
+			} while (dword_6D5EB4 >= v0);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(LoadGame_DlgCreate, "starcraft");
+
 void __cdecl gameMenu_()
 {
 	dword_6D1234 = sub_4CA450_;
@@ -549,7 +572,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			savegameMenu_();
 			break;
 		case -25481:
-			LoadGame_DlgCreate();
+			LoadGame_DlgCreate_();
 			break;
 		case -25477:
 			gameMenu_();
@@ -5168,7 +5191,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		savegameMenu_();
 		break;
 	case 2:
-		LoadGame_DlgCreate();
+		LoadGame_DlgCreate_();
 		break;
 	case 3:
 		loadoptionsMenu();
