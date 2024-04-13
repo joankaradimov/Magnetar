@@ -5222,9 +5222,45 @@ void open_mission_objectives_dialog_()
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
 
+void __fastcall gameMenu_BINDLG_(dialog* dlg)
+{
+	char v2;
+	dword_6D1234 = 0;
+	waitLoopCntd(10, dlg);
+	switch (LastControlID)
+	{
+	case -3:
+		v2 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v2 - 1;
+			dword_6D1234 = sub_4CA450_;
+			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+		break;
+	case 1:
+		dword_6D1234 = CMDACT_RestartGame;
+		BWFXN_OpenGameDialog_("rez\\restart.bin", gamemenu_Dlg_Interact);
+		break;
+	case 2:
+		QuitMissionMenu();
+		break;
+	case 3:
+		dword_6D1234 = quit_lastBINDLG;
+		BWFXN_OpenGameDialog_("rez\\quit.bin", gamemenu_Dlg_Interact);
+		break;
+	}
+}
+
+FUNCTION_PATCH(gameMenu_BINDLG, gameMenu_BINDLG_, "starcraft");
+
 void open_abort_menu_()
 {
-	dword_6D1234 = gameMenu_BINDLG;
+	dword_6D1234 = gameMenu_BINDLG_;
 	BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
 }
 
@@ -5291,7 +5327,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 	registerUserDialogAction(dlg, sizeof(functions), functions);
 	UpdateOKButton(dlg, 4, CTRL_USELOCALGRAPHIC);
 	UpdateCancelButton(dlg, 4, CTRL_USELOCALGRAPHIC);
-	if (dword_6D1234 == gameMenu_BINDLG)
+	if (dword_6D1234 == gameMenu_BINDLG || dword_6D1234 == gameMenu_BINDLG_)
 	{
 		sub_4C9440(dlg);
 	}
@@ -5380,7 +5416,7 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	else
 	{
 		byte_6D1224 -= 1;
-		dword_6D1234 = gameMenu_BINDLG;
+		dword_6D1234 = gameMenu_BINDLG_;
 		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
 	}
 }
@@ -5425,7 +5461,7 @@ void __fastcall BWFXN_QuitMission_(dialog* dlg)
 	else
 	{
 		byte_6D1224 -= 1;
-		dword_6D1234 = gameMenu_BINDLG;
+		dword_6D1234 = gameMenu_BINDLG_;
 		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
 	}
 }
