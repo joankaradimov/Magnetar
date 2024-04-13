@@ -2087,6 +2087,30 @@ bool hasMessagesWaiting_(MSG* a1, int a2)
 
 FAIL_STUB_PATCH(hasMessagesWaiting, "starcraft");
 
+void pressGlobalDlgHotkey_()
+{
+	DWORD tick_count = GetTickCount();
+
+	for (activation_delays& activation_delay : stru_6D5E8C)
+	{
+		dialog* dlg = activation_delay.dlg;
+		if (activation_delay.dlg && activation_delay.anonymous_0 < tick_count)
+		{
+			activation_delay.dlg = 0;
+
+			dlgEvent evt;
+			evt.wNo = EVN_USER;
+			evt.dwUser = USER_HOTKEY;
+			*(_DWORD*)&evt.wSelection = 0;
+			evt.cursor.x = Mouse.x;
+			evt.cursor.y = Mouse.y;
+			dlg->pfcnInteract(dlg, &evt);
+		}
+	}
+}
+
+FAIL_STUB_PATCH(pressGlobalDlgHotkey, "starcraft");
+
 bool sendInputToAllDialogs_(dlgEvent* evt)
 {
 	sub_419F80();
@@ -2097,7 +2121,7 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 		bool result = event_dialog->pfcnInteract(event_dialog, evt);
 		if (result)
 		{
-			pressGlobalDlgHotkey();
+			pressGlobalDlgHotkey_();
 			return result;
 		}
 	}
@@ -2107,12 +2131,12 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 		int result = dlg->pfcnInteract(dlg, evt);
 		if (result)
 		{
-			pressGlobalDlgHotkey();
+			pressGlobalDlgHotkey_();
 			return result;
 		}
 	}
 
-	pressGlobalDlgHotkey();
+	pressGlobalDlgHotkey_();
 	return 0;
 }
 
