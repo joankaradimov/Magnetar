@@ -5223,8 +5223,7 @@ void __fastcall CMDACT_RestartGame_(dialog* a1)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v2 - 1;
-			dword_6D1234 = gameMenu_BINDLG_;
-			BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
+			open_abort_menu_();
 			return;
 		}
 	}
@@ -5447,8 +5446,7 @@ void __fastcall BWFXN_QuitReplay_maybe_(dialog* dlg)
 	else
 	{
 		byte_6D1224 -= 1;
-		dword_6D1234 = gameMenu_BINDLG_;
-		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+		open_abort_menu_();
 	}
 }
 
@@ -5492,8 +5490,7 @@ void __fastcall BWFXN_QuitMission_(dialog* dlg)
 	else
 	{
 		byte_6D1224 -= 1;
-		dword_6D1234 = gameMenu_BINDLG_;
-		BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact_);
+		open_abort_menu_();
 	}
 }
 
