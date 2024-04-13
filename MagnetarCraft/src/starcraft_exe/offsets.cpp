@@ -11507,7 +11507,7 @@ void load_Options_BIN(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*snd_dlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), snd_dlg_BINDLG_Main, 0x460e20);
-DECL_FUNC(void (*sub_460F10)(), sub_460F10, 0x460f10);
+DECL_FUNC(void (*open_sound_options_menu)(), open_sound_options_menu, 0x460f10);
 DECL_FUNC(int (*sub_460F20)(), sub_460F20, 0x460f20);
 DECL_FUNC(void (__cdecl*lmissionDlgActivate)(), lmissionDlgActivate, 0x460f30);
 DECL_FUNC(void (__cdecl*sub_460F70)(), sub_460F70, 0x460f70);
@@ -16468,7 +16468,7 @@ void video_OK(dialog *dlg) {
     }
 }
 DECL_FUNC(int (__fastcall*video_BINDLG_Main)(dialog *dlg, dlgEvent *evt), video_BINDLG_Main, 0x480f90);
-DECL_FUNC(void (__cdecl*sub_481060)(), sub_481060, 0x481060);
+DECL_FUNC(void (__cdecl*open_video_options_menu)(), open_video_options_menu, 0x481060);
 DECL_FUNC(void (__fastcall*DestroyHelpContext)(bool exit_code), DestroyHelpContext, 0x4810a0);
 DECL_FUNC(void (__fastcall*ContextHelpUpdateProc)(int a1, int a2, Bitmap *pSurface, bounds *pBounds), ContextHelpUpdateProc, 0x4810f0);
 DECL_FUNC(int (__stdcall*sub_481160)(Bitmap *a1), sub_481160, 0x481160);
@@ -16566,7 +16566,7 @@ void CMDACT_GameSpeed(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*spd_dlg_Interact)(dialog *dlg, dlgEvent *evt), spd_dlg_Interact, 0x481fa0);
-DECL_FUNC(void (*sub_482070)(), sub_482070, 0x482070);
+DECL_FUNC(void (*open_speed_options_menu)(), open_speed_options_menu, 0x482070);
 void SAI_PathCreate_Sub3_1_1_0_0(SAI_Paths *a1, int x, int y, UnknownPathRelated *result) {
     int address = 0x482090;
     __asm {
@@ -29498,7 +29498,7 @@ void CMDACT_SetLatency(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*netdlg_BINDLG_Main)(dialog *dlg, dlgEvent *evt), netdlg_BINDLG_Main, 0x4e8ae0);
-DECL_FUNC(void (*sub_4E8BB0)(), sub_4E8BB0, 0x4e8bb0);
+DECL_FUNC(void (*open_network_options_menu)(), open_network_options_menu, 0x4e8bb0);
 unsigned pixelPosHasCreep(__int16 a1, __int16 a2) {
     int address = 0x4e8bc0;
     unsigned result_;

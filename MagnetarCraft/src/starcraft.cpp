@@ -336,6 +336,161 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void open_speed_options_menu_()
+{
+	dword_655C3C = CpuThrottle;
+	BWFXN_OpenGameDialog_("rez\\spd_dlg.bin", spd_dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_speed_options_menu, "starcraft");
+
+void open_sound_options_menu_()
+{
+	BWFXN_OpenGameDialog_("rez\\snd_dlg.bin", snd_dlg_BINDLG_Main);
+}
+
+FAIL_STUB_PATCH(open_sound_options_menu, "starcraft");
+
+void video_OK_(dialog* dlg)
+{
+	if (LastControlID != -2)
+	{
+		ColorCycle = dword_656188;
+		Gamma = (unsigned int)dword_656190 > 0x8C || (unsigned int)dword_656190 < 0x3C ? 100 : dword_656190;
+		updatePaletteEntries();
+		UnitPortraits = (unsigned int)dword_65618C > 2 ? 2 : dword_65618C;
+		if (dword_68AC98 && ActivePortraitUnit)
+		{
+			UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
+			u16 v6 = setBuildingSelPortrait_(last_queue_slot_type);
+			displayUpdatePortrait(v6, ActivePortraitUnit, 1);
+		}
+	}
+	sub_4C9780(dlg);
+	char v7 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v7 - 1;
+		open_options_menu_();
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(video_OK, "starcraft");
+
+void sub_480B90_(dialog* dlg)
+{
+	UnitPortraits = dlg->wIndex > 5 ? 2 : dlg->wIndex - 3;
+
+	if (dword_68AC98 && ActivePortraitUnit)
+	{
+		UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
+		u16 portrait_id = setBuildingSelPortrait_(last_queue_slot_type);
+		displayUpdatePortrait(portrait_id, ActivePortraitUnit, 1);
+	}
+}
+
+FAIL_STUB_PATCH(sub_480B90, "starcraft");
+
+int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
+{
+	if (evt->wNo == EventNo::EVN_USER)
+	{
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_ACTIVATE:
+			sub_480B90_(dlg);
+			break;
+		case EventUser::USER_INIT:
+			sub_480AE0(dlg);
+			break;
+		}
+	}
+	return genericOptionInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(video_PortraitRadioBtns, "starcraft");
+
+void video_CustomCTRLID_(dialog* a1)
+{
+	static FnInteract functions[] = {
+		video_GammaSlider,
+		video_CCyclingCheckbox,
+		video_PortraitRadioBtns_,
+		video_PortraitRadioBtns_,
+		video_PortraitRadioBtns_,
+	};
+
+	registerUserDialogAction(a1, sizeof(functions), functions);
+}
+
+FAIL_STUB_PATCH(video_CustomCTRLID, "starcraft");
+
+int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_IDLE:
+		sub_480B30(dlg, dlg);
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			video_Main(dlg);
+			break;
+		case USER_DESTROY:
+			video_Cancel(dlg, evt);
+			return 1;
+		case USER_ACTIVATE:
+			video_OK_(dlg);
+			return 1;
+		case USER_INIT:
+			video_CustomCTRLID_(dlg);
+			break;
+		}
+	}
+
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	}
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(video_BINDLG_Main, "starcraft");
+
+void open_video_options_menu_()
+{
+	dword_656190 = Gamma;
+	dword_65618C = UnitPortraits;
+	dword_656188 = ColorCycle;
+	BWFXN_OpenGameDialog_("rez\\video.bin", video_BINDLG_Main_);
+}
+
+FAIL_STUB_PATCH(open_video_options_menu, "starcraft");
+
+void open_network_options_menu_()
+{
+	BWFXN_OpenGameDialog_("rez\\netdlg.bin", netdlg_BINDLG_Main);
+}
+
+FAIL_STUB_PATCH(open_network_options_menu, "starcraft");
+
 void __fastcall options_menu_handler_(dialog* dlg)
 {
 	char v1;
@@ -356,17 +511,16 @@ void __fastcall options_menu_handler_(dialog* dlg)
 		}
 		break;
 	case 1:
-		dword_655C3C = CpuThrottle;
-		BWFXN_OpenGameDialog_("rez\\spd_dlg.bin", spd_dlg_Interact);
+		open_speed_options_menu_();
 		break;
 	case 2:
-		BWFXN_OpenGameDialog_("rez\\snd_dlg.bin", snd_dlg_BINDLG_Main);
+		open_sound_options_menu_();
 		break;
 	case 3:
-		sub_481060();
+		open_video_options_menu_();
 		break;
 	case 4:
-		BWFXN_OpenGameDialog_("rez\\netdlg.bin", netdlg_BINDLG_Main);
+		open_network_options_menu_();
 		break;
 	default:
 		return;
@@ -449,7 +603,7 @@ int __fastcall savegameBIN_(__int16 a1)
 	if (a1 != -2)
 	{
 		byte_6D1224 = 0;
-		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact);
+		BWFXN_OpenGameDialog_("rez\\savegame.bin", savegameBIN_DLG_Interact);
 		return 1;
 	}
 	else if (sub_4CF820(SaveGameFile))
@@ -576,7 +730,7 @@ void savegameMenu_()
 		byte_68516A = 0;
 		dword_68516C = 0;
 		SaveGameFile[0] = 0;
-		BWFXN_OpenGameDialog("rez\\savegame.bin", savegameBIN_DLG_Interact_);
+		BWFXN_OpenGameDialog_("rez\\savegame.bin", savegameBIN_DLG_Interact_);
 	}
 }
 
@@ -5040,139 +5194,6 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 
 FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_, "starcraft");
 
-void video_OK_(dialog* dlg)
-{
-	if (LastControlID != -2)
-	{
-		ColorCycle = dword_656188;
-		Gamma = (unsigned int)dword_656190 > 0x8C || (unsigned int)dword_656190 < 0x3C ? 100 : dword_656190;
-		updatePaletteEntries();
-		UnitPortraits = (unsigned int)dword_65618C > 2 ? 2 : dword_65618C;
-		if (dword_68AC98 && ActivePortraitUnit)
-		{
-			UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
-			u16 v6 = setBuildingSelPortrait_(last_queue_slot_type);
-			displayUpdatePortrait(v6, ActivePortraitUnit, 1);
-		}
-	}
-	sub_4C9780(dlg);
-	char v7 = --byte_6D1224;
-	if (byte_6D1224)
-	{
-		byte_6D1224 = v7 - 1;
-		open_options_menu_();
-	}
-	else
-	{
-		DestroyDialog(dlg);
-	}
-}
-
-FAIL_STUB_PATCH(video_OK, "starcraft");
-
-void sub_480B90_(dialog* dlg)
-{
-	UnitPortraits = dlg->wIndex > 5 ? 2 : dlg->wIndex - 3;
-
-	if (dword_68AC98 && ActivePortraitUnit)
-	{
-		UnitType last_queue_slot_type = getLastQueueSlotType(ActivePortraitUnit);
-		u16 portrait_id = setBuildingSelPortrait_(last_queue_slot_type);
-		displayUpdatePortrait(portrait_id, ActivePortraitUnit, 1);
-	}
-}
-
-FAIL_STUB_PATCH(sub_480B90, "starcraft");
-
-int __fastcall video_PortraitRadioBtns_(dialog* dlg, dlgEvent* evt)
-{
-	if (evt->wNo == EventNo::EVN_USER)
-	{
-		switch (evt->dwUser)
-		{
-		case EventUser::USER_ACTIVATE:
-			sub_480B90_(dlg);
-			break;
-		case EventUser::USER_INIT:
-			sub_480AE0(dlg);
-			break;
-		}
-	}
-	return genericOptionInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(video_PortraitRadioBtns, "starcraft");
-
-void video_CustomCTRLID_(dialog* a1)
-{
-	static FnInteract functions[] = {
-		video_GammaSlider,
-		video_CCyclingCheckbox,
-		video_PortraitRadioBtns_,
-		video_PortraitRadioBtns_,
-		video_PortraitRadioBtns_,
-	};
-
-	registerUserDialogAction(a1, sizeof(functions), functions);
-}
-
-FAIL_STUB_PATCH(video_CustomCTRLID, "starcraft");
-
-int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
-{
-	switch (evt->wNo)
-	{
-	case EventNo::EVN_IDLE:
-		sub_480B30(dlg, dlg);
-		break;
-	case EventNo::EVN_USER:
-		switch (evt->dwUser)
-		{
-		case USER_CREATE:
-			video_Main(dlg);
-			break;
-		case USER_DESTROY:
-			video_Cancel(dlg, evt);
-			return 1;
-		case USER_ACTIVATE:
-			video_OK_(dlg);
-			return 1;
-		case USER_INIT:
-			video_CustomCTRLID_(dlg);
-			break;
-		}
-	}
-
-	switch (evt->wNo)
-	{
-	case EventNo::EVN_KEYFIRST:
-	case EventNo::EVN_KEYRPT:
-	case EventNo::EVN_MOUSEMOVE:
-	case EventNo::EVN_LBUTTONDOWN:
-	case EventNo::EVN_LBUTTONUP:
-	case EventNo::EVN_LBUTTONDBLCLK:
-	case EventNo::EVN_RBUTTONDOWN:
-	case EventNo::EVN_RBUTTONUP:
-	case EventNo::EVN_RBUTTONDBLCLK:
-	case EventNo::EVN_CHAR:
-		genericDlgInteract(dlg, evt);
-		return 1;
-	}
-	return genericDlgInteract(dlg, evt);
-}
-
-FAIL_STUB_PATCH(video_BINDLG_Main, "starcraft");
-
-void __cdecl sub_481060_()
-{
-	dword_656190 = Gamma;
-	dword_65618C = UnitPortraits;
-	dword_656188 = ColorCycle;
-	BWFXN_OpenGameDialog("rez\\video.bin", video_BINDLG_Main_);
-}
-
-FUNCTION_PATCH(sub_481060, sub_481060_, "starcraft");
-
 void __fastcall saveGameCBProc_(dialog* dlg, __int16 _unused)
 {
 	dialog* v5 = getControlFromIndex_(dlg, 7);
@@ -5312,7 +5333,7 @@ FAIL_STUB_PATCH(objctdlg_BINDLG, "starcraft");
 
 void open_mission_objectives_dialog_()
 {
-	BWFXN_OpenGameDialog("rez\\objctdlg.bin", objctdlg_BINDLG_);
+	BWFXN_OpenGameDialog_("rez\\objctdlg.bin", objctdlg_BINDLG_);
 }
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
@@ -14286,7 +14307,7 @@ void loadTimeoutDlg_()
 		dword_59CC80 = std::min<unsigned>(dword_59CC80 - 2, 45);
 	}
 
-	BWFXN_OpenGameDialog("rez\\timeout.bin", Timeout_BINDLG);
+	BWFXN_OpenGameDialog_("rez\\timeout.bin", Timeout_BINDLG);
 	byte_6D1224 = 0;
 	BWFXN_RedrawTarget();
 }
