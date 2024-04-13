@@ -4576,7 +4576,7 @@ extern void (__cdecl*QuitMissionMenu)();
 extern void (__cdecl*ExitGameMenu)();
 extern void (__cdecl*HelpMenu)();
 extern void (__fastcall*gameMenu_BINDLG)(dialog *dlg);
-extern void (__cdecl*sub_4CA430)();
+extern void (__cdecl*open_abort_menu)();
 extern void (__fastcall*sub_4CA450)(dialog *dlg);
 extern void (__cdecl*gameMenu)();
 extern BOOL (*mapHandleDestroy)();

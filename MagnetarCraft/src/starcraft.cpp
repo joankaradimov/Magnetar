@@ -5214,6 +5214,14 @@ void open_mission_objectives_dialog_()
 
 FAIL_STUB_PATCH(open_mission_objectives_dialog, "starcraft");
 
+void open_abort_menu_()
+{
+	dword_6D1234 = gameMenu_BINDLG;
+	BWFXN_OpenGameDialog_("rez\\abrtmenu.bin", gamemenu_Dlg_Interact);
+}
+
+FAIL_STUB_PATCH(open_abort_menu, "starcraft");
+
 void __fastcall sub_4CA450_(dialog* dlg)
 {
 	dword_6D1234 = 0;
@@ -5239,7 +5247,7 @@ void __fastcall sub_4CA450_(dialog* dlg)
 		open_mission_objectives_dialog_();
 		break;
 	case 6:
-		sub_4CA430();
+		open_abort_menu_();
 		return;
 	case 7:
 		CMDACT_PauseGame();

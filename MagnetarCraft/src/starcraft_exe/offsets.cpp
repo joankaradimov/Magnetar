@@ -25234,7 +25234,7 @@ DECL_FUNC(void (__cdecl*QuitMissionMenu)(), QuitMissionMenu, 0x4ca2f0);
 DECL_FUNC(void (__cdecl*ExitGameMenu)(), ExitGameMenu, 0x4ca330);
 DECL_FUNC(void (__cdecl*HelpMenu)(), HelpMenu, 0x4ca350);
 DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);
-DECL_FUNC(void (__cdecl*sub_4CA430)(), sub_4CA430, 0x4ca430);
+DECL_FUNC(void (__cdecl*open_abort_menu)(), open_abort_menu, 0x4ca430);
 DECL_FUNC(void (__fastcall*sub_4CA450)(dialog *dlg), sub_4CA450, 0x4ca450);
 DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
 DECL_FUNC(BOOL (*mapHandleDestroy)(), mapHandleDestroy, 0x4ca520);
