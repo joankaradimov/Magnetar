@@ -25236,7 +25236,7 @@ DECL_FUNC(void (__cdecl*open_help_menu)(), open_help_menu, 0x4ca350);
 DECL_FUNC(void (__fastcall*gameMenu_BINDLG)(dialog *dlg), gameMenu_BINDLG, 0x4ca370);
 DECL_FUNC(void (__cdecl*open_abort_menu)(), open_abort_menu, 0x4ca430);
 DECL_FUNC(void (__fastcall*sub_4CA450)(dialog *dlg), sub_4CA450, 0x4ca450);
-DECL_FUNC(void (__cdecl*gameMenu)(), gameMenu, 0x4ca500);
+DECL_FUNC(void (__cdecl*open_game_menu)(), open_game_menu, 0x4ca500);
 DECL_FUNC(BOOL (*mapHandleDestroy)(), mapHandleDestroy, 0x4ca520);
 DECL_FUNC(int (__stdcall*mapAuthCallback)(char *szFileName, void *a2, struct_v3 *a3), mapAuthCallback, 0x4ca540);
 DECL_FUNC(bool (__stdcall*ChkLoader_PUNI)(SectionData *a1, int a2, MapChunks *a3), ChkLoader_PUNI, 0x4ca600);

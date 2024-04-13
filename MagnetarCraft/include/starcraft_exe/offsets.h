@@ -4578,7 +4578,7 @@ extern void (__cdecl*open_help_menu)();
 extern void (__fastcall*gameMenu_BINDLG)(dialog *dlg);
 extern void (__cdecl*open_abort_menu)();
 extern void (__fastcall*sub_4CA450)(dialog *dlg);
-extern void (__cdecl*gameMenu)();
+extern void (__cdecl*open_game_menu)();
 extern BOOL (*mapHandleDestroy)();
 extern int (__stdcall*mapAuthCallback)(char *szFileName, void *a2, struct_v3 *a3);
 extern bool (__stdcall*ChkLoader_PUNI)(SectionData *a1, int a2, MapChunks *a3);

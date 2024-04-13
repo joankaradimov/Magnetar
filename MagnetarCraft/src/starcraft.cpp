@@ -348,8 +348,7 @@ void __fastcall MainMenuOptionsCustomInteract_(dialog* dlg)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v1 - 1;
-			dword_6D1234 = sub_4CA450_;
-			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+			open_game_menu_();
 		}
 		else
 		{
@@ -395,8 +394,7 @@ void __fastcall helpmenu_lastBINDLG_(dialog* dlg)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v1 - 1;
-			dword_6D1234 = sub_4CA450_;
-			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+			open_game_menu_();
 		}
 		else
 		{
@@ -524,8 +522,7 @@ void DLG_Loadsave_Activate_(dialog* dlg)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v1 - 1;
-			dword_6D1234 = sub_4CA450;
-			BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+			open_game_menu_();
 		}
 		else
 		{
@@ -597,8 +594,7 @@ void DLG_loadsave_Act_(dialog* dlg)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v1 - 1;
-			dword_6D1234 = sub_4CA450_;
-			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+			open_game_menu_();
 		}
 		else
 		{
@@ -668,13 +664,13 @@ void LoadGame_DlgCreate_()
 
 FAIL_STUB_PATCH(LoadGame_DlgCreate, "starcraft");
 
-void __cdecl gameMenu_()
+void open_game_menu_()
 {
 	dword_6D1234 = sub_4CA450_;
-	BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
+	BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
 }
 
-FAIL_STUB_PATCH(gameMenu, "starcraft");
+FAIL_STUB_PATCH(open_game_menu, "starcraft");
 
 void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 {
@@ -722,7 +718,7 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 			LoadGame_DlgCreate_();
 			break;
 		case -25477:
-			gameMenu_();
+			open_game_menu_();
 			return;
 		default:
 			break;
@@ -5271,8 +5267,7 @@ void options_OK_(dialog* dlg)
 	if (byte_6D1224)
 	{
 		byte_6D1224 = v1 - 1;
-		dword_6D1234 = sub_4CA450_;
-		BWFXN_OpenGameDialog("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		open_game_menu_();
 	}
 	else
 	{
@@ -5412,8 +5407,7 @@ void __fastcall gameMenu_BINDLG_(dialog* dlg)
 		if (byte_6D1224)
 		{
 			byte_6D1224 = v2 - 1;
-			dword_6D1234 = sub_4CA450_;
-			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+			open_game_menu_();
 		}
 		else
 		{
@@ -15805,8 +15799,7 @@ void load_gamemenu_(dialog* dlg)
 {
 	if (dlg->wIndex == 1)
 	{
-		dword_6D1234 = sub_4CA450_;
-		BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact_);
+		open_game_menu_();
 	}
 }
 
