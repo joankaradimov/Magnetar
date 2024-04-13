@@ -336,9 +336,40 @@ void sub_496E90_(unsigned __int8 a1)
 
 FAIL_STUB_PATCH(sub_496E90, "starcraft");
 
+void __fastcall helpmenu_lastBINDLG_(dialog* dlg)
+{
+	char v1;
+	dword_6D1234 = 0;
+	switch (LastControlID)
+	{
+	case -3:
+		v1 = --byte_6D1224;
+		if (byte_6D1224)
+		{
+			byte_6D1224 = v1 - 1;
+			dword_6D1234 = sub_4CA450_;
+			BWFXN_OpenGameDialog_("rez\\gamemenu.bin", gamemenu_Dlg_Interact);
+		}
+		else
+		{
+			DestroyDialog(dlg);
+		}
+		break;
+	case 1:
+		BWFXN_OpenGameDialog_("rez\\help.bin", help_BINDLG);
+		break;
+	case 2:
+		dword_658AE0 = 0;
+		BWFXN_OpenGameDialog_("rez\\tips_dlg.bin", TIPS_BINDLG);
+		break;
+	}
+}
+
+FUNCTION_PATCH(helpmenu_lastBINDLG, helpmenu_lastBINDLG_, "starcraft");
+
 void open_help_menu_()
 {
-	dword_6D1234 = helpmenu_lastBINDLG;
+	dword_6D1234 = helpmenu_lastBINDLG_;
 	BWFXN_OpenGameDialog_("rez\\helpmenu.bin", gamemenu_Dlg_Interact);
 }
 

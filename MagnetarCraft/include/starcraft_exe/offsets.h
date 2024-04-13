@@ -4566,7 +4566,7 @@ void sub_4C9CC0(dialog *a1, const char *a2);
 char setObjctDlgBtnString(dialog *a1);
 extern void (__cdecl*loadoptionsMenu)();
 extern int (__fastcall*objctdlg_BINDLG)(dialog *dlg, dlgEvent *evt);
-extern void (__fastcall*helpmenu_lastBINDLG)(dialog *a1);
+extern void (__fastcall*helpmenu_lastBINDLG)(dialog *dlg);
 extern void (*open_mission_objectives_dialog)();
 extern void (__fastcall*MainMenuOptionsCustomInteract)(dialog *this_);
 char gamemenu_CustomCtrlID(dialog *a1);
