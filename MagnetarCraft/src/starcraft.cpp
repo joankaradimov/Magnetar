@@ -416,6 +416,24 @@ void open_speed_options_menu_()
 
 FAIL_STUB_PATCH(open_speed_options_menu, "starcraft");
 
+void load_Options_BIN_(dialog* dlg)
+{
+	sub_460A90(dlg);
+	sub_4C9780(dlg);
+	char v2 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v2 - 1;
+		open_options_menu_();
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(load_Options_BIN, "starcraft");
+
 int __fastcall snd_dlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -456,7 +474,7 @@ int __fastcall snd_dlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 			spdDlgDestroy(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			load_Options_BIN(dlg);
+			load_Options_BIN_(dlg);
 			return 1;
 		case EventUser::USER_INIT:
 			snd_dlg_UserCTRLID(dlg);
