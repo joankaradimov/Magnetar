@@ -870,6 +870,24 @@ int sub_461980_(char* filename)
 
 FAIL_STUB_PATCH(sub_461980, "starcraft");
 
+void loadOKCancelDialog_(const char* message, int(__fastcall* a2)(__int16), char* a1)
+{
+	if (!okcancel_message && !dword_6D124C)
+	{
+		dword_6D124C = a2;
+		okcancel_message = (char*)SMemAlloc(strlen(message) + 1, "Starcraft\\SWAR\\lang\\okcancel.cpp", 137, 0);
+
+		strcpy(okcancel_message, message);
+
+		dword_5128F0 = 1;
+		dword_6D1244 = 0;
+		dword_6D1248 = 0;
+		BWFXN_OpenGameDialog(a1, okcancel_Interact);
+	}
+}
+
+FAIL_STUB_PATCH(loadOKCancelDialog, "starcraft");
+
 int __fastcall open_savegame_menu_(__int16 _unused)
 {
 	byte_6D1224 = 0;
@@ -881,7 +899,7 @@ FAIL_STUB_PATCH(open_savegame_menu, "starcraft");
 
 void open_ok_dialog_(const char* message, int(__fastcall* interact_fn)(__int16))
 {
-	loadOKCancelDialog(message, interact_fn, "rez\\ok.bin");
+	loadOKCancelDialog_(message, interact_fn, "rez\\ok.bin");
 }
 
 FAIL_STUB_PATCH(open_ok_dialog, "starcraft");
@@ -912,7 +930,7 @@ FAIL_STUB_PATCH(okBIN, "starcraft");
 
 void open_okcancel_dialog_(const char* message, int(__fastcall* interact_fn)(__int16))
 {
-	loadOKCancelDialog(message, interact_fn, "rez\\okcancel.bin");
+	loadOKCancelDialog_(message, interact_fn, "rez\\okcancel.bin");
 }
 
 FAIL_STUB_PATCH(open_okcancel_dialog, "starcraft");

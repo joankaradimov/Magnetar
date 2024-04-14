@@ -30901,12 +30901,12 @@ int loadOKBIN(int a1, const char *a2, HANDLE phFile) {
     }
     return result_;
 }
-void loadOKCancelDialog(const char *esi0, int (__fastcall *a2)(__int16), char *a3) {
+void loadOKCancelDialog(const char *message, int (__fastcall *a2)(__int16), char *a3) {
     int address = 0x4f6050;
     __asm {
         push dword ptr a3
         push dword ptr a2
-        mov esi, esi0
+        mov esi, message
         call address
     }
 }
@@ -35177,7 +35177,7 @@ char *& okcancel_message = * ((decltype(&okcancel_message)) 0x6d123c);
 void *& dword_6D1240 = * ((decltype(&dword_6D1240)) 0x6d1240);
 int& dword_6D1244 = * ((decltype(&dword_6D1244)) 0x6d1244);
 HANDLE& dword_6D1248 = * ((decltype(&dword_6D1248)) 0x6d1248);
-int (__fastcall *&dword_6D124C)(_DWORD) = *((decltype(&dword_6D124C)) 0x6d124c);
+int (__fastcall *&dword_6D124C)(__int16) = *((decltype(&dword_6D124C)) 0x6d124c);
 void *& dword_6D1250 = * ((decltype(&dword_6D1250)) 0x6d1250);
 void *& dword_6D1254 = * ((decltype(&dword_6D1254)) 0x6d1254);
 void *& dword_6D1258 = * ((decltype(&dword_6D1258)) 0x6d1258);
