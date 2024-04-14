@@ -30910,7 +30910,7 @@ void loadOKCancelDialog(const char *esi0, int (__fastcall *a2)(__int16), char *a
         call address
     }
 }
-void sub_4F60E0(int (__fastcall *a1)(__int16), const char *a2) {
+void open_okcancel_dialog(int (__fastcall *a1)(__int16), const char *a2) {
     int address = 0x4f60e0;
     __asm {
         mov esi, a2

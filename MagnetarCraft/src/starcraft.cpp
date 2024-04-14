@@ -903,6 +903,13 @@ int __fastcall okBIN_(__int16 a1)
 
 FAIL_STUB_PATCH(okBIN, "starcraft");
 
+void open_okcancel_dialog_(const char* message, int(__fastcall* interact_fn)(__int16))
+{
+	loadOKCancelDialog(message, interact_fn, "rez\\okcancel.bin");
+}
+
+FAIL_STUB_PATCH(open_okcancel_dialog, "starcraft");
+
 void dlg_loadsave_delete_(dialog* dlg)
 {
 	dialog* list_dlg = getControlFromIndex_(dlg, 1);
@@ -915,7 +922,7 @@ void dlg_loadsave_delete_(dialog* dlg)
 
 	char buff[256];
 	_snprintf(buff, sizeof(buff), GetNetworkTblString_(4), savegame_filename);
-	loadOKCancelDialog(buff, okBIN_, "rez\\okcancel.bin");
+	open_okcancel_dialog_(buff, okBIN_);
 }
 
 FAIL_STUB_PATCH(dlg_loadsave_delete, "starcraft");
@@ -959,7 +966,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 		char buff[256];
 		dword_68516C = v4->unk0;
 		_snprintf(buff, sizeof(buff), GetNetworkTblString_(3), SaveGameFile);
-		loadOKCancelDialog(buff, savegameBIN_, "rez\\okcancel.bin");
+		open_okcancel_dialog_(buff, savegameBIN_);
 	}
 	else if (word_685168 >= 0x80u)
 	{

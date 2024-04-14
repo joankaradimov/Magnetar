@@ -5585,7 +5585,7 @@ extern int (__fastcall*okcancel_Interact)(dialog *dlg, struct dlgEvent *evt);
 int loadOKCancelBIN(int a1, const char *a2, HANDLE phFile);
 int loadOKBIN(int a1, const char *a2, HANDLE phFile);
 void loadOKCancelDialog(const char *esi0, int (__fastcall *a2)(__int16), char *a3);
-void sub_4F60E0(int (__fastcall *a1)(__int16), const char *a2);
+void open_okcancel_dialog(int (__fastcall *a1)(__int16), const char *a2);
 void sub_4F60F0(int (__fastcall *a1)(__int16), const char *a2);
 signed AppAddExit(AppExitHandle a1);
 char ApplyHallucinationStats(CUnit *a1);
