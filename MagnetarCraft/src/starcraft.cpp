@@ -757,6 +757,23 @@ void open_help_()
 
 FAIL_STUB_PATCH(open_help, "starcraft");
 
+void sub_47E690_(dialog* dlg)
+{
+	sub_4C9780(dlg);
+	char v2 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v2 - 1;
+		open_help_menu_();
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(sub_47E690, "starcraft");
+
 int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -783,7 +800,7 @@ int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt)
 			sub_47E630(dlg, evt);
 			return 1;
 		case USER_ACTIVATE:
-			sub_47E690(dlg);
+			sub_47E690_(dlg);
 			return 1;
 		}
 	}
