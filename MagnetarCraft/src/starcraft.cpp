@@ -629,6 +629,35 @@ void open_video_options_menu_()
 
 FAIL_STUB_PATCH(open_video_options_menu, "starcraft");
 
+void network_options_menu_activate_(dialog* dlg)
+{
+	if (LastControlID == -2)
+	{
+		for (_WORD i = 0; i <= 2; ++i)
+		{
+			dialog* pFirstChild = getControlFromIndex_(dlg, i + 1);
+			if (pFirstChild->fields.scroll.pfcnScrollerUpdate)
+			{
+				CMDACT_set_latency(i); // TODO: reimplement
+			}
+		}
+	}
+
+	sub_4C9780(dlg);
+	char v5 = --byte_6D1224;
+	if (byte_6D1224)
+	{
+		byte_6D1224 = v5 - 1;
+		open_options_menu_();
+	}
+	else
+	{
+		DestroyDialog(dlg);
+	}
+}
+
+FAIL_STUB_PATCH(network_options_menu_activate, "starcraft");
+
 int __fastcall netdlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
@@ -655,7 +684,7 @@ int __fastcall netdlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 			sub_4E8920(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			network_options_menu_activate(dlg);
+			network_options_menu_activate_(dlg);
 			return 1;
 		case EventUser::USER_INIT:
 			registerUserDialogAction(dlg, sizeof(off_51AC84), off_51AC84);
