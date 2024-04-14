@@ -16301,8 +16301,8 @@ void tips_BinDLG_CustomCtrlID(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (__fastcall*TIPS_BINDLG)(dialog *dlg, dlgEvent *evt), TIPS_BINDLG, 0x47e9a0);
-void loadTips_BINDLG(int a1) {
+DECL_FUNC(int (__fastcall*tips_dialog_main)(dialog *dlg, dlgEvent *evt), tips_dialog_main, 0x47e9a0);
+void open_tips_dialog(int a1) {
     int address = 0x47ea30;
     __asm {
         mov eax, a1

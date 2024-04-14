@@ -757,6 +757,42 @@ void open_help_()
 
 FAIL_STUB_PATCH(open_help, "starcraft");
 
+int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EVN_KEYFIRST:
+	case EVN_KEYRPT:
+	case EVN_MOUSEMOVE:
+	case EVN_LBUTTONDOWN:
+	case EVN_LBUTTONUP:
+	case EVN_LBUTTONDBLCLK:
+	case EVN_RBUTTONDOWN:
+	case EVN_RBUTTONUP:
+	case EVN_RBUTTONDBLCLK:
+	case EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EVN_USER:
+		switch (evt->dwUser)
+		{
+		case USER_CREATE:
+			tips_BinDLG_CustomCtrlID(dlg);
+			break;
+		case USER_DESTROY:
+			sub_47E630(dlg, evt);
+			return 1;
+		case USER_ACTIVATE:
+			sub_47E690(dlg);
+			return 1;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(tips_dialog_main, "starcraft");
+
 void __fastcall help_menu_handler_(dialog* dlg)
 {
 	char v1;
@@ -779,8 +815,7 @@ void __fastcall help_menu_handler_(dialog* dlg)
 		open_help_();
 		break;
 	case 2:
-		dword_658AE0 = 0;
-		BWFXN_OpenGameDialog_("rez\\tips_dlg.bin", TIPS_BINDLG);
+		open_tips_dialog_(0);
 		break;
 	}
 }
@@ -14939,13 +14974,13 @@ void __cdecl CMDRECV_PauseGame_()
 
 FUNCTION_PATCH(CMDRECV_PauseGame, CMDRECV_PauseGame_, "starcraft");
 
-void loadTips_BINDLG_(int a1)
+void open_tips_dialog_(int a1)
 {
 	dword_658AE0 = a1;
-	BWFXN_OpenGameDialog_("rez\\tips_dlg.bin", TIPS_BINDLG);
+	BWFXN_OpenGameDialog_("rez\\tips_dlg.bin", tips_dialog_main_);
 }
 
-FAIL_STUB_PATCH(loadTips_BINDLG, "starcraft");
+FAIL_STUB_PATCH(open_tips_dialog, "starcraft");
 
 int gameLoopTurns_()
 {
@@ -15213,7 +15248,7 @@ GamePosition BeginGame_()
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
 	{
-		loadTips_BINDLG_(1);
+		open_tips_dialog_(1);
 	}
 	SetMapStartStatus();
 	SetCurrentPaletteInfo(palette, 0x100u, 0);
