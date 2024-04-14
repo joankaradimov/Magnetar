@@ -740,7 +740,7 @@ void __fastcall options_menu_handler_(dialog* dlg)
 	}
 }
 
-FUNCTION_PATCH(options_menu_handler, options_menu_handler_, "starcraft");
+FAIL_STUB_PATCH(options_menu_handler, "starcraft");
 
 void open_options_menu_()
 {
@@ -5743,7 +5743,7 @@ char gamemenu_CustomCtrlID_(dialog* dlg)
 		dialog* v3 = getControlFromIndex_(dlg, 1);
 		HideDialog_(v3);
 	}
-	if (active_menu_handler == options_menu_handler || active_menu_handler == options_menu_handler_)
+	if (active_menu_handler == options_menu_handler_)
 	{
 		sub_4C94F0(dlg);
 	}
