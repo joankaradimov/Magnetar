@@ -561,6 +561,18 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 
 FAIL_STUB_PATCH(MinimapGameClickEvent, "starcraft");
 
+void MinimapControl_ShowAllianceDialog_()
+{
+	memcpy(stru_63FF64.player, Alliance[g_LocalNationID].player, sizeof(PlayerAlliance));
+
+	word_63FF74 = InReplay ? ReplayVision : PlayerVision[g_LocalNationID];
+
+	char* v2 = multiPlayerMode && gameData.got_file_values.team_mode ? "rez\\teamfltr.bin" : "rez\\allyfltr.bin";
+	BWFXN_OpenGameDialog_(v2, allyFltr_Main);
+}
+
+FAIL_STUB_PATCH(MinimapControl_ShowAllianceDialog, "starcraft");
+
 void minimap_dlg_Activate_(dialog* dlg)
 {
 	switch (dlg->wIndex)
@@ -585,7 +597,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 		break;
 	case 4:
 		refreshSelectionScreen_();
-		MinimapControl_ShowAllianceDialog();
+		MinimapControl_ShowAllianceDialog_();
 		break;
 	}
 }

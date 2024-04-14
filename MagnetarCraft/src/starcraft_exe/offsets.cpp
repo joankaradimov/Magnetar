@@ -11667,10 +11667,10 @@ void sub_4622A0(__int16 a1, int a2, int (__fastcall *a3)(__int16)) {
         call address
     }
 }
-void dlg_loadsave_delete(dialog *a1) {
+void dlg_loadsave_delete(dialog *dlg) {
     int address = 0x462310;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -18367,8 +18367,8 @@ void CMDACT_AllyVisionPair(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(bool (__fastcall*allyFltr_Main)(dialog *dlg, dlgEvent *evt), allyFltr_Main, 0x491310);
-DECL_FUNC(void (*MinimapControl_ShowAllianceDialog)(), MinimapControl_ShowAllianceDialog, 0x4913d0);
+DECL_FUNC(int (__fastcall*allyFltr_Main)(dialog *dlg, dlgEvent *evt), allyFltr_Main, 0x491310);
+DECL_FUNC(void (__cdecl*MinimapControl_ShowAllianceDialog)(), MinimapControl_ShowAllianceDialog, 0x4913d0);
 DECL_FUNC(void (*sub_491450)(), sub_491450, 0x491450);
 CUnit * Unit__SpendEnergy(CUnit *result, __int16 energy) {
     int address = 0x491460;
@@ -34249,9 +34249,7 @@ char(&byte_63FF60)[] = * ((decltype(&byte_63FF60)) 0x63ff60);
 char(&byte_63FF61)[] = * ((decltype(&byte_63FF61)) 0x63ff61);
 char(&byte_63FF62)[] = * ((decltype(&byte_63FF62)) 0x63ff62);
 char(&byte_63FF63)[] = * ((decltype(&byte_63FF63)) 0x63ff63);
-int& dword_63FF64 = * ((decltype(&dword_63FF64)) 0x63ff64);
-int& dword_63FF68 = * ((decltype(&dword_63FF68)) 0x63ff68);
-int& dword_63FF6C = * ((decltype(&dword_63FF6C)) 0x63ff6c);
+PlayerAlliance& stru_63FF64 = * ((decltype(&stru_63FF64)) 0x63ff64);
 char& byte_63FF70 = * ((decltype(&byte_63FF70)) 0x63ff70);
 __int16& word_63FF74 = * ((decltype(&word_63FF74)) 0x63ff74);
 u16(&terran_sfx_related)[413] = * ((decltype(&terran_sfx_related)) 0x63ff78);
