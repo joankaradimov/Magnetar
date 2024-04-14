@@ -868,18 +868,20 @@ int __fastcall okBIN_(__int16 a1)
 	{
 		return open_savegame_menu_(0);
 	}
-	if (sub_4CF820(SaveGameFile))
+	else if (sub_4CF820(SaveGameFile))
 	{
 		byte_68516A = 0;
 		dword_68516C = 0;
 		SaveGameFile[0] = 0;
 		return open_savegame_menu_(0);
 	}
-
-	char buff[256];
-	_snprintf(buff, sizeof(buff), GetNetworkTblString_(1), SaveGameFile);
-	loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
-	return 0;
+	else
+	{
+		char buff[256];
+		_snprintf(buff, sizeof(buff), GetNetworkTblString_(1), SaveGameFile);
+		loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
+		return 0;
+	}
 }
 
 FAIL_STUB_PATCH(okBIN, "starcraft");
