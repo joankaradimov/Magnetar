@@ -11432,7 +11432,7 @@ DECL_FUNC(__int16 (__thiscall*IncreaseCompletedUnitCountsAtLocation)(CUnit *this
 DECL_FUNC(int (__fastcall*TrgBringProc)(CUnit *a1, int a2), TrgBringProc, 0x460980);
 DECL_FUNC(unsigned (__fastcall*Bring)(int a1, char a2), Bring, 0x4609d0);
 DECL_FUNC(int (*sub_460A80)(), sub_460A80, 0x460a80);
-DECL_FUNC(dialog * (__fastcall*sub_460A90)(dialog *a1), sub_460A90, 0x460a90);
+DECL_FUNC(void (__fastcall*sub_460A90)(dialog *a1), sub_460A90, 0x460a90);
 int sub_460B00(int a1) {
     int address = 0x460b00;
     int result_;
@@ -11466,15 +11466,15 @@ dialog * sub_460BB0(dialog *a1) {
     }
     return result_;
 }
-bool spdDlgDestroy(dialog *a1, dlgEvent *a2) {
+int spdDlgDestroy(dialog *a1, dlgEvent *a2) {
     int address = 0x460c30;
-    bool result_;
+    int result_;
     __asm {
         xor eax, eax
         mov edi, a2
         mov eax, a1
         call address
-        mov result_, al
+        mov result_, eax
     }
     return result_;
 }
@@ -11499,10 +11499,10 @@ char spdDlgCreate(dialog *a1) {
     }
     return result_;
 }
-void load_Options_BIN(dialog *a1) {
+void load_Options_BIN(dialog *dlg) {
     int address = 0x460dd0;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -29490,10 +29490,10 @@ char sub_4E89C0(dialog *a1) {
     }
     return result_;
 }
-void CMDACT_SetLatency(dialog *a1) {
+void network_options_menu_activate(dialog *dlg) {
     int address = 0x4e8a30;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
