@@ -811,6 +811,23 @@ int sub_461980_(char* filename)
 
 FAIL_STUB_PATCH(sub_461980, "starcraft");
 
+void dlg_loadsave_delete_(dialog* dlg)
+{
+	dialog* list_dlg = getControlFromIndex_(dlg, 1);
+	u8 list_index = list_dlg->fields.list.bStrs ? list_dlg->fields.list.bCurrStr : -1;
+	const char* savegame_filename = list_dlg->fields.list.ppStrs[list_index];
+	TSAVEGAME* v4 = sub_4617C0(savegame_filename);
+
+	dword_68516C = v4->unk0;
+	strcpy_s(SaveGameFile, v4->unk);
+
+	char buff[256];
+	_snprintf(buff, sizeof(buff), GetNetworkTblString_(4), savegame_filename);
+	loadOKCancelDialog(buff, okBIN, "rez\\okcancel.bin");
+}
+
+FAIL_STUB_PATCH(dlg_loadsave_delete, "starcraft");
+
 int __fastcall savegameBIN_(__int16 a1)
 {
 	if (a1 != -2)
@@ -878,7 +895,7 @@ void DLG_Loadsave_Activate_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case 3:
-		dlg_loadsave_delete(dlg);
+		dlg_loadsave_delete_(dlg);
 		break;
 	case -2:
 		byte_6D1224 = 0;
