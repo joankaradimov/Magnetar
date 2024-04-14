@@ -983,6 +983,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 	}
 }
 
+FAIL_STUB_PATCH(sub_4622A0, "starcraft");
 FAIL_STUB_PATCH(dlg_loadsave_overwrite, "starcraft");
 
 void DLG_Loadsave_Activate_(dialog* dlg)
