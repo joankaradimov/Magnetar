@@ -750,6 +750,13 @@ void open_options_menu_()
 
 FAIL_STUB_PATCH(open_options_menu, "starcraft");
 
+void open_help_()
+{
+	BWFXN_OpenGameDialog_("rez\\help.bin", help_BINDLG);
+}
+
+FAIL_STUB_PATCH(open_help, "starcraft");
+
 void __fastcall help_menu_handler_(dialog* dlg)
 {
 	char v1;
@@ -769,7 +776,7 @@ void __fastcall help_menu_handler_(dialog* dlg)
 		}
 		break;
 	case 1:
-		BWFXN_OpenGameDialog_("rez\\help.bin", help_BINDLG);
+		open_help_();
 		break;
 	case 2:
 		dword_658AE0 = 0;

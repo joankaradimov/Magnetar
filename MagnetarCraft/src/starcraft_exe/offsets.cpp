@@ -30830,7 +30830,7 @@ void help_BINDLG_CustomCtrlID(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*help_BINDLG)(dialog *dlg, dlgEvent *evt), help_BINDLG, 0x4f5650);
-DECL_FUNC(void (*sub_4F56F0)(), sub_4F56F0, 0x4f56f0);
+DECL_FUNC(void (*open_help)(), open_help, 0x4f56f0);
 DECL_FUNC(void (__stdcall*msgfltr_Cancel)(char a1), msgfltr_Cancel, 0x4f5700);
 DECL_FUNC(void (__fastcall*genericPopupDlgInteract)(dialog *a1, dlgEvent *a2), genericPopupDlgInteract, 0x4f5760);
 DECL_FUNC(void (__fastcall*BWFXN_OpenGameDialog)(char *a1, FnInteract a2), BWFXN_OpenGameDialog, 0x4f57a0);

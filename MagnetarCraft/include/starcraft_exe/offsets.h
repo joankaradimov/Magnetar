@@ -5570,7 +5570,7 @@ void help_listbox_create(dialog *a1);
 extern bool (__fastcall*help_Listbox)(dialog *dlg, dlgEvent *evt);
 void help_BINDLG_CustomCtrlID(dialog *a1);
 extern int (__fastcall*help_BINDLG)(dialog *dlg, dlgEvent *evt);
-extern void (*sub_4F56F0)();
+extern void (*open_help)();
 extern void (__stdcall*msgfltr_Cancel)(char a1);
 extern void (__fastcall*genericPopupDlgInteract)(dialog *a1, dlgEvent *a2);
 extern void (__fastcall*BWFXN_OpenGameDialog)(char *a1, FnInteract a2);
