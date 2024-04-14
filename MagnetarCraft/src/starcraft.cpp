@@ -388,16 +388,16 @@ int __fastcall spd_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			copyOptionsInfoToDialog(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			destroySpdDlg(dlg, evt);
 			return 1;
-		case USER_ACTIVATE:
+		case EventUser::USER_ACTIVATE:
 			change_speed_options_(dlg);
 			return 1;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			registerUserDialogAction(dlg, sizeof(off_51ABB0), off_51ABB0);
 			break;
 		}
@@ -584,16 +584,16 @@ int __fastcall video_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
 	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			video_Main(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			video_Cancel(dlg, evt);
 			return 1;
-		case USER_ACTIVATE:
+		case EventUser::USER_ACTIVATE:
 			video_OK_(dlg);
 			return 1;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			video_CustomCTRLID_(dlg);
 			break;
 		}
@@ -2640,8 +2640,8 @@ void pressGlobalDlgHotkey_()
 			activation_delay.dlg = 0;
 
 			dlgEvent evt;
-			evt.wNo = EVN_USER;
-			evt.dwUser = USER_HOTKEY;
+			evt.wNo = EventNo::EVN_USER;
+			evt.dwUser = EventUser::USER_HOTKEY;
 			*(_DWORD*)&evt.wSelection = 0;
 			evt.cursor.x = Mouse.x;
 			evt.cursor.y = Mouse.y;
@@ -6759,8 +6759,8 @@ void showDialog_(dialog* dlg)
 	{
 		dlgEvent event;
 		event.cursor.y = Mouse.y;
-		event.wNo = EVN_USER;
-		event.dwUser = USER_SHOW;
+		event.wNo = EventNo::EVN_USER;
+		event.dwUser = EventUser::USER_SHOW;
 		*(_DWORD*)&event.wSelection = 0;
 		event.cursor.x = Mouse.x;
 
@@ -7469,23 +7469,23 @@ FAIL_STUB_PATCH(sub_4B6C70, "starcraft");
 
 int __fastcall gluPEdit_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			sub_4B6A20(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			sub_4B65D0(dlg);
 			DestroyChildren(dlg);
 			dword_6D5A3C = 0;
 			dword_6D5A54 = 0;
 			break;
-		case USER_UNK_7:
+		case EventUser::USER_UNK_7:
 			sub_4CD9C0(dlg);
 			break;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			sub_4B6C70_(dlg);
 			break;
 		}
@@ -7583,22 +7583,22 @@ FUNCTION_PATCH(BWFXN_gluPEdit_MBox, BWFXN_gluPEdit_MBox_, "starcraft");
 
 int __fastcall Popup_Main_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			sub_4B6810(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			DestroyChildren(dlg);
 			dword_6D5A3C = 0;
 			dword_6D5A54 = 0;
 			break;
-		case USER_UNK_7:
+		case EventUser::USER_UNK_7:
 			sub_4CD9C0(dlg);
 			break;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			sub_4B6C70_(dlg);
 			break;
 		}
@@ -9782,34 +9782,34 @@ int __fastcall lmission_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
-	case EVN_MOUSEMOVE:
-	case EVN_LBUTTONDOWN:
-	case EVN_LBUTTONUP:
-	case EVN_LBUTTONDBLCLK:
-	case EVN_RBUTTONDOWN:
-	case EVN_RBUTTONUP:
-	case EVN_RBUTTONDBLCLK:
-	case EVN_CHAR:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
 		genericDlgInteract(dlg, evt);
 		return 1;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			lmissionDlgCreate(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			waitLoopCntd(0, dlg);
 			msgfltr_Cancel(0);
 			genericPopupDlgInteract(dlg, evt);
 			dword_685178 = 0;
 			return 1;
-		case USER_ACTIVATE:
+		case EventUser::USER_ACTIVATE:
 			lmissionDlgActivate_();
 			break;
-		case USER_UNK_8:
+		case EventUser::USER_UNK_8:
 			if (*(_DWORD*)&evt->wSelection == 0)
 			{
 				lmissionInitSelf(GamePosition::GAME_LOSE);
@@ -13764,8 +13764,8 @@ void sub_4591D0_()
 					}
 					dlgEvent v9;
 					v9.cursor.y = Mouse.y;
-					v9.wNo = EVN_USER;
-					v9.dwUser = USER_NEXT;
+					v9.wNo = EventNo::EVN_USER;
+					v9.dwUser = EventUser::USER_NEXT;
 					*(_DWORD*)&v9.wSelection = 0;
 					v9.cursor.x = Mouse.x;
 					dlg->pfcnInteract(dlg, &v9);
@@ -15236,8 +15236,8 @@ bool statBtn_dlg_CharPress_(dlgEvent* evt)
 	}
 
 	dlgEvent v2;
-	v2.wNo = EVN_USER;
-	v2.dwUser = USER_HOTKEY;
+	v2.wNo = EventNo::EVN_USER;
+	v2.dwUser = EventUser::USER_HOTKEY;
 	v2.wSelection = 0;
 	v2.wUnk_0x06 = 0;
 	v2.cursor.x = Mouse.x;
@@ -15281,16 +15281,16 @@ int __fastcall statfluf_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
-	case EVN_MOUSEMOVE:
-	case EVN_LBUTTONDOWN:
-	case EVN_LBUTTONDBLCLK:
-	case EVN_RBUTTONDOWN:
-	case EVN_RBUTTONDBLCLK:
-	case EVN_CHAR:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
 		return 0;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			statflufDlgUpdate_(dlg);
@@ -15384,7 +15384,7 @@ FUNCTION_PATCH((void*)0x4E6020, moveScreenToUnit__, "starcraft");
 
 int __fastcall statPortBtnInteract_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -15462,24 +15462,24 @@ int __fastcall statport_Dlg_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
-	case EVN_MOUSEMOVE:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
 		return 0;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			statport_Buttonpress_(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			statport_alloc();
 			break;
-		case USER_MOUSEMOVE:
+		case EventUser::USER_MOUSEMOVE:
 			return 1;
 		}
 		break;
-	case EVN_CHAR:
+	case EventNo::EVN_CHAR:
 		return sub_45E9F0(evt);
 	}
 	return genericDlgInteract(dlg, evt);
@@ -15574,21 +15574,21 @@ FAIL_STUB_PATCH(hideLeftmostResource, "starcraft");
 
 int __fastcall StatRes_CustomCtrl_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			dlg->lUser = 0;
 			dlg->pfcnUpdate = statRes_Text_Update;
 			dlg->pfcnInteract = statRes_Text_Interact;
 			dlg->wUser = dlg->wIndex == 6 ? 10 : 0;
 			[[fallthrough]];
-		case USER_NEXT:
-		case USER_UNK_8:
-		case USER_INIT:
-		case USER_SHOW:
-		case USER_HIDE:
+		case EventUser::USER_NEXT:
+		case EventUser::USER_UNK_8:
+		case EventUser::USER_INIT:
+		case EventUser::USER_SHOW:
+		case EventUser::USER_HIDE:
 			return genericCommonInteract(evt, dlg);
 		}
 	}
@@ -15684,7 +15684,7 @@ FAIL_STUB_PATCH(ProgressBar_Create, "starcraft");
 
 int __fastcall statdata_ProgressBarInteract_(dialog* dlg, dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
@@ -15845,16 +15845,16 @@ int __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
-	case EVN_CHAR:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_CHAR:
 		return 0;
 		break;
-	case EVN_MOUSEMOVE:
+	case EventNo::EVN_MOUSEMOVE:
 		statdata_Destroy(dlg, evt);
 		break;
-	case EVN_USER:
-		if (evt->dwUser == USER_CREATE)
+	case EventNo::EVN_USER:
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			statdata_extendedCtrlID_(dlg);
 		}
@@ -15884,21 +15884,21 @@ int __fastcall statbtn_Btn_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_MOUSEMOVE:
+	case EventNo::EVN_MOUSEMOVE:
 		sub_4597C0(dlg, evt);
 		break;
-	case EVN_LBUTTONDOWN:
-	case EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
 		if (dlg->lFlags & CTRL_DISABLED)
 		{
 			return 0;
 		}
 		break;
-	case EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONUP:
 		GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
 		statBtn_dlg_MouseMove(current_dialog, evt);
 		return 1;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
@@ -15946,23 +15946,23 @@ int __fastcall statbtn_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
 		return 0;
-	case EVN_MOUSEMOVE:
+	case EventNo::EVN_MOUSEMOVE:
 		statBtn_dlg_MouseMove(dlg, evt);
 		break;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			statbtn_BIN_CustomCtrlID_(dlg);
 			break;
-		case USER_MOUSEMOVE:
+		case EventUser::USER_MOUSEMOVE:
 			return 1;
 		}
 		break;
-	case EVN_CHAR:
+	case EventNo::EVN_CHAR:
 		return statBtn_dlg_CharPress_(evt);
 	}
 
@@ -16138,11 +16138,11 @@ int __fastcall Statf10_DialogProc_(dialog* dlg, dlgEvent* evt)
 		}
 		break;
 	case EventNo::EVN_USER:
-		if (evt->dwUser == USER_CREATE)
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			Statf10_RegisterCustomProcs_(dlg);
 		}
-		else if (evt->dwUser == USER_MOUSEMOVE)
+		else if (evt->dwUser == EventUser::USER_MOUSEMOVE)
 		{
 			return 1;
 		}
@@ -16303,7 +16303,7 @@ int __fastcall textbox_CtrlInteract_(dialog* dlg, struct dlgEvent* evt)
 		}
 		break;
 	case EventNo::EVN_USER:
-		if (evt->dwUser == USER_NEXT && byte_68C144)
+		if (evt->dwUser == EventUser::USER_NEXT && byte_68C144)
 		{
 			onSendText_(dlg->fields.ctrl.pDlg, evt, (CheatFlags) 0);
 		}
@@ -16373,26 +16373,26 @@ int __fastcall textbox_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
-	case EVN_KEYRPT:
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
 		return isSinglePaused();
-	case EVN_MOUSEMOVE:
-	case EVN_LBUTTONDOWN:
-	case EVN_LBUTTONDBLCLK:
-	case EVN_RBUTTONDOWN:
-	case EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONDBLCLK:
 		return IS_GAME_PAUSED && !multiPlayerMode;
-	case EVN_USER:
-		if (evt->dwUser == USER_CREATE)
+	case EventNo::EVN_USER:
+		if (evt->dwUser == EventUser::USER_CREATE)
 		{
 			textbox_DLG_Init_Evt_(dlg);
 		}
-		else if (evt->dwUser == USER_MOUSEMOVE)
+		else if (evt->dwUser == EventUser::USER_MOUSEMOVE)
 		{
 			return 0;
 		}
 		break;
-	case EVN_CHAR:
+	case EventNo::EVN_CHAR:
 		if (isSinglePaused())
 		{
 			if (evt->wVirtKey == VK_ESCAPE)
@@ -18502,8 +18502,8 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 		if (dword_51C418)
 		{
 			dlgEvent v14;
-			v14.wNo = EVN_USER;
-			v14.dwUser = USER_NEXT;
+			v14.wNo = EventNo::EVN_USER;
+			v14.dwUser = EventUser::USER_NEXT;
 			v14.wSelection = 0;
 			v14.wUnk_0x06 = 0;
 			v14.cursor.x = Mouse.x;
@@ -18589,8 +18589,8 @@ void gluHist_Create_(dialog* dlg)
 	if (mission_list_dlg->fields.list.bStrs)
 	{
 		dlgEvent evt;
-		evt.wNo = EVN_USER;
-		evt.dwUser = USER_SELECT;
+		evt.wNo = EventNo::EVN_USER;
+		evt.dwUser = EventUser::USER_SELECT;
 		*(_DWORD*)&evt.wSelection = 0;
 		mission_list_dlg->pfcnInteract(mission_list_dlg, &evt);
 		DlgSetSelected_UpdateScrollbar(0, mission_list_dlg);
@@ -18631,10 +18631,10 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 	else if (evt->wNo == EventNo::EVN_WHEELUP)
 	{
 		dlgEvent event;
-		event.dwUser = USER_SCROLLUP;
+		event.dwUser = EventUser::USER_SCROLLUP;
 		event.wSelection = 0;
 		event.wUnk_0x06 = 0;
-		event.wNo = EVN_USER;
+		event.wNo = EventNo::EVN_USER;
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 
@@ -18645,10 +18645,10 @@ int __fastcall gluHist_Interact_(dialog* dlg, struct dlgEvent* evt)
 	else if (evt->wNo == EventNo::EVN_WHEELDWN)
 	{
 		dlgEvent event;
-		event.dwUser = USER_SCROLLDOWN;
+		event.dwUser = EventUser::USER_SCROLLDOWN;
 		event.wSelection = 0;
 		event.wUnk_0x06 = 0;
-		event.wNo = EVN_USER;
+		event.wNo = EventNo::EVN_USER;
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 
@@ -19447,8 +19447,8 @@ void sub_4ADB10_()
 			if (v3)
 			{
 				dlgEvent v18;
-				v18.wNo = EVN_USER;
-				v18.dwUser = USER_SELECT;
+				v18.wNo = EventNo::EVN_USER;
+				v18.dwUser = EventUser::USER_SELECT;
 				*(_DWORD*)&v18.wSelection = (unsigned __int8)v17.game_data.game_speed;
 				v3->pfcnInteract(v3, &v18);
 				DisableControl(v3);
@@ -20142,8 +20142,8 @@ bool __fastcall sub_46D340_(dialog* dlg)
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 		*(_DWORD*)&event.wSelection = 0;
-		event.dwUser = USER_ACTIVATE;
-		event.wNo = EVN_USER;
+		event.dwUser = EventUser::USER_ACTIVATE;
+		event.wNo = EventNo::EVN_USER;
 		v2 = dlg->pfcnInteract(dlg, &event);
 		dlg->fields.dlg.pModalFcn = 0;
 		return v2;
@@ -20155,8 +20155,8 @@ bool __fastcall sub_46D340_(dialog* dlg)
 		event.cursor.x = Mouse.x;
 		event.cursor.y = Mouse.y;
 		*(_DWORD*)&event.wSelection = 0;
-		event.dwUser = USER_ACTIVATE;
-		event.wNo = EVN_USER;
+		event.dwUser = EventUser::USER_ACTIVATE;
+		event.wNo = EventNo::EVN_USER;
 		v2 = dlg->pfcnInteract(dlg, &event);
 		dlg->fields.dlg.pModalFcn = 0;
 		return v2;
@@ -20435,20 +20435,20 @@ FAIL_STUB_PATCH(gluModem_CustomCtrlID, "starcraft");
 
 int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			sub_4B0AE0(dlg);
 			DLG_SwishIn_(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			Sleep(400);
 			waitLoopCntd(56, dlg);
 			break;
 			return genericDlgInteract(dlg, evt);
-		case USER_ACTIVATE:
+		case EventUser::USER_ACTIVATE:
 			switch (LastControlID)
 			{
 			case 5:
@@ -20482,7 +20482,7 @@ int __fastcall gluModem_Main_(dialog* dlg, struct dlgEvent* evt)
 				return DLG_SwishOut_(dlg);
 			}
 			break;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			gluModem_CustomCtrlID_(dlg);
 			return genericDlgInteract(dlg, evt);
 		}
@@ -20533,8 +20533,8 @@ void CreateRaceDropdown_(dialog* dlg, RaceId race)
 
 	dlgEvent v11;
 	v11.cursor.y = Mouse.y;
-	v11.wNo = EVN_USER;
-	v11.dwUser = USER_NEXT;
+	v11.wNo = EventNo::EVN_USER;
+	v11.dwUser = EventUser::USER_NEXT;
 	*(_DWORD*)&v11.wSelection = 0;
 	v11.cursor.x = Mouse.x;
 	dlg->pfcnInteract(dlg, &v11);
@@ -20569,8 +20569,8 @@ void CreateRaceDropdown_(dialog* dlg, RaceId race)
 	if (v5 < dlg->fields.scroll.bSliderSkip || v5 == 0xFF)
 	{
 		*(_DWORD*)&v11.wSelection = v5;
-		v11.wNo = EVN_USER;
-		v11.dwUser = USER_SELECT;
+		v11.wNo = EventNo::EVN_USER;
+		v11.dwUser = EventUser::USER_SELECT;
 		dlg->pfcnInteract(dlg, &v11);
 		DlgSetSelected_UpdateScrollbar(v5, dlg);
 	}
@@ -20923,8 +20923,8 @@ void saveGame_Create_(dialog* dlg)
 	if (byte_51BFD8 < v6->fields.scroll.bSliderSkip || byte_51BFD8 == -1)
 	{
 		dlgEvent v11;
-		v11.wNo = EVN_USER;
-		v11.dwUser = USER_SELECT;
+		v11.wNo = EventNo::EVN_USER;
+		v11.dwUser = EventUser::USER_SELECT;
 		*(_DWORD*)&v11.wSelection = (unsigned __int8)byte_51BFD8;
 		v6->pfcnInteract(v6, &v11);
 		DlgSetSelected_UpdateScrollbar(byte_51BFD8, v6);
@@ -20958,24 +20958,24 @@ FAIL_STUB_PATCH(savegameBIN_CustomCtrlID, "starcraft");
 
 int __fastcall savegameBIN_Main_(dialog* dlg, struct dlgEvent* evt)
 {
-	if (evt->wNo == EVN_USER)
+	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
-		case USER_CREATE:
+		case EventUser::USER_CREATE:
 			saveGame_Create_(dlg);
 			break;
-		case USER_DESTROY:
+		case EventUser::USER_DESTROY:
 			saveGame_Destroy(dlg);
 			break;
-		case USER_ACTIVATE:
+		case EventUser::USER_ACTIVATE:
 			if (dialog* v5 = getControlFromIndex_(dlg, 2))
 			{
 				SStrCopy(byte_51BFB8, v5->pszText, 0x7FFFFFFFu);
 				trimTrailingSpaces(byte_51BFB8);
 			}
 			break;
-		case USER_INIT:
+		case EventUser::USER_INIT:
 			savegameBIN_CustomCtrlID_(dlg);
 			break;
 		}
@@ -21564,7 +21564,7 @@ void Game_MouseWheel_(EventNo wNo, int a2)
 {
 	dlgEvent v3;
 
-	v3.dwUser = USER_CREATE;
+	v3.dwUser = EventUser::USER_CREATE;
 	v3.wSelection = LOWORD(a2);
 	v3.wUnk_0x06 = HIWORD(a2);
 	v3.wVirtKey = 0;
@@ -21654,7 +21654,7 @@ LRESULT __stdcall MainWindowProc_(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPa
 			WORD key_flags = HIWORD(lParam);
 			v16.wVirtKey = wParam;
 			v16.wUnk_0x0A = BWFXN_Game_KeyState();
-			v16.wNo = (key_flags & KF_REPEAT) ? EVN_KEYRPT : EVN_KEYFIRST;
+			v16.wNo = (key_flags & KF_REPEAT) ? EventNo::EVN_KEYRPT : EventNo::EVN_KEYFIRST;
 			if (!sendInputToAllDialogs_(&v16))
 			{
 				InputProcedure v11 = (key_flags & KF_REPEAT) ? input_procedures[EventNo::EVN_KEYRPT] : input_procedures[EventNo::EVN_KEYDOWN];
@@ -22280,26 +22280,26 @@ int __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
-	case EVN_KEYFIRST:
+	case EventNo::EVN_KEYFIRST:
 		if (!credits_keyDwn_(dlg, evt))
 		{
 			return false;
 		}
 		break;
-	case EVN_LBUTTONDOWN:
-	case EVN_RBUTTONDOWN:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_RBUTTONDOWN:
 		if (!runCredits_(dlg))
 		{
 			return false;
 		}
 		break;
-	case EVN_IDLE:
+	case EventNo::EVN_IDLE:
 		if (!credits_idle_(dlg))
 		{
 			return false;
 		}
 		break;
-	case EVN_USER:
+	case EventNo::EVN_USER:
 		if (evt->dwUser == 0)
 		{
 			if (!creditsDlgInit_(dlg))
@@ -22308,7 +22308,7 @@ int __fastcall creditsDlgInteract_(dialog* dlg, struct dlgEvent* evt)
 			}
 			break;
 		}
-		else if (evt->dwUser == USER_DESTROY)
+		else if (evt->dwUser == EventUser::USER_DESTROY)
 		{
 			creditsDlgDestroy_(dlg);
 		}
