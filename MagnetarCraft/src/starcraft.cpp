@@ -811,6 +811,28 @@ int sub_461980_(char* filename)
 
 FAIL_STUB_PATCH(sub_461980, "starcraft");
 
+int __fastcall okBIN_(__int16 a1)
+{
+	if (a1 != -2)
+	{
+		return loadSaveGameBIN(0);
+	}
+	if (sub_4CF820(SaveGameFile))
+	{
+		byte_68516A = 0;
+		dword_68516C = 0;
+		SaveGameFile[0] = 0;
+		return loadSaveGameBIN(0);
+	}
+
+	char buff[256];
+	_snprintf(buff, sizeof(buff), GetNetworkTblString_(1), SaveGameFile);
+	loadOKCancelDialog(buff, loadSaveGameBIN, "rez\\ok.bin");
+	return 0;
+}
+
+FAIL_STUB_PATCH(okBIN, "starcraft");
+
 void dlg_loadsave_delete_(dialog* dlg)
 {
 	dialog* list_dlg = getControlFromIndex_(dlg, 1);
@@ -823,7 +845,7 @@ void dlg_loadsave_delete_(dialog* dlg)
 
 	char buff[256];
 	_snprintf(buff, sizeof(buff), GetNetworkTblString_(4), savegame_filename);
-	loadOKCancelDialog(buff, okBIN, "rez\\okcancel.bin");
+	loadOKCancelDialog(buff, okBIN_, "rez\\okcancel.bin");
 }
 
 FAIL_STUB_PATCH(dlg_loadsave_delete, "starcraft");
