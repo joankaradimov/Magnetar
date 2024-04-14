@@ -14932,6 +14932,14 @@ void __cdecl CMDRECV_PauseGame_()
 
 FUNCTION_PATCH(CMDRECV_PauseGame, CMDRECV_PauseGame_, "starcraft");
 
+void loadTips_BINDLG_(int a1)
+{
+	dword_658AE0 = a1;
+	BWFXN_OpenGameDialog_("rez\\tips_dlg.bin", TIPS_BINDLG);
+}
+
+FAIL_STUB_PATCH(loadTips_BINDLG, "starcraft");
+
 int gameLoopTurns_()
 {
 	if (glGluesMode == GLUE_GENERIC)
@@ -15198,7 +15206,7 @@ GamePosition BeginGame_()
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
 	{
-		loadTips_BINDLG(1);
+		loadTips_BINDLG_(1);
 	}
 	SetMapStartStatus();
 	SetCurrentPaletteInfo(palette, 0x100u, 0);
