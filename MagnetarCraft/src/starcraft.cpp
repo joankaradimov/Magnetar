@@ -811,23 +811,32 @@ int sub_461980_(char* filename)
 
 FAIL_STUB_PATCH(sub_461980, "starcraft");
 
+int __fastcall open_savegame_menu_(__int16 _unused)
+{
+	byte_6D1224 = 0;
+	BWFXN_OpenGameDialog_("rez\\savegame.bin", savegameBIN_DLG_Interact);
+	return 1;
+}
+
+FAIL_STUB_PATCH(open_savegame_menu, "starcraft");
+
 int __fastcall okBIN_(__int16 a1)
 {
 	if (a1 != -2)
 	{
-		return loadSaveGameBIN(0);
+		return open_savegame_menu_(0);
 	}
 	if (sub_4CF820(SaveGameFile))
 	{
 		byte_68516A = 0;
 		dword_68516C = 0;
 		SaveGameFile[0] = 0;
-		return loadSaveGameBIN(0);
+		return open_savegame_menu_(0);
 	}
 
 	char buff[256];
 	_snprintf(buff, sizeof(buff), GetNetworkTblString_(1), SaveGameFile);
-	loadOKCancelDialog(buff, loadSaveGameBIN, "rez\\ok.bin");
+	loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
 	return 0;
 }
 
@@ -854,9 +863,7 @@ int __fastcall savegameBIN_(__int16 a1)
 {
 	if (a1 != -2)
 	{
-		byte_6D1224 = 0;
-		BWFXN_OpenGameDialog_("rez\\savegame.bin", savegameBIN_DLG_Interact);
-		return 1;
+		return open_savegame_menu_(0);
 	}
 	else if (sub_4CF820(SaveGameFile))
 	{
@@ -867,7 +874,7 @@ int __fastcall savegameBIN_(__int16 a1)
 	{
 		char buff[256];
 		_snprintf(buff, sizeof(buff), GetNetworkTblString_(2), SaveGameFile);
-		loadOKCancelDialog(buff, loadSaveGameBIN, "rez\\ok.bin");
+		loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
 		return 0;
 	}
 }
@@ -895,7 +902,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 	}
 	else if (word_685168 >= 0x80u)
 	{
-		loadOKCancelDialog(GetNetworkTblString_(5), loadSaveGameBIN, "rez\\ok.bin");
+		loadOKCancelDialog(GetNetworkTblString_(5), open_savegame_menu_, "rez\\ok.bin");
 	}
 	else if (!isBadName(0, SaveGameFile, sizeof(SaveGameFile)))
 	{
@@ -904,7 +911,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 	}
 	else
 	{
-		loadOKCancelDialog(GetNetworkTblString_(6), loadSaveGameBIN, "rez\\ok.bin");
+		loadOKCancelDialog(GetNetworkTblString_(6), open_savegame_menu_, "rez\\ok.bin");
 	}
 }
 

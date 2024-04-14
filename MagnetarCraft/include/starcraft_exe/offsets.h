@@ -2083,7 +2083,7 @@ void sub_461D80(dialog *a1);
 extern bool (__fastcall*loadsave_ListBox)(dialog *dlg, dlgEvent *evt);
 char DLG_loadsave_Create(dialog *dlg, dlgEvent *a2);
 extern int (__fastcall*DLG_LoadGame_Interact)(dialog *dlg, dlgEvent *evt);
-extern int (__fastcall*loadSaveGameBIN)(__int16 _unused);
+extern int (__fastcall*open_savegame_menu)(__int16 _unused);
 extern void (*LoadGame_DlgCreate)();
 extern signed (__fastcall*okBIN)(__int16 a1);
 extern int (__fastcall*savegameBIN)(__int16 a1);

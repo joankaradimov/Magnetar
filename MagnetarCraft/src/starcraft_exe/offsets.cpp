@@ -11653,7 +11653,7 @@ char DLG_loadsave_Create(dialog *dlg, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*DLG_LoadGame_Interact)(dialog *dlg, dlgEvent *evt), DLG_LoadGame_Interact, 0x462060);
-DECL_FUNC(int (__fastcall*loadSaveGameBIN)(__int16 _unused), loadSaveGameBIN, 0x4620e0);
+DECL_FUNC(int (__fastcall*open_savegame_menu)(__int16 _unused), open_savegame_menu, 0x4620e0);
 DECL_FUNC(void (*LoadGame_DlgCreate)(), LoadGame_DlgCreate, 0x462100);
 DECL_FUNC(signed (__fastcall*okBIN)(__int16 a1), okBIN, 0x462150);
 DECL_FUNC(int (__fastcall*savegameBIN)(__int16 a1), savegameBIN, 0x4621f0);
