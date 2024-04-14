@@ -561,6 +561,14 @@ void MinimapGameClickEvent_(dialog* dlg, dlgEvent* event)
 
 FAIL_STUB_PATCH(MinimapGameClickEvent, "starcraft");
 
+void sub_490FC0_()
+{
+	byte_63FF70 = byte_581D60;
+	BWFXN_OpenGameDialog_("rez\\msgfltr.bin", msgfltr_Main);
+}
+
+FAIL_STUB_PATCH(sub_490FC0, "starcraft");
+
 void MinimapControl_ShowAllianceDialog_()
 {
 	memcpy(stru_63FF64.player, Alliance[g_LocalNationID].player, sizeof(PlayerAlliance));
@@ -592,8 +600,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 		break;
 	case 3:
 		refreshSelectionScreen_();
-		byte_63FF70 = byte_581D60;
-		BWFXN_OpenGameDialog_("rez\\msgfltr.bin", msgfltr_Main);
+		sub_490FC0_();
 		break;
 	case 4:
 		refreshSelectionScreen_();
