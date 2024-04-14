@@ -416,9 +416,64 @@ void open_speed_options_menu_()
 
 FAIL_STUB_PATCH(open_speed_options_menu, "starcraft");
 
+int __fastcall snd_dlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_IDLE:
+	{
+		RegistryOptions* lUser = (RegistryOptions*)dlg->lUser;
+		if (lUser->field_26)
+		{
+			lUser->field_26 -= 1;
+			if (!lUser->field_26)
+			{
+				sub_460A90(dlg);
+				muteBgm(&registry_options);
+			}
+		}
+		break;
+	}
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			spdDlgCreate(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			spdDlgDestroy(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			load_Options_BIN(dlg);
+			return 1;
+		case EventUser::USER_INIT:
+			snd_dlg_UserCTRLID(dlg);
+			break;
+		default:
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(snd_dlg_BINDLG_Main, "starcraft");
+
 void open_sound_options_menu_()
 {
-	BWFXN_OpenGameDialog_("rez\\snd_dlg.bin", snd_dlg_BINDLG_Main);
+	BWFXN_OpenGameDialog_("rez\\snd_dlg.bin", snd_dlg_BINDLG_Main_);
 }
 
 FAIL_STUB_PATCH(open_sound_options_menu, "starcraft");
