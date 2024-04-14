@@ -629,9 +629,48 @@ void open_video_options_menu_()
 
 FAIL_STUB_PATCH(open_video_options_menu, "starcraft");
 
+int __fastcall netdlg_BINDLG_Main_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_KEYFIRST:
+	case EventNo::EVN_KEYRPT:
+	case EventNo::EVN_MOUSEMOVE:
+	case EventNo::EVN_LBUTTONDOWN:
+	case EventNo::EVN_LBUTTONUP:
+	case EventNo::EVN_LBUTTONDBLCLK:
+	case EventNo::EVN_RBUTTONDOWN:
+	case EventNo::EVN_RBUTTONUP:
+	case EventNo::EVN_RBUTTONDBLCLK:
+	case EventNo::EVN_CHAR:
+		genericDlgInteract(dlg, evt);
+		return 1;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			sub_4E89C0(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			sub_4E8920(dlg, evt);
+			return 1;
+		case EventUser::USER_ACTIVATE:
+			network_options_menu_activate(dlg);
+			return 1;
+		case EventUser::USER_INIT:
+			registerUserDialogAction(dlg, sizeof(off_51AC84), off_51AC84);
+			break;
+		}
+	}
+
+	return genericDlgInteract(dlg, evt);
+}
+
+FAIL_STUB_PATCH(netdlg_BINDLG_Main, "starcraft");
+
 void open_network_options_menu_()
 {
-	BWFXN_OpenGameDialog_("rez\\netdlg.bin", netdlg_BINDLG_Main);
+	BWFXN_OpenGameDialog_("rez\\netdlg.bin", netdlg_BINDLG_Main_);
 }
 
 FAIL_STUB_PATCH(open_network_options_menu, "starcraft");
