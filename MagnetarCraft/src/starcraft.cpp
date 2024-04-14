@@ -879,6 +879,13 @@ int __fastcall open_savegame_menu_(__int16 _unused)
 
 FAIL_STUB_PATCH(open_savegame_menu, "starcraft");
 
+void open_ok_dialog_(const char* message, int(__fastcall* interact_fn)(__int16))
+{
+	loadOKCancelDialog(message, interact_fn, "rez\\ok.bin");
+}
+
+FAIL_STUB_PATCH(open_ok_dialog, "starcraft");
+
 int __fastcall okBIN_(__int16 a1)
 {
 	if (a1 != -2)
@@ -896,7 +903,7 @@ int __fastcall okBIN_(__int16 a1)
 	{
 		char buff[256];
 		_snprintf(buff, sizeof(buff), GetNetworkTblString_(1), SaveGameFile);
-		loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
+		open_ok_dialog_(buff, open_savegame_menu_);
 		return 0;
 	}
 }
@@ -942,7 +949,7 @@ int __fastcall savegameBIN_(__int16 a1)
 	{
 		char buff[256];
 		_snprintf(buff, sizeof(buff), GetNetworkTblString_(2), SaveGameFile);
-		loadOKCancelDialog(buff, open_savegame_menu_, "rez\\ok.bin");
+		open_ok_dialog_(buff, open_savegame_menu_);
 		return 0;
 	}
 }
@@ -970,7 +977,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 	}
 	else if (word_685168 >= 0x80u)
 	{
-		loadOKCancelDialog(GetNetworkTblString_(5), open_savegame_menu_, "rez\\ok.bin");
+		open_ok_dialog_(GetNetworkTblString_(5), open_savegame_menu_);
 	}
 	else if (!isBadName(0, SaveGameFile, sizeof(SaveGameFile)))
 	{
@@ -979,7 +986,7 @@ void dlg_loadsave_overwrite_(dialog* dlg)
 	}
 	else
 	{
-		loadOKCancelDialog(GetNetworkTblString_(6), open_savegame_menu_, "rez\\ok.bin");
+		open_ok_dialog_(GetNetworkTblString_(6), open_savegame_menu_);
 	}
 }
 
