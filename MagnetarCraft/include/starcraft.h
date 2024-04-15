@@ -149,6 +149,7 @@ void __fastcall options_menu_handler_(dialog* dlg);
 void __fastcall quit_mission_menu_handler_(dialog* dlg);
 int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt);
 void ReportGameResult_();
+void PauseGame_maybe_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

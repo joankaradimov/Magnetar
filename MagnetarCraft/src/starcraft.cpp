@@ -5475,7 +5475,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	setCursorType_(CursorType::CUR_ARROW);
 	if (!multiPlayerMode)
 	{
-		PauseGame_maybe();
+		PauseGame_maybe_();
 	}
 	if (gwGameMode == GAME_RUN)
 	{
@@ -14940,7 +14940,7 @@ void Cls2RecvFrom_()
 
 FAIL_STUB_PATCH(Cls2RecvFrom, "starcraft");
 
-void PauseGame_maybe_(void)
+void PauseGame_maybe_()
 {
 	if (!IS_GAME_PAUSED)
 	{
@@ -14964,7 +14964,7 @@ void PauseGame_maybe_(void)
 	}
 }
 
-FUNCTION_PATCH(PauseGame_maybe, PauseGame_maybe_, "starcraft");
+FAIL_STUB_PATCH(PauseGame_maybe, "starcraft");
 
 void pauseSetPaletteToGreyscale_()
 {
@@ -23204,7 +23204,7 @@ int __fastcall TriggerAction_PauseGame_(Action* a1)
 			hAccTable = dword_5968F8;
 			input_procedures[16] = input_standardSysHotkeys;
 			RefreshCursor_0();
-			PauseGame_maybe();
+			PauseGame_maybe_();
 			dword_6509AC->container.dwExecutionFlags |= 0x20;
 			byte_6509B4 = 1;
 		}
