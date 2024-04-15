@@ -1074,7 +1074,7 @@ int __fastcall savegameBIN_DLG_Interact_(dialog* dlg, dlgEvent* evt)
 	return genericDlgInteract(dlg, evt);
 }
 
-FUNCTION_PATCH(savegameBIN_DLG_Interact, savegameBIN_DLG_Interact_, "starcraft");
+FAIL_STUB_PATCH(savegameBIN_DLG_Interact, "starcraft");
 
 void savegameMenu_()
 {
