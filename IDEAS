@@ -33,6 +33,8 @@ Content:
 - Add maps (StarCraft/Brood War/StarCraft64)
 - take the extended sprites and SFX from Pr0nogo's SCBW Framework: http://www.staredit.net/topic/17547/
 - Expose a new expansion level that uses the expanded sprites 
+- Add a "Phantom" game type
+- Add a "Fastest Map" game type
 
 Tileset work:
 - lift tileset limitations (i.e. vx4ex)
@@ -42,6 +44,7 @@ Tileset work:
 Pathfinding:
 - reimplement pathing code and run 512x512 maps
 - water pathfinding and units
+- railway pathfinding and units
 - different map topologies
 - multiple map layers (with different tilesets)
 
