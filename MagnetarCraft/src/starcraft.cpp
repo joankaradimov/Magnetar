@@ -17895,6 +17895,19 @@ bool unitIsNeutral(ChunkUnitEntry* unit_entry)
 
 FAIL_STUB_PATCH(unitNotNeutral, "starcraft");
 
+CUnit* sub_4CD740_(ChunkUnitEntry* a1)
+{
+	CUnit* unit = CreateUnitAtPos(a1->properties.player, a1->unit_type, a1->position.x, a1->position.y);
+
+	if (unit)
+	{
+		editUnitFlags(unit, &a1->properties.valid_group_flags);
+	}
+	return unit;
+}
+
+FAIL_STUB_PATCH(sub_4CD740, "starcraft");
+
 bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	if (section_size % sizeof(ChunkUnitEntry))
@@ -17925,7 +17938,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 				|| !getPlayerForce(unit_entry->properties.player)
 				|| (Unit_GroupFlags[unit_entry->unit_type] & 0x80u) != 0))
 		{
-			CUnit* v11 = sub_4CD740(unit_entry);
+			CUnit* v11 = sub_4CD740_(unit_entry);
 			if (v11)
 			{
 				v19 = CHK_UNIT_Nydus(unit_entry->linked_unit_id, v11, v19, unit_entry->id);
