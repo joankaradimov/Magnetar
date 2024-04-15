@@ -17964,7 +17964,7 @@ bool __stdcall ChkLoader_UNIT_(SectionData* section_data, int section_size, MapC
 		return 0;
 	}
 
-	memset(startPositions, 0, 8 * sizeof(Position));
+	memset(startPositions, 0, sizeof(startPositions));
 
 	UnitRelated20* v18 = NULL;
 	UnitRelated20* v19 = NULL;
