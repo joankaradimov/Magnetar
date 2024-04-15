@@ -17786,6 +17786,51 @@ struct Thingy2Entry
 	u16 disabled : 1;
 };
 
+CUnit* CreateUnitAtPos_(__int16 player_id, UnitType unit_type, __int16 x, __int16 y)
+{
+	if ((Unit_AvailabilityFlags[unit_type] & 0x200) && !IsExpansion)
+	{
+		return 0;
+	}
+	if (CUnit* unit = CreateUnit(unit_type, x, y, player_id))
+	{
+		if (spreadsCreep(unit->unitType, 1) || (Unit_PrototypeFlags[unit->unitType] & UnitPrototypeFlags::CreepBuilding))
+		{
+			ApplyCreepAtLocationFromUnitType(unit->unitType, (__int16)unit->sprite->position.x, (__int16)unit->sprite->position.y);
+		}
+		updateUnitStatsFinishBuilding(unit);
+		if (sub_49EC30(unit))
+		{
+			updateUnitStrengthAndApplyDefaultOrders(unit);
+			sub_462960(unit);
+			return unit;
+		}
+		else
+		{
+			char buff[256];
+			_snprintf(
+				buff,
+				sizeof(buff),
+				GetNetworkTblString_(18),
+				getUnitNameStatString(unit->unitType),
+				unit->sprite->position.x,
+				unit->sprite->position.y
+			);
+			display_error(buff, Color::COLOR_YELLOW);
+			unit->userActionFlags |= 4u;
+			RemoveUnit(unit);
+			return 0;
+		}
+	}
+	else
+	{
+		displayLastNetError(player_id);
+		return 0;
+	}
+}
+
+FAIL_STUB_PATCH(CreateUnitAtPos, "starcraft");
+
 bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapChunks* a3)
 {
 	if (section_size % 10u)
@@ -17814,7 +17859,7 @@ bool __stdcall ChkLoader_THG2_(SectionData* section_data, int section_size, MapC
 			}
 			if (gameData.got_file_values.victory_conditions == VC_MAP_DEFAULT && gameData.got_file_values.starting_units == SU_MAP_DEFAULT && !gameData.got_file_values.tournament_mode || entries[i].player_id == 11)
 			{
-				CUnit* unit = CreateUnitAtPos(entries[i].player_id, entries[i].unit_type, entries[i].position.x, entries[i].position.y);
+				CUnit* unit = CreateUnitAtPos_(entries[i].player_id, entries[i].unit_type, entries[i].position.x, entries[i].position.y);
 				if (unit && entries[i].disabled)
 				{
 					Thg2SpecialDIsableUnit(unit);
@@ -17897,7 +17942,7 @@ FAIL_STUB_PATCH(unitNotNeutral, "starcraft");
 
 CUnit* sub_4CD740_(ChunkUnitEntry* a1)
 {
-	CUnit* unit = CreateUnitAtPos(a1->properties.player, a1->unit_type, a1->position.x, a1->position.y);
+	CUnit* unit = CreateUnitAtPos_(a1->properties.player, a1->unit_type, a1->position.x, a1->position.y);
 
 	if (unit)
 	{
