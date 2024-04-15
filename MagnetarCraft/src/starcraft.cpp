@@ -8296,6 +8296,37 @@ void __stdcall packetErrHandle__(int a2, char* a3, int a4, int a5)
 
 FUNCTION_PATCH((void*)0x4BB0B0, packetErrHandle__, "starcraft");
 
+void initializeProviderVersion_(SNETPROGRAMDATA* a1)
+{
+	memset(a1, 0, sizeof(SNETPROGRAMDATA));
+	a1->size = 60;
+	if (IsExpansion)
+	{
+		a1->programid = 'SEXP';
+		a1->programname = "Brood War";
+	}
+	else
+	{
+		a1->programid = 'STAR';
+		a1->programname = "Starcraft";
+	}
+	a1->programdescription = "internal version unknown";
+	a1->versionid = 211;
+	a1->maxplayers = 8;
+	a1->optcategorybits = 255;
+
+	DWORD v4;
+	DWORD v5;
+	getCDKeyInfo((void**)&v5, (int*)&v4);
+	a1->key_owner = v5;
+	a1->key = v4;
+
+	a1->is_spawn = is_spawn;
+	a1->lang = LocalGetLang();
+}
+
+FAIL_STUB_PATCH(initializeProviderVersion, "starcraft");
+
 void __stdcall BWFXN_GlobalPrintText_(s_evt* evt)
 {
 	if (gwGameMode == GAME_RUN)
@@ -8313,7 +8344,7 @@ FAIL_STUB_PATCH(BWFXN_GlobalPrintText, "starcraft");
 int InitializeNetworkProvider_(Char4 provider_id)
 {
 	SNETPROGRAMDATA provider_data;
-	initializeProviderVersion(&provider_data);
+	initializeProviderVersion_(&provider_data);
 
 	SNETPLAYERDATA user_data;
 	user_data.dwSize = sizeof(SNETPLAYERDATA);
@@ -21301,7 +21332,7 @@ void SelectGame_()
 	SNETPLAYERDATA player_data;
 	int playerid;
 
-	initializeProviderVersion(&program_data);
+	initializeProviderVersion_(&program_data);
 	player_data.dwUnknown = 0;
 	player_data.dwSize = 16;
 	player_data.pszPlayerName = playerName;
