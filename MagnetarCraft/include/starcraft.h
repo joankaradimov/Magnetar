@@ -144,6 +144,7 @@ void open_quit_mission_menu_();
 void open_options_menu_();
 void open_tips_dialog_(int a1);
 void open_help_menu_();
+void options_OK_(dialog* dlg);
 void __fastcall options_menu_handler_(dialog* dlg);
 void __fastcall quit_mission_menu_handler_(dialog* dlg);
 int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt);

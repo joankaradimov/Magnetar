@@ -712,16 +712,7 @@ void __fastcall options_menu_handler_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case -3:
-		v1 = --byte_6D1224;
-		if (byte_6D1224)
-		{
-			byte_6D1224 = v1 - 1;
-			open_game_menu_();
-		}
-		else
-		{
-			DestroyDialog(dlg);
-		}
+		options_OK_(dlg);
 		break;
 	case 1:
 		open_speed_options_menu_();
@@ -817,16 +808,7 @@ void __fastcall help_menu_handler_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case -3:
-		v1 = --byte_6D1224;
-		if (byte_6D1224)
-		{
-			byte_6D1224 = v1 - 1;
-			open_game_menu_();
-		}
-		else
-		{
-			DestroyDialog(dlg);
-		}
+		options_OK_(dlg);
 		break;
 	case 1:
 		open_help_();
@@ -1025,16 +1007,7 @@ void DLG_Loadsave_Activate_(dialog* dlg)
 		dlg_loadsave_overwrite_(dlg);
 		break;
 	case -3:
-		v1 = --byte_6D1224;
-		if (byte_6D1224)
-		{
-			byte_6D1224 = v1 - 1;
-			open_game_menu_();
-		}
-		else
-		{
-			DestroyDialog(dlg);
-		}
+		options_OK_(dlg);
 		break;
 	}
 }
@@ -1097,16 +1070,7 @@ void DLG_loadsave_Act_(dialog* dlg)
 	}
 	else if (LastControlID == -3)
 	{
-		char v1 = --byte_6D1224;
-		if (byte_6D1224)
-		{
-			byte_6D1224 = v1 - 1;
-			open_game_menu_();
-		}
-		else
-		{
-			DestroyDialog(dlg);
-		}
+		options_OK_(dlg);
 	}
 }
 
@@ -5776,16 +5740,7 @@ void __fastcall abort_menu_handler_(dialog* dlg)
 	switch (LastControlID)
 	{
 	case -3:
-		v2 = --byte_6D1224;
-		if (byte_6D1224)
-		{
-			byte_6D1224 = v2 - 1;
-			open_game_menu_();
-		}
-		else
-		{
-			DestroyDialog(dlg);
-		}
+		options_OK_(dlg);
 		break;
 	case 1:
 		open_restart_game_menu_();
