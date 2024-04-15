@@ -9087,18 +9087,7 @@ int LoadReplayFile_(const char* filename, int* a3)
 	return v5;
 }
 
-int __cdecl LoadReplayFile__()
-{
-	char* filename;
-	int* a3;
-
-	__asm mov filename, eax
-	__asm mov a3, edi
-
-	return LoadReplayFile_(filename, a3);
-}
-
-FUNCTION_PATCH((void*)0x4DF570, LoadReplayFile__, "starcraft");
+FAIL_STUB_PATCH(LoadReplayFile, "starcraft");
 
 int chooseTRGTemplate_()
 {
@@ -19503,7 +19492,7 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 			strcpy_s(replay->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
 			return;
 		}
-		if (!LoadReplayFile(replay->full_path, &a3))
+		if (!LoadReplayFile_(replay->full_path, &a3))
 		{
 			unsigned v6 = a3 != 0 ? -3u : 0;
 			replay->error = 2;
