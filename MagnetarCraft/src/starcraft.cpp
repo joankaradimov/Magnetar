@@ -14555,6 +14555,31 @@ void PollInput_()
 
 FAIL_STUB_PATCH(PollInput, "starcraft");
 
+void CMDRECV_SaveGame_(SaveGameCommand* command)
+{
+	if ((!multiPlayerMode || getActivePlayerId() == dword_512680) && !gameData.got_file_values.tournament_mode)
+	{
+		if (isStringValid(sizeof(command->filename), sizeof(command->filename), 0, command->filename, 0))
+		{
+			if (isBadName(0, command->filename, SStrLen(command->filename)))
+			{
+				sub_4D02D0(command->filename, command->time, 0);
+			}
+		}
+	}
+}
+
+void CMDRECV_SaveGame__()
+{
+	SaveGameCommand* command;
+
+	__asm mov command, eax
+
+	CMDRECV_SaveGame_(command);
+}
+
+FUNCTION_PATCH((void*)0x4C2910, CMDRECV_SaveGame__, "starcraft");
+
 void replayLoop_()
 {
 	if (!InGame)
