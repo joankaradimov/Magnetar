@@ -21374,7 +21374,7 @@ void loadMenu_gluBNRes_()
 
 FAIL_STUB_PATCH(loadMenu_gluBNRes, "starcraft");
 
-int SwitchMenu_()
+void SwitchMenu_()
 {
 	if (!GetModuleFileNameA(NULL, main_directory, MAX_PATH))
 		main_directory[0] = 0;
@@ -21553,7 +21553,7 @@ LABEL_28:
 	sub_4DC940();
 	if (dword_51C40C)
 		SMemFree(dword_51C40C, "Starcraft\\SWAR\\lang\\glues.cpp", 370, 0);
-	return sub_4DC870();
+	sub_4DC870();
 }
 
 FAIL_STUB_PATCH(SwitchMenu, "starcraft");
