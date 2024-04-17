@@ -294,7 +294,7 @@ const char* ISCRIPT_GRAMMAR = R"(
     OPC_PLAYSNDRAND       <- 'playsndrand' __ INT (__ INT)*
     OPC_CREATEGASOVERLAYS <- 'creategasoverlays' __ INT
     OPC_ENGSET            <- 'engset' __ INT
-    OPC_SETFILPSTATE      <- 'setflipstate' __ INT
+    OPC_SETFLIPSTATE      <- 'setflipstate' __ INT
     OPC_SETPOS            <- 'setpos' __ INT __ INT
     OPC_SETSPAWNFRAME     <- 'setspawnframe' __ INT
     OPC_SETHORPOS         <- 'sethorpos' __ INT
@@ -317,7 +317,7 @@ const char* ISCRIPT_GRAMMAR = R"(
         OPC_TURN1CWISE / OPC_TURNCWISE / OPC_TURNCCWISE / OPC_TURNRAND /
         OPC_SETFLSPEED / OPC_TMPRMGRAPHICSTART / OPC_TMPRMGRAPHICEND /
         OPC_PLAYSNDBTWN / OPC_PLAYSNDRAND / OPC_ENGSET / OPC_ENGFRAME /
-        OPC_SETFILPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
+        OPC_SETFLIPSTATE / OPC_SETPOS / OPC_SETSPAWNFRAME / OPC_SETHORPOS /
         OPC___2D
     ) ^ OPCODE_ERROR
 
@@ -583,11 +583,11 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
         *builder << IScriptOpcodes::opc_end;
     };
 
-    //iscript_parser["OPC_SETFLIPSTATE"] = [](const peg::SemanticValues& vs, std::any& dt) {
-    //    auto builder = std::any_cast<IScriptBuilder*>(dt);
-    //    u8 arg = std::any_cast<int>(vs[0]);
-    //    *builder << IScriptOpcodes::opc_setflipstate << arg;
-    //};
+    iscript_parser["OPC_SETFLIPSTATE"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        u8 arg = std::any_cast<int>(vs[0]);
+        *builder << IScriptOpcodes::opc_setflipstate << arg;
+    };
 
     iscript_parser["OPC_PLAYSND"] = [](const peg::SemanticValues& vs, std::any& dt) {
         auto builder = std::any_cast<IScriptBuilder*>(dt);
