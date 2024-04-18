@@ -1,0 +1,33 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "MagnetarCraft.exe (Magnetar\\MagnetarCraft.exe)",
+      "name": "MagnetarCraft.exe (Magnetar\\MagnetarCraft.exe)",
+      "env": {
+        "PATH": "${cmake.buildRoot}\\yaml-cpp;${cmake.buildRoot}\\LuaJIT\\src;${cmake.buildRoot}\\StormLib"
+      }
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "MagnetarTest.exe (Magnetar\\MagnetarTest.exe)",
+      "name": "MagnetarTest.exe (Magnetar\\MagnetarTest.exe)",
+      "env": {
+        "PATH": "${cmake.buildRoot}\\yaml-cpp;${cmake.buildRoot}\\LuaJIT\\src;${cmake.buildRoot}\\StormLib;${cmake.buildRoot}\\bin"
+      }
+    },
+    {
+      "type": "default",
+      "project": "CMakeLists.txt",
+      "projectTarget": "mpqbuilder.exe (MpqBuilder\\mpqbuilder.exe)",
+      "name": "mpqbuilder.exe (MpqBuilder\\mpqbuilder.exe)",
+      "env": {
+        "PATH": "${cmake.buildRoot}\\StormLib"
+      }
+    }
+  ]
+}

@@ -12,8 +12,7 @@ if(result)
 endif ()
 
 set(BUILD_TESTS FALSE)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Magnetar)
+set(BUILD_SHARED_LIBS TRUE)
 
 if (MSVC)
     # This is needed for errors to be clickable in the VisualStudio UI
