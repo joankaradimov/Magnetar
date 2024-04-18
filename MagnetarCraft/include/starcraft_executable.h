@@ -4,6 +4,10 @@
 #include "MemoryModule.h"
 #include "file_info.h"
 
+#define STARCRAFT_IMAGE_BASE ((BYTE*)0x400000)
+#define STARCRAFT_IMAGE_SIZE ((size_t)0x2ec000)
+#define STARCRAFT_IMAGE_END (STARCRAFT_IMAGE_BASE + STARCRAFT_IMAGE_SIZE)
+
 class StarCraftExecutable
 {
 public:

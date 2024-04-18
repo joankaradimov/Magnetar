@@ -2,23 +2,19 @@
 
 #include <sstream>
 
-void* const STARCRAFT_IMAGE_BASE = (void*)0x400000;
-const int STARCRAFT_IMAGE_SIZE = 0x2ec000;
-void* const STARCRAFT_IMAGE_END = (char*)STARCRAFT_IMAGE_BASE + STARCRAFT_IMAGE_SIZE;
-
 WORD EXPECTED_MAJOR_VERSION = 1;
 WORD EXPECTED_MINOR_VERSION = 16;
 WORD EXPECTED_PATCH_VERSION = 1;
 
 #pragma section(".scimg", read, write)
-__declspec(allocate(".scimg")) char scimg[STARCRAFT_IMAGE_SIZE * 2];
+__declspec(allocate(".scimg")) BYTE scimg[STARCRAFT_IMAGE_SIZE + STARCRAFT_IMAGE_SIZE / 2];
 
 StarCraftExecutable::StarCraftExecutable(const std::filesystem::path& path) : module(nullptr), file_info(path), executable_path(path)
 {
 	if (scimg > STARCRAFT_IMAGE_BASE || scimg + sizeof(scimg) < STARCRAFT_IMAGE_END)
 	{
 		std::ostringstream error_message;
-		error_message << "Could not reserve memory at base address 0x" << std::hex << STARCRAFT_IMAGE_BASE << " for " << executable_path.filename();
+		error_message << "Could not reserve memory at base address 0x" << (void*) STARCRAFT_IMAGE_BASE << " for " << executable_path.filename();
 		throw std::exception(error_message.str().c_str());
 	}
 
