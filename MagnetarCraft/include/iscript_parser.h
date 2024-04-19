@@ -12,7 +12,7 @@ struct IScriptAnimationSet
 {
     IScriptAnimationSet() : opcodes(nullptr)
     {
-        for (int i = 0; i < animations.size(); i++)
+        for (size_t i = 0; i < animations.size(); i++)
         {
             animations[i] = 0xFFFF;
         }
