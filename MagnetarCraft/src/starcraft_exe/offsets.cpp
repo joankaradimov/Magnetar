@@ -9060,7 +9060,7 @@ char ** sub_44D100(_DWORD *a1) {
 }
 DECL_FUNC(char * (*sub_44D120)(), sub_44D120, 0x44d120);
 DECL_FUNC(char (__fastcall*sub_44D140)(const char *a1, LPARAM a2, HWND hDlg), sub_44D140, 0x44d140);
-DECL_FUNC(int (__stdcall*SaveProfileChanges)(HWND hDlg), SaveProfileChanges, 0x44d1e0);
+DECL_FUNC(int (__stdcall*SaveProfileChanges)(_DWORD a1, _DWORD a2, _DWORD a3, _DWORD a4), SaveProfileChanges, 0x44d1e0);
 BOOL sub_44D450(HWND a1) {
     int address = 0x44d450;
     BOOL result_;
@@ -9072,7 +9072,7 @@ BOOL sub_44D450(HWND a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*sub_44D540)(char *a1, int a2, int a3), sub_44D540, 0x44d540);
+DECL_FUNC(_BYTE * (__fastcall*sub_44D540)(char *a1, _BYTE *a2, int a3), sub_44D540, 0x44d540);
 DECL_FUNC(void * (*sub_44D5B0)(), sub_44D5B0, 0x44d5b0);
 int gluBN_PROFILE_LinkHandler(LPCSTR lpszString, HDC a2, int a3, int a4, int a5) {
     int address = 0x44d630;
@@ -11519,10 +11519,10 @@ void lmissionDlgCreate(dialog *a1) {
         call address
     }
 }
-void sub_461160(dialog *a1) {
+void sub_461160(dialog *dlg) {
     int address = 0x461160;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -12536,7 +12536,17 @@ void setResourceCount(CUnit *this_) {
         call address
     }
 }
-DECL_FUNC(int (__thiscall*unit_isMineralField)(_DWORD a1), unit_isMineralField, 0x468890);
+BOOL unit_isMineralField(CUnit *a1) {
+    int address = 0x468890;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 BOOL UnitIsGasBuilding(CUnit *a1) {
     int address = 0x4688b0;
     BOOL result_;
@@ -14014,16 +14024,12 @@ DECL_FUNC(int (*sub_472500)(), sub_472500, 0x472500);
 DECL_FUNC(int (__thiscall*sub_472570)(_DWORD a1), sub_472570, 0x472570);
 DECL_FUNC(int (*sub_472720)(), sub_472720, 0x472720);
 DECL_FUNC(int (*sub_472750)(), sub_472750, 0x472750);
-unsigned initializeProviderVersion(SNETPROGRAMDATA *a1) {
+void initializeProviderVersion(SNETPROGRAMDATA *a1) {
     int address = 0x472770;
-    unsigned result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int isPlayerBanned(const char *a1) {
     int address = 0x472800;
@@ -16285,10 +16291,10 @@ void * sub_47E630(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-void sub_47E690(dialog *a1) {
+void sub_47E690(dialog *dlg) {
     int address = 0x47e690;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -22863,11 +22869,11 @@ __int64 * makeCheatHash(const char *cheat, __int64 *a2) {
     }
     return result_;
 }
-void cheatActivation(int result, const char *player_name) {
+void cheatActivation(CheatFlags cheat_flags, const char *player_name) {
     int address = 0x4b1fa0;
     __asm {
         push dword ptr player_name
-        mov eax, result
+        mov eax, cheat_flags
         call address
         add esp, 4
     }
@@ -23218,7 +23224,7 @@ void gluLoad_CustomCtrlID(dialog *dlg) {
     }
 }
 DECL_FUNC(int (__fastcall*gluLoad_Main)(dialog *dlg, struct dlgEvent *evt), gluLoad_Main, 0x4b6410);
-DECL_FUNC(void (*loadMenu_gluLoad)(), loadMenu_gluLoad, 0x4b6490);
+DECL_FUNC(void (__cdecl*loadMenu_gluLoad)(), loadMenu_gluLoad, 0x4b6490);
 BOOL sub_4B6530(CampaignMenuEntry *a1, unsigned int a2) {
     int address = 0x4b6530;
     BOOL result_;
@@ -25096,12 +25102,12 @@ char * sub_4C9030(dialog *a1) {
     }
     return result_;
 }
-int sub_4C90C0(dialog *a1) {
+int sub_4C90C0(dialog *dlg) {
     int address = 0x4c90c0;
     int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, dlg
         call address
         mov result_, eax
     }
@@ -25193,11 +25199,11 @@ void sub_4C9C40(const char *a1) {
         call address
     }
 }
-void sub_4C9CC0(dialog *a1, const char *a2) {
+void sub_4C9CC0(dialog *dlg, const char *a2) {
     int address = 0x4c9cc0;
     __asm {
         mov eax, a2
-        mov ebx, a1
+        mov ebx, dlg
         call address
     }
 }
@@ -28042,7 +28048,7 @@ void DLG_SwishIn(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (*SwitchMenu)(), SwitchMenu, 0x4de200);
+DECL_FUNC(void (__cdecl*SwitchMenu)(), SwitchMenu, 0x4de200);
 signed replayCommand(const char *a1) {
     int address = 0x4de6a0;
     signed result_;
@@ -28384,7 +28390,7 @@ DECL_FUNC(DWORD (__stdcall*CheckForOtherInstances)(LPCSTR lpClassName), CheckFor
 DECL_FUNC(int (*VerifySystemMemory)(), VerifySystemMemory, 0x4e0440);
 DECL_FUNC(void (__cdecl*CreateMainWindow)(), CreateMainWindow, 0x4e05b0);
 DECL_FUNC(void (*GameRun)(), GameRun, 0x4e0710);
-DECL_FUNC(void (*GameMainLoop)(), GameMainLoop, 0x4e0820);
+DECL_FUNC(void (__cdecl*GameMainLoop)(), GameMainLoop, 0x4e0820);
 DECL_FUNC(int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd), _WinMain, 0x4e0ae0);
 DECL_FUNC(int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2), sub_4E0B30, 0x4e0b30);
 __int16 genericLightupBtnUserDestroyEventHandler(dialog *a1) {
@@ -34755,7 +34761,7 @@ int& dword_68F6D0 = * ((decltype(&dword_68F6D0)) 0x68f6d0);
 void *& dword_68F6D4 = * ((decltype(&dword_68F6D4)) 0x68f6d4);
 char *& dword_68F6D8 = * ((decltype(&dword_68F6D8)) 0x68f6d8);
 void *& dword_68F6DC = * ((decltype(&dword_68F6DC)) 0x68f6dc);
-int& dword_68F6E0 = * ((decltype(&dword_68F6E0)) 0x68f6e0);
+int (__stdcall *&dword_68F6E0)(_DWORD, _DWORD, _DWORD, _DWORD) = *((decltype(&dword_68F6E0)) 0x68f6e0);
 int& dword_68F6E4 = * ((decltype(&dword_68F6E4)) 0x68f6e4);
 int& dword_68F6E8 = * ((decltype(&dword_68F6E8)) 0x68f6e8);
 HGDIOBJ& dword_68F6EC = * ((decltype(&dword_68F6EC)) 0x68f6ec);
