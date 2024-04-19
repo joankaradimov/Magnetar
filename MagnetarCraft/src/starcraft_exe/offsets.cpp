@@ -27690,8 +27690,8 @@ BOOL gluMainDestroy(dialog *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*sub_4DB180)(void *this_), sub_4DB180, 0x4db180);
-DECL_FUNC(int (__thiscall*sub_4DB1C0)(void *this_), sub_4DB1C0, 0x4db1c0);
+DECL_FUNC(int (__thiscall*expansion_cd_archive_loaded)(void *this_), expansion_cd_archive_loaded, 0x4db180);
+DECL_FUNC(int (__thiscall*vanilla_cd_archive_loaded)(void *this_), vanilla_cd_archive_loaded, 0x4db1c0);
 DECL_FUNC(signed (__cdecl*loadCampaignBIN)(), loadCampaignBIN, 0x4db200);
 DECL_FUNC(int (__fastcall*sub_4DB260)(const char *a1, int a2, int *a3, int a4, int a5), sub_4DB260, 0x4db260);
 void gluMainCreate(dialog *dlg) {

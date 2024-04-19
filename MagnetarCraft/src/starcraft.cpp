@@ -18582,6 +18582,36 @@ void init_gluesounds_()
 
 FAIL_STUB_PATCH(init_gluesounds, "starcraft");
 
+bool exists_on_cd_archive(const char* filename)
+{
+	if (cd_archive_mpq)
+	{
+		HANDLE phFile;
+		if (SFileOpenFileEx(cd_archive_mpq, filename, 0, &phFile))
+		{
+			SFileCloseFile(phFile);
+			return 1;
+		}
+	}
+
+	return 0;
+}
+
+bool expansion_cd_archive_loaded_()
+{
+	return exists_on_cd_archive("rez\\gluexpcmpgn.bin");
+}
+
+FAIL_STUB_PATCH(vanilla_cd_archive_loaded, "starcraft");
+FAIL_STUB_PATCH(expansion_cd_archive_loaded, "starcraft");
+
+bool loadCampaignBIN_()
+{
+	return exists_on_cd_archive(IsExpansion ? "rez\\gluexpcmpgn.bin" : "rez\\glucmpgn.bin");
+}
+
+FAIL_STUB_PATCH(loadCampaignBIN, "starcraft");
+
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 {
 	sub_4195E0();
@@ -21440,7 +21470,7 @@ void SwitchMenu_()
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = active_campaign->is_expansion;
-		if (active_campaign->is_expansion && !is_expansion_installed || !loadCampaignBIN() || !CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]))
+		if (active_campaign->is_expansion && !is_expansion_installed || !loadCampaignBIN_() || !CreateCampaignGame_(active_campaign->entries[active_campaign_entry_index]))
 		{
 			glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			IsExpansion = 0;
@@ -22827,9 +22857,8 @@ void GameMainLoop_()
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
 
-	if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", 0, &phFile))
+	if (expansion_cd_archive_loaded_())
 	{
-		SFileCloseFile(phFile);
 		if (registry_options.field_18 & 0x800)
 		{
 			registry_options.field_18 &= ~0x800;
@@ -22894,26 +22923,13 @@ void GameMainLoop_()
 			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			if (gwGameMode == GamePosition::GAME_INTRO)
 			{
-				if (cd_archive_mpq && SFileOpenFileEx(cd_archive_mpq, "rez\\gluexpcmpgn.bin", GLUE_MAIN_MENU, &phFile))
+				try
 				{
-					SFileCloseFile(phFile);
-					try
-					{
-						PlayMovie_("smk\\starXintr.smk", SVID_AUTOCUTSCENE);
-					}
-					catch (const FileNotFoundException& e)
-					{
-					}
+					const char* movie = expansion_cd_archive_loaded_() ? "smk\\starXintr.smk" : "smk\\starintr.smk";
+					PlayMovie_(movie, SVID_AUTOCUTSCENE);
 				}
-				else
+				catch (const FileNotFoundException& e)
 				{
-					try
-					{
-						PlayMovie_("smk\\starintr.smk", SVID_AUTOCUTSCENE);
-					}
-					catch (const FileNotFoundException& e)
-					{
-					}
 				}
 				if (gwGameMode == GamePosition::GAME_INTRO)
 					gwGameMode = GamePosition::GAME_GLUES;
