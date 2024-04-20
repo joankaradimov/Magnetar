@@ -216,7 +216,7 @@ private:
 std::vector<IScriptAnimationSet> animation_sets;
 
 const char* ISCRIPT_GRAMMAR = R"(
-    ROOT <- (_ (EOL / &'.' HEADER / LABEL / &. OP _ EOL))* EOF
+    ROOT <- (_ (EOL / &'.header' HEADER / &'.' DATA / LABEL / &. OP _ EOL))* EOF
 
     HEADER <- '.headerstart' _ EOL _ (!'.' HEADER_LINE? _ EOL _)* '.headerend' _ EOL
     LABEL  <- <ID> _ ':' _ NL?
@@ -233,6 +233,13 @@ const char* ISCRIPT_GRAMMAR = R"(
                  'WarpIn' | 'Unused3' | 'StarEditInit' | 'Disable' | 'Burrow' | 'UnBurrow' | 'Enable'
 
     HEADER_LINE <- (HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION) ^ HEADER_ERROR
+
+    # Data rules
+    DATA       <- (DATA_BYTE / DATA_WORD / DATA_LABEL / DATA_FILL) _ EOL
+    DATA_BYTE  <- '.DB' __ INT
+    DATA_WORD  <- '.DW' __ INT
+    DATA_LABEL <- '.DW' __ ID
+    DATA_FILL  <- '.FILL' __ INT
 
     # opcode rules
     OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
@@ -363,6 +370,37 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
             result = 0x10 * result + (digit >= 'a' ? digit - 'a' + 10 : digit >= 'A' ? digit - 'A' + 10 : digit - '0');
         }
         return result;
+    };
+
+    iscript_parser["DATA_BYTE"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        auto data = vs.token_to_number<int>();
+
+        *builder << u8(data);
+    };
+
+    iscript_parser["DATA_WORD"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        auto data = std::any_cast<int>(vs[0]);
+
+        *builder << u16(data);
+    };
+
+    iscript_parser["DATA_LABEL"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        auto label = std::any_cast<LabelReference>(vs[0]);
+
+        *builder << label;
+    };
+
+    iscript_parser["DATA_FILL"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        auto count = std::any_cast<int>(vs[0]);
+
+        for (int i = 0; i < count; i++)
+        {
+            *builder << u8(0);
+        }
     };
 
     iscript_parser["HEADER"].enter = [](const peg::Context& context, const char* s, size_t n, std::any& dt) {
