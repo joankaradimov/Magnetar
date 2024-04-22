@@ -235,11 +235,12 @@ const char* ISCRIPT_GRAMMAR = R"(
     HEADER_LINE <- (HEADER_IS_ID / HEADER_TYPE / HEADER_ANIMATION) ^ HEADER_ERROR
 
     # Data rules
-    DATA       <- (DATA_BYTE / DATA_WORD / DATA_LABEL / DATA_FILL) _ EOL
-    DATA_BYTE  <- '.DB' __ INT
-    DATA_WORD  <- '.DW' __ INT
-    DATA_LABEL <- '.DW' __ ID
-    DATA_FILL  <- '.FILL' __ INT
+    DATA        <- (DATA_BYTE / DATA_STRING / DATA_WORD / DATA_LABEL / DATA_FILL) _ EOL
+    DATA_BYTE   <- '.DB' __ INT
+    DATA_STRING <- '.DB' __ STRING
+    DATA_WORD   <- '.DW' __ INT
+    DATA_LABEL  <- '.DW' __ ID
+    DATA_FILL   <- '.FILL' __ INT
 
     # opcode rules
     OPC_IMGUL             <- 'imgul' __ INT __ INT __ INT
@@ -333,6 +334,7 @@ const char* ISCRIPT_GRAMMAR = R"(
     DEC      <- '-'? [1-9][0-9]* / '-'? '0'
     HEX      <- '0x' [0-9a-fA-F]+
     INT      <- HEX / DEC
+    STRING   <- '"' [^"]* '"'
 
     ~EOF     <- !.
     ~EOL     <- &'#' COMMENT NL / NL
@@ -372,11 +374,26 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
         return result;
     };
 
+    iscript_parser["STRING"] = [](const peg::SemanticValues& vs) {
+        auto s = vs.token();
+        return s.substr(1, s.size() - 2); // Strip quotes
+    };
+
     iscript_parser["DATA_BYTE"] = [](const peg::SemanticValues& vs, std::any& dt) {
         auto builder = std::any_cast<IScriptBuilder*>(dt);
         auto data = vs.token_to_number<int>();
 
         *builder << u8(data);
+    };
+
+    iscript_parser["DATA_STRING"] = [](const peg::SemanticValues& vs, std::any& dt) {
+        auto builder = std::any_cast<IScriptBuilder*>(dt);
+        auto data = std::any_cast<std::string_view>(vs[0]);
+
+        for (int i = 0; i < data.size(); i++)
+        {
+            *builder << data[i];
+        }
     };
 
     iscript_parser["DATA_WORD"] = [](const peg::SemanticValues& vs, std::any& dt) {

@@ -6,8 +6,8 @@
 
 Engines_GlowHeader:   # offset: 0x055C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	291
 Type         	15
 #  .DW 0  # unused header value
@@ -41,8 +41,8 @@ Engines_GlowHeaderInit:   # offset: 0x0584
 
 Unknown316:   # offset: 0x0590
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	316
 Type         	1
 #  .DW 0  # unused header value
@@ -99,8 +99,8 @@ Unknown316Init:   # offset: 0x059C
 
 Bleeding_Large_Variant1:   # offset: 0x060E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	328
 Type         	1
 #  .DW 0  # unused header value
@@ -112,8 +112,8 @@ Death          Bleeding_Large_Variant1Death
 
 Bleeding_Large_Variant2:   # offset: 0x061A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	329
 Type         	1
 #  .DW 0  # unused header value
@@ -146,8 +146,8 @@ Bleeding_Large_Variant1Death:   # offset: 0x0649
 
 Bleeding_Small_Variant1:   # offset: 0x064C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	324
 Type         	1
 #  .DW 0  # unused header value
@@ -159,8 +159,8 @@ Death          Bleeding_Small_Variant1Death
 
 Bleeding_Small_Variant2:   # offset: 0x0658
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	325
 Type         	1
 #  .DW 0  # unused header value
@@ -193,8 +193,8 @@ Bleeding_Small_Variant1Death:   # offset: 0x0687
 
 Flames_Large_:   # offset: 0x068A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	326
 Type         	1
 #  .DW 0  # unused header value
@@ -206,8 +206,8 @@ Death          Flames_Large_Death
 
 Unknown327:   # offset: 0x0696
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	327
 Type         	1
 #  .DW 0  # unused header value
@@ -252,8 +252,8 @@ Flames_Large_Death:   # offset: 0x06E3
 
 Flames_Small_:   # offset: 0x06E6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	322
 Type         	1
 #  .DW 0  # unused header value
@@ -265,8 +265,8 @@ Death          Flames_Small_Death
 
 Unknown323:   # offset: 0x06F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	323
 Type         	1
 #  .DW 0  # unused header value
@@ -311,8 +311,8 @@ Flames_Small_Death:   # offset: 0x073F
 
 CursorMarker:   # offset: 0x0742
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	288
 Type         	2
 #  .DW 0  # unused header value
@@ -341,8 +341,8 @@ CursorMarkerGndAttkInit:   # offset: 0x0752
 
 BurowingDust:   # offset: 0x0770
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	274
 Type         	1
 #  .DW 0  # unused header value
@@ -371,8 +371,8 @@ BurowingDustInit:   # offset: 0x077C
 
 StartLocation:   # offset: 0x07A0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	335
 Type         	0
 #  .DW 0  # unused header value
@@ -388,8 +388,8 @@ StartLocationInit:   # offset: 0x07AC
 
 Consume:   # offset: 0x07B2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	298
 Type         	2
 #  .DW 0  # unused header value
@@ -449,8 +449,8 @@ ConsumeDeath:   # offset: 0x07C8
 
 DoubleExplosion:   # offset: 0x0828
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	278
 Type         	1
 #  .DW 0  # unused header value
@@ -490,8 +490,8 @@ DoubleExplosionInit:   # offset: 0x0834
 
 DefensiveMatrixOverlay:   # offset: 0x0874
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	300
 Type         	1
 #  .DW 0  # unused header value
@@ -516,8 +516,8 @@ DefensiveMatrixOverlayInit:   # offset: 0x0880
 
 DefensiveMatrixHit:   # offset: 0x089C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	301
 Type         	1
 #  .DW 0  # unused header value
@@ -543,8 +543,8 @@ DefensiveMatrixHitDeath:   # offset: 0x08BC
 
 DarkSwarm:   # offset: 0x08C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	299
 Type         	1
 #  .DW 0  # unused header value
@@ -601,8 +601,8 @@ DarkSwarmDeath:   # offset: 0x0913
 
 DustVariant1:   # offset: 0x092E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	330
 Type         	0
 #  .DW 0  # unused header value
@@ -634,8 +634,8 @@ DustVariant1Init:   # offset: 0x093A
 
 DustVariant2:   # offset: 0x0964
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	331
 Type         	0
 #  .DW 0  # unused header value
@@ -671,8 +671,8 @@ DustVariant2Init:   # offset: 0x0970
 
 PlagueCloud:   # offset: 0x09A4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	296
 Type         	2
 #  .DW 0  # unused header value
@@ -724,8 +724,8 @@ PlagueCloudDeath:   # offset: 0x09BD
 
 PlagueOverlay:   # offset: 0x0A08
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	297
 Type         	1
 #  .DW 0  # unused header value
@@ -753,8 +753,8 @@ PlagueOverlayLocal00:   # offset: 0x0A19
 
 C_10CanisterRifleHit:   # offset: 0x0A32
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	241
 Type         	2
 #  .DW 0  # unused header value
@@ -796,8 +796,8 @@ C_10CanisterRifleHitDeath:   # offset: 0x0A48
 
 FragmentationGrenadeHit:   # offset: 0x0A7C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	283
 Type         	1
 #  .DW 0  # unused header value
@@ -832,8 +832,8 @@ FragmentationGrenadeHitInit:   # offset: 0x0A88
 
 HallucinationDeath:   # offset: 0x0ABC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	321
 Type         	0
 #  .DW 0  # unused header value
@@ -874,8 +874,8 @@ HallucinationDeathInit:   # offset: 0x0AC8
 
 BattlecruiserAttackOverlay:   # offset: 0x0B0A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	293
 Type         	1
 #  .DW 0  # unused header value
@@ -902,8 +902,8 @@ BattlecruiserAttackOverlayDeath:   # offset: 0x0B2F
 
 ATA_ATSLaserBattery_BurstLasers:   # offset: 0x0B32
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	243
 Type         	2
 #  .DW 0  # unused header value
@@ -936,8 +936,8 @@ ATA_ATSLaserBattery_BurstLasersDeath:   # offset: 0x0B58
 
 ATA_ATSLaserBattery_BurstLasersHit:   # offset: 0x0B62
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	294
 Type         	1
 #  .DW 0  # unused header value
@@ -975,8 +975,8 @@ ATA_ATSLaserBattery_BurstLasersHitDeath:   # offset: 0x0BA3
 
 Unknown295:   # offset: 0x0BA6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	295
 Type         	1
 #  .DW 0  # unused header value
@@ -1003,8 +1003,8 @@ Unknown295Death:   # offset: 0x0BCB
 
 Unknown244:   # offset: 0x0BCE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	244
 Type         	1
 #  .DW 0  # unused header value
@@ -1025,8 +1025,8 @@ Unknown244Death:   # offset: 0x0BE0
 
 LockdownHit:   # offset: 0x0BE4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	245
 Type         	1
 #  .DW 0  # unused header value
@@ -1081,8 +1081,8 @@ LockdownHitDeath:   # offset: 0x0C48
 
 PsionicStormPartVariant2:   # offset: 0x0C4E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	318
 Type         	1
 #  .DW 0  # unused header value
@@ -1135,8 +1135,8 @@ PsionicStormPartVariant2Init:   # offset: 0x0C5A
 
 PsionicStormPartVariant1:   # offset: 0x0CB8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	317
 Type         	1
 #  .DW 0  # unused header value
@@ -1188,8 +1188,8 @@ PsionicStormPartVariant1Init:   # offset: 0x0CC4
 
 EMPShockwaveHit_Part1_:   # offset: 0x0D20
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	319
 Type         	0
 #  .DW 0  # unused header value
@@ -1218,8 +1218,8 @@ EMPShockwaveHit_Part1_Init:   # offset: 0x0D2C
 
 EMPShockwaveHit_Part2_:   # offset: 0x0D50
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	320
 Type         	0
 #  .DW 0  # unused header value
@@ -1250,8 +1250,8 @@ EMPShockwaveHit_Part2_Init:   # offset: 0x0D5C
 
 ArchonOverlay:   # offset: 0x0D88
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	229
 Type         	1
 #  .DW 0  # unused header value
@@ -1319,8 +1319,8 @@ ArchonOverlayDeath:   # offset: 0x0E08
 
 PsionicShockwaveHit:   # offset: 0x0E0C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	268
 Type         	2
 #  .DW 0  # unused header value
@@ -1366,8 +1366,8 @@ PsionicShockwaveHitDeath:   # offset: 0x0E22
 
 EnsnareOverlay:   # offset: 0x0E60
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	303
 Type         	1
 #  .DW 0  # unused header value
@@ -1395,8 +1395,8 @@ EnsnareOverlayLocal00:   # offset: 0x0E71
 
 Ensnare:   # offset: 0x0E8A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	302
 Type         	1
 #  .DW 0  # unused header value
@@ -1443,8 +1443,8 @@ EnsnareInit:   # offset: 0x0E96
 
 Venom_Unused_:   # offset: 0x0EE6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	257
 Type         	2
 #  .DW 0  # unused header value
@@ -1471,8 +1471,8 @@ Venom_Unused_Death:   # offset: 0x0F00
 
 AcidSporeHit:   # offset: 0x0F0A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	261
 Type         	1
 #  .DW 0  # unused header value
@@ -1512,8 +1512,8 @@ AcidSporeHitInit:   # offset: 0x0F16
 
 AcidSpore:   # offset: 0x0F54
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	260
 Type         	2
 #  .DW 0  # unused header value
@@ -1546,8 +1546,8 @@ AcidSporeDeath:   # offset: 0x0F7A
 
 GuardianAttackOverlay:   # offset: 0x0F86
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	262
 Type         	1
 #  .DW 0  # unused header value
@@ -1575,8 +1575,8 @@ GuardianAttackOverlayInit:   # offset: 0x0F92
 
 Irradiate:   # offset: 0x0FB2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	304
 Type         	1
 #  .DW 0  # unused header value
@@ -1604,8 +1604,8 @@ IrradiateInit:   # offset: 0x0FBE
 
 StasisFieldHit:   # offset: 0x0FE0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	307
 Type         	1
 #  .DW 0  # unused header value
@@ -1638,8 +1638,8 @@ StasisFieldHitInit:   # offset: 0x0FEC
 
 StasisFieldOverlay:   # offset: 0x101A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	306
 Type         	1
 #  .DW 0  # unused header value
@@ -1702,8 +1702,8 @@ StasisFieldOverlayDeath:   # offset: 0x1072
 
 SiegeTank_Siege_TurretOverlay:   # offset: 0x1096
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	251
 Type         	1
 #  .DW 0  # unused header value
@@ -1732,8 +1732,8 @@ SiegeTank_Siege_TurretOverlayInit:   # offset: 0x10A2
 
 VenomHit_Unused_:   # offset: 0x10C6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	259
 Type         	1
 #  .DW 0  # unused header value
@@ -1774,8 +1774,8 @@ VenomHit_Unused_Init:   # offset: 0x10D2
 
 SiegeTank_Tank_TurretOverlay:   # offset: 0x1114
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	250
 Type         	1
 #  .DW 0  # unused header value
@@ -1792,8 +1792,8 @@ SiegeTank_Tank_TurretOverlayInit:   # offset: 0x1120
 
 HallucinationHit:   # offset: 0x1126
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	253
 Type         	1
 #  .DW 0  # unused header value
@@ -1827,8 +1827,8 @@ HallucinationHitDeath:   # offset: 0x115A
 
 Unknown277:   # offset: 0x115E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	277
 Type         	1
 #  .DW 0  # unused header value
@@ -1864,8 +1864,8 @@ Unknown277Init:   # offset: 0x116A
 
 YamatoGunOverlay:   # offset: 0x11A0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	314
 Type         	1
 #  .DW 0  # unused header value
@@ -1939,8 +1939,8 @@ YamatoGunOverlayDeath:   # offset: 0x1232
 
 YamatoGunHit:   # offset: 0x1236
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	315
 Type         	1
 #  .DW 0  # unused header value
@@ -1984,8 +1984,8 @@ YamatoGunHitInit:   # offset: 0x1242
 
 Flamethrower:   # offset: 0x128A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	312
 Type         	1
 #  .DW 0  # unused header value
@@ -2040,8 +2040,8 @@ FlamethrowerDeath:   # offset: 0x12DC
 
 PowerupsShadowHeader:   # offset: 0x12E2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	215
 Type         	1
 #  .DW 0  # unused header value
@@ -2057,8 +2057,8 @@ PowerupsShadowHeaderInit:   # offset: 0x12EE
 
 CarrierEngines:   # offset: 0x12F4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	290
 Type         	12
 #  .DW 0  # unused header value
@@ -2087,8 +2087,8 @@ CarrierEnginesInit:   # offset: 0x1318
 
 VespeneGeyserSmokes:   # offset: 0x131E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	281
 Type         	1
 #  .DW 0  # unused header value
@@ -2120,8 +2120,8 @@ VespeneGeyserSmokesInit:   # offset: 0x132A
 
 Unknown282:   # offset: 0x1354
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	282
 Type         	1
 #  .DW 0  # unused header value
@@ -2146,8 +2146,8 @@ Unknown282Init:   # offset: 0x1360
 
 GrenadeShotSmoke:   # offset: 0x137A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	284
 Type         	1
 #  .DW 0  # unused header value
@@ -2179,8 +2179,8 @@ GrenadeShotSmokeInit:   # offset: 0x1386
 
 SeekerSporesOverlay:   # offset: 0x13B0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	270
 Type         	1
 #  .DW 0  # unused header value
@@ -2209,8 +2209,8 @@ SeekerSporesOverlayInit:   # offset: 0x13BC
 
 Unknown254:   # offset: 0x13E0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	254
 Type         	0
 #  .DW 0  # unused header value
@@ -2262,8 +2262,8 @@ Unknown254Init:   # offset: 0x13EC
 
 PhaseDisruptor_Anti_MatterMissileHit:   # offset: 0x1448
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	285
 Type         	1
 #  .DW 0  # unused header value
@@ -2307,8 +2307,8 @@ PhaseDisruptor_Anti_MatterMissileHitInit:   # offset: 0x1454
 
 Scarab_Anti_MatterMissileOverlay:   # offset: 0x149E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	286
 Type         	1
 #  .DW 0  # unused header value
@@ -2340,8 +2340,8 @@ Scarab_Anti_MatterMissileOverlayInit:   # offset: 0x14AA
 
 GeminiMissilesExplosion:   # offset: 0x14D4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	313
 Type         	1
 #  .DW 0  # unused header value
@@ -2377,8 +2377,8 @@ GeminiMissilesExplosionInit:   # offset: 0x14E0
 
 ArcliteShockCannonHit:   # offset: 0x1514
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	246
 Type         	2
 #  .DW 0  # unused header value
@@ -2430,8 +2430,8 @@ ArcliteShockCannonHitDeath:   # offset: 0x152A
 
 NukeBeam:   # offset: 0x1576
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	73
 Type         	12
 #  .DW 0  # unused header value
@@ -2466,8 +2466,8 @@ NukeBeamDeath:   # offset: 0x15A7
 
 NukeExplosion:   # offset: 0x15AA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	133
 Type         	1
 #  .DW 0  # unused header value
@@ -2539,8 +2539,8 @@ NukeExplosionInit:   # offset: 0x15B6
 
 NukeTargetDot:   # offset: 0x1648
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	74
 Type         	1
 #  .DW 0  # unused header value
@@ -2563,8 +2563,8 @@ NukeTargetDotDeath:   # offset: 0x1661
 
 Unknown272:   # offset: 0x1664
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	272
 Type         	1
 #  .DW 0  # unused header value
@@ -2590,8 +2590,8 @@ Unknown272Death:   # offset: 0x1684
 
 AcidSpray:   # offset: 0x1688
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	271
 Type         	1
 #  .DW 0  # unused header value
@@ -2625,8 +2625,8 @@ AcidSprayDeath:   # offset: 0x16BC
 
 PsiFieldType1:   # offset: 0x16C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	333
 Type         	1
 #  .DW 0  # unused header value
@@ -2651,8 +2651,8 @@ PsiFieldType1Death:   # offset: 0x16E4
 
 ScarabHit:   # offset: 0x16E8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	287
 Type         	1
 #  .DW 0  # unused header value
@@ -2688,8 +2688,8 @@ ScarabHitInit:   # offset: 0x16F4
 
 ScoutEngines:   # offset: 0x172A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	162
 Type         	12
 #  .DW 0  # unused header value
@@ -2721,8 +2721,8 @@ ScoutEnginesInit:   # offset: 0x174E
 
 ShieldOverlay:   # offset: 0x175A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	276
 Type         	1
 #  .DW 0  # unused header value
@@ -2747,8 +2747,8 @@ ShieldOverlayDeath:   # offset: 0x1778
 
 PsionicStorm:   # offset: 0x177C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	236
 Type         	14
 #  .DW 0  # unused header value
@@ -2817,8 +2817,8 @@ PsionicStormLocal00:   # offset: 0x17B3
 
 HighTemplarGlow:   # offset: 0x17FC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	310
 Type         	1
 #  .DW 0  # unused header value
@@ -2839,8 +2839,8 @@ HighTemplarGlowInit:   # offset: 0x1808
 
 RecallField:   # offset: 0x1818
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	305
 Type         	1
 #  .DW 0  # unused header value
@@ -2916,8 +2916,8 @@ RecallFieldInit:   # offset: 0x1824
 
 BuildingRubbleHeader:   # offset: 0x18BC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	145
 Type         	1
 #  .DW 0  # unused header value
@@ -2961,8 +2961,8 @@ BuildingRubbleHeaderInit:   # offset: 0x18C8
 
 RechargeShields_Large_:   # offset: 0x1906
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	308
 Type         	1
 #  .DW 0  # unused header value
@@ -3010,8 +3010,8 @@ RechargeShields_Large_Init:   # offset: 0x1912
 
 RechargeShields_Small_:   # offset: 0x1964
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	309
 Type         	1
 #  .DW 0  # unused header value
@@ -3036,8 +3036,8 @@ RechargeShields_Small_Init:   # offset: 0x1970
 
 NuclearMissileDeath_:   # offset: 0x198C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	279
 Type         	1
 #  .DW 0  # unused header value
@@ -3075,8 +3075,8 @@ NuclearMissileDeathDeath:   # offset: 0x19CD
 
 Longbolt_Halo_GeminiMissilesTrail:   # offset: 0x19D0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	273
 Type         	1
 #  .DW 0  # unused header value
@@ -3111,8 +3111,8 @@ Longbolt_Halo_GeminiMissilesTrailInit:   # offset: 0x19DC
 
 NeedleSpinesOverlay:   # offset: 0x1A0A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	311
 Type         	1
 #  .DW 0  # unused header value
@@ -3141,8 +3141,8 @@ NeedleSpinesOverlayInit:   # offset: 0x1A16
 
 GlaveWurmHit:   # offset: 0x1A3A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	265
 Type         	1
 #  .DW 0  # unused header value
@@ -3178,8 +3178,8 @@ GlaveWurmHitInit:   # offset: 0x1A46
 
 GlaveWurmTrail:   # offset: 0x1A7A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	269
 Type         	1
 #  .DW 0  # unused header value
@@ -3203,8 +3203,8 @@ GlaveWurmTrailInit:   # offset: 0x1A86
 
 Explosion_Small_:   # offset: 0x1A9C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	142
 Type         	0
 #  .DW 0  # unused header value
@@ -3237,8 +3237,8 @@ Explosion_Small_Init:   # offset: 0x1AA8
 
 Explosion_Medium_:   # offset: 0x1AD6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	143
 Type         	0
 #  .DW 0  # unused header value
@@ -3274,8 +3274,8 @@ Explosion_Medium_Init:   # offset: 0x1AE2
 
 Explosion_Large_:   # offset: 0x1B16
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	144
 Type         	0
 #  .DW 0  # unused header value
@@ -3319,8 +3319,8 @@ Explosion_Large_Init:   # offset: 0x1B22
 
 SpiderMineExplosion:   # offset: 0x1B6A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	280
 Type         	0
 #  .DW 0  # unused header value
@@ -3356,8 +3356,8 @@ SpiderMineExplosionInit:   # offset: 0x1B76
 
 WraithAfterburners:   # offset: 0x1BAC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	83
 Type         	12
 #  .DW 0  # unused header value
@@ -3389,8 +3389,8 @@ WraithAfterburnersInit:   # offset: 0x1BD0
 
 ScienceVesselOverlay:   # offset: 0x1BDC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	252
 Type         	1
 #  .DW 0  # unused header value
@@ -3440,8 +3440,8 @@ ScienceVesselOverlayDeath:   # offset: 0x1C38
 
 ZergAirDeathExplosion:   # offset: 0x1C3C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	33
 Type         	1
 #  .DW 0  # unused header value
@@ -3473,8 +3473,8 @@ ZergAirDeathExplosionInit:   # offset: 0x1C48
 
 ZergBuildingExplosion:   # offset: 0x1C72
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	34
 Type         	1
 #  .DW 0  # unused header value
@@ -3514,8 +3514,8 @@ ZergBuildingExplosionInit:   # offset: 0x1C7E
 
 InfestedTerranExplosion:   # offset: 0x1CBC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	7
 Type         	1
 #  .DW 0  # unused header value
@@ -3551,8 +3551,8 @@ InfestedTerranExplosionInit:   # offset: 0x1CC8
 
 Ragnasaur_AshworldCritter_:   # offset: 0x1CFC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	198
 Type         	12
 #  .DW 0  # unused header value
@@ -3634,8 +3634,8 @@ Ragnasaur_AshworldCritter_Walking:   # offset: 0x1D59
 
 Rhynadon_BadlandsCritter_:   # offset: 0x1D9C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	199
 Type         	12
 #  .DW 0  # unused header value
@@ -3723,8 +3723,8 @@ Rhynadon_BadlandsCritter_Walking:   # offset: 0x1DF9
 
 CrashedBattlecruiser:   # offset: 0x1E4A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	104
 Type         	20
 #  .DW 0  # unused header value
@@ -3763,8 +3763,8 @@ CrashedBattlecruiserBuilt:   # offset: 0x1E83
 
 Civilian:   # offset: 0x1E8A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	67
 Type         	12
 #  .DW 0  # unused header value
@@ -3835,8 +3835,8 @@ CivilianWalking:   # offset: 0x1ED2
 
 DataDisk:   # offset: 0x1F0E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	218
 Type         	1
 #  .DW 0  # unused header value
@@ -3864,8 +3864,8 @@ DataDiskDeath:   # offset: 0x1F30
 
 Flag:   # offset: 0x1F38
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	216
 Type         	1
 #  .DW 0  # unused header value
@@ -3906,8 +3906,8 @@ FlagDeath:   # offset: 0x1F78
 
 GasOrb:   # offset: 0x1F80
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	225
 Type         	1
 #  .DW 0  # unused header value
@@ -3919,8 +3919,8 @@ Death          GasOrbDeath
 
 GasOrb2:   # offset: 0x1F8C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	226
 Type         	1
 #  .DW 0  # unused header value
@@ -3949,8 +3949,8 @@ GasOrbDeath:   # offset: 0x1FB4
 
 GasSac:   # offset: 0x1FBC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	223
 Type         	1
 #  .DW 0  # unused header value
@@ -3962,8 +3962,8 @@ Death          GasSacDeath
 
 GasSac2:   # offset: 0x1FC8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	224
 Type         	1
 #  .DW 0  # unused header value
@@ -3992,8 +3992,8 @@ GasSacDeath:   # offset: 0x1FF0
 
 GasTank:   # offset: 0x1FF8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	227
 Type         	1
 #  .DW 0  # unused header value
@@ -4005,8 +4005,8 @@ Death          GasTankDeath
 
 GasTank2:   # offset: 0x2004
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	228
 Type         	1
 #  .DW 0  # unused header value
@@ -4035,8 +4035,8 @@ GasTankDeath:   # offset: 0x202C
 
 VespeneGeyser:   # offset: 0x2034
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	201
 Type         	20
 #  .DW 0  # unused header value
@@ -4068,8 +4068,8 @@ WarpIn         [NONE]
 
 VespeneGeyser2:   # offset: 0x2068
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	202
 Type         	20
 #  .DW 0  # unused header value
@@ -4101,8 +4101,8 @@ WarpIn         [NONE]
 
 VespeneGeyserShadow:   # offset: 0x209C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	203
 Type         	1
 #  .DW 0  # unused header value
@@ -4151,8 +4151,8 @@ VespeneGeyserShadowInit:   # offset: 0x20EB
 
 IonCannon:   # offset: 0x20F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	116
 Type         	20
 #  .DW 0  # unused header value
@@ -4188,8 +4188,8 @@ IonCannonInit:   # offset: 0x2126
 
 Bengalaas_JungleCritter_:   # offset: 0x212C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	200
 Type         	12
 #  .DW 0  # unused header value
@@ -4279,8 +4279,8 @@ Bengalaas_JungleCritter_Walking:   # offset: 0x2189
 
 YoungChrysalis:   # offset: 0x21E0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	220
 Type         	1
 #  .DW 0  # unused header value
@@ -4308,8 +4308,8 @@ YoungChrysalisDeath:   # offset: 0x2202
 
 MatureChrysalis:   # offset: 0x220A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	47
 Type         	20
 #  .DW 0  # unused header value
@@ -4366,8 +4366,8 @@ MatureChrysalisAlmostBuilt:   # offset: 0x2266
 
 CrystalsShadows:   # offset: 0x2272
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	219
 Type         	1
 #  .DW 0  # unused header value
@@ -4395,8 +4395,8 @@ CrystalsShadowsDeath:   # offset: 0x2294
 
 KhaydarinCrystalFormation:   # offset: 0x229C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	176
 Type         	20
 #  .DW 0  # unused header value
@@ -4432,8 +4432,8 @@ KhaydarinCrystalFormationInit:   # offset: 0x22D0
 
 MineralFieldType1:   # offset: 0x22D6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	204
 Type         	20
 #  .DW 0  # unused header value
@@ -4465,8 +4465,8 @@ WarpIn         [NONE]
 
 MineralFieldType2:   # offset: 0x230A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	205
 Type         	20
 #  .DW 0  # unused header value
@@ -4498,8 +4498,8 @@ WarpIn         [NONE]
 
 MineralFieldType3:   # offset: 0x233E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	206
 Type         	20
 #  .DW 0  # unused header value
@@ -4558,8 +4558,8 @@ MineralFieldType1SpecialState1:   # offset: 0x2399
 
 OreChunk:   # offset: 0x23A0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	221
 Type         	1
 #  .DW 0  # unused header value
@@ -4571,8 +4571,8 @@ Death          OreChunkDeath
 
 OreChunk2:   # offset: 0x23AC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	222
 Type         	1
 #  .DW 0  # unused header value
@@ -4595,8 +4595,8 @@ OreChunkDeath:   # offset: 0x23C6
 
 Unknwon214:   # offset: 0x23CE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	214
 Type         	1
 #  .DW 0  # unused header value
@@ -4617,8 +4617,8 @@ Unknwon214Death:   # offset: 0x23E0
 
 PsiEmitter:   # offset: 0x23E8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	217
 Type         	1
 #  .DW 0  # unused header value
@@ -4663,8 +4663,8 @@ PsiEmitterDeath:   # offset: 0x242D
 
 Unknown207:   # offset: 0x2436
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	207
 Type         	20
 #  .DW 0  # unused header value
@@ -4705,8 +4705,8 @@ Unknown207Death:   # offset: 0x2470
 
 StasisCell_Prison:   # offset: 0x2478
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	187
 Type         	20
 #  .DW 0  # unused header value
@@ -4742,8 +4742,8 @@ StasisCell_PrisonInit:   # offset: 0x24AC
 
 Temple:   # offset: 0x24B2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	189
 Type         	20
 #  .DW 0  # unused header value
@@ -4779,8 +4779,8 @@ TempleInit:   # offset: 0x24E6
 
 MapRevealer:   # offset: 0x24EC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	352
 Type         	1
 #  .DW 0  # unused header value
@@ -4813,8 +4813,8 @@ MapRevealerDeath:   # offset: 0x251C
 
 Arbiter:   # offset: 0x251E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	146
 Type         	21
 #  .DW 0  # unused header value
@@ -4898,8 +4898,8 @@ ArbiterCastSpell:   # offset: 0x25A3
 
 ArchonEnergy:   # offset: 0x25B2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	147
 Type         	13
 #  .DW 0  # unused header value
@@ -5024,8 +5024,8 @@ ArchonEnergyGndAttkInit:   # offset: 0x2662
 
 ArchonBeing:   # offset: 0x26C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	148
 Type         	12
 #  .DW 0  # unused header value
@@ -5103,8 +5103,8 @@ ArchonBeingLocal00:   # offset: 0x272E
 
 ArchonSwirl:   # offset: 0x275C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	149
 Type         	1
 #  .DW 0  # unused header value
@@ -5154,8 +5154,8 @@ ArchonSwirlLocal00:   # offset: 0x276D
 
 Carrier:   # offset: 0x27BC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	151
 Type         	21
 #  .DW 0  # unused header value
@@ -5206,8 +5206,8 @@ CarrierWalking:   # offset: 0x280E
 
 Dragoon:   # offset: 0x2816
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	153
 Type         	21
 #  .DW 0  # unused header value
@@ -5353,8 +5353,8 @@ DragoonGndAttkToIdle:   # offset: 0x2927
 
 DragoonRemnants:   # offset: 0x2944
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	154
 Type         	0
 #  .DW 0  # unused header value
@@ -5379,8 +5379,8 @@ DragoonRemnantsInit:   # offset: 0x2950
 
 DarkTemplar_Hero_:   # offset: 0x296A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	152
 Type         	12
 #  .DW 0  # unused header value
@@ -5475,8 +5475,8 @@ DarkTemplar_Hero_CastSpell:   # offset: 0x2A17
 
 Interceptor:   # offset: 0x2A1E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	155
 Type         	12
 #  .DW 0  # unused header value
@@ -5525,8 +5525,8 @@ InterceptorGndAttkInit:   # offset: 0x2A60
 
 Probe:   # offset: 0x2A70
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	156
 Type         	21
 #  .DW 0  # unused header value
@@ -5584,8 +5584,8 @@ ProbeWalking:   # offset: 0x2ACC
 
 Shuttle:   # offset: 0x2AD2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	157
 Type         	21
 #  .DW 0  # unused header value
@@ -5640,8 +5640,8 @@ ShuttleWalking:   # offset: 0x2B24
 
 Scout:   # offset: 0x2B32
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	161
 Type         	21
 #  .DW 0  # unused header value
@@ -5720,8 +5720,8 @@ ScoutAirAttkInit:   # offset: 0x2BB3
 
 HighTemplar:   # offset: 0x2BC2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	158
 Type         	21
 #  .DW 0  # unused header value
@@ -5858,8 +5858,8 @@ HighTemplarCastSpell:   # offset: 0x2CAF
 
 Reaver:   # offset: 0x2CD4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	159
 Type         	21
 #  .DW 0  # unused header value
@@ -5947,8 +5947,8 @@ ReaverGndAttkToIdle:   # offset: 0x2D75
 
 Scarab:   # offset: 0x2D78
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	160
 Type         	13
 #  .DW 0  # unused header value
@@ -5993,8 +5993,8 @@ ScarabWalking:   # offset: 0x2DB1
 
 Observer:   # offset: 0x2DC0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	165
 Type         	21
 #  .DW 0  # unused header value
@@ -6046,8 +6046,8 @@ ObserverWalking:   # offset: 0x2E14
 
 Zealot:   # offset: 0x2E1C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	163
 Type         	21
 #  .DW 0  # unused header value
@@ -6079,8 +6079,8 @@ WarpIn         ZealotWarpIn
 
 ZealotDeath_:   # offset: 0x2E50
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	164
 Type         	1
 #  .DW 0  # unused header value
@@ -6179,8 +6179,8 @@ ZealotGndAttkToIdle:   # offset: 0x2F10
 
 TemplarArchives:   # offset: 0x2F14
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	166
 Type         	27
 #  .DW 0  # unused header value
@@ -6228,8 +6228,8 @@ TemplarArchivesWarpIn:   # offset: 0x2F5F
 
 Assimilator:   # offset: 0x2F68
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	167
 Type         	27
 #  .DW 0  # unused header value
@@ -6297,8 +6297,8 @@ AssimilatorDeath:   # offset: 0x2FDC
 
 Observatory:   # offset: 0x2FE8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	168
 Type         	27
 #  .DW 0  # unused header value
@@ -6346,8 +6346,8 @@ ObservatoryWarpIn:   # offset: 0x3033
 
 WarpFlashHeader:   # offset: 0x303C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	192
 Type         	1
 #  .DW 0  # unused header value
@@ -6369,8 +6369,8 @@ WarpFlashHeaderDeath:   # offset: 0x3051
 
 CitadelOfAdun:   # offset: 0x3054
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	170
 Type         	27
 #  .DW 0  # unused header value
@@ -6418,8 +6418,8 @@ CitadelOfAdunWarpIn:   # offset: 0x309F
 
 Forge:   # offset: 0x30A8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	171
 Type         	27
 #  .DW 0  # unused header value
@@ -6471,8 +6471,8 @@ ForgeWarpIn:   # offset: 0x30FB
 
 ForgeOverlay:   # offset: 0x3104
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	172
 Type         	27
 #  .DW 0  # unused header value
@@ -6523,8 +6523,8 @@ ForgeOverlayIsWorking:   # offset: 0x314A
 
 Gateway:   # offset: 0x315C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	173
 Type         	27
 #  .DW 0  # unused header value
@@ -6572,8 +6572,8 @@ GatewayWarpIn:   # offset: 0x31A7
 
 CyberneticsCore:   # offset: 0x31B0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	174
 Type         	27
 #  .DW 0  # unused header value
@@ -6625,8 +6625,8 @@ CyberneticsCoreWarpIn:   # offset: 0x3203
 
 CybrneticsCoreOverlay:   # offset: 0x320C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	175
 Type         	27
 #  .DW 0  # unused header value
@@ -6676,8 +6676,8 @@ CybrneticsCoreOverlayIsWorking:   # offset: 0x3252
 
 Nexus:   # offset: 0x3260
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	177
 Type         	21
 #  .DW 0  # unused header value
@@ -6723,8 +6723,8 @@ NexusWarpIn:   # offset: 0x32A7
 
 ProtossBeaconOverlay:   # offset: 0x32B0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	210
 Type         	1
 #  .DW 0  # unused header value
@@ -6748,8 +6748,8 @@ ProtossBeaconOverlayInit:   # offset: 0x32BC
 
 PhotonCannon:   # offset: 0x32D4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	179
 Type         	27
 #  .DW 0  # unused header value
@@ -6816,8 +6816,8 @@ PhotonCannonGndAttkToIdle:   # offset: 0x333B
 
 ProtossBeacon:   # offset: 0x3348
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	212
 Type         	1
 #  .DW 0  # unused header value
@@ -6835,8 +6835,8 @@ ProtossBeaconInit:   # offset: 0x3354
 
 ArbiterTribunal:   # offset: 0x3360
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	180
 Type         	27
 #  .DW 0  # unused header value
@@ -6884,8 +6884,8 @@ ArbiterTribunalWarpIn:   # offset: 0x33AB
 
 Pylon:   # offset: 0x33B4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	181
 Type         	21
 #  .DW 0  # unused header value
@@ -6933,8 +6933,8 @@ PylonDeath:   # offset: 0x33FB
 
 RoboticsFacility:   # offset: 0x3406
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	182
 Type         	27
 #  .DW 0  # unused header value
@@ -6983,8 +6983,8 @@ RoboticsFacilityWarpIn:   # offset: 0x3451
 
 ShieldBattery:   # offset: 0x345A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	183
 Type         	27
 #  .DW 0  # unused header value
@@ -7041,8 +7041,8 @@ ShieldBatteryDeath:   # offset: 0x34B5
 
 Stargate:   # offset: 0x34C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	185
 Type         	27
 #  .DW 0  # unused header value
@@ -7094,8 +7094,8 @@ StargateWarpIn:   # offset: 0x3513
 
 RoboticsSupportBay:   # offset: 0x351C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	188
 Type         	27
 #  .DW 0  # unused header value
@@ -7143,8 +7143,8 @@ RoboticsSupportBayWarpIn:   # offset: 0x3567
 
 FleetBeacon:   # offset: 0x3570
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	190
 Type         	27
 #  .DW 0  # unused header value
@@ -7192,8 +7192,8 @@ FleetBeaconWarpIn:   # offset: 0x35BB
 
 WarpTexture:   # offset: 0x35C4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	193
 Type         	1
 #  .DW 0  # unused header value
@@ -7255,8 +7255,8 @@ WarpTextureDeath:   # offset: 0x3639
 
 WarpAnchor:   # offset: 0x3642
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	191
 Type         	13
 #  .DW 0  # unused header value
@@ -7332,8 +7332,8 @@ WarpAnchorDeath:   # offset: 0x36B4
 
 Unknown169:   # offset: 0x36D4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	169
 Type         	20
 #  .DW 0  # unused header value
@@ -7373,8 +7373,8 @@ Unknown169Init:   # offset: 0x3708
 
 NexusOverlay:   # offset: 0x3716
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	178
 Type         	24
 #  .DW 0  # unused header value
@@ -7426,8 +7426,8 @@ NexusOverlayIsWorking:   # offset: 0x3758
 
 ShieldBatteryOverlay:   # offset: 0x3770
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	184
 Type         	24
 #  .DW 0  # unused header value
@@ -7487,8 +7487,8 @@ ShieldBatteryOverlayIsWorking:   # offset: 0x37B2
 
 StargateOverlay:   # offset: 0x37E0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	186
 Type         	24
 #  .DW 0  # unused header value
@@ -7545,8 +7545,8 @@ StargateOverlayIsWorking:   # offset: 0x3822
 
 Scourge:   # offset: 0x3848
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	0
 Type         	12
 #  .DW 0  # unused header value
@@ -7620,8 +7620,8 @@ ScourgeAirAttkInit:   # offset: 0x38C4
 
 ScourgeDeath:   # offset: 0x38D4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	2
 Type         	0
 #  .DW 0  # unused header value
@@ -7641,8 +7641,8 @@ ScourgeDeathInit:   # offset: 0x38E0
 
 ScourgeExplosion:   # offset: 0x38EE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	3
 Type         	1
 #  .DW 0  # unused header value
@@ -7675,8 +7675,8 @@ ScourgeExplosionInit:   # offset: 0x38FA
 
 Broodling:   # offset: 0x3928
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	4
 Type         	12
 #  .DW 0  # unused header value
@@ -7768,8 +7768,8 @@ BroodlingGndAttkInit:   # offset: 0x39BB
 
 BroodlingRemnants:   # offset: 0x39DE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	5
 Type         	0
 #  .DW 0  # unused header value
@@ -7794,8 +7794,8 @@ BroodlingRemnantsInit:   # offset: 0x39EA
 
 InfestedTerran:   # offset: 0x3A04
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	6
 Type         	26
 #  .DW 0  # unused header value
@@ -7933,8 +7933,8 @@ InfestedTerranUnBurrow:   # offset: 0x3AF9
 
 Defiler:   # offset: 0x3B22
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	9
 Type         	26
 #  .DW 0  # unused header value
@@ -8086,8 +8086,8 @@ DefilerUnBurrow:   # offset: 0x3C34
 
 DefilerRemnants:   # offset: 0x3C56
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	10
 Type         	0
 #  .DW 0  # unused header value
@@ -8112,8 +8112,8 @@ DefilerRemnantsInit:   # offset: 0x3C62
 
 Drone:   # offset: 0x3C7C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	11
 Type         	26
 #  .DW 0  # unused header value
@@ -8257,8 +8257,8 @@ DroneLiftOff:   # offset: 0x3D9A
 
 DroneRemnants:   # offset: 0x3DA0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	12
 Type         	0
 #  .DW 0  # unused header value
@@ -8283,8 +8283,8 @@ DroneRemnantsInit:   # offset: 0x3DAC
 
 Egg:   # offset: 0x3DC6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	13
 Type         	13
 #  .DW 0  # unused header value
@@ -8374,8 +8374,8 @@ EggDeath:   # offset: 0x3E73
 
 EggRemnants:   # offset: 0x3E7E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	14
 Type         	0
 #  .DW 0  # unused header value
@@ -8415,8 +8415,8 @@ EggRemnantsInit:   # offset: 0x3E8A
 
 Guardian:   # offset: 0x3EC8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	15
 Type         	12
 #  .DW 0  # unused header value
@@ -8491,8 +8491,8 @@ GuardianGndAttkInit:   # offset: 0x3F4E
 
 GuardianDeath:   # offset: 0x3F5C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	17
 Type         	0
 #  .DW 0  # unused header value
@@ -8512,8 +8512,8 @@ GuardianDeathInit:   # offset: 0x3F68
 
 Hydralisk:   # offset: 0x3F76
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	18
 Type         	26
 #  .DW 0  # unused header value
@@ -8733,8 +8733,8 @@ HydraliskUnBurrow:   # offset: 0x4120
 
 HydraliskRemnants:   # offset: 0x4142
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	19
 Type         	0
 #  .DW 0  # unused header value
@@ -8758,8 +8758,8 @@ HydraliskRemnantsInit:   # offset: 0x414E
 
 Larva:   # offset: 0x4164
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	21
 Type         	12
 #  .DW 0  # unused header value
@@ -8812,8 +8812,8 @@ LarvaWalking:   # offset: 0x4199
 
 LarvaRemnants:   # offset: 0x41C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	22
 Type         	0
 #  .DW 0  # unused header value
@@ -8846,8 +8846,8 @@ LarvaRemnantsInit:   # offset: 0x41CC
 
 Mutalisk:   # offset: 0x41FA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	23
 Type         	12
 #  .DW 0  # unused header value
@@ -8915,8 +8915,8 @@ MutaliskGndAttkInit:   # offset: 0x426C
 
 MutaliskDeath:   # offset: 0x4278
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	24
 Type         	0
 #  .DW 0  # unused header value
@@ -8936,8 +8936,8 @@ MutaliskDeathInit:   # offset: 0x4284
 
 Overlord:   # offset: 0x4292
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	25
 Type         	12
 #  .DW 0  # unused header value
@@ -8996,8 +8996,8 @@ OverlordWalkingToIdle:   # offset: 0x42E5
 
 OverlordDeath:   # offset: 0x42FC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	26
 Type         	0
 #  .DW 0  # unused header value
@@ -9017,8 +9017,8 @@ OverlordDeathInit:   # offset: 0x4308
 
 Queen:   # offset: 0x4316
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	27
 Type         	12
 #  .DW 0  # unused header value
@@ -9116,8 +9116,8 @@ QueenCastSpell:   # offset: 0x43B1
 
 QueenDeath:   # offset: 0x43D8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	28
 Type         	0
 #  .DW 0  # unused header value
@@ -9137,8 +9137,8 @@ QueenDeathInit:   # offset: 0x43E4
 
 UltraliskCavern:   # offset: 0x43F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	55
 Type         	20
 #  .DW 0  # unused header value
@@ -9192,8 +9192,8 @@ UltraliskCavernIsWorking:   # offset: 0x443C
 
 InfestedKerrigan:   # offset: 0x4454
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	20
 Type         	26
 #  .DW 0  # unused header value
@@ -9375,8 +9375,8 @@ InfestedKerriganUnBurrow:   # offset: 0x45B7
 
 Ultralisk:   # offset: 0x45C8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	29
 Type         	12
 #  .DW 0  # unused header value
@@ -9563,8 +9563,8 @@ UltraliskGndAttkRpt:   # offset: 0x4721
 
 UltraliskRemnants:   # offset: 0x4758
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	30
 Type         	0
 #  .DW 0  # unused header value
@@ -9589,8 +9589,8 @@ UltraliskRemnantsInit:   # offset: 0x4764
 
 EggSpawn:   # offset: 0x477E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	37
 Type         	0
 #  .DW 0  # unused header value
@@ -9615,8 +9615,8 @@ EggSpawnInit:   # offset: 0x478A
 
 Zergling:   # offset: 0x47A4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	31
 Type         	26
 #  .DW 0  # unused header value
@@ -9755,8 +9755,8 @@ ZerglingUnBurrow:   # offset: 0x489F
 
 ZerglingRemnants:   # offset: 0x48C0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	32
 Type         	0
 #  .DW 0  # unused header value
@@ -9781,8 +9781,8 @@ ZerglingRemnantsInit:   # offset: 0x48CC
 
 EvolutionChamber:   # offset: 0x48E6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	41
 Type         	20
 #  .DW 0  # unused header value
@@ -9833,8 +9833,8 @@ EvolutionChamberIsWorking:   # offset: 0x4930
 
 SpawningPool:   # offset: 0x4942
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	40
 Type         	20
 #  .DW 0  # unused header value
@@ -9891,8 +9891,8 @@ SpawningPoolAlmostBuilt:   # offset: 0x499E
 
 Extractor:   # offset: 0x49AA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	56
 Type         	20
 #  .DW 0  # unused header value
@@ -9968,8 +9968,8 @@ ExtractorDeath:   # offset: 0x4A35
 
 CreepColony:   # offset: 0x4A40
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	42
 Type         	20
 #  .DW 0  # unused header value
@@ -10023,8 +10023,8 @@ CreepColonyLocal00:   # offset: 0x4A8A
 
 Hatchery:   # offset: 0x4AA2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	43
 Type         	20
 #  .DW 0  # unused header value
@@ -10088,8 +10088,8 @@ unknownLabel4B0D:   # offset: 0x4B0D
 
 Hive:   # offset: 0x4B18
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	44
 Type         	20
 #  .DW 0  # unused header value
@@ -10147,8 +10147,8 @@ HiveIsWorking:   # offset: 0x4B62
 
 InfestedCommandCenter:   # offset: 0x4B84
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	39
 Type         	20
 #  .DW 0  # unused header value
@@ -10227,8 +10227,8 @@ InfestedCommandCenterLanding:   # offset: 0x4BF2
 
 Lair:   # offset: 0x4C16
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	45
 Type         	20
 #  .DW 0  # unused header value
@@ -10286,8 +10286,8 @@ LairIsWorking:   # offset: 0x4C60
 
 SunkenColony:   # offset: 0x4C82
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	46
 Type         	20
 #  .DW 0  # unused header value
@@ -10491,8 +10491,8 @@ SunkenColonyLocal01:   # offset: 0x4DD0
 
 GreaterSpire:   # offset: 0x4E42
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	48
 Type         	20
 #  .DW 0  # unused header value
@@ -10543,8 +10543,8 @@ GreaterSpireIsWorking:   # offset: 0x4E8C
 
 DefilerMound:   # offset: 0x4E9E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	49
 Type         	20
 #  .DW 0  # unused header value
@@ -10598,8 +10598,8 @@ DefilerMoundIsWorking:   # offset: 0x4EE8
 
 QueenNest:   # offset: 0x4F00
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	50
 Type         	20
 #  .DW 0  # unused header value
@@ -10653,8 +10653,8 @@ QueenNestIsWorking:   # offset: 0x4F4A
 
 NydusCanal:   # offset: 0x4F62
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	51
 Type         	20
 #  .DW 0  # unused header value
@@ -10712,8 +10712,8 @@ NydusCanalIsWorking:   # offset: 0x4FAC
 
 Overmind_withShell_:   # offset: 0x4FCE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	52
 Type         	20
 #  .DW 0  # unused header value
@@ -10779,8 +10779,8 @@ Overmind_withShell_Death:   # offset: 0x5036
 
 Overmind_withoutShell_:   # offset: 0x5048
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	54
 Type         	20
 #  .DW 0  # unused header value
@@ -10812,8 +10812,8 @@ WarpIn         [NONE]
 
 OvermindRemnants:   # offset: 0x507C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	53
 Type         	1
 #  .DW 0  # unused header value
@@ -10856,8 +10856,8 @@ OvermindRemnantsInit:   # offset: 0x50BC
 
 SporeColony:   # offset: 0x50C4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	59
 Type         	20
 #  .DW 0  # unused header value
@@ -10911,8 +10911,8 @@ SporeColonyAirAttkToIdle:   # offset: 0x510E
 
 HydraliskDen:   # offset: 0x5126
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	57
 Type         	20
 #  .DW 0  # unused header value
@@ -10966,8 +10966,8 @@ HydraliskDenIsWorking:   # offset: 0x5170
 
 Spire:   # offset: 0x5188
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	58
 Type         	20
 #  .DW 0  # unused header value
@@ -11021,8 +11021,8 @@ SpireIsWorking:   # offset: 0x51D2
 
 Cerebrate:   # offset: 0x51EA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	38
 Type         	20
 #  .DW 0  # unused header value
@@ -11077,8 +11077,8 @@ CerebrateIsWorking:   # offset: 0x5234
 
 ZergBeaconOverlay:   # offset: 0x5250
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	208
 Type         	1
 #  .DW 0  # unused header value
@@ -11102,8 +11102,8 @@ ZergBeaconOverlayInit:   # offset: 0x525C
 
 ZergBeacon:   # offset: 0x5274
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	211
 Type         	1
 #  .DW 0  # unused header value
@@ -11121,8 +11121,8 @@ ZergBeaconInit:   # offset: 0x5280
 
 ZergBirth:   # offset: 0x528C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	36
 Type         	13
 #  .DW 0  # unused header value
@@ -11176,8 +11176,8 @@ ZergBirthDeath:   # offset: 0x52E7
 
 GuardianCocoon:   # offset: 0x52EA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	8
 Type         	14
 #  .DW 0  # unused header value
@@ -11203,8 +11203,8 @@ AlmostBuilt    [NONE]
 
 GuardianBirth:   # offset: 0x5312
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	16
 Type         	13
 #  .DW 0  # unused header value
@@ -11316,8 +11316,8 @@ GuardianBirthDeath:   # offset: 0x53EB
 
 InfestedCommandCenterOverlay:   # offset: 0x53F6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	60
 Type         	1
 #  .DW 0  # unused header value
@@ -11343,8 +11343,8 @@ InfestedCommandCenterOverlayDeath:   # offset: 0x5414
 
 ZergConstruction_Small_:   # offset: 0x5418
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	61
 Type         	15
 #  .DW 0  # unused header value
@@ -11412,8 +11412,8 @@ ZergConstruction_Small_AlmostBuilt:   # offset: 0x5489
 
 ZergConstruction_Medium_:   # offset: 0x549E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	62
 Type         	15
 #  .DW 0  # unused header value
@@ -11503,8 +11503,8 @@ ZergConstruction_Medium_AlmostBuilt:   # offset: 0x5544
 
 ZergBuildingMorph:   # offset: 0x5558
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	63
 Type         	15
 #  .DW 0  # unused header value
@@ -11530,8 +11530,8 @@ AlmostBuilt    ZergBuildingMorphAlmostBuilt
 
 ZergConstruction_Large_:   # offset: 0x5580
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	64
 Type         	15
 #  .DW 0  # unused header value
@@ -11655,8 +11655,8 @@ ZergConstruction_Large_Death:   # offset: 0x5677
 
 ZergBuildingSpawn:   # offset: 0x5682
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	65
 Type         	1
 #  .DW 0  # unused header value
@@ -11682,8 +11682,8 @@ ZergBuildingSpawnDeath:   # offset: 0x569E
 
 PulseCannon:   # offset: 0x56A2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	233
 Type         	2
 #  .DW 0  # unused header value
@@ -11713,8 +11713,8 @@ PulseCannonDeath:   # offset: 0x56C3
 
 PhaseDisruptor:   # offset: 0x56CA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	234
 Type         	2
 #  .DW 0  # unused header value
@@ -11752,8 +11752,8 @@ PhaseDisruptorDeath:   # offset: 0x56FF
 
 Lockdown_EMPShockwaveMissile:   # offset: 0x5708
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	249
 Type         	2
 #  .DW 0  # unused header value
@@ -11783,8 +11783,8 @@ Lockdown_EMPShockwaveMissileDeath:   # offset: 0x572B
 
 STA_STSPhotonCannonOverlay:   # offset: 0x5734
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	235
 Type         	2
 #  .DW 0  # unused header value
@@ -11834,8 +11834,8 @@ STA_STSPhotonCannonOverlayDeath:   # offset: 0x5787
 
 ParticleBeamHit:   # offset: 0x5790
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	230
 Type         	2
 #  .DW 0  # unused header value
@@ -11883,8 +11883,8 @@ ParticleBeamHitDeath:   # offset: 0x57A6
 
 YamatoGun:   # offset: 0x57E8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	247
 Type         	2
 #  .DW 0  # unused header value
@@ -11916,8 +11916,8 @@ YamatoGunDeath:   # offset: 0x580E
 
 YamatoGunTrail:   # offset: 0x5818
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	248
 Type         	0
 #  .DW 0  # unused header value
@@ -11938,8 +11938,8 @@ YamatoGunTrailInit:   # offset: 0x5824
 
 GeminiMissiles:   # offset: 0x5834
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	239
 Type         	2
 #  .DW 0  # unused header value
@@ -11971,8 +11971,8 @@ GeminiMissilesDeath:   # offset: 0x585C
 
 FragmentationGrenade:   # offset: 0x5868
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	242
 Type         	2
 #  .DW 0  # unused header value
@@ -12013,8 +12013,8 @@ FragmentationGrenadeDeath:   # offset: 0x58A2
 
 Anti_MatterMissile:   # offset: 0x58AC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	232
 Type         	2
 #  .DW 0  # unused header value
@@ -12045,8 +12045,8 @@ Anti_MatterMissileDeath:   # offset: 0x58D0
 
 LongboltMissile:   # offset: 0x58DA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	240
 Type         	2
 #  .DW 0  # unused header value
@@ -12078,8 +12078,8 @@ LongboltMissileDeath:   # offset: 0x5900
 
 QueenSpellHolder:   # offset: 0x590C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	267
 Type         	2
 #  .DW 0  # unused header value
@@ -12107,8 +12107,8 @@ QueenSpellHolderDeath:   # offset: 0x5926
 
 Unknown255:   # offset: 0x5930
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	255
 Type         	2
 #  .DW 0  # unused header value
@@ -12142,8 +12142,8 @@ Unknown255Death:   # offset: 0x5946
 
 DualPhotonBlasterHit:   # offset: 0x5966
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	231
 Type         	2
 #  .DW 0  # unused header value
@@ -12183,8 +12183,8 @@ DualPhotonBlasterHitDeath:   # offset: 0x597C
 
 FusionCutterHit:   # offset: 0x59AA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	237
 Type         	2
 #  .DW 0  # unused header value
@@ -12228,8 +12228,8 @@ FusionCutterHitDeath:   # offset: 0x59C0
 
 GlaveWurm:   # offset: 0x59FA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	264
 Type         	13
 #  .DW 0  # unused header value
@@ -12304,8 +12304,8 @@ GlaveWurmDeath:   # offset: 0x5A9C
 
 SeekerSpores:   # offset: 0x5AA8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	266
 Type         	2
 #  .DW 0  # unused header value
@@ -12348,8 +12348,8 @@ SeekerSporesDeath:   # offset: 0x5AF4
 
 SubterraneanTentacle:   # offset: 0x5B00
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	258
 Type         	2
 #  .DW 0  # unused header value
@@ -12394,8 +12394,8 @@ SubterraneanTentacleDeath:   # offset: 0x5B19
 
 GaussRifleHit:   # offset: 0x5B52
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	238
 Type         	2
 #  .DW 0  # unused header value
@@ -12448,8 +12448,8 @@ GaussRifleHitDeath:   # offset: 0x5B68
 
 WhiteCircle:   # offset: 0x5BB6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	292
 Type         	2
 #  .DW 0  # unused header value
@@ -12475,8 +12475,8 @@ WhiteCircleDeath:   # offset: 0x5BCC
 
 NeedleSpinesHit:   # offset: 0x5BD6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	256
 Type         	2
 #  .DW 0  # unused header value
@@ -12514,8 +12514,8 @@ NeedleSpinesHitDeath:   # offset: 0x5BEC
 
 Academy:   # offset: 0x5C16
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	94
 Type         	20
 #  .DW 0  # unused header value
@@ -12565,8 +12565,8 @@ AcademyIsWorking:   # offset: 0x5C61
 
 AcademyOverlay:   # offset: 0x5C6A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	95
 Type         	24
 #  .DW 0  # unused header value
@@ -12615,8 +12615,8 @@ AcademyOverlayDeath:   # offset: 0x5CB3
 
 Barracks:   # offset: 0x5CB6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	96
 Type         	24
 #  .DW 0  # unused header value
@@ -12721,8 +12721,8 @@ BarracksDisable:   # offset: 0x5D74
 
 Armory:   # offset: 0x5D78
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	97
 Type         	20
 #  .DW 0  # unused header value
@@ -12769,8 +12769,8 @@ ArmoryAlmostBuilt:   # offset: 0x5DBF
 
 ArmoryOverlay:   # offset: 0x5DC6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	98
 Type         	24
 #  .DW 0  # unused header value
@@ -12820,8 +12820,8 @@ ArmoryOverlayDeath:   # offset: 0x5E14
 
 ComsatStation:   # offset: 0x5E18
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	99
 Type         	20
 #  .DW 0  # unused header value
@@ -12876,8 +12876,8 @@ unknownLabel5E70:   # offset: 0x5E70
 
 ComsatConnector:   # offset: 0x5E74
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	100
 Type         	24
 #  .DW 0  # unused header value
@@ -12936,8 +12936,8 @@ ComsatConnectorDeath:   # offset: 0x5ED4
 
 ComsatOverlay:   # offset: 0x5ED8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	101
 Type         	24
 #  .DW 0  # unused header value
@@ -13006,8 +13006,8 @@ ComsatOverlayDeath:   # offset: 0x5F51
 
 CommandCenter:   # offset: 0x5F54
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	102
 Type         	20
 #  .DW 0  # unused header value
@@ -13088,8 +13088,8 @@ CommandCenterLanding:   # offset: 0x5FC3
 
 CommandCenterOverlay:   # offset: 0x5FE6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	103
 Type         	24
 #  .DW 0  # unused header value
@@ -13182,8 +13182,8 @@ CommandCenterOverlayDeath:   # offset: 0x6070
 
 SupplyDepot:   # offset: 0x6074
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	105
 Type         	24
 #  .DW 0  # unused header value
@@ -13238,8 +13238,8 @@ SupplyDepotDisable:   # offset: 0x60CC
 
 SupplyDepotOverlay:   # offset: 0x60D0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	106
 Type         	24
 #  .DW 0  # unused header value
@@ -13294,8 +13294,8 @@ SupplyDepotOverlayDeath:   # offset: 0x612D
 
 ControlTower:   # offset: 0x6130
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	107
 Type         	24
 #  .DW 0  # unused header value
@@ -13352,8 +13352,8 @@ ControlTowerDisable:   # offset: 0x618D
 
 ControlTowerConnector:   # offset: 0x6190
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	108
 Type         	24
 #  .DW 0  # unused header value
@@ -13416,8 +13416,8 @@ ControlTowerConnectorDeath:   # offset: 0x61FA
 
 ControlTowerOverlay:   # offset: 0x61FE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	109
 Type         	24
 #  .DW 0  # unused header value
@@ -13467,8 +13467,8 @@ ControlTowerOverlayDeath:   # offset: 0x6246
 
 CovertOps:   # offset: 0x624A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	113
 Type         	20
 #  .DW 0  # unused header value
@@ -13519,8 +13519,8 @@ CovertOpsLanding:   # offset: 0x6297
 
 CovertOpsConnector:   # offset: 0x62A0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	114
 Type         	24
 #  .DW 0  # unused header value
@@ -13583,8 +13583,8 @@ CovertOpsConnectorDeath:   # offset: 0x630A
 
 CovertOpsOverlay:   # offset: 0x630E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	115
 Type         	24
 #  .DW 0  # unused header value
@@ -13634,8 +13634,8 @@ CovertOpsOverlayDeath:   # offset: 0x6356
 
 Factory:   # offset: 0x635A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	111
 Type         	24
 #  .DW 0  # unused header value
@@ -13731,8 +13731,8 @@ FactoryLanding:   # offset: 0x63DF
 
 FactoryOverlay:   # offset: 0x6408
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	112
 Type         	24
 #  .DW 0  # unused header value
@@ -13782,8 +13782,8 @@ FactoryOverlayDeath:   # offset: 0x6456
 
 MachineShop:   # offset: 0x645A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	117
 Type         	24
 #  .DW 0  # unused header value
@@ -13851,8 +13851,8 @@ MachineShopIsWorking:   # offset: 0x64B8
 
 MachineShopConnector:   # offset: 0x64D0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	118
 Type         	24
 #  .DW 0  # unused header value
@@ -13911,8 +13911,8 @@ MachineShopConnectorDeath:   # offset: 0x6530
 
 MissileTurret_Base_:   # offset: 0x6534
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	119
 Type         	20
 #  .DW 0  # unused header value
@@ -13959,8 +13959,8 @@ MissileTurret_Base_WorkingToIdle:   # offset: 0x657E
 
 MissileTurret_Turret_:   # offset: 0x6584
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	120
 Type         	24
 #  .DW 0  # unused header value
@@ -14017,8 +14017,8 @@ MissileTurret_Turret_GndAttkToIdle:   # offset: 0x65D5
 
 NuclearSilo:   # offset: 0x65D8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	128
 Type         	24
 #  .DW 0  # unused header value
@@ -14075,8 +14075,8 @@ NuclearSiloDisable:   # offset: 0x6635
 
 NuclearSiloConnector:   # offset: 0x6638
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	129
 Type         	24
 #  .DW 0  # unused header value
@@ -14139,8 +14139,8 @@ NuclearSiloConnectorDeath:   # offset: 0x66A2
 
 NuclearSiloOverlay:   # offset: 0x66A6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	130
 Type         	24
 #  .DW 0  # unused header value
@@ -14190,8 +14190,8 @@ NuclearSiloOverlayDeath:   # offset: 0x66EE
 
 NuclearMissile:   # offset: 0x66F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	131
 Type         	21
 #  .DW 0  # unused header value
@@ -14259,8 +14259,8 @@ NuclearMissileDeath:   # offset: 0x6761
 
 PhysicsLab:   # offset: 0x676A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	121
 Type         	20
 #  .DW 0  # unused header value
@@ -14320,8 +14320,8 @@ PhysicsLabLanding:   # offset: 0x67CB
 
 PhysicsLabConnector:   # offset: 0x67D4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	122
 Type         	24
 #  .DW 0  # unused header value
@@ -14384,8 +14384,8 @@ PhysicsLabConnectorDeath:   # offset: 0x683E
 
 Bunker:   # offset: 0x6842
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	123
 Type         	24
 #  .DW 0  # unused header value
@@ -14432,8 +14432,8 @@ BunkerAlmostBuilt:   # offset: 0x6889
 
 BunkerOverlay:   # offset: 0x6890
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	124
 Type         	0
 #  .DW 0  # unused header value
@@ -14461,8 +14461,8 @@ BunkerOverlayInit:   # offset: 0x689C
 
 Refinery:   # offset: 0x68B2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	125
 Type         	20
 #  .DW 0  # unused header value
@@ -14542,8 +14542,8 @@ RefineryDeath:   # offset: 0x6937
 
 ScienceFacility:   # offset: 0x6942
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	126
 Type         	20
 #  .DW 0  # unused header value
@@ -14623,8 +14623,8 @@ ScienceFacilityAlmostBuilt:   # offset: 0x69C9
 
 ScienceFacilityOverlay:   # offset: 0x69D0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	127
 Type         	24
 #  .DW 0  # unused header value
@@ -14674,8 +14674,8 @@ ScienceFacilityOverlayDeath:   # offset: 0x6A18
 
 Starport:   # offset: 0x6A1C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	134
 Type         	20
 #  .DW 0  # unused header value
@@ -14756,8 +14756,8 @@ StarportLanding:   # offset: 0x6A8B
 
 StarportOverlay:   # offset: 0x6AAE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	135
 Type         	24
 #  .DW 0  # unused header value
@@ -14807,8 +14807,8 @@ StarportOverlayDeath:   # offset: 0x6AFC
 
 TerranBeaconOverlay:   # offset: 0x6B00
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	209
 Type         	1
 #  .DW 0  # unused header value
@@ -14832,8 +14832,8 @@ TerranBeaconOverlayInit:   # offset: 0x6B0C
 
 TerranBeacon:   # offset: 0x6B24
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	213
 Type         	1
 #  .DW 0  # unused header value
@@ -14851,8 +14851,8 @@ TerranBeaconInit:   # offset: 0x6B30
 
 EngineeringBay:   # offset: 0x6B3C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	136
 Type         	24
 #  .DW 0  # unused header value
@@ -14941,8 +14941,8 @@ EngineeringBayDisable:   # offset: 0x6BD9
 
 EngineeringBayOverlay:   # offset: 0x6BDC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	137
 Type         	24
 #  .DW 0  # unused header value
@@ -15001,8 +15001,8 @@ EngineeringBayOverlayDeath:   # offset: 0x6C3F
 
 Battlecruiser:   # offset: 0x6C42
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	66
 Type         	12
 #  .DW 0  # unused header value
@@ -15053,8 +15053,8 @@ BattlecruiserCastSpell:   # offset: 0x6C94
 
 Dropship:   # offset: 0x6C9A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	68
 Type         	12
 #  .DW 0  # unused header value
@@ -15094,8 +15094,8 @@ DropshipWalking:   # offset: 0x6CD4
 
 Firebat:   # offset: 0x6CDE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	69
 Type         	12
 #  .DW 0  # unused header value
@@ -15230,8 +15230,8 @@ FirebatGndAttkToIdle:   # offset: 0x6DDF
 
 Ghost:   # offset: 0x6DE2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	70
 Type         	13
 #  .DW 0  # unused header value
@@ -15255,8 +15255,8 @@ SpecialState1  GhostSpecialState1
 
 GhostDeath_:   # offset: 0x6E06
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	72
 Type         	1
 #  .DW 0  # unused header value
@@ -15442,8 +15442,8 @@ GhostCastSpell:   # offset: 0x6F5B
 
 GhostRemnants:   # offset: 0x6F72
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	71
 Type         	0
 #  .DW 0  # unused header value
@@ -15464,8 +15464,8 @@ GhostRemnantsInit:   # offset: 0x6F7E
 
 Goliath_Base_:   # offset: 0x6F8E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	75
 Type         	23
 #  .DW 0  # unused header value
@@ -15546,8 +15546,8 @@ Goliath_Base_Walking:   # offset: 0x6FE1
 
 Goliath_Turret_:   # offset: 0x702A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	76
 Type         	12
 #  .DW 0  # unused header value
@@ -15631,8 +15631,8 @@ Goliath_Turret_AirAttkInit:   # offset: 0x70BF
 
 Marine:   # offset: 0x70C8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	78
 Type         	12
 #  .DW 0  # unused header value
@@ -15656,8 +15656,8 @@ SpecialState1  [NONE]
 
 MarineDeath_:   # offset: 0x70EC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	80
 Type         	1
 #  .DW 0  # unused header value
@@ -15824,8 +15824,8 @@ MarineGndAttkToIdle:   # offset: 0x722E
 
 ScannerSweep:   # offset: 0x723C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	81
 Type         	1
 #  .DW 0  # unused header value
@@ -15865,8 +15865,8 @@ ScannerSweepDeath:   # offset: 0x728E
 
 MarineRemnants:   # offset: 0x7292
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	79
 Type         	0
 #  .DW 0  # unused header value
@@ -15887,8 +15887,8 @@ MarineRemnantsInit:   # offset: 0x729E
 
 Wraith:   # offset: 0x72AE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	82
 Type         	12
 #  .DW 0  # unused header value
@@ -15928,8 +15928,8 @@ WraithWalking:   # offset: 0x72E8
 
 SCV:   # offset: 0x72F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	84
 Type         	15
 #  .DW 0  # unused header value
@@ -15999,8 +15999,8 @@ SCVGndAttkToIdle:   # offset: 0x7365
 
 SiegeTank_Siege_Base:   # offset: 0x736C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	92
 Type         	23
 #  .DW 0  # unused header value
@@ -16079,8 +16079,8 @@ SiegeTank_Siege_BaseSpecialState2:   # offset: 0x73E4
 
 SiegeTank_Siege_Turret:   # offset: 0x7408
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	93
 Type         	14
 #  .DW 0  # unused header value
@@ -16155,8 +16155,8 @@ SiegeTank_Siege_TurretSpecialState2:   # offset: 0x7474
 
 SiegeTank_Tank_Base:   # offset: 0x7494
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	90
 Type         	23
 #  .DW 0  # unused header value
@@ -16220,8 +16220,8 @@ SiegeTank_Tank_BaseWalking:   # offset: 0x74ED
 
 SiegeTank_Tank_Turret:   # offset: 0x7506
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	91
 Type         	13
 #  .DW 0  # unused header value
@@ -16262,8 +16262,8 @@ SiegeTank_Tank_TurretGndAttkInit:   # offset: 0x7531
 
 SarahKerrigan:   # offset: 0x7546
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	77
 Type         	13
 #  .DW 0  # unused header value
@@ -16443,8 +16443,8 @@ SarahKerriganCastSpell:   # offset: 0x7689
 
 Vulture:   # offset: 0x76A0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	86
 Type         	13
 #  .DW 0  # unused header value
@@ -16486,8 +16486,8 @@ VultureSpecialState1:   # offset: 0x76DA
 
 SpiderMine:   # offset: 0x76E2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	87
 Type         	26
 #  .DW 0  # unused header value
@@ -16601,8 +16601,8 @@ SpiderMineDeath:   # offset: 0x77B5
 
 ScienceVessel_Base_:   # offset: 0x77BE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	88
 Type         	12
 #  .DW 0  # unused header value
@@ -16649,8 +16649,8 @@ ScienceVessel_Base_Death:   # offset: 0x7802
 
 ScienceVessel_Turret_:   # offset: 0x780E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	89
 Type         	12
 #  .DW 0  # unused header value
@@ -16678,8 +16678,8 @@ ScienceVessel_Turret_Init:   # offset: 0x7832
 
 TerranConstruction_Large_:   # offset: 0x7838
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	138
 Type         	14
 #  .DW 0  # unused header value
@@ -16719,8 +16719,8 @@ TerranConstruction_Large_SpecialState2:   # offset: 0x7871
 
 TerranConstruction_Medium_:   # offset: 0x7878
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	139
 Type         	14
 #  .DW 0  # unused header value
@@ -16760,8 +16760,8 @@ TerranConstruction_Medium_SpecialState2:   # offset: 0x78B1
 
 TerranConstruction_Small_:   # offset: 0x78B8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	140
 Type         	14
 #  .DW 0  # unused header value
@@ -16787,8 +16787,8 @@ AlmostBuilt    [NONE]
 
 AddonConstruction:   # offset: 0x78E0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	141
 Type         	14
 #  .DW 0  # unused header value
@@ -16883,8 +16883,8 @@ TempleDeath:   # offset: 0x7983
 
 CircleMarker:   # offset: 0x7996
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	289
 Type         	1
 #  .DW 0  # unused header value
@@ -16931,8 +16931,8 @@ unknownLabel79D0:   # offset: 0x79D0
 
 ConfirmCircle:   # offset: 0x79D8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	332
 Type         	1
 #  .DW 0  # unused header value
@@ -16953,8 +16953,8 @@ ConfirmCircleDeath:   # offset: 0x79EA
 
 PsiFieldType2:   # offset: 0x79EE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	334
 Type         	1
 #  .DW 0  # unused header value
@@ -16976,8 +16976,8 @@ PsiFieldType2Death:   # offset: 0x7A02
 
 ShadowHeader:   # offset: 0x7A06
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	275
 Type         	1
 #  .DW 0  # unused header value
@@ -16994,8 +16994,8 @@ ShadowHeaderInit:   # offset: 0x7A12
 
 DoodadHeader:   # offset: 0x7A18
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	336
 Type         	0
 #  .DW 0  # unused header value
@@ -17011,8 +17011,8 @@ DoodadHeaderInit:   # offset: 0x7A24
 
 DoodadHeader_secondary_:   # offset: 0x7A2A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	337
 Type         	0
 #  .DW 0  # unused header value
@@ -17030,8 +17030,8 @@ DoodadHeader_secondary_Init:   # offset: 0x7A36
 
 SpacePlatformDoodad:   # offset: 0x7A40
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	338
 Type         	0
 #  .DW 0  # unused header value
@@ -17060,8 +17060,8 @@ SpacePlatformDoodadLocal00:   # offset: 0x7A4F
 
 SpacePlatformDoodad2:   # offset: 0x7A70
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	339
 Type         	0
 #  .DW 0  # unused header value
@@ -17094,8 +17094,8 @@ SpacePlatformDoodad2Local00:   # offset: 0x7A7F
 
 InstallationDoodad:   # offset: 0x7AAA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	340
 Type         	27
 #  .DW 0  # unused header value
@@ -17187,8 +17187,8 @@ InstallationDoodadDisable:   # offset: 0x7B2B
 
 InstallationDoodad2:   # offset: 0x7B60
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	341
 Type         	27
 #  .DW 0  # unused header value
@@ -17282,8 +17282,8 @@ InstallationDoodad2Disable:   # offset: 0x7BE7
 
 FloorMissileTrap:   # offset: 0x7C18
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	345
 Type         	27
 #  .DW 0  # unused header value
@@ -17417,8 +17417,8 @@ FloorMissileTrapDeath:   # offset: 0x7D20
 
 FloorMissileTrapTurret:   # offset: 0x7D28
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	346
 Type         	24
 #  .DW 0  # unused header value
@@ -17472,8 +17472,8 @@ FloorMissileTrapTurretLocal01:   # offset: 0x7D7C
 
 FloorGunTrap:   # offset: 0x7D80
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	347
 Type         	27
 #  .DW 0  # unused header value
@@ -17588,8 +17588,8 @@ FloorGunTrapDeath:   # offset: 0x7E57
 
 WallMissileTrapType1:   # offset: 0x7E60
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	348
 Type         	27
 #  .DW 0  # unused header value
@@ -17673,8 +17673,8 @@ WallMissileTrapType1Death:   # offset: 0x7EF0
 
 WallMissileTrapTypet2:   # offset: 0x7EF8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	349
 Type         	27
 #  .DW 0  # unused header value
@@ -17760,8 +17760,8 @@ WallMissileTrapTypet2Death:   # offset: 0x7F8C
 
 WallFlameTrapType1:   # offset: 0x7F94
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	350
 Type         	27
 #  .DW 0  # unused header value
@@ -17870,8 +17870,8 @@ WallFlameTrapType1Death:   # offset: 0x805F
 
 WallFlameTrapType2:   # offset: 0x8068
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	351
 Type         	27
 #  .DW 0  # unused header value
@@ -17982,8 +17982,8 @@ WallFlameTrapType2Death:   # offset: 0x8137
 
 InstallationRightWallFans:   # offset: 0x8140
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	342
 Type         	0
 #  .DW 0  # unused header value
@@ -18015,8 +18015,8 @@ InstallationRightWallFansInit:   # offset: 0x814C
 
 InstallationLeftWallFans:   # offset: 0x8178
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	343
 Type         	0
 #  .DW 0  # unused header value
@@ -18051,8 +18051,8 @@ InstallationLeftWallFansLocal00:   # offset: 0x818B
 
 InstallationGear:   # offset: 0x81B6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	344
 Type         	0
 #  .DW 0  # unused header value
@@ -18080,8 +18080,8 @@ InstallationGearInit:   # offset: 0x81C2
 
 DisruptionWeb:   # offset: 0x81E4
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	374
 Type         	1
 #  .DW 0  # unused header value
@@ -18130,8 +18130,8 @@ DisruptionWebDeath:   # offset: 0x8223
 
 Unknown371:   # offset: 0x823E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	371
 Type         	1
 #  .DW 0  # unused header value
@@ -18181,8 +18181,8 @@ Unknown371Death:   # offset: 0x829A
 
 AcidSpores_1_Overlay:   # offset: 0x829E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	383
 Type         	1
 #  .DW 0  # unused header value
@@ -18194,8 +18194,8 @@ Death          VespeneGeyserShadowDeath
 
 AcidSpores_2_3_Overlay:   # offset: 0x82AA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	384
 Type         	1
 #  .DW 0  # unused header value
@@ -18207,8 +18207,8 @@ Death          VespeneGeyserShadowDeath
 
 AcidSpores_4_5_Overlay:   # offset: 0x82B6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	385
 Type         	1
 #  .DW 0  # unused header value
@@ -18220,8 +18220,8 @@ Death          VespeneGeyserShadowDeath
 
 AcidSpores_6_9_Overlay:   # offset: 0x82C2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	386
 Type         	1
 #  .DW 0  # unused header value
@@ -18293,8 +18293,8 @@ AcidSpores_6_9_OverlayLocal00:   # offset: 0x832A
 
 CorsairEngines:   # offset: 0x8342
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	370
 Type         	12
 #  .DW 0  # unused header value
@@ -18326,8 +18326,8 @@ CorsairEnginesInit:   # offset: 0x8366
 
 NeutronFlare:   # offset: 0x8372
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	373
 Type         	2
 #  .DW 0  # unused header value
@@ -18364,8 +18364,8 @@ NeutronFlareDeath:   # offset: 0x8388
 
 MindControlHit:   # offset: 0x83B0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	390
 Type         	1
 #  .DW 0  # unused header value
@@ -18418,8 +18418,8 @@ MindControlHitInit:   # offset: 0x83BC
 
 Feedback:   # offset: 0x841E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	392
 Type         	1
 #  .DW 0  # unused header value
@@ -18475,8 +18475,8 @@ FeedbackInit:   # offset: 0x842A
 
 MaelstormOverlay:   # offset: 0x8494
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	393
 Type         	1
 #  .DW 0  # unused header value
@@ -18542,8 +18542,8 @@ unknownLabel851B:   # offset: 0x851B
 
 RestorationHit:   # offset: 0x851C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	389
 Type         	1
 #  .DW 0  # unused header value
@@ -18623,8 +18623,8 @@ RestorationHitInit:   # offset: 0x8528
 
 Unknown394:   # offset: 0x85CC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	394
 Type         	1
 #  .DW 0  # unused header value
@@ -18660,8 +18660,8 @@ Unknown394Init:   # offset: 0x85D8
 
 OpticalFlareHit:   # offset: 0x860E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	391
 Type         	1
 #  .DW 0  # unused header value
@@ -18694,8 +18694,8 @@ OpticalFlareHitInit:   # offset: 0x861A
 
 CorrosiveAcid:   # offset: 0x864A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	381
 Type         	2
 #  .DW 0  # unused header value
@@ -18737,8 +18737,8 @@ CorrosiveAcidDeath:   # offset: 0x8681
 
 CorrosiveAcidHit:   # offset: 0x868E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	382
 Type         	1
 #  .DW 0  # unused header value
@@ -18775,8 +18775,8 @@ CorrosiveAcidHitDeath:   # offset: 0x86CF
 
 DevourerBirth:   # offset: 0x86D0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	358
 Type         	13
 #  .DW 0  # unused header value
@@ -18839,8 +18839,8 @@ DevourerBirthDeath:   # offset: 0x873A
 
 MaelstromHit:   # offset: 0x873E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	411
 Type         	1
 #  .DW 0  # unused header value
@@ -18873,8 +18873,8 @@ MaelstromHitInit:   # offset: 0x874A
 
 Scantid_DesertCritter_:   # offset: 0x8778
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	375
 Type         	12
 #  .DW 0  # unused header value
@@ -18970,8 +18970,8 @@ Scantid_DesertCritter_Walking:   # offset: 0x87D5
 
 Kakaru_TwilightCritter_:   # offset: 0x883A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	376
 Type         	12
 #  .DW 0  # unused header value
@@ -19077,8 +19077,8 @@ Kakaru_TwilightCritter_Walking:   # offset: 0x88DA
 
 Ursadon_IceCritter_:   # offset: 0x891A
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	377
 Type         	12
 #  .DW 0  # unused header value
@@ -19156,8 +19156,8 @@ Ursadon_IceCritter_Walking:   # offset: 0x8977
 
 PsiDisrupter:   # offset: 0x89B2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	407
 Type         	20
 #  .DW 0  # unused header value
@@ -19196,8 +19196,8 @@ PsiDisrupterBuilt:   # offset: 0x89EB
 
 PowerGenerator:   # offset: 0x89F2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	408
 Type         	20
 #  .DW 0  # unused header value
@@ -19249,8 +19249,8 @@ PowerGeneratorBuilt:   # offset: 0x8A2B
 
 Corsair:   # offset: 0x8A52
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	369
 Type         	21
 #  .DW 0  # unused header value
@@ -19368,8 +19368,8 @@ CorsairCastSpell:   # offset: 0x8B1E
 
 DarkArchonEnergy:   # offset: 0x8B34
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	365
 Type         	13
 #  .DW 0  # unused header value
@@ -19493,8 +19493,8 @@ DarkArchonEnergyCastSpell:   # offset: 0x8C2D
 
 DarkArchonBeing:   # offset: 0x8C36
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	366
 Type         	12
 #  .DW 0  # unused header value
@@ -19582,8 +19582,8 @@ DarkArchonBeingCastSpell:   # offset: 0x8CD4
 
 DarkArchonSwirl:   # offset: 0x8CDE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	367
 Type         	1
 #  .DW 0  # unused header value
@@ -19633,8 +19633,8 @@ DarkArchonSwirlLocal00:   # offset: 0x8CEF
 
 DarkArchonDeath:   # offset: 0x8D3E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	368
 Type         	0
 #  .DW 0  # unused header value
@@ -19679,8 +19679,8 @@ DarkArchonDeathInit:   # offset: 0x8D4A
 
 WarpGate:   # offset: 0x8D96
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	406
 Type         	20
 #  .DW 0  # unused header value
@@ -19730,8 +19730,8 @@ WarpGateAlmostBuilt:   # offset: 0x8DE3
 
 WarpGateOverlay:   # offset: 0x8DEA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	409
 Type         	24
 #  .DW 0  # unused header value
@@ -19791,8 +19791,8 @@ WarpGateOverlayInit:   # offset: 0x8E26
 
 XelNagaTemple:   # offset: 0x8E5C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	410
 Type         	20
 #  .DW 0  # unused header value
@@ -19840,8 +19840,8 @@ XelNagaTempleAlmostBuilt:   # offset: 0x8EA4
 
 DarkTemplar_Unit_:   # offset: 0x8EAA
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	372
 Type         	12
 #  .DW 0  # unused header value
@@ -19936,8 +19936,8 @@ DarkTemplar_Unit_CastSpell:   # offset: 0x8F57
 
 Devourer:   # offset: 0x8F5E
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	357
 Type         	12
 #  .DW 0  # unused header value
@@ -20021,8 +20021,8 @@ DevourerGndAttkInit:   # offset: 0x8FDA
 
 DevourerDeath:   # offset: 0x9006
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	359
 Type         	0
 #  .DW 0  # unused header value
@@ -20042,8 +20042,8 @@ DevourerDeathInit:   # offset: 0x9012
 
 LurkerEgg:   # offset: 0x9020
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	353
 Type         	14
 #  .DW 0  # unused header value
@@ -20143,8 +20143,8 @@ LurkerEggDeath:   # offset: 0x90E2
 
 OvermindCocoon:   # offset: 0x90EE
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	405
 Type         	20
 #  .DW 0  # unused header value
@@ -20202,8 +20202,8 @@ OvermindCocoonAlmostBuilt:   # offset: 0x9150
 
 LurkerRemnants:   # offset: 0x9156
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	356
 Type         	0
 #  .DW 0  # unused header value
@@ -20228,8 +20228,8 @@ LurkerRemnantsInit:   # offset: 0x9162
 
 Lurker:   # offset: 0x917C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	354
 Type         	26
 #  .DW 0  # unused header value
@@ -20440,8 +20440,8 @@ LurkerUnBurrow:   # offset: 0x931B
 
 OpticalFlare:   # offset: 0x933C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	379
 Type         	2
 #  .DW 0  # unused header value
@@ -20482,8 +20482,8 @@ OpticalFlareDeath:   # offset: 0x9376
 
 Unknown395:   # offset: 0x9380
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	395
 Type         	2
 #  .DW 0  # unused header value
@@ -20515,8 +20515,8 @@ Unknown395Death:   # offset: 0x93A4
 
 HaloRocket:   # offset: 0x93B0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	378
 Type         	2
 #  .DW 0  # unused header value
@@ -20548,8 +20548,8 @@ HaloRocketDeath:   # offset: 0x93D6
 
 SubterraneanSpines:   # offset: 0x93E2
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	380
 Type         	1
 #  .DW 0  # unused header value
@@ -20586,8 +20586,8 @@ SubterraneanSpinesInit:   # offset: 0x93EE
 
 Medic:   # offset: 0x9426
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	360
 Type         	13
 #  .DW 0  # unused header value
@@ -20728,8 +20728,8 @@ MedicCastSpell:   # offset: 0x9523
 
 MedicRemnants:   # offset: 0x9540
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	361
 Type         	0
 #  .DW 0  # unused header value
@@ -20753,8 +20753,8 @@ MedicRemnantsInit:   # offset: 0x954C
 
 Valkyrie:   # offset: 0x9562
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	362
 Type         	12
 #  .DW 0  # unused header value
@@ -20815,8 +20815,8 @@ ValkyrieAirAttkInit:   # offset: 0x95AD
 
 DoodadShadowsHeader_BW_:   # offset: 0x95C6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	388
 Type         	1
 #  .DW 0  # unused header value
@@ -20833,8 +20833,8 @@ DoodadShadowsHeader_BW_Init:   # offset: 0x95D2
 
 IceDoodad:   # offset: 0x95D8
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	387
 Type         	0
 #  .DW 0  # unused header value
@@ -20853,8 +20853,8 @@ IceDoodadInit:   # offset: 0x95E4
 
 TwilightDoodad:   # offset: 0x95F0
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	401
 Type         	0
 #  .DW 0  # unused header value
@@ -20878,8 +20878,8 @@ TwilightDoodadLocal00:   # offset: 0x95FF
 
 TwilightDoodad2:   # offset: 0x9612
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	402
 Type         	0
 #  .DW 0  # unused header value
@@ -20908,8 +20908,8 @@ TwilightDoodad2Local00:   # offset: 0x9621
 
 TwilightDoodad3:   # offset: 0x9642
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	403
 Type         	0
 #  .DW 0  # unused header value
@@ -20933,8 +20933,8 @@ TwilightDoodad3Local00:   # offset: 0x9651
 
 TwilightDoodad4:   # offset: 0x9664
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	404
 Type         	0
 #  .DW 0  # unused header value
@@ -20986,8 +20986,8 @@ TwilightDoodad4Local00:   # offset: 0x9673
 
 DesertDoodad:   # offset: 0x96CC
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	396
 Type         	0
 #  .DW 0  # unused header value
@@ -21019,8 +21019,8 @@ DesertDoodadLocal00:   # offset: 0x96DB
 
 DesertDoodad2:   # offset: 0x9702
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	397
 Type         	0
 #  .DW 0  # unused header value
@@ -21049,8 +21049,8 @@ DesertDoodad2Local00:   # offset: 0x9711
 
 DesertDoodadOverlay:   # offset: 0x9732
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	399
 Type         	0
 #  .DW 0  # unused header value
@@ -21089,8 +21089,8 @@ DesertDoodadOverlayLocal00:   # offset: 0x9741
 
 DesertDoodad4:   # offset: 0x977C
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	400
 Type         	0
 #  .DW 0  # unused header value
@@ -21123,8 +21123,8 @@ DesertDoodadLocal00:   # offset: 0x978B
 
 DesertDoodad3:   # offset: 0x97B6
 # ----------------------------------------------------------------------------- #
+.DB "SCPE"
 .headerstart
-#  .DB "SCPE"
 IsId         	398
 Type         	0
 #  .DW 0  # unused header value
