@@ -3034,7 +3034,7 @@ RechargeShields_Small_Init:   # offset: 0x1970
   goto               RechargeShields_Small_Init
 
 
-NuclearMissileDeath:   # offset: 0x198C
+NuclearMissileDeath_:   # offset: 0x198C
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
@@ -6077,7 +6077,7 @@ WarpIn         ZealotWarpIn
 # ----------------------------------------------------------------------------- #
 
 
-ZealotDeath:   # offset: 0x2E50
+ZealotDeath_:   # offset: 0x2E50
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
@@ -15253,7 +15253,7 @@ SpecialState1  GhostSpecialState1
 # ----------------------------------------------------------------------------- #
 
 
-GhostDeath:   # offset: 0x6E06
+GhostDeath_:   # offset: 0x6E06
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
@@ -15654,7 +15654,7 @@ SpecialState1  [NONE]
 # ----------------------------------------------------------------------------- #
 
 
-MarineDeath:   # offset: 0x70EC
+MarineDeath_:   # offset: 0x70EC
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
@@ -20876,21 +20876,21 @@ TwilightDoodadLocal00:   # offset: 0x95FF
 
   .DB 0x00
 
-TwilightDoodad:   # offset: 0x9612
+TwilightDoodad2:   # offset: 0x9612
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
 IsId         	402
 Type         	0
 #  .DW 0  # unused header value
-Init           TwilightDoodadInit
+Init           TwilightDoodad2Init
 Death          [NONE]
 .headerend
 # ----------------------------------------------------------------------------- #
 
-TwilightDoodadInit:   # offset: 0x961E
+TwilightDoodad2Init:   # offset: 0x961E
   playfram           0 
-TwilightDoodadLocal00:   # offset: 0x9621
+TwilightDoodad2Local00:   # offset: 0x9621
   playfram           0 
   wait               1 
   playfram           1 
@@ -20903,49 +20903,49 @@ TwilightDoodadLocal00:   # offset: 0x9621
   wait               1 
   playfram           0 
   wait               1 
-  goto               TwilightDoodadLocal00
+  goto               TwilightDoodad2Local00
 
 
-TwilightDoodad:   # offset: 0x9642
+TwilightDoodad3:   # offset: 0x9642
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
 IsId         	403
 Type         	0
 #  .DW 0  # unused header value
-Init           TwilightDoodadInit
+Init           TwilightDoodad3Init
 Death          [NONE]
 .headerend
 # ----------------------------------------------------------------------------- #
 
-TwilightDoodadInit:   # offset: 0x964E
+TwilightDoodad3Init:   # offset: 0x964E
   playfram           0 
-TwilightDoodadLocal00:   # offset: 0x9651
+TwilightDoodad3Local00:   # offset: 0x9651
   playfram           0 
   wait               2 
   playfram           1 
   wait               2 
   playfram           2 
   wait               2 
-  goto               TwilightDoodadLocal00
+  goto               TwilightDoodad3Local00
 
   .DB 0x00
 
-TwilightDoodad:   # offset: 0x9664
+TwilightDoodad4:   # offset: 0x9664
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
 IsId         	404
 Type         	0
 #  .DW 0  # unused header value
-Init           TwilightDoodadInit
+Init           TwilightDoodad4Init
 Death          [NONE]
 .headerend
 # ----------------------------------------------------------------------------- #
 
-TwilightDoodadInit:   # offset: 0x9670
+TwilightDoodad4Init:   # offset: 0x9670
   playfram           0 
-TwilightDoodadLocal00:   # offset: 0x9673
+TwilightDoodad4Local00:   # offset: 0x9673
   playfram           0 
   setflipstate       0 
   wait               2 
@@ -20981,7 +20981,7 @@ TwilightDoodadLocal00:   # offset: 0x9673
   wait               2 
   playfram           1 
   wait               2 
-  goto               TwilightDoodadLocal00
+  goto               TwilightDoodad4Local00
 
 
 DesertDoodad:   # offset: 0x96CC
@@ -21087,7 +21087,7 @@ DesertDoodadOverlayLocal00:   # offset: 0x9741
   goto               DesertDoodadOverlayLocal00
 
 
-DesertDoodad:   # offset: 0x977C
+DesertDoodad4:   # offset: 0x977C
 # ----------------------------------------------------------------------------- #
 .headerstart
 #  .DB "SCPE"
@@ -21330,7 +21330,7 @@ _IDTable: # offset: 0x97E6
 .DW Zealot
 
 .DW 164
-.DW ZealotDeath
+.DW ZealotDeath_
 
 .DW 369
 .DW Corsair
@@ -21876,7 +21876,7 @@ _IDTable: # offset: 0x97E6
 .DW GhostRemnants
 
 .DW  72
-.DW GhostDeath
+.DW GhostDeath_
 
 .DW  73
 .DW NukeBeam
@@ -21900,7 +21900,7 @@ _IDTable: # offset: 0x97E6
 .DW MarineRemnants
 
 .DW  80
-.DW MarineDeath
+.DW MarineDeath_
 
 .DW 360
 .DW Medic
@@ -22080,7 +22080,7 @@ _IDTable: # offset: 0x97E6
 .DW PhaseDisruptor_Anti_MatterMissileHit
 
 .DW 279
-.DW NuclearMissileDeath
+.DW NuclearMissileDeath_
 
 .DW 281
 .DW VespeneGeyserSmokes
@@ -22332,19 +22332,19 @@ _IDTable: # offset: 0x97E6
 .DW DesertDoodadOverlay
 
 .DW 400
-.DW DesertDoodad
+.DW DesertDoodad4
 
 .DW 401
 .DW TwilightDoodad
 
 .DW 402
-.DW TwilightDoodad
+.DW TwilightDoodad2
 
 .DW 403
-.DW TwilightDoodad
+.DW TwilightDoodad3
 
 .DW 404
-.DW TwilightDoodad
+.DW TwilightDoodad4
 
 .DW  -1
 .DW 0
