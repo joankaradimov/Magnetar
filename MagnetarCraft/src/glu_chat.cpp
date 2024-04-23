@@ -402,15 +402,15 @@ void loadMenu_gluChat_()
 	case 557:
 		if (NetMode.as_number == 'BNET')
 		{
-			glGluesMode = GLUE_BATTLE;
+			glGluesMode = MenuPosition::GLUE_BATTLE;
 		}
 		else if (NetMode.as_number == 'MDMX' || NetMode.as_number == 'MODM')
 		{
-			glGluesMode = GLUE_MODEM;
+			glGluesMode = MenuPosition::GLUE_MODEM;
 		}
 		else
 		{
-			glGluesMode = GLUE_GAME_SELECT;
+			glGluesMode = MenuPosition::GLUE_GAME_SELECT;
 		}
 		InReplay = 0;
 		freeChkFileMem_();

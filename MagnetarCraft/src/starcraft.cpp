@@ -7872,7 +7872,7 @@ void doNetTBLError_(int line, const char* error_message, char* file_name, int a4
 		g_ActiveNationID = v6;
 		dword_51267C = v5;
 	}
-	else if (glGluesMode == GLUE_BATTLE)
+	else if (glGluesMode == MenuPosition::GLUE_BATTLE)
 	{
 		sub_4AD0E0_(GetNetworkTblString_(a4), buff);
 	}
@@ -8332,7 +8332,7 @@ void __stdcall BWFXN_GlobalPrintText_(s_evt* evt)
 	{
 		InfoMessage(0, (const char*)evt->pData);
 	}
-	else if (gwGameMode == GAME_GLUES && glGluesMode == GLUE_CHAT && evt->pData)
+	else if (gwGameMode == GamePosition::GAME_GLUES && glGluesMode == MenuPosition::GLUE_CHAT && evt->pData)
 	{
 		printLobbyString(0xFFFFFFFF, (char*)evt->pData);
 	}
@@ -14712,7 +14712,7 @@ void sub_4C4A80_(int a1, int a2)
 		}
 		return;
 	}
-	if (glGluesMode == GLUE_CHAT)
+	if (glGluesMode == MenuPosition::GLUE_CHAT)
 	{
 		if (!a1)
 		{
@@ -14738,7 +14738,7 @@ void sub_4C4A80_(int a1, int a2)
 	Players[player_id].nRace = v13;
 	Players[player_id].nTeam = v12;
 	dword_57EEC0[a1] = 8;
-	if (glGluesMode == GLUE_CHAT)
+	if (glGluesMode == MenuPosition::GLUE_CHAT)
 	{
 		update_lobby_glue = 1;
 		if (loadGameFileHandle)
@@ -15035,7 +15035,7 @@ FAIL_STUB_PATCH(open_tips_dialog, "starcraft");
 
 int gameLoopTurns_()
 {
-	if (glGluesMode == GLUE_GENERIC)
+	if (glGluesMode == MenuPosition::GLUE_GENERIC)
 	{
 		return 0;
 	}
@@ -15047,12 +15047,12 @@ int gameLoopTurns_()
 	{
 		return 0;
 	}
-	if (glGluesMode == GLUE_GENERIC)
+	if (glGluesMode == MenuPosition::GLUE_GENERIC)
 	{
 		return 0;
 	}
 	GameKeepAlive_();
-	if (glGluesMode == GLUE_GENERIC)
+	if (glGluesMode == MenuPosition::GLUE_GENERIC)
 	{
 		return 0;
 	}
@@ -15064,7 +15064,7 @@ int gameLoopTurns_()
 	{
 		Cls2RecvFrom_();
 	}
-	if (glGluesMode == GLUE_GENERIC)
+	if (glGluesMode == MenuPosition::GLUE_GENERIC)
 	{
 		return 0;
 	}
@@ -17174,7 +17174,7 @@ int SAI_PathCreate_Sub3_0_(SAI_PathsEx* a1, Position a2, MapSize size)
 					GetWindowThreadProcessId(hWndParent, (LPDWORD)&size);
 					EnumWindows(EnumFunc, *(_DWORD*)&size);
 				}
-				glGluesMode = GLUE_GENERIC;
+				glGluesMode = MenuPosition::GLUE_GENERIC;
 			}
 			return 0;
 		}
@@ -19027,7 +19027,7 @@ int campaignTypeCheatStrings_(const char* a2)
 			if (!InReplay)
 			{
 				replay_header.ReplayFrames = ElapsedTimeFrames;
-				glGluesMode = GLUE_MAIN_MENU;
+				glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 				return 1;
 			}
 		}
@@ -19035,7 +19035,7 @@ int campaignTypeCheatStrings_(const char* a2)
 		{
 			gwGameMode = GAME_GLUES;
 		}
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 	return 1;
 }
@@ -20225,7 +20225,7 @@ std::vector<RaceId> SELECTABLE_RACES = {
 
 void loadMenu_None_()
 {
-	glGluesMode = GLUE_MAIN_MENU;
+	glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	LastControlID = -1;
 	if (dword_6D5A3C)
 	{
@@ -20252,7 +20252,7 @@ FAIL_STUB_PATCH(loadMenu_None, "starcraft");
 
 void jmpNoMenu_()
 {
-	if (glGluesMode == GLUE_GENERIC)
+	if (glGluesMode == MenuPosition::GLUE_GENERIC)
 	{
 		loadMenu_None_();
 	}
@@ -20734,16 +20734,16 @@ void loadMenu_gluModem_()
 	switch (gluLoadBINDlg_(gluModem_bin, gluModem_Main_))
 	{
 	case 5:
-		glGluesMode = GLUE_CHAT;
+		glGluesMode = MenuPosition::GLUE_CHAT;
 		break;
 	case 6:
-		glGluesMode = GLUE_CONNECT;
+		glGluesMode = MenuPosition::GLUE_CONNECT;
 		break;
 	case 9:
-		glGluesMode = GLUE_CREATE;
+		glGluesMode = MenuPosition::GLUE_CREATE;
 		break;
 	default:
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		break;
 	}
 
@@ -21393,11 +21393,11 @@ void SelectGame_()
 			playerName[0] = 0;
 		}
 		::playerid = playerid;
-		glGluesMode = GLUE_CHAT;
+		glGluesMode = MenuPosition::GLUE_CHAT;
 		sub_4DCEE0();
 		if (!isHost && !sub_452900())
 		{
-			glGluesMode = GLUE_BATTLE;
+			glGluesMode = MenuPosition::GLUE_BATTLE;
 		}
 	}
 	else
@@ -21405,7 +21405,7 @@ void SelectGame_()
 		sub_4DCEE0();
 		checkLastFileError();
 		memset(is_keycode_used, 0, sizeof(is_keycode_used));
-		glGluesMode = GLUE_CONNECT;
+		glGluesMode = MenuPosition::GLUE_CONNECT;
 	}
 }
 
@@ -21451,13 +21451,13 @@ void SwitchMenu_()
 	if (gwGameMode == GAME_WIN)
 	{
 		gwGameMode = GAME_GLUES;
-		glGluesMode = GLUE_SCORE_T_VICTORY;
+		glGluesMode = MenuPosition::GLUE_SCORE_T_VICTORY;
 		goto LABEL_28;
 	}
 	if (gwGameMode == GAME_LOSE)
 	{
 		gwGameMode = GAME_GLUES;
-		glGluesMode = GLUE_SCORE_T_VICTORY;
+		glGluesMode = MenuPosition::GLUE_SCORE_T_VICTORY;
 		goto LABEL_28;
 	}
 	if (Ophelia && !multiPlayerMode)
@@ -21615,13 +21615,13 @@ FAIL_STUB_PATCH(SwitchMenu, "starcraft");
 void Game_Close_()
 {
 	dword_5967F0 = 1;
-	if (glGluesMode == GLUE_BATTLE)
+	if (glGluesMode == MenuPosition::GLUE_BATTLE)
 	{
 		DWORD dwProcessId;
 		GetWindowThreadProcessId(hWndParent, &dwProcessId);
 		EnumWindows(EnumFunc, dwProcessId);
 	}
-	glGluesMode = GLUE_GENERIC;
+	glGluesMode = MenuPosition::GLUE_GENERIC;
 	if (gwGameMode == GAME_RUN)
 	{
 		GameState = 0;
@@ -22648,7 +22648,7 @@ int CreateNextCampaignGame_()
 {
 	if (!next_scenario[0])
 	{
-		glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+		glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		return 1;
 	}
 	GotFileValues* v1 = InitUseMapSettingsTemplate_();
@@ -22671,13 +22671,13 @@ int CreateNextCampaignGame_()
 				switch (Players[g_LocalNationID].nRace)
 				{
 				case RACE_Zerg:
-					glGluesMode = GLUE_READY_Z;
+					glGluesMode = MenuPosition::GLUE_READY_Z;
 					return 1;
 				case RACE_Terran:
-					glGluesMode = GLUE_READY_T;
+					glGluesMode = MenuPosition::GLUE_READY_T;
 					return 1;
 				case RACE_Protoss:
-					glGluesMode = GLUE_READY_P;
+					glGluesMode = MenuPosition::GLUE_READY_P;
 					return 1;
 				}
 			}
@@ -22687,7 +22687,7 @@ int CreateNextCampaignGame_()
 	{
 		doNetTBLError_(0, 0, 0, 106);
 	}
-	glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+	glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 	return 0;
 }
 
@@ -22944,7 +22944,7 @@ void GameMainLoop_()
 			if (gwGameMode == GamePosition::GAME_CREDITS)
 			{
 				gwGameMode = GamePosition::GAME_GLUES;
-				glGluesMode = GLUE_MAIN_MENU;
+				glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 			}
 			break;
 		case GamePosition::GAME_EPILOG:

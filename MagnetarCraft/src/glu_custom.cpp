@@ -405,7 +405,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 	case 12:
 		if (multiPlayerMode)
 		{
-			glGluesMode = GLUE_CHAT;
+			glGluesMode = MenuPosition::GLUE_CHAT;
 		}
 		else if (gameData.got_file_values.victory_conditions
 			|| gameData.got_file_values.starting_units
@@ -430,7 +430,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 
 		if (!multiPlayerMode)
 		{
-			glGluesMode = IsExpansion != 0 ? GLUE_EX_CAMPAIGN : GLUE_CAMPAIGN;
+			glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		}
 		else if (NetMode.as_number == 'SCBL')
 		{

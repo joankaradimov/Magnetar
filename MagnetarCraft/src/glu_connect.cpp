@@ -214,7 +214,7 @@ void loadMenu_gluConn_()
 
 	if (gluLoadBINDlg_(gluConn_Dlg, ConnSel_Interact_) != 9)
 	{
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 	}
 	else if (network_provider_id.as_number == 'BNET')
 	{

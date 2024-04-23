@@ -81,7 +81,7 @@ public:
 			byte_50CDC1[i] = i;
 		}
 
-		gwGameMode = GAME_RUN;
+		gwGameMode = GamePosition::GAME_RUN;
 		strcpy_s(playerName, "Tester");
 	}
 };

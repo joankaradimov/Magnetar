@@ -270,29 +270,29 @@ void loadMenu_gluCmpgn_()
 	switch (gluLoadBINDlg_(campaign_dialog, gluCmpgn_Main_))
 	{
 	case 5:
-		glGluesMode = GLUE_LOAD;
+		glGluesMode = MenuPosition::GLUE_LOAD;
 		break;
 	case 6:
-		glGluesMode = GLUE_READY_P;
+		glGluesMode = MenuPosition::GLUE_READY_P;
 		break;
 	case 30:
 	case 7:
-		glGluesMode = GLUE_READY_T;
+		glGluesMode = MenuPosition::GLUE_READY_T;
 		break;
 	case 8:
-		glGluesMode = GLUE_READY_Z;
+		glGluesMode = MenuPosition::GLUE_READY_Z;
 		break;
 	case 9:
-		glGluesMode = GLUE_LOGIN;
+		glGluesMode = MenuPosition::GLUE_LOGIN;
 		break;
 	case 10:
-		glGluesMode = GLUE_CREATE;
+		glGluesMode = MenuPosition::GLUE_CREATE;
 		break;
 	case 11:
-		glGluesMode = GLUE_CREATE_MULTI;
+		glGluesMode = MenuPosition::GLUE_CREATE_MULTI;
 		break;
 	default:
-		glGluesMode = GLUE_MAIN_MENU;
+		glGluesMode = MenuPosition::GLUE_MAIN_MENU;
 		break;
 	}
 
