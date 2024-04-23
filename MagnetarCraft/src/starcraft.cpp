@@ -6177,11 +6177,10 @@ DatLoad* imagesDat_;
 
 void LoadInitIscriptBIN_()
 {
-	//IScriptParser parser;
-	//parser.parse(animation_sets, "scripts\\iscript.txt");
+	IScriptParser parser;
+	parser.parse(animation_sets, "scripts\\iscript.txt");
 
-	int iscript_bin_size;
-	iscript_data = (IScript*) fastFileRead_(&iscript_bin_size, 0, "scripts\\iscript.bin", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	iscript_data = (IScript*) animation_sets.front().opcodes.get();
 
 	iscript_id_to_pc.clear();
 	unsigned __int16* v2 = (unsigned __int16*)((char*)iscript_data + iscript_data->size_maybe);

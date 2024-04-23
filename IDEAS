@@ -7,7 +7,6 @@ General:
 - migrate to clang
 
 IScript:
-- execute from iscript.txt
 - JIT compiler for iscript.bin
 - extend the iscript.bin limits
 - execute iscript.bin scripts in parallel
