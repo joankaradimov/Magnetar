@@ -430,7 +430,7 @@ void loadMenu_gluCustm_(int is_multiplayer)
 
 		if (!multiPlayerMode)
 		{
-			glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
+			glGluesMode = IsExpansion ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		}
 		else if (NetMode.as_number == 'SCBL')
 		{

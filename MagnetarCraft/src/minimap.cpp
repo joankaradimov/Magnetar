@@ -84,7 +84,7 @@ void minimapVisionUpdate_()
 					v3 = 0;
 					BYTE1(v3) = ReplayVision;
 					int v4 = ~active_tile;
-					if ((v3 & v4) != 0)
+					if (v3 & v4)
 					{
 						if (((unsigned __int8)v4 & (unsigned __int8)ReplayVision) != 0)
 						{

@@ -902,7 +902,7 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
             }
             point v124;
             ISCRIPT_UseLOFile_(&v124, image, OverlayType::OT_SPECIAL, v65);
-            int v67 = v65 + (iscript_unit->fields2.resource.resourceCount != 0 ? 430 : 435);
+            int v67 = v65 + (iscript_unit->fields2.resource.resourceCount ? 430 : 435);
             if (CImage* v68 = sub_4D4E30())
             {
                 image_Insert(v68, &image->spriteOwner->pImageHead, image);

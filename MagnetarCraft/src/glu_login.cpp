@@ -113,7 +113,7 @@ void loadMenu_gluLogin_()
 	case 4:
 		if (!multiPlayerMode)
 		{
-			glGluesMode = IsExpansion != 0 ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
+			glGluesMode = IsExpansion ? MenuPosition::GLUE_EX_CAMPAIGN : MenuPosition::GLUE_CAMPAIGN;
 		}
 		else if (NetMode.as_number == 'MDMX' || NetMode.as_number == 'MODM')
 		{
@@ -126,7 +126,7 @@ void loadMenu_gluLogin_()
 		break;
 	case 5:
 		leaveOnQuit(0);
-		glGluesMode = multiPlayerMode != 0 ? MenuPosition::GLUE_CONNECT : MenuPosition::GLUE_MAIN_MENU;
+		glGluesMode = multiPlayerMode ? MenuPosition::GLUE_CONNECT : MenuPosition::GLUE_MAIN_MENU;
 		break;
 	default:
 		glGluesMode = MenuPosition::GLUE_MAIN_MENU;

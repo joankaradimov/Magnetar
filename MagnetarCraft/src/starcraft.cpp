@@ -4002,7 +4002,7 @@ void initializeDefaultPlayerNames_()
 		PlayerType nType = Players[i].nType;
 		if (nType == PT_Computer || nType == PT_Rescuable || nType == PT_Unknown0 || nType == PT_Neutral)
 		{
-			int v1 = IsExpansion != 0 ? 145 : 29;
+			int v1 = IsExpansion ? 145 : 29;
 
 			switch (Players[i].nRace)
 			{
@@ -9266,7 +9266,7 @@ signed int LoadGameInit_()
 	if (!multiPlayerMode)
 		TickCounterInit_();
 	saveLoadSuccess = (unsigned __int8)mapStarted;
-	elapstedTimeModifier = mapStarted != 0 ? savedElapsedSeconds : 0;
+	elapstedTimeModifier = mapStarted ? savedElapsedSeconds : 0;
 	SetGameSpeed_maybe(registry_options.GameSpeed, 0, 1u);
 	if (InReplay)
 	{
@@ -10184,7 +10184,7 @@ void DestroyGame_()
 		{
 			char a1[MAX_PATH];
 			createLeagueFile(a1);
-			SNetSendReplayPath(a1, game_id_hash, validation_replay_path[0] != 0 ? validation_replay_path : NULL);
+			SNetSendReplayPath(a1, game_id_hash, validation_replay_path[0] ? validation_replay_path : NULL);
 		}
 		game_id_hash = 0;
 	}
@@ -10551,7 +10551,7 @@ int UMRepath_(CUnit* unit)
 
 		reAssignPath(unit);
 	}
-	unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+	unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) ? UM_FollowPath : UM_FailedPath;
 	dword_6BEE88 = 0;
 	return 1;
 }
@@ -10748,7 +10748,7 @@ void Unit_ExecPathingState_(CUnit* unit)
 			v2 = UMNewMoveTarget(unit);
 			break;
 		case UnitMovementState::UM_AnotherPath:
-			unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) != 0 ? UM_FollowPath : UM_FailedPath;
+			unit->movementState = UMAnotherPath_(unit, unit->moveTarget.pt) ? UM_FollowPath : UM_FailedPath;
 			return;
 		case UnitMovementState::UM_Repath:
 			v2 = UMRepath_(unit);
