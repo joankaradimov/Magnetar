@@ -16759,7 +16759,8 @@ bool __stdcall ChkLoader_MBRF_(SectionData* section_data, int section_size, MapC
 
 	for (int i = 0; i < section_size / sizeof(BriefingEntry); i++)
 	{
-		if (!AddBriefingTrigger((BriefingEntry*) section_data->start_address + i * sizeof(BriefingEntry)))
+		BriefingEntry* briefing_entries = (BriefingEntry*)section_data->start_address;
+		if (!AddBriefingTrigger(briefing_entries + i))
 		{
 			break;
 		}
