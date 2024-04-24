@@ -925,7 +925,7 @@ void dlg_loadsave_delete_(dialog* dlg)
 	TSAVEGAME* v4 = sub_4617C0(savegame_filename);
 
 	dword_68516C = v4->unk0;
-	strcpy_s(SaveGameFile, v4->unk);
+	SStrCopy(SaveGameFile, v4->unk);
 
 	char buff[256];
 	_snprintf(buff, sizeof(buff), GetNetworkTblString_(4), savegame_filename);
@@ -8256,7 +8256,7 @@ int ReadMapData_(const char* source, MapChunks* a4, int is_campaign)
 		dword_5994DC = 1;
 		const char* v13 = GetMapTblString(a4->tbl_index_title);
 
-		strcpy_s(CurrentMapName, v13);
+		SStrCopy(CurrentMapName, v13);
 		return 1;
 	}
 	else
@@ -8532,7 +8532,7 @@ int LevelCheatInitGame_()
 	if (!playerName[0])
 	{
 		const char* v1 = GetNetworkTblString_(72);
-		strcpy_s(playerName, v1);
+		SStrCopy(playerName, v1);
 	}
 	if (!active_campaign)
 	{
@@ -8558,8 +8558,8 @@ int LevelCheatInitGame_()
 	LABEL_21:
 		GameData v6;
 		memset(&v6, 0, sizeof(GameData));
-		strcpy_s(v6.player_name, playerName);
-		strcpy_s(v6.map_name, CurrentMapName);
+		SStrCopy(v6.player_name, playerName);
+		SStrCopy(v6.map_name, CurrentMapName);
 		v6.active_human_players = 1;
 		v6.max_players = 1;
 		v6.game_speed = registry_options.GameSpeed;
@@ -18771,8 +18771,8 @@ int CreateCampaignGame_(const CampaignMenuEntryEx& campaign_entry)
 	{
 		GameData v4;
 		memset(&v4, 0, sizeof(v4));
-		strcpy_s(v4.player_name, playerName);
-		strcpy_s(v4.map_name, CurrentMapName);
+		SStrCopy(v4.player_name, playerName);
+		SStrCopy(v4.map_name, CurrentMapName);
 		v4.game_speed = registry_options.GameSpeed;
 		v4.active_human_players = 1;
 		v4.max_players = 1;
@@ -19379,7 +19379,7 @@ int CreateLadderGame_(GameData* a1, int a2)
 		a1->active_human_players = 1;
 		if (strlen(playerName) < 0x19)
 		{
-			strcpy_s(a1->host_name, playerName);
+			SStrCopy(a1->host_name, playerName);
 			if (a1->got_file_values.team_mode && !a1->save_timestamp)
 			{
 				a1->max_players = 8;
@@ -19454,7 +19454,7 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 	{
 		map_dir_entry->fully_loaded = 1;
 		map_dir_entry->error = 1;
-		strcpy_s(map_dir_entry->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
+		SStrCopy(map_dir_entry->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
 		int v4 = strlen(map_dir_entry->filename);
 		int v5 = strlen(map_dir_entry->full_path);
 		if (v4 < 32 && v5 + v4 < 260)
@@ -19467,15 +19467,15 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 				{
 					if (WORD* table = (WORD*)fastFileRead_(0, 0, "rez\\campaign.tbl", 0, 1, __FILE__, __LINE__))
 					{
-						strcpy_s(map_dir_entry->title, GetTblString(table, 1));
-						strcpy_s(map_dir_entry->description, GetTblString(table, 2));
+						SStrCopy(map_dir_entry->title, GetTblString(table, 1));
+						SStrCopy(map_dir_entry->description, GetTblString(table, 2));
 
 						SMemFree(table, __FILE__, __LINE__, 0);
 					}
 
 					if (strlen(map_dir_entry->title) == 0)
 					{
-						strcpy_s(map_dir_entry->title, map_dir_entry->filename);
+						SStrCopy(map_dir_entry->title, map_dir_entry->filename);
 					}
 
 					SFileCloseArchive(custom_campaign_mpq);
@@ -19493,17 +19493,17 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 				map_dir_entry->map_width_tiles = map_size.width;
 				map_dir_entry->map_height_tiles = map_size.height;
 				map_dir_entry->tileset = CurrentTileSet;
-				strcpy_s(map_dir_entry->title, a4.tbl_index_title ? get_chk_String(a4.tbl_index_title) : "");
+				SStrCopy(map_dir_entry->title, a4.tbl_index_title ? get_chk_String(a4.tbl_index_title) : "");
 				if (strlen(map_dir_entry->title) == 0)
 				{
-					strcpy_s(map_dir_entry->title, map_dir_entry->filename);
+					SStrCopy(map_dir_entry->title, map_dir_entry->filename);
 				}
-				strcpy_s(map_dir_entry->description, a4.tbl_index_description ? get_chk_String(a4.tbl_index_description) : "");
+				SStrCopy(map_dir_entry->description, a4.tbl_index_description ? get_chk_String(a4.tbl_index_description) : "");
 				sprintf_s(map_dir_entry->unknown_x478, get_GluAll_String(NUMBER_OF_PLAYERS), map_dir_entry->human_player_slots_maybe);
 				sprintf_s(map_dir_entry->map_dimension_string, get_GluAll_String(MAP_SIZE), map_dir_entry->map_width_tiles, map_dir_entry->map_height_tiles);
 				sprintf_s(map_dir_entry->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), map_dir_entry->computer_slots);
 				sprintf_s(map_dir_entry->human_players_string, get_GluAll_String(HUMAN_SLOTS), map_dir_entry->human_player_slots);
-				strcpy_s(map_dir_entry->tileset_string, get_Tileset_String(map_dir_entry->tileset));
+				SStrCopy(map_dir_entry->tileset_string, get_Tileset_String(map_dir_entry->tileset));
 				for (int i = 0; i < _countof(map_dir_entry->player_forces); i++)
 				{
 					map_dir_entry->player_forces[i] = playerForce[i];
@@ -19513,17 +19513,17 @@ void FullyLoadMapDirEntry_(MapDirEntry* map_dir_entry)
 			}
 			else if (LOWORD(a4.version) <= 59)
 			{
-				strcpy_s(map_dir_entry->description, get_GluAll_String(INVALID_SAVE_GAME));
+				SStrCopy(map_dir_entry->description, get_GluAll_String(INVALID_SAVE_GAME));
 			}
 			else
 			{
 				map_dir_entry->error = 2;
-				strcpy_s(map_dir_entry->description, get_GluAll_String(INVALID_SCENARIO));
+				SStrCopy(map_dir_entry->description, get_GluAll_String(INVALID_SCENARIO));
 			}
 		}
 		else
 		{
-			strcpy_s(map_dir_entry->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
+			SStrCopy(map_dir_entry->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
 		}
 	}
 }
@@ -19537,20 +19537,20 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 	{
 		replay->fully_loaded = 1;
 		replay->error = 1;
-		strcpy_s(replay->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
+		SStrCopy(replay->title, get_GluAll_String(SCENARIO_FILENAME_TOO_LONG));
 		int v4 = strlen(replay->filename);
 		int a3 = strlen(replay->full_path);
-		strcpy_s(replay->title, get_GluAll_String(GluAllTblEntry(SELECTED_SCENARIO_NOT_VALID | 0x80)));
+		SStrCopy(replay->title, get_GluAll_String(GluAllTblEntry(SELECTED_SCENARIO_NOT_VALID | 0x80)));
 		if (v4 >= 32 || a3 + v4 + 1 > 260)
 		{
-			strcpy_s(replay->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
+			SStrCopy(replay->description, get_GluAll_String(SCENARIO_INVALID_OR_CORRUPTED));
 			return;
 		}
 		if (!LoadReplayFile_(replay->full_path, &a3))
 		{
 			unsigned v6 = a3 != 0 ? -3u : 0;
 			replay->error = 2;
-			strcpy_s(replay->description, get_GluAll_String((GluAllTblEntry)(v6 + 63)));
+			SStrCopy(replay->description, get_GluAll_String((GluAllTblEntry)(v6 + 63)));
 			return;
 		}
 
@@ -19593,24 +19593,24 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 		const char* source_file = v14 ? replay->full_path : MapdataFilenames_[CampaignIndex];
 		if (ReadMapData_(source_file, &a4, !v14))
 		{
-			sprintf_s(replay->description, get_GluAll_String(UNABLE_TO_LOAD_MAP), replay->game_data.map_name);
-			strcat_s(replay->description, "\n\n");
-			strcpy_s(replay->name, replay->filename);
+			sprintf_s(replay->description, sizeof(replay->description), get_GluAll_String(UNABLE_TO_LOAD_MAP), replay->game_data.map_name);
+			SStrNCat(replay->description, "\n\n");
+			SStrCopy(replay->name, replay->filename);
 			sprintf_s(replay->unknown_x478, get_GluAll_String(NUMBER_OF_PLAYERS), replay->unknown3);
 			sprintf_s(replay->map_dimension_string, get_GluAll_String(MAP_SIZE), replay->map_width_tiles, replay->map_height_tiles);
 			sprintf_s(replay->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), replay->computer_slots);
 			sprintf_s(replay->human_players_string, get_GluAll_String(HUMAN_SLOTS), replay->human_player_slots);
-			strcpy_s(replay->tileset_string, get_GluAll_String((GluAllTblEntry)(replay->tileset + 39)));
+			SStrCopy(replay->tileset_string, get_GluAll_String((GluAllTblEntry)(replay->tileset + 39)));
 			replay->error = 0;
 		}
 		else if (LOWORD(a4.version) <= 59)
 		{
-			strcpy_s(replay->description, get_GluAll_String(INVALID_SAVE_GAME));
+			SStrCopy(replay->description, get_GluAll_String(INVALID_SAVE_GAME));
 		}
 		else
 		{
 			replay->error = 2;
-			strcpy_s(replay->description, get_GluAll_String(INVALID_SCENARIO));
+			SStrCopy(replay->description, get_GluAll_String(INVALID_SCENARIO));
 		}
 	}
 }
@@ -19926,7 +19926,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		}
 		GameData game_data;
 		memcpy(&game_data, &v8->game_data, sizeof(game_data));
-		strcpy_s(game_data.player_name, source);
+		SStrCopy(game_data.player_name, source);
 		if (CreateLadderGame_(&game_data, a3) == 1)
 		{
 			return 0;
@@ -19992,8 +19992,8 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 		}
 
 		memset(&game_data, 0, sizeof(game_data));
-		strcpy_s(game_data.player_name, source);
-		strcpy_s(game_data.map_name, v8->title);
+		SStrCopy(game_data.player_name, source);
+		SStrCopy(game_data.map_name, v8->title);
 		game_data.height = v8->map_height_tiles;
 		game_data.width = v8->map_width_tiles;
 		*(_DWORD*)&game_data.game_type = a4;
@@ -20061,7 +20061,7 @@ unsigned sub_4A8050_(MapDirEntry* a1, char* source, int a3, unsigned int a4, uns
 			return 0x8000000A;
 		}
 		memcpy(&game_data, &v8->game_data, sizeof(game_data));
-		strcpy_s(game_data.player_name, source);
+		SStrCopy(game_data.player_name, source);
 		if (!multiPlayerMode)
 		{
 			if (!initSingle())
@@ -21465,7 +21465,7 @@ void SwitchMenu_()
 		Ophelia = 0;
 		if (!playerName[0])
 		{
-			strcpy_s(playerName, GetNetworkTblString_(72));
+			SStrCopy(playerName, GetNetworkTblString_(72));
 		}
 		customSingleplayer[0] = 0;
 		IsExpansion = active_campaign->is_expansion;
@@ -23864,7 +23864,7 @@ int __fastcall TriggerAction_SetNextScenario_(Action* a1)
 {
 	if (a1->string)
 	{
-		strcpy_s(next_scenario, GetMapTblString(a1->string));
+		SStrCopy(next_scenario, GetMapTblString(a1->string));
 	}
 	return 1;
 }

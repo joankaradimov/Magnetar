@@ -160,3 +160,13 @@ void __stdcall SRgnCreate(int handle, int reserved);
 void __stdcall SRgnDelete(int handle);
 
 }
+
+template <size_t SIZE> int SStrCopy(char(&dest)[SIZE], const char* src)
+{
+	return SStrCopy(dest, src, SIZE);
+}
+
+template <size_t SIZE> int SStrNCat(char(&dest)[SIZE], const char* src)
+{
+	return SStrNCat(dest, src, SIZE);
+}

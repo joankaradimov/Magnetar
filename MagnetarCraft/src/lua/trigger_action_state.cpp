@@ -2,6 +2,7 @@
 
 #include "race.h"
 #include "starcraft.h"
+#include "magnetorm.h"
 
 class Scenario
 {
@@ -13,7 +14,7 @@ public:
 
 	void set_next_scenario(const char* scenario)
 	{
-		strcpy_s(next_scenario, scenario);
+		SStrCopy(next_scenario, scenario);
 	}
 
 	std::string to_string()

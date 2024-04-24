@@ -37,7 +37,7 @@ public:
 		MapChunks chunks;
 		ReadMapData_(entry.generic_string().c_str(), &chunks, 0);
 
-		strcpy_s(Players[g_LocalNationID].szName, "Tester");
+		SStrCopy(Players[g_LocalNationID].szName, "Tester");
 		IsExpansion = replay_header.is_expansion;
 
 		CreateGame_(&replay_header.game_data);
@@ -82,7 +82,7 @@ public:
 		}
 
 		gwGameMode = GamePosition::GAME_RUN;
-		strcpy_s(playerName, "Tester");
+		SStrCopy(playerName, "Tester");
 	}
 };
 

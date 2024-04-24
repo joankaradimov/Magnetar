@@ -9,15 +9,18 @@ Magnetar
 Programming
 
 Joan Karadimov
+
 </PAGE>
-
-
 Tileset graphics
 
  DarkenedFantasies </COMMENT Fixes for Ashworld magma and Iceworld water>
+
 </PAGE>
+Testing:
 
+Revenant
 
+</PAGE>
 </SCREENRIGHT>
 Thanks To
 
