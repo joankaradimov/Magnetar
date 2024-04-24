@@ -3504,7 +3504,7 @@ FAIL_STUB_PATCH(DetectExpansionInstallation, "starcraft");
 
 HANDLE magnetar_mpq;
 
-int InitializeArchiveHandles_()
+void InitializeArchiveHandles_()
 {
 	snet_version_data.size = sizeof(snet_version_data);
 	snet_version_data.versionstring = aInternalVersio;
@@ -3570,7 +3570,7 @@ int InitializeArchiveHandles_()
 	}
 
 	DetectExpansionInstallation_();
-	return strcat_s(archive_files, stardat_path.generic_string().c_str());
+	strcat_s(archive_files, stardat_path.generic_string().c_str());
 }
 
 FAIL_STUB_PATCH(InitializeArchiveHandles, "starcraft");
