@@ -2589,9 +2589,9 @@ FUNCTION_PATCH((void*)0x4212C0, SysWarn_FileNotFound__, "starcraft");
 
 void FileFatal_(HANDLE a1, int a2)
 {
-	char buffer[260];
+	char buffer[MAX_PATH];
 
-	if (!SFileGetFileName(a1, buffer, 260))
+	if (!SFileGetFileName(a1, buffer, sizeof(buffer)))
 	{
 		strcpy_s(buffer, "*unknown*");
 	}
@@ -4093,7 +4093,7 @@ void LoadCursors_()
 	AppAddExit_(DestroyCursors_);
 	for (CursorType i = CursorType::CUR_ARROW; i < CursorType::CUR_MAX; ++i)
 	{
-		char dest[260];
+		char dest[MAX_PATH];
 		strcpy_s(dest, "cursor\\");
 		strcat_s(dest, cursor_filenames[i]);
 		grpHead* v1 = LoadGraphic(dest, 0, "Starcraft\\SWAR\\lang\\cur.cpp", 212);
@@ -7719,7 +7719,7 @@ void BWFXN_gluPOK_MBox_(const char* a1)
 	strcpy(byte_599C98, a1);
 	byte_599B98[0] = 0;
 
-	char fileName[260];
+	char fileName[MAX_PATH];
 	strcpy_s(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 	strcat_s(fileName, "\\pOPopup.pcx");
 
@@ -8619,7 +8619,7 @@ int RestartGame_()
 	}
 	RaceId v1 = Players[g_LocalNationID].nRace;
 	next_campaign_mission = 0;
-	char dest[260];
+	char dest[MAX_PATH];
 	strcpy_s(dest, CurrentMapFileName);
 	MapChunks a4;
 	if (ReadMapData_(dest, &a4, 1))
@@ -10182,7 +10182,7 @@ void DestroyGame_()
 		SaveReplay_("LastReplay");
 		if (league_maybe)
 		{
-			char a1[260];
+			char a1[MAX_PATH];
 			createLeagueFile(a1);
 			SNetSendReplayPath(a1, game_id_hash, validation_replay_path[0] != 0 ? validation_replay_path : NULL);
 		}
@@ -18700,7 +18700,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 	{
 		if (!glue_background_palette[0].data || a2 == (dialog*)-12)
 		{
-			char dest[260];
+			char dest[MAX_PATH];
 			strcpy_s(dest, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 			strcat_s(dest, "\\BackGnd.pcx");
 			AllocBackgroundImage(dest, &a2->srcBits, palette, "Starcraft\\SWAR\\lang\\glues.cpp", 1052);
@@ -20276,7 +20276,7 @@ int load_gluGameMode_BINDLG_()
 	SStrCopy(byte_599C98, get_GluAll_String((GluAllTblEntry)0xAA), 0xFFu);
 	byte_599B98[0] = 0;
 
-	char fileName[260];
+	char fileName[MAX_PATH];
 	strcpy_s(fileName, stru_50E06C[stru_4FFAD0[glGluesMode].menu_position].glue_path);
 	strcat_s(fileName, "\\retail_ex.pcx");
 
@@ -20943,11 +20943,11 @@ bool userHasMap_()
 		v0[1] = 0;
 	}
 
-	char dest[260];
+	char dest[MAX_PATH];
 	strcpy_s(dest, Filename);
 	strcat_s(dest, "maps\\download\\");
 
-	char base[260];
+	char base[MAX_PATH];
 	strcpy_s(base, Filename);
 	strcat_s(base, "maps\\");
 
@@ -22657,7 +22657,7 @@ int CreateNextCampaignGame_()
 		int v2 = v1->template_id | ((v1->unused1 | (v1->variation_id << 8)) << 8);
 		SMemFree(v1, "Starcraft\\SWAR\\lang\\uiSingle.cpp", 319, 0);
 
-		char dest[260];
+		char dest[MAX_PATH];
 		strcpy_s(dest, CurrentMapFileName);
 		char* v3 = strrchr(dest, '\\');
 
@@ -23288,7 +23288,7 @@ FAIL_STUB_PATCH(getTextDisplayTime, "starcraft");
 
 int __fastcall TriggerAction_PlayWav_(Action* a1)
 {
-	char buff[260];
+	char buff[MAX_PATH];
 
 	if (!InReplay && active_trigger_player == g_LocalNationID && a1->wavString && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{

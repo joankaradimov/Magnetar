@@ -71,7 +71,7 @@ int gluCustmLoadMapFromList_()
 			case 0:
 				if (!dword_59B844)
 				{
-					char v16[260];
+					char v16[MAX_PATH];
 					sub_4DCB00(v16, "");
 					strcpy_s(menuMapRelativePath, CurrentMapFolder + strlen(v16));
 					strcpy_s(menuMapFileName, map_listbox->fields.list.ppStrs[v0]);
