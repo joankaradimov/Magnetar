@@ -19600,7 +19600,7 @@ void LoadReplayMapDirEntry_(MapDirEntry* replay)
 			sprintf_s(replay->map_dimension_string, get_GluAll_String(MAP_SIZE), replay->map_width_tiles, replay->map_height_tiles);
 			sprintf_s(replay->computer_players_string, get_GluAll_String(COMPUTER_SLOTS), replay->computer_slots);
 			sprintf_s(replay->human_players_string, get_GluAll_String(HUMAN_SLOTS), replay->human_player_slots);
-			SStrCopy(replay->tileset_string, get_GluAll_String((GluAllTblEntry)(replay->tileset + 39)));
+			SStrCopy(replay->tileset_string, get_Tileset_String(replay->tileset));
 			replay->error = 0;
 		}
 		else if (LOWORD(a4.version) <= 59)
