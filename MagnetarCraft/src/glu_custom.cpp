@@ -73,8 +73,8 @@ int gluCustmLoadMapFromList_()
 				{
 					char v16[260];
 					sub_4DCB00(v16, "");
-					strcpy(menuMapRelativePath, CurrentMapFolder + strlen(v16));
-					strcpy(menuMapFileName, map_listbox->fields.list.ppStrs[v0]);
+					strcpy_s(menuMapRelativePath, CurrentMapFolder + strlen(v16));
+					strcpy_s(menuMapFileName, map_listbox->fields.list.ppStrs[v0]);
 				}
 				return multiPlayerMode ? 1 : gluCustmSinglePlayerInit();
 			case 0x80000001:

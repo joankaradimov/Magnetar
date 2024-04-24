@@ -165,8 +165,8 @@ int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 			if (!dword_6D63C0)
 			{
 				char v12[260];
-				strcpy(v12, byte_59B628);
-				strcat(v12, "pInset.pcx");
+				strcpy_s(v12, byte_59B628);
+				strcat_s(v12, "pInset.pcx");
 				AllocBackgroundImage(v12, &stru_6DB284, 0, "Starcraft\\SWAR\\lang\\gluScore.cpp", 455);
 				dword_6D63C0 = 1;
 			}
@@ -244,8 +244,8 @@ int sub_4B4600_(dialog* a1)
 	getControlFromIndex_(a1, 8)->lFlags |= DialogFlags::CTRL_DLG_ACTIVE;
 
 	char fileName[260];
-	strcpy(fileName, byte_59B628);
-	strcat(fileName, "pMain.pcx");
+	strcpy_s(fileName, byte_59B628);
+	strcat_s(fileName, "pMain.pcx");
 
 	int height;
 	int width;
