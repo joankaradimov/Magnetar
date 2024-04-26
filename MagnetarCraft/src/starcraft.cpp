@@ -12473,6 +12473,19 @@ void GameLoop_()
 
 FAIL_STUB_PATCH(GameLoop, "starcraft");
 
+void CyclePalette_(int a1)
+{
+	CycleStruct* v1 = &cycle_colors[a1];
+	BYTE palette_entry_low = v1->palette_entry_low;
+	int palette_entry_high = v1->palette_entry_high;
+	PALETTEENTRY v4 = GamePalette[palette_entry_high];
+	PALETTEENTRY* v5 = &GamePalette[palette_entry_low];
+	memcpy(&GamePalette[palette_entry_low + 1], v5, 4 * (palette_entry_high - palette_entry_low));
+	*v5 = v4;
+}
+
+FAIL_STUB_PATCH(CyclePalette, "starcraft");
+
 unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index, unsigned int a3)
 {
 	int v4 = 0, v5 = 255;
@@ -12504,7 +12517,7 @@ unsigned int DoCycle_(CycleStruct* cycle_struct, unsigned int cycle_struct_index
 			{
 				CyclePaletteAdvanced(cycle_struct_index);
 			}
-			CyclePalette(cycle_struct_index);
+			CyclePalette_(cycle_struct_index);
 			v4 = std::max<int>(v4, cycle_struct->palette_entry_high);
 			v5 = std::min<int>(cycle_struct->palette_entry_low, v5);
 		}
