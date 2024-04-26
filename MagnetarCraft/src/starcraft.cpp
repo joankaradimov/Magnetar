@@ -2197,7 +2197,7 @@ FAIL_STUB_PATCH(getSelectedUnitsAtPoint, "starcraft");
 void __fastcall input_dragSelect_MouseBtnUp_(dlgEvent* a1)
 {
 	input_dragSelect_MouseMove(a1);
-	SetInGameInputProcs();
+	SetInGameInputProcs_();
 	setCursorType_(getCursorType_());
 	stru_66FF50.left += MoveToX;
 	stru_66FF50.right += MoveToX;

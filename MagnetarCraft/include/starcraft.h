@@ -151,6 +151,7 @@ int __fastcall tips_dialog_main_(dialog* dlg, dlgEvent* evt);
 void ReportGameResult_();
 void PauseGame_maybe_();
 DWORD sub_4A2B60_();
+void SetInGameInputProcs_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
