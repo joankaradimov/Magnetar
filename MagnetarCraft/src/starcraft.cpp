@@ -14554,6 +14554,245 @@ void PollInput_()
 
 FAIL_STUB_PATCH(PollInput, "starcraft");
 
+int sub_4D02D0_(const char* filename, int time, int a3)
+{
+	if (!a3 && gameData.got_file_values.tournament_mode)
+	{
+		return 0;
+	}
+
+	CHAR save_filename[MAX_PATH];
+	int has_save_path = getSavePath(save_filename, sizeof(save_filename), a3, filename);
+	if (isBadName(1, save_filename, sizeof(save_filename)))
+	{
+		return 0;
+	}
+
+	char dest[MAX_PATH];
+	SStrCopy(dest, GetNetworkTblString_(109));
+	SStrNCat(dest, " \"");
+	SStrNCat(dest, filename);
+	SStrNCat(dest, "\"");
+	int v6 = g_ActiveNationID;
+	int v7 = dword_51267C;
+	g_ActiveNationID = g_LocalNationID;
+	dword_51267C = g_LocalHumanID;
+	load_wait(dest);
+	g_ActiveNationID = v6;
+	dword_51267C = v7;
+
+	FILE* v8;
+	if (has_save_path)
+	{
+		v8 = fopen(save_filename, "wb+");
+		if (!v8)
+		{
+			has_save_path = 0;
+		}
+	}
+	else
+	{
+		v8 = 0;
+	}
+
+	if (!writeSavePlaintextHeader(v8, (int)save_filename))
+	{
+		has_save_path = 0;
+	}
+	if (!WriteSaveVersion(time, v8))
+	{
+		has_save_path = 0;
+	}
+	savedElapsedSeconds = sub_4A2B60();
+	if (CampaignIndex == MD_none)
+	{
+		convertFullPathToRelativePath(sizeof(CurrentMapFileName), CurrentMapFileName);
+	}
+	if (!CompressWrite(Players, 0x1B0u, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(&BWDATA_PlayerResources, 0x17700u, v8))
+	{
+		has_save_path = 0;
+	}
+	if (fwrite(&g_LocalHumanID, 4, 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (CampaignIndex == MD_none)
+	{
+		convertRelativeToFullPath(CurrentMapFileName, sizeof(CurrentMapFileName));
+	}
+	RemoveAllPylonAuras();
+	RemoveAllSelectionCircles();
+	if (!writeImages(v8))
+	{
+		has_save_path = 0;
+	}
+	if (!writeSprites(v8))
+	{
+		has_save_path = 0;
+	}
+	packThingyData();
+	BOOL v9 = writeThingys(v8, stru_6509D8, 500);
+	if (!writeThingys(v8, stru_652928, 500))
+	{
+		v9 = 0;
+	}
+	unpackThingyData();
+	if (!v9)
+	{
+		has_save_path = 0;
+	}
+	if (!WriteFlingys(v8))
+	{
+		has_save_path = 0;
+	}
+	if (!WriteUnits(v8))
+	{
+		has_save_path = 0;
+	}
+	if (!WriteBullets(v8))
+	{
+		has_save_path = 0;
+	}
+	if (!WriteOrders(v8))
+	{
+		has_save_path = 0;
+	}
+	CreateAllSelectionCircles();
+	CreateAllPylonAuras();
+	if (location)
+	{
+		time = 2 * dword_6D0F08 * dword_6D0C6C;
+	}
+	if (fwrite(&time, sizeof(time), 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(location, time, v8))
+	{
+		has_save_path = 0;
+	}
+	if (CreepEdgeData)
+	{
+		time = dword_6D0F08 * dword_6D0C6C;
+	}
+	if (fwrite(&time, 4, 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(CreepEdgeData, time, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!SaveDisappearingCreepChunk(v8))
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(MapTileArray, 0x20000, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(CellMap, 0x20000, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(active_tiles, 0x40000, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!WriteTriggerData(v8))
+	{
+		has_save_path = 0;
+	}
+	if (fwrite(&chk_string_section_size, 4, 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(MapStringTbl.buffer, chk_string_section_size, v8))
+	{
+		has_save_path = 0;
+	}
+	packAllPlayerSelectionGroups();
+	if (!CompressWrite(playersSelections, 0x180, v8))
+	{
+		has_save_path = 0;
+	}
+	unpackAllPlayerSelectionGroups();
+
+	int v13;
+	if (SaiContourHub* contours = SAIPathing->contours)
+	{
+		v13 = 8
+			* (contours->contourCount[0] + contours->contourCount[1] + contours->contourCount[2] + contours->contourCount[3])
+			+ 752224;
+	}
+	else
+	{
+		v13 = 752168;
+	}
+	time = v13;
+	BYTE* v14 = (BYTE*)SMemAlloc(v13, "Starcraft\\SWAR\\lang\\saveload.cpp", 1655, 0);
+	if (!prepContourInfoForSaving(v14))
+	{
+		has_save_path = 0;
+	}
+	if (fwrite(&time, sizeof(time), 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (!CompressWrite(v14, time, v8))
+	{
+		has_save_path = 0;
+	}
+	if (!SaveWriteAIData(v8))
+	{
+		has_save_path = 0;
+	}
+	SMemFree(v14, "Starcraft\\SWAR\\lang\\saveload.cpp", 1662, 0);
+	if (!WriteDATFileData(v8))
+	{
+		has_save_path = 0;
+	}
+	if (fwrite(&MoveToX, sizeof(MoveToX), 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (fwrite(&MoveToY, sizeof(MoveToY), 1, v8) != 1)
+	{
+		has_save_path = 0;
+	}
+	if (a3)
+	{
+		has_save_path = WriteGameActions(v8, replayData);
+	}
+	if (v8 && fclose(v8))
+	{
+		has_save_path = 0;
+	}
+	HidePopupDialog();
+	if (has_save_path)
+	{
+		return has_save_path;
+	}
+
+	DWORD file_attributes = GetFileAttributesA(save_filename);
+	if (file_attributes != -1 && (file_attributes & 1))
+	{
+		SetFileAttributesA(save_filename, file_attributes & ~1);
+	}
+	DeleteFileA(save_filename);
+	if (!outOfGame)
+	{
+		doNetTBLError(0, 0, 0, 101);
+	}
+	return has_save_path;
+}
+
+FAIL_STUB_PATCH(sub_4D02D0, "starcraft");
+
 void CMDRECV_SaveGame_(SaveGameCommand* command)
 {
 	if ((!multiPlayerMode || getActivePlayerId() == dword_512680) && !gameData.got_file_values.tournament_mode)
@@ -14562,7 +14801,7 @@ void CMDRECV_SaveGame_(SaveGameCommand* command)
 		{
 			if (isBadName(0, command->filename, SStrLen(command->filename)))
 			{
-				sub_4D02D0(command->filename, command->time, 0);
+				sub_4D02D0_(command->filename, command->time, 0);
 			}
 		}
 	}
