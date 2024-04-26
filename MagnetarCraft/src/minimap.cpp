@@ -892,11 +892,11 @@ void load_gluMinimap_()
 	{
 		if (dword_5993AC)
 		{
-			byte_59CB60[i] = sub_4BDB30(stru_59C6C0, palette[i]);
+			byte_59CB60[i] = sub_4BDB30_(stru_59C6C0, palette[i]);
 		}
 		else if (sub_4CB560(i))
 		{
-			byte_59CB60[i] = sub_4BDB30(palette, palette[i]);
+			byte_59CB60[i] = sub_4BDB30_(palette, palette[i]);
 		}
 		else
 		{

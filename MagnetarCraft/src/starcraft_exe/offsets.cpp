@@ -24146,10 +24146,10 @@ DECL_FUNC(void (__fastcall*input_targetOrder_LeftMouseClick)(dlgEvent *a1), inpu
 DECL_FUNC(void (__fastcall*DrawGameProc)(int a1, int a2, Bitmap *a3, bounds *a4), DrawGameProc, 0x4bd580);
 DECL_FUNC(void (__cdecl*InitializeGameLayer)(), InitializeGameLayer, 0x4bd630);
 DECL_FUNC(void (*initMapData)(), initMapData, 0x4bd6f0);
-DECL_FUNC(void * (*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
-DECL_FUNC(int (__thiscall*sub_4BDB30)(PALETTEENTRY *this_, PALETTEENTRY a2), sub_4BDB30, 0x4bdb30);
+DECL_FUNC(char * (*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
+DECL_FUNC(int (__thiscall*sub_4BDB30)(PALETTEENTRY *palette, PALETTEENTRY a2), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(unsigned (*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
-DECL_FUNC(void * (*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
+DECL_FUNC(char * (*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
 DECL_FUNC(void (__stdcall*sub_4BDDD0)(const char *tileset_name), sub_4BDDD0, 0x4bddd0);
 DECL_FUNC(void (__stdcall*loadColorShiftTilesetImages)(const char *tileset_name), loadColorShiftTilesetImages, 0x4bde60);
 BOOL sub_4BDF40(void *a1) {
@@ -27977,7 +27977,7 @@ _DWORD * sub_4DC840(_DWORD *result, _DWORD *a2, const void *a3) {
 }
 DECL_FUNC(int (*sub_4DC870)(), sub_4DC870, 0x4dc870);
 DECL_FUNC(void (__cdecl*sub_4DC8D0)(), sub_4DC8D0, 0x4dc8d0);
-DECL_FUNC(void * (*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
+DECL_FUNC(char * (*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
 DECL_FUNC(grpHead * (*sub_4DC940)(), sub_4DC940, 0x4dc940);
 DECL_FUNC(int (__thiscall*cleanUpFileNameString)(char *a1), cleanUpFileNameString, 0x4dca20);
 void sub_4DCB00(char *a1, char *a2) {
@@ -35216,7 +35216,7 @@ int (__fastcall *&dword_6D124C)(__int16) = *((decltype(&dword_6D124C)) 0x6d124c)
 void *& dword_6D1250 = * ((decltype(&dword_6D1250)) 0x6d1250);
 void *& dword_6D1254 = * ((decltype(&dword_6D1254)) 0x6d1254);
 void *& dword_6D1258 = * ((decltype(&dword_6D1258)) 0x6d1258);
-void *& dword_6D125C = * ((decltype(&dword_6D125C)) 0x6d125c);
+char *& dword_6D125C = * ((decltype(&dword_6D125C)) 0x6d125c);
 MegatileFlags *& active_tiles = * ((decltype(&active_tiles)) 0x6d1260);
 char& byte_6D1264 = * ((decltype(&byte_6D1264)) 0x6d1264);
 char& byte_6D1265 = * ((decltype(&byte_6D1265)) 0x6d1265);

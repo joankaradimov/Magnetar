@@ -8026,6 +8026,45 @@ void GameInitAI_()
 
 FAIL_STUB_PATCH(GameInitAI, "starcraft");
 
+int sub_4BDB30_(PALETTEENTRY* palette, PALETTEENTRY a2)
+{
+	unsigned int v2 = -1;
+	int v28 = 0;
+	int v27 = 1;
+	do
+	{
+		if (!dword_6D125C[v27])
+		{
+			int v4 = a2.peRed - palette[v27].peRed;
+			int v5 = a2.peBlue - palette[v27].peBlue;
+			int v6 = a2.peGreen - palette[v27].peGreen;
+			unsigned int v7 = v4 * v4 + v6 * v6 + v5 * v5;
+			if (v7 < v2)
+			{
+				v28 = v27;
+				v2 = v7;
+			}
+		}
+		v27 += 1;
+	} while (v27 < 256);
+
+	return v28;
+}
+
+FAIL_STUB_PATCH(sub_4BDB30, "starcraft");
+
+void sub_41E450_(int(*a1)(PALETTEENTRY*, PALETTEENTRY), PALETTEENTRY* a2)
+{
+	int v2 = 0;
+	do
+	{
+		byte_6CEB20[v2] = a1(a2, stru_51A0F0[v2]);
+		v2++;
+	} while ((int)(stru_51A0F0 + v2) < (int)&Gamma);
+}
+
+FAIL_STUB_PATCH(sub_41E450, "starcraft");
+
 u8 illegalTeamCheck_()
 {
 	if (gameData.got_file_values.team_mode == 2)
@@ -8119,7 +8158,7 @@ signed int GameInit_()
 	InitializeBulletArray();
 	InitializeOrderArray();
 	sub_4CB5B0(TILESET_PALETTE_RELATED[CurrentTileSet]->y);
-	sub_41E450(sub_4BDB30, palette);
+	sub_41E450_(sub_4BDB30_, palette);
 	sub_4C99C0();
 	if (!loadGameFileHandle)
 		InitializeUnitCounts();
@@ -18993,7 +19032,7 @@ void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_siz
 			memcpy(palette, glue_background_palette + 1, sizeof(palette));
 		}
 		a2->lFlags |= CTRL_UNKOWN1;
-		sub_41E450(sub_4BDB30, palette);
+		sub_41E450_(sub_4BDB30_, palette);
 		sub_4178B0(palette, NULL);
 		getBGPalInfo(glGluesMode);
 		MenuPosition v10 = stru_4FFAD0[glGluesMode].menu_position;
