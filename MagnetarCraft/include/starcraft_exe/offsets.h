@@ -2437,7 +2437,7 @@ extern void (__cdecl*JoinGame)();
 int sub_471CD0(int a1, int result);
 extern void (__fastcall*versionCheck)(int a1, char a2, int a3, int a4, int a5);
 extern BOOL (__stdcall*createVersionBuffer)(__int16 net_player_flags, __int16 net_player_x4, __int16 protocol_version, char save_player_unique_id, char save_player_id, int save_hash, BOOL create);
-extern void (__thiscall*RECV_StartGame)(int ecx0, int a2);
+extern void (*RECV_StartGame)(int a1);
 void RECV_SetRandomSeed(signed int a1, struct_v2 *a2);
 extern int (*sub_4721E0)();
 extern int (__fastcall*replaceNewlines)(_DWORD a1, _DWORD a2);

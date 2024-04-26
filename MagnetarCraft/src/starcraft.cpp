@@ -15182,7 +15182,7 @@ BOOL sub_4C4870_()
 	return 0;
 }
 
-FUNCTION_PATCH(sub_4C4870, sub_4C4870_, "starcraft");
+FAIL_STUB_PATCH(sub_4C4870, "starcraft");
 
 void Cls2RecvFrom_()
 {
@@ -21110,7 +21110,7 @@ void CALLBACK TimerFunc_(HWND a2, UINT a3, UINT_PTR a4, DWORD a5)
 
 FAIL_STUB_PATCH(TimerFunc, "starcraft");
 
-void __cdecl SetTimerFunc_()
+void SetTimerFunc_()
 {
 	dword_6D5C28 = 1;
 	countdown_seconds = 5;
@@ -21121,7 +21121,36 @@ void __cdecl SetTimerFunc_()
 	}
 }
 
-FUNCTION_PATCH(SetTimerFunc, SetTimerFunc_, "starcraft");
+FAIL_STUB_PATCH(SetTimerFunc, "starcraft");
+
+void RECV_StartGame_(int a1)
+{
+	if (gameState != 4)
+	{
+		bootReason(4);
+		return;
+	}
+	if (a1)
+	{
+		return;
+	}
+	if (!sub_4C4870_())
+	{
+		bootReason(9);
+		return;
+	}
+
+	if (InReplay)
+	{
+		memcpy(playerReplayWatchers, Players, sizeof(playerReplayWatchers));
+	}
+	gameState = 5;
+	countdownTimerInterval = std::max(2 * LatencyCalls + 4, 24);
+	SetTimerFunc_();
+	TickCounterInit_();
+}
+
+FUNCTION_PATCH(RECV_StartGame, RECV_StartGame_, "starcraft");
 
 void sub_4D3860_()
 {
