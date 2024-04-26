@@ -181,7 +181,6 @@ enum SaiAccessabilityFlags : __int16;
 union SaiRegionUser;
 struct __declspec(align(4)) EstablishingShotPosition;
 enum GluAllTblEntry : __int16;
-struct UnknownTilesetRelated2;
 enum MapDirEntryFlags : unsigned __int8;
 struct Timer;
 struct __declspec(align(2)) struc_66FE20;
@@ -304,7 +303,7 @@ struct Box16;
 struct SaiContour;
 struct __declspec(align(4)) SaiContourHub;
 struct SaiSplit;
-struct UnknownTilesetRelated1;
+struct UnknownTilesetRelated2;
 struct MinimapSurfaceInfoRelated;
 struct CycleStruct;
 struct __declspec(align(4)) SFX_related;
@@ -389,6 +388,7 @@ struct __declspec(align(4)) Map;
 struct __declspec(align(4)) SectionData;
 struct SaiRegion;
 struct __declspec(align(2)) PathCreateRelated;
+struct UnknownTilesetRelated1;
 struct __declspec(align(4)) CFlingy;
 struct __declspec(align(4)) TPROVIDER;
 struct CheatHashRelated;
@@ -3660,16 +3660,6 @@ enum GluAllTblEntry : __int16
   INVALID_SAVE_GAME = 0x3F,
 };
 
-struct UnknownTilesetRelated2
-{
-  _DWORD dword0;
-  unsigned __int8 has_next;
-  _BYTE byte5;
-  _BYTE byte6;
-  _BYTE byte7;
-};
-static_assert(sizeof(UnknownTilesetRelated2) == 8, "Incorrect size for type `UnknownTilesetRelated2`. Expected: 8");
-
 enum MapDirEntryFlags : unsigned __int8
 {
   MDEF_SAVEGAME = 0x1,
@@ -5712,12 +5702,15 @@ struct SaiSplit
 };
 static_assert(sizeof(SaiSplit) == 6, "Incorrect size for type `SaiSplit`. Expected: 6");
 
-struct UnknownTilesetRelated1
+struct UnknownTilesetRelated2
 {
-  int x;
-  UnknownTilesetRelated2 y[];
+  PALETTEENTRY *advanced_cycle_data;
+  unsigned __int8 has_next;
+  _BYTE palette_entry_low;
+  _BYTE palette_entry_high;
+  _BYTE adv_cycle_count;
 };
-static_assert(sizeof(UnknownTilesetRelated1) == 4, "Incorrect size for type `UnknownTilesetRelated1`. Expected: 4");
+static_assert(sizeof(UnknownTilesetRelated2) == 8, "Incorrect size for type `UnknownTilesetRelated2`. Expected: 8");
 
 struct MinimapSurfaceInfoRelated
 {
@@ -6602,6 +6595,13 @@ struct __declspec(align(2)) PathCreateRelated
 };
 #pragma pack(pop)
 static_assert(sizeof(PathCreateRelated) == 8, "Incorrect size for type `PathCreateRelated`. Expected: 8");
+
+struct UnknownTilesetRelated1
+{
+  int x;
+  UnknownTilesetRelated2 y[];
+};
+static_assert(sizeof(UnknownTilesetRelated1) == 4, "Incorrect size for type `UnknownTilesetRelated1`. Expected: 4");
 
 struct __declspec(align(4)) CFlingy
 {

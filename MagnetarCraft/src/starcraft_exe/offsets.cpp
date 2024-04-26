@@ -3467,7 +3467,7 @@ void CyclePaletteAdvanced(int cycle_struct_index) {
         call address
     }
 }
-CycleStruct * sub_41E550(unsigned __int8 a1, BYTE a2, BYTE a3, BYTE a4, void *a5, BYTE a6) {
+CycleStruct * sub_41E550(unsigned __int8 a1, BYTE a2, BYTE a3, BYTE a4, PALETTEENTRY *a5, BYTE a6) {
     int address = 0x41e550;
     CycleStruct * result_;
     __asm {
@@ -24149,7 +24149,7 @@ DECL_FUNC(void (*initMapData)(), initMapData, 0x4bd6f0);
 DECL_FUNC(char * (*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
 DECL_FUNC(int (__thiscall*sub_4BDB30)(PALETTEENTRY *palette, PALETTEENTRY a2), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(unsigned (*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
-DECL_FUNC(char * (*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
+DECL_FUNC(void (__cdecl*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
 DECL_FUNC(void (__stdcall*sub_4BDDD0)(const char *tileset_name), sub_4BDDD0, 0x4bddd0);
 DECL_FUNC(void (__stdcall*loadColorShiftTilesetImages)(const char *tileset_name), loadColorShiftTilesetImages, 0x4bde60);
 BOOL sub_4BDF40(void *a1) {
@@ -33252,12 +33252,11 @@ __int16(&word_512768)[2] = * ((decltype(&word_512768)) 0x512768);
 __int16& word_51276C = * ((decltype(&word_51276C)) 0x51276c);
 __int16& word_512770 = * ((decltype(&word_512770)) 0x512770);
 __int16& word_512774 = * ((decltype(&word_512774)) 0x512774);
-UnknownTilesetRelated1& stru_512778 = * ((decltype(&stru_512778)) 0x512778);
-UnknownTilesetRelated1& stru_51279C = * ((decltype(&stru_51279C)) 0x51279c);
-UnknownTilesetRelated1& stru_5127B8 = * ((decltype(&stru_5127B8)) 0x5127b8);
-UnknownTilesetRelated1 *(&off_5127DC)[8] = * ((decltype(&off_5127DC)) 0x5127dc);
+UnknownTilesetRelated1& badlands_color_cycle = * ((decltype(&badlands_color_cycle)) 0x512778);
+UnknownTilesetRelated1& exp_color_cycle = * ((decltype(&exp_color_cycle)) 0x51279c);
+UnknownTilesetRelated1& ashworld_color_cycle = * ((decltype(&ashworld_color_cycle)) 0x5127b8);
+UnknownTilesetRelated1 *(&color_cycles)[8] = * ((decltype(&color_cycles)) 0x5127dc);
 ActionPointer(&ActionTable)[60] = * ((decltype(&ActionTable)) 0x512800);
-int (__fastcall *&off_512818)(Action *) = *((decltype(&off_512818)) 0x512818);
 int& dword_5128F0 = * ((decltype(&dword_5128F0)) 0x5128f0);
 ColorShiftData(&colorShift)[8] = * ((decltype(&colorShift)) 0x5128f8);
 char *(&TileSetNames)[8] = * ((decltype(&TileSetNames)) 0x512998);
@@ -35205,7 +35204,7 @@ char& mapStarted = * ((decltype(&mapStarted)) 0x6d121c);
 WORD *& networkTable = * ((decltype(&networkTable)) 0x6d1220);
 char& byte_6D1224 = * ((decltype(&byte_6D1224)) 0x6d1224);
 char& byte_6D1225 = * ((decltype(&byte_6D1225)) 0x6d1225);
-UnknownTilesetRelated1& stru_6D1228 = * ((decltype(&stru_6D1228)) 0x6d1228);
+UnknownTilesetRelated1& no_color_cycle = * ((decltype(&no_color_cycle)) 0x6d1228);
 void (__fastcall *&active_menu_handler)(dialog *) = *((decltype(&active_menu_handler)) 0x6d1234);
 StringTbl& StatTxtTbl = * ((decltype(&StatTxtTbl)) 0x6d1238);
 char *& okcancel_message = * ((decltype(&okcancel_message)) 0x6d123c);

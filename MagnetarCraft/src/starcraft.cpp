@@ -6809,14 +6809,14 @@ int LoadMap_()
 FAIL_STUB_PATCH(LoadMap, "starcraft");
 
 UnknownTilesetRelated1* TILESET_PALETTE_RELATED[] = {
-	&stru_512778,
-	&stru_6D1228,
-	&stru_6D1228,
-	&stru_5127B8,
-	&stru_512778,
-	&stru_51279C,
-	&stru_51279C,
-	&stru_51279C,
+	&badlands_color_cycle,
+	&no_color_cycle,
+	&no_color_cycle,
+	&ashworld_color_cycle,
+	&badlands_color_cycle,
+	&exp_color_cycle,
+	&exp_color_cycle,
+	&exp_color_cycle,
 };
 
 MEMORY_PATCH(0x4BDD8A, TILESET_PALETTE_RELATED, "starcraft");
