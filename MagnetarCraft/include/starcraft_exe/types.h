@@ -242,6 +242,7 @@ enum StormVideoFlags;
 struct DownloadListMaybe;
 struct struct_v4_1;
 struct struct_a2_1;
+struct struc_500F60;
 struct RTTIBaseClassDescriptor;
 struct _EH3_EXCEPTION_REGISTRATION;
 struct Bitmap;
@@ -5021,6 +5022,15 @@ struct struct_a2_1
   int dword1F8;
 };
 static_assert(sizeof(struct_a2_1) == 508, "Incorrect size for type `struct_a2_1`. Expected: 508");
+
+struct struc_500F60
+{
+  char *xpath_maybe;
+  int flags;
+  int nIDDlgItem;
+  int field_C;
+};
+static_assert(sizeof(struc_500F60) == 16, "Incorrect size for type `struc_500F60`. Expected: 16");
 
 #pragma pack(push, 1)
 struct RTTIBaseClassDescriptor

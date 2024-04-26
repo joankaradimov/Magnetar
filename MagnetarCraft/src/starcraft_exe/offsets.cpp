@@ -3557,7 +3557,20 @@ DECL_FUNC(HANDLE (*createErrFile)(), createErrFile, 0x41ecb0);
 DECL_FUNC(void (*ProcError)(int a1), ProcError, 0x41ee50);
 DECL_FUNC(void (*ErrorLog)(char *arg0, ...), ErrorLog, 0x41ef00);
 DECL_FUNC(void (*ErrorLogSystemInfo)(), ErrorLogSystemInfo, 0x41efd0);
-DECL_FUNC(int (__thiscall*___vsnprintf)(char *a1), ___vsnprintf, 0x41f0a0);
+int ___vsnprintf(char *a1, va_list a2, char *a3, size_t a4) {
+    int address = 0x41f0a0;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov esi, a4
+        mov edi, a3
+        mov eax, a2
+        mov ecx, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 LPVOID localLoadResource(LPCSTR lpName, const CHAR *a2, int a3) {
     int address = 0x41f0c0;
     LPVOID result_;
@@ -3910,11 +3923,13 @@ BOOL ErrMessageBox(__int16 a1, LPCSTR lpText, LPCSTR lpCaption) {
     return result_;
 }
 DECL_FUNC(BOOL (__stdcall*DialogFunc)(HWND a1, UINT a2, WPARAM a3, LPARAM a4), DialogFunc, 0x420980);
-int sub_420A20(int a1) {
+int sub_420A20(int a1, char *a2, size_t a3) {
     int address = 0x420a20;
     int result_;
     __asm {
         xor eax, eax
+        mov esi, a3
+        mov edi, a2
         mov eax, a1
         call address
         mov result_, eax
@@ -9046,10 +9061,23 @@ int sub_44D050(int a1, int result, int ebx0, int edi0) {
     }
     return result_;
 }
-DECL_FUNC(_DWORD (__stdcall*sub_44D0C0)(_DWORD a1), sub_44D0C0, 0x44d0c0);
-char ** sub_44D100(_DWORD *a1) {
+char sub_44D0C0(int a1, _BYTE **a2, void (__fastcall *a3)(const char *a1, LPARAM a2, HWND hDlg), int a4) {
+    int address = 0x44d0c0;
+    char result_;
+    __asm {
+        xor eax, eax
+        push dword ptr a4
+        mov ebx, a3
+        mov ecx, a2
+        mov eax, a1
+        call address
+        mov result_, al
+    }
+    return result_;
+}
+struc_500F60 * sub_44D100(_DWORD *a1) {
     int address = 0x44d100;
-    char ** result_;
+    struc_500F60 * result_;
     __asm {
         xor eax, eax
         mov eax, a1
@@ -9059,7 +9087,7 @@ char ** sub_44D100(_DWORD *a1) {
     return result_;
 }
 DECL_FUNC(char * (*sub_44D120)(), sub_44D120, 0x44d120);
-DECL_FUNC(char (__fastcall*sub_44D140)(const char *a1, LPARAM a2, HWND hDlg), sub_44D140, 0x44d140);
+DECL_FUNC(void (__fastcall*sub_44D140)(const char *a1, LPARAM a2, HWND a3), sub_44D140, 0x44d140);
 DECL_FUNC(int (__stdcall*SaveProfileChanges)(_DWORD a1, _DWORD a2, _DWORD a3, _DWORD a4), SaveProfileChanges, 0x44d1e0);
 BOOL sub_44D450(HWND a1) {
     int address = 0x44d450;
@@ -9072,7 +9100,7 @@ BOOL sub_44D450(HWND a1) {
     }
     return result_;
 }
-DECL_FUNC(_BYTE * (__fastcall*sub_44D540)(char *a1, _BYTE *a2, int a3), sub_44D540, 0x44d540);
+DECL_FUNC(void (__fastcall*sub_44D540)(const char *a1, LPARAM a2, HWND a3), sub_44D540, 0x44d540);
 DECL_FUNC(void * (*sub_44D5B0)(), sub_44D5B0, 0x44d5b0);
 int gluBN_PROFILE_LinkHandler(LPCSTR lpszString, HDC a2, int a3, int a4, int a5) {
     int address = 0x44d630;
@@ -9089,14 +9117,14 @@ int gluBN_PROFILE_LinkHandler(LPCSTR lpszString, HDC a2, int a3, int a4, int a5)
     }
     return result_;
 }
-int sub_44D740(int a1) {
+char sub_44D740(int a1) {
     int address = 0x44d740;
-    int result_;
+    char result_;
     __asm {
         xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
+        mov result_, al
     }
     return result_;
 }
@@ -9172,7 +9200,7 @@ HWND InitProfileDialog(HWND a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*BattleDrawProfileInfo)(int a1, int a2, int a3, int a4, int a5, int a6, int a7, int a8, int a9, int a10, int a11), BattleDrawProfileInfo, 0x44e150);
+DECL_FUNC(int (__stdcall*BattleDrawProfileInfo)(int a1, int a2, int a3, int a4, int a5, int a6, _BYTE **a7, int a8, int a9, int a10, int a11), BattleDrawProfileInfo, 0x44e150);
 DECL_FUNC(int (__stdcall*DLG_PROFILE_Proc)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam), DLG_PROFILE_Proc, 0x44e1d0);
 DECL_FUNC(BOOL (__stdcall*BattleMakeProfileDialog)(int a1, int a2, int a3, int a4, LPARAM a5, int a6, int a7, int a8, int a9, int a10), BattleMakeProfileDialog, 0x44e390);
 DECL_FUNC(int (*sub_44E400)(), sub_44E400, 0x44e400);
@@ -27680,7 +27708,7 @@ void DataVersionCheck(const char *data_file_version) {
     }
 }
 DECL_FUNC(Font * (__fastcall*AllocateFont)(char *font_path, int default_value, int a3, int a4, int search_scope, char *logfilename, int logline), AllocateFont, 0x4dab00);
-DECL_FUNC(int (*InitializeArchiveHandles)(), InitializeArchiveHandles, 0x4dabd0);
+DECL_FUNC(void (__cdecl*InitializeArchiveHandles)(), InitializeArchiveHandles, 0x4dabd0);
 DECL_FUNC(void (*LoadGameFonts)(), LoadGameFonts, 0x4dae50);
 DECL_FUNC(void (*LoadMenuFonts)(), LoadMenuFonts, 0x4daec0);
 DECL_FUNC(void (__cdecl*PreInitData)(), PreInitData, 0x4daf30);
@@ -31710,8 +31738,8 @@ char(&aCputhrottle)[] = * ((decltype(&aCputhrottle)) 0x500c94);
 char(&aGamma)[] = * ((decltype(&aGamma)) 0x500cb0);
 char(&aColorcycle)[] = * ((decltype(&aColorcycle)) 0x500cb8);
 char(&aUnitportraits)[] = * ((decltype(&aUnitportraits)) 0x500cc4);
-char *& off_500E40 = * ((decltype(&off_500E40)) 0x500e40);
-char *& off_500F60 = * ((decltype(&off_500F60)) 0x500f60);
+struc_500F60(&stru_500E40)[18] = * ((decltype(&stru_500E40)) 0x500e40);
+struc_500F60(&stru_500F60)[18] = * ((decltype(&stru_500F60)) 0x500f60);
 char(&aGlueBattle_n_9)[43] = * ((decltype(&aGlueBattle_n_9)) 0x501080);
 char(&aGlueBattle_n_8)[] = * ((decltype(&aGlueBattle_n_8)) 0x5010ac);
 char(&aGlueBattle__10)[] = * ((decltype(&aGlueBattle__10)) 0x5010d8);
@@ -33481,6 +33509,7 @@ __int16& word_519F64 = * ((decltype(&word_519F64)) 0x519f64);
 RegistryOption(&stru_519F68)[16] = * ((decltype(&stru_519F68)) 0x519f68);
 char& byte_51A0E8 = * ((decltype(&byte_51A0E8)) 0x51a0e8);
 char& byte_51A0E9 = * ((decltype(&byte_51A0E9)) 0x51a0e9);
+PALETTEENTRY(&stru_51A0F0)[25] = * ((decltype(&stru_51A0F0)) 0x51a0f0);
 int& Gamma = * ((decltype(&Gamma)) 0x51a158);
 RECT& ScrLimit = * ((decltype(&ScrLimit)) 0x51a15c);
 RECT& ScrSize = * ((decltype(&ScrSize)) 0x51a16c);
@@ -35300,13 +35329,7 @@ Bitmap& progress_bar_empty_pcx = * ((decltype(&progress_bar_empty_pcx)) 0x6d5cbc
 Bitmap& progress_bar_full_pcx = * ((decltype(&progress_bar_full_pcx)) 0x6d5cc4);
 void *& dword_6D5CD8 = * ((decltype(&dword_6D5CD8)) 0x6d5cd8);
 void *& dword_6D5CDC = * ((decltype(&dword_6D5CDC)) 0x6d5cdc);
-int(&dword_6D5D00)[] = * ((decltype(&dword_6D5D00)) 0x6d5d00);
-int& dword_6D5D10 = * ((decltype(&dword_6D5D10)) 0x6d5d10);
-int& dword_6D5D14 = * ((decltype(&dword_6D5D14)) 0x6d5d14);
-int& dword_6D5D18 = * ((decltype(&dword_6D5D18)) 0x6d5d18);
-char *& dword_6D5D1C = * ((decltype(&dword_6D5D1C)) 0x6d5d1c);
-char *& dword_6D5D20 = * ((decltype(&dword_6D5D20)) 0x6d5d20);
-int& dword_6D5D30 = * ((decltype(&dword_6D5D30)) 0x6d5d30);
+char *(&dword_6D5D00)[18] = * ((decltype(&dword_6D5D00)) 0x6d5d00);
 int& dword_6D5D48 = * ((decltype(&dword_6D5D48)) 0x6d5d48);
 void *& dword_6D5D4C = * ((decltype(&dword_6D5D4C)) 0x6d5d4c);
 char *& dword_6D5D50 = * ((decltype(&dword_6D5D50)) 0x6d5d50);
