@@ -10,7 +10,7 @@ unsigned getElapsedGameTimeSeconds_()
 {
 	if (isInGame)
 	{
-		return (GetTickCount() - dword_59CC7C) / 1000 + elapstedTimeModifier;
+		return sub_4A2B60_();
 	}
 	else
 	{

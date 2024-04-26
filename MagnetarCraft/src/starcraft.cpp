@@ -14554,6 +14554,13 @@ void PollInput_()
 
 FAIL_STUB_PATCH(PollInput, "starcraft");
 
+DWORD sub_4A2B60_()
+{
+	return (GetTickCount() - dword_59CC7C) / 1000 + elapstedTimeModifier;
+}
+
+FAIL_STUB_PATCH(sub_4A2B60, "starcraft");
+
 int sub_4D02D0_(const char* filename, int time, int a3)
 {
 	if (!a3 && gameData.got_file_values.tournament_mode)
@@ -14603,7 +14610,7 @@ int sub_4D02D0_(const char* filename, int time, int a3)
 	{
 		has_save_path = 0;
 	}
-	savedElapsedSeconds = sub_4A2B60();
+	savedElapsedSeconds = sub_4A2B60_();
 	if (CampaignIndex == MD_none)
 	{
 		convertFullPathToRelativePath(sizeof(CurrentMapFileName), CurrentMapFileName);
