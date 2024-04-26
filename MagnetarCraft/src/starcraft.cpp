@@ -14467,6 +14467,22 @@ void DoGameLoop_()
 
 FAIL_STUB_PATCH(DoGameLoop, "starcraft");
 
+void DisableDragSelect_()
+{
+	if (byte_66FF5C)
+	{
+		BWFXN_RefreshTarget(
+			(__int16)stru_66FF50.left,
+			(__int16)stru_66FF50.bottom,
+			(__int16)stru_66FF50.top,
+			(__int16)stru_66FF50.right);
+		byte_66FF5C = 0;
+		SetInGameInputProcs_();
+	}
+}
+
+FAIL_STUB_PATCH(DisableDragSelect, "starcraft");
+
 void PollInput_()
 {
 	if (!is_app_active || IS_GAME_PAUSED && !multiPlayerMode)
@@ -14475,7 +14491,7 @@ void PollInput_()
 	}
 	if (byte_658AC0)
 	{
-		DisableDragSelect();
+		DisableDragSelect_();
 	}
 	else if (byte_66FF5C || byte_6D1214)
 	{
