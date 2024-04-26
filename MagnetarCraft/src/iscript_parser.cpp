@@ -193,6 +193,14 @@ public:
     void set_animation_label(Anims animation, LabelReference label)
     {
         current_header().animations[animation] = label;
+        if (label.name.empty())
+        {
+            *this << short(0);
+        }
+        else
+        {
+            *this << label;
+        }
     }
 
 private:
@@ -442,6 +450,7 @@ IScriptParser::IScriptParser() : iscript_parser(ISCRIPT_GRAMMAR)
         auto arg = std::any_cast<int>(vs[0]);
 
         builder->set_current_type(arg);
+        *builder << arg;
     };
 
     iscript_parser["HEADER_ANIMATION"] = [](const peg::SemanticValues& vs, std::any& dt) {
