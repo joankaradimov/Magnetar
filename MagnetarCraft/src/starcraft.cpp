@@ -7098,6 +7098,16 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+void getUnitPlaceboxSize_(UnitType unit_type, WORD* height, WORD* width)
+{
+	grpHead* v3 = ImageGrpGraphics[Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit_type]]]];
+
+	*width = std::max(v3->width, Unit_Placement[unit_type].x);
+	*height = std::max(v3->height, Unit_Placement[unit_type].y);
+}
+
+FAIL_STUB_PATCH(getUnitPlaceboxSize, "starcraft");
+
 void sub_48DA30_(UnitType unit_type)
 {
 	unsigned int playerID;
@@ -7132,7 +7142,7 @@ void __stdcall sub_48DAF0_(int a1, UnitType unit_type)
 
 	WORD width;
 	WORD height;
-	getUnitPlaceboxSize(unit_type, &height, &width);
+	getUnitPlaceboxSize_(unit_type, &height, &width);
 	width = (width + 31) & ~31;
 	height = (height + 31) & ~31;
 
