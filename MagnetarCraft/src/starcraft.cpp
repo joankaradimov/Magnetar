@@ -4632,6 +4632,26 @@ void set_unit_player_palette_(u8 player_id)
 
 FAIL_STUB_PATCH(set_unit_player_palette, "starcraft");
 
+void __fastcall imageRenderFxn14_0_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
+{
+	u8 v5 = dword_6D5BD4;
+	set_unit_player_palette_(player_id);
+	imageRenderFxn0_0(a1, a2, a3, a4, 0);
+	set_unit_player_palette_(v5);
+}
+
+FUNCTION_PATCH(imageRenderFxn14_0, imageRenderFxn14_0_, "starcraft");
+
+void __fastcall imageRenderFxn14_1_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
+{
+	u8 v5 = dword_6D5BD4;
+	set_unit_player_palette_(player_id);
+	imageRenderFxn0_1(a1, a2, a3, a4, 0);
+	set_unit_player_palette_(v5);
+}
+
+FUNCTION_PATCH(imageRenderFxn14_1, imageRenderFxn14_1_, "starcraft");
+
 void drawSprite_(CSprite* a1)
 {
 	set_unit_player_palette_(a1->playerID);

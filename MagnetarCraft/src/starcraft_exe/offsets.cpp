@@ -27147,8 +27147,8 @@ void compileHealthBar(CImage *a1, CSprite *a2) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*imageRenderFxn14_1)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_1, 0x4d6120);
-DECL_FUNC(void (__fastcall*imageRenderFxn14_0)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_0, 0x4d61a0);
+DECL_FUNC(void (__fastcall*imageRenderFxn14_1)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), imageRenderFxn14_1, 0x4d6120);
+DECL_FUNC(void (__fastcall*imageRenderFxn14_0)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), imageRenderFxn14_0, 0x4d61a0);
 DECL_FUNC(int (__stdcall*ReadImagesArray)(FILE *a1), ReadImagesArray, 0x4d6220);
 void packImageData(CImage *image) {
     int address = 0x4d6330;
