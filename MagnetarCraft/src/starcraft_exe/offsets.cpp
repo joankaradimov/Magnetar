@@ -17065,7 +17065,7 @@ int * initializeThingyArray(unsigned __int16 count, CThingy **a2, CThingy **a3, 
     }
     return result_;
 }
-DECL_FUNC(unsigned (*packThingyData)(), packThingyData, 0x487540);
+DECL_FUNC(void (__cdecl*packThingyData)(), packThingyData, 0x487540);
 DECL_FUNC(void (__cdecl*unpackThingyData)(), unpackThingyData, 0x4875f0);
 DECL_FUNC(BOOL (__stdcall*sub_487690)(CThingy *a1), sub_487690, 0x487690);
 bool isThingyOnMap(signed int a1, signed int a2, CThingy *a3) {
@@ -18638,10 +18638,10 @@ void FreezeUnit(CUnit *a1) {
         call address
     }
 }
-void ApplyUnitEffects(CUnit *a1) {
+void ApplyUnitEffects(CUnit *unit) {
     int address = 0x492da0;
     __asm {
-        mov eax, a1
+        mov eax, unit
         call address
     }
 }
@@ -18661,16 +18661,12 @@ void updateUnitStatusTimers(CUnit *unit) {
         call address
     }
 }
-CUnit * removeFromPsiProviderList(CUnit *result) {
+void removeFromPsiProviderList(CUnit *result) {
     int address = 0x493100;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 BOOL sub_493160(int a1) {
     int address = 0x493160;
@@ -18718,7 +18714,7 @@ BOOL unitCanRechargeShields(CUnit *a1, CUnit *a2) {
     }
     return result_;
 }
-DECL_FUNC(CUnit * (*RemoveAllPylonAuras)(), RemoveAllPylonAuras, 0x4935f0);
+DECL_FUNC(void (__cdecl*RemoveAllPylonAuras)(), RemoveAllPylonAuras, 0x4935f0);
 DECL_FUNC(void (*createPylonAura)(), createPylonAura, 0x493640);
 signed unitHasPower(unsigned __int16 a1, int a2, int a3, char a4) {
     int address = 0x4936b0;
@@ -19501,7 +19497,7 @@ void drawImage(CImage *image) {
     }
 }
 DECL_FUNC(void (__cdecl*CleanupSpritesDat)(), CleanupSpritesDat, 0x497d60);
-DECL_FUNC(int * (__thiscall*sub_497D80)(void *this_), sub_497D80, 0x497d80);
+DECL_FUNC(CSprite * (__thiscall*sub_497D80)(void *this_), sub_497D80, 0x497d80);
 DECL_FUNC(void (*sub_497DA0)(), sub_497DA0, 0x497da0);
 CImage * setSpriteColoringData(CSprite *a1, unsigned __int8 a2) {
     int address = 0x497dc0;
@@ -19578,7 +19574,6 @@ void sub_497FD0(char a1, CSprite *a2, unsigned __int8 a3, char a4) {
         mov esi, a2
         mov al, a1
         call address
-        add esp, 8
     }
 }
 CImage * sub_4980F0(CSprite *a1) {
@@ -19671,7 +19666,7 @@ void unknownColorShiftSomething(u8 result, char a2) {
 }
 DECL_FUNC(int (__stdcall*ReadSpritesArray)(FILE *a1), ReadSpritesArray, 0x498570);
 DECL_FUNC(BOOL (__stdcall*writeSprites)(FILE *file), writeSprites, 0x498740);
-DECL_FUNC(int (*RemoveAllSelectionCircles)(), RemoveAllSelectionCircles, 0x4989a0);
+DECL_FUNC(void (__cdecl*RemoveAllSelectionCircles)(), RemoveAllSelectionCircles, 0x4989a0);
 void sub_498A10(CSprite *a1) {
     int address = 0x498a10;
     __asm {
@@ -19765,7 +19760,6 @@ void CreateOverlay(CSprite *a1, int esi0, char a3, char a4, int a5) {
         mov esi, esi0
         mov eax, a1
         call address
-        add esp, 12
     }
 }
 CImage * sub_498F40(CSprite *a1, int a2, char a3, char a4, unsigned int a5) {
@@ -19853,18 +19847,14 @@ void sub_499730(CSprite *a1) {
         call address
     }
 }
-char sub_4997A0(int a1, CSprite *a2, int a3) {
+void sub_4997A0(int a1, CSprite *a2, int a3) {
     int address = 0x4997a0;
-    char result_;
     __asm {
-        xor eax, eax
         push dword ptr a3
         mov esi, a2
         mov ecx, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 int CreateLandingDustOverlays(CSprite *a1) {
     int address = 0x4997e0;
@@ -27156,16 +27146,12 @@ void packImageData(CImage *image) {
         call address
     }
 }
-CImage ** CreateHealthBar(CSprite *a1) {
+void CreateHealthBar(CSprite *a1) {
     int address = 0x4d6420;
-    CImage ** result_;
     __asm {
-        xor eax, eax
         mov edx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__thiscall*sub_4D64A0)(unsigned int this_), sub_4D64A0, 0x4d64a0);
 DECL_FUNC(int (__stdcall*writeImages)(FILE *file), writeImages, 0x4d64c0);
@@ -27199,7 +27185,7 @@ void sub_4D66B0(CImage *image) {
         call address
     }
 }
-void sub_4D6740(CImage *a1, CSprite *a2, unsigned int a3, unsigned int a4) {
+void sub_4D6740(CImage *a1, CSprite *a2, points a3, points a4) {
     int address = 0x4d6740;
     __asm {
         push dword ptr a4
@@ -29120,7 +29106,6 @@ void SetConstructionGraphic(CUnit *unit, int a2) {
         push dword ptr a2
         mov edi, unit
         call address
-        add esp, 4
     }
 }
 BOOL isConstructingAddon(CUnit *a1) {
@@ -30634,7 +30619,7 @@ unsigned sub_4F40D0(int a1) {
 }
 DECL_FUNC(BOOL (*LobbyLoopTurns)(), LobbyLoopTurns, 0x4f40f0);
 DECL_FUNC(char (__fastcall*RemoveAcidSpores)(int a1, CUnit *a2), RemoveAcidSpores, 0x4f4160);
-DECL_FUNC(unsigned (__thiscall*GetAcidSporeImage)(CUnit *this_), GetAcidSporeImage, 0x4f41f0);
+DECL_FUNC(int (__thiscall*GetAcidSporeImage)(CUnit *this_), GetAcidSporeImage, 0x4f41f0);
 void sub_4F4240(CUnit *a1) {
     int address = 0x4f4240;
     __asm {
