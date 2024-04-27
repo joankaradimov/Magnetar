@@ -7098,6 +7098,26 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+BOOL sub_463A10_(UnitType unit_type, CUnit* geyser)
+{
+	points a3;
+
+	a3.x = Unit_Placement[unit_type].x / 2 + Unit_Placement[geyser->unitType].x / -2 - Unit_AddonOffset[geyser->unitType - 106].x;
+	a3.y = Unit_Placement[unit_type].y / 2 + Unit_Placement[geyser->unitType].y / -2 - Unit_AddonOffset[geyser->unitType - 106].y;
+	return sub_4D6F90(geyser->sprite, Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit_type]]], a3, unit_type) != 0;
+}
+
+BOOL __stdcall sub_463A10__(CUnit* unit)
+{
+	UnitType unit_type;
+
+	__asm mov unit_type, bx
+
+	return sub_463A10_(unit_type, unit);
+}
+
+FUNCTION_PATCH((void*)0x463A10, sub_463A10__, "starcraft");
+
 void Base_CancelStructure_(CUnit* unit)
 {
 	if (!unit->sprite)

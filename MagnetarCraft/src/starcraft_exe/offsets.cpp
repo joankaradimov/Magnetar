@@ -27239,8 +27239,17 @@ void InitializeHealthBarImage(int a1, CImage *a2) {
 }
 DECL_FUNC(void (*InitializePresetImageArrays)(), InitializePresetImageArrays, 0x4d6930);
 DECL_FUNC(CImage * (__stdcall*ISCRIPT_CreateImage)(CImage *image, int image_id, char horizontal_offset, int vertical_offset, ImageOrder image_order), ISCRIPT_CreateImage, 0x4d6d90);
-DECL_FUNC(void (__fastcall*sub_4D6F00)(int a1, CSprite *a2, unsigned int a3, unsigned int a4), sub_4D6F00, 0x4d6f00);
-CImage * sub_4D6F90(CSprite *a1, unsigned __int16 a2, unsigned int a3, unsigned __int16 a4) {
+void sub_4D6F00(CSprite *a1, points a2, points a3) {
+    int address = 0x4d6f00;
+    __asm {
+        push dword ptr a3
+        push dword ptr a2
+        mov edx, a1
+        call address
+        add esp, 8
+    }
+}
+CImage * sub_4D6F90(CSprite *a1, unsigned __int16 a2, points a3, unsigned __int16 a4) {
     int address = 0x4d6f90;
     CImage * result_;
     __asm {
@@ -34499,7 +34508,7 @@ u8(&Unit_RightClickAction)[228] = * ((decltype(&Unit_RightClickAction)) 0x662098
 u8(&Unit_SizeType)[228] = * ((decltype(&Unit_SizeType)) 0x662180);
 Order(&Unit_HumanAiIdleOrder)[228] = * ((decltype(&Unit_HumanAiIdleOrder)) 0x662268);
 u32(&Unit_MaxHitPoints)[228] = * ((decltype(&Unit_MaxHitPoints)) 0x662350);
-u16(&Unit_AddonOffset)[192] = * ((decltype(&Unit_AddonOffset)) 0x6626e0);
+points(&Unit_AddonOffset)[96] = * ((decltype(&Unit_AddonOffset)) 0x6626e0);
 points(&Unit_Placement)[228] = * ((decltype(&Unit_Placement)) 0x662860);
 u16(&Unit_LastWhatSound)[228] = * ((decltype(&Unit_LastWhatSound)) 0x662bf0);
 u8(&Unit_SeekRange)[228] = * ((decltype(&Unit_SeekRange)) 0x662db8);
