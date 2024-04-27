@@ -1207,10 +1207,10 @@ DECL_FUNC(void (*sub_404BFA)(), sub_404BFA, 0x404bfa);
 DECL_FUNC(void (*sub_404C1E)(), sub_404C1E, 0x404c1e);
 DECL_FUNC(void (__fastcall*renderTerrainGRPToCache)(grpFrame *a1, int a2), renderTerrainGRPToCache, 0x40aae0);
 DECL_FUNC(char (__fastcall*imageRenderFxn0_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn0_0, 0x40abbe);
-DECL_FUNC(char (__fastcall*sub_40AD04)(int a1, int a2, int a3, int a4, int a5), sub_40AD04, 0x40ad04);
+DECL_FUNC(char (__fastcall*sub_40AD04)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), sub_40AD04, 0x40ad04);
 DECL_FUNC(char (__fastcall*sub_40AE63)(int a1, int a2, grpFrame *a3, _DWORD *a4, int a5), sub_40AE63, 0x40ae63);
 DECL_FUNC(char (__fastcall*sub_40AFD5)(int a1, int a2, grpFrame *a3, tagRECT *a4, int a5), sub_40AFD5, 0x40afd5);
-DECL_FUNC(char (__fastcall*imageRenderFxn3_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn3_0, 0x40b155);
+DECL_FUNC(void (__fastcall*imageRenderFxn3_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn3_0, 0x40b155);
 DECL_FUNC(char (__fastcall*imageRenderFxn8_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn8_0, 0x40b2d3);
 DECL_FUNC(char (__fastcall*imageRenderFxn17_0_cntd)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn17_0_cntd, 0x40b441);
 DECL_FUNC(char (__fastcall*imageRenderFxn9_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn9_0, 0x40b596);
@@ -17937,11 +17937,11 @@ int placeBuildingMsg(int a1) {
     return result_;
 }
 DECL_FUNC(BYTE (*refreshLayer3And4)(), refreshLayer3And4, 0x48d9a0);
-void sub_48DA30(UnitType a1) {
+void sub_48DA30(UnitType unit_type) {
     int address = 0x48da30;
     __asm {
         xor eax, eax
-        mov ax, a1
+        mov ax, unit_type
         call address
     }
 }
@@ -20149,7 +20149,7 @@ char AI_CloakUnit(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (__stdcall*sub_49B320)(char a1), sub_49B320, 0x49b320);
+DECL_FUNC(void (__stdcall*set_unit_player_palette)(u8 player_id), set_unit_player_palette, 0x49b320);
 DECL_FUNC(void * (__stdcall*RandomizePlayerColours)(void *a1), RandomizePlayerColours, 0x49b360);
 unsigned sub_49B410(CUnit *a1) {
     int address = 0x49b410;
@@ -26910,18 +26910,14 @@ DECL_FUNC(char (__fastcall*imageRenderFxn16_1)(int a1, int a2, grpFrame *a3, REC
 DECL_FUNC(char (__fastcall*imageRenderFxn16_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn16_0, 0x4d5210);
 DECL_FUNC(__int16 (__fastcall*imageRenderFxn15_0)(__int16 a1, unsigned __int16 a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn15_0, 0x4d5280);
 DECL_FUNC(char (__fastcall*imageRenderFxn13_0)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), imageRenderFxn13_0, 0x4d5390);
-char imageRenderFxn12_Main(rect *a1, int a2, int a3) {
+void imageRenderFxn12_Main(rect *a1, int a2, int a3) {
     int address = 0x4d53f0;
-    char result_;
     __asm {
-        xor eax, eax
         push dword ptr a3
         push dword ptr a2
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(char (__fastcall*imageRenderFxn17_1)(int a1, int a2, grpFrame *a3, int a4, unsigned __int8 a5), imageRenderFxn17_1, 0x4d5450);
 DECL_FUNC(char (__fastcall*imageRenderFxn17_0)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), imageRenderFxn17_0, 0x4d5480);
@@ -27092,7 +27088,7 @@ void sub_4D5BB0(CSprite *a1) {
 }
 DECL_FUNC(void (*InitDamageOverlayCounts)(), InitDamageOverlayCounts, 0x4d5c20);
 DECL_FUNC(void (__fastcall*imageRenderFxn12_1)(int a1, int a2, grpFrame *a3, rect *a4, int a5), imageRenderFxn12_1, 0x4d5c90);
-DECL_FUNC(char (__fastcall*imageRenderFxn12_0)(int a1, int a2, int a3, rect *a4, int a5), imageRenderFxn12_0, 0x4d5cd0);
+DECL_FUNC(void (__fastcall*imageRenderFxn12_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn12_0, 0x4d5cd0);
 DECL_FUNC(void (__thiscall*iscriptDecloaking)(CImage *this_), iscriptDecloaking, 0x4d5d10);
 DECL_FUNC(CImage * (__thiscall*iscriptCloaking)(CImage *this_), iscriptCloaking, 0x4d5d70);
 DECL_FUNC(int (*sub_4D5DC0)(), sub_4D5DC0, 0x4d5dc0);
@@ -27151,8 +27147,8 @@ void compileHealthBar(CImage *a1, CSprite *a2) {
         call address
     }
 }
-DECL_FUNC(int (__fastcall*imageRenderFxn14_1)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_1, 0x4d6120);
-DECL_FUNC(int (__fastcall*imageRenderFxn14_0)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_0, 0x4d61a0);
+DECL_FUNC(void (__fastcall*imageRenderFxn14_1)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_1, 0x4d6120);
+DECL_FUNC(void (__fastcall*imageRenderFxn14_0)(int a1, int a2, grpFrame *a3, RECT *a4, char a5), imageRenderFxn14_0, 0x4d61a0);
 DECL_FUNC(int (__stdcall*ReadImagesArray)(FILE *a1), ReadImagesArray, 0x4d6220);
 void packImageData(CImage *image) {
     int address = 0x4d6330;
