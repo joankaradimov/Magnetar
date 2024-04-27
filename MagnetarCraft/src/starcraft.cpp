@@ -7098,6 +7098,55 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+void SetConstructionGraphic_(CUnit* unit, int a2)
+{
+	// u8 v2 = ((unsigned __int16)unit->statusFlags >> 8) & 3;
+	StatusFlags v2 = unit->statusFlags & (StatusFlags::RequiresDetection | StatusFlags::Cloaked);
+	char a4 = 0;
+	char a1a = 0;
+	int v5;
+	if (v2)
+	{
+		CImage* pImagePrimary = unit->sprite->pImagePrimary;
+		a4 = LOBYTE(pImagePrimary->coloringData);
+		a1a = BYTE1(pImagePrimary->coloringData);
+	}
+	CUnit* v4 = iscript_unit;
+	iscript_unit = unit;
+	if (a2 && Unit_ConstructionAnimation[unit->unitType])
+	{
+		v5 = Unit_ConstructionAnimation[unit->unitType];
+	}
+	else
+	{
+		v5 = Sprites_Image[unit->sprite->spriteID];
+	}
+
+	ReplaceSpriteOverlayImage(unit->sprite, v5, unit->currentDirection1);
+	iscript_unit = v4;
+	if (v2)
+	{
+		sub_497FD0(a1a, unit->sprite, v2, a4);
+		if (playerVisions & unit->visibilityStatus)
+		{
+			makeSpriteVisible(unit->sprite);
+		}
+	}
+	ApplyUnitEffects(unit);
+	unit->buildingOverlayState = building_overlay_state_max[unit->sprite->pImagePrimary->imageID];
+}
+
+void __stdcall SetConstructionGraphic__(int a2)
+{
+	CUnit* unit;
+
+	__asm mov unit, edi
+
+	SetConstructionGraphic_(unit, a2);
+}
+
+FUNCTION_PATCH((void*)0x4E65E0, SetConstructionGraphic__, "starcraft");
+
 BOOL sub_463A10_(UnitType unit_type, CUnit* geyser)
 {
 	points a3;
