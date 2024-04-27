@@ -8234,7 +8234,7 @@ extern int& level_cheat_is_bw;
 extern CHAR(&main_directory)[260];
 extern DlgGrp *(&dword_51C5C8)[16];
 extern int& level_cheat_race;
-extern void *& dword_51C60C;
+extern GlueEffectBuffer *& dword_51C60C;
 extern int(&randomCounts)[];
 extern int& dword_51C618;
 extern int& dword_51C630;

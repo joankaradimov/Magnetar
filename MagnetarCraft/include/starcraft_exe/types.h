@@ -235,7 +235,7 @@ struct ScoreFormatRelated;
 struct __unaligned __declspec(align(1)) struct_v0;
 struct ShaState;
 struct __unaligned __declspec(align(1)) LoadGameCommand;
-struct __declspec(align(1)) GluRelated;
+struct __declspec(align(4)) GluRelated;
 struct struct_v3;
 enum StormVideoFlags;
 struct DownloadListMaybe;
@@ -364,6 +364,7 @@ struct __declspec(align(1)) MinimapPingCommand;
 struct __declspec(align(1)) GroupUnitsCommand;
 struct UnitGroupRelatedInner;
 struct TSAVEGAME;
+struct GlueEffectBuffer;
 struct CPPEH_RECORD;
 struct dialog_btn;
 struct __declspec(align(1)) dialog_list;
@@ -4936,7 +4937,7 @@ struct __unaligned __declspec(align(1)) LoadGameCommand
 #pragma pack(pop)
 static_assert(sizeof(LoadGameCommand) == 33, "Incorrect size for type `LoadGameCommand`. Expected: 33");
 
-struct __declspec(align(1)) GluRelated
+struct __declspec(align(4)) GluRelated
 {
   const char glue_path[260];
   grpHead *grp_head;
@@ -6203,6 +6204,12 @@ struct TSAVEGAME
   char unk[52];
 };
 static_assert(sizeof(TSAVEGAME) == 64, "Incorrect size for type `TSAVEGAME`. Expected: 64");
+
+struct GlueEffectBuffer
+{
+  BYTE data[16];
+};
+static_assert(sizeof(GlueEffectBuffer) == 16, "Incorrect size for type `GlueEffectBuffer`. Expected: 16");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 

@@ -18931,6 +18931,29 @@ void sub_4CC990_()
 
 FAIL_STUB_PATCH(sub_4CC990, "starcraft");
 
+void loadtEffectPcx_(void)
+{
+	sub_4BDD60();
+	CompileSCode(0, 0);
+	dword_51C60C = (GlueEffectBuffer*) SMemAlloc(sizeof(GlueEffectBuffer) * _countof(stru_50E06C), "Starcraft\\SWAR\\lang\\glues.cpp", 315, 0);
+
+	for (int i = 0; i < _countof(stru_50E06C); i++)
+	{
+		if (!stru_50E06C[i].field_110 || !is_spawn)
+		{
+			char fileName[MAX_PATH];
+			SStrCopy(fileName, stru_50E06C[i].glue_path);
+			SStrNCat(fileName, "\\tEffect.pcx");
+			if (!SBmpLoadImage(fileName, 0, dword_51C60C + i, sizeof(GlueEffectBuffer), 0, 0, 0))
+			{
+				throw FileNotFoundException(fileName, SErrGetLastError());
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(loadtEffectPcx, "starcraft");
+
 void loadDlgGrp_()
 {
 	for (int i = 0; i < 12; i++)
@@ -21877,7 +21900,7 @@ void SwitchMenu_()
 		byte_50CDC1[i] = i;
 	}
 	LoadMenuFonts();
-	loadtEffectPcx();
+	loadtEffectPcx_();
 	loadCursor();
 	loadTFontPcx();
 	loadDlgGrp_();
