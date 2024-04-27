@@ -80,12 +80,20 @@ int __stdcall ReadSpritesArray_(FILE* a1)
 
 FUNCTION_PATCH(ReadSpritesArray, ReadSpritesArray_, "starcraft");
 
-BOOL __stdcall writeSprites_(FILE* file)
+void sub_497DA0_()
 {
     for (int i = 0; i < _countof(SpriteTable); i++)
     {
         packSpriteData(SpriteTable + i);
     }
+}
+
+FAIL_STUB_PATCH(sub_497DA0, "starcraft");
+
+BOOL __stdcall writeSprites_(FILE* file)
+{
+    sub_497DA0_();
+
     int v3 = 0;
     CImage** v4 = &SpriteTable[1].pImageHead;
     do
