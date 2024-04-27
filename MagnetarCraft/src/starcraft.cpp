@@ -7071,6 +7071,28 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+void sub_48DA30_(UnitType unit_type)
+{
+	unsigned int playerID;
+	if (byte_64088D == ORD_BLDG_LAND || byte_64088D == ORD_PLACE_ADDON && unit_type == Terran_Marine)
+	{
+		playerID = ActivePortraitUnit->sprite->playerID;
+	}
+	else
+	{
+		playerID = ActivePortraitUnit->playerID;
+	}
+	dword_6D5BD4 = getColourID(playerID);
+	memcpy(byte_50CDC1 + 8, &stru_581D76[dword_6D5BD4].colors, sizeof(stru_581D76[dword_6D5BD4].colors));
+	grpHead* grp = ImageGrpGraphics[Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit_type]]]];
+
+	RECT rc;
+	SetRect(&rc, 0, 0, grp->frames[0].wid, grp->frames[0].hgt);
+	imageRenderFxn0_0(grp->frames[0].x, grp->frames[0].y, grp->frames, &rc, 0);
+}
+
+FAIL_STUB_PATCH(sub_48DA30, "starcraft");
+
 void __stdcall sub_48DAF0_(int a1, UnitType unit_type)
 {
 	if (a1)
@@ -7094,7 +7116,7 @@ void __stdcall sub_48DAF0_(int a1, UnitType unit_type)
 	dword_6CF4A8->data = (u8*)SMemAlloc(height * width, "Starcraft\\SWAR\\lang\\placebox.cpp", 280, 0);
 	memset(dword_6CF4A8->data, 0, height * width);
 
-	sub_48DA30(unit_type);
+	sub_48DA30_(unit_type);
 	memset(&stru_640898[a1], 0xCu, sizeof(struc_640898));
 
 	ScreenLayers[a1 + 3].width = width;
