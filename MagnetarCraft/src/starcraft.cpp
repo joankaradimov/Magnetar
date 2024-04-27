@@ -7071,6 +7071,40 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+void __stdcall sub_48DAF0_(int a1, UnitType unit_type)
+{
+	if (a1)
+	{
+		placeBuildingUnitType = unit_type;
+	}
+	else
+	{
+		placeBuildBaseType = unit_type;
+	}
+
+	WORD width;
+	WORD height;
+	getUnitPlaceboxSize(unit_type, &height, &width);
+	width = (width + 31) & ~31;
+	height = (height + 31) & ~31;
+
+	dword_6CF4A8 = placement_boxes + a1;
+	dword_6CF4A8->wid = width;
+	dword_6CF4A8->ht = height;
+	dword_6CF4A8->data = (u8*)SMemAlloc(height * width, "Starcraft\\SWAR\\lang\\placebox.cpp", 280, 0);
+	memset(dword_6CF4A8->data, 0, height * width);
+
+	sub_48DA30(unit_type);
+	memset(&stru_640898[a1], 0xCu, sizeof(struc_640898));
+
+	ScreenLayers[a1 + 3].width = width;
+	ScreenLayers[a1 + 3].height = height;
+	ScreenLayers[a1 + 3].buffers = 1;
+	dword_6CF4A8 = 0;
+}
+
+FUNCTION_PATCH(sub_48DAF0, sub_48DAF0_, "starcraft");
+
 void InitializeSpriteArray_()
 {
 	// TODO: dynamically allocate spritesDat memory
