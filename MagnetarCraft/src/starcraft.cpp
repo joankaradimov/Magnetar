@@ -7098,6 +7098,93 @@ void InitializePresetImageArrays_()
 
 FAIL_STUB_PATCH(InitializePresetImageArrays, "starcraft");
 
+void Base_CancelStructure_(CUnit* unit)
+{
+	if (!unit->sprite)
+	{
+		return;
+	}
+	if (unit->orderID == Order::ORD_DIE)
+	{
+		return;
+	}
+	if (unit->statusFlags & StatusFlags::Completed)
+	{
+		return;
+	}
+	if (unit->unitType == UnitType::Zerg_Guardian
+		|| unit->unitType == UnitType::Zerg_Lurker
+		|| unit->unitType == UnitType::Zerg_Devourer
+		|| unit->unitType == UnitType::Zerg_Nydus_Canal && unit->fields2.nydus.exit)
+	{
+		return;
+	}
+	if (unit->unitType == UnitType::Zerg_Mutalisk || unit->unitType == UnitType::Zerg_Hydralisk)
+	{
+		return;
+	}
+
+	if (!(unit->statusFlags & StatusFlags::GoundedBuilding))
+	{
+		bool is_zerg_egg = unit->unitType == UnitType::Zerg_Egg || unit->unitType == UnitType::Zerg_Cocoon || unit->unitType == UnitType::Zerg_Lurker_Egg;
+		UnitType v4 = is_zerg_egg ? unit->buildQueue[unit->buildQueueSlot % 5] : unit->unitType;
+		refundUnitTrainCost(unit->playerID, v4);
+	}
+	else if (unitGetRace(unit) == RaceId::RACE_Zerg)
+	{
+		ZergPlaceBuilding(unit);
+		return;
+	}
+	else
+	{
+		refundBuildingCost(unit->unitType, unit->playerID);
+	}
+
+	if (unit->unitType == UnitType::Zerg_Cocoon)
+	{
+		replaceUnitWithType(unit, UnitType::Zerg_Mutalisk);
+	}
+	else if (unit->unitType == UnitType::Zerg_Lurker_Egg)
+	{
+		replaceUnitWithType(unit, UnitType::Zerg_Hydralisk);
+	}
+	else
+	{
+		if (unit->unitType == UnitType::Terran_Nuclear_Missile)
+		{
+			if (CUnit* connectedUnit = unit->connectedUnit)
+			{
+				connectedUnit->fields2.silo.pNuke = 0;
+				unit->connectedUnit->orderState = 0;
+			}
+			RefreshConsole();
+		}
+		RemoveUnit(unit);
+		return;
+	}
+
+	unit->remainingBuildTime = 0;
+	unit->buildQueue[unit->buildQueueSlot] = UnitType(228);
+	ReplaceSpriteOverlayImage(unit->sprite, Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit->previousUnitType]]], 0);
+	unit->orderSignal &= ~4;
+	for (CImage* image = unit->sprite->pImageHead; image; image = image->next)
+	{
+		PlayIscriptAnim_(image, Anims::AE_SpecialState2);
+	}
+	orderComputer_cl(unit, Order::ORD_ZERG_BIRTH);
+}
+
+void Base_CancelStructure__()
+{
+	CUnit* unit;
+
+	__asm mov unit, ecx
+
+	Base_CancelStructure_(unit);
+}
+
+FUNCTION_PATCH((void*)0x468280, Base_CancelStructure__, "starcraft");
+
 void getUnitPlaceboxSize_(UnitType unit_type, WORD* height, WORD* width)
 {
 	grpHead* v3 = ImageGrpGraphics[Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit_type]]]];

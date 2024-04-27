@@ -20941,7 +20941,6 @@ void replaceUnitWithType(CUnit *a1, UnitType a2) {
         push dword ptr a2
         mov eax, a1
         call address
-        add esp, 4
     }
 }
 signed sub_4A0080(CUnit *a1) {
