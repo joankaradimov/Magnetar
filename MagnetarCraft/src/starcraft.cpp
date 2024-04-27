@@ -9041,6 +9041,29 @@ void playsound_init_UI_(u16* a1)
 
 FAIL_STUB_PATCH(playsound_init_UI, "starcraft");
 
+void sub_4BDB00_()
+{
+	if (dword_6D125C)
+	{
+		SMemFree(dword_6D125C, "Starcraft\\SWAR\\lang\\light.cpp", 121, 0);
+	}
+	dword_6D125C = nullptr;
+}
+
+FAIL_STUB_PATCH(sub_4BDB00, "starcraft");
+
+void sub_4DC8F0_()
+{
+	if (dword_51C60C)
+	{
+		SMemFree(dword_51C60C, "Starcraft\\SWAR\\lang\\glues.cpp", 338, 0);
+	}
+	BWFXN_GameEndTarget();
+	sub_4BDB00_();
+}
+
+FAIL_STUB_PATCH(sub_4DC8F0, "starcraft");
+
 int COMMON_SFX_COUNT = 113;
 int TERRAN_SFX_COUNT = 299;
 int PROTOSS_SFX_COUNT = 282;
@@ -10080,10 +10103,9 @@ void DestroyMapData_()
 		spkHandle = NULL;
 	}
 	TransDestroy();
-	if (!dword_5993AC && dword_6D125C)
+	if (!dword_5993AC)
 	{
-		SMemFree(dword_6D125C, "Starcraft\\SWAR\\lang\\light.cpp", 121, 0);
-		dword_6D125C = NULL;
+		sub_4BDB00_();
 	}
 
 	for (int i = 1; i < _countof(colorShift); i++)
@@ -22212,12 +22234,7 @@ LABEL_28:
 	}
 	RefreshCursor_0();
 	playsound_init_UI_(0);
-	if (dword_51C60C)
-		SMemFree(dword_51C60C, "Starcraft\\SWAR\\lang\\glues.cpp", 338, 0);
-	BWFXN_GameEndTarget();
-	if (dword_6D125C)
-		SMemFree(dword_6D125C, "Starcraft\\SWAR\\lang\\light.cpp", 121, 0);
-	dword_6D125C = 0;
+	sub_4DC8F0_();
 	sub_4DC940();
 	if (dword_51C40C)
 		SMemFree(dword_51C40C, "Starcraft\\SWAR\\lang\\glues.cpp", 370, 0);
