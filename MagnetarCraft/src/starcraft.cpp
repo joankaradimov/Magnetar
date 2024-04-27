@@ -10143,16 +10143,15 @@ void DestroyGame_()
 	{
 		TriggerNode_Destructor(stru_51A280 + i);
 	}
-	struct_0* v2 = placement_boxes;
-	do
+
+	for (Bitmap& placement_box: placement_boxes)
 	{
-		if (v2->field_0)
+		if (placement_box.data)
 		{
-			SMemFree(v2->field_0, "Starcraft\\SWAR\\lang\\placebox.cpp", 578, 0);
-			v2->field_0 = 0;
+			SMemFree(placement_box.data, "Starcraft\\SWAR\\lang\\placebox.cpp", 578, 0);
+			placement_box.data = nullptr;
 		}
-		++v2;
-	} while ((int)v2 < (int)playerReplayWatchers);
+	}
 	sub_484D90_();
 	destroyGameHUD_();
 	DestroyMapData_();

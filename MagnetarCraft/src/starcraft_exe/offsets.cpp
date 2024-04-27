@@ -11971,13 +11971,13 @@ void orders_Medic(CUnit *a1) {
         call address
     }
 }
-BOOL sub_463A10(UnitType a1, CUnit *a2) {
+BOOL sub_463A10(UnitType a1, CUnit *geyser) {
     int address = 0x463a10;
     BOOL result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
-        push dword ptr a2
+        push dword ptr geyser
         mov bx, a1
         call address
         mov result_, eax
@@ -13475,14 +13475,14 @@ ButtonState parseRequirementOpcodes(__int16 a1, CUnit *a2, Tech2 a3, int a4, int
     }
     return result_;
 }
-ButtonState OrderAllowed(CUnit *a1, unsigned __int16 order, int a3) {
+ButtonState OrderAllowed(CUnit *a1, Order order, int a3) {
     int address = 0x46dc20;
     ButtonState result_;
     __asm {
         xor eax, eax
         xor ebx, ebx
         push dword ptr a3
-        mov bx, order
+        mov bl, order
         mov eax, a1
         call address
         mov result_, eax
@@ -17891,18 +17891,15 @@ signed InitPlacementBoxPos_maybe(int a1) {
     return result_;
 }
 DECL_FUNC(WORD * (*sub_48D700)(), sub_48D700, 0x48d700);
-int getUnitPlaceboxSize(UnitType a1, int a2, int a3) {
+void getUnitPlaceboxSize(UnitType unit_type, WORD *height, WORD *width) {
     int address = 0x48d750;
-    int result_;
     __asm {
         xor eax, eax
-        push dword ptr a3
-        mov edi, a2
-        mov ax, a1
+        push dword ptr width
+        mov edi, height
+        mov ax, unit_type
         call address
-        mov result_, eax
     }
-    return result_;
 }
 char sub_48D7B0(int a1) {
     int address = 0x48d7b0;
@@ -17940,19 +17937,16 @@ int placeBuildingMsg(int a1) {
     return result_;
 }
 DECL_FUNC(BYTE (*refreshLayer3And4)(), refreshLayer3And4, 0x48d9a0);
-char sub_48DA30(UnitType a1) {
+void sub_48DA30(UnitType a1) {
     int address = 0x48da30;
-    char result_;
     __asm {
         xor eax, eax
         mov ax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
-DECL_FUNC(int (__stdcall*sub_48DAF0)(int a1, UnitType a2), sub_48DAF0, 0x48daf0);
-BOOL CMDRECV_PlaceBuildingAllowed(CUnit *a1, UnitType ax0, unsigned __int8 a3) {
+DECL_FUNC(void (__stdcall*sub_48DAF0)(int a1, UnitType a2), sub_48DAF0, 0x48daf0);
+BOOL CMDRECV_PlaceBuildingAllowed(CUnit *a1, UnitType ax0, Order a3) {
     int address = 0x48dbd0;
     BOOL result_;
     __asm {
@@ -17980,16 +17974,12 @@ void sub_48DE70(CUnit *a1, Order a2, int a3, UnitType a4) {
         call address
     }
 }
-BOOL sub_48DFF0(CUnit *a1) {
+void sub_48DFF0(CUnit *a1) {
     int address = 0x48dff0;
-    BOOL result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__stdcall*cmdRECV_PlaceBuildingNormal)(__int64 a1, int unit_type), cmdRECV_PlaceBuildingNormal, 0x48e010);
 DECL_FUNC(void (__stdcall*cmdRECV_PlaceBuildingAddon)(__int64 a1, int a2), cmdRECV_PlaceBuildingAddon, 0x48e0a0);
@@ -18006,16 +17996,12 @@ int cmdRECV_PlaceBuilding(unsigned __int16 a1, int a2, int a3) {
     }
     return result_;
 }
-CUnit * placebuildingRefineryCheck(CUnit *result) {
+void placebuildingRefineryCheck(CUnit *result) {
     int address = 0x48e1e0;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__stdcall*doPlacebuildingChecking)(CUnit *a1), doPlacebuildingChecking, 0x48e210);
 DECL_FUNC(void (*refreshPlaceBuildingLocation)(), refreshPlaceBuildingLocation, 0x48e310);
@@ -24146,7 +24132,7 @@ DECL_FUNC(void (__fastcall*input_targetOrder_LeftMouseClick)(dlgEvent *a1), inpu
 DECL_FUNC(void (__fastcall*DrawGameProc)(int a1, int a2, Bitmap *a3, bounds *a4), DrawGameProc, 0x4bd580);
 DECL_FUNC(void (__cdecl*InitializeGameLayer)(), InitializeGameLayer, 0x4bd630);
 DECL_FUNC(void (*initMapData)(), initMapData, 0x4bd6f0);
-DECL_FUNC(char * (*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
+DECL_FUNC(void (__cdecl*sub_4BDB00)(), sub_4BDB00, 0x4bdb00);
 DECL_FUNC(int (__thiscall*sub_4BDB30)(PALETTEENTRY *palette, PALETTEENTRY a2), sub_4BDB30, 0x4bdb30);
 DECL_FUNC(unsigned (*sub_4BDD40)(), sub_4BDD40, 0x4bdd40);
 DECL_FUNC(void (__cdecl*sub_4BDD60)(), sub_4BDD60, 0x4bdd60);
@@ -25089,7 +25075,7 @@ DECL_FUNC(int (__fastcall*CreateUnit_maybe)(signed int player_id, int unit_type,
 DECL_FUNC(int (__fastcall*TriggerAction_CreateUnitWithProperties)(Action *a1), TriggerAction_CreateUnitWithProperties, 0x4c8d90);
 DECL_FUNC(int (*sub_4C8E10)(), sub_4C8E10, 0x4c8e10);
 DECL_FUNC(RegistryOptions * (*sub_4C8E30)(), sub_4C8E30, 0x4c8e30);
-DECL_FUNC(int (*sub_4C8E60)(), sub_4C8E60, 0x4c8e60);
+DECL_FUNC(void (__cdecl*sub_4C8E60)(), sub_4C8E60, 0x4c8e60);
 char sub_4C8E80(unsigned __int16 a1, grpHead *a2, int a3, int a4) {
     int address = 0x4c8e80;
     char result_;
@@ -27977,7 +27963,7 @@ _DWORD * sub_4DC840(_DWORD *result, _DWORD *a2, const void *a3) {
 }
 DECL_FUNC(int (*sub_4DC870)(), sub_4DC870, 0x4dc870);
 DECL_FUNC(void (__cdecl*sub_4DC8D0)(), sub_4DC8D0, 0x4dc8d0);
-DECL_FUNC(char * (*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
+DECL_FUNC(void (__cdecl*sub_4DC8F0)(), sub_4DC8F0, 0x4dc8f0);
 DECL_FUNC(grpHead * (*sub_4DC940)(), sub_4DC940, 0x4dc940);
 DECL_FUNC(int (__thiscall*cleanUpFileNameString)(char *a1), cleanUpFileNameString, 0x4dca20);
 void sub_4DCB00(char *a1, char *a2) {
@@ -34300,14 +34286,13 @@ int& isPlacingAddon = * ((decltype(&isPlacingAddon)) 0x640884);
 UnitType& placeBuildBaseType = * ((decltype(&placeBuildBaseType)) 0x640888);
 UnitType& placeBuildingUnitType = * ((decltype(&placeBuildingUnitType)) 0x64088a);
 char& _placementRelated = * ((decltype(&_placementRelated)) 0x64088c);
-char& byte_64088D = * ((decltype(&byte_64088D)) 0x64088d);
+Order& byte_64088D = * ((decltype(&byte_64088D)) 0x64088d);
 Position& placeBuilding = * ((decltype(&placeBuilding)) 0x640890);
-char(&byte_640898)[96] = * ((decltype(&byte_640898)) 0x640898);
+struc_640898(&stru_640898)[2] = * ((decltype(&stru_640898)) 0x640898);
 char(&byte_6408F8)[96] = * ((decltype(&byte_6408F8)) 0x6408f8);
 int& placeBuildingMessageId = * ((decltype(&placeBuildingMessageId)) 0x640958);
-__int16(&word_64095C)[] = * ((decltype(&word_64095C)) 0x64095c);
-char(&algn_64095E)[2] = * ((decltype(&algn_64095E)) 0x64095e);
-struct_0(&placement_boxes)[2] = * ((decltype(&placement_boxes)) 0x640960);
+Bitmap(&placement_boxes)[2] = * ((decltype(&placement_boxes)) 0x64095c);
+unsigned __int16& word_64096C = * ((decltype(&word_64096C)) 0x64096c);
 PlayerInfo(&playerReplayWatchers)[12] = * ((decltype(&playerReplayWatchers)) 0x640970);
 int& Chat_IncrementY = * ((decltype(&Chat_IncrementY)) 0x640b20);
 int(&chat_line_expiration)[12] = * ((decltype(&chat_line_expiration)) 0x640b24);
@@ -34724,7 +34709,7 @@ dialog *& statres_Dlg = * ((decltype(&statres_Dlg)) 0x68c234);
 void *& game_icons_grp = * ((decltype(&game_icons_grp)) 0x68c238);
 char(&byte_68C23C)[4] = * ((decltype(&byte_68C23C)) 0x68c23c);
 char(&byte_68C240)[192] = * ((decltype(&byte_68C240)) 0x68c240);
-char& byte_68C300 = * ((decltype(&byte_68C300)) 0x68c300);
+Order& byte_68C300 = * ((decltype(&byte_68C300)) 0x68c300);
 int& dword_68C308 = * ((decltype(&dword_68C308)) 0x68c308);
 int& dword_68C30C = * ((decltype(&dword_68C30C)) 0x68c30c);
 int& dword_68C310 = * ((decltype(&dword_68C310)) 0x68c310);

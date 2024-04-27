@@ -242,6 +242,7 @@ struct DownloadListMaybe;
 struct struct_v4_1;
 struct struct_a2_1;
 struct struc_500F60;
+struct struc_640898;
 struct RTTIBaseClassDescriptor;
 struct _EH3_EXCEPTION_REGISTRATION;
 struct Bitmap;
@@ -5022,6 +5023,12 @@ struct struc_500F60
 };
 static_assert(sizeof(struc_500F60) == 16, "Incorrect size for type `struc_500F60`. Expected: 16");
 
+struct struc_640898
+{
+  char field_0[48];
+};
+static_assert(sizeof(struc_640898) == 48, "Incorrect size for type `struc_640898`. Expected: 48");
+
 #pragma pack(push, 1)
 struct RTTIBaseClassDescriptor
 {
@@ -7006,7 +7013,7 @@ struct __declspec(align(4)) CUnit
   u16 currentButtonSet;
   bool isCloaked;
   UnitMovementState movementState;
-  u16 buildQueue[5];
+  UnitType buildQueue[5];
   u16 energy;
   u8 buildQueueSlot;
   u8 uniquenessIdentifier;
