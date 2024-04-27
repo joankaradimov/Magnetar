@@ -4624,10 +4624,17 @@ void drawImage_(CImage* a1)
 
 FAIL_STUB_PATCH(drawImage, "starcraft");
 
+void set_unit_player_palette_(u8 player_id)
+{
+	dword_6D5BD4 = getColourID(player_id);
+	memcpy(byte_50CDC1 + 8, &stru_581D76[dword_6D5BD4].colors, sizeof(stru_581D76[dword_6D5BD4].colors));
+}
+
+FAIL_STUB_PATCH(set_unit_player_palette, "starcraft");
+
 void drawSprite_(CSprite* a1)
 {
-	dword_6D5BD4 = getColourID(a1->playerID);
-	memcpy(byte_50CDC1 + 8, stru_581D76[dword_6D5BD4].colors, sizeof(stru_581D76[dword_6D5BD4].colors));
+	set_unit_player_palette_(a1->playerID);
 
 	if (a1->pImagePrimary)
 	{
@@ -7082,8 +7089,7 @@ void sub_48DA30_(UnitType unit_type)
 	{
 		playerID = ActivePortraitUnit->playerID;
 	}
-	dword_6D5BD4 = getColourID(playerID);
-	memcpy(byte_50CDC1 + 8, &stru_581D76[dword_6D5BD4].colors, sizeof(stru_581D76[dword_6D5BD4].colors));
+	set_unit_player_palette_(playerID);
 	grpHead* grp = ImageGrpGraphics[Sprites_Image[Flingy_SpriteID[Unit_Graphic[unit_type]]]];
 
 	RECT rc;
