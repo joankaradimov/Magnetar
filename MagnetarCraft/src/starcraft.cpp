@@ -1900,7 +1900,7 @@ int __stdcall sub_496030_(CUnit* a1)
 		{
 			if ((v13->flags & 0x80) == 0)
 			{
-				PlayIscriptAnim(v14, AE_WalkingToIdle);
+				PlayIscriptAnim_(v14, AE_WalkingToIdle);
 			}
 		}
 	}
@@ -1908,7 +1908,7 @@ int __stdcall sub_496030_(CUnit* a1)
 	{
 		for (CImage* j = a1->sprite->pImageHead; j; j = j->next)
 		{
-			PlayIscriptAnim(j, AE_Walking);
+			PlayIscriptAnim_(j, AE_Walking);
 		}
 	}
 
