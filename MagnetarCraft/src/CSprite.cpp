@@ -5,6 +5,16 @@
 
 SpriteTileDataEx _SpritesOnTileRow;
 
+void sub_497D80_()
+{
+    for (int i = 0; i < _countof(SpriteTable); i++)
+    {
+        unpackSpriteData(SpriteTable + i);
+    }
+}
+
+FAIL_STUB_PATCH(sub_497D80, "starcraft");
+
 int __stdcall ReadSpritesArray_(FILE* a1)
 {
     u16 v19;
@@ -35,10 +45,7 @@ int __stdcall ReadSpritesArray_(FILE* a1)
         }
         SMemFree(v18, "Starcraft\\SWAR\\lang\\CSprite.cpp", 1884, 0);
     }
-    for (int i = 0; i < _countof(SpriteTable); i++)
-    {
-        unpackSpriteData(SpriteTable + i);
-    }
+    sub_497D80_();
     initializeSpriteArray();
     if (fread(_SpritesOnTileRow.heads, sizeof(_SpritesOnTileRow.heads), 1, a1) != 1)
     {
@@ -140,10 +147,7 @@ BOOL __stdcall writeSprites_(FILE* file)
         v7 = CompressWrite(location, v8, file);
         SMemFree(location, "Starcraft\\SWAR\\lang\\CSprite.cpp", 1811, 0);
     }
-    for (int i = 0; i < _countof(SpriteTable); i++)
-    {
-        unpackSpriteData(SpriteTable + i);
-    }
+    sub_497D80_();
     if (!v7)
     {
         return 0;
