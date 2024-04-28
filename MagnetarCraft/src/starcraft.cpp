@@ -18862,6 +18862,31 @@ void GenerateMegatileDefaultFlags_()
 
 FAIL_STUB_PATCH(GenerateMegatileDefaultFlags, "starcraft");
 
+void sub_4BDD60_()
+{
+	dword_6D125C = (char*)SMemAlloc(256, "Starcraft\\SWAR\\lang\\light.cpp", 112, 0);
+	UnknownTilesetRelated2* tileset_related = color_cycles[CurrentTileSet]->y;
+	int v1 = 256;
+	do
+	{
+		--v1;
+
+		char v7 = 0;
+		for (int i = 0; tileset_related[i].has_next; i++)
+		{
+			if (tileset_related[i].palette_entry_low <= v1 && v1 <= tileset_related[i].palette_entry_high)
+			{
+				v7 = 1;
+				break;
+			}
+		}
+
+		dword_6D125C[v1] = v7;
+	} while (v1);
+}
+
+FAIL_STUB_PATCH(sub_4BDD60, "starcraft");
+
 void sub_4BDDD0_(const char* tileset_name)
 {
 	char buff[MAX_PATH];
@@ -18949,7 +18974,7 @@ void initMapData_()
 	{
 		memcpy(stru_6CEB40, palette, sizeof(PALETTEENTRY[256]));
 		sub_4BCD70(palette);
-		sub_4BDD60();
+		sub_4BDD60_();
 	}
 	loadColorShiftTilesetImages(TILESET_NAMES[CurrentTileSet]);
 	sub_4BDDD0_(TILESET_NAMES[CurrentTileSet]);
@@ -19111,7 +19136,7 @@ FAIL_STUB_PATCH(sub_4CC990, "starcraft");
 
 void loadtEffectPcx_(void)
 {
-	sub_4BDD60();
+	sub_4BDD60_();
 	CompileSCode(0, 0);
 	dword_51C60C = (GlueEffectBuffer*) SMemAlloc(sizeof(GlueEffectBuffer) * _countof(stru_50E06C), "Starcraft\\SWAR\\lang\\glues.cpp", 315, 0);
 
