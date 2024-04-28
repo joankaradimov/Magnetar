@@ -3192,13 +3192,13 @@ int sub_41C5A0(int a1, rect *a2) {
 DECL_FUNC(signed (__stdcall*CtrlNode_Constructor)(dialog *a1, RECT *a2), CtrlNode_Constructor, 0x41c5d0);
 DECL_FUNC(void (*updateAllDlgs)(), updateAllDlgs, 0x41c780);
 DECL_FUNC(void (*sub_41C7B0)(), sub_41C7B0, 0x41c7b0);
-int sub_41C810(int a1, int a2) {
+int sub_41C810(s16 *eax0, int a2) {
     int address = 0x41c810;
     int result_;
     __asm {
         xor eax, eax
         mov ecx, a2
-        mov eax, a1
+        mov eax, eax0
         call address
         mov result_, eax
     }
@@ -3342,7 +3342,7 @@ BltMask * BltMask_Constructor(Bitmap *a1, char *a2, char *a3) {
     return result_;
 }
 DECL_FUNC(signed (*realizePalette)(), realizePalette, 0x41d710);
-DECL_FUNC(int (__stdcall*sub_41D780)(__int16 a1, __int16 a2), sub_41D780, 0x41d780);
+DECL_FUNC(int (__thiscall*sub_41D780)(Bitmap *this_, __int16 a2, __int16 a3), sub_41D780, 0x41d780);
 DECL_FUNC(u8 * (__fastcall*drawVertLine)(int a1, unsigned __int16 a2, __int16 a3, unsigned __int16 a4), drawVertLine, 0x41d7d0);
 __int16 MinimapFill(unsigned __int16 a1, int a2, __int16 a3, __int16 a4) {
     int address = 0x41d810;
@@ -3363,7 +3363,7 @@ DECL_FUNC(int (*sub_41D860)(), sub_41D860, 0x41d860);
 DECL_FUNC(int (__thiscall*sub_41D880)(char *logfilename), sub_41D880, 0x41d880);
 DECL_FUNC(int (__fastcall*sub_41D8A0)(unsigned int numentries, unsigned int firstentry), sub_41D8A0, 0x41d8a0);
 DECL_FUNC(HWND (*BWFXN_DDrawDestroy)(), BWFXN_DDrawDestroy, 0x41d8b0);
-DECL_FUNC(BOOL (*BWFXN_DDrawInitialize)(), BWFXN_DDrawInitialize, 0x41d930);
+DECL_FUNC(void (__cdecl*BWFXN_DDrawInitialize)(), BWFXN_DDrawInitialize, 0x41d930);
 void sub_41DC20(PALETTEENTRY *a1, PALETTEENTRY *a2, int a3) {
     int address = 0x41dc20;
     __asm {
@@ -3396,9 +3396,9 @@ void sub_41DD50(PALETTEENTRY *a1, unsigned int a2, unsigned int a3) {
     }
 }
 DECL_FUNC(u8 * (*sub_41DD90)(), sub_41DD90, 0x41dd90);
-DECL_FUNC(BOOL (*sub_41DDD0)(), sub_41DDD0, 0x41ddd0);
+DECL_FUNC(void (*sub_41DDD0)(), sub_41DDD0, 0x41ddd0);
 DECL_FUNC(char (__stdcall*refreshRect)(int a1, int a2, int a3, int a4), refreshRect, 0x41de20);
-DECL_FUNC(int (__stdcall*BlitBitmap)(Bitmap *a1), BlitBitmap, 0x41deb0);
+DECL_FUNC(void (__stdcall*BlitBitmap)(Bitmap *a1), BlitBitmap, 0x41deb0);
 DECL_FUNC(void (__fastcall*BlitCursorSurface)(int a1, __int16 a2, Bitmap *a3, __int16 a4), BlitCursorSurface, 0x41df40);
 DECL_FUNC(void (__cdecl*sub_41E000)(), sub_41E000, 0x41e000);
 DECL_FUNC(void (__cdecl*InitializeImage)(), InitializeImage, 0x41e050);
@@ -15638,16 +15638,12 @@ DECL_FUNC(int (__stdcall*sub_479E00)(__int16 a1, __int16 a2), sub_479E00, 0x479e
 DECL_FUNC(int (*sub_479E30)(), sub_479E30, 0x479e30);
 DECL_FUNC(int (*nullsub_35)(), nullsub_35, 0x479e50);
 DECL_FUNC(bool * (__thiscall*minorUnpackSharedSaveData)(CBullet *bullet), minorUnpackSharedSaveData, 0x479e60);
-int minorPackSharedSaveData(CBullet *a1) {
+void minorPackSharedSaveData(CBullet *a1) {
     int address = 0x479ec0;
-    int result_;
     __asm {
-        xor eax, eax
         mov edi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (__stdcall*sub_479F70)(int a1, int a2), sub_479F70, 0x479f70);
 int unitOrderMoveToTargetUnitResetOrderState(int result, char a2, int a3) {
@@ -16506,8 +16502,18 @@ DECL_FUNC(void (__cdecl*open_video_options_menu)(), open_video_options_menu, 0x4
 DECL_FUNC(void (__fastcall*DestroyHelpContext)(bool exit_code), DestroyHelpContext, 0x4810a0);
 DECL_FUNC(void (__fastcall*ContextHelpUpdateProc)(int a1, int a2, Bitmap *pSurface, bounds *pBounds), ContextHelpUpdateProc, 0x4810f0);
 DECL_FUNC(int (__stdcall*sub_481160)(Bitmap *a1), sub_481160, 0x481160);
-DECL_FUNC(int (__stdcall*BitContextHelpSurface)(Bitmap *a1), BitContextHelpSurface, 0x4811e0);
-DECL_FUNC(int (__fastcall*sub_481260)(int a1, __int16 a2, Bitmap *a3, __int16 a4), sub_481260, 0x481260);
+DECL_FUNC(void (__stdcall*BitContextHelpSurface)(Bitmap *a1), BitContextHelpSurface, 0x4811e0);
+void sub_481260(__int16 a1, Bitmap *a2, __int16 a3) {
+    int address = 0x481260;
+    __asm {
+        xor edx, edx
+        push dword ptr a3
+        push dword ptr a2
+        mov dx, a1
+        call address
+        add esp, 8
+    }
+}
 DECL_FUNC(int (*sub_481310)(), sub_481310, 0x481310);
 DECL_FUNC(Bitmap * (*sub_481320)(), sub_481320, 0x481320);
 DECL_FUNC(void (__cdecl*CreateHelpContext)(), CreateHelpContext, 0x481330);
@@ -19287,7 +19293,7 @@ char refreshImage(CImage *a1) {
 }
 DECL_FUNC(char (__stdcall*sub_4970F0)(__int16 *a1), sub_4970F0, 0x4970f0);
 DECL_FUNC(void (__cdecl*createUnitBuildingSpriteValidityArray)(), createUnitBuildingSpriteValidityArray, 0x497110);
-DECL_FUNC(unsigned (*initializeSpriteArray)(), initializeSpriteArray, 0x497230);
+DECL_FUNC(void (__cdecl*initializeSpriteArray)(), initializeSpriteArray, 0x497230);
 CSprite * unpackSpriteData(CSprite *sprite) {
     int address = 0x497310;
     CSprite * result_;
@@ -19497,7 +19503,7 @@ void drawImage(CImage *image) {
     }
 }
 DECL_FUNC(void (__cdecl*CleanupSpritesDat)(), CleanupSpritesDat, 0x497d60);
-DECL_FUNC(CSprite * (__thiscall*sub_497D80)(void *this_), sub_497D80, 0x497d80);
+DECL_FUNC(void (*sub_497D80)(), sub_497D80, 0x497d80);
 DECL_FUNC(void (*sub_497DA0)(), sub_497DA0, 0x497da0);
 CImage * setSpriteColoringData(CSprite *a1, unsigned __int8 a2) {
     int address = 0x497dc0;
@@ -28685,29 +28691,21 @@ int CreateUnitHash(CUnit *a1) {
     }
     return result_;
 }
-bool * unpackUnitData(CUnit *a1, bool *a2) {
+void unpackUnitData(CUnit *a1, bool a2) {
     int address = 0x4e2e20;
-    bool * result_;
     __asm {
-        xor eax, eax
         push dword ptr a2
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-int packUnitData(CUnit *a1, int a2) {
+void packUnitData(CUnit *a1, int a2) {
     int address = 0x4e3410;
-    int result_;
     __asm {
-        xor eax, eax
         push dword ptr a2
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(int (*sub_4E3DC0)(), sub_4E3DC0, 0x4e3dc0);
 void networkTBLPlayerMessage(int a1, __int16 a2) {
@@ -29758,7 +29756,7 @@ CUnit * sub_4EA9D0(unsigned int a1, void *a2) {
     }
     return result_;
 }
-int sub_4EAA80(int a1, int a2, int a3) {
+int sub_4EAA80(unsigned int a1, char *a2, int a3) {
     int address = 0x4eaa80;
     int result_;
     __asm {
