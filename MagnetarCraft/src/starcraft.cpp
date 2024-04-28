@@ -14898,6 +14898,35 @@ DWORD sub_4A2B60_()
 
 FAIL_STUB_PATCH(sub_4A2B60, "starcraft");
 
+void RemoveAllSelectionCircles_()
+{
+	for (int i = 0; i < _countof(SpriteTable); i++)
+	{
+		if (SpriteTable[i].flags & 8)
+		{
+			removeSelectionCircleAndHPBar(SpriteTable + i);
+		}
+		else if (SpriteTable[i].flags & 1)
+		{
+			removeSelectionCircle(SpriteTable + i);
+		}
+		if (SpriteTable[i].flags & 6)
+		{
+			SpriteTable[i].flags &= ~6;
+			for (CImage* image = SpriteTable[i].pImageTail; image; image = image->prev)
+			{
+				if (image->imageID >= 0x23Bu && image->imageID <= 0x244u)
+				{
+					removeSelectionCircleImage(image);
+					break;
+				}
+			}
+		}
+	}
+}
+
+FAIL_STUB_PATCH(RemoveAllSelectionCircles_, "starcraft");
+
 int sub_4D02D0_(const char* filename, int time, int a3)
 {
 	if (!a3 && gameData.got_file_values.tournament_mode)
@@ -14969,7 +14998,7 @@ int sub_4D02D0_(const char* filename, int time, int a3)
 		convertRelativeToFullPath(CurrentMapFileName, sizeof(CurrentMapFileName));
 	}
 	RemoveAllPylonAuras();
-	RemoveAllSelectionCircles();
+	RemoveAllSelectionCircles_();
 	if (!writeImages(v8))
 	{
 		has_save_path = 0;
