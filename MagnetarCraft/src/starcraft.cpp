@@ -2281,7 +2281,7 @@ void __fastcall input_Game_RightMouseClick_(dlgEvent* event)
 			int v6 = MoveToX + (__int16)event->cursor.x;
 			int v7 = MoveToY + (__int16)event->cursor.y;
 			CUnit* v8 = FindUnitAtPoint(v6, v7);
-			if (ClientSelectionCount != 1 || ActivePortraitUnit != v8 || v8 && (v8->statusFlags & GoundedBuilding) != 0 && Unit_IsFactoryBuilding(v8))
+			if (ClientSelectionCount != 1 || ActivePortraitUnit != v8 || v8 && (v8->statusFlags & GroundedBuilding) != 0 && Unit_IsFactoryBuilding(v8))
 			{
 				if (!v8)
 				{
@@ -7193,7 +7193,7 @@ void Base_CancelStructure_(CUnit* unit)
 		return;
 	}
 
-	if (!(unit->statusFlags & StatusFlags::GoundedBuilding))
+	if (!(unit->statusFlags & StatusFlags::GroundedBuilding))
 	{
 		bool is_zerg_egg = unit->unitType == UnitType::Zerg_Egg || unit->unitType == UnitType::Zerg_Cocoon || unit->unitType == UnitType::Zerg_Lurker_Egg;
 		UnitType v4 = is_zerg_egg ? unit->buildQueue[unit->buildQueueSlot % 5] : unit->unitType;
@@ -11388,7 +11388,7 @@ void UpdateUnitSpriteInfo_(CUnit* unit)
 			unit->sprite->flags &= ~6;
 			removeSelectionCircleFromSprite(unit->sprite);
 		}
-		if ((unit->statusFlags & GoundedBuilding) || unit->unitType >= Special_Floor_Missile_Trap && unit->unitType <= Special_Right_Wall_Flame_Trap)
+		if ((unit->statusFlags & GroundedBuilding) || unit->unitType >= Special_Floor_Missile_Trap && unit->unitType <= Special_Right_Wall_Flame_Trap)
 		{
 			if (unit->sprite && (unit->orderID || unit->orderState != 1))
 			{
@@ -11477,7 +11477,7 @@ void updateUnitTimers_(CUnit* unit)
 		if (unit->status.removeTimer == 0 || --unit->status.removeTimer)
 		{
 			u8 v19 = Unit_GroupFlags[unit->unitType];
-			if ((v19 & 5) == 0 && (v19 & 2) != 0 && ((unit->statusFlags & GoundedBuilding) || (Unit_PrototypeFlags[unit->unitType] & FlyingBuilding)))
+			if ((v19 & 5) == 0 && (v19 & 2) != 0 && ((unit->statusFlags & GroundedBuilding) || (Unit_PrototypeFlags[unit->unitType] & FlyingBuilding)))
 			{
 				if (unitHPbelow33_percent(unit))
 				{
@@ -25275,7 +25275,7 @@ ButtonState __fastcall BTNSCOND_CanMove_(u16 variable, int player_id, CUnit* uni
 		{
 			return ButtonState::BTNST_ENABLED;
 		}
-		else if ((unit->statusFlags & GoundedBuilding) && Unit_IsFactoryBuilding(unit))
+		else if ((unit->statusFlags & StatusFlags::GroundedBuilding) && Unit_IsFactoryBuilding(unit))
 		{
 			return ButtonState::BTNST_ENABLED;
 		}
@@ -25299,7 +25299,7 @@ ButtonState __fastcall BTNSCOND_CanMoveSpecialCase_(u16 variable, int player_id,
 		{
 			return ButtonState::BTNST_ENABLED;
 		}
-		else if (Unit_RightClickAction[unit->unitType] || (unit->statusFlags & GoundedBuilding) != 0 && Unit_IsFactoryBuilding(unit))
+		else if (Unit_RightClickAction[unit->unitType] || (unit->statusFlags & GroundedBuilding) != 0 && Unit_IsFactoryBuilding(unit))
 		{
 			return ButtonState::BTNST_ENABLED;
 		}
@@ -25316,7 +25316,7 @@ ButtonState __fastcall BTNSCOND_CanAttack_(u16 variable, int player_id, CUnit* u
 	{
 		if (CUnit* v4 = ClientSelectionGroup[i])
 		{
-			if (v4->unitType == Zerg_Lurker && (v4->statusFlags & Burrowed) || Unit_RightClickAction[v4->unitType] || (v4->statusFlags & StatusFlags::GoundedBuilding) && Unit_IsFactoryBuilding(v4))
+			if (v4->unitType == Zerg_Lurker && (v4->statusFlags & Burrowed) || Unit_RightClickAction[v4->unitType] || (v4->statusFlags & StatusFlags::GroundedBuilding) && Unit_IsFactoryBuilding(v4))
 			{
 				if (AI_UnitCanAttack(v4))
 				{
@@ -26135,7 +26135,7 @@ FUNCTION_PATCH(BTNSCOND_IsSieged, BTNSCOND_IsSieged_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsLiftedCanMove_(u16 variable, int player_id, CUnit* unit)
 {
-	if (unit->statusFlags & StatusFlags::GoundedBuilding)
+	if (unit->statusFlags & StatusFlags::GroundedBuilding)
 	{
 		return ButtonState::BTNST_HIDDEN;
 	}
@@ -26149,7 +26149,7 @@ FUNCTION_PATCH(BTNSCOND_IsLiftedCanMove, BTNSCOND_IsLiftedCanMove_, "starcraft")
 
 ButtonState __fastcall BTNSCOND_IsLifted_(u16 variable, int player_id, CUnit* unit)
 {
-	if (ClientSelectionCount == 1 && !(unit->statusFlags & StatusFlags::GoundedBuilding))
+	if (ClientSelectionCount == 1 && !(unit->statusFlags & StatusFlags::GroundedBuilding))
 	{
 		return ButtonState::BTNST_ENABLED;
 	}
@@ -26163,7 +26163,7 @@ FUNCTION_PATCH(BTNSCOND_IsLifted, BTNSCOND_IsLifted_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsLanded_(u16 variable, int player_id, CUnit* unit)
 {
-	if ((unit->statusFlags & StatusFlags::GoundedBuilding) && !UnitIsTrainingOrMorphing(unit) && unit->fields1.building.techType == Tech::TECH_none && unit->fields1.building.upgradeType == 61)
+	if ((unit->statusFlags & StatusFlags::GroundedBuilding) && !UnitIsTrainingOrMorphing(unit) && unit->fields1.building.techType == Tech::TECH_none && unit->fields1.building.upgradeType == 61)
 	{
 		return ButtonState::BTNST_ENABLED;
 	}
@@ -26177,7 +26177,7 @@ FUNCTION_PATCH(BTNSCOND_IsLanded, BTNSCOND_IsLanded_, "starcraft");
 
 ButtonState __fastcall BTNSCOND_IsBuildingAddon_(u16 variable, int player_id, CUnit* unit)
 {
-	if (unit->secondaryOrderID == Order::ORD_BUILD_ADDON && (unit->statusFlags & StatusFlags::GoundedBuilding))
+	if (unit->secondaryOrderID == Order::ORD_BUILD_ADDON && (unit->statusFlags & StatusFlags::GroundedBuilding))
 	{
 		if (unit->currentBuildUnit && (unit->currentBuildUnit->statusFlags & StatusFlags::Completed) == 0)
 		{

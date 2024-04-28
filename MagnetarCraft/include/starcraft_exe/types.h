@@ -1344,7 +1344,7 @@ static_assert(sizeof(CUnitPsiProvider) == 8, "Incorrect size for type `CUnitPsiP
 enum StatusFlags : unsigned __int32
 {
   Completed = 0x1,
-  GoundedBuilding = 0x2,
+  GroundedBuilding = 0x2,
   InAir = 0x4,
   Disabled = 0x8,
   Burrowed = 0x10,
