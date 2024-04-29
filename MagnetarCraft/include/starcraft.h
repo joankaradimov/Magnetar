@@ -127,7 +127,7 @@ void __cdecl refreshSelectionScreen_();
 void initMapData_();
 void BINDLG_BlitSurface_(dialog* dlg);
 void GroundAttackInit_(__int16 x, __int16 y);
-void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2);
+void BWFXN_OpenGameDialog_(char* a1, FnInteract a2);
 void __fastcall BWFXN_QueueCommand_(const void* buffer, unsigned int buffer_size);
 void minimapPreviewUpdateState_();
 bool LoadPrecursorCampaign();

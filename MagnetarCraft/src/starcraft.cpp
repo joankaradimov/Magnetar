@@ -864,7 +864,7 @@ void loadOKCancelDialog_(const char* message, int(__fastcall* a2)(__int16), char
 		dword_5128F0 = 1;
 		dword_6D1244 = 0;
 		dword_6D1248 = 0;
-		BWFXN_OpenGameDialog(a1, okcancel_Interact);
+		BWFXN_OpenGameDialog_(a1, okcancel_Interact);
 	}
 }
 
@@ -5475,7 +5475,7 @@ void InitializeDialog_(dialog *a1, FnInteract a2)
 
 FAIL_STUB_PATCH(InitializeDialog, "starcraft");
 
-void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
+void BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
 	if (!multiPlayerMode)
 	{
@@ -5536,7 +5536,7 @@ void __fastcall BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	InitializeDialog_(GameMenuDlg, a2);
 }
 
-FUNCTION_PATCH(BWFXN_OpenGameDialog, BWFXN_OpenGameDialog_, "starcraft");
+FAIL_STUB_PATCH(BWFXN_OpenGameDialog, "starcraft");
 
 void __fastcall saveGameCBProc_(dialog* dlg, __int16 _unused)
 {
