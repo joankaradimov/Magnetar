@@ -5410,6 +5410,20 @@ void audioVideoInit_()
 
 FAIL_STUB_PATCH(audioVideoInit, "starcraft");
 
+void init_throttling_options_()
+{
+	int value;
+
+	AppAddExit_(SaveCPUThrottleOption);
+	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, &value))
+	{
+		CpuThrottle = value != 0;
+	}
+}
+
+FAIL_STUB_PATCH(init_throttling_options, "starcraft");
+FAIL_STUB_PATCH(sub_4DA790, "starcraft");
+
 void __stdcall TickCountSomething_(int a1)
 {
 	if (IS_GAME_PAUSED)
@@ -23547,9 +23561,7 @@ void GameMainLoop_()
 	InitializeInputProcs_();
 	CreateMainWindow_();
 	audioVideoInit_();
-	AppAddExit_(SaveCPUThrottleOption);
-	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, (int*)&phFile))
-		CpuThrottle = phFile != 0;
+	init_throttling_options_();
 	if (has_viewport)
 	{
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
@@ -23662,8 +23674,6 @@ void GameMainLoop_()
 	}
 }
 
-FAIL_STUB_PATCH(sub_4DA790, "starcraft");
-FAIL_STUB_PATCH(sub_481CF0, "starcraft");
 FAIL_STUB_PATCH(GameMainLoop, "starcraft");
 
 unsigned int LocalGetLang_()

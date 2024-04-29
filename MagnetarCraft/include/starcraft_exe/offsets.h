@@ -2857,7 +2857,7 @@ int DecryptKey(int a1, int a2, unsigned int a3);
 extern void (__fastcall*SaveCPUThrottleOption)(bool exit_code);
 extern int (__thiscall*speedOptnsScreenScrollSliders)(int this_);
 void createUpdateSpdOptionsScrollers(dialog *a1);
-extern int (*sub_481CF0)();
+extern void (__cdecl*init_throttling_options)();
 bool destroySpdDlg(dialog *a1, dlgEvent *a2);
 extern bool (__fastcall*spd_speedSlider)(dialog *dlg, struct dlgEvent *evt);
 extern bool (__fastcall*spd_CPUThrottleCheckbox)(dialog *dlg, dlgEvent *evt);
@@ -5017,7 +5017,7 @@ HANDLE LoadInstallArchiveHD(const char *a1, char *a2, const char *hMpq, HANDLE p
 HANDLE LoadArchiveFromCD(int a1, char *a2, DWORD dwPriority, char *szFileName);
 HANDLE LoadInstallArchiveCD(DWORD a1, const char *a2, const char *filename);
 extern void (__fastcall*j_BWFXN_DSoundDestroy)(bool exit_code);
-extern int (*sub_4DA790)();
+extern void (__cdecl*sub_4DA790)();
 void localDll_Init(HINSTANCE a1);
 extern void (__cdecl*CommandLineCheck)();
 signed InitializeCDArchives(const char *filename, int a2);

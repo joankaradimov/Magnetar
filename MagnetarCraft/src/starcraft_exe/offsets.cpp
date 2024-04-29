@@ -16565,7 +16565,7 @@ void createUpdateSpdOptionsScrollers(dialog *a1) {
         call address
     }
 }
-DECL_FUNC(int (*sub_481CF0)(), sub_481CF0, 0x481cf0);
+DECL_FUNC(void (__cdecl*init_throttling_options)(), init_throttling_options, 0x481cf0);
 bool destroySpdDlg(dialog *a1, dlgEvent *a2) {
     int address = 0x481d30;
     bool result_;
@@ -27661,7 +27661,7 @@ HANDLE LoadInstallArchiveCD(DWORD a1, const char *a2, const char *filename) {
     return result_;
 }
 DECL_FUNC(void (__fastcall*j_BWFXN_DSoundDestroy)(bool exit_code), j_BWFXN_DSoundDestroy, 0x4da780);
-DECL_FUNC(int (*sub_4DA790)(), sub_4DA790, 0x4da790);
+DECL_FUNC(void (__cdecl*sub_4DA790)(), sub_4DA790, 0x4da790);
 void localDll_Init(HINSTANCE a1) {
     int address = 0x4da7d0;
     __asm {
