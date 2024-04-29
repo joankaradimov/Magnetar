@@ -2637,7 +2637,17 @@ void sub_419170(int a1, dialog *a2) {
 }
 DECL_FUNC(int (__fastcall*genericLabelInteract)(dialog *dlg, dlgEvent *evt), genericLabelInteract, 0x419190);
 DECL_FUNC(int (__fastcall*genericImageInteract)(dialog *dlg, struct dlgEvent *evt), genericImageInteract, 0x4191e0);
-DECL_FUNC(int (*sub_419260)(), sub_419260, 0x419260);
+BOOL sub_419260(int a1) {
+    int address = 0x419260;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov esi, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 __int16 sub_419290(DlgGrp *a1) {
     int address = 0x419290;
     __int16 result_;
@@ -2660,14 +2670,14 @@ int sub_419450(int result) {
     }
     return result_;
 }
-void sub_419460(void (__stdcall *result)(int)) {
+void snd_set_btn_click(void (__stdcall *result)(int)) {
     int address = 0x419460;
     __asm {
         mov eax, result
         call address
     }
 }
-DECL_FUNC(void (__thiscall*sub_419470)(void *this_), sub_419470, 0x419470);
+DECL_FUNC(void (__thiscall*snd_play_btn)(void *this_), snd_play_btn, 0x419470);
 DECL_FUNC(BOOL (__thiscall*sub_419480)(void *this_), sub_419480, 0x419480);
 DECL_FUNC(void (*sub_4194B0)(), sub_4194B0, 0x4194b0);
 void AllocInitDialogData(dialog *a1, dialog *a2, FnAllocBackgroundImage allocFunction, const char *logfile, int logline) {
@@ -2681,7 +2691,7 @@ void AllocInitDialogData(dialog *a1, dialog *a2, FnAllocBackgroundImage allocFun
         call address
     }
 }
-DECL_FUNC(int (*sub_4195E0)(), sub_4195E0, 0x4195e0);
+DECL_FUNC(void (__cdecl*dlg_focus_free)(), dlg_focus_free, 0x4195e0);
 void removeDlgFromTimerTracking(dialog *a1) {
     int address = 0x419640;
     __asm {
@@ -2705,7 +2715,7 @@ void SetActivationDelay_maybe(dialog *dlg) {
     }
 }
 DECL_FUNC(void (__cdecl*pressGlobalDlgHotkey)(), pressGlobalDlgHotkey, 0x419740);
-DlgGrp * DlgGrp_Constructor(int a1, char *a2, const char *grp_path, grpHead *(__fastcall *a4)(const char *, int, const char *, int)) {
+DlgGrp * dlg_load_theme(int a1, char *a2, const char *grp_path, grpHead *(__fastcall *a4)(const char *, int, const char *, int)) {
     int address = 0x4197b0;
     DlgGrp * result_;
     __asm {
@@ -2728,14 +2738,14 @@ void InitializeDialog(dialog *a1, FnInteract a2) {
         call address
     }
 }
-dialog * sub_419E10(int a1, int a2, int a3, int (__fastcall *a4)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD), void (__fastcall *a5)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD)) {
+dialog * sub_419E10(int a1, const char *a2, int esi0, int (__fastcall *a4)(_DWORD, _DWORD, _DWORD, _DWORD, _DWORD), FnAllocBackgroundImage a5) {
     int address = 0x419e10;
     dialog * result_;
     __asm {
         xor eax, eax
         push dword ptr a5
         push dword ptr a4
-        mov esi, a3
+        mov esi, esi0
         mov edi, a2
         mov ecx, a1
         call address
@@ -2743,7 +2753,7 @@ dialog * sub_419E10(int a1, int a2, int a3, int (__fastcall *a4)(_DWORD, _DWORD,
     }
     return result_;
 }
-void setFontHandleFromFlags(dialog *a1) {
+void dlg_set_font(dialog *a1) {
     int address = 0x419e50;
     __asm {
         mov eax, a1
@@ -2769,7 +2779,7 @@ int sendInputToAllDialogs(dlgEvent *evt) {
     }
     return result_;
 }
-DECL_FUNC(void (__cdecl*InitializeDialogScreenLayer)(), InitializeDialogScreenLayer, 0x41a030);
+DECL_FUNC(void (__cdecl*dlg_mgr_init)(), dlg_mgr_init, 0x41a030);
 int gluLoadBINDlg(dialog *a1, FnInteract fn_interact) {
     int address = 0x41a080;
     int result_;

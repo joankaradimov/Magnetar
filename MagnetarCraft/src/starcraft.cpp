@@ -3980,7 +3980,7 @@ void InitializeImage_()
 
 FAIL_STUB_PATCH(InitializeImage, "starcraft");
 
-void InitializeDialogScreenLayer_()
+void dlg_mgr_init_()
 {
 	AppAddExit_(DestroyScreenLayer);
 	ScreenLayers[2].left = 0;
@@ -3993,7 +3993,7 @@ void InitializeDialogScreenLayer_()
 	ScreenLayers[2].bits = 32;
 }
 
-FAIL_STUB_PATCH(InitializeDialogScreenLayer, "starcraft");
+FAIL_STUB_PATCH(dlg_mgr_init, "starcraft");
 
 void initializeDefaultPlayerNames_()
 {
@@ -4158,7 +4158,7 @@ void PreInitData_()
 	InitializeImage_();
 	AppAddExit_(DestroyImage);
 	LoadCursors_();
-	InitializeDialogScreenLayer_();
+	dlg_mgr_init_();
 	dword_6D5E20 = &GameScreenBuffer;
 	CreateHelpContext();
 	AppAddExit_(DestroyHelpContext);
@@ -5516,7 +5516,7 @@ void BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 		}
 		byte_6D1214 = 0;
 	}
-	sub_4195E0();
+	dlg_focus_free();
 	if (byte_66FF5C)
 	{
 		BWFXN_RefreshTarget(stru_66FF50.left, stru_66FF50.bottom, stru_66FF50.top, stru_66FF50.right);
@@ -9151,7 +9151,7 @@ void LoadRaceUI_()
 	if (consoleIndex == RaceId::RACE_Zerg || consoleIndex == RaceId::RACE_Terran || consoleIndex == RaceId::RACE_Protoss)
 	{
 		const Race& race = Race::races()[consoleIndex];
-		DlgGrp_Constructor(173, "Starcraft\\SWAR\\lang\\game.cpp", (char*)race.dialog_graphics, LoadGraphic);
+		dlg_load_theme(173, "Starcraft\\SWAR\\lang\\game.cpp", (char*)race.dialog_graphics, LoadGraphic);
 		current_ingame_music_track = &race.ingame_music[0];
 	}
 
@@ -9526,7 +9526,7 @@ signed int LoadGameInit_()
 			replay_header.seed_related.initial_seed = initialSeed;
 		}
 	}
-	InitializeDialogScreenLayer_();
+	dlg_mgr_init_();
 	ButtonPressSound = mouseOver_Loading_CB;
 	LoadGameFonts();
 	memset(randomCounts, 0, 0x400u);
@@ -19226,14 +19226,14 @@ FAIL_STUB_PATCH(loadtEffectPcx, "starcraft");
 
 void loadDlgGrp_()
 {
-	for (int i = 0; i < 12; i++)
+	for (int i = 0; i < _countof(stru_50E06C); i++)
 	{
 		if (!stru_50E06C[i].field_110 || !is_spawn)
 		{
 			char dest[MAX_PATH];
 			strcpy_s(dest, stru_50E06C[i].glue_path);
 			strcat_s(dest, "\\Dlg.grp");
-			dword_51C5C8[i] = DlgGrp_Constructor(388, "Starcraft\\SWAR\\lang\\glues.cpp", dest, LoadGraphic);
+			dword_51C5C8[i] = dlg_load_theme(388, "Starcraft\\SWAR\\lang\\glues.cpp", dest, LoadGraphic);
 		}
 	}
 }
@@ -19312,7 +19312,7 @@ FAIL_STUB_PATCH(loadCampaignBIN, "starcraft");
 
 int gluLoadBINDlg_(dialog* a1, FnInteract fn_interact)
 {
-	sub_4195E0();
+	dlg_focus_free();
 	a1->lFlags |= DialogFlags::CTRL_LBOX_NORECALC;
 	LastControlID = -3;
 	InitializeDialog_(a1, fn_interact);
