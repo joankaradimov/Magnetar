@@ -14891,6 +14891,20 @@ void PollInput_()
 
 FAIL_STUB_PATCH(PollInput, "starcraft");
 
+void load_wait_(const char* a1)
+{
+	if (!dword_6D1240)
+	{
+		size_t filename_length = strlen(a1) + 1;
+		dword_6D1240 = (char*) SMemAlloc(filename_length, "Starcraft\\SWAR\\lang\\okcancel.cpp", 226, 0);
+		strcpy_s(dword_6D1240, filename_length, a1);
+		BWFXN_OpenGameDialog_("rez\\wait.bin", wait_BINDLG);
+		BWFXN_RedrawTarget();
+	}
+}
+
+FAIL_STUB_PATCH(load_wait, "starcraft");
+
 DWORD sub_4A2B60_()
 {
 	return (GetTickCount() - dword_59CC7C) / 1000 + elapstedTimeModifier;
@@ -14950,7 +14964,7 @@ int sub_4D02D0_(const char* filename, int time, int a3)
 	int v7 = dword_51267C;
 	g_ActiveNationID = g_LocalNationID;
 	dword_51267C = g_LocalHumanID;
-	load_wait(dest);
+	load_wait_(dest);
 	g_ActiveNationID = v6;
 	dword_51267C = v7;
 

@@ -9662,7 +9662,7 @@ extern UnknownTilesetRelated1& no_color_cycle;
 extern void (__fastcall *&active_menu_handler)(dialog *);
 extern StringTbl& StatTxtTbl;
 extern char *& okcancel_message;
-extern void *& dword_6D1240;
+extern char *& dword_6D1240;
 extern int& dword_6D1244;
 extern HANDLE& dword_6D1248;
 extern int (__fastcall *&dword_6D124C)(__int16);
