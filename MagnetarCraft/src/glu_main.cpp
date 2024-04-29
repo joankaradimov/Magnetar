@@ -273,7 +273,7 @@ void loadMenu_gluMain_()
 		switch (gluLoadBINDlg_(bin_dialog, gluMain_Dlg_Interact_))
 		{
 		case 2:
-			gwGameMode = GAME_EXIT;
+			gwGameMode = GamePosition::GAME_EXIT;
 			break;
 		case 3:
 			multiPlayerMode = 0;
@@ -292,10 +292,10 @@ void loadMenu_gluMain_()
 		case 5:
 			break;
 		case 8:
-			gwGameMode = GAME_INTRO;
+			gwGameMode = GamePosition::GAME_INTRO;
 			break;
 		case 9:
-			gwGameMode = GAME_CREDITS;
+			gwGameMode = GamePosition::GAME_CREDITS;
 			break;
 		case 65520:
 			break;
