@@ -325,8 +325,8 @@ void gluCustm_CustomCtrl_InitializeChildren_(dialog* dlg)
 
 	if (!multiPlayerMode)
 	{
-		byte_59BB6C = registry_options.GameSpeed;
-		registry_options.GameSpeed;
+		byte_59BB6C = registry_options.game_speed;
+		registry_options.game_speed;
 	}
 }
 

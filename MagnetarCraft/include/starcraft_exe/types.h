@@ -201,6 +201,7 @@ enum EndgameState : unsigned __int8;
 enum MusicTrack;
 enum MusicTrackType : unsigned __int8;
 struct __declspec(align(4)) TriggerOrderRelated;
+enum RegistryOptionsFlags;
 struct __declspec(align(4)) BNetGateways;
 struct __declspec(align(8)) FontColorRelated;
 enum Color : unsigned __int8;
@@ -3909,6 +3910,19 @@ struct __declspec(align(4)) TriggerOrderRelated
 };
 static_assert(sizeof(TriggerOrderRelated) == 24, "Incorrect size for type `TriggerOrderRelated`. Expected: 24");
 
+enum RegistryOptionsFlags
+{
+  F_UNIT_SPEECH_ON = 0x1,
+  F_UNIT_NOISE_ON = 0x2,
+  F_BLDG_NOISE_ON = 0x4,
+  F_SFX_FLAGS = 0x7,
+  F_TIPS_ON = 0x100,
+  F_PLAY_INTRO = 0x200,
+  F_TRIG_TEXT = 0x400,
+  F_PLAY_XINTRO = 0x800,
+  F_CHAT_COLORS_ON = 0x1000,
+};
+
 typedef int (__fastcall *BriefingAction)(Action *action, int arg2);
 
 struct __declspec(align(4)) BNetGateways
@@ -5826,13 +5840,13 @@ static_assert(sizeof(MusicTrackDescription) == 8, "Incorrect size for type `Musi
 
 struct __declspec(align(2)) RegistryOptions
 {
-  int GameSpeed;
-  int MouseScrollSpeed;
-  int KeyScrollSpeed;
-  int Music;
-  int Sfx;
-  int TipNumber;
-  int field_18;
+  int game_speed;
+  int mouse_scroll_speed;
+  int key_scroll_speed;
+  int music;
+  int sfx;
+  int tip;
+  RegistryOptionsFlags flags;
   int MMouseScrollSpeed;
   int MKeyScrollSpeed;
   u8 field_24;

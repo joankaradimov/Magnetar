@@ -43,7 +43,7 @@ bool keep_app_active_in_background = false;
 
 void SetGameSpeed_maybe_(int game_speed, unsigned __int8 a2, unsigned speed_multiplier)
 {
-	registry_options.GameSpeed = game_speed;
+	registry_options.game_speed = game_speed;
 	replay_speed_multiplier = speed_multiplier;
 	is_replay_paused = a2;
 
@@ -1148,14 +1148,14 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 	int wVirtKey = (__int16)event->wVirtKey;
 	if (wVirtKey == -25498)
 	{
-		if (registry_options.Music)
+		if (registry_options.music)
 		{
-			dword_5999B4 = registry_options.Music;
-			registry_options.Music = 0;
+			dword_5999B4 = registry_options.music;
+			registry_options.music = 0;
 		}
 		else
 		{
-			registry_options.Music = dword_5999B4;
+			registry_options.music = dword_5999B4;
 		}
 		muteBgm(&registry_options);
 	}
@@ -1377,15 +1377,15 @@ void __fastcall CMDACT_Hotkey_(dlgEvent* event)
 				}
 				break;
 			case -25480:
-				if (!multiPlayerMode && registry_options.GameSpeed < 6)
+				if (!multiPlayerMode && registry_options.game_speed < 6)
 				{
-					CMDACT_ChangeGameSpeed(LOBYTE(registry_options.GameSpeed) + 1);
+					CMDACT_ChangeGameSpeed(registry_options.game_speed + 1);
 				}
 				break;
 			case -25478:
-				if (!multiPlayerMode && registry_options.GameSpeed)
+				if (!multiPlayerMode && registry_options.game_speed)
 				{
-					CMDACT_ChangeGameSpeed(LOBYTE(registry_options.GameSpeed) - 1);
+					CMDACT_ChangeGameSpeed(registry_options.game_speed - 1);
 				}
 				break;
 			case -25476:
@@ -2948,7 +2948,7 @@ void PlayMusic_(const MusicTrackDescription* a1)
 		else
 		{
 			byte_6D5BBD = 0;
-			if (registry_options.Music)
+			if (registry_options.music)
 			{
 				if (SFileDdaBeginEx(directsound, 0x40000, a1->track_type != MusicTrackType::MENU_MUSIC ? 0 : 0x40000, 0, getMusicVolume(), 0, 0))
 				{
@@ -4147,7 +4147,7 @@ void PreInitData_()
 	{
 		DataVersionCheck("rez\\CDversion.txt");
 	}
-	registry_options.field_18 |= 7;
+	registry_options.flags |= RegistryOptionsFlags::F_SFX_FLAGS;
 	LoadRegOptions();
 	AppAddExit_(saveRegOptions);
 	LoadNetworkTBL_();
@@ -4963,7 +4963,7 @@ void DLGMusicFade_(const MusicTrackDescription* music_track)
 			bigvolume = -10000;
 			PlayMusic_(music_track);
 			bigvolume = old_bigvolume;
-			if (registry_options.Music)
+			if (registry_options.music)
 			{
 				dword_6D5BB8 = -3396;
 				KillTimer(hWndParent, 3u);
@@ -4983,10 +4983,10 @@ void muteBgm_(RegistryOptions* a1)
 {
 	if (direct_sound)
 	{
-		dword_6D5E3C = volume[99 * a1->Sfx / 100] - dword_6D5A0C;
-		if (a1->Music)
+		dword_6D5E3C = volume[99 * a1->sfx / 100] - dword_6D5A0C;
+		if (a1->music)
 		{
-			int v2 = dword_5008EC[a1->Music] - dword_6D5A0C;
+			int v2 = dword_5008EC[a1->music] - dword_6D5A0C;
 			bigvolume = v2;
 			if (directsound)
 			{
@@ -5039,14 +5039,14 @@ FUNCTION_PATCH((void*)0x4BC320, muteBgm__, "starcraft");
 void initVolume_()
 {
 	dword_5998E8 = 50;
-	if (registry_options.Sfx == -1)
+	if (registry_options.sfx == -1)
 	{
-		registry_options.Sfx = 50;
+		registry_options.sfx = 50;
 	}
 	dword_5999B4 = 25;
-	if (registry_options.Music == -1)
+	if (registry_options.music == -1)
 	{
-		registry_options.Music = 25;
+		registry_options.music = 25;
 	}
 	muteBgm_(&registry_options);
 }
@@ -5423,7 +5423,7 @@ void __stdcall TickCountSomething_(int a1)
 		IS_GAME_PAUSED = 0;
 		if (InReplay && !dword_6D5BE8)
 		{
-			SetGameSpeed_maybe(registry_options.GameSpeed, 0, replay_speed_multiplier);
+			SetGameSpeed_maybe(registry_options.game_speed, 0, replay_speed_multiplier);
 		}
 	}
 }
@@ -8849,7 +8849,7 @@ int LevelCheatInitGame_()
 		SStrCopy(v6.map_name, CurrentMapName);
 		v6.active_human_players = 1;
 		v6.max_players = 1;
-		v6.game_speed = registry_options.GameSpeed;
+		v6.game_speed = registry_options.game_speed;
 		GotFileValues* v4 = InitUseMapSettingsTemplate_();
 		if (v4)
 		{
@@ -8973,7 +8973,7 @@ FAIL_STUB_PATCH(sub_4BCA30, "starcraft");
 
 void sub_4BCA80_(SfxData a1)
 {
-	if (direct_sound && registry_options.Sfx && a1 < SFX_MAX)
+	if (direct_sound && registry_options.sfx && a1 < SFX_MAX)
 	{
 		struct_5* v1 = &stru_6D1270[a1];
 		v1->anonymous_1 = 81 - GetTickCount();
@@ -9017,7 +9017,7 @@ void playsound_init_UI_(u16* a1)
 		{
 			SfxData v2 = (SfxData)a1[i];
 
-			if (v2 < SFX_MAX && registry_options.Sfx && (SFXData_Flags2[v2] & 1))
+			if (v2 < SFX_MAX && registry_options.sfx && (SFXData_Flags2[v2] & 1))
 			{
 				sub_4BCA80_(v2);
 			}
@@ -9577,7 +9577,7 @@ signed int LoadGameInit_()
 		TickCounterInit_();
 	saveLoadSuccess = (unsigned __int8)mapStarted;
 	elapstedTimeModifier = mapStarted ? savedElapsedSeconds : 0;
-	SetGameSpeed_maybe(registry_options.GameSpeed, 0, 1u);
+	SetGameSpeed_maybe(registry_options.game_speed, 0, 1);
 	if (InReplay)
 	{
 		copyPlayerStructsToReplayPlayerStructs(Players, &gameData);
@@ -11549,7 +11549,7 @@ void PlaySoundAtPos_(SfxData sfx, points a2, int a3, int a4)
 	if (sfx
 		&& (unsigned int)a2.x < (unsigned __int16)map_width_pixels
 		&& (unsigned int)a2.y < (unsigned __int16)map_height_pixels
-		&& registry_options.Sfx
+		&& registry_options.sfx
 		&& a3)
 	{
 		if (InReplay)
@@ -14301,10 +14301,10 @@ void replayStatBtns_(dialog* dlg)
 		v15[0] = 0;
 		if (replay_speed_multiplier > 1)
 		{
-			const char* v9 = registry_options.GameSpeed >= 3 ? "x" : "/";
+			const char* v9 = registry_options.game_speed >= 3 ? "x" : "/";
 			sprintf_s(v15, " %s %d", v9, replay_speed_multiplier);
 		}
-		const char* v12 = get_GluAll_String((GluAllTblEntry)(LOWORD(registry_options.GameSpeed) + 85));
+		const char* v12 = get_GluAll_String((GluAllTblEntry)(registry_options.game_speed + 85));
 		const char* v10 = get_GluAll_String((GluAllTblEntry)0x5D);
 		sprintf_s(byte_6CAC10, "%s %s%s", v10, v12, v15);
 	}
@@ -14826,12 +14826,12 @@ void PollInput_()
 	if (a2 || a1)
 	{
 		dword_6D5C1C = 1;
-		scroll_speed = multiPlayerMode ? registry_options.MKeyScrollSpeed : registry_options.KeyScrollSpeed;
+		scroll_speed = multiPlayerMode ? registry_options.MKeyScrollSpeed : registry_options.key_scroll_speed;
 	}
 	else
 	{
 		getScrollCursorType(&a2, &a1);
-		scroll_speed = multiPlayerMode ? registry_options.MMouseScrollSpeed : registry_options.MouseScrollSpeed;
+		scroll_speed = multiPlayerMode ? registry_options.MMouseScrollSpeed : registry_options.mouse_scroll_speed;
 	}
 
 	if (a2 == 0 && a1 == 0)
@@ -15213,7 +15213,7 @@ void replayLoop_()
 	}
 	if ((int)ElapsedTimeFrames >= replay_header.ReplayFrames)
 	{
-		SetGameSpeed_maybe(registry_options.GameSpeed, 1, replay_speed_multiplier);
+		SetGameSpeed_maybe(registry_options.game_speed, 1, replay_speed_multiplier);
 		open_win_mission_dialog_();
 	}
 	else if ((int)ElapsedTimeFrames >= nextReplayCommandFrame)
@@ -15598,7 +15598,7 @@ void PauseGame_maybe_()
 		if (InReplay)
 		{
 			dword_6D5BE8 = is_replay_paused;
-			SetGameSpeed_maybe_(registry_options.GameSpeed, 1, replay_speed_multiplier);
+			SetGameSpeed_maybe_(registry_options.game_speed, 1, replay_speed_multiplier);
 		}
 	}
 }
@@ -15718,15 +15718,15 @@ int GameLoopWaitSendTurn_(int* a1)
 			dword_6D6370 = GetTickCount() - dword_6D6370;
 			if ((unsigned int)dword_6D6370 >= 0x64)
 			{
-				dword_51CE94 = ((LatencyFrames[registry_options.GameSpeed] * GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]) >> 1) + GetTickCount();
+				dword_51CE94 = ((LatencyFrames[registry_options.game_speed] * GameSpeedModifiers.gameSpeedModifiers[registry_options.game_speed]) >> 1) + GetTickCount();
 			}
 			else
 			{
-				dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed] >> 1;
+				dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.game_speed] >> 1;
 			}
 		}
 		byte_51CE9D = 0;
-		FramesUntilNextTurn = LatencyFrames[registry_options.GameSpeed];
+		FramesUntilNextTurn = LatencyFrames[registry_options.game_speed];
 		if (multiPlayerMode)
 		{
 			*a1 = 1;
@@ -15827,14 +15827,14 @@ void GameLoop_State_()
 			GameLoop_();
 		}
 		SetInGameLoop(1);
-		BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed]);
+		BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.game_speed]);
 		SetInGameLoop(0);
 		if (InReplay)
 		{
 			replayFrameComputation_();
 		}
 	}
-	dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.GameSpeed];
+	dword_51CE94 += GameSpeedModifiers.gameSpeedModifiers[registry_options.game_speed];
 	DWORD v6 = GetTickCount();
 	if (v6 < dword_51CE94)
 	{
@@ -15870,7 +15870,7 @@ void GameLoop_Top_()
 		{
 			BWFXN_videoLoop_(3);
 			DWORD v1 = GetTickCount();
-			if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.GameSpeed])
+			if (!byte_51CE9D && abs(int(dword_51CE94 - v1)) > GameSpeedModifiers.altSpeedModifiers[registry_options.game_speed])
 			{
 				dword_51CE94 = v1;
 			}
@@ -15923,7 +15923,7 @@ GamePosition BeginGame_()
 	RefreshLayer5();
 	setCursorType_(getCursorType_());
 	cursorRefresh();
-	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.field_18 & 0x100) != 0)
+	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.flags & RegistryOptionsFlags::F_TIPS_ON))
 	{
 		open_tips_dialog_(1);
 	}
@@ -15933,11 +15933,11 @@ GamePosition BeginGame_()
 	TitlePaletteUpdate_(3);
 	if (multiPlayerMode)
 	{
-		registry_options.GameSpeed = gameData.game_speed;
+		registry_options.game_speed = gameData.game_speed;
 	}
 	else if (!active_campaign)
 	{
-		registry_options.GameSpeed = 4;
+		registry_options.game_speed = 4;
 	}
 	newGame(1);
 	BWFXN_videoLoop_(0);
@@ -19448,7 +19448,7 @@ int CreateCampaignGame_(const CampaignMenuEntryEx& campaign_entry)
 		memset(&v4, 0, sizeof(v4));
 		SStrCopy(v4.player_name, playerName);
 		SStrCopy(v4.map_name, CurrentMapName);
-		v4.game_speed = registry_options.GameSpeed;
+		v4.game_speed = registry_options.game_speed;
 		v4.active_human_players = 1;
 		v4.max_players = 1;
 
@@ -19833,9 +19833,9 @@ char __stdcall DLG_SwishOut_(dialog* dlg)
 			getControlFromIndex_(dlg, timer_related.timers[v6].wIndex)->wUser = 1;
 			timer_related.active_timers_maybe[v6++] = { 1, 0 };
 		} while (v6 < timer_related.active_timers_count_maybe);
-		if (v6 && direct_sound && registry_options.Sfx)
+		if (v6 && direct_sound && registry_options.sfx)
 		{
-			PlayTransmissionLocation(SFX_glue_swishout, volume[99 * registry_options.Sfx / 100], 0, 0);
+			PlayTransmissionLocation(SFX_glue_swishout, volume[99 * registry_options.sfx / 100], 0, 0);
 		}
 	}
 	else
@@ -23365,7 +23365,7 @@ int CreateNextCampaignGame_()
 			v3[1] = 0;
 			strcat_s(dest, next_scenario);
 
-			if (!LoadScenarioSingle_(dest, v2, playerName, registry_options.GameSpeed))
+			if (!LoadScenarioSingle_(dest, v2, playerName, registry_options.game_speed))
 			{
 				switch (Players[g_LocalNationID].nRace)
 				{
@@ -23456,8 +23456,8 @@ FAIL_STUB_PATCH(ContinueCampaign, "starcraft");
 
 void BeginEpilog_()
 {
-	int v0 = registry_options.Music;
-	if (!registry_options.Music && registry_options.Sfx)
+	int v0 = registry_options.music;
+	if (!registry_options.music && registry_options.sfx)
 	{
 		if (directsound)
 		{
@@ -23468,7 +23468,7 @@ void BeginEpilog_()
 		byte_6D5BBC = 0;
 		byte_6D5BBD = 0;
 		bigvolume = 0;
-		registry_options.Music = 50;
+		registry_options.music = 50;
 	}
 
 	while (active_campaign_entry_index < active_campaign->entries.size() && active_campaign->entries[active_campaign_entry_index].entry_type == CampaignMenuEntryType::EPILOG)
@@ -23497,15 +23497,15 @@ void BeginEpilog_()
 		}
 	}
 
-	registry_options.Music = v0;
+	registry_options.music = v0;
 }
 
 FAIL_STUB_PATCH(BeginEpilog, "starcraft");
 
 void BeginCredits_()
 {
-	int v0 = registry_options.Music;
-	if (!registry_options.Music && registry_options.Sfx)
+	int v0 = registry_options.music;
+	if (!registry_options.music && registry_options.sfx)
 	{
 		if (directsound)
 		{
@@ -23516,7 +23516,7 @@ void BeginCredits_()
 		byte_6D5BBC = 0;
 		byte_6D5BBD = 0;
 		bigvolume = 0;
-		registry_options.Music = 50;
+		registry_options.music = 50;
 	}
 
 	DLGMusicFade_(&Race::races()[RaceId::RACE_Terran].ingame_music[1]);
@@ -23531,7 +23531,7 @@ void BeginCredits_()
 		loadInitCreditsBIN_("rez\\crdt_lst.txt");
 	}
 	stopMusic_();
-	registry_options.Music = v0;
+	registry_options.music = v0;
 }
 
 FAIL_STUB_PATCH(BeginCredits, "starcraft");
@@ -23557,9 +23557,9 @@ void GameMainLoop_()
 
 	if (expansion_cd_archive_loaded_())
 	{
-		if (registry_options.field_18 & 0x800)
+		if (registry_options.flags & RegistryOptionsFlags::F_PLAY_XINTRO)
 		{
-			registry_options.field_18 &= ~0x800;
+			registry_options.flags &= ~RegistryOptionsFlags::F_PLAY_XINTRO;
 			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			try
 			{
@@ -23572,9 +23572,9 @@ void GameMainLoop_()
 	}
 	else
 	{
-		if (registry_options.field_18 & 0x200)
+		if (registry_options.flags & RegistryOptionsFlags::F_PLAY_INTRO)
 		{
-			registry_options.field_18 &= ~0x200;
+			registry_options.flags &= ~RegistryOptionsFlags::F_PLAY_INTRO;
 			PlayMovie_("smk\\blizzard.smk", SVID_AUTOCUTSCENE);
 			try
 			{
@@ -23956,7 +23956,7 @@ int __fastcall TriggerAction_UnpauseGame_(Action* a1)
 				IS_GAME_PAUSED = 0;
 				if (InReplay && !dword_6D5BE8)
 				{
-					SetGameSpeed_maybe(registry_options.GameSpeed, 0, replay_speed_multiplier);
+					SetGameSpeed_maybe(registry_options.game_speed, 0, replay_speed_multiplier);
 				}
 			}
 			cursorRefresh();
@@ -24159,7 +24159,7 @@ int __fastcall TriggerAction_Transmission_(Action* a1)
 			{
 				DisplayTalkingPortrait_maybe_(v7, (UnitType) a1->unit, -1, -1);
 			}
-			if ((registry_options.field_18 & 0x400) || (a1->flags & 4))
+			if ((registry_options.flags & RegistryOptionsFlags::F_TRIG_TEXT) || (a1->flags & 4))
 			{
 				const char* text_message = get_chk_String(a1->string);
 				unsigned display_time = std::max(v7, getTextDisplayTime_(text_message));
@@ -24184,7 +24184,7 @@ int __fastcall TriggerAction_DisplayTextMessage_(Action* a1)
 {
 	const char* text_message;
 
-	if (active_trigger_player == g_LocalNationID && ((registry_options.field_18 & 0x400) || (a1->flags & 4)) && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
+	if (active_trigger_player == g_LocalNationID && ((registry_options.flags & RegistryOptionsFlags::F_TRIG_TEXT) || (a1->flags & 4)) && (dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
 	{
 		text_message = GetMapTblString(a1->string);
 
@@ -25050,7 +25050,7 @@ FUNCTION_PATCH(BTNSCOND_ReplayPlayPause, BTNSCOND_ReplayPlayPause_, "starcraft")
 void CMDACT_SetReplaySpeed_()
 {
 	ReplaySpeedCommand command;
-	command.game_speed = registry_options.GameSpeed;
+	command.game_speed = registry_options.game_speed;
 	command.replay_speed_multiplier = replay_speed_multiplier;
 	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = !is_replay_paused;
@@ -25068,7 +25068,7 @@ ButtonState __fastcall BTNSCOND_ReplaySlowDown_(u16 variable, int player_id, CUn
 	{
 		return BTNST_HIDDEN;
 	}
-	else if (!registry_options.GameSpeed && replay_speed_multiplier >= 1 || is_replay_paused)
+	else if (!registry_options.game_speed && replay_speed_multiplier >= 1 || is_replay_paused)
 	{
 		return BTNST_DISABLED;
 	}
@@ -25090,10 +25090,10 @@ void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 	ReplaySpeedCommand command;
 	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = 0;
-	command.game_speed = registry_options.GameSpeed;
+	command.game_speed = registry_options.game_speed;
 	command.replay_speed_multiplier = replay_speed_multiplier;
 
-	if (registry_options.GameSpeed == 6)
+	if (registry_options.game_speed == 6)
 	{
 		if (replay_speed_multiplier > 1)
 		{
@@ -25106,7 +25106,7 @@ void __fastcall CMDACT_DecreaseReplaySpeed_(int a1, bool a2)
 	}
 	else
 	{
-		if (registry_options.GameSpeed)
+		if (registry_options.game_speed)
 		{
 			command.game_speed -= 1;
 		}
@@ -25127,7 +25127,7 @@ ButtonState __fastcall BTNSCOND_ReplaySpeedUp_(u16 variable, int player_id, CUni
 	{
 		return BTNST_HIDDEN;
 	}
-	else if (registry_options.GameSpeed == 6 && replay_speed_multiplier >= MAX_REPLAY_SPEED || is_replay_paused)
+	else if (registry_options.game_speed == 6 && replay_speed_multiplier >= MAX_REPLAY_SPEED || is_replay_paused)
 	{
 		return BTNST_DISABLED;
 	}
@@ -25149,12 +25149,12 @@ void __fastcall CMDACT_IncreaseReplaySpeed_(int a1, bool a2)
 	ReplaySpeedCommand command;
 	command.command_id = CommandId::CMD_ReplaySpeed;
 	command.is_paused = 0;
-	command.game_speed = registry_options.GameSpeed;
+	command.game_speed = registry_options.game_speed;
 	command.replay_speed_multiplier = replay_speed_multiplier;
 
-	if (registry_options.GameSpeed)
+	if (registry_options.game_speed)
 	{
-		if (registry_options.GameSpeed < 6)
+		if (registry_options.game_speed < 6)
 		{
 			command.game_speed += 1;
 		}
