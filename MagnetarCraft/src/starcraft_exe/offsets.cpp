@@ -16556,7 +16556,7 @@ int DecryptKey(int a1, int a2, unsigned int a3) {
     }
     return result_;
 }
-DECL_FUNC(void (__fastcall*SaveCPUThrottleOption)(bool exit_code), SaveCPUThrottleOption, 0x481ae0);
+DECL_FUNC(void (__fastcall*exit_throttling_options)(bool exit_code), exit_throttling_options, 0x481ae0);
 DECL_FUNC(int (__thiscall*speedOptnsScreenScrollSliders)(int this_), speedOptnsScreenScrollSliders, 0x481b00);
 void createUpdateSpdOptionsScrollers(dialog *a1) {
     int address = 0x481b80;

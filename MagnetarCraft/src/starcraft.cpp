@@ -5410,11 +5410,21 @@ void audioVideoInit_()
 
 FAIL_STUB_PATCH(audioVideoInit, "starcraft");
 
+void __fastcall exit_throttling_options_(bool exit_code)
+{
+	if (!exit_code)
+	{
+		SRegSaveValue("Starcraft", "CPUThrottle", 0, CpuThrottle);
+	}
+}
+
+FAIL_STUB_PATCH(exit_throttling_options, "starcraft");
+
 void init_throttling_options_()
 {
 	int value;
 
-	AppAddExit_(SaveCPUThrottleOption);
+	AppAddExit_(exit_throttling_options_);
 	if (SRegLoadValue("Starcraft", "CPUThrottle", 0, &value))
 	{
 		CpuThrottle = value != 0;

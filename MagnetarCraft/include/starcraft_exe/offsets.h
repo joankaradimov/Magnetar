@@ -2854,7 +2854,7 @@ void CreateContextHelp(int a1, int a2, char *a3);
 extern int (*sub_481690)();
 void md5_ctx_init(int a1, int a2);
 int DecryptKey(int a1, int a2, unsigned int a3);
-extern void (__fastcall*SaveCPUThrottleOption)(bool exit_code);
+extern void (__fastcall*exit_throttling_options)(bool exit_code);
 extern int (__thiscall*speedOptnsScreenScrollSliders)(int this_);
 void createUpdateSpdOptionsScrollers(dialog *a1);
 extern void (__cdecl*init_throttling_options)();
