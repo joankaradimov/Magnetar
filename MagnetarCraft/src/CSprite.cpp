@@ -5,6 +5,47 @@
 
 SpriteTileDataEx _SpritesOnTileRow;
 
+void initializeSpriteArray_()
+{
+    for (int v0 = 0; v0 < _countof(SpriteTable); v0++)
+    {
+        if (!SpriteTable[v0].pImageHead)
+        {
+            CSprite* v4 = &SpriteTable[v0];
+            UnusedSprites = v4;
+            dword_63FE34 = v4;
+
+            for (int v3 = v0 + 1; v3 < _countof(SpriteTable); v3++)
+            {
+                CSprite* v5 = &SpriteTable[v3];
+
+                if (!v5->pImageHead)
+                {
+                    if (dword_63FE34 == v4)
+                    {
+                        dword_63FE34 = v5;
+                    }
+                    v5->prev = v4;
+                    v5->next = v4->next;
+                    CSprite* next = v4->next;
+                    if (next)
+                    {
+                        next->prev = v5;
+                    }
+                    v4->next = v5;
+                    v4 = v5;
+                }
+            }
+            return;
+        }
+    }
+
+    UnusedSprites = nullptr;
+    dword_63FE34 = nullptr;
+}
+
+FAIL_STUB_PATCH(initializeSpriteArray, "starcraft");
+
 void sub_497D80_()
 {
     for (int i = 0; i < _countof(SpriteTable); i++)
@@ -46,7 +87,7 @@ int __stdcall ReadSpritesArray_(FILE* a1)
         SMemFree(v18, "Starcraft\\SWAR\\lang\\CSprite.cpp", 1884, 0);
     }
     sub_497D80_();
-    initializeSpriteArray();
+    initializeSpriteArray_();
     if (fread(_SpritesOnTileRow.heads, sizeof(_SpritesOnTileRow.heads), 1, a1) != 1)
     {
         return 0;
