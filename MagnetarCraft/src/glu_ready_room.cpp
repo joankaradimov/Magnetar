@@ -80,7 +80,7 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 	};
 
 	static FnInteract functions[] = {
-		gluRdyZ_Secret_,
+		flc_only_mouseover_,
 		NULL,
 		NULL,
 		NULL,
@@ -92,7 +92,7 @@ void gluRdy_CustomCtrlID_(dialog* dlg)
 		NULL,
 		NULL,
 		NULL,
-		genericLightupBtnInteract,
+		flc_ctrl_interact,
 		Menu_Generic_Button,
 		gluRdy_Portrait,
 		gluRdy_Portrait,

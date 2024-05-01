@@ -149,16 +149,16 @@ void gluMain_CustomCtrlID_(dialog* a1)
 {
 	static FnInteract functions[] = {
 		NULL,
-		genericLightupBtnInteract,
-		genericLightupBtnInteract,
-		genericLightupBtnInteract,
-		genericLightupBtnInteract,
+		flc_ctrl_interact,
+		flc_ctrl_interact,
+		flc_ctrl_interact,
+		flc_ctrl_interact,
 		NULL,
 		NULL,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
 		genericLabelInteract,
-		genericLightupBtnInteract,
+		flc_ctrl_interact,
 	};
 
 	registerMenuFunctions_(functions, a1, sizeof(functions));

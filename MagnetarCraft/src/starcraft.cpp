@@ -9625,7 +9625,7 @@ FAIL_STUB_PATCH(LoadGameInit, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 
-void sub_4F5990_(dialog* dlg)
+void okcancel_activate_(dialog* dlg)
 {
 	DestroyDialog(dlg);
 	if (dword_6D124C)
@@ -9635,7 +9635,7 @@ void sub_4F5990_(dialog* dlg)
 	dword_6D124C = nullptr;
 }
 
-FAIL_STUB_PATCH(sub_4F5990, "starcraft");
+FAIL_STUB_PATCH(okcancel_activate, "starcraft");
 
 int __fastcall okcancel_Interact_(dialog* dlg, struct dlgEvent* evt)
 {
@@ -9657,13 +9657,13 @@ int __fastcall okcancel_Interact_(dialog* dlg, struct dlgEvent* evt)
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_CREATE:
-			sub_4F5B70(dlg);
+			okcancel_create(dlg);
 			break;
 		case EventUser::USER_DESTROY:
-			sub_4F59E0(dlg, evt);
+			okcancel_destroy(dlg, evt);
 			return 1;
 		case EventUser::USER_ACTIVATE:
-			sub_4F5990_(dlg);
+			okcancel_activate_(dlg);
 			return 1;
 		case EventUser::USER_UNK_7:
 			sub_4CD9C0(dlg);
@@ -19008,7 +19008,7 @@ void initMapData_()
 	GameTerrainCache = (byte *)SMemAlloc(TILE_CACHE_SIZE, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
 	active_tiles = (MegatileFlags*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
 	memset(active_tiles, 0, MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles));
-	dword_6D5CD8 = SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
+	dword_6D5CD8 = (BYTE*) SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
 
 	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
@@ -19358,18 +19358,18 @@ int __stdcall gluLoadBINDlg__(FnInteract fn_interact)
 
 FUNCTION_PATCH((void*)0x41A080, gluLoadBINDlg__, "starcraft");
 
-void AnimateVideos_(dialog* result)
+void flc_animate_(dialog* result)
 {
 	for (dialog* i = result->fields.dlg.pFirstChild; i; i = i->pNext)
 	{
 		if (i->wCtrlType == DialogType::cFLCBTN)
 		{
-			SetCallbackTimer(72, i, 30, PlayVideoFrame);
+			SetCallbackTimer(72, i, 30, flc_anim_update_fn);
 		}
 	}
 }
 
-FAIL_STUB_PATCH(AnimateVideos, "starcraft");
+FAIL_STUB_PATCH(flc_animate, "starcraft");
 
 void __fastcall sub_4DCEA0_(dialog* a1, __int16 a2)
 {
@@ -19389,7 +19389,7 @@ FAIL_STUB_PATCH(sub_4DCEA0, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size)
 {
-	AnimateVideos_(a2);
+	flc_animate_(a2);
 	a2->lFlags |= CTRL_USELOCALGRAPHIC;
 	if (functions)
 	{
@@ -21118,17 +21118,17 @@ void sub_46D3C0_(dialog* dlg)
 
 FAIL_STUB_PATCH(sub_46D3C0, "starcraft");
 
-int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
+int __fastcall flc_only_mouseover_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_USER)
 	{
 		switch (evt->dwUser)
 		{
 		case EventUser::USER_INIT:
-			ButtonVideo(dlg);
+			flc_init(dlg);
 			return genericCommonInteract(evt, dlg);
 		case EventUser::USER_DESTROY:
-			genericLightupBtnUserDestroyEventHandler(dlg);
+			flc_ctrl_deactivate(dlg);
 			return genericCommonInteract(evt, dlg);
 		}
 	}
@@ -21136,7 +21136,7 @@ int __fastcall gluRdyZ_Secret_(dialog* dlg, dlgEvent* evt)
 	return 0;
 }
 
-FAIL_STUB_PATCH(gluRdyZ_Secret, "starcraft");
+FAIL_STUB_PATCH(flc_only_mouseover, "starcraft");
 
 void loadPortdataDAT_()
 {

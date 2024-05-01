@@ -1776,17 +1776,13 @@ void ScrollBar_SetBounds(__int16 a1, __int16 a2, dialog *a3) {
         call address
     }
 }
-int sub_4153B0(dialog *a1, rect *a2) {
+void sub_4153B0(dialog *a1, rect *a2) {
     int address = 0x4153b0;
-    int result_;
     __asm {
-        xor eax, eax
         push dword ptr a2
         mov ebx, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__fastcall*genericHScrollUpdate)(dialog *dlg, int x, int y, rect *dst), genericHScrollUpdate, 0x4155a0);
 DECL_FUNC(void (__fastcall*genericVScrollUpdate)(dialog *dlg, int x, int y, rect *dst), genericVScrollUpdate, 0x415760);
@@ -2166,7 +2162,7 @@ void sub_4178B0(const void *result, _DWORD *a2) {
         call address
     }
 }
-unsigned sub_417A10(unsigned __int8 a1, char *a2, int a3, int a4, int a5) {
+unsigned effects_render_text(unsigned __int8 a1, char *a2, int a3, int a4, int a5) {
     int address = 0x417a10;
     unsigned result_;
     __asm {
@@ -2606,9 +2602,9 @@ u32 genericDlgCharEventHandler(dlgEvent *evt, dialog *dlg) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*sub_418C00)(dialog *a1), sub_418C00, 0x418c00);
-unsigned genericCommonInteract(dlgEvent *a1, dialog *a2) {
+int genericCommonInteract(dlgEvent *a1, dialog *a2) {
     int address = 0x418c40;
-    unsigned result_;
+    int result_;
     __asm {
         xor eax, eax
         mov ecx, a2
@@ -3353,7 +3349,7 @@ BltMask * BltMask_Constructor(Bitmap *a1, char *a2, char *a3) {
 }
 DECL_FUNC(signed (*realizePalette)(), realizePalette, 0x41d710);
 DECL_FUNC(int (__thiscall*sub_41D780)(Bitmap *this_, __int16 a2, __int16 a3), sub_41D780, 0x41d780);
-DECL_FUNC(u8 * (__fastcall*drawVertLine)(int a1, unsigned __int16 a2, __int16 a3, unsigned __int16 a4), drawVertLine, 0x41d7d0);
+DECL_FUNC(void (__fastcall*drawVertLine)(int a1, unsigned __int16 a2, __int16 a3, unsigned __int16 a4), drawVertLine, 0x41d7d0);
 __int16 MinimapFill(unsigned __int16 a1, int a2, __int16 a3, __int16 a4) {
     int address = 0x41d810;
     __int16 result_;
@@ -9771,8 +9767,8 @@ void LoadBNGatewayList(BNetGateways *a1) {
         call address
     }
 }
-DECL_FUNC(void * (*sub_453150)(), sub_453150, 0x453150);
-DECL_FUNC(void * (*sub_453170)(), sub_453170, 0x453170);
+DECL_FUNC(void (__cdecl*sub_453150)(), sub_453150, 0x453150);
+DECL_FUNC(void (__cdecl*sub_453170)(), sub_453170, 0x453170);
 DECL_FUNC(unsigned (*sub_4531A0)(), sub_4531A0, 0x4531a0);
 char sub_4531F0(CUnit *a1) {
     int address = 0x4531f0;
@@ -9792,16 +9788,12 @@ void setRepulseAngle(CUnit *a1) {
         call address
     }
 }
-CUnit * removeRepulseTile(CUnit *result) {
+void removeRepulseTile(CUnit *result) {
     int address = 0x4533d0;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 signed sub_453420(CUnit *a1) {
     int address = 0x453420;
@@ -28413,18 +28405,14 @@ DECL_FUNC(void (*GameRun)(), GameRun, 0x4e0710);
 DECL_FUNC(void (__cdecl*GameMainLoop)(), GameMainLoop, 0x4e0820);
 DECL_FUNC(int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd), _WinMain, 0x4e0ae0);
 DECL_FUNC(int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2), sub_4E0B30, 0x4e0b30);
-__int16 genericLightupBtnUserDestroyEventHandler(dialog *a1) {
+void flc_ctrl_deactivate(dialog *a1) {
     int address = 0x4e0b80;
-    __int16 result_;
     __asm {
-        xor eax, eax
         mov edi, a1
         call address
-        mov result_, ax
     }
-    return result_;
 }
-int sub_4E0BE0(dialog *a1, dialog *a2, rect *a3, int a4, int a5) {
+int flc_draw_flc(dialog *a1, dialog *a2, rect *a3, int a4, int a5) {
     int address = 0x4e0be0;
     int result_;
     __asm {
@@ -28439,8 +28427,14 @@ int sub_4E0BE0(dialog *a1, dialog *a2, rect *a3, int a4, int a5) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_4E0D10)(), sub_4E0D10, 0x4e0d10);
-void genericLightupBtnMouseUpdate(dlgEvent *a1, rect *a2, dialog *a3) {
+void flc_remove_timers(dialog *dlg) {
+    int address = 0x4e0d10;
+    __asm {
+        mov eax, dlg
+        call address
+    }
+}
+void flc_mouse_update(dlgEvent *a1, rect *a2, dialog *a3) {
     int address = 0x4e0d40;
     __asm {
         mov esi, a3
@@ -28449,22 +28443,22 @@ void genericLightupBtnMouseUpdate(dlgEvent *a1, rect *a2, dialog *a3) {
         call address
     }
 }
-void activateDialog(dialog *a1) {
+void flc_clicked(dialog *a1) {
     int address = 0x4e0dd0;
     __asm {
         mov esi, a1
         call address
     }
 }
-void sub_4E0E40(dialog *result) {
+void flc_hover_update(dialog *dlg) {
     int address = 0x4e0e40;
     __asm {
-        mov eax, result
+        mov eax, dlg
         call address
     }
 }
-DECL_FUNC(void (__fastcall*PlayVideoFrame)(dialog *a1, __int16 a2), PlayVideoFrame, 0x4e0f50);
-void sub_4E1020(dialog *a1, char a2) {
+DECL_FUNC(void (__fastcall*flc_anim_update_fn)(dialog *dlg, __int16 a2), flc_anim_update_fn, 0x4e0f50);
+void flc_draw_text(dialog *a1, char a2) {
     int address = 0x4e1020;
     __asm {
         push dword ptr a2
@@ -28472,15 +28466,15 @@ void sub_4E1020(dialog *a1, char a2) {
         call address
     }
 }
-void AnimateVideos(dialog *result) {
+void flc_animate(dialog *dlg) {
     int address = 0x4e10f0;
     __asm {
-        mov eax, result
+        mov eax, dlg
         call address
     }
 }
 DECL_FUNC(void (__fastcall*sub_4E1120)(dialog *dlg, int x, int y, rect *dst), sub_4E1120, 0x4e1120);
-DECL_FUNC(void (__fastcall*genericLightupBtnUpdate)(dialog *dlg, int x, int y, rect *dst), genericLightupBtnUpdate, 0x4e1180);
+DECL_FUNC(void (__fastcall*flc_draw)(dialog *dlg, int x, int y, rect *dst), flc_draw, 0x4e1180);
 void MenuGenericBtnInitChildren(dialog *dlg) {
     int address = 0x4e1220;
     __asm {
@@ -28488,7 +28482,7 @@ void MenuGenericBtnInitChildren(dialog *dlg) {
         call address
     }
 }
-BOOL PlayVidInRect(int a1) {
+BOOL flc_init_flc(dialog *a1) {
     int address = 0x4e1260;
     BOOL result_;
     __asm {
@@ -28511,7 +28505,7 @@ int MenuGenericBtnUserEventHandler(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-void ButtonVideo(dialog *a1) {
+void flc_init(dialog *a1) {
     int address = 0x4e14a0;
     __asm {
         mov edi, a1
@@ -28519,9 +28513,9 @@ void ButtonVideo(dialog *a1) {
     }
 }
 DECL_FUNC(int (__fastcall*Menu_Generic_Button)(dialog *dlg, dlgEvent *evt), Menu_Generic_Button, 0x4e1560);
-unsigned sub_4E1640(dialog *a1, dlgEvent *a2) {
+int sub_4E1640(dialog *a1, dlgEvent *a2) {
     int address = 0x4e1640;
-    unsigned result_;
+    int result_;
     __asm {
         xor eax, eax
         mov esi, a2
@@ -28531,7 +28525,7 @@ unsigned sub_4E1640(dialog *a1, dlgEvent *a2) {
     }
     return result_;
 }
-int genericLightupBtnUserEventHandler(dlgEvent *a1, dialog *a2) {
+int flc_ctrl_evn(dlgEvent *a1, dialog *a2) {
     int address = 0x4e1670;
     int result_;
     __asm {
@@ -28543,8 +28537,8 @@ int genericLightupBtnUserEventHandler(dlgEvent *a1, dialog *a2) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*gluRdyZ_Secret)(dialog *dlg, dlgEvent *evt), gluRdyZ_Secret, 0x4e17a0);
-DECL_FUNC(int (__fastcall*genericLightupBtnInteract)(dialog *dlg, struct dlgEvent *evt), genericLightupBtnInteract, 0x4e17e0);
+DECL_FUNC(int (__fastcall*flc_only_mouseover)(dialog *dlg, dlgEvent *evt), flc_only_mouseover, 0x4e17a0);
+DECL_FUNC(int (__fastcall*flc_ctrl_interact)(dialog *dlg, struct dlgEvent *evt), flc_ctrl_interact, 0x4e17e0);
 dialog * sub_4E18C0(dialog *a1) {
     int address = 0x4e18c0;
     dialog * result_;
@@ -28582,9 +28576,9 @@ void removeDlgFromTimerTracking1(dialog *a1) {
         call address
     }
 }
-unsigned GenericControlInteract(dialog *a1, dlgEvent *a2) {
+int GenericControlInteract(dialog *a1, dlgEvent *a2) {
     int address = 0x4e1a70;
-    unsigned result_;
+    int result_;
     __asm {
         xor eax, eax
         mov ebx, a2
@@ -28597,20 +28591,16 @@ unsigned GenericControlInteract(dialog *a1, dlgEvent *a2) {
 DECL_FUNC(bool (__fastcall*genericCheckboxInteract)(dialog *dlg, struct dlgEvent *evt), genericCheckboxInteract, 0x4e1b50);
 DECL_FUNC(bool (__fastcall*genericOptionInteract)(dialog *dlg, struct dlgEvent *evt), genericOptionInteract, 0x4e1bc0);
 DECL_FUNC(bool (__fastcall*genericBtnInteract)(dialog *dlg, struct dlgEvent *evt), genericBtnInteract, 0x4e1c20);
-u8 * BWFXN_Draw(unsigned __int16 a1, int a2, int a3, unsigned __int16 a4) {
+void BWFXN_Draw(unsigned __int16 a1, int a2, int a3, unsigned __int16 a4) {
     int address = 0x4e1c70;
-    u8 * result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         push dword ptr a4
         push dword ptr a3
         push dword ptr a2
         mov si, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__stdcall*BWFXN_DrawBox)(s16 x, s16 y, u16 w, u16 h), BWFXN_DrawBox, 0x4e1d20);
 DECL_FUNC(BOOL (__stdcall*CreatePath_PopulatePathAreas)(struct_a1_1 *a1), CreatePath_PopulatePathAreas, 0x4e1d90);
@@ -29542,7 +29532,7 @@ BOOL sub_4E8C20(CUnit *a1, CUnit *a2) {
     return result_;
 }
 DECL_FUNC(int (*sub_4E8C60)(), sub_4E8C60, 0x4e8c60);
-DECL_FUNC(BOOL (__fastcall*larvaCounterProc)(CUnit *a1, CUnit *a2), larvaCounterProc, 0x4e8c80);
+DECL_FUNC(int (__fastcall*larvaCounterProc)(CUnit *a1, CUnit *a2), larvaCounterProc, 0x4e8c80);
 BOOL sub_4E8CB0(__int16 *a1, int a2, int a3) {
     int address = 0x4e8cb0;
     BOOL result_;
@@ -30179,7 +30169,13 @@ DECL_FUNC(signed (*GameInit)(), GameInit, 0x4eee00);
 DECL_FUNC(signed (*sub_4EEFD0)(), sub_4EEFD0, 0x4eefd0);
 DECL_FUNC(signed (*LoadGameInit)(), LoadGameInit, 0x4ef100);
 DECL_FUNC(int (__thiscall*DrawDialogImage)(rect *this_, Bitmap *a2, int a3, int a4, int a5), DrawDialogImage, 0x4ef440);
-DECL_FUNC(int (*sub_4EF530)(), sub_4EF530, 0x4ef530);
+void sub_4EF530(__int16 *a1) {
+    int address = 0x4ef530;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 DECL_FUNC(void (__fastcall*genericImageUpdate)(dialog *dlg, int x, int y, rect *dst), genericImageUpdate, 0x4ef560);
 DECL_FUNC(void (__fastcall*genericDlgUpdate)(dialog *dlg, int x, int y, rect *dst), genericDlgUpdate, 0x4ef590);
 int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, DialogFlags a5) {
@@ -30197,18 +30193,14 @@ int sub_4EF600(rect *a1, unsigned int a2, __int16 a3, __int16 a4, DialogFlags a5
     }
     return result_;
 }
-u8 * sub_4EF6D0(u8 *result, int a2, char a3) {
+void sub_4EF6D0(rect *result, dialog *dlg, char a3) {
     int address = 0x4ef6d0;
-    u8 * result_;
     __asm {
-        xor eax, eax
         push dword ptr a3
-        mov ecx, a2
+        mov ecx, dlg
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_4EF710(rect *a1, unsigned int a2, int a3, int x, __int16 y, int width, DialogFlags a7) {
     int address = 0x4ef710;
@@ -30852,7 +30844,7 @@ DECL_FUNC(void (__stdcall*msgfltr_Cancel)(char a1), msgfltr_Cancel, 0x4f5700);
 DECL_FUNC(void (__fastcall*genericPopupDlgInteract)(dialog *a1, dlgEvent *a2), genericPopupDlgInteract, 0x4f5760);
 DECL_FUNC(void (__fastcall*BWFXN_OpenGameDialog)(char *a1, FnInteract a2), BWFXN_OpenGameDialog, 0x4f57a0);
 DECL_FUNC(void (*HidePopupDialog)(), HidePopupDialog, 0x4f5930);
-void sub_4F5990(dialog *dlg) {
+void okcancel_activate(dialog *dlg) {
     int address = 0x4f5990;
     __asm {
         mov eax, dlg
@@ -30860,7 +30852,7 @@ void sub_4F5990(dialog *dlg) {
     }
 }
 DECL_FUNC(void (__fastcall*DLG_DrawTextUpdate_CB)(dialog *dlg, int x, int y, rect *dst), DLG_DrawTextUpdate_CB, 0x4f59c0);
-int sub_4F59E0(dialog *a1, dlgEvent *a2) {
+int okcancel_destroy(dialog *a1, dlgEvent *a2) {
     int address = 0x4f59e0;
     int result_;
     __asm {
@@ -30873,7 +30865,7 @@ int sub_4F59E0(dialog *a1, dlgEvent *a2) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*wait_BINDLG)(dialog *dlg, dlgEvent *evt), wait_BINDLG, 0x4f5a40);
-dialog * sub_4F5B70(dialog *a1) {
+dialog * okcancel_create(dialog *a1) {
     int address = 0x4f5b70;
     dialog * result_;
     __asm {
@@ -35024,7 +35016,7 @@ CHAR(&fatal_error_message)[512] = * ((decltype(&fatal_error_message)) 0x6cddd0);
 int& main_thread_id = * ((decltype(&main_thread_id)) 0x6cdfd0);
 RegistryOptions& registry_options = * ((decltype(&registry_options)) 0x6cdfd4);
 FontColorRelated& stru_6CE000 = * ((decltype(&stru_6CE000)) 0x6ce000);
-fontMemStruct& PrintXY_Font = * ((decltype(&PrintXY_Font)) 0x6ce0c0);
+fontMemStruct& gsFontMargins = * ((decltype(&gsFontMargins)) 0x6ce0c0);
 int& dword_6CE0D0 = * ((decltype(&dword_6CE0D0)) 0x6ce0d0);
 char& byte_6CE0D4 = * ((decltype(&byte_6CE0D4)) 0x6ce0d4);
 int& dword_6CE0D8 = * ((decltype(&dword_6CE0D8)) 0x6ce0d8);
@@ -35308,7 +35300,7 @@ Bitmap& pbrempt_pcx = * ((decltype(&pbrempt_pcx)) 0x6d5cac);
 Bitmap& pbrfull_pcx = * ((decltype(&pbrfull_pcx)) 0x6d5cb4);
 Bitmap& progress_bar_empty_pcx = * ((decltype(&progress_bar_empty_pcx)) 0x6d5cbc);
 Bitmap& progress_bar_full_pcx = * ((decltype(&progress_bar_full_pcx)) 0x6d5cc4);
-void *& dword_6D5CD8 = * ((decltype(&dword_6D5CD8)) 0x6d5cd8);
+BYTE *& dword_6D5CD8 = * ((decltype(&dword_6D5CD8)) 0x6d5cd8);
 void *& dword_6D5CDC = * ((decltype(&dword_6D5CDC)) 0x6d5cdc);
 char *(&dword_6D5D00)[18] = * ((decltype(&dword_6D5D00)) 0x6d5d00);
 int& dword_6D5D48 = * ((decltype(&dword_6D5D48)) 0x6d5d48);

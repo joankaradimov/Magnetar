@@ -139,7 +139,7 @@ int __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_MOUSEMOVE:
 			return sub_4B24B0(dlg, evt);
 		case EventUser::USER_INIT:
-			genericLightupBtnInteract(dlg, evt);
+			flc_ctrl_interact(dlg, evt);
 			dlg->pfcnUpdate = gluCmpgnBtn_BtnLightupUpdate;
 			SetCallbackTimer(72, dlg, 30, gluCmpgnBtn_InitTimer);
 			return 1;
@@ -147,7 +147,7 @@ int __fastcall gluCmpgn_CampaignButton_(dialog* dlg, dlgEvent* evt)
 		break;
 	}
 
-	return genericLightupBtnInteract(dlg, evt);
+	return flc_ctrl_interact(dlg, evt);
 }
 
 FAIL_STUB_PATCH(gluCmpgn_CampaignButton, "starcraft");
@@ -161,7 +161,7 @@ void gluCmpgn_CustomCtrlID_(dialog* dlg)
 		NULL,
 		Menu_Generic_Button,
 		gluCmpgn_CampaignButton_,
-		genericLightupBtnInteract,
+		flc_ctrl_interact,
 		gluCmpgn_CampaignButton_,
 		Menu_Generic_Button,
 		Menu_Generic_Button,
