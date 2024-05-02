@@ -8631,7 +8631,7 @@ int GetBNIconImageRect(unsigned int a1, int a2) {
     }
     return result_;
 }
-DECL_FUNC(int (*LoadBNIcons)(), LoadBNIcons, 0x4490e0);
+DECL_FUNC(void (__cdecl*LoadBNIcons)(), LoadBNIcons, 0x4490e0);
 BOOL sub_449140(unsigned int a1, HWND hWnd, char *a3, int a4) {
     int address = 0x449140;
     BOOL result_;
@@ -8676,7 +8676,7 @@ int BNBlitToWindow(signed int a1, int arg0, int a3, int a4) {
     }
     return result_;
 }
-DECL_FUNC(void * (*sub_449390)(), sub_449390, 0x449390);
+DECL_FUNC(void (__cdecl*sub_449390)(), sub_449390, 0x449390);
 DECL_FUNC(int (__stdcall*ParseSCIcon)(int a1, int arg4, int arg8), ParseSCIcon, 0x4494a0);
 int DrawChannelUser_maybe(int a1, int a2, int a3, LPCSTR lpString, int a5, char a6, int a7) {
     int address = 0x449650;
@@ -9026,7 +9026,7 @@ signed gluBN_CREATE_LIST_Proc(HWND a1, unsigned int a2, HWND hWnd, int a4) {
 DECL_FUNC(LPARAM (__stdcall*gluBN_CREATE_GAME_Proc)(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam), gluBN_CREATE_GAME_Proc, 0x44c960);
 DECL_FUNC(signed (__stdcall*BattleMakeCreateGameDialog)(int a1, int a2, int a3, int a4, int a5, int a6), BattleMakeCreateGameDialog, 0x44cbe0);
 DECL_FUNC(void * (*BNProfileImageCleanup_0)(), BNProfileImageCleanup_0, 0x44cda0);
-DECL_FUNC(BOOL (*BNProfileImageCreate)(), BNProfileImageCreate, 0x44cdf0);
+DECL_FUNC(void (__cdecl*BNProfileImageCreate)(), BNProfileImageCreate, 0x44cdf0);
 int sub_44CEB0(int *a1, int a2, int a3, HWND hWnd) {
     int address = 0x44ceb0;
     int result_;
@@ -22438,7 +22438,7 @@ int createFont(int result) {
     }
     return result_;
 }
-DECL_FUNC(int (*sub_4ACF20)(), sub_4ACF20, 0x4acf20);
+DECL_FUNC(void (__cdecl*sub_4ACF20)(), sub_4ACF20, 0x4acf20);
 char * __SDlgDialogBoxIndirectParam(unsigned int a1, HWND hWndParent, LPVOID lpParam, LPARAM lParam) {
     int address = 0x4acf80;
     char * result_;
@@ -22469,7 +22469,7 @@ char * sub_4AD040(unsigned __int16 a1, int a2, int a3) {
 DECL_FUNC(int (__stdcall*BattlePlaySound)(int a1, int a2, int a3), BattlePlaySound, 0x4ad0b0);
 DECL_FUNC(void (__stdcall*sub_4AD0E0)(LPCSTR lpText, LPCSTR lpCaption), sub_4AD0E0, 0x4ad0e0);
 DECL_FUNC(void * (*sub_4AD110)(), sub_4AD110, 0x4ad110);
-DECL_FUNC(void * (*sub_4AD140)(), sub_4AD140, 0x4ad140);
+DECL_FUNC(void (__cdecl*sub_4AD140)(), sub_4AD140, 0x4ad140);
 char * initializeProviderStruct(SNETUIDATA *a1) {
     int address = 0x4ad190;
     char * result_;
@@ -27988,7 +27988,7 @@ DECL_FUNC(void (__cdecl*nextLeaveGameMenu)(), nextLeaveGameMenu, 0x4dcc50);
 DECL_FUNC(void (*loadMenu_None)(), loadMenu_None, 0x4dcc90);
 DECL_FUNC(void (__fastcall*DLGSwishOutProc)(dialog *a1, __int16 a2), DLGSwishOutProc, 0x4dcd00);
 DECL_FUNC(void (__fastcall*sub_4DCEA0)(dialog *a1, __int16 a2), sub_4DCEA0, 0x4dcea0);
-DECL_FUNC(BYTE (*sub_4DCEE0)(), sub_4DCEE0, 0x4dcee0);
+DECL_FUNC(void (__cdecl*sub_4DCEE0)(), sub_4DCEE0, 0x4dcee0);
 void setDialogString(dialog *a1, __int16 a2, const char *a3) {
     int address = 0x4dcf30;
     __asm {
