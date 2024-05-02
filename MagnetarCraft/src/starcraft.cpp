@@ -22153,13 +22153,54 @@ void SelectGame_()
 
 FAIL_STUB_PATCH(SelectGame, "starcraft");
 
+void BNProfileImageCreate_()
+{
+	const char* v0;
+
+	if (IsExpansion)
+	{
+		v0 = "glue\\battle.net\\backgrounds\\profileexp.pcx";
+	}
+	else
+	{
+		v0 = "glue\\battle.net\\backgrounds\\profilebkg.pcx";
+	}
+	SBmpLoadImage(v0, 0, 0, 0, (int)&dword_68F6C4, (int)&dword_68F6E4, 0);
+	dword_68F6D4 = SMemAlloc(dword_68F6E4 * dword_68F6C4, "Starcraft\\SWAR\\lang\\gluBNProfile.cpp", 1179, 0);
+	SBmpLoadImage(v0, 0, dword_68F6D4, dword_68F6E4 * dword_68F6C4, 0, 0, 0);
+	dword_68F6C0 = SMemAlloc(dword_68F6E4 * dword_68F6C4, "Starcraft\\SWAR\\lang\\gluBNProfile.cpp", 1182, 0);
+	SBmpLoadImage("glue\\battle.net\\backgrounds\\blankprofile.pcx", 0, dword_68F6C0, dword_68F6E4 * dword_68F6C4, 0, 0, 0);
+}
+
+FAIL_STUB_PATCH(BNProfileImageCreate, "starcraft");
+
+void LoadBNIcons_()
+{
+	int v0;
+
+	if (BNLoadImage("glue\\battle.net\\icons\\icons.pcx", (int*)&dword_68FEC4, "IconTable", 0, 0, -1, 1, (int)&dword_68FEB8, 0))
+	{
+		v0 = dword_68FEBC;
+	}
+	else
+	{
+		v0 = 0;
+		dword_68FEC4 = 0;
+		dword_68FEBC = 0;
+		dword_68FEB8 = 0;
+	}
+	dword_68FEC0 = v0 / 14;
+}
+
+FAIL_STUB_PATCH(LoadBNIcons, "starcraft");
+
 void sub_4AD140_()
 {
 	if (!dword_59BD8C)
 	{
 		sub_449390();
-		BNProfileImageCreate();
-		LoadBNIcons();
+		BNProfileImageCreate_();
+		LoadBNIcons_();
 		dword_59BD9C = (void*)fastFileRead(&dword_59BDA0, 0, "rez\\gluBNRes.res", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 		dword_59BD8C = 1;
 	}
