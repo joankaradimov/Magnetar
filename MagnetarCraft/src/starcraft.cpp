@@ -10061,13 +10061,20 @@ void DestroyFogSightData_()
 
 FAIL_STUB_PATCH(DestroyFogSightData, "starcraft");
 
-void DestroyMapData_()
+void sub_453170_()
 {
 	if (dword_6D5CD8)
 	{
 		SMemFree(dword_6D5CD8, "Starcraft\\SWAR\\lang\\repulse.cpp", 315, 0);
-		dword_6D5CD8 = NULL;
+		dword_6D5CD8 = nullptr;
 	}
+}
+
+FAIL_STUB_PATCH(sub_453170, "starcraft");
+
+void DestroyMapData_()
+{
+	sub_453170_();
 	if (VR4Data)
 	{
 		SMemFree(VR4Data, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 470, 0);
@@ -18863,6 +18870,13 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 
 FAIL_STUB_PATCH(loadParallaxStarGfx, "starcraft");
 
+void sub_453150_()
+{
+	dword_6D5CD8 = (BYTE*) SMemAlloc(171 * 171, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
+}
+
+FAIL_STUB_PATCH(sub_453150, "starcraft");
+
 void GenerateMegatileDefaultFlags_()
 {
 	megatile_default_flags = (MegatileFlags*)SMemAlloc(4 * megatileCount, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 195, 8);
@@ -19008,7 +19022,7 @@ void initMapData_()
 	GameTerrainCache = (byte *)SMemAlloc(TILE_CACHE_SIZE, "Starcraft\\SWAR\\lang\\Gamemap.cpp", 605, 0);
 	active_tiles = (MegatileFlags*)SMemAlloc(MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles), "Starcraft\\SWAR\\lang\\Gamemap.cpp", 606, 0);
 	memset(active_tiles, 0, MAX_MAP_DIMENTION * MAX_MAP_DIMENTION * sizeof(*active_tiles));
-	dword_6D5CD8 = (BYTE*) SMemAlloc(29241, "Starcraft\\SWAR\\lang\\repulse.cpp", 323, 8);
+	sub_453150_();
 
 	sprintf_s(filename, "%s%s%s", "Tileset\\", TILESET_NAMES[CurrentTileSet], ".wpe");
 	fastFileRead_(0, 0, filename, (int)palette, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
