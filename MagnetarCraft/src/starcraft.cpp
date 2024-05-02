@@ -22167,11 +22167,29 @@ void sub_4AD140_()
 
 FAIL_STUB_PATCH(sub_4AD140, "starcraft");
 
+void sub_4ACF20_()
+{
+	if (dword_59BD8C)
+	{
+		sub_4491E0();
+		BNProfileImageCleanup_0();
+		if (dword_68FEC4)
+		{
+			SMemFree(dword_68FEC4, "Starcraft\\SWAR\\lang\\gluBNIcon.cpp", 107, 0);
+			dword_68FEC4 = 0;
+		}
+		SMemFree(dword_59BD9C, "Starcraft\\SWAR\\lang\\gluBN.cpp", 358, 0);
+		dword_59BD8C = 0;
+	}
+}
+
+FAIL_STUB_PATCH(sub_4ACF20, "starcraft");
+
 void loadMenu_gluBNRes_()
 {
 	sub_4AD140_();
 	SelectGame_();
-	sub_4ACF20();
+	sub_4ACF20_();
 	dword_50E064 = -1;
 }
 
