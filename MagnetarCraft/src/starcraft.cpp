@@ -22153,7 +22153,7 @@ void SelectGame_()
 
 FAIL_STUB_PATCH(SelectGame, "starcraft");
 
-void loadMenu_gluBNRes_()
+void sub_4AD140_()
 {
 	if (!dword_59BD8C)
 	{
@@ -22163,6 +22163,13 @@ void loadMenu_gluBNRes_()
 		dword_59BD9C = (void*)fastFileRead(&dword_59BDA0, 0, "rez\\gluBNRes.res", 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 		dword_59BD8C = 1;
 	}
+}
+
+FAIL_STUB_PATCH(sub_4AD140, "starcraft");
+
+void loadMenu_gluBNRes_()
+{
+	sub_4AD140_();
 	SelectGame_();
 	sub_4ACF20();
 	dword_50E064 = -1;

@@ -154,6 +154,7 @@ void PauseGame_maybe_();
 DWORD sub_4A2B60_();
 void SetInGameInputProcs_();
 int sub_4BDB30_(PALETTEENTRY* palette, PALETTEENTRY a2);
+void sub_4AD140_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
