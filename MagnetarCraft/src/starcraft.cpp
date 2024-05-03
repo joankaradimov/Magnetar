@@ -23252,8 +23252,6 @@ FAIL_STUB_PATCH(ContinueCampaign, "starcraft");
 
 void GameMainLoop_()
 {
-	HANDLE phFile;
-
 	gwGameMode = GamePosition::GAME_GLUES;
 	PreInitData_();
 	InitializeInputProcs_();
