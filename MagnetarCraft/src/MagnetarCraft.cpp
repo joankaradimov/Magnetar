@@ -366,5 +366,5 @@ void StartMagnetar()
 	VerifySystemMemory_();
 	FastIndexInit_();
 	BWSetSecurityInfo();
-	GameMainLoop_();
+	RunGame_();
 }

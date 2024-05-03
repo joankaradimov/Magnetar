@@ -61,7 +61,7 @@ extern struct Campaign* active_campaign;
 extern int active_campaign_entry_index;
 
 void localDll_Init_(HINSTANCE a1);
-void GameMainLoop_();
+void RunGame_();
 int AppAddExit_(AppExitHandle handle);
 void AppExit_(bool exit_code);
 void PreInitData_();
@@ -72,7 +72,7 @@ void __fastcall CleanupIscriptBINHandle_(bool exit_code);
 int LoadReplayFile_(const char* a1, int* a3);
 int ReadMapData_(const char* source, MapChunks* a4, int is_campaign);
 int CreateGame_(GameData* data);
-void GameRun_();
+void main_game_run_();
 int load_gluGameMode_BINDLG_();
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 void stopMusic_();

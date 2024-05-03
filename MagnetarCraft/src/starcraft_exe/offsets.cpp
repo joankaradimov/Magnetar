@@ -2349,12 +2349,12 @@ dialog * sub_4180D0(dialog *result, int a2) {
     }
     return result_;
 }
-void registerUserDialogAction(dialog *result, unsigned int a2, FnInteract *a3) {
+void registerUserDialogAction(dialog *dlg, unsigned int a2, FnInteract *a3) {
     int address = 0x418100;
     __asm {
         mov edi, a3
         mov ecx, a2
-        mov eax, result
+        mov eax, dlg
         call address
     }
 }
@@ -17254,7 +17254,7 @@ BOOL sub_488710(int a1) {
 DECL_FUNC(int (*sub_488750)(), sub_488750, 0x488750);
 DECL_FUNC(BOOL (*isSinglePaused)(), isSinglePaused, 0x488760);
 DECL_FUNC(int (*BWFXN_IsPaused)(), BWFXN_IsPaused, 0x488780);
-DECL_FUNC(void (__stdcall*TickCountSomething)(int a1), TickCountSomething, 0x488790);
+DECL_FUNC(void (__stdcall*unpause_game)(int a1), unpause_game, 0x488790);
 DECL_FUNC(void (*PauseGame_maybe)(void), PauseGame_maybe, 0x488800);
 int sub_488880(unsigned __int16 a1, unsigned __int8 a2) {
     int address = 0x488880;
@@ -24110,7 +24110,7 @@ unsigned GetGroundHeightAtPos(signed int x, signed int y) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*DestroyMapData)(), DestroyMapData, 0x4bd190);
-DECL_FUNC(char (*RefreshLayer5)(), RefreshLayer5, 0x4bd350);
+DECL_FUNC(char (*gamemap_force_redraw)(), gamemap_force_redraw, 0x4bd350);
 DECL_FUNC(void (__cdecl*sub_4BD3A0)(), sub_4BD3A0, 0x4bd3a0);
 DECL_FUNC(unsigned (*InitialSetScreenToStartLocation)(), InitialSetScreenToStartLocation, 0x4bd3f0);
 char sub_4BD4B0(int a1, int a2) {
@@ -25113,16 +25113,12 @@ char * sub_4C9030(dialog *a1) {
     }
     return result_;
 }
-int sub_4C90C0(dialog *dlg) {
+void sub_4C90C0(dialog *dlg) {
     int address = 0x4c90c0;
-    int result_;
     __asm {
-        xor eax, eax
         mov eax, dlg
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__fastcall*sub_4C9120)(bool exit_code), sub_4C9120, 0x4c9120);
 DECL_FUNC(void (__fastcall*sub_4C9150)(dialog *dlg, __int16 a2), sub_4C9150, 0x4c9150);
@@ -25668,14 +25664,14 @@ dialog * UpdateCancelButton(dialog *a1, unsigned __int16 a2, DialogFlags a3) {
     }
     return result_;
 }
-dialog * UpdateOKButton(dialog *a1, unsigned __int16 a2, DialogFlags a3) {
+dialog * UpdateOKButton(dialog *dlg, unsigned __int16 a2, DialogFlags a3) {
     int address = 0x4cda80;
     dialog * result_;
     __asm {
         xor eax, eax
         push dword ptr a3
         push dword ptr a2
-        mov eax, a1
+        mov eax, dlg
         call address
         mov result_, eax
     }
@@ -27315,27 +27311,19 @@ BOOL sub_4D8600(char a1) {
     }
     return result_;
 }
-unsigned creditsSetDisplayTime(const char *a1) {
+void creditsSetDisplayTime(const char *a1) {
     int address = 0x4d8620;
-    unsigned result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-unsigned creditsSetFadeSpeed(const char *a1) {
+void creditsSetFadeSpeed(const char *a1) {
     int address = 0x4d8660;
-    unsigned result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_4D86A0(char **tag, _DWORD *is_tag) {
     int address = 0x4d86a0;
@@ -27503,14 +27491,14 @@ unsigned sub_4D9360(int a1) {
     return result_;
 }
 DECL_FUNC(void (*sub_4D93B0)(), sub_4D93B0, 0x4d93b0);
-DECL_FUNC(void (__cdecl*updateHUDInformation)(), updateHUDInformation, 0x4d93f0);
+DECL_FUNC(void (__cdecl*gameloop_update_ui)(), gameloop_update_ui, 0x4d93f0);
 DECL_FUNC(void (__cdecl*RefreshAllUnits)(), RefreshAllUnits, 0x4d9460);
-DECL_FUNC(void (*GameLoop)(), GameLoop, 0x4d94b0);
-DECL_FUNC(void (*DoGameLoop)(), DoGameLoop, 0x4d9530);
+DECL_FUNC(void (*gameloop_update_game)(), gameloop_update_game, 0x4d94b0);
+DECL_FUNC(void (*gameloop_advance2)(), gameloop_advance2, 0x4d9530);
 DECL_FUNC(int (__thiscall*GameLoopWaitSendTurn)(int *this_), GameLoopWaitSendTurn, 0x4d9550);
 DECL_FUNC(int (__thiscall*GameLoop_State)(void *a1), GameLoop_State, 0x4d9670);
 DECL_FUNC(void (*GameLoop_Top)(), GameLoop_Top, 0x4d9840);
-DECL_FUNC(GamePosition (*BeginGame)(), BeginGame, 0x4d9950);
+DECL_FUNC(GamePosition (*run_game)(), run_game, 0x4d9950);
 DECL_FUNC(int (*sub_4D9AA0)(), sub_4D9AA0, 0x4d9aa0);
 DECL_FUNC(int (*sub_4D9AB0)(), sub_4D9AB0, 0x4d9ab0);
 DECL_FUNC(void (__fastcall*DestroyFontKey)(bool exit_code), DestroyFontKey, 0x4d9ac0);
@@ -27859,7 +27847,7 @@ unsigned sub_4DC530(unsigned int result) {
     }
     return result_;
 }
-DECL_FUNC(void (__thiscall*SetInGameLoop)(int this_), SetInGameLoop, 0x4dc540);
+DECL_FUNC(void (__thiscall*set_rand_enabled)(int this_), set_rand_enabled, 0x4dc540);
 unsigned RandBetween(int a1, unsigned int a2, int a3) {
     int address = 0x4dc550;
     unsigned result_;
@@ -28401,8 +28389,8 @@ DECL_FUNC(int (*BWSetSecurityInfo)(), BWSetSecurityInfo, 0x4e0200);
 DECL_FUNC(DWORD (__stdcall*CheckForOtherInstances)(LPCSTR lpClassName), CheckForOtherInstances, 0x4e0380);
 DECL_FUNC(int (*VerifySystemMemory)(), VerifySystemMemory, 0x4e0440);
 DECL_FUNC(void (__cdecl*CreateMainWindow)(), CreateMainWindow, 0x4e05b0);
-DECL_FUNC(void (*GameRun)(), GameRun, 0x4e0710);
-DECL_FUNC(void (__cdecl*GameMainLoop)(), GameMainLoop, 0x4e0820);
+DECL_FUNC(void (*main_game_run)(), main_game_run, 0x4e0710);
+DECL_FUNC(void (__cdecl*RunGame)(), RunGame, 0x4e0820);
 DECL_FUNC(int (__stdcall*_WinMain)(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd), _WinMain, 0x4e0ae0);
 DECL_FUNC(int (__fastcall*sub_4E0B30)(dialog *a1, dlgEvent *a2), sub_4E0B30, 0x4e0b30);
 void flc_ctrl_deactivate(dialog *a1) {
@@ -30162,12 +30150,12 @@ DECL_FUNC(void (__cdecl*LoadRaceUI)(), LoadRaceUI, 0x4ee2d0);
 DECL_FUNC(signed (*RestartGame)(), RestartGame, 0x4ee3d0);
 DECL_FUNC(signed (*LoadGameCreate)(), LoadGameCreate, 0x4ee520);
 DECL_FUNC(int (*LevelCheatInitGame)(), LevelCheatInitGame, 0x4ee5b0);
-DECL_FUNC(void (__cdecl*DestroyGame)(), DestroyGame, 0x4ee8c0);
+DECL_FUNC(void (__cdecl*free_game)(), free_game, 0x4ee8c0);
 DECL_FUNC(void (__cdecl*hotkeyRemapping)(), hotkeyRemapping, 0x4eec30);
 DECL_FUNC(signed (*LoadGameCore)(), LoadGameCore, 0x4eed10);
 DECL_FUNC(signed (*GameInit)(), GameInit, 0x4eee00);
 DECL_FUNC(signed (*sub_4EEFD0)(), sub_4EEFD0, 0x4eefd0);
-DECL_FUNC(signed (*LoadGameInit)(), LoadGameInit, 0x4ef100);
+DECL_FUNC(signed (*new_game)(), new_game, 0x4ef100);
 DECL_FUNC(int (__thiscall*DrawDialogImage)(rect *this_, Bitmap *a2, int a3, int a4, int a5), DrawDialogImage, 0x4ef440);
 void sub_4EF530(__int16 *a1) {
     int address = 0x4ef530;

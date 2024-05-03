@@ -119,7 +119,7 @@ TEST_P(ReplayTest, Replays) {
 		}
 	};
 
-	GameRun_();
+	main_game_run_();
 }
 
 std::vector<std::filesystem::path> ReadTestCasesFromDisk() {

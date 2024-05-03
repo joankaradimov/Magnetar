@@ -5435,7 +5435,7 @@ void init_throttling_options_()
 FAIL_STUB_PATCH(init_throttling_options, "starcraft");
 FAIL_STUB_PATCH(sub_4DA790, "starcraft");
 
-void __stdcall TickCountSomething_(int a1)
+void __stdcall unpause_game_(int a1)
 {
 	if (IS_GAME_PAUSED)
 	{
@@ -5453,7 +5453,7 @@ void __stdcall TickCountSomething_(int a1)
 	}
 }
 
-FUNCTION_PATCH(TickCountSomething, TickCountSomething_, "starcraft");
+FUNCTION_PATCH(unpause_game, unpause_game_, "starcraft");
 
 void InitializeDialog_(dialog *a1, FnInteract a2)
 {
@@ -5504,7 +5504,7 @@ void BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 {
 	if (!multiPlayerMode)
 	{
-		TickCountSomething_(1);
+		unpause_game_(1);
 	}
 	if (GameMenuDlg)
 	{
@@ -7763,7 +7763,7 @@ void load_DLGFatal_BIN_(const char* error_location, const char* a2)
 		}
 		if (!multiPlayerMode)
 		{
-			TickCountSomething_(1);
+			unpause_game_(1);
 		}
 		if (GameMenuDlg)
 		{
@@ -9490,7 +9490,7 @@ int chooseTRGTemplate_()
 
 FAIL_STUB_PATCH(chooseTRGTemplate, "starcraft");
 
-signed int LoadGameInit_()
+signed int new_game_()
 {
 	stopMusic_();
 	if (InReplay)
@@ -9622,7 +9622,7 @@ signed int LoadGameInit_()
 }
 
 FAIL_STUB_PATCH(sub_49CC10, "starcraft");
-FAIL_STUB_PATCH(LoadGameInit, "starcraft");
+FAIL_STUB_PATCH(new_game, "starcraft");
 
 void registerMenuFunctions_(FnInteract* functions, dialog* a2, int functions_size);
 
@@ -10401,7 +10401,7 @@ void load_endmission_()
 
 FAIL_STUB_PATCH(load_endmission, "starcraft");
 
-void DestroyGame_()
+void free_game_()
 {
 	TickCounterDestroy_();
 	if (multiPlayerMode && NetMode.as_number == 'BNET')
@@ -10416,7 +10416,7 @@ void DestroyGame_()
 	memset(cycle_colors, 0, sizeof(cycle_colors));
 	if (!multiPlayerMode)
 	{
-		TickCountSomething_(1);
+		unpause_game_(1);
 	}
 	if (GameMenuDlg)
 	{
@@ -10530,7 +10530,7 @@ void DestroyGame_()
 	}
 }
 
-FAIL_STUB_PATCH(DestroyGame, "starcraft");
+FAIL_STUB_PATCH(free_game, "starcraft");
 
 void updateActiveTileInfo_()
 {
@@ -10599,7 +10599,7 @@ void RemoveFoWCheat_()
 
 	if ((GameCheats & (CHEAT_BlackSheepWall | CHEAT_WarAintWhatItUsedToBe)) == 0)
 	{
-		RefreshLayer5();
+		gamemap_force_redraw();
 		for (int i = 0; i < map_size.width * map_size.height; i++)
 		{
 			active_tiles[i] |= VISIBLE_ALL;
@@ -12789,9 +12789,9 @@ void updateThingys_()
 
 FAIL_STUB_PATCH(updateThingys, "starcraft");
 
-void GameLoop_()
+void gameloop_update_game_()
 {
-	SetInGameLoop(1);
+	set_rand_enabled(1);
 	InitializeRandomizerInfo();
 	AI_Loop();
 	if (visionUpdateCount == 0)
@@ -12808,10 +12808,10 @@ void GameLoop_()
 	ImageDrawingBulletDrawing_();
 	UpdateImages_();
 	updateThingys_();
-	SetInGameLoop(0);
+	set_rand_enabled(0);
 }
 
-FAIL_STUB_PATCH(GameLoop, "starcraft");
+FAIL_STUB_PATCH(gameloop_update_game, "starcraft");
 
 void CyclePalette_(int a1)
 {
@@ -14797,7 +14797,7 @@ void refreshGameTextIfCounterActive_()
 
 FAIL_STUB_PATCH(refreshGameTextIfCounterActive, "starcraft");
 
-void updateHUDInformation_()
+void gameloop_update_ui_()
 {
 	if (has_hud)
 	{
@@ -14808,17 +14808,17 @@ void updateHUDInformation_()
 	}
 }
 
-FAIL_STUB_PATCH(updateHUDInformation, "starcraft");
+FAIL_STUB_PATCH(gameloop_update_ui, "starcraft");
 
-void DoGameLoop_()
+void gameloop_advance2_()
 {
-	GameLoop_();
-	updateHUDInformation_();
-	GameLoop_();
-	updateHUDInformation_();
+	gameloop_update_game_();
+	gameloop_update_ui_();
+	gameloop_update_game_();
+	gameloop_update_ui_();
 }
 
-FAIL_STUB_PATCH(DoGameLoop, "starcraft");
+FAIL_STUB_PATCH(gameloop_advance2, "starcraft");
 
 void DisableDragSelect_()
 {
@@ -14910,7 +14910,7 @@ void PollInput_()
 
 		if (v6 || v5)
 		{
-			RefreshLayer5();
+			gamemap_force_redraw();
 		}
 	}
 
@@ -15863,11 +15863,11 @@ void GameLoop_State_()
 		{
 			++ElapsedTimeFrames;
 			v9 = 1;
-			GameLoop_();
+			gameloop_update_game_();
 		}
-		SetInGameLoop(1);
+		set_rand_enabled(1);
 		BWFXN_ExecuteGameTriggers_(GameSpeedModifiers.gameSpeedModifiers[registry_options.game_speed]);
-		SetInGameLoop(0);
+		set_rand_enabled(0);
 		if (InReplay)
 		{
 			replayFrameComputation_();
@@ -15927,7 +15927,7 @@ void GameLoop_Top_()
 				GameLoop_State_();
 				v2 = true;
 			}
-			updateHUDInformation_();
+			gameloop_update_ui_();
 			if (dword_5968EC || v2)
 			{
 				dword_5968EC = 0;
@@ -15941,7 +15941,7 @@ void GameLoop_Top_()
 		while (GameState)
 		{
 			GameLoop_State_();
-			updateHUDInformation_();
+			gameloop_update_ui_();
 		}
 	}
 }
@@ -15962,7 +15962,7 @@ void sub_41E9E0_(int a1)
 
 FAIL_STUB_PATCH(sub_41E9E0, "starcraft");
 
-GamePosition BeginGame_()
+GamePosition run_game_()
 {
 	visionUpdateCount = 1;
 	DLGMusicFade_(current_ingame_music_track);
@@ -15971,9 +15971,9 @@ GamePosition BeginGame_()
 		_SetCursorPos(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 	}
 	GameState = 1;
-	TickCountSomething_(0);
-	DoGameLoop_();
-	RefreshLayer5();
+	unpause_game_(0);
+	gameloop_advance2_();
+	gamemap_force_redraw();
 	setCursorType_(getCursorType_());
 	cursorRefresh();
 	if (!multiPlayerMode && !getMapStartStatus() && !InReplay && (registry_options.flags & RegistryOptionsFlags::F_TIPS_ON))
@@ -16014,12 +16014,12 @@ GamePosition BeginGame_()
 	return gwNextGameMode;
 }
 
-FAIL_STUB_PATCH(BeginGame, "starcraft");
+FAIL_STUB_PATCH(run_game, "starcraft");
 
-void GameRun_()
+void main_game_run_()
 {
 	IsInGameLoop = 1;
-	int v1 = LoadGameInit_();
+	int v1 = new_game_();
 	IsInGameLoop = 0;
 	if (!InReplay)
 	{
@@ -16042,12 +16042,12 @@ void GameRun_()
 		fclose(loadGameFileHandle);
 		loadGameFileHandle = 0;
 	}
-	GamePosition next_game_position = v1 ? BeginGame_() : GAME_GLUES;
-	DestroyGame_();
+	GamePosition next_game_position = v1 ? run_game_() : GAME_GLUES;
+	free_game_();
 	gwGameMode = next_game_position;
 }
 
-FAIL_STUB_PATCH(GameRun, "starcraft");
+FAIL_STUB_PATCH(main_game_run, "starcraft");
 
 bool statBtn_dlg_CharPress_(dlgEvent* evt)
 {
@@ -23250,7 +23250,7 @@ FAIL_STUB_PATCH(getCampaignIndex, "starcraft");
 FAIL_STUB_PATCH(updateActiveCampaignMission, "starcraft");
 FAIL_STUB_PATCH(ContinueCampaign, "starcraft");
 
-void GameMainLoop_()
+void RunGame_()
 {
 	gwGameMode = GamePosition::GAME_GLUES;
 	PreInitData_();
@@ -23312,7 +23312,7 @@ void GameMainLoop_()
 		switch (gwGameMode)
 		{
 		case GamePosition::GAME_RUN:
-			GameRun_();
+			main_game_run_();
 			break;
 		case GamePosition::GAME_CINEMATIC:
 			PlayMovie_(active_campaign->entries[active_campaign_entry_index]);
@@ -23370,7 +23370,7 @@ void GameMainLoop_()
 	}
 }
 
-FAIL_STUB_PATCH(GameMainLoop, "starcraft");
+FAIL_STUB_PATCH(RunGame, "starcraft");
 
 unsigned int LocalGetLang_()
 {
