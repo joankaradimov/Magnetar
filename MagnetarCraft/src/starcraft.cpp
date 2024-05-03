@@ -15941,6 +15941,20 @@ void GameLoop_Top_()
 
 FAIL_STUB_PATCH(GameLoop_Top, "starcraft");
 
+void sub_41E9E0_(int a1)
+{
+	if (!byte_51A0E9)
+	{
+		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		byte_51A0E9 = 1;
+		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		gluDlgFadePalette(a1);
+		BWFXN_RedrawTarget_();
+	}
+}
+
+FAIL_STUB_PATCH(sub_41E9E0, "starcraft");
+
 GamePosition BeginGame_()
 {
 	visionUpdateCount = 1;
@@ -15987,7 +16001,7 @@ GamePosition BeginGame_()
 	}
 	newGame(0);
 	stopAllSound_();
-	sub_41E9E0(3);
+	sub_41E9E0_(3);
 	get_tFontGam_PCX_0();
 	RefreshCursor_0();
 	return gwNextGameMode;
@@ -20068,7 +20082,7 @@ void changeMenu_()
 			SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
 		}
 		memset(glue_background_palette, 0, sizeof(glue_background_palette));
-		sub_41E9E0(3);
+		sub_41E9E0_(3);
 		RefreshCursor_0();
 	}
 	BWFXN_RedrawTarget_();

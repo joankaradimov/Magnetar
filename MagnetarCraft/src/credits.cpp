@@ -77,7 +77,7 @@ void creditsEndPage_(dialog* a1)
 	if (byte_51CEAC)
 	{
 		byte_51CEAC = 0;
-		sub_41E9E0(byte_51CEC8);
+		sub_41E9E0_(byte_51CEC8);
 		memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
 		if ((a1->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
