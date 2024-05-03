@@ -15436,6 +15436,18 @@ void sub_4C4FA0_()
 
 FAIL_STUB_PATCH(sub_4C4FA0, "starcraft");
 
+void sub_4A2D40_()
+{
+	if (dword_6D5BC4)
+	{
+		DestroyDialog(dword_6D5BC4);
+		dword_6D5BC4 = 0;
+	}
+	BWFXN_RedrawTarget();
+}
+
+FAIL_STUB_PATCH(sub_4A2D40, "starcraft");
+
 void timeoutProcDropdown_()
 {
 	if (!byte_6D5BC2)
@@ -15478,12 +15490,7 @@ void timeoutProcDropdown_()
 			}
 			BWFXN_RedrawTarget_();
 		}
-		if (dword_6D5BC4)
-		{
-			DestroyDialog(dword_6D5BC4);
-			dword_6D5BC4 = 0;
-		}
-		BWFXN_RedrawTarget_();
+		sub_4A2D40_();
 		byte_6D5BC2 = 0;
 		countdownTimeRemaining = GetTickCount();
 	}
