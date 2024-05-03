@@ -20,6 +20,7 @@ add_library(MagnetarCraftObject OBJECT
 	src/CBullet.cpp
 	src/CFlingy.cpp
 	src/CSprite.cpp
+	src/credits.cpp
 	src/iscript.cpp
 	src/iscript_parser.cpp
 	src/file_info.cpp
