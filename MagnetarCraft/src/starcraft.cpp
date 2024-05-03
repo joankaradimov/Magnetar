@@ -22125,6 +22125,21 @@ void sub_4DBF80_()
 
 FAIL_STUB_PATCH(sub_4DBF80, "starcraft");
 
+void sub_4DCEE0_()
+{
+	if (!byte_51A0E9)
+	{
+		memset(stru_6CEB40, 0, sizeof(stru_6CEB40));
+		byte_51A0E9 = 1;
+		memcpy(stru_6CE720, GamePalette, sizeof(stru_6CE720));
+		gluDlgFadePalette(3u);
+		BWFXN_RedrawTarget_();
+	}
+	RefreshCursor_0();
+}
+
+FAIL_STUB_PATCH(sub_4DCEE0, "starcraft");
+
 void SelectGame_()
 {
 	SNETUIDATA ui_data;
@@ -22151,7 +22166,7 @@ void SelectGame_()
 		}
 		::playerid = playerid;
 		glGluesMode = MenuPosition::GLUE_CHAT;
-		sub_4DCEE0();
+		sub_4DCEE0_();
 		if (!isHost && !sub_452900())
 		{
 			glGluesMode = MenuPosition::GLUE_BATTLE;
@@ -22159,7 +22174,7 @@ void SelectGame_()
 	}
 	else
 	{
-		sub_4DCEE0();
+		sub_4DCEE0_();
 		checkLastFileError();
 		memset(is_keycode_used, 0, sizeof(is_keycode_used));
 		glGluesMode = MenuPosition::GLUE_CONNECT;

@@ -195,7 +195,7 @@ int Begin_BNET_(Char4 network_provider_id)
 	{
 		return InitializeNetworkProvider_(network_provider_id);
 	}
-	sub_4DCEE0();
+	sub_4DCEE0_();
 	dword_50E064 = -1;
 	sub_4AD140_();
 	if (InitializeNetworkProvider_(network_provider_id))
