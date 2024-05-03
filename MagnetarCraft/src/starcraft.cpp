@@ -14931,7 +14931,7 @@ void load_wait_(const char* a1)
 		dword_6D1240 = (char*) SMemAlloc(filename_length, "Starcraft\\SWAR\\lang\\okcancel.cpp", 226, 0);
 		strcpy_s(dword_6D1240, filename_length, a1);
 		BWFXN_OpenGameDialog_("rez\\wait.bin", wait_BINDLG);
-		BWFXN_RedrawTarget();
+		BWFXN_RedrawTarget_();
 	}
 }
 
@@ -15319,7 +15319,7 @@ void loadTimeoutDlg_()
 
 	BWFXN_OpenGameDialog_("rez\\timeout.bin", Timeout_BINDLG);
 	byte_6D1224 = 0;
-	BWFXN_RedrawTarget();
+	BWFXN_RedrawTarget_();
 }
 
 FAIL_STUB_PATCH(loadTimeoutDlg, "starcraft");
@@ -15443,7 +15443,7 @@ void sub_4A2D40_()
 		DestroyDialog(dword_6D5BC4);
 		dword_6D5BC4 = 0;
 	}
-	BWFXN_RedrawTarget();
+	BWFXN_RedrawTarget_();
 }
 
 FAIL_STUB_PATCH(sub_4A2D40, "starcraft");
@@ -19864,7 +19864,7 @@ bool LoadPrecursorCampaign()
 char __stdcall DLG_SwishOut_(dialog* dlg)
 {
 	RefreshCursor_0();
-	BWFXN_RedrawTarget();
+	BWFXN_RedrawTarget_();
 	dword_51C4A8 = 1;
 	ListNodeUnknown* v1 = dword_51C4B4;
 	if (dword_51C4B4)
