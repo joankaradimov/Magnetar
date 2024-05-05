@@ -5417,6 +5417,20 @@ void loadColorSettings_()
 
 FAIL_STUB_PATCH(loadColorSettings, "starcraft");
 
+void __fastcall vidinimoDestroy_(bool exit_code)
+{
+	memset(cycle_colors, 0, sizeof(cycle_colors));
+	dword_6D5DF8 = 0;
+	BWFXN_DDrawDestroy();
+	if (GameScreenBuffer.data)
+	{
+		SMemFree(GameScreenBuffer.data, 0, 0, 0);
+		GameScreenBuffer.data = nullptr;
+	}
+}
+
+FAIL_STUB_PATCH(vidinimoDestroy, "starcraft");
+
 void __fastcall sfxdata_cleanup_(bool exit_code)
 {
 	// TODO: dynamically clean sfxdataDat memory
@@ -5447,7 +5461,7 @@ void audioVideoInit_()
 	GameScreenBuffer.data = (u8 *)SMemAlloc(SCREEN_WIDTH * SCREEN_HEIGHT, "Starcraft\\SWAR\\lang\\gds\\vidinimo.cpp", 55, 0);
 	BWFXN_DDrawInitialize_();
 	dword_6D5DF8 = 1;
-	AppAddExit_(vidinimoDestroy);
+	AppAddExit_(vidinimoDestroy_);
 	memcpy(stru_6CEB40, &palette, sizeof(PALETTEENTRY[256]));
 	BWFXN_RedrawTarget_();
 	LoadSfx_();
