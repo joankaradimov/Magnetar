@@ -1206,22 +1206,22 @@ void * sub_404BC0(int a1, ChunkNode *a2) {
 DECL_FUNC(void (*sub_404BFA)(), sub_404BFA, 0x404bfa);
 DECL_FUNC(void (*sub_404C1E)(), sub_404C1E, 0x404c1e);
 DECL_FUNC(void (__fastcall*renderTerrainGRPToCache)(grpFrame *a1, int a2), renderTerrainGRPToCache, 0x40aae0);
-DECL_FUNC(char (__fastcall*imageRenderFxn0_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn0_0, 0x40abbe);
+DECL_FUNC(char (__fastcall*rle_draw_normal)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_normal, 0x40abbe);
 DECL_FUNC(char (__fastcall*sub_40AD04)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), sub_40AD04, 0x40ad04);
 DECL_FUNC(char (__fastcall*sub_40AE63)(int a1, int a2, grpFrame *a3, _DWORD *a4, int a5), sub_40AE63, 0x40ae63);
 DECL_FUNC(char (__fastcall*sub_40AFD5)(int a1, int a2, grpFrame *a3, tagRECT *a4, int a5), sub_40AFD5, 0x40afd5);
-DECL_FUNC(void (__fastcall*imageRenderFxn3_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn3_0, 0x40b155);
-DECL_FUNC(char (__fastcall*imageRenderFxn8_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn8_0, 0x40b2d3);
+DECL_FUNC(void (__fastcall*rle_draw_cloacked_invis)(int a1, int a2, grpFrame *a3, tagRECT *a4, int a5), rle_draw_cloacked_invis, 0x40b155);
+DECL_FUNC(char (__fastcall*rle_draw_8)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_8, 0x40b2d3);
 DECL_FUNC(char (__fastcall*imageRenderFxn17_0_cntd)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn17_0_cntd, 0x40b441);
-DECL_FUNC(char (__fastcall*imageRenderFxn9_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn9_0, 0x40b596);
-DECL_FUNC(char (__fastcall*imageRenderFxn10_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn10_0, 0x40b6f0);
+DECL_FUNC(char (__fastcall*rle_draw_effect)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_effect, 0x40b596);
+DECL_FUNC(char (__fastcall*rle_draw_shadow)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_shadow, 0x40b6f0);
 DECL_FUNC(char (__fastcall*imageRenderFxn5_2__1_common)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn5_2__1_common, 0x40b824);
-DECL_FUNC(char (__fastcall*imageRenderFxn3_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn3_1, 0x40b9a9);
-DECL_FUNC(char (__fastcall*imageRenderFxn8_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn8_1, 0x40bb2e);
-DECL_FUNC(char (__fastcall*imageRenderFxn9_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn9_1, 0x40bca3);
+DECL_FUNC(char (__fastcall*rle_draw_cloacked_invis_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_cloacked_invis_hflip, 0x40b9a9);
+DECL_FUNC(char (__fastcall*rle_draw_8_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_8_hflip, 0x40bb2e);
+DECL_FUNC(char (__fastcall*rle_draw_effect_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_effect_hflip, 0x40bca3);
 DECL_FUNC(char (__fastcall*imageRenderFxn17_1_cntd)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn17_1_cntd, 0x40be04);
-DECL_FUNC(char (__fastcall*imageRenderFxn0_1)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn0_1, 0x40bf60);
-DECL_FUNC(char (__fastcall*imageRenderFxn10_1)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn10_1, 0x40c0ae);
+DECL_FUNC(char (__fastcall*rle_draw_hflip)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_hflip, 0x40bf60);
+DECL_FUNC(char (__fastcall*rle_draw_shadow_hflip)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_shadow_hflip, 0x40c0ae);
 void BlitToBitmap(int result, int a2, void *a3, const void *a4) {
     int address = 0x40c200;
     __asm {
@@ -15716,7 +15716,7 @@ DECL_FUNC(_DWORD (__stdcall*sub_47A750)(_DWORD a1), sub_47A750, 0x47a750);
 DECL_FUNC(char * (__fastcall*sub_47A7C0)(int a1), sub_47A7C0, 0x47a7c0);
 DECL_FUNC(char * (__fastcall*sub_47A7E0)(int a1), sub_47A7E0, 0x47a7e0);
 DECL_FUNC(char * (__fastcall*sub_47A800)(int a1), sub_47A800, 0x47a800);
-DECL_FUNC(unsigned (__fastcall*imageRenderFxn11_0)(int a1, int a2, int a3, int a4, CUnit *a5), imageRenderFxn11_0, 0x47a820);
+DECL_FUNC(unsigned (__fastcall*rle_draw_hpfloat)(int a1, int a2, int a3, int a4, CUnit *a5), rle_draw_hpfloat, 0x47a820);
 DECL_FUNC(void (*sub_47AAC0)(), sub_47AAC0, 0x47aac0);
 DECL_FUNC(int (__stdcall*sub_47AAF0)(int a1), sub_47AAF0, 0x47aaf0);
 void sub_47AB40(LO_Header **a1, signed int a2) {
@@ -26899,10 +26899,10 @@ DECL_FUNC(void (__fastcall*CleanupIscriptBINHandle)(bool exit_code), CleanupIscr
 DECL_FUNC(void (*nullsub_66)(), nullsub_66, 0x4d5150);
 DECL_FUNC(int (*nullsub_67)(), nullsub_67, 0x4d5160);
 DECL_FUNC(int (__stdcall*sub_4D5170)(int a1, int a2), sub_4D5170, 0x4d5170);
-DECL_FUNC(char (__fastcall*imageRenderFxn16_1)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn16_1, 0x4d51a0);
-DECL_FUNC(char (__fastcall*imageRenderFxn16_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn16_0, 0x4d5210);
-DECL_FUNC(__int16 (__fastcall*imageRenderFxn15_0)(__int16 a1, unsigned __int16 a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn15_0, 0x4d5280);
-DECL_FUNC(char (__fastcall*imageRenderFxn13_0)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), imageRenderFxn13_0, 0x4d5390);
+DECL_FUNC(char (__fastcall*rle_draw_shift_hflip)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_shift_hflip, 0x4d51a0);
+DECL_FUNC(char (__fastcall*rle_draw_shift)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_shift, 0x4d5210);
+DECL_FUNC(__int16 (__fastcall*rle_draw_greenbox)(__int16 a1, unsigned __int16 a2, grpFrame *a3, RECT *a4, int a5), rle_draw_greenbox, 0x4d5280);
+DECL_FUNC(char (__fastcall*rle_draw_select)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), rle_draw_select, 0x4d5390);
 void imageRenderFxn12_Main(rect *a1, int a2, int a3) {
     int address = 0x4d53f0;
     __asm {
@@ -26912,15 +26912,15 @@ void imageRenderFxn12_Main(rect *a1, int a2, int a3) {
         call address
     }
 }
-DECL_FUNC(char (__fastcall*imageRenderFxn17_1)(int a1, int a2, grpFrame *a3, int a4, unsigned __int8 a5), imageRenderFxn17_1, 0x4d5450);
-DECL_FUNC(char (__fastcall*imageRenderFxn17_0)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), imageRenderFxn17_0, 0x4d5480);
-DECL_FUNC(char (__fastcall*imageRenderFxn6_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn6_1, 0x4d54b0);
-DECL_FUNC(char (__fastcall*imageRenderFxn6_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn6_0, 0x4d54d0);
-DECL_FUNC(char (__fastcall*imageRenderFxn5_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn5_1, 0x4d54f0);
-DECL_FUNC(char (__fastcall*imageRenderFxn5_0)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn5_0, 0x4d5530);
-DECL_FUNC(char (__fastcall*imageRenderFxn2_1)(int a1, int a2, int a3, tagRECT *a4, int a5), imageRenderFxn2_1, 0x4d5570);
-DECL_FUNC(char (__fastcall*imageRenderFxn2_0)(int a1, int a2, grpFrame *a3, tagRECT *a4, int a5), imageRenderFxn2_0, 0x4d55b0);
-DECL_FUNC(int (*nullsub_6)(), nullsub_6, 0x4d55f0);
+DECL_FUNC(char (__fastcall*rle_draw_warp_fade_hflip)(int a1, int a2, grpFrame *a3, int a4, unsigned __int8 a5), rle_draw_warp_fade_hflip, 0x4d5450);
+DECL_FUNC(char (__fastcall*rle_draw_warp_fade)(int a1, int a2, grpFrame *a3, RECT *a4, unsigned __int8 a5), rle_draw_warp_fade, 0x4d5480);
+DECL_FUNC(char (__fastcall*rle_draw_cloaked_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_cloaked_hflip, 0x4d54b0);
+DECL_FUNC(char (__fastcall*rle_draw_cloaked)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_cloaked, 0x4d54d0);
+DECL_FUNC(char (__fastcall*rle_draw_cloak_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_cloak_hflip, 0x4d54f0);
+DECL_FUNC(char (__fastcall*rle_draw_cloak)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_cloak, 0x4d5530);
+DECL_FUNC(char (__fastcall*rle_draw_invis_hflip)(int a1, int a2, int a3, tagRECT *a4, int a5), rle_draw_invis_hflip, 0x4d5570);
+DECL_FUNC(char (__fastcall*rle_draw_invis)(int a1, int a2, grpFrame *a3, tagRECT *a4, int a5), rle_draw_invis, 0x4d55b0);
+DECL_FUNC(void (__fastcall*rle_advance_none)(CImage *image), rle_advance_none, 0x4d55f0);
 CImage * unpackImageGrpData(CImage *result) {
     int address = 0x4d5600;
     CImage * result_;
@@ -26968,7 +26968,7 @@ CImage * CImage__updateGraphicData(CImage *image) {
     }
     return result_;
 }
-CImage * setImagePaletteType(CImage *result, unsigned __int8 a2) {
+CImage * setImagePaletteType(CImage *result, RLEType a2) {
     int address = 0x4d58b0;
     CImage * result_;
     __asm {
@@ -27080,10 +27080,10 @@ void sub_4D5BB0(CSprite *a1) {
     }
 }
 DECL_FUNC(void (*InitDamageOverlayCounts)(), InitDamageOverlayCounts, 0x4d5c20);
-DECL_FUNC(void (__fastcall*imageRenderFxn12_1)(int a1, int a2, grpFrame *a3, rect *a4, int a5), imageRenderFxn12_1, 0x4d5c90);
-DECL_FUNC(void (__fastcall*imageRenderFxn12_0)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), imageRenderFxn12_0, 0x4d5cd0);
-DECL_FUNC(void (__thiscall*iscriptDecloaking)(CImage *this_), iscriptDecloaking, 0x4d5d10);
-DECL_FUNC(CImage * (__thiscall*iscriptCloaking)(CImage *this_), iscriptCloaking, 0x4d5d70);
+DECL_FUNC(void (__fastcall*rle_draw_texture_hflip)(int a1, int a2, grpFrame *a3, rect *a4, int a5), rle_draw_texture_hflip, 0x4d5c90);
+DECL_FUNC(void (__fastcall*rle_draw_texture)(int a1, int a2, grpFrame *a3, RECT *a4, int a5), rle_draw_texture, 0x4d5cd0);
+DECL_FUNC(void (__fastcall*rle_advance_decloak)(CImage *this_), rle_advance_decloak, 0x4d5d10);
+DECL_FUNC(void (__fastcall*rle_advance_cloak)(CImage *this_), rle_advance_cloak, 0x4d5d70);
 DECL_FUNC(int (*sub_4D5DC0)(), sub_4D5DC0, 0x4d5dc0);
 DECL_FUNC(CImage * (*sub_4D5DE0)(), sub_4D5DE0, 0x4d5de0);
 DECL_FUNC(int (__fastcall*sub_4D5E00)(int a1, grpHead *a2), sub_4D5E00, 0x4d5e00);
@@ -27140,8 +27140,8 @@ void compileHealthBar(CImage *a1, CSprite *a2) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*imageRenderFxn14_1)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), imageRenderFxn14_1, 0x4d6120);
-DECL_FUNC(void (__fastcall*imageRenderFxn14_0)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), imageRenderFxn14_0, 0x4d61a0);
+DECL_FUNC(void (__fastcall*rle_draw_playerside_hflip)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), rle_draw_playerside_hflip, 0x4d6120);
+DECL_FUNC(void (__fastcall*rle_draw_playerside)(int a1, int a2, grpFrame *a3, RECT *a4, char player_id), rle_draw_playerside, 0x4d61a0);
 DECL_FUNC(int (__stdcall*ReadImagesArray)(FILE *a1), ReadImagesArray, 0x4d6220);
 void packImageData(CImage *image) {
     int address = 0x4d6330;
@@ -27299,7 +27299,7 @@ void PlayWarpInOverlay(CImage *image) {
         call address
     }
 }
-DECL_FUNC(void (__fastcall*iscriptSomething_Death)(CImage *image), iscriptSomething_Death, 0x4d8590);
+DECL_FUNC(void (__fastcall*rle_advance_warp_fade)(CImage *image), rle_advance_warp_fade, 0x4d8590);
 BOOL sub_4D8600(char a1) {
     int address = 0x4d8600;
     BOOL result_;
@@ -33199,8 +33199,8 @@ char(&aRegistration_table)[19] = * ((decltype(&aRegistration_table)) 0x512450);
 int& is_spawn = * ((decltype(&is_spawn)) 0x5124d0);
 int& FrameSkip = * ((decltype(&FrameSkip)) 0x5124d4);
 GameSpeeds& GameSpeedModifiers = * ((decltype(&GameSpeedModifiers)) 0x5124d8);
-UpdateFunction(&update_functions)[18] = * ((decltype(&update_functions)) 0x512510);
-RenderFunction(&render_functions)[18] = * ((decltype(&render_functions)) 0x5125a0);
+UpdateFunction(&sgUpdateFuncs)[18] = * ((decltype(&sgUpdateFuncs)) 0x512510);
+RenderFunction(&sgDrawFuncs)[18] = * ((decltype(&sgDrawFuncs)) 0x5125a0);
 int& g_ActiveNationID = * ((decltype(&g_ActiveNationID)) 0x512678);
 int& dword_51267C = * ((decltype(&dword_51267C)) 0x51267c);
 int& dword_512680 = * ((decltype(&dword_512680)) 0x512680);
@@ -34543,7 +34543,7 @@ u8(&Image_DrawIfCloaked)[999] = * ((decltype(&Image_DrawIfCloaked)) 0x667718);
 int(&Images_SpecialOverlayLO)[999] = * ((decltype(&Images_SpecialOverlayLO)) 0x667b00);
 int(&Images_GrpFile)[999] = * ((decltype(&Images_GrpFile)) 0x668aa0);
 u8(&Images_Remapping)[999] = * ((decltype(&Images_Remapping)) 0x669a40);
-u8(&Image_DrawFunction)[999] = * ((decltype(&Image_DrawFunction)) 0x669e28);
+RLEType(&Image_DrawFunction)[999] = * ((decltype(&Image_DrawFunction)) 0x669e28);
 int(&Images_InjuryOverlayLO)[999] = * ((decltype(&Images_InjuryOverlayLO)) 0x66a210);
 int(&Images_AttackOverlayLO)[999] = * ((decltype(&Images_AttackOverlayLO)) 0x66b1b0);
 u8(&Images_IsClickable)[999] = * ((decltype(&Images_IsClickable)) 0x66c150);

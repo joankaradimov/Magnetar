@@ -212,7 +212,7 @@ FAIL_STUB_PATCH(turn_unit_right, "starcraft");
 void ISCRIPT_NoBrkCodeEnd_(CUnit* unit)
 {
     unit->statusFlags &= ~StatusFlags::NoBrkCodeStart;
-    unit->sprite->flags &= ~0x80;
+    unit->sprite->flags &= ~CSpriteFlags::CSF_DontIntSeq;
     if (unit->orderQueueHead && (unit->userActionFlags & 1))
     {
         IgnoreAllScriptAndGotoIdle(unit);
@@ -807,7 +807,7 @@ void BWFXN_PlayIscript__(CImage* image, IScriptProgramState* program_state, _DWO
                 break;
             }
             iscript_unit->statusFlags |= StatusFlags::NoBrkCodeStart;
-            iscript_unit->sprite->flags |= 0x80u;
+            iscript_unit->sprite->flags |= CSpriteFlags::CSF_DontIntSeq;
             break;
         case opc_nobrkcodeend:
             if (noop)

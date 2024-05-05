@@ -111,8 +111,10 @@ struct GameSpeeds;
 enum EventNo : unsigned __int16;
 enum EventUser;
 struct bounds;
+enum CSpriteFlags : unsigned __int8;
 enum Anims : __int8;
 enum ImageFlags : unsigned __int16;
+enum RLEType : unsigned __int8;
 struct points;
 struct __declspec(align(4)) point;
 enum Order : unsigned __int8;
@@ -140,8 +142,6 @@ enum Tileset : unsigned __int16;
 struct TileID;
 enum MegatileFlags;
 struct SpriteTileData;
-struct UpdateFunction;
-struct RenderFunction;
 struct AI_Flags;
 struct ChkLoader;
 struct __declspec(align(2)) ChkSectionLoader;
@@ -289,6 +289,8 @@ struct MiniTileFlagArray;
 struct Action;
 struct StringTbl;
 struct MapSize;
+struct __declspec(align(4)) UpdateFunction;
+struct __declspec(align(4)) RenderFunction;
 struct Box32;
 struct Condition;
 struct EstablishingShot;
@@ -716,6 +718,17 @@ static_assert(sizeof(bounds) == 12, "Incorrect size for type `bounds`. Expected:
 
 typedef unsigned __int8 BYTE;
 
+enum CSpriteFlags : unsigned __int8
+{
+  CSF_DrawCircle = 0x1,
+  CSF_TeamCircle = 0x6,
+  CSF_Selected = 0x8,
+  CSF_Prop_10 = 0x10,
+  CSF_Hidden = 0x20,
+  CSF_Burrowed = 0x40,
+  CSF_DontIntSeq = 0x80,
+};
+
 enum Anims : __int8
 {
   AE_Init = 0x0,
@@ -759,6 +772,28 @@ enum ImageFlags : unsigned __int16
   IF_CLICKABLE = 0x20,
   IF_HIDDEN = 0x40,
   IF_USES_SPECIAL_OFFSET = 0x80,
+};
+
+enum RLEType : unsigned __int8
+{
+  RLE_NORMAL = 0x0,
+  RLE_NORMAL2 = 0x1,
+  RLE_CLOAK_INVIS = 0x2,
+  RLE_CLOAKED_INVIS = 0x3,
+  RLE_DECLOAK_INVIS = 0x4,
+  RLE_CLOAK = 0x5,
+  RLE_CLOAKED = 0x6,
+  RLE_DECLOAK = 0x7,
+  RLE_8 = 0x8,
+  RLE_EFFECT = 0x9,
+  RLE_SHADOW = 0xA,
+  RLE_HPFLOATDRAW = 0xB,
+  RLE_TEXTURE = 0xC,
+  RLE_SELECTDRAW = 0xD,
+  RLE_PLAYER_SIDE = 0xE,
+  RLE_GREENBOX = 0xF,
+  RLE_SHIFT = 0x10,
+  RLE_FADE = 0x11,
 };
 
 struct points
@@ -1668,21 +1703,6 @@ struct SpriteTileData
   CSprite *heads[256];
 };
 static_assert(sizeof(SpriteTileData) == 2048, "Incorrect size for type `SpriteTileData`. Expected: 2048");
-
-struct UpdateFunction
-{
-  int index;
-  void (__fastcall *update_function)(CImage *);
-};
-static_assert(sizeof(UpdateFunction) == 8, "Incorrect size for type `UpdateFunction`. Expected: 8");
-
-struct RenderFunction
-{
-  int index;
-  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
-  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
-};
-static_assert(sizeof(RenderFunction) == 12, "Incorrect size for type `RenderFunction`. Expected: 12");
 
 struct AI_Flags
 {
@@ -5477,6 +5497,25 @@ struct MapSize
 };
 static_assert(sizeof(MapSize) == 4, "Incorrect size for type `MapSize`. Expected: 4");
 
+#pragma pack(push, 4)
+struct __declspec(align(4)) UpdateFunction
+{
+  RLEType index;
+  void (__fastcall *update_function)(CImage *);
+};
+#pragma pack(pop)
+static_assert(sizeof(UpdateFunction) == 8, "Incorrect size for type `UpdateFunction`. Expected: 8");
+
+#pragma pack(push, 4)
+struct __declspec(align(4)) RenderFunction
+{
+  RLEType index;
+  void (__fastcall *RenderFunction1)(int, int, grpFrame *, rect *, int);
+  void (__fastcall *RenderFunction2)(int, int, grpFrame *, rect *, int);
+};
+#pragma pack(pop)
+static_assert(sizeof(RenderFunction) == 12, "Incorrect size for type `RenderFunction`. Expected: 12");
+
 struct Box32
 {
   s32 left;
@@ -6293,7 +6332,7 @@ struct __declspec(align(4)) CSprite
   u8 selectionIndex;
   u8 visibilityFlags;
   u8 elevationLevel;
-  u8 flags;
+  CSpriteFlags flags;
   u8 selectionTimer;
   u16 index;
   u8 unkflags_12;
@@ -6310,7 +6349,7 @@ struct __declspec(align(4)) CImage
   CImage *prev;
   CImage *next;
   u16 imageID;
-  u8 paletteType;
+  RLEType paletteType;
   u8 direction;
   ImageFlags flags;
   s8 horizontalOffset;

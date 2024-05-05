@@ -1539,7 +1539,7 @@ void sub_42D8C0__()
 FUNCTION_PATCH((void*)0x42D8C0, sub_42D8C0__, "starcraft");
 
 
-void __fastcall iscriptSomething_Death_(CImage* image)
+void __fastcall rle_advance_warp_fade_(CImage* image)
 {
 	char v2 = BYTE1(image->coloringData);
 	if (v2)
@@ -1567,7 +1567,7 @@ void __fastcall iscriptSomething_Death_(CImage* image)
 	}
 }
 
-FUNCTION_PATCH(iscriptSomething_Death, iscriptSomething_Death_, "starcraft");
+FUNCTION_PATCH(rle_advance_warp_fade, rle_advance_warp_fade_, "starcraft");
 
 void DLGErrFatal_()
 {
@@ -1677,9 +1677,9 @@ void PlayWarpInOverlay_(CImage* image)
 	init_iscript_program_state(&image->iscript_program, Anims::AE_Init);
 	BWFXN_PlayIscript_(image, &image->iscript_program);
 	isValidScript_(image, Images_IscriptEntry[image->imageID]);
-	image->paletteType = 12;
-	image->updateFunction = update_functions[12].update_function;
-	image->renderFunction = (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? render_functions[12].RenderFunction2 : render_functions[12].RenderFunction1;
+	image->paletteType = RLEType::RLE_TEXTURE;
+	image->updateFunction = sgUpdateFuncs[RLEType::RLE_TEXTURE].update_function;
+	image->renderFunction = (image->flags & ImageFlags::IF_HORIZONTALLY_FLIPPED) ? sgDrawFuncs[RLEType::RLE_TEXTURE].RenderFunction2 : sgDrawFuncs[RLEType::RLE_TEXTURE].RenderFunction1;
 	image->flags |= ImageFlags::IF_REDRAW;
 	BWFXN_PlayIscript_(image, &image->iscript_program);
 }
@@ -2380,7 +2380,7 @@ int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char 
 	}
 	sprite->playerID = player_id;
 	sprite->spriteID = sprite_id;
-	sprite->flags = 0;
+	sprite->flags = CSpriteFlags(0);
 	sprite->position.x = x;
 	sprite->position.y = y;
 	sprite->visibilityFlags = -1;
@@ -2388,7 +2388,7 @@ int initSpriteData_(unsigned __int16 x, unsigned __int16 y, int sprite_id, char 
 	sprite->selectionTimer = 0;
 	if (!Sprites_IsVisible[sprite_id])
 	{
-		sprite->flags = 32;
+		sprite->flags = CSpriteFlags::CSF_Hidden;
 		refreshAllVisibleImagesAtScreenPosition(sprite, 0);
 	}
 	if (!CreateImageOverlay(sprite, Sprites_Image[sprite_id], 0, 0, 0))
@@ -4633,25 +4633,25 @@ void set_unit_player_palette_(u8 player_id)
 
 FAIL_STUB_PATCH(set_unit_player_palette, "starcraft");
 
-void __fastcall imageRenderFxn14_0_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
+void __fastcall rle_draw_playerside_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
 {
 	u8 v5 = dword_6D5BD4;
 	set_unit_player_palette_(player_id);
-	imageRenderFxn0_0(a1, a2, a3, a4, 0);
+	rle_draw_normal(a1, a2, a3, a4, 0);
 	set_unit_player_palette_(v5);
 }
 
-FUNCTION_PATCH(imageRenderFxn14_0, imageRenderFxn14_0_, "starcraft");
+FUNCTION_PATCH(rle_draw_playerside, rle_draw_playerside_, "starcraft");
 
-void __fastcall imageRenderFxn14_1_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
+void __fastcall rle_draw_playerside_hflip_(int a1, int a2, grpFrame* a3, RECT* a4, char player_id)
 {
 	u8 v5 = dword_6D5BD4;
 	set_unit_player_palette_(player_id);
-	imageRenderFxn0_1(a1, a2, a3, a4, 0);
+	rle_draw_hflip(a1, a2, a3, a4, 0);
 	set_unit_player_palette_(v5);
 }
 
-FUNCTION_PATCH(imageRenderFxn14_1, imageRenderFxn14_1_, "starcraft");
+FUNCTION_PATCH(rle_draw_playerside_hflip, rle_draw_playerside_hflip_, "starcraft");
 
 void drawSprite_(CSprite* a1)
 {
@@ -7063,9 +7063,9 @@ void InitializePresetImageArrays_()
 	stru_51DE70[0].frameSet = 0;
 	stru_51DE70[0].direction = 0;
 	stru_51DE70[0].frameIndex = 0;
-	stru_51DE70[0].paletteType = 15;
-	stru_51DE70[0].updateFunction = update_functions[15].update_function;
-	stru_51DE70[0].renderFunction = stru_51DE70[0].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? render_functions[15].RenderFunction2 : stru_51DE70[0].renderFunction = render_functions[15].RenderFunction1;
+	stru_51DE70[0].paletteType = RLEType::RLE_GREENBOX;
+	stru_51DE70[0].updateFunction = sgUpdateFuncs[RLEType::RLE_GREENBOX].update_function;
+	stru_51DE70[0].renderFunction = stru_51DE70[0].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? sgDrawFuncs[RLEType::RLE_GREENBOX].RenderFunction2 : stru_51DE70[0].renderFunction = sgDrawFuncs[RLEType::RLE_GREENBOX].RenderFunction1;
 	stru_51DE70[0].flags |= ImageFlags::IF_REDRAW;
 
 	for (int i = 1; i < _countof(stru_51DE70); i++)
@@ -7084,13 +7084,13 @@ void InitializePresetImageArrays_()
 		stru_51DE70[i].imageID = 583;
 		stru_51DE70[i].GRPFile = stru_51EE78 + 1 + i;
 		stru_51DE70[i].GRPFile->wFrames = 1;
-		stru_51DE70[i].updateFunction = update_functions[15].update_function;
-		stru_51DE70[i].renderFunction = stru_51DE70[i].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? render_functions[15].RenderFunction2 : render_functions[15].RenderFunction1;
+		stru_51DE70[i].updateFunction = sgUpdateFuncs[RLEType::RLE_GREENBOX].update_function;
+		stru_51DE70[i].renderFunction = stru_51DE70[i].flags & ImageFlags::IF_HORIZONTALLY_FLIPPED ? sgDrawFuncs[RLEType::RLE_GREENBOX].RenderFunction2 : sgDrawFuncs[RLEType::RLE_GREENBOX].RenderFunction1;
 		stru_51DE70[i].flags &= ~(IF_CLICKABLE | IF_HAS_ISCRIPT_ANIMATIONS | IF_HAS_DIRECTIONAL_FRAMES);
 		stru_51DE70[i].frameSet = 0;
 		stru_51DE70[i].direction = 0;
 		stru_51DE70[i].frameIndex = 0;
-		stru_51DE70[i].paletteType = 15;
+		stru_51DE70[i].paletteType = RLEType::RLE_GREENBOX;
 		stru_51DE70[i].flags |= ImageFlags::IF_REDRAW;
 	}
 
@@ -7305,7 +7305,7 @@ void sub_48DA30_(UnitType unit_type)
 
 	RECT rc;
 	SetRect(&rc, 0, 0, grp->frames[0].wid, grp->frames[0].hgt);
-	imageRenderFxn0_0(grp->frames[0].x, grp->frames[0].y, grp->frames, &rc, 0);
+	rle_draw_normal(grp->frames[0].x, grp->frames[0].y, grp->frames, &rc, 0);
 }
 
 FAIL_STUB_PATCH(sub_48DA30, "starcraft");
@@ -7442,7 +7442,7 @@ void InitializeThingyArray_()
 
 	ThingyList_UsedFirst = CreateThingy(318, 0, 0, 0);
 	wantThingyUpdate = 0;
-	ThingyList_UsedFirst->sprite->flags |= 0x20;
+	ThingyList_UsedFirst->sprite->flags |= CSpriteFlags::CSF_Hidden;
 	refreshAllVisibleImagesAtScreenPosition(ThingyList_UsedFirst->sprite, 0);
 }
 
@@ -11415,9 +11415,9 @@ void UpdateUnitSpriteInfo_(CUnit* unit)
 			updateBuildingLandUnitSelection(unit);
 		}
 		removeSelectionCircle(unit->sprite);
-		if (unit->sprite->flags & 6)
+		if (unit->sprite->flags & CSpriteFlags::CSF_TeamCircle)
 		{
-			unit->sprite->flags &= ~6;
+			unit->sprite->flags &= ~CSpriteFlags::CSF_TeamCircle;
 			removeSelectionCircleFromSprite(unit->sprite);
 		}
 		if ((unit->statusFlags & GroundedBuilding) || unit->unitType >= Special_Floor_Missile_Trap && unit->unitType <= Special_Right_Wall_Flame_Trap)
@@ -14956,9 +14956,9 @@ void RemoveAllSelectionCircles_()
 		{
 			removeSelectionCircle(SpriteTable + i);
 		}
-		if (SpriteTable[i].flags & 6)
+		if (SpriteTable[i].flags & CSpriteFlags::CSF_TeamCircle)
 		{
-			SpriteTable[i].flags &= ~6;
+			SpriteTable[i].flags &= ~CSpriteFlags::CSF_TeamCircle;
 			for (CImage* image = SpriteTable[i].pImageTail; image; image = image->prev)
 			{
 				if (image->imageID >= 0x23Bu && image->imageID <= 0x244u)

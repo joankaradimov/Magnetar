@@ -45,6 +45,7 @@ DEFINE_ENUM_FLAG_OPERATORS(SaiAccessabilityFlags);
 DEFINE_ENUM_FLAG_OPERATORS(PrintFlags);
 DEFINE_ENUM_FLAG_OPERATORS(StatusFlags);
 DEFINE_ENUM_FLAG_OPERATORS(RegistryOptionsFlags);
+DEFINE_ENUM_FLAG_OPERATORS(CSpriteFlags);
 
 extern std::function<void()> on_end_game;
 extern bool frame_capping;
