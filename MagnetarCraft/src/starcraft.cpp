@@ -3209,6 +3209,28 @@ void DoBltUsingMask_()
 
 FAIL_STUB_PATCH(DoBltUsingMask, "starcraft");
 
+void BlitDirtyArray_(RECT* a1)
+{
+	void* lpSurface;
+	int width;
+
+	if (SDrawLockSurface(0, 0, &lpSurface, &width, 0))
+	{
+		SBltROP3(
+			(int)lpSurface + a1->left + width * a1->top,
+			(int)&GameScreenBuffer.data[SCREEN_WIDTH * a1->top + a1->left],
+			a1->right - a1->left,
+			a1->bottom - a1->top,
+			width,
+			SCREEN_WIDTH,
+			0,
+			0xCC0020u);
+		SDrawUnlockSurface(0, lpSurface, 1, a1);
+	}
+}
+
+FAIL_STUB_PATCH(BlitDirtyArray, "starcraft");
+
 void sub_41E000_()
 {
 	if (handle && dword_6D5E18)
@@ -3281,7 +3303,7 @@ void DirtyArrayHandling_()
 		screen_rect.top = 0;
 		screen_rect.right = SCREEN_WIDTH;
 		screen_rect.bottom = SCREEN_HEIGHT;
-		BlitDirtyArray(&screen_rect);
+		BlitDirtyArray_(&screen_rect);
 	}
 
 	sub_41E000_();
