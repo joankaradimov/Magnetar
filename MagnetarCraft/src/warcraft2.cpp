@@ -12,6 +12,29 @@ void __stdcall init_current_thread_()
 
 FAIL_STUB_PATCH(init_current_thread, "warcraft2");
 
+void __cdecl sub_41C750_(int a1)
+{
+    struct_arg0 v3;
+
+    sub_440D10();
+    int v1 = sub_4875C0(&v3, a1);
+    if (dword_4AE198)
+    {
+        dword_4AE198(0);
+    }
+
+    if (v1 && (byte_4AE0F9 || !sub_405610(&v3)))
+    {
+        auto v2 = funcs_41C7B5[v3.word0];
+        if (v2)
+        {
+            v2(&v3);
+        }
+    }
+}
+
+FUNCTION_PATCH(sub_41C750, sub_41C750_, "warcraft2");
+
 void sub_43B330_(int a1)
 {
     HANDLE v2;
@@ -41,7 +64,7 @@ void sub_43B330_(int a1)
             {
                 break;
             }
-            sub_41C750(3);
+            sub_41C750_(3);
             Sleep(0);
         }
         SVidPlayEnd(v2);
