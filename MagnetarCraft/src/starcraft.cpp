@@ -4646,24 +4646,19 @@ void blitTileCacheOnRefresh_()
 			}
 			if (*v0 == 1)
 			{
-				int v3 = i + 1;
-				int v4 = 1;
-				if (i + 1 < GAME_AREA_WIDTH / 16)
+				int v4 = 0;
+				while (i + v4 + 1 < GAME_AREA_WIDTH / 16)
 				{
-					do
+					if (*v0 == 0)
 					{
-						if (*v0 == 0)
-						{
-							break;
-						}
-						++v0;
-						++v4;
-						++v3;
-					} while (v3 < GAME_AREA_WIDTH / 16);
+						break;
+					}
+					++v0;
+					++v4;
 				}
-				BlitTerrainCacheToGameBitmap_(v6, i, v4, v1);
-				v1 = v1 + 16 * (v4 - 1);
-				i = i + v4 - 1;
+				BlitTerrainCacheToGameBitmap_(v6, i, v4 + 1, v1);
+				v1 = v1 + 16 * v4;
+				i = i + v4;
 				if (v1 >= TILE_CACHE_SIZE)
 				{
 					v1 -= TILE_CACHE_SIZE;
