@@ -5427,16 +5427,30 @@ void sub_41DDD0_()
 
 FAIL_STUB_PATCH(sub_41DDD0, "starcraft");
 
-void __fastcall vidinimoDestroy_(bool exit_code)
+void sub_41DD20_()
 {
-	memset(cycle_colors, 0, sizeof(cycle_colors));
 	dword_6D5DF8 = 0;
 	BWFXN_DDrawDestroy();
 	if (GameScreenBuffer.data)
 	{
 		SMemFree(GameScreenBuffer.data, 0, 0, 0);
-		GameScreenBuffer.data = nullptr;
+		GameScreenBuffer.data = 0;
 	}
+}
+
+FAIL_STUB_PATCH(sub_41DD20, "starcraft");
+
+void sub_41DD90_()
+{
+	memset(cycle_colors, 0, sizeof(cycle_colors));
+	sub_41DD20_();
+}
+
+FAIL_STUB_PATCH(sub_41DD90, "starcraft");
+
+void __fastcall vidinimoDestroy_(bool exit_code)
+{
+	sub_41DD90_();
 }
 
 FAIL_STUB_PATCH(vidinimoDestroy, "starcraft");
