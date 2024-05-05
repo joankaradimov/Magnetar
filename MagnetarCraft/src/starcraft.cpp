@@ -1918,6 +1918,59 @@ int __stdcall sub_496030_(CUnit* a1)
 
 FUNCTION_PATCH(sub_496030, sub_496030_, "starcraft");
 
+void MoveUnit_(CUnit* unit, __int16 pos_x, __int16 pos_y)
+{
+	Position a2;
+	a2.x = pos_x;
+	a2.y = pos_y;
+	fixTargetLocation(unit->unitType, &a2);
+
+	CSprite* sprite = unit->sprite;
+	int v14 = (__int16)sprite->position.x;
+	int v15 = (__int16)sprite->position.y;
+
+	int x = (__int16)a2.x;
+	int y = (__int16)a2.y;
+	unit->position.x = a2.x;
+	unit->position.y = a2.y;
+	unit->halt.x = (__int16)a2.x << 8;
+	unit->halt.y = (__int16)a2.y << 8;
+	sub_497A10_(sprite, a2.x, a2.y);
+	if (unit->sprite && unit->orderID)
+	{
+		SetMoveTarget_xy(x, y, unit);
+		if (x != (__int16)unit->nextTargetWaypoint.x || y != (__int16)unit->nextTargetWaypoint.y)
+		{
+			unit->nextTargetWaypoint.x = x;
+			unit->nextTargetWaypoint.y = y;
+		}
+	}
+
+	if ((Unit_PrototypeFlags[unit->unitType] & Subunit) == 0)
+	{
+		updateUnitSortingInfo(x - v14, unit, y - v15);
+		if ((unit->sprite->flags & CSpriteFlags::CSF_Hidden) == 0)
+		{
+			getUnitCollision(unit);
+		}
+	}
+}
+
+void __cdecl MoveUnit__()
+{
+	CUnit* unit;
+	__int16 pos_x;
+	__int16 pos_y;
+
+	__asm mov unit, edx
+	__asm mov pos_x, ax
+	__asm mov pos_y, cx
+
+	MoveUnit_(unit, pos_x, pos_y);
+}
+
+FUNCTION_PATCH((void*)0x4EBAE0, MoveUnit__, "starcraft");
+
 void GroundAttackInit_(__int16 x, __int16 y)
 {
 	wantThingyUpdate = 0;
