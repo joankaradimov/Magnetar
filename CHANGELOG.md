@@ -2,7 +2,7 @@
 
 ## Unreleased
   - Reimplement ~15% of the functions in StarCraft 1.16.1
-  - Use iscript animations from a source file instead of a binary
+  - Use iscript animations from a source file instead of iscript.bin
   - Fix crashes caused by long strings (e.g. scenario title/description)
   - Fix a crash in mission briefing initialization
   - Add a new trigger action: "Execute Lua"
