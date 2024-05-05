@@ -7596,6 +7596,22 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
+void sub_4BE200_()
+{
+	if (last_cursor && last_cursor->wFrames != 1)
+	{
+		DWORD tick_count = GetTickCount();
+		if (tick_count >= dword_597398)
+		{
+			dword_597398 = tick_count + 100;
+			++dword_597390;
+			drawCursor_();
+		}
+	}
+}
+
+FAIL_STUB_PATCH(sub_4BE200, "starcraft");
+
 void BWFXN_NextFrameHelperFunctionTarget_()
 {
 	if (!byte_6D1214)
@@ -7609,16 +7625,8 @@ void BWFXN_NextFrameHelperFunctionTarget_()
 		}
 		setCursorType_(cursor_type);
 	}
-	if (last_cursor && last_cursor->wFrames != 1)
-	{
-		DWORD tick_count = GetTickCount();
-		if (tick_count >= dword_597398)
-		{
-			dword_597398 = tick_count + 100;
-			++dword_597390;
-			drawCursor_();
-		}
-	}
+
+	sub_4BE200_();
 }
 
 FAIL_STUB_PATCH(BWFXN_NextFrameHelperFunctionTarget, "starcraft");
@@ -19409,16 +19417,7 @@ FAIL_STUB_PATCH(flc_animate, "starcraft");
 
 void __fastcall sub_4DCEA0_(dialog* a1, __int16 a2)
 {
-	if (last_cursor && last_cursor->wFrames != 1)
-	{
-		DWORD TickCount = GetTickCount();
-		if (TickCount >= dword_597398)
-		{
-			dword_597398 = TickCount + 100;
-			++dword_597390;
-			drawCursor();
-		}
-	}
+	sub_4BE200_();
 }
 
 FAIL_STUB_PATCH(sub_4DCEA0, "starcraft");
