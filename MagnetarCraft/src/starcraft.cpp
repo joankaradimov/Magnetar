@@ -3244,6 +3244,25 @@ void sub_41E000_()
 
 FAIL_STUB_PATCH(sub_41E000, "starcraft");
 
+int sub_41E1A0_(layer* a1)
+{
+	if (a1->bits & 0x21)
+	{
+		return 1;
+	}
+	else if (refreshRect((__int16)a1->left, (__int16)a1->top, (__int16)a1->left + (__int16)a1->width, (__int16)a1->top + (__int16)a1->height))
+	{
+		a1->bits |= 4;
+		return 1;
+	}
+	else
+	{
+		return a1->bits & 2;
+	}
+}
+
+FAIL_STUB_PATCH(sub_41E1A0, "starcraft");
+
 void DirtyArrayHandling_()
 {
 	u8* v0 = GameScreenBuffer.data;
@@ -3269,25 +3288,11 @@ void DirtyArrayHandling_()
 				{
 					BlitCursorSurface(0, 0, &GameScreenBuffer, 0);
 				}
-				if (v2->bits & 0x21)
+				if (sub_41E1A0_(v2))
 				{
-					goto LABEL_12;
-				}
-				if (refreshRect(
-					(__int16)v2->left,
-					(__int16)v2->top,
-					(__int16)v2->left + (__int16)v2->width,
-					(__int16)v2->top + (__int16)v2->height))
-				{
-					v2->bits |= 4;
-				LABEL_12:
 					v2->pUpdate(0, 0, v2->pSurface, &b);
 					v2->bits &= 0xF8u;
 					continue;
-				}
-				if (v2->bits & 2)
-				{
-					goto LABEL_12;
 				}
 			}
 		}
