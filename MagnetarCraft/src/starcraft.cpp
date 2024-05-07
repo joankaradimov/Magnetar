@@ -4061,6 +4061,25 @@ void InitializeImage_()
 
 FAIL_STUB_PATCH(InitializeImage, "starcraft");
 
+void sub_41C7B0_()
+{
+	for (dialog* dlg = DialogList; dlg; dlg = dlg->pNext)
+	{
+		if ((dlg->lFlags & DialogFlags::CTRL_DLG_NOREDRAW) && (dlg->lFlags & DialogFlags::CTRL_VISIBLE))
+		{
+			if (dword_6D5E20 == &GameScreenBuffer)
+			{
+				if (refreshRect(dlg->rct.left, dlg->rct.top, dlg->rct.right, dlg->rct.bottom))
+				{
+					sub_41C4F0(dlg);
+				}
+			}
+		}
+	}
+}
+
+FUNCTION_PATCH(sub_41C7B0, sub_41C7B0_, "starcraft");
+
 void dlg_mgr_init_()
 {
 	AppAddExit_(DestroyScreenLayer);
