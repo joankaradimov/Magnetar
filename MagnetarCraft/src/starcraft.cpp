@@ -2877,7 +2877,7 @@ FUNCTION_PATCH(drawCursor, drawCursor_, "starcraft");
 void UpdateDlgMousePosition_(void)
 {
 	drawCursor_();
-	LOBYTE(InputFlags) = InputFlags & 0xFE;
+	InputFlags &= ~1;
 
 	dlgEvent v0;
 	v0.wNo = EventNo::EVN_MOUSEMOVE;
@@ -3291,7 +3291,7 @@ void DirtyArrayHandling_()
 				if (sub_41E1A0_(v2))
 				{
 					v2->pUpdate(0, 0, v2->pSurface, &b);
-					v2->bits &= 0xF8u;
+					v2->bits &= ~7;
 					continue;
 				}
 			}
@@ -23691,7 +23691,7 @@ int __fastcall TriggerAction_Wait_(Action* a1)
 	}
 	if (a1->flags & 1)
 	{
-		a1->flags = a1->flags & 0xFE;
+		a1->flags &= ~1;
 		return 1;
 	}
 	if ((dword_6509AC->container.dwExecutionFlags & 0x10) == 0)
@@ -24015,7 +24015,7 @@ int __fastcall TriggerAction_CenterView_(Action* a1)
 	{
 		if (a1->flags & 1)
 		{
-			a1->flags = a1->flags & 0xFE;
+			a1->flags &= ~1;
 			CenterCursorGameScreen();
 			return 1;
 		}
