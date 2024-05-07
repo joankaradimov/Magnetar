@@ -4684,7 +4684,7 @@ FAIL_STUB_PATCH(blitTileCacheOnRefresh, "starcraft");
 
 void drawImage_(CImage* a1)
 {
-	if ((a1->flags & 0x40) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & 1) != 0 || isImageRefreshable(a1)))
+	if ((a1->flags & ImageFlags::IF_HIDDEN) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & ImageFlags::IF_REDRAW) || isImageRefreshable(a1)))
 	{
 		RECT v8;
 		v8.left = a1->grpBounds.left;
