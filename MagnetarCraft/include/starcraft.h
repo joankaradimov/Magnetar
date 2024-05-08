@@ -158,6 +158,7 @@ int sub_4BDB30_(PALETTEENTRY* palette, PALETTEENTRY a2);
 void sub_4AD140_();
 void sub_41E9E0_(int a1);
 void sub_4DCEE0_();
+void RefreshCursor_0_();
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

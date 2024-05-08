@@ -17,7 +17,7 @@ FAIL_STUB_PATCH(sub_4D4440, "starcraft");
 
 void PlayMovie_(const char* cinematic, StormVideoFlags flags)
 {
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	sub_4D4440_();
 
 	HANDLE video;

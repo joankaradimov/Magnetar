@@ -47,7 +47,7 @@ void titleInit_(dialog* dlg)
 		dlg->lFlags |= DialogFlags::CTRL_UPDATE;
 		updateDialog(dlg);
 	}
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
 	TitlePaletteUpdate_(3);
 	TitleBlitAndLoop(dlg);

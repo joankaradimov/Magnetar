@@ -173,13 +173,29 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen, "starcraft");
 
+void RefreshCursor_0_()
+{
+	if (ScreenLayers[0].buffers)
+	{
+		ScreenLayers[0].bits |= 1;
+		BWFXN_RefreshTarget(
+			(__int16)ScreenLayers[0].left,
+			(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
+			(__int16)ScreenLayers[0].top,
+			(__int16)ScreenLayers[0].width + (__int16)ScreenLayers[0].left - 1);
+	}
+	ScreenLayers[0].buffers = 0;
+}
+
+FUNCTION_PATCH(RefreshCursor_0_, RefreshCursor_0, "starcraft");
+
 void __fastcall input_Game_MiddleMouseBtnDwn_(dlgEvent* a1)
 {
 	int x = (__int16)a1->cursor.x;
 	int y = (__int16)a1->cursor.y;
 	dword_6556F8 = x - 100 * ScreenX / (map_width_pixels - GAME_AREA_WIDTH) + 50;
 	dword_6556F4 = y - 100 * ScreenY / (map_height_pixels - GAME_AREA_HEIGHT) + 50;
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	input_procedures[EventNo::EVN_MOUSEMOVE] = input_MiddleBtnScreenMove_MouseMove;
 }
 
@@ -16189,7 +16205,7 @@ GamePosition run_game_()
 	stopAllSound_();
 	sub_41E9E0_(3);
 	get_tFontGam_PCX_0();
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	return gwNextGameMode;
 }
 
@@ -20033,7 +20049,7 @@ bool LoadPrecursorCampaign()
 
 char __stdcall DLG_SwishOut_(dialog* dlg)
 {
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	BWFXN_RedrawTarget_();
 	dword_51C4A8 = 1;
 	ListNodeUnknown* v1 = dword_51C4B4;
@@ -20260,7 +20276,7 @@ void changeMenu_()
 		}
 		memset(glue_background_palette, 0, sizeof(glue_background_palette));
 		sub_41E9E0_(3);
-		RefreshCursor_0();
+		RefreshCursor_0_();
 	}
 	BWFXN_RedrawTarget_();
 	memset(&timer_related, 0, 0x90u);
@@ -22312,7 +22328,7 @@ void sub_4DCEE0_()
 		gluDlgFadePalette(3u);
 		BWFXN_RedrawTarget_();
 	}
-	RefreshCursor_0();
+	RefreshCursor_0_();
 }
 
 FAIL_STUB_PATCH(sub_4DCEE0, "starcraft");
@@ -22522,7 +22538,7 @@ LABEL_28:
 		gluDlgFadePalette(3);
 		BWFXN_RedrawTarget_();
 	}
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	dword_6D5E38 = jmpNoMenu_;
 	if (glue_background_palette[0].data)
 		SMemFree(glue_background_palette[0].data, "Starcraft\\SWAR\\lang\\glues.cpp", 442, 0);
@@ -22611,7 +22627,7 @@ LABEL_28:
 		gluDlgFadePalette(3);
 		BWFXN_RedrawTarget_();
 	}
-	RefreshCursor_0();
+	RefreshCursor_0_();
 	playsound_init_UI_(0);
 	sub_4DC8F0_();
 	sub_4DC940();
@@ -23780,7 +23796,7 @@ int __fastcall TriggerAction_PauseGame_(Action* a1)
 			AcceleratorTables = input_procedures[16];
 			hAccTable = dword_5968F8;
 			input_procedures[16] = input_standardSysHotkeys;
-			RefreshCursor_0();
+			RefreshCursor_0_();
 			PauseGame_maybe_();
 			dword_6509AC->container.dwExecutionFlags |= 0x20;
 			byte_6509B4 = 1;
