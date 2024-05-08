@@ -3397,19 +3397,15 @@ DECL_FUNC(void (__fastcall*BlitCursorSurface)(int a1, __int16 a2, Bitmap *a3, __
 DECL_FUNC(void (__cdecl*sub_41E000)(), sub_41E000, 0x41e000);
 DECL_FUNC(void (__cdecl*InitializeImage)(), InitializeImage, 0x41e050);
 DECL_FUNC(void (__fastcall*DestroyImage)(bool exit_code), DestroyImage, 0x41e0a0);
-signed BWFXN_RefreshTarget(signed int left, signed int bottom, signed int top, signed int right) {
+void BWFXN_RefreshTarget(int left, int bottom, int top, int right) {
     int address = 0x41e0d0;
-    signed result_;
     __asm {
-        xor eax, eax
         push dword ptr right
         mov ecx, top
         mov edx, bottom
         mov eax, left
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int sub_41E1A0(layer *a1) {
     int address = 0x41e1a0;
@@ -16431,7 +16427,7 @@ int revealSightAtLocation(int sight_range, unsigned int vision_mask, signed int 
     }
     return result_;
 }
-DECL_FUNC(char (*sub_4807F0)(), sub_4807F0, 0x4807f0);
+DECL_FUNC(void (__cdecl*sub_4807F0)(), sub_4807F0, 0x4807f0);
 DECL_FUNC(void (__cdecl*RemoveFoWCheat)(), RemoveFoWCheat, 0x480880);
 void updateAllFog(int a1) {
     int address = 0x4808e0;
@@ -16812,7 +16808,7 @@ void resetGameInputProcs(CursorType a1) {
         call address
     }
 }
-DECL_FUNC(void (__thiscall*input_MiddleBtnScreenMove_MouseMove)(dlgEvent *a1), input_MiddleBtnScreenMove_MouseMove, 0x484460);
+DECL_FUNC(void (__fastcall*input_MiddleBtnScreenMove_MouseMove)(dlgEvent *a1), input_MiddleBtnScreenMove_MouseMove, 0x484460);
 void recallScreenLocation(int a1) {
     int address = 0x484500;
     __asm {
@@ -17903,16 +17899,12 @@ void getUnitPlaceboxSize(UnitType unit_type, WORD *height, WORD *width) {
         call address
     }
 }
-char sub_48D7B0(int a1) {
+void sub_48D7B0(int a1) {
     int address = 0x48d7b0;
-    char result_;
     __asm {
-        xor eax, eax
         mov edx, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 int sub_48D7F0(int a1, int a2) {
     int address = 0x48d7f0;
@@ -17938,7 +17930,7 @@ int placeBuildingMsg(int a1) {
     }
     return result_;
 }
-DECL_FUNC(BYTE (*refreshLayer3And4)(), refreshLayer3And4, 0x48d9a0);
+DECL_FUNC(void (__cdecl*refreshLayer3And4)(), refreshLayer3And4, 0x48d9a0);
 void sub_48DA30(UnitType unit_type) {
     int address = 0x48da30;
     __asm {
@@ -17965,7 +17957,7 @@ BOOL CMDRECV_PlaceBuildingAllowed(CUnit *a1, UnitType ax0, Order a3) {
 DECL_FUNC(CUnit * (__stdcall*sub_48DCD0)(int a1), sub_48DCD0, 0x48dcd0);
 DECL_FUNC(int (*UpdatePlacementStateForPlacementBox_maybe)(), UpdatePlacementStateForPlacementBox_maybe, 0x48dce0);
 DECL_FUNC(BOOL (*_PlaceBuildingAllowed)(), _PlaceBuildingAllowed, 0x48dda0);
-DECL_FUNC(char (__fastcall*refreshScreen)(), refreshScreen, 0x48ddc0);
+DECL_FUNC(void (__fastcall*refreshScreen)(), refreshScreen, 0x48ddc0);
 void sub_48DE70(CUnit *a1, Order a2, int a3, UnitType a4) {
     int address = 0x48de70;
     __asm {
@@ -18022,18 +18014,14 @@ DECL_FUNC(void (*sub_48E5A0)(), sub_48E5A0, 0x48e5a0);
 DECL_FUNC(void (__fastcall*input_placeBuilding_LeftMouseClick)(dlgEvent *event), input_placeBuilding_LeftMouseClick, 0x48e5d0);
 DECL_FUNC(void (__stdcall*sub_48E640)(char a1), sub_48E640, 0x48e640);
 DECL_FUNC(void (*pracebuildingProc)(), pracebuildingProc, 0x48e6e0);
-char issuePlacebuildingOrder(UnitType a1, char a2) {
+void issuePlacebuildingOrder(UnitType a1, char a2) {
     int address = 0x48e730;
-    char result_;
     __asm {
-        xor eax, eax
         xor esi, esi
         push dword ptr a2
         mov si, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 int getSfxPanFromXDistance(signed int a1) {
     int address = 0x48e850;
@@ -20232,7 +20220,7 @@ unsigned UpdateTileCacheOnYScreenMovement(int a1, _WORD *a2, unsigned int a3) {
 DECL_FUNC(int (*sub_49BF20)(), sub_49BF20, 0x49bf20);
 DECL_FUNC(unsigned (__thiscall*sub_49BF70)(void *this_), sub_49BF70, 0x49bf70);
 DECL_FUNC(unsigned (__fastcall*sub_49BFA0)(int a1), sub_49BFA0, 0x49bfa0);
-DECL_FUNC(char (*BWFXN_UpdateScreenPosition)(), BWFXN_UpdateScreenPosition, 0x49bfd0);
+DECL_FUNC(void (__cdecl*BWFXN_UpdateScreenPosition)(), BWFXN_UpdateScreenPosition, 0x49bfd0);
 signed moveToXScrIncrease(int a1) {
     int address = 0x49c0c0;
     signed result_;
@@ -24102,7 +24090,7 @@ unsigned GetGroundHeightAtPos(signed int x, signed int y) {
     return result_;
 }
 DECL_FUNC(void (__cdecl*DestroyMapData)(), DestroyMapData, 0x4bd190);
-DECL_FUNC(char (*gamemap_force_redraw)(), gamemap_force_redraw, 0x4bd350);
+DECL_FUNC(void (__cdecl*gamemap_force_redraw)(), gamemap_force_redraw, 0x4bd350);
 DECL_FUNC(void (__cdecl*sub_4BD3A0)(), sub_4BD3A0, 0x4bd3a0);
 DECL_FUNC(unsigned (*InitialSetScreenToStartLocation)(), InitialSetScreenToStartLocation, 0x4bd3f0);
 void sub_4BD4B0(int a1, int a2) {
@@ -24137,8 +24125,8 @@ BOOL sub_4BDF40(void *a1) {
 DECL_FUNC(int (*sub_4BDF70)(), sub_4BDF70, 0x4bdf70);
 DECL_FUNC(grpFrame * (*sub_4BDF80)(), sub_4BDF80, 0x4bdf80);
 DECL_FUNC(void (__fastcall*cursorUpdateProc)(int a1, int a2, Bitmap *a3, bounds *a4), cursorUpdateProc, 0x4bdfa0);
-DECL_FUNC(signed (*cursorRefresh)(), cursorRefresh, 0x4be060);
-DECL_FUNC(BYTE (*RefreshCursor_0)(), RefreshCursor_0, 0x4be0b0);
+DECL_FUNC(void (__cdecl*cursorRefresh)(), cursorRefresh, 0x4be060);
+DECL_FUNC(void (__cdecl*RefreshCursor_0)(), RefreshCursor_0, 0x4be0b0);
 DECL_FUNC(void (__cdecl*sub_4BE100)(), sub_4BE100, 0x4be100);
 DECL_FUNC(void (__cdecl*drawCursor)(), drawCursor, 0x4be120);
 DECL_FUNC(void (__fastcall*updateCursorImage)(int a1, int a2, Bitmap *a3), updateCursorImage, 0x4be1a0);
