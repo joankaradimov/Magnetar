@@ -3186,7 +3186,7 @@ bool realizePalette_()
 	if (dword_6D5E1C)
 	{
 		SDrawRealizePalette();
-		memset(RefreshRegions, 1u, sizeof(RefreshRegions));
+		memset(RefreshRegions, 1, sizeof(RefreshRegions));
 		updateAllDlgs_();
 		dword_6D5E1C = 0;
 	}
@@ -3236,7 +3236,7 @@ void sub_41E000_()
 	if (handle && dword_6D5E18)
 	{
 		STransDelete(dword_6D5E18);
-		STransIntersectDirtyArray(handle, (int)RefreshRegions, 3u, (int)&dword_6D5E18);
+		STransIntersectDirtyArray(handle, (int)RefreshRegions, 3, (int)&dword_6D5E18);
 		DoBltUsingMask_();
 		memset(RefreshRegions, 0, sizeof(RefreshRegions));
 	}
@@ -3381,7 +3381,7 @@ HANDLE LoadInstallArchiveHD_(const char* a1, char* a2, const char* mpq_filename,
 	}
 	SStrNCat(a2, mpq_filename, 260);
 	HANDLE hMpq;
-	if (!SFileOpenArchive(a2, dwFlags, 2u, &hMpq))
+	if (!SFileOpenArchive(a2, dwFlags, 2, &hMpq))
 	{
 		return 0;
 	}
@@ -3410,7 +3410,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 	if (cd_archive_mpq || (cd_archive_mpq = LoadInstallArchiveHD_(filename, path_buffer, "\\StarCraft.mpq", 1000)) != 0)
 		return 1;
 
-	cd_archive_mpq = LoadInstallArchiveCD(1000u, "\\Install.exe", filename);
+	cd_archive_mpq = LoadInstallArchiveCD(1000, "\\Install.exe", filename);
 	if (cd_archive_mpq)
 		return 1;
 
@@ -3427,7 +3427,7 @@ signed int InitializeCDArchives_(const char *filename, int a2)
 		}
 		if (v4 != 1)
 			goto LABEL_13;
-		cd_archive_mpq = LoadInstallArchiveCD(1000u, "\\Install.exe", (char *)filename);
+		cd_archive_mpq = LoadInstallArchiveCD(1000, "\\Install.exe", (char *)filename);
 		if (cd_archive_mpq)
 			return 1;
 	}
@@ -4910,7 +4910,7 @@ void InitializeGameLayer_()
 	ScreenLayers[5].width = GAME_AREA_WIDTH;
 	ScreenLayers[5].height = GAME_AREA_HEIGHT;
 	ScreenLayers[5].pUpdate = has_viewport ? DrawGameProc_ : DrawNullProc_;
-	memset(RefreshRegions, 1u, sizeof(RefreshRegions));
+	memset(RefreshRegions, 1, sizeof(RefreshRegions));
 	for (int i = 3; i <= 5; ++i)
 	{
 		ScreenLayers[i].bits |= 1;
@@ -5060,8 +5060,8 @@ void DLGMusicFade_(const MusicTrackDescription* music_track)
 			if (registry_options.music)
 			{
 				dword_6D5BB8 = -3396;
-				KillTimer(hWndParent, 3u);
-				SetTimer(hWndParent, 3u, 0x14u, FadeMusicProc);
+				KillTimer(hWndParent, 3);
+				SetTimer(hWndParent, 3, 0x14, FadeMusicProc);
 			}
 		}
 		else
@@ -6176,7 +6176,7 @@ void TitlePaletteUpdate_(int a1)
 				sub_41DC20(GamePalette, a2, 256);
 				v1 = a2;
 			}
-			SDrawUpdatePalette(0, 0x100u, v1, 1);
+			SDrawUpdatePalette(0, 0x100, v1, 1);
 			BWFXN_RedrawTarget_();
 			memset(stru_6CE720, 0, sizeof(stru_6CE720));
 			gluDlgFadePalette(a1);
@@ -23105,7 +23105,7 @@ void CreateMainWindow_()
 	window_class.lpfnWndProc = MainWindowProc_;
 	window_class.hInstance = hInst;
 	window_class.hIcon = LoadIconA(hInst, (LPCSTR)0x66);
-	window_class.hIconSm = (HICON)LoadImageA(hInst, (LPCSTR)0x66, 1u, 16, 16, 0x8000u);
+	window_class.hIconSm = (HICON)LoadImageA(hInst, (LPCSTR)0x66, 1, 16, 16, 0x8000u);
 	window_class.hCursor = LoadCursorA(0, (LPCSTR)0x7F00);
 	window_class.hbrBackground = (HBRUSH)GetStockObject(5);
 	window_class.lpszClassName = "SWarClass";
@@ -23503,7 +23503,7 @@ unsigned int LocalGetLang_()
 	CHAR Buffer[16];
 	char *v2;
 
-	if (local_dll_library && LoadStringA(local_dll_library, 3u, Buffer, 16) || LoadStringA(hInst, 3u, Buffer, 16))
+	if (local_dll_library && LoadStringA(local_dll_library, 3, Buffer, 16) || LoadStringA(hInst, 3, Buffer, 16))
 		return strtoul(Buffer, &v2, 16);
 	else
 		return 1033;
