@@ -3244,13 +3244,31 @@ void sub_41E000_()
 
 FAIL_STUB_PATCH(sub_41E000, "starcraft");
 
+char refreshRect_(int a1, int a2, int a3, int a4)
+{
+	for (int v4 = a2 / 16; v4 <= (a4 - 1) / 16; v4++)
+	{
+		for (int v8 = 0; v8 < (a3 - 1) / 16 - a1 / 16 + 1; v8++)
+		{
+			if (RefreshRegions[(GAME_AREA_WIDTH / 16) * (a2 / 16 + v4) + a1 / 16 + v8])
+			{
+				return 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
+FAIL_STUB_PATCH(refreshRect, "starcraft");
+
 int sub_41E1A0_(layer* a1)
 {
 	if (a1->bits & 0x21)
 	{
 		return 1;
 	}
-	else if (refreshRect((__int16)a1->left, (__int16)a1->top, (__int16)a1->left + (__int16)a1->width, (__int16)a1->top + (__int16)a1->height))
+	else if (refreshRect_((__int16)a1->left, (__int16)a1->top, (__int16)a1->left + (__int16)a1->width, (__int16)a1->top + (__int16)a1->height))
 	{
 		a1->bits |= 4;
 		return 1;
@@ -4069,7 +4087,7 @@ void sub_41C7B0_()
 		{
 			if (dword_6D5E20 == &GameScreenBuffer)
 			{
-				if (refreshRect(dlg->rct.left, dlg->rct.top, dlg->rct.right, dlg->rct.bottom))
+				if (refreshRect_(dlg->rct.left, dlg->rct.top, dlg->rct.right, dlg->rct.bottom))
 				{
 					sub_41C4F0(dlg);
 				}
