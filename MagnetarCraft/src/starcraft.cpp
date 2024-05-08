@@ -173,6 +173,18 @@ int IsOutsideGameScreen_(int x, int y)
 
 FAIL_STUB_PATCH(IsOutsideGameScreen, "starcraft");
 
+void __fastcall input_Game_MiddleMouseBtnDwn_(dlgEvent* a1)
+{
+	int x = (__int16)a1->cursor.x;
+	int y = (__int16)a1->cursor.y;
+	dword_6556F8 = x - 100 * ScreenX / (map_width_pixels - GAME_AREA_WIDTH) + 50;
+	dword_6556F4 = y - 100 * ScreenY / (map_height_pixels - GAME_AREA_HEIGHT) + 50;
+	RefreshCursor_0();
+	input_procedures[EventNo::EVN_MOUSEMOVE] = input_MiddleBtnScreenMove_MouseMove;
+}
+
+FAIL_STUB_PATCH(input_Game_MiddleMouseBtnDwn, "starcraft");
+
 u16 setBuildingSelPortrait_(UnitType unit_type)
 {
 	u16 portrait_id = Unit_IdlePortrait[unit_type];
@@ -2374,7 +2386,7 @@ void SetInGameInputProcs_()
 	input_procedures[EventNo::EVN_LBUTTONDBLCLK] = input_Game_LeftMouseBtnDwn;
 	input_procedures[EventNo::EVN_RBUTTONDOWN] = input_Game_RightMouseBtnDwn;
 	input_procedures[EventNo::EVN_RBUTTONDBLCLK] = input_Game_RightMouseBtnDwn;
-	input_procedures[EventNo::EVN_MBUTTONDOWN] = input_Game_MiddleMouseBtnDwn;
+	input_procedures[EventNo::EVN_MBUTTONDOWN] = input_Game_MiddleMouseBtnDwn_;
 	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp;
 	input_procedures[EventNo::EVN_IDLE] = input_Game_Idle;
 	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress_;
