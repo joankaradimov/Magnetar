@@ -185,6 +185,20 @@ void __fastcall input_Game_MiddleMouseBtnDwn_(dlgEvent* a1)
 
 FAIL_STUB_PATCH(input_Game_MiddleMouseBtnDwn, "starcraft");
 
+void __fastcall input_Game_MiddleMouseBtnUp_(dlgEvent* a1)
+{
+	ScreenLayers[0].buffers = 1;
+	ScreenLayers[0].bits |= 1;
+	BWFXN_RefreshTarget(
+		(__int16)ScreenLayers[0].left,
+		(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
+		(__int16)ScreenLayers[0].top,
+		(__int16)ScreenLayers[0].width + (__int16)ScreenLayers[0].left - 1);
+	input_procedures[EventNo::EVN_MOUSEMOVE] = nullptr;
+}
+
+FAIL_STUB_PATCH(input_Game_MiddleMouseBtnUp, "starcraft");
+
 u16 setBuildingSelPortrait_(UnitType unit_type)
 {
 	u16 portrait_id = Unit_IdlePortrait[unit_type];
@@ -2387,7 +2401,7 @@ void SetInGameInputProcs_()
 	input_procedures[EventNo::EVN_RBUTTONDOWN] = input_Game_RightMouseBtnDwn;
 	input_procedures[EventNo::EVN_RBUTTONDBLCLK] = input_Game_RightMouseBtnDwn;
 	input_procedures[EventNo::EVN_MBUTTONDOWN] = input_Game_MiddleMouseBtnDwn_;
-	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp;
+	input_procedures[EventNo::EVN_MBUTTONUP] = input_Game_MiddleMouseBtnUp_;
 	input_procedures[EventNo::EVN_IDLE] = input_Game_Idle;
 	input_procedures[EventNo::EVN_CHAR] = input_Game_UserKeyPress_;
 	input_procedures[EventNo::EVN_SYSCHAR] = CMDACT_Hotkey_;
