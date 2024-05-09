@@ -54,17 +54,14 @@ void setAllOverlayDirectionsGeneric(CThingy *thingy, unsigned __int8 direction) 
     }
 }
 DECL_FUNC(BOOL (__stdcall*unitIsOwnerByCurrentPlayer)(CUnit *unit), unitIsOwnerByCurrentPlayer, 0x401170);
-__int32 unitSetRetreatPoint(unsigned __int8 a1, CUnit *a2) {
+void unitSetRetreatPoint(unsigned __int8 a1, CUnit *a2) {
     int address = 0x4011a0;
-    __int32 result_;
     __asm {
         xor eax, eax
         mov edx, a2
         mov al, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 BOOL UnitIsGoliath(CUnit *a1) {
     int address = 0x4011f0;
@@ -3335,7 +3332,7 @@ BltMask * BltMask_Constructor(Bitmap *a1, char *a2, char *a3) {
     }
     return result_;
 }
-DECL_FUNC(signed (*realizePalette)(), realizePalette, 0x41d710);
+DECL_FUNC(int (__cdecl*realizePalette)(), realizePalette, 0x41d710);
 DECL_FUNC(int (__thiscall*sub_41D780)(Bitmap *this_, __int16 a2, __int16 a3), sub_41D780, 0x41d780);
 DECL_FUNC(void (__fastcall*drawVertLine)(int a1, unsigned __int16 a2, __int16 a3, unsigned __int16 a4), drawVertLine, 0x41d7d0);
 __int16 MinimapFill(unsigned __int16 a1, int a2, __int16 a3, __int16 a4) {
@@ -4872,16 +4869,12 @@ int sub_42D190(unsigned __int8 a1, unsigned __int8 a2, int a3) {
     return result_;
 }
 DECL_FUNC(int (__fastcall*sub_42D240)(int a1, Tech a2, int a3), sub_42D240, 0x42d240);
-BYTE refreshImageData(RECT *a1) {
+void refreshImageData(RECT *a1) {
     int address = 0x42d280;
-    BYTE result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(CSprite * (*sub_42D330)(), sub_42D330, 0x42d330);
 DECL_FUNC(int (*sub_42D350)(), sub_42D350, 0x42d350);
@@ -11913,7 +11906,13 @@ u8 setPathingFromUnitElevation(CUnit *a1) {
     }
     return result_;
 }
-DECL_FUNC(int (*setGroundBuildingPathing)(void), setGroundBuildingPathing, 0x4634e0);
+void setGroundBuildingPathing(CUnit *a1) {
+    int address = 0x4634e0;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 int AI_OrderHeal(CUnit *a1, CUnit *a2) {
     int address = 0x463530;
     int result_;
@@ -13026,7 +13025,13 @@ int sub_46A720(CUnit *a1) {
     return result_;
 }
 DECL_FUNC(char (__thiscall*sub_46A740)(CUnit *this_), sub_46A740, 0x46a740);
-DECL_FUNC(int (*setArchonWarpPathing)(void), setArchonWarpPathing, 0x46a820);
+void setArchonWarpPathing(CUnit *a1) {
+    int address = 0x46a820;
+    __asm {
+        mov eax, a1
+        call address
+    }
+}
 signed UMForceMoveFree(CUnit *a1) {
     int address = 0x46a850;
     signed result_;
@@ -16232,16 +16237,12 @@ BOOL sub_47D730(unsigned int a1, unsigned int a2) {
 }
 DECL_FUNC(int (__stdcall*sub_47D770)(CUnit *a1), sub_47D770, 0x47d770);
 DECL_FUNC(int (__stdcall*sub_47D860)(int a1, int a2, CUnit *a3), sub_47D860, 0x47d860);
-char sub_47D920(RECT *a1) {
+void sub_47D920(RECT *a1) {
     int address = 0x47d920;
-    char result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 int LoadDisappearingCreepChunk(FILE *a1) {
     int address = 0x47d9d0;
@@ -16336,7 +16337,17 @@ void open_tips_dialog(int a1) {
     }
 }
 DECL_FUNC(int (*sub_47EA50)(), sub_47EA50, 0x47ea50);
-DECL_FUNC(_DWORD (__stdcall*sub_47EA60)(_DWORD a1, _DWORD a2), sub_47EA60, 0x47ea60);
+void sub_47EA60(_BYTE *a1, int a2, int a3, u8 *a4, int a5) {
+    int address = 0x47ea60;
+    __asm {
+        push dword ptr a5
+        push dword ptr a4
+        mov ebx, a3
+        mov ecx, a2
+        mov edx, a1
+        call address
+    }
+}
 int GetScrollSpeed(int *a1) {
     int address = 0x47eab0;
     int result_;
@@ -18751,17 +18762,13 @@ void orders_CompletingArchonSummon(CUnit *unit) {
     }
 }
 DECL_FUNC(CSprite * (__thiscall*sub_493BF0)(CUnit *this_), sub_493BF0, 0x493bf0);
-char PrepareUnitMoveClearRefs(CUnit *unit, bool hideUnit) {
+void PrepareUnitMoveClearRefs(CUnit *unit, bool hideUnit) {
     int address = 0x493ca0;
-    char result_;
     __asm {
-        xor eax, eax
         push dword ptr hideUnit
         mov edi, unit
         call address
-        mov result_, al
     }
-    return result_;
 }
 void orders_RechargeShields1(CUnit *unit) {
     int address = 0x493dd0;
@@ -19253,29 +19260,25 @@ int * sub_496FC0(void *a1, char *a2, int *a3) {
     return result_;
 }
 DECL_FUNC(void (*EnableVisibilityHashUpdate)(), EnableVisibilityHashUpdate, 0x496ff0);
-int isImageRefreshable(CImage *a1) {
+int isImageRefreshable(CImage *image) {
     int address = 0x497000;
     int result_;
     __asm {
         xor eax, eax
-        mov eax, a1
+        mov eax, image
         call address
         mov result_, eax
     }
     return result_;
 }
-char refreshImage(CImage *a1) {
+void refreshImage(CImage *a1) {
     int address = 0x4970a0;
-    char result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
-DECL_FUNC(char (__stdcall*sub_4970F0)(__int16 *a1), sub_4970F0, 0x4970f0);
+DECL_FUNC(void (__stdcall*sub_4970F0)(CImage *a1), sub_4970F0, 0x4970f0);
 DECL_FUNC(void (__cdecl*createUnitBuildingSpriteValidityArray)(), createUnitBuildingSpriteValidityArray, 0x497110);
 DECL_FUNC(void (__cdecl*initializeSpriteArray)(), initializeSpriteArray, 0x497230);
 CSprite * unpackSpriteData(CSprite *sprite) {
@@ -19319,16 +19322,12 @@ void refreshAllVisibleImagesAtScreenPosition(CSprite *a1, char a2) {
         call address
     }
 }
-char refreshGrpImage(int a1) {
+void refreshGrpImage(CSprite *sprite) {
     int address = 0x497530;
-    char result_;
     __asm {
-        xor eax, eax
-        mov eax, a1
+        mov eax, sprite
         call address
-        mov result_, al
     }
-    return result_;
 }
 char removeSelectionCircleFromSprite(CSprite *a1) {
     int address = 0x497590;
@@ -19386,16 +19385,12 @@ int sub_4976B0(int a1) {
     }
     return result_;
 }
-char refreshAllVisibleSprites(CSprite *a1) {
+void refreshAllVisibleSprites(CSprite *a1) {
     int address = 0x4976c0;
-    char result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 void refreshCarryableSprite(CSprite *sprite) {
     int address = 0x497750;
@@ -19619,16 +19614,12 @@ int sub_498260(int *a1, int a2, int *a3) {
     return result_;
 }
 DECL_FUNC(void (__stdcall*DoVisibilityUpdate)(int a1, unsigned int a2), DoVisibilityUpdate, 0x4982d0);
-char refreshSpriteData(CSprite *result) {
+void refreshSpriteData(CSprite *sprite) {
     int address = 0x4983a0;
-    char result_;
     __asm {
-        xor eax, eax
-        mov eax, result
+        mov eax, sprite
         call address
-        mov result_, al
     }
-    return result_;
 }
 CImage * sub_498450(int a1) {
     int address = 0x498450;
@@ -19864,11 +19855,11 @@ int CreateLiftoffDustOverlays(CSprite *a1) {
     }
     return result_;
 }
-void sub_499860(CImage *a1, CSprite *a2) {
+void sub_499860(int sprite_id, CSprite *a2) {
     int address = 0x499860;
     __asm {
         mov ecx, a2
-        mov eax, a1
+        mov eax, sprite_id
         call address
     }
 }
@@ -26849,27 +26840,19 @@ void sub_4D4F10(CImage *image) {
         call address
     }
 }
-CImage * removeSelectionCircleImage(CImage *a1) {
+void removeSelectionCircleImage(CImage *a1) {
     int address = 0x4d4fa0;
-    CImage * result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
-CImage * removeHPBar(CImage *a1) {
+void removeHPBar(CImage *a1) {
     int address = 0x4d5030;
-    CImage * result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 DECL_FUNC(void (__fastcall*CleanupIscriptBINHandle)(bool exit_code), CleanupIscriptBINHandle, 0x4d50c0);
 DECL_FUNC(void (*nullsub_66)(), nullsub_66, 0x4d5150);
@@ -28706,16 +28689,12 @@ void orders_CTFCOP_init(CUnit *unit) {
         call address
     }
 }
-struct_path_related * toggleUnitPath(CUnit *a1) {
+void toggleUnitPath(CUnit *a1) {
     int address = 0x4e42a0;
-    struct_path_related * result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 _DWORD * getAllocatedPath(_WORD *a1, __int16 *a2) {
     int address = 0x4e42f0;
@@ -29040,16 +29019,12 @@ void unitDeathSomething_0(CUnit *a1) {
         call address
     }
 }
-CUnit * initUnitTrapDoodad(CUnit *a1) {
+void initUnitTrapDoodad(CUnit *a1) {
     int address = 0x4e6490;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         mov edi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 int _CreateDashedSelection(CUnit *a1) {
     int address = 0x4e65c0;
@@ -30540,7 +30515,7 @@ void killPowerup(CUnit *a1) {
         call address
     }
 }
-DECL_FUNC(char (__stdcall*sub_4F3CA0)(CUnit *a1, CUnit *a2), sub_4F3CA0, 0x4f3ca0);
+DECL_FUNC(void (__stdcall*sub_4F3CA0)(CUnit *a1, CUnit *a2), sub_4F3CA0, 0x4f3ca0);
 void orders_Powerup2(CUnit *a1) {
     int address = 0x4f3e10;
     __asm {
