@@ -178,7 +178,7 @@ void RefreshCursor_0_()
 	if (ScreenLayers[0].buffers)
 	{
 		ScreenLayers[0].bits |= 1;
-		BWFXN_RefreshTarget(
+		BWFXN_RefreshTarget_(
 			(__int16)ScreenLayers[0].left,
 			(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
 			(__int16)ScreenLayers[0].top,
@@ -205,7 +205,7 @@ void __fastcall input_Game_MiddleMouseBtnUp_(dlgEvent* a1)
 {
 	ScreenLayers[0].buffers = 1;
 	ScreenLayers[0].bits |= 1;
-	BWFXN_RefreshTarget(
+	BWFXN_RefreshTarget_(
 		(__int16)ScreenLayers[0].left,
 		(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
 		(__int16)ScreenLayers[0].top,
@@ -2883,12 +2883,76 @@ bool sendInputToAllDialogs_(dlgEvent* evt)
 
 FAIL_STUB_PATCH(sendInputToAllDialogs, "starcraft");
 
+void BWFXN_RefreshTarget_(int left, int bottom, int top, int right)
+{
+	if (left < 0)
+	{
+		left = 0;
+	}
+	else if (left >= SCREEN_WIDTH)
+	{
+		return;
+	}
+
+	if (right < 0)
+	{
+		return;
+	}
+	else if (right >= SCREEN_WIDTH)
+	{
+		right = SCREEN_WIDTH - 1;
+	}
+
+	if (top < 0)
+	{
+		top = 0;
+	}
+	else if (top >= SCREEN_HEIGHT)
+	{
+		return;
+	}
+
+	if (bottom < 0)
+	{
+		return;
+	}
+	else if (bottom >= SCREEN_HEIGHT)
+	{
+		bottom = SCREEN_HEIGHT - 1;
+	}
+
+	top = top / 16;
+	bottom = bottom / 16;
+	right = right / 16;
+	left = left / 16;
+
+	for (int i = 0; i < bottom - top + 1; i++)
+	{
+		memset(&RefreshRegions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
+	}
+}
+
+void __stdcall BWFXN_RefreshTarget__(int right)
+{
+	int left;
+	int bottom;
+	int top;
+
+	__asm mov left, eax
+	__asm mov bottom, edx
+	__asm mov top, ecx
+
+	BWFXN_RefreshTarget_(left, bottom, top, right);
+}
+
+FUNCTION_PATCH((void*)0x41E0D0, BWFXN_RefreshTarget__, "starcraft");
+
 void RefreshCursorScreen_()
 {
 	if (ScreenLayers[0].buffers)
 	{
 		ScreenLayers[0].bits |= 1;
-		BWFXN_RefreshTarget(
+		BWFXN_RefreshTarget_(
 			(__int16)ScreenLayers[0].left,
 			(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
 			(__int16)ScreenLayers[0].top,
@@ -4978,7 +5042,7 @@ void InitializeGameLayer_()
 		int top = ScreenLayers[i].top;
 		int bottom = top + ScreenLayers[i].height - 1;
 		int right = left + ScreenLayers[i].width - 1;
-		BWFXN_RefreshTarget(left, bottom, top, right);
+		BWFXN_RefreshTarget_(left, bottom, top, right);
 	}
 }
 
@@ -4986,11 +5050,11 @@ FAIL_STUB_PATCH(InitializeGameLayer, "starcraft");
 
 void __cdecl refreshSelectionScreen_()
 {
-	BWFXN_RefreshTarget(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
+	BWFXN_RefreshTarget_(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
 	if (ScreenLayers[1].buffers)
 	{
 		ScreenLayers[1].bits |= 1;
-		BWFXN_RefreshTarget(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
+		BWFXN_RefreshTarget_(ScreenLayers[1].left, ScreenLayers[1].height + ScreenLayers[1].top - 1, ScreenLayers[1].top, ScreenLayers[1].width + ScreenLayers[1].left - 1);
 	}
 	ScreenLayers[1].left = GAME_AREA_WIDTH;
 	ScreenLayers[1].top = GAME_AREA_HEIGHT;
@@ -5707,7 +5771,7 @@ void BWFXN_OpenGameDialog_(char* a1, FnInteract a2)
 	dlg_focus_free();
 	if (byte_66FF5C)
 	{
-		BWFXN_RefreshTarget(stru_66FF50.left, stru_66FF50.bottom, stru_66FF50.top, stru_66FF50.right);
+		BWFXN_RefreshTarget_(stru_66FF50.left, stru_66FF50.bottom, stru_66FF50.top, stru_66FF50.right);
 		byte_66FF5C = 0;
 		SetInGameInputProcs_();
 	}
@@ -7856,7 +7920,7 @@ void sub_4E4820_(dialog* dlg)
 	byte_6D1214 = 1;
 	ScreenLayers[0].buffers = 1;
 	ScreenLayers[0].bits |= 1;
-	BWFXN_RefreshTarget(
+	BWFXN_RefreshTarget_(
 		(__int16)ScreenLayers[0].left,
 		(__int16)ScreenLayers[0].height + (__int16)ScreenLayers[0].top - 1,
 		(__int16)ScreenLayers[0].top,
@@ -15019,7 +15083,7 @@ void DisableDragSelect_()
 {
 	if (byte_66FF5C)
 	{
-		BWFXN_RefreshTarget(
+		BWFXN_RefreshTarget_(
 			(__int16)stru_66FF50.left,
 			(__int16)stru_66FF50.bottom,
 			(__int16)stru_66FF50.top,
@@ -15820,7 +15884,7 @@ void PauseGame_maybe_()
 		IS_GAME_PAUSED = 1;
 		if (byte_66FF5C)
 		{
-			BWFXN_RefreshTarget(
+			BWFXN_RefreshTarget_(
 				(__int16)stru_66FF50.left,
 				(__int16)stru_66FF50.bottom,
 				(__int16)stru_66FF50.top,
@@ -20220,7 +20284,7 @@ void DLG_SwishIn_(dialog* a1)
 {
 	ScreenLayers[0].bits |= 1;
 	ScreenLayers[0].buffers = 1;
-	BWFXN_RefreshTarget(ScreenLayers[0].left, ScreenLayers[0].height + ScreenLayers[0].top - 1, ScreenLayers[0].top, ScreenLayers[0].width + ScreenLayers[0].left - 1);
+	BWFXN_RefreshTarget_(ScreenLayers[0].left, ScreenLayers[0].height + ScreenLayers[0].top - 1, ScreenLayers[0].top, ScreenLayers[0].width + ScreenLayers[0].left - 1);
 	if (dword_50E064 != stru_4FFAD0[glGluesMode].menu_position)
 	{
 		memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));
