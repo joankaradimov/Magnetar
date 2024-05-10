@@ -3350,6 +3350,32 @@ void sub_41E000_()
 
 FAIL_STUB_PATCH(sub_41E000, "starcraft");
 
+void refreshImageData_(RECT *a1)
+{
+	int left = a1->left / 16;
+	int right = (a1->right + 15) / 16;
+	int top = a1->top / 16;
+	int bottom = (a1->bottom + 15) / 16;
+
+	for (int i = 0; i <= bottom - top; i++)
+	{
+		memset(&RefreshRegions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
+	}
+
+	ScreenLayers[5].bits |= 2;
+}
+
+void __stdcall refreshImageData__()
+{
+	RECT* a1;
+
+	__asm mov a1, esi
+
+	refreshImageData_(a1);
+}
+
+FUNCTION_PATCH((void*)0x42D280, refreshImageData__, "starcraft");
+
 char refreshRect_(int a1, int a2, int a3, int a4)
 {
 	for (int v4 = a2 / 16; v4 <= (a4 - 1) / 16; v4++)
