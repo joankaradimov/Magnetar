@@ -10464,11 +10464,11 @@ void statdataMouseOverInteract(dialog *a1, dialog *a2) {
         call address
     }
 }
-void sub_457DE0(dialog *a1, struct dlgEvent *a2) {
+void sub_457DE0(dialog *dlg, struct dlgEvent *evt) {
     int address = 0x457de0;
     __asm {
-        push dword ptr a2
-        mov esi, a1
+        push dword ptr evt
+        mov esi, dlg
         call address
     }
 }
@@ -10481,7 +10481,7 @@ void statdata_Destroy(dialog *a1, struct dlgEvent *a2) {
     }
 }
 DECL_FUNC(int (__fastcall*statdata_UnitWireframeTransit)(dialog *dlg, dlgEvent *evn), statdata_UnitWireframeTransit, 0x457e90);
-DECL_FUNC(int (__fastcall*statdata_buttonInteract)(dialog *a1, dlgEvent *a2), statdata_buttonInteract, 0x457f30);
+DECL_FUNC(int (__fastcall*statdata_buttonInteract)(dialog *dlg, dlgEvent *evt), statdata_buttonInteract, 0x457f30);
 DECL_FUNC(void (__cdecl*sub_457FE0)(), sub_457FE0, 0x457fe0);
 void ProgressBar_Create(dialog *a1) {
     int address = 0x458050;
@@ -13618,12 +13618,13 @@ DECL_FUNC(BOOL (*sub_46EE70)(), sub_46EE70, 0x46ee70);
 DECL_FUNC(void (__cdecl*refreshDragSelectBox)(), refreshDragSelectBox, 0x46eeb0);
 DECL_FUNC(void (__fastcall*input_dragSelect_MouseMove)(dlgEvent *this_), input_dragSelect_MouseMove, 0x46eef0);
 DECL_FUNC(void (__cdecl*DisableDragSelect)(), DisableDragSelect, 0x46efa0);
-void getTargettingErrorString(int a1, int a2, CUnit *a3) {
+void getTargettingErrorString(WeaponType a1, int a2, CUnit *a3) {
     int address = 0x46efe0;
     __asm {
+        xor eax, eax
         mov ecx, a3
         mov edx, a2
-        mov eax, a1
+        mov al, a1
         call address
     }
 }
@@ -15058,13 +15059,14 @@ unsigned getUpgradedWpnCooldown(WeaponType a1, CUnit *a2) {
     }
     return result_;
 }
-int getUpgradedDamageAmtForGUI(int weapon_type, CUnit *a2) {
+int getUpgradedDamageAmtForGUI(WeaponType weapon_type, CUnit *a2) {
     int address = 0x475e40;
     int result_;
     __asm {
         xor eax, eax
+        xor edx, edx
         mov esi, a2
-        mov edx, weapon_type
+        mov dl, weapon_type
         call address
         mov result_, eax
     }
@@ -15083,12 +15085,13 @@ int getUnitDamageBonus(CUnit *a1, WeaponType weapon_type) {
     }
     return result_;
 }
-int getDamageAmtForGUI(CUnit *a1, int weapon_type) {
+int getDamageAmtForGUI(CUnit *a1, WeaponType weapon_type) {
     int address = 0x475f10;
     int result_;
     __asm {
         xor eax, eax
-        mov ecx, weapon_type
+        xor ecx, ecx
+        mov cl, weapon_type
         mov eax, a1
         call address
         mov result_, eax
@@ -16398,7 +16401,7 @@ void sendWhisper(int result, const char *a2) {
     }
 }
 DECL_FUNC(signed (__stdcall*chatCommandFilter)(char *text), chatCommandFilter, 0x47f8f0);
-DECL_FUNC(char * (*maskSomething0)(), maskSomething0, 0x47fc50);
+DECL_FUNC(void (__cdecl*maskSomething0)(), maskSomething0, 0x47fc50);
 DECL_FUNC(int (*maskSomething2)(), maskSomething2, 0x47fe10);
 DECL_FUNC(int (__fastcall*fogGraphicSomething)(int a1, int a2, int a3, int a4, int a5), fogGraphicSomething, 0x47ff10);
 DECL_FUNC(int (__fastcall*fogGraphicSomething_0)(_BYTE *a1, int a2), fogGraphicSomething_0, 0x480000);
@@ -16412,7 +16415,7 @@ DECL_FUNC(MegatileFlags * (*sub_480410)(), sub_480410, 0x480410);
 DECL_FUNC(int (*sub_480430)(), sub_480430, 0x480430);
 DECL_FUNC(int (*j_maskSomething2)(), j_maskSomething2, 0x4804c0);
 DECL_FUNC(int (*maskSomething1)(), maskSomething1, 0x4804d0);
-DECL_FUNC(char * (*sub_4805D0)(), sub_4805D0, 0x4805d0);
+DECL_FUNC(void (__cdecl*sub_4805D0)(), sub_4805D0, 0x4805d0);
 void updateFog(int result, signed int a2, signed int a3, signed int a4) {
     int address = 0x4805f0;
     __asm {
@@ -34336,7 +34339,7 @@ u16(&Weapon_TargetErrorMessage)[130] = * ((decltype(&Weapon_TargetErrorMessage))
 WeaponBehavior(&Weapon_Behavior)[130] = * ((decltype(&Weapon_Behavior)) 0x656670);
 char(&Weapon_ExplosionType)[130] = * ((decltype(&Weapon_ExplosionType)) 0x6566f8);
 u16(&Weapon_Icon)[130] = * ((decltype(&Weapon_Icon)) 0x656780);
-__int16(&Weapon_InnerSplashRadius)[130] = * ((decltype(&Weapon_InnerSplashRadius)) 0x656888);
+unsigned __int16(&Weapon_InnerSplashRadius)[130] = * ((decltype(&Weapon_InnerSplashRadius)) 0x656888);
 u8(&Weapon_AttackDirection)[130] = * ((decltype(&Weapon_AttackDirection)) 0x656990);
 int(&Weapon_MinRange)[130] = * ((decltype(&Weapon_MinRange)) 0x656a18);
 u8(&Weapon_YOffset)[130] = * ((decltype(&Weapon_YOffset)) 0x656c20);
