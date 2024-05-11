@@ -16773,6 +16773,50 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN, "starcraft");
 
+int __fastcall statdata_buttonInteract_(dialog* dlg, dlgEvent* evt)
+{
+	switch (evt->wNo)
+	{
+	case EventNo::EVN_MOUSEMOVE:
+		sub_457DE0(dlg, evt);
+		break;
+	case EventNo::EVN_USER:
+		switch (evt->dwUser)
+		{
+		case EventUser::USER_CREATE:
+			DlgButton_Create(dlg);
+			break;
+		case EventUser::USER_DESTROY:
+			if (void* data = (void*)dlg->lUser)
+			{
+				SMemFree(data, "Starcraft\\SWAR\\lang\\statdata.cpp", 641, 0);
+			}
+			break;
+		case EventUser::USER_ACTIVATE:
+			CMDACT_CancelGeneric(dlg);
+			return 1;
+		case EventUser::USER_MOUSEMOVE:
+			if (dlg->lFlags & DialogFlags::CTRL_VISIBLE)
+			{
+				return 1;
+
+			}
+			break;
+		case EventUser::USER_NEXT:
+			if (dlg == ctrl_under_mouse)
+			{
+				refreshSelectionScreen();
+				ctrl_under_mouse = 0;
+			}
+			break;
+		}
+	}
+
+	return GenericDlgInteractFxns[dlg->wCtrlType](dlg, evt);
+}
+
+FAIL_STUB_PATCH(statdata_buttonInteract, "starcraft");
+
 void ProgressBar_Create_(dialog* a1)
 {
 	char buff[MAX_PATH];
@@ -16900,22 +16944,22 @@ void statdata_extendedCtrlID_(dialog* dlg)
 {
 	static FnInteract functions[] = {
 		statdata_UnitWireframeInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
 		statdata_ProgressBarInteract_,
 		statdata_Unknown,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
-		statdata_buttonInteract,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
+		statdata_buttonInteract_,
 		statdata_ProgressBarInteract_,
 		statdata_ProgressBarInteract_,
-		statdata_buttonInteract,
+		statdata_buttonInteract_,
 		statdata_ProgressBarInteract_,
-		statdata_buttonInteract,
+		statdata_buttonInteract_,
 		statdata_UnitWireframeTransit_, // large unit (leftmost)
 		statdata_UnitWireframeTransit_, // large unit (rightmost)
 		statdata_UnitWireframeTransit_, // large unit (middle)
