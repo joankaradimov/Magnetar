@@ -16773,12 +16773,30 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN, "starcraft");
 
+void sub_457DE0_(dialog* dlg, struct dlgEvent* evt)
+{
+	if (IS_GAME_PAUSED || dlg != dlgSetMouseOver(dlg->fields.ctrl.pDlg, evt))
+	{
+		ctrl_under_mouse = 0;
+		ctrl_under_mouse_val = -1;
+		refreshSelectionScreen_();
+	}
+	else if (dlg != ctrl_under_mouse)
+	{
+		ctrl_under_mouse_val = dlg->lUser;
+		ctrl_under_mouse = dlg;
+		statdataMouseOverInteract(dlg, dlg->fields.ctrl.pDlg);
+	}
+}
+
+FAIL_STUB_PATCH(sub_457DE0, "starcraft");
+
 int __fastcall statdata_buttonInteract_(dialog* dlg, dlgEvent* evt)
 {
 	switch (evt->wNo)
 	{
 	case EventNo::EVN_MOUSEMOVE:
-		sub_457DE0(dlg, evt);
+		sub_457DE0_(dlg, evt);
 		break;
 	case EventNo::EVN_USER:
 		switch (evt->dwUser)
@@ -16860,7 +16878,7 @@ int __fastcall statdata_UnitWireframeTransit_(dialog* dlg, dlgEvent* evn)
 {
 	if (evn->wNo == EventNo::EVN_MOUSEMOVE)
 	{
-		sub_457DE0(dlg, evn);
+		sub_457DE0_(dlg, evn);
 	}
 	else if (evn->wNo == EventNo::EVN_USER)
 	{
@@ -16899,7 +16917,7 @@ int __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 {
 	if (evt->wNo == EventNo::EVN_MOUSEMOVE)
 	{
-		sub_457DE0(dlg, evt);
+		sub_457DE0_(dlg, evt);
 	}
 	else if (evt->wNo == EventNo::EVN_USER)
 	{
