@@ -15004,6 +15004,28 @@ UnitStat unit_stats_[] =
 	{0x0E3, UnitStatCond_Powerup, UnitStatAct_Powerup },
 };
 
+void sub_457FE0_()
+{
+	dlgEvent a1;
+	a1.cursor.x = Mouse.x;
+	a1.cursor.y = Mouse.y;
+
+	dialog* stardata_Dlg_ = stardata_Dlg;
+	dialog* v1 = IS_GAME_PAUSED ? nullptr : dlgSetMouseOver(stardata_Dlg, &a1);
+
+	if (v1 != ctrl_under_mouse || v1 && v1->lUser != ctrl_under_mouse_val)
+	{
+		ctrl_under_mouse = v1;
+		if (v1)
+		{
+			ctrl_under_mouse_val = v1->lUser;
+		}
+		statdataMouseOverInteract(v1, stardata_Dlg_); // TODO: can stardata_Dlg be used directly?
+	}
+}
+
+FAIL_STUB_PATCH(sub_457FE0);
+
 void sub_458120_()
 {
 	if (ActivePortraitUnit)
@@ -15013,14 +15035,14 @@ void sub_458120_()
 			if (CanUpdateStatDataDialog || isSelGroupUpdated())
 			{
 				sub_425960(stardata_Dlg);
-				sub_457FE0();
+				sub_457FE0_();
 			}
 		}
 		else if (CanUpdateStatDataDialog || unit_stats_[ActivePortraitUnit->unitType].condition())
 		{
 			unit_stats_[ActivePortraitUnit->unitType].action(stardata_Dlg);
 			sub_4568B0();
-			sub_457FE0();
+			sub_457FE0_();
 		}
 	}
 	else if (CanUpdateStatDataDialog)
