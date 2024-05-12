@@ -8723,7 +8723,7 @@ signed int GameInit_()
 	initializePsiFieldData();
 	ResetDATFiles_();
 	resetOrdersUnitsDAT_();
-	calculateUnitStrengths();
+	calculate_unit_strengths();
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle)
 		return 1;

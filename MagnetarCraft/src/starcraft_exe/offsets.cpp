@@ -5379,18 +5379,29 @@ int sub_431100(int a1) {
     }
     return result_;
 }
-signed sub_431110(signed int unitType) {
+UnitType sub_431110(signed int unitType) {
     int address = 0x431110;
-    signed result_;
+    UnitType result_;
     __asm {
         xor eax, eax
         mov eax, unitType
+        call address
+        mov result_, ax
+    }
+    return result_;
+}
+int filter_strength(int a1, unsigned int a2) {
+    int address = 0x431150;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov ecx, a2
+        mov eax, a1
         call address
         mov result_, eax
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*filterUnitStrength)(_DWORD a1), filterUnitStrength, 0x431150);
 int sub_431200(WeaponType weapon_type) {
     int address = 0x431200;
     int result_;
@@ -5405,7 +5416,7 @@ int sub_431200(WeaponType weapon_type) {
 DECL_FUNC(int (*sub_431230)(), sub_431230, 0x431230);
 DECL_FUNC(int (*sub_431240)(), sub_431240, 0x431240);
 DECL_FUNC(int (*sub_431250)(), sub_431250, 0x431250);
-int calcUnitStrength(int a1, WeaponType weapon_type) {
+int calculate_strength(int a1, WeaponType weapon_type) {
     int address = 0x431270;
     int result_;
     __asm {
@@ -5417,29 +5428,31 @@ int calcUnitStrength(int a1, WeaponType weapon_type) {
     }
     return result_;
 }
-int sub_431320(signed int unitType) {
+int calculate_ground_strength(UnitType unitType) {
     int address = 0x431320;
     int result_;
     __asm {
         xor eax, eax
-        mov esi, unitType
+        xor esi, esi
+        mov si, unitType
         call address
         mov result_, eax
     }
     return result_;
 }
-int sub_431370(signed int unit_type) {
+int calculate_air_strength(UnitType unit_type) {
     int address = 0x431370;
     int result_;
     __asm {
         xor eax, eax
-        mov esi, unit_type
+        xor esi, esi
+        mov si, unit_type
         call address
         mov result_, eax
     }
     return result_;
 }
-DECL_FUNC(void (*calculateUnitStrengths)(void), calculateUnitStrengths, 0x4313c0);
+DECL_FUNC(void (*calculate_unit_strengths)(void), calculate_unit_strengths, 0x4313c0);
 Position sub_4314F0(CUnit *a1, int a2) {
     int address = 0x4314f0;
     Position result_;
@@ -10472,11 +10485,11 @@ void sub_457DE0(dialog *dlg, struct dlgEvent *evt) {
         call address
     }
 }
-void statdata_Destroy(dialog *a1, struct dlgEvent *a2) {
+void statdata_Destroy(dialog *dlg, struct dlgEvent *evt) {
     int address = 0x457e40;
     __asm {
-        mov ecx, a2
-        mov eax, a1
+        mov ecx, evt
+        mov eax, dlg
         call address
     }
 }
@@ -13618,7 +13631,7 @@ DECL_FUNC(BOOL (*sub_46EE70)(), sub_46EE70, 0x46ee70);
 DECL_FUNC(void (__cdecl*refreshDragSelectBox)(), refreshDragSelectBox, 0x46eeb0);
 DECL_FUNC(void (__fastcall*input_dragSelect_MouseMove)(dlgEvent *this_), input_dragSelect_MouseMove, 0x46eef0);
 DECL_FUNC(void (__cdecl*DisableDragSelect)(), DisableDragSelect, 0x46efa0);
-void getTargettingErrorString(WeaponType a1, int a2, CUnit *a3) {
+void getTargettingErrorString(WeaponType a1, WORD *a2, CUnit *a3) {
     int address = 0x46efe0;
     __asm {
         xor eax, eax
@@ -34856,9 +34869,9 @@ int& dword_6AA08C = * ((decltype(&dword_6AA08C)) 0x6aa08c);
 _DWORD(&AiArray)[11502] = * ((decltype(&AiArray)) 0x6aa090);
 _DWORD(&dword_6B5448)[6001] = * ((decltype(&dword_6B5448)) 0x6b5448);
 int(&dword_6BB20C)[] = * ((decltype(&dword_6BB20C)) 0x6bb20c);
-int(&dword_6BB210)[227] = * ((decltype(&dword_6BB210)) 0x6bb210);
+int(&unit_air_strengths)[227] = * ((decltype(&unit_air_strengths)) 0x6bb210);
 int(&dword_6BB59C)[] = * ((decltype(&dword_6BB59C)) 0x6bb59c);
-int(&dword_6BB5A0)[228] = * ((decltype(&dword_6BB5A0)) 0x6bb5a0);
+int(&unit_ground_strengths)[228] = * ((decltype(&unit_ground_strengths)) 0x6bb5a0);
 int& MaxUnitHeight = * ((decltype(&MaxUnitHeight)) 0x6bb930);
 CUnit *(&tempUnitsListsArray)[1701] = * ((decltype(&tempUnitsListsArray)) 0x6bb938);
 int(&dword_6BD3D0)[1701] = * ((decltype(&dword_6BD3D0)) 0x6bd3d0);
