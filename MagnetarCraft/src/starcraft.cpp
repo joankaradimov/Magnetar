@@ -7873,6 +7873,20 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
+void calculate_unit_strengths_()
+{
+	for (UnitType unit_type = UnitType(0); unit_type < UnitType::UT_MAX; unit_type = UnitType(unit_type + 1))
+	{
+		unsigned air_strength = calculate_air_strength(unit_type);
+		unsigned ground_strength = calculate_ground_strength(unit_type);
+
+		unit_air_strengths[unit_type] = air_strength == 1 ? ground_strength <= 1 : air_strength;
+		unit_ground_strengths[unit_type] = ground_strength == 1 ? air_strength <= 1 : ground_strength;
+	}
+}
+
+FAIL_STUB_PATCH(calculate_unit_strengths, "starcraft");
+
 void sub_4BE200_()
 {
 	if (last_cursor && last_cursor->wFrames != 1)
@@ -8723,7 +8737,7 @@ signed int GameInit_()
 	initializePsiFieldData();
 	ResetDATFiles_();
 	resetOrdersUnitsDAT_();
-	calculate_unit_strengths();
+	calculate_unit_strengths_();
 	createUnitBuildingSpriteValidityArray();
 	if (loadGameFileHandle)
 		return 1;
