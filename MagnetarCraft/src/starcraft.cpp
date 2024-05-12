@@ -7873,6 +7873,30 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
+unsigned calculate_strength_(UnitType unit_type, WeaponType weapon_type)
+{
+	unsigned shield_points = Unit_ShieldsEnabled[unit_type] ? Unit_MaxShieldPoints[unit_type] : 0;
+	unsigned hit_points = shield_points + (Unit_MaxHitPoints[unit_type] >> 8);
+
+	if (!hit_points)
+	{
+		return 0;
+	}
+
+	// The actual formula is:
+	// 7.58 * sqrt(dps * range + 8 * dps * hit_points); where dps = (damage / cooldown)
+	// The weird conditions, brackets, and integer operations are for compatibility with the original implementation
+
+	unsigned damage = (unsigned)Weapon_DamageFactor[weapon_type] * Weapon_DamageAmount[weapon_type];
+	int range = Weapon_MaxRange[weapon_type];
+	unsigned cooldown = Weapon_DamageCooldown[weapon_type];
+	unsigned real_damage = weapon_type != WT_None ? damage : 0;
+
+	return (unsigned)(7.58 * sqrt(double(damage * (range / cooldown) + hit_points * (8 * 256 * real_damage / cooldown) / 256)));
+}
+
+FAIL_STUB_PATCH(calculate_strength, "starcraft");
+
 unsigned adjust_unit_strength_(UnitType unit_type, unsigned strength)
 {
 	switch (unit_type)
@@ -7912,7 +7936,7 @@ int calculate_air_strength_(UnitType unit_type)
 	{
 		return 1;
 	}
-	return adjust_unit_strength_(unit_type, calculate_strength(unit_type, weapon));
+	return adjust_unit_strength_(unit_type, calculate_strength_(unit_type, weapon));
 }
 
 FAIL_STUB_PATCH(calculate_air_strength, "starcraft");
@@ -7928,7 +7952,7 @@ int calculate_ground_strength_(UnitType unit_type)
 	{
 		return 1;
 	}
-	return adjust_unit_strength_(unit_type, calculate_strength(unit_type, weapon_type));
+	return adjust_unit_strength_(unit_type, calculate_strength_(unit_type, weapon_type));
 }
 
 FAIL_STUB_PATCH(calculate_ground_strength, "starcraft");
