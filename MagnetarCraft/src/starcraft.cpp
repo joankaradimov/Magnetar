@@ -16795,6 +16795,23 @@ void load_StatRes_BIN_()
 
 FAIL_STUB_PATCH(load_StatRes_BIN, "starcraft");
 
+void statdata_Destroy_(dialog* dlg, struct dlgEvent* evt)
+{
+	dialog* v3 = IS_GAME_PAUSED ? nullptr : dlgSetMouseOver(dlg, evt);
+
+	if (v3 != ctrl_under_mouse || v3 && v3->lUser != ctrl_under_mouse_val)
+	{
+		ctrl_under_mouse = v3;
+		if (v3)
+		{
+			ctrl_under_mouse_val = v3->lUser;
+		}
+		statdataMouseOverInteract(v3, dlg);
+	}
+}
+
+FAIL_STUB_PATCH(statdata_Destroy, "starcraft");
+
 void sub_457DE0_(dialog* dlg, struct dlgEvent* evt)
 {
 	if (IS_GAME_PAUSED || dlg != dlgSetMouseOver(dlg->fields.ctrl.pDlg, evt))
@@ -17046,7 +17063,7 @@ int __fastcall statdata_dlg_Interact_(dialog* dlg, dlgEvent* evt)
 		return 0;
 		break;
 	case EventNo::EVN_MOUSEMOVE:
-		statdata_Destroy(dlg, evt);
+		statdata_Destroy_(dlg, evt);
 		break;
 	case EventNo::EVN_USER:
 		if (evt->dwUser == EventUser::USER_CREATE)
