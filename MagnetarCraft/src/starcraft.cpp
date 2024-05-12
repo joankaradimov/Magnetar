@@ -7873,6 +7873,34 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
+unsigned adjust_unit_strength_(UnitType unit_type, unsigned strength)
+{
+	switch (unit_type)
+	{
+	case UnitType::Terran_SCV:
+	case UnitType::Zerg_Drone:
+	case UnitType::Protoss_Probe:
+		return strength / 4;
+	case UnitType::Terran_Vulture_Spider_Mine:
+	case UnitType::Protoss_Interceptor:
+	case UnitType::Protoss_Scarab:
+		return 0;
+	case UnitType::Terran_Firebat:
+	case UnitType::Zerg_Mutalisk:
+	case UnitType::Protoss_Zealot:
+		return 2 * strength;
+	case UnitType::Zerg_Scourge:
+	case UnitType::Zerg_Infested_Terran:
+		return strength / 16;
+	case UnitType::Protoss_Reaver:
+		return strength / 10;
+	}
+
+	return strength;
+}
+
+FAIL_STUB_PATCH(adjust_unit_strength, "starcraft");
+
 int calculate_air_strength_(UnitType unit_type)
 {
 	if (unit_type == Zerg_Larva || unit_type == Zerg_Egg || unit_type == Zerg_Cocoon || unit_type == Zerg_Lurker_Egg)
@@ -7884,7 +7912,7 @@ int calculate_air_strength_(UnitType unit_type)
 	{
 		return 1;
 	}
-	return filter_strength(unit_type, calculate_strength(unit_type, weapon));
+	return adjust_unit_strength_(unit_type, calculate_strength(unit_type, weapon));
 }
 
 FAIL_STUB_PATCH(calculate_air_strength, "starcraft");
@@ -7900,7 +7928,7 @@ int calculate_ground_strength_(UnitType unit_type)
 	{
 		return 1;
 	}
-	return filter_strength(unit_type, calculate_strength(unit_type, weapon_type));
+	return adjust_unit_strength_(unit_type, calculate_strength(unit_type, weapon_type));
 }
 
 FAIL_STUB_PATCH(calculate_ground_strength, "starcraft");

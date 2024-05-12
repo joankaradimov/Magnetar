@@ -5390,13 +5390,13 @@ UnitType sub_431110(signed int unitType) {
     }
     return result_;
 }
-int filter_strength(int a1, unsigned int a2) {
+unsigned adjust_unit_strength(UnitType unit_type, unsigned int a2) {
     int address = 0x431150;
-    int result_;
+    unsigned result_;
     __asm {
         xor eax, eax
         mov ecx, a2
-        mov eax, a1
+        mov ax, unit_type
         call address
         mov result_, eax
     }
@@ -5428,13 +5428,13 @@ int calculate_strength(int a1, WeaponType weapon_type) {
     }
     return result_;
 }
-int calculate_ground_strength(UnitType unitType) {
+int calculate_ground_strength(UnitType unit_type) {
     int address = 0x431320;
     int result_;
     __asm {
         xor eax, eax
         xor esi, esi
-        mov si, unitType
+        mov si, unit_type
         call address
         mov result_, eax
     }
