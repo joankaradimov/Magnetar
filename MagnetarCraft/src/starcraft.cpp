@@ -7873,12 +7873,44 @@ void resetOrdersUnitsDAT_()
 
 FAIL_STUB_PATCH(resetOrdersUnitsDAT, "starcraft");
 
+int calculate_air_strength_(UnitType unit_type)
+{
+	if (unit_type == Zerg_Larva || unit_type == Zerg_Egg || unit_type == Zerg_Cocoon || unit_type == Zerg_Lurker_Egg)
+	{
+		return 0;
+	}
+	WeaponType weapon = Unit_AirWeapon[sub_431110(unit_type)];
+	if (weapon == WT_None)
+	{
+		return 1;
+	}
+	return filter_strength(unit_type, calculate_strength(unit_type, weapon));
+}
+
+FAIL_STUB_PATCH(calculate_air_strength, "starcraft");
+
+int calculate_ground_strength_(UnitType unit_type)
+{
+	if (unit_type == Zerg_Larva || unit_type == Zerg_Egg || unit_type == Zerg_Cocoon || unit_type == Zerg_Lurker_Egg)
+	{
+		return 0;
+	}
+	WeaponType weapon_type = Unit_GroundWeapon[sub_431110(unit_type)];
+	if (weapon_type == WT_None)
+	{
+		return 1;
+	}
+	return filter_strength(unit_type, calculate_strength(unit_type, weapon_type));
+}
+
+FAIL_STUB_PATCH(calculate_ground_strength, "starcraft");
+
 void calculate_unit_strengths_()
 {
 	for (UnitType unit_type = UnitType(0); unit_type < UnitType::UT_MAX; unit_type = UnitType(unit_type + 1))
 	{
-		unsigned air_strength = calculate_air_strength(unit_type);
-		unsigned ground_strength = calculate_ground_strength(unit_type);
+		unsigned air_strength = calculate_air_strength_(unit_type);
+		unsigned ground_strength = calculate_ground_strength_(unit_type);
 
 		unit_air_strengths[unit_type] = air_strength == 1 ? ground_strength <= 1 : air_strength;
 		unit_ground_strengths[unit_type] = ground_strength == 1 ? air_strength <= 1 : ground_strength;
