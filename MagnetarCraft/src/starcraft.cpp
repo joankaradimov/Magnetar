@@ -15102,6 +15102,68 @@ UnitStat unit_stats_[] =
 	{0x0E3, UnitStatCond_Powerup, UnitStatAct_Powerup },
 };
 
+void statdataMouseOverInteract_(dialog* a1, dialog* a2)
+{
+	if (ActivePortraitUnit && a1 && a1 != a2 && (!InReplay || 9 <= a1->wIndex && a1->wIndex <= 12))
+	{
+		switch (a1->wIndex)
+		{
+		case 2:
+		case 3:
+		case 4:
+		case 5:
+		case 6:
+		case 17:
+			drawCancelUnitContextHelp(a1);
+			return;
+		case 9:
+		case 10:
+		case 11:
+		case 12:
+			statdatalUserInteract(a1); // TODO: reimplement for weapons.dat
+			return;
+		case 15:
+			drawCancelUpgradeContextHelp(a1);
+			return;
+		case 18:
+		case 19:
+		case 20:
+		case 21:
+		case 22:
+		case 23:
+		case 24:
+		case 25:
+		case 26:
+		case 27:
+		case 28:
+		case 29:
+		case 30:
+		case 31:
+		case 32:
+			drawUnloadUnitContextHelp(a1);
+			return;
+		case 33:
+		case 34:
+		case 35:
+		case 36:
+		case 37:
+		case 38:
+		case 39:
+		case 40:
+		case 41:
+		case 42:
+		case 43:
+		case 44:
+			CreateContextHelpFromDialog(a1, GetTblString(StatTxtTbl.buffer, 809));
+			return;
+		}
+	}
+
+	refreshSelectionScreen_();
+}
+
+FAIL_STUB_PATCH(statdataMouseOverInteract, "starcraft");
+
 void sub_457FE0_()
 {
 	dlgEvent a1;
@@ -15118,7 +15180,7 @@ void sub_457FE0_()
 		{
 			ctrl_under_mouse_val = v1->lUser;
 		}
-		statdataMouseOverInteract(v1, stardata_Dlg_); // TODO: can stardata_Dlg be used directly?
+		statdataMouseOverInteract_(v1, stardata_Dlg_); // TODO: can stardata_Dlg be used directly?
 	}
 }
 
@@ -16904,7 +16966,7 @@ void statdata_Destroy_(dialog* dlg, struct dlgEvent* evt)
 		{
 			ctrl_under_mouse_val = v3->lUser;
 		}
-		statdataMouseOverInteract(v3, dlg);
+		statdataMouseOverInteract_(v3, dlg);
 	}
 }
 
@@ -16922,7 +16984,7 @@ void sub_457DE0_(dialog* dlg, struct dlgEvent* evt)
 	{
 		ctrl_under_mouse_val = dlg->lUser;
 		ctrl_under_mouse = dlg;
-		statdataMouseOverInteract(dlg, dlg->fields.ctrl.pDlg);
+		statdataMouseOverInteract_(dlg, dlg->fields.ctrl.pDlg);
 	}
 }
 
