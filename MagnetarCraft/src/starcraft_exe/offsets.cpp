@@ -3777,7 +3777,7 @@ u8 * BWFXN_PrintXY(char *a1, int a2) {
     }
     return result_;
 }
-unsigned BWFXN_DrawXY(char *text, signed int x, signed int y) {
+unsigned BWFXN_DrawXY(const char *text, signed int x, signed int y) {
     int address = 0x4202b0;
     unsigned result_;
     __asm {
@@ -5390,12 +5390,12 @@ UnitType sub_431110(signed int unitType) {
     }
     return result_;
 }
-unsigned adjust_unit_strength(UnitType unit_type, unsigned int a2) {
+unsigned adjust_unit_strength(UnitType unit_type, unsigned int strength) {
     int address = 0x431150;
     unsigned result_;
     __asm {
         xor eax, eax
-        mov ecx, a2
+        mov ecx, strength
         mov ax, unit_type
         call address
         mov result_, eax
@@ -5416,13 +5416,13 @@ int sub_431200(WeaponType weapon_type) {
 DECL_FUNC(int (*sub_431230)(), sub_431230, 0x431230);
 DECL_FUNC(int (*sub_431240)(), sub_431240, 0x431240);
 DECL_FUNC(int (*sub_431250)(), sub_431250, 0x431250);
-int calculate_strength(int a1, WeaponType weapon_type) {
+unsigned calculate_strength(UnitType unit_type, WeaponType weapon_type) {
     int address = 0x431270;
-    int result_;
+    unsigned result_;
     __asm {
         xor eax, eax
         push dword ptr weapon_type
-        mov eax, a1
+        mov ax, unit_type
         call address
         mov result_, eax
     }
@@ -10411,13 +10411,12 @@ void sub_457310(dialog *a1) {
         call address
     }
 }
-void CreateContextHelpFromDialog(dialog *a1, char *a2) {
+void CreateContextHelpFromDialog(dialog *a1, const char *a2) {
     int address = 0x457350;
     __asm {
         push dword ptr a2
         mov eax, a1
         call address
-        add esp, 4
     }
 }
 void sub_457390(int a1) {
@@ -16548,7 +16547,7 @@ void refreshSelectionScreenEx(WORD *a1) {
     }
 }
 DECL_FUNC(void (__cdecl*refreshSelectionScreen)(), refreshSelectionScreen, 0x481480);
-void CreateContextHelp(int a1, int a2, char *a3) {
+void CreateContextHelp(int a1, int a2, const char *a3) {
     int address = 0x481510;
     __asm {
         push dword ptr a3
