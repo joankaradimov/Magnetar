@@ -7932,7 +7932,7 @@ int calculate_air_strength_(UnitType unit_type)
 		return 0;
 	}
 	WeaponType weapon = Unit_AirWeapon[sub_431110(unit_type)];
-	if (weapon == WT_None)
+	if (weapon == WeaponType::WT_None)
 	{
 		return 1;
 	}
@@ -7948,7 +7948,7 @@ int calculate_ground_strength_(UnitType unit_type)
 		return 0;
 	}
 	WeaponType weapon_type = Unit_GroundWeapon[sub_431110(unit_type)];
-	if (weapon_type == WT_None)
+	if (weapon_type == WeaponType::WT_None)
 	{
 		return 1;
 	}
