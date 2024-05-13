@@ -141,6 +141,38 @@ void BulletBehaviour_Bounce_(CBullet* bullet)
 
 FAIL_STUB_PATCH(BulletBehaviour_Bounce, "starcraft");
 
+void BulletBehaviour_Persist_(CBullet* bullet)
+{
+    bool time_expired = bullet->time_remaining == 0;
+    bullet->time_remaining -= 1;
+
+    if (time_expired)
+    {
+        bullet->behaviourTypeInternal = ReachedDestination;
+        if (CUnit* target = bullet->attackTarget.pUnit)
+        {
+            bullet->attackTarget.pt.x = target->sprite->position.x;
+            bullet->attackTarget.pt.y = target->sprite->position.y;
+        }
+        else
+        {
+            bullet->attackTarget.pUnit = nullptr;
+        }
+        bullet->unknown_0x4E = 0;
+        bullet->someUnitType = UT_MAX;
+        for (CImage* image = bullet->sprite->pImageHead; image; image = image->next)
+        {
+            PlayIscriptAnim_(image, AE_Death);
+        }
+    }
+    else if (bullet->time_remaining % 7 == 0)
+    {
+        CBullet_Damage(bullet);
+    }
+}
+
+FAIL_STUB_PATCH(BulletBehaviour_Persist, "starcraft");
+
 int InitializeBullet_(CUnit* unit, __int16 a2, char player_id, CBullet* bullet, WeaponType weapon_type, int a6, int a7)
 {
     if (sub_496360(Weapon_Graphic[weapon_type], a2, a6, (CFlingy*)bullet, player_id, a7))
@@ -379,7 +411,7 @@ void ProgressBulletState_(CBullet* bullet)
         BulletBehaviour_Bounce_(bullet);
         break;
     case BulletState::TargetGround:
-        BulletBehaviour_Persist(bullet);
+        BulletBehaviour_Persist_(bullet);
         break;
     case BulletState::ReachedDestination:
         BulletBehaviour_Instant(bullet);
