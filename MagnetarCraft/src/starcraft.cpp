@@ -12145,6 +12145,33 @@ void getTargetSomething_(CUnit* unit)
 
 FAIL_STUB_PATCH(getTargetSomething, "starcraft");
 
+void orders_AttackUnit_(CUnit* unit)
+{
+	if (Players[unit->playerID].nType == PlayerType::PT_Computer)
+	{
+		CUnit* target = unit->orderTarget.pUnit;
+		if (!target || !(Unit_PrototypeFlags[target->unitType] & UnitPrototypeFlags::Building))
+		{
+			if (AI_Guard_AttackTarget_Proc(unit, 0))
+			{
+				return;
+			}
+		}
+	}
+
+	holdPositionProc(unit);
+	if (OrderAttackBehaviour(unit))
+	{
+		if (unit->status.pAI)
+		{
+			AI_AttackUnit(unit);
+		}
+		getWeaponBeginIscript(unit, AE_GndAttkRpt);
+	}
+}
+
+FAIL_STUB_PATCH(orders_AttackUnit, "starcraft");
+
 void ordersEntries_(CUnit* unit)
 {
 	switch (unit->orderID)
@@ -12319,7 +12346,7 @@ void ordersEntries_(CUnit* unit)
 					orders_Special(unit);
 					break;
 				case Order::ORD_ATTACK_UNIT:
-					orders_AttackUnit(unit);
+					orders_AttackUnit_(unit);
 					break;
 				case Order::ORD_ATTACK_FIXED_RNGE:
 					orders_AttackFixedRange(unit);
