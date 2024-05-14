@@ -244,6 +244,8 @@ struct struct_v4_1;
 struct struct_a2_1;
 struct struc_500F60;
 struct struc_640898;
+enum StatDataDescriptorType : unsigned __int16;
+enum ExplosionType : unsigned __int8;
 struct RTTIBaseClassDescriptor;
 struct _EH3_EXCEPTION_REGISTRATION;
 struct Bitmap;
@@ -368,6 +370,7 @@ struct __declspec(align(1)) GroupUnitsCommand;
 struct UnitGroupRelatedInner;
 struct TSAVEGAME;
 struct GlueEffectBuffer;
+struct StatDataDescriptor;
 struct CPPEH_RECORD;
 struct dialog_btn;
 struct __declspec(align(1)) dialog_list;
@@ -2036,8 +2039,8 @@ enum WeaponBehavior : __int8
   WB_AppearOnTargetSite = 0x4,
   WB_AppearOnAttacker = 0x5,
   WB_AttackAndSelfDestruct = 0x6,
-  WB_AttackNearbyArea = 0x8,
   WB_Bounce = 0x7,
+  WB_AttackNearbyArea = 0x8,
   WB_GoToMaxRange = 0x9,
 };
 
@@ -5064,6 +5067,44 @@ struct struc_640898
 };
 static_assert(sizeof(struc_640898) == 48, "Incorrect size for type `struc_640898`. Expected: 48");
 
+enum StatDataDescriptorType : unsigned __int16
+{
+  SDDT_WEAPON = 0x0,
+  SDDT_ARMOR = 0x1,
+  SDDT_UPGRADE = 0x2,
+  SDDT_UNIT = 0x3,
+  SDDT_TECH = 0x4,
+};
+
+enum ExplosionType : unsigned __int8
+{
+  ET_NONE = 0x0,
+  ET_NORMAL = 0x1,
+  ET_RADIAL_SPLASH = 0x2,
+  ET_ENEMY_SPLASH = 0x3,
+  ET_LOCKDOWN = 0x4,
+  ET_NUCLEAR_MISSILE = 0x5,
+  ET_PARASITE = 0x6,
+  ET_BROODLINGS = 0x7,
+  ET_EMP_SHOCKWAVE = 0x8,
+  ET_IRRADIATE = 0x9,
+  ET_ENSNARE = 0xA,
+  ET_PLAGUE = 0xB,
+  ET_STASIS_FIELD = 0xC,
+  ET_DARK_SWARM = 0xD,
+  ET_CONSUME = 0xE,
+  ET_YAMATO_GUN = 0xF,
+  ET_RESTORATION = 0x10,
+  ET_DISRUPTION_WEB = 0x11,
+  ET_CORROSIVE_ACID = 0x12,
+  ET_MIND_CONTROL = 0x13,
+  ET_FEEDBACK = 0x14,
+  ET_OPTICAL_FLARE = 0x15,
+  ET_MAELSTROM = 0x16,
+  ET_23 = 0x17,
+  ET_AIR_SPLASH = 0x18,
+};
+
 #pragma pack(push, 1)
 struct RTTIBaseClassDescriptor
 {
@@ -6264,6 +6305,15 @@ struct GlueEffectBuffer
 };
 static_assert(sizeof(GlueEffectBuffer) == 16, "Incorrect size for type `GlueEffectBuffer`. Expected: 16");
 
+struct StatDataDescriptor
+{
+  CUnit *xxx;
+  _WORD word4;
+  StatDataDescriptorType type;
+  u16 value;
+};
+static_assert(sizeof(StatDataDescriptor) == 12, "Incorrect size for type `StatDataDescriptor`. Expected: 12");
+
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 
 struct CPPEH_RECORD
@@ -7002,7 +7052,7 @@ struct __declspec(align(2)) dialog
   s16 wIndex;
   DialogType wCtrlType;
   u16 wUser;
-  int lUser;
+  void *lUser;
   FnInteract pfcnInteract;
   FnUpdate pfcnUpdate;
   dialog_fields fields;

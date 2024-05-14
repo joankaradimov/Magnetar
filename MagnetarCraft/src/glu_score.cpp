@@ -181,7 +181,7 @@ int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_SHOW:
 			if (dlg->lUser)
 			{
-				int v4 = dlg->lUser;
+				int v4 = (int) dlg->lUser;
 				if (*(_DWORD*)(v4 + 20))
 				{
 					return genericCommonInteract(evt, dlg);

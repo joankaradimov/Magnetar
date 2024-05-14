@@ -10326,7 +10326,7 @@ dialog * sub_456A30(dialog *result) {
     }
     return result_;
 }
-DECL_FUNC(int (__fastcall*statdata_UnitWireframeInteract)(dialog *a1, dlgEvent *a2), statdata_UnitWireframeInteract, 0x456a50);
+DECL_FUNC(int (__fastcall*statdata_UnitWireframeInteract)(dialog *dlg, dlgEvent *evt), statdata_UnitWireframeInteract, 0x456a50);
 DECL_FUNC(void (*load_WireframeGRP)(), load_WireframeGRP, 0x456a90);
 DECL_FUNC(int (*sub_456AE0)(), sub_456AE0, 0x456ae0);
 DECL_FUNC(u8 * (*ProgressBar_Destroy)(), ProgressBar_Destroy, 0x456b00);
@@ -10366,7 +10366,7 @@ char sub_456D30(dialog *dlg) {
     return result_;
 }
 DECL_FUNC(void (__thiscall*statdata_LabelUnknownUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_LabelUnknownUpdate, 0x456e00);
-DECL_FUNC(int (__fastcall*statdata_Unknown)(dialog *a1, dlgEvent *a2), statdata_Unknown, 0x456ec0);
+DECL_FUNC(int (__fastcall*statdata_Unknown)(dialog *dlg, dlgEvent *evt), statdata_Unknown, 0x456ec0);
 DECL_FUNC(void (__cdecl*destroyStatdata)(), destroyStatdata, 0x456ef0);
 DECL_FUNC(void (__fastcall*statdata_UnitWireframeSelectUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeSelectUpdate, 0x456f50);
 DECL_FUNC(void (__fastcall*statdata_UnitWireframeTransUpdate)(dialog *dlg, int x, int y, rect *dst), statdata_UnitWireframeTransUpdate, 0x4570a0);
@@ -10457,16 +10457,12 @@ void drawUnloadUnitContextHelp(dialog *a1) {
         call address
     }
 }
-void * DlgButton_Create(dialog *a1) {
+void DlgButton_Create(dialog *a1) {
     int address = 0x457ca0;
-    void * result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void statdataMouseOverInteract(dialog *a1, dialog *a2) {
     int address = 0x457ce0;
@@ -10495,10 +10491,10 @@ void statdata_Destroy(dialog *dlg, struct dlgEvent *evt) {
 DECL_FUNC(int (__fastcall*statdata_UnitWireframeTransit)(dialog *dlg, dlgEvent *evn), statdata_UnitWireframeTransit, 0x457e90);
 DECL_FUNC(int (__fastcall*statdata_buttonInteract)(dialog *dlg, dlgEvent *evt), statdata_buttonInteract, 0x457f30);
 DECL_FUNC(void (__cdecl*sub_457FE0)(), sub_457FE0, 0x457fe0);
-void ProgressBar_Create(dialog *a1) {
+void ProgressBar_Create(dialog *dlg) {
     int address = 0x458050;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -10506,10 +10502,10 @@ DECL_FUNC(void (*sub_458120)(), sub_458120, 0x458120);
 DECL_FUNC(int (__fastcall*statdata_ProgressBarInteract)(dialog *dlg, dlgEvent *evt), statdata_ProgressBarInteract, 0x4581e0);
 DECL_FUNC(void (__fastcall*StatusScreenButton)(dialog *a1, dialog *a2), StatusScreenButton, 0x458220);
 DECL_FUNC(int (__fastcall*statdata_UnitWireframeSelection)(dialog *dlg, dlgEvent *evt), statdata_UnitWireframeSelection, 0x4583e0);
-void statdata_extendedCtrlID(dialog *a1) {
+void statdata_extendedCtrlID(dialog *dlg) {
     int address = 0x4584c0;
     __asm {
-        mov eax, a1
+        mov eax, dlg
         call address
     }
 }
@@ -11068,16 +11064,12 @@ void updateNewUnitVision(UnitType a1, int pos_x, int pos_y) {
         call address
     }
 }
-Order orders_DroneStartBuild(CUnit *a1) {
+void orders_DroneStartBuild(CUnit *a1) {
     int address = 0x45cf80;
-    Order result_;
     __asm {
-        xor eax, eax
         mov eax, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 DECL_FUNC(signed (__stdcall*sub_45D040)(CUnit *a1), sub_45D040, 0x45d040);
 DECL_FUNC(void (__stdcall*orders_Morph2)(CUnit *a1), orders_Morph2, 0x45d0d0);
@@ -13683,10 +13675,10 @@ int sub_46F380(int a1, int a2, CUnit *a3) {
     return result_;
 }
 DECL_FUNC(CUnit * (__stdcall*FindUnitAtPoint)(int x, int y), FindUnitAtPoint, 0x46f3a0);
-void sub_46F5B0(int x, int y, CUnit *unit, signed int a4) {
+void sub_46F5B0(int x, int y, CUnit *unit, signed int unit_type) {
     int address = 0x46f5b0;
     __asm {
-        push dword ptr a4
+        push dword ptr unit_type
         push dword ptr unit
         push dword ptr y
         push dword ptr x
@@ -15311,18 +15303,14 @@ void AskForHelp(CUnit *enemy, CUnit *unit) {
         call address
     }
 }
-CUnit * getWeaponBeginIscript(CUnit *result, Anims a2) {
+void getWeaponBeginIscript(CUnit *result, Anims a2) {
     int address = 0x476ed0;
-    CUnit * result_;
     __asm {
-        xor eax, eax
         xor edx, edx
         mov dl, a2
         mov eax, result
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void orders_tower_guard(CUnit *unit) {
     int address = 0x476f50;
@@ -15511,16 +15499,12 @@ void orders_HarassMove(CUnit *unit) {
         call address
     }
 }
-char orders_AttackMove(CUnit *a1) {
+void orders_AttackMove(CUnit *a1) {
     int address = 0x479040;
-    char result_;
     __asm {
-        xor eax, eax
         mov esi, a1
         call address
-        mov result_, al
     }
-    return result_;
 }
 void orders_tower_attack(CUnit *unit) {
     int address = 0x479150;
@@ -15585,18 +15569,14 @@ void DoWeaponDamage(unsigned int result, CUnit *a2, WeaponType weapon_type, unsi
         call address
     }
 }
-int WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
+void WeaponBulletShot(CBullet *bullet, CUnit *target, unsigned int dmg_divide) {
     int address = 0x479ae0;
-    int result_;
     __asm {
-        xor eax, eax
         push dword ptr dmg_divide
         mov eax, target
         mov edx, bullet
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void ISCRIPT_AttackMelee(CUnit *unit) {
     int address = 0x479b40;
@@ -15605,16 +15585,12 @@ void ISCRIPT_AttackMelee(CUnit *unit) {
         call address
     }
 }
-CUnit * orders_AttackUnit(CUnit *a1) {
+void orders_AttackUnit(CUnit *unit) {
     int address = 0x479bd0;
-    CUnit * result_;
     __asm {
-        xor eax, eax
-        mov esi, a1
+        mov esi, unit
         call address
-        mov result_, eax
     }
-    return result_;
 }
 void ISCRIPT_UseWeapon(CUnit *unit, WeaponType weapon_type) {
     int address = 0x479c30;
@@ -17694,8 +17670,8 @@ int Splash(CBullet *a1, CUnit *a2) {
 DECL_FUNC(int (__fastcall*SplashProc)(CUnit *a1, CBullet *a2), SplashProc, 0x48b680);
 DECL_FUNC(int (__fastcall*AirSplashProc2)(CUnit *a1, CBullet *a2), AirSplashProc2, 0x48b730);
 DECL_FUNC(int (__fastcall*LurkerSplashProc)(CUnit *a1, CBullet *a2), LurkerSplashProc, 0x48b750);
-DECL_FUNC(void (__stdcall*CBullet_Damage)(CBullet *a1), CBullet_Damage, 0x48b770);
-DECL_FUNC(void (__thiscall*BulletBehaviour_Persist)(CBullet *this_), BulletBehaviour_Persist, 0x48bc70);
+DECL_FUNC(void (__stdcall*CBullet_Damage)(CBullet *bullet), CBullet_Damage, 0x48b770);
+DECL_FUNC(void (__thiscall*BulletBehaviour_Persist)(CBullet *bullet), BulletBehaviour_Persist, 0x48bc70);
 void ProgressBulletState(CBullet *bullet) {
     int address = 0x48bcf0;
     __asm {
@@ -18003,14 +17979,14 @@ void sub_48DFF0(CUnit *a1) {
 }
 DECL_FUNC(void (__stdcall*cmdRECV_PlaceBuildingNormal)(__int64 a1, int unit_type), cmdRECV_PlaceBuildingNormal, 0x48e010);
 DECL_FUNC(void (__stdcall*cmdRECV_PlaceBuildingAddon)(__int64 a1, int a2), cmdRECV_PlaceBuildingAddon, 0x48e0a0);
-int cmdRECV_PlaceBuilding(unsigned __int16 a1, int a2, int a3) {
+int cmdRECV_PlaceBuilding(unsigned __int16 ax0, unsigned int a2, int a3) {
     int address = 0x48e190;
     int result_;
     __asm {
         xor eax, eax
         push dword ptr a3
         mov ecx, a2
-        mov ax, a1
+        mov ax, ax0
         call address
         mov result_, eax
     }
@@ -20521,7 +20497,7 @@ bool CheckUnitCollisionPos(__int16 *move_area, CUnit *unit, Position *inPos, Pos
     }
     return result_;
 }
-DECL_FUNC(int (__thiscall*SelfDestructCB)(CUnit *this_), SelfDestructCB, 0x49d640);
+DECL_FUNC(int (__fastcall*SelfDestructCB)(CUnit *unit, CBullet *bullet), SelfDestructCB, 0x49d640);
 __int16 sub_49D660(CUnit *a1) {
     int address = 0x49d660;
     __int16 result_;
@@ -29406,13 +29382,13 @@ CUnit * AI_BestUnit_InBox(__int16 a1, CUnit *a2, int (__fastcall *a3)(CUnit *, C
     }
     return result_;
 }
-CUnit * ModifyUnit_maybe(Box16 *a1, void *a2, int (__fastcall *a3)(CUnit *, void *)) {
+CUnit * ModifyUnit_maybe(Box16 *a1, CBullet *bullet, int (__fastcall *a3)(CUnit *, CBullet *)) {
     int address = 0x4e8830;
     CUnit * result_;
     __asm {
         xor eax, eax
         mov edi, a3
-        mov ebx, a2
+        mov ebx, bullet
         mov eax, a1
         call address
         mov result_, eax
@@ -34349,7 +34325,7 @@ __int16(&Tech_Icon)[44] = * ((decltype(&Tech_Icon)) 0x656430);
 u8(&Weapon_DamageFactor)[130] = * ((decltype(&Weapon_DamageFactor)) 0x6564e0);
 u16(&Weapon_TargetErrorMessage)[130] = * ((decltype(&Weapon_TargetErrorMessage)) 0x656568);
 WeaponBehavior(&Weapon_Behavior)[130] = * ((decltype(&Weapon_Behavior)) 0x656670);
-char(&Weapon_ExplosionType)[130] = * ((decltype(&Weapon_ExplosionType)) 0x6566f8);
+ExplosionType(&Weapon_ExplosionType)[130] = * ((decltype(&Weapon_ExplosionType)) 0x6566f8);
 u16(&Weapon_Icon)[130] = * ((decltype(&Weapon_Icon)) 0x656780);
 unsigned __int16(&Weapon_InnerSplashRadius)[130] = * ((decltype(&Weapon_InnerSplashRadius)) 0x656888);
 u8(&Weapon_AttackDirection)[130] = * ((decltype(&Weapon_AttackDirection)) 0x656990);
@@ -34491,7 +34467,7 @@ char(&Orders_CanBeInterrupted)[189] = * ((decltype(&Orders_CanBeInterrupted)) 0x
 char(&Orders_Unknown7)[189] = * ((decltype(&Orders_Unknown7)) 0x665100);
 char(&Orders_Unknown9)[189] = * ((decltype(&Orders_Unknown9)) 0x6651c0);
 __int16(&Orders_Label)[189] = * ((decltype(&Orders_Label)) 0x665280);
-char(&Orders_ObscuredOrder)[189] = * ((decltype(&Orders_ObscuredOrder)) 0x665400);
+Order(&Orders_ObscuredOrder)[189] = * ((decltype(&Orders_ObscuredOrder)) 0x665400);
 char(&Orders_CanBeObstructed)[189] = * ((decltype(&Orders_CanBeObstructed)) 0x6654c0);
 __int16(&Orders_Unknown17)[189] = * ((decltype(&Orders_Unknown17)) 0x665580);
 char(&Orders_CanBeQueued)[189] = * ((decltype(&Orders_CanBeQueued)) 0x665700);
@@ -34635,7 +34611,7 @@ void *& cmdicons_grp = * ((decltype(&cmdicons_grp)) 0x68c1e0);
 char& byte_68C1E4 = * ((decltype(&byte_68C1E4)) 0x68c1e4);
 char& statusScreenFunc = * ((decltype(&statusScreenFunc)) 0x68c1e5);
 dialog *& ctrl_under_mouse = * ((decltype(&ctrl_under_mouse)) 0x68c1e8);
-int& ctrl_under_mouse_val = * ((decltype(&ctrl_under_mouse_val)) 0x68c1ec);
+StatDataDescriptor *& ctrl_under_mouse_val = * ((decltype(&ctrl_under_mouse_val)) 0x68c1ec);
 dialog *& stardata_Dlg = * ((decltype(&stardata_Dlg)) 0x68c1f0);
 grpHead *& dword_68C1F4 = * ((decltype(&dword_68C1F4)) 0x68c1f4);
 char& CanUpdateStatDataDialog = * ((decltype(&CanUpdateStatDataDialog)) 0x68c1f8);

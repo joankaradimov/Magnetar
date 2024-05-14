@@ -6586,7 +6586,7 @@ void CreateInitialMeleeBuildings_(RaceId race, u8 player_index)
 	v14.top = v10 - v6 / 2;
 	v14.bottom = v6 / 2 + v10 - 1;
 	v14.right = v7 + v9 - 1;
-	ModifyUnit_maybe(&v14, 0, (int(__fastcall*)(CUnit*, void*))SelfDestructCB);
+	ModifyUnit_maybe(&v14, 0, SelfDestructCB);
 
 	CUnit* v12 = CreateUnit(base_building, v9, v10, player_index);
 	if (v12)
@@ -8284,7 +8284,7 @@ bool __stdcall BWFXN_gluPEdit_MBox_(char* text, char* dest, size_t size, char* r
 		AllocInitDialogData(dword_6D5A3C, dword_6D5A3C, AllocBackgroundImage, "Starcraft\\SWAR\\lang\\gluPopup.cpp", 432);
 	}
 
-	getControlFromIndex_(dword_6D5A3C, 4)->lUser = size;
+	getControlFromIndex_(dword_6D5A3C, 4)->lUser = (void*) size;
 	if (GetUserDefaultLangID() == 1042)
 	{
 		HIMC Context = dword_6D6438;
@@ -14630,7 +14630,7 @@ void sub_4591D0_()
 				&& v1 < LOWORD(v3->button_count)
 				&& dlg->wIndex >= (int)button_order->position)
 			{
-				dlg->lUser = (int)button_order;
+				dlg->lUser = button_order;
 				if (dlg->wUser != button_order->icon_id)
 				{
 					dlg->wUser = button_order->icon_id;
@@ -14763,7 +14763,7 @@ void updateSelectedUnitPortrait_()
 		CUnit* v2 = ActivePortraitUnit;
 		if (!ActivePortraitUnit)
 		{
-			dword_68AC98->lUser = (int)ActivePortraitUnit;
+			dword_68AC98->lUser = ActivePortraitUnit;
 			dword_68AC98->wUser = -1;
 			HideDialog(dword_68AC98);
 		}
@@ -15205,7 +15205,7 @@ void sub_457FE0_()
 		ctrl_under_mouse = v1;
 		if (v1)
 		{
-			ctrl_under_mouse_val = v1->lUser;
+			ctrl_under_mouse_val = (StatDataDescriptor*) v1->lUser;
 		}
 		statdataMouseOverInteract_(v1, stardata_Dlg_); // TODO: can stardata_Dlg be used directly?
 	}
@@ -16991,7 +16991,7 @@ void statdata_Destroy_(dialog* dlg, struct dlgEvent* evt)
 		ctrl_under_mouse = v3;
 		if (v3)
 		{
-			ctrl_under_mouse_val = v3->lUser;
+			ctrl_under_mouse_val = (StatDataDescriptor*) v3->lUser;
 		}
 		statdataMouseOverInteract_(v3, dlg);
 	}
@@ -17004,12 +17004,12 @@ void sub_457DE0_(dialog* dlg, struct dlgEvent* evt)
 	if (IS_GAME_PAUSED || dlg != dlgSetMouseOver(dlg->fields.ctrl.pDlg, evt))
 	{
 		ctrl_under_mouse = 0;
-		ctrl_under_mouse_val = -1;
+		ctrl_under_mouse_val = (StatDataDescriptor*) -1;
 		refreshSelectionScreen_();
 	}
 	else if (dlg != ctrl_under_mouse)
 	{
-		ctrl_under_mouse_val = dlg->lUser;
+		ctrl_under_mouse_val = (StatDataDescriptor*) dlg->lUser;
 		ctrl_under_mouse = dlg;
 		statdataMouseOverInteract_(dlg, dlg->fields.ctrl.pDlg);
 	}
@@ -17152,7 +17152,7 @@ int __fastcall statdata_UnitWireframeSelection_(dialog* dlg, dlgEvent* evt)
 		case EventUser::USER_CREATE:
 			dlg->pfcnUpdate = statdata_UnitWireframeSelectUpdate;
 			dlg->wUser = 0;
-			dlg->lUser = (int)SMemAlloc(8, "Starcraft\\SWAR\\lang\\statdata.cpp", 775, 0);
+			dlg->lUser = SMemAlloc(8, "Starcraft\\SWAR\\lang\\statdata.cpp", 775, 0);
 			break;
 		case EventUser::USER_DESTROY:
 			if (dlg->lUser)
@@ -17271,7 +17271,7 @@ void load_Statdata_BIN_()
 	CanUpdateStatDataDialog = 1;
 	statusScreenFunc = 0;
 	ctrl_under_mouse = 0;
-	ctrl_under_mouse_val = -1;
+	ctrl_under_mouse_val = (StatDataDescriptor*) -1;
 
 	stardata_Dlg = LoadDialog("rez\\statdata.bin"); // The middle area of the main (bottom-of-the-screen) in-game UI
 	InitializeDialog_(stardata_Dlg, statdata_dlg_Interact_);
@@ -21867,7 +21867,7 @@ void __fastcall MissionBriefingLoop_(dialog* dlg, __int16 a2)
 		}
 		else
 		{
-			dlg->lUser = (int)lUser->next;
+			dlg->lUser = lUser->next;
 		}
 	}
 }
