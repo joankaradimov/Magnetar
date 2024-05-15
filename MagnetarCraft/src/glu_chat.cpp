@@ -160,7 +160,7 @@ void SendLobbyMessage_()
 	if ((dword_5999E4->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		dword_5999E4->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(dword_5999E4);
+		updateDialog_(dword_5999E4);
 	}
 }
 

@@ -34,7 +34,7 @@ void selConn_connectionList_Create_(dialog* a1)
 	if ((ok_button->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		ok_button->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(ok_button);
+		updateDialog_(ok_button);
 	}
 }
 
@@ -138,7 +138,7 @@ int getGameList_(dialog* dlg)
 	if ((v14->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		v14->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(v14);
+		updateDialog_(v14);
 	}
 	SNetEnumProviders(0, Provider_Constructor);
 	if (!byte_6D5BBC)

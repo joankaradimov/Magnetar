@@ -45,7 +45,7 @@ void titleInit_(dialog* dlg)
 	if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(dlg);
+		updateDialog_(dlg);
 	}
 	RefreshCursor_0_();
 	memcpy(stru_6CEB40, palette, sizeof(stru_6CEB40));

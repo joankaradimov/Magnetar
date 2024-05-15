@@ -63,7 +63,7 @@ void sub_4D8840_(int element_length, char* element_start)
 			if ((dword_51CEB0->lFlags & CTRL_UPDATE) == 0)
 			{
 				dword_51CEB0->lFlags |= CTRL_UPDATE;
-				updateDialog(dword_51CEB0);
+				updateDialog_(dword_51CEB0);
 			}
 			showDialog_(dword_51CEB0);
 		}
@@ -82,7 +82,7 @@ void creditsEndPage_(dialog* a1)
 		if ((a1->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			a1->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(a1);
+			updateDialog_(a1);
 		}
 		TitlePaletteUpdate_(byte_51CEC8);
 	}

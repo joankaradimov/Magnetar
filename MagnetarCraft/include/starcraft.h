@@ -160,6 +160,7 @@ void sub_41E9E0_(int a1);
 void sub_4DCEE0_();
 void RefreshCursor_0_();
 void BWFXN_RefreshTarget_(int left, int bottom, int top, int right);
+void updateDialog_(dialog* dlg);
 
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)

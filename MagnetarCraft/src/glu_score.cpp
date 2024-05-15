@@ -175,7 +175,7 @@ int __fastcall gluScore_PlayerRaceIcon_(dialog* dlg, dlgEvent* evt)
 			if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 			{
 				dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-				updateDialog(dlg);
+				updateDialog_(dlg);
 			}
 			return genericCommonInteract(evt, dlg);
 		case EventUser::USER_SHOW:
@@ -236,7 +236,7 @@ int sub_4B4600_(dialog* a1)
 		if ((v2->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			v2->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(v2);
+			updateDialog_(v2);
 		}
 		v2->lFlags |= DialogFlags::CTRL_DLG_ACTIVE;
 	}
@@ -262,7 +262,7 @@ int sub_4B4600_(dialog* a1)
 	if ((v13->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		v13->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(v13);
+		updateDialog_(v13);
 	}
 	return sub_4B42D0(a1);
 }
@@ -288,7 +288,7 @@ int __fastcall gluScore_SaveReplay_(dialog* dlg, dlgEvent* evt)
 				if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 				{
 					dlg->lFlags = dlg->lFlags | DialogFlags::CTRL_UPDATE;
-					updateDialog(dlg);
+					updateDialog_(dlg);
 				}
 				DisableControl(dlg);
 			}

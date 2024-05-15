@@ -294,7 +294,7 @@ void __fastcall sub_45EC40_(dialog* a1, __int16 timer_id)
 			if ((a1->lFlags & CTRL_UPDATE) == 0)
 			{
 				a1->lFlags |= CTRL_UPDATE;
-				updateDialog(a1);
+				updateDialog_(a1);
 			}
 		}
 		break;
@@ -3269,6 +3269,57 @@ void sub_4BD3A0_()
 
 FAIL_STUB_PATCH(sub_4BD3A0, "starcraft");
 
+void updateDialog_(dialog* dlg)
+{
+	dialog* pDlg;
+	int width;
+	int height;
+
+	if (dlg->wCtrlType == DialogType::cDLG)
+	{
+		pDlg = dlg;
+		width = 0;
+		height = 0;
+	}
+	else
+	{
+		pDlg = dlg->fields.ctrl.pDlg;
+		width = pDlg->rct.left;
+		height = pDlg->rct.top;
+	}
+
+	tagRECT rc;
+	SetRect(&rc, pDlg->rct.left, pDlg->rct.top, pDlg->rct.right, pDlg->rct.bottom);
+
+	tagRECT a1;
+	SetRect(&a1, dlg->rct.left, dlg->rct.top, dlg->rct.right, dlg->rct.bottom);
+
+	a1.left = std::max(width + a1.left, rc.left);
+	a1.right = std::min(width + a1.right, rc.right);
+	a1.top = std::max(height + a1.top, rc.top);
+	a1.bottom = std::min(height + a1.bottom, rc.bottom);
+
+	if (a1.top <= a1.bottom && a1.left <= a1.right)
+	{
+		if ((pDlg->lFlags & DialogFlags::CTRL_DLG_NOREDRAW) && dword_6D5E20 == &GameScreenBuffer)
+		{
+			BWFXN_RefreshTarget_(a1.left, a1.bottom, a1.top, a1.right);
+		}
+		_RgnUnk(&a1);
+	}
+}
+
+void __cdecl updateDialog__()
+{
+	dialog* dlg;
+
+	__asm mov dlg, eax
+
+	updateDialog_(dlg);
+}
+
+FUNCTION_PATCH((void*)0x41C400, updateDialog__, "starcraft");
+
 void updateAllDlgs_()
 {
 	for (dialog* dlg = DialogList; dlg; dlg = dlg->pNext)
@@ -3276,7 +3327,7 @@ void updateAllDlgs_()
 		if ((dlg->lFlags & CTRL_UPDATE) == 0)
 		{
 			dlg->lFlags |= CTRL_UPDATE;
-			updateDialog(dlg);
+			updateDialog_(dlg);
 		}
 	}
 }
@@ -7190,7 +7241,7 @@ void showDialog_(dialog* dlg)
 		if (dlg->pfcnInteract(dlg, &event) && !(dlg->lFlags & DialogFlags::CTRL_UPDATE))
 		{
 			dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(dlg);
+			updateDialog_(dlg);
 		}
 	}
 }
@@ -7229,7 +7280,7 @@ void HideDialog_(dialog* dlg)
 			if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 			{
 				dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-				updateDialog(dlg);
+				updateDialog_(dlg);
 			}
 		}
 	}
@@ -8211,7 +8262,7 @@ void sub_4B6C70_(dialog* dlg)
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
 	{
 		dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(dlg);
+		updateDialog_(dlg);
 	}
 }
 
@@ -14637,7 +14688,7 @@ void sub_4591D0_()
 					if ((dlg->lFlags & 1) == 0)
 					{
 						dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-						updateDialog(dlg);
+						updateDialog_(dlg);
 					}
 					dlgEvent v9;
 					v9.cursor.y = Mouse.y;
@@ -16591,7 +16642,7 @@ void statflufDlgUpdate_(dialog* dlg)
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
 	{
 		dlg->lFlags |= CTRL_UPDATE;
-		updateDialog(dlg);
+		updateDialog_(dlg);
 	}
 }
 
@@ -17622,7 +17673,7 @@ void onSendText_(dialog* a1, dlgEvent* a2, CheatFlags a3)
 		if ((v4->lFlags & CTRL_VISIBLE) != 0 && (v4->lFlags & CTRL_UPDATE) == 0)
 		{
 			v4->lFlags |= CTRL_UPDATE;
-			updateDialog(v4);
+			updateDialog_(v4);
 		}
 		hAccTable = hAccel;
 		input_procedures[16] = CMDACT_Hotkey_;
@@ -20605,7 +20656,7 @@ void DLG_SwishIn_(dialog* a1)
 		if ((a1->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			a1->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(a1);
+			updateDialog_(a1);
 		}
 		TitlePaletteUpdate_(3);
 		dword_50E064 = stru_4FFAD0[glGluesMode].menu_position;
@@ -22062,7 +22113,7 @@ void CreateRaceDropdown_(dialog* dlg, RaceId race)
 	if ((dlg->lFlags & CTRL_UPDATE) == 0)
 	{
 		dlg->lFlags |= CTRL_UPDATE;
-		updateDialog(dlg);
+		updateDialog_(dlg);
 	}
 
 	dlgEvent v11;
@@ -22498,7 +22549,7 @@ void saveGame_Create_(dialog* dlg)
 	if ((v9->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		v9->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(v9);
+		updateDialog_(v9);
 	}
 }
 

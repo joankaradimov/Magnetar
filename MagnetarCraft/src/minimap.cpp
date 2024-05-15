@@ -284,7 +284,7 @@ void minimapGameUpdate_(dialog* a1)
 	if ((a1->lFlags & CTRL_UPDATE) == 0)
 	{
 		a1->lFlags |= CTRL_UPDATE;
-		updateDialog(a1);
+		updateDialog_(a1);
 	}
 }
 
@@ -315,7 +315,7 @@ void minimapGameMouseUpdate_(dialog* dlg)
 		if ((dlg->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			dlg->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(dlg);
+			updateDialog_(dlg);
 		}
 	}
 }
@@ -415,7 +415,7 @@ void __fastcall Minimap_TimerRefresh_(dialog* dlg, __int16 timer_id)
 	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(minimap_dialog);
+		updateDialog_(minimap_dialog);
 	}
 	HasMegatileUpdate = 0;
 }
@@ -443,7 +443,7 @@ void __fastcall updateMinimapSurfaceInfoProc_(dialog* a1, __int16 a2)
 				if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 				{
 					minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
-					updateDialog(minimap_dialog);
+					updateDialog_(minimap_dialog);
 				}
 				HasMegatileUpdate = 0;
 				return;
@@ -484,7 +484,7 @@ void __fastcall updateMinimapSurfaceInfo2Proc_(dialog* a1, __int16 a2)
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(minimap_dialog);
+			updateDialog_(minimap_dialog);
 		}
 		HasMegatileUpdate = 0;
 	}
@@ -500,7 +500,7 @@ void minimapPreviewUpdateState_()
 	if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 	{
 		minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
-		updateDialog(minimap_dialog);
+		updateDialog_(minimap_dialog);
 	}
 }
 
@@ -594,7 +594,7 @@ void minimap_dlg_Activate_(dialog* dlg)
 		if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
 		{
 			minimap_dialog->lFlags |= CTRL_UPDATE;
-			updateDialog(minimap_dialog);
+			updateDialog_(minimap_dialog);
 		}
 		drawShowHideTerrainContextHelp(dlg);
 		break;
@@ -780,7 +780,7 @@ void updateMinimapPreviewDlg_(dialog* dlg)
 	if ((minimap_dialog->lFlags & CTRL_UPDATE) == 0)
 	{
 		minimap_dialog->lFlags |= CTRL_UPDATE;
-		updateDialog(minimap_dialog);
+		updateDialog_(minimap_dialog);
 	}
 }
 
@@ -920,7 +920,7 @@ void load_gluMinimap_()
 		if ((minimap_dialog->lFlags & DialogFlags::CTRL_UPDATE) == 0)
 		{
 			minimap_dialog->lFlags |= DialogFlags::CTRL_UPDATE;
-			updateDialog(minimap_dialog);
+			updateDialog_(minimap_dialog);
 		}
 	}
 	else
