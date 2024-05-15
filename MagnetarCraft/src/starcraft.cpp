@@ -4835,6 +4835,48 @@ void BWFXN_blitMapTiles_()
 
 FAIL_STUB_PATCH(BWFXN_blitMapTiles, "starcraft");
 
+void maskSomething1_()
+{
+	maskSomething0();
+
+	unsigned v1 = MoveToY % 32;
+	char* v4 = (char*)dword_6D5C0C + 25;
+	char* v5 = (char*)dword_6D5C10 + 25;
+
+	for (int i = 0; i < 480; i += 32)
+	{
+		for (int v13 = -(MoveToX % 32); v13 < 704 -(MoveToX % 32); v13 += 32)
+		{
+			char v7 = *v4;
+			char v8 = *v5;
+			++v4;
+			++v5;
+			if (v8 != v7)
+			{
+				*(v5 - 1) = *(v4 - 1);
+				int v12 = 32;
+				for (int v9 = v13 + 32; v9 < 704 - (MoveToX % 32); v9 += 32)
+				{
+					if (*v5 == *v4)
+					{
+						break;
+					}
+					*v5++ = *v4;
+					++v4;
+					v12 += 32;
+				}
+				BWFXN_RefreshTarget(v13 - 32, i + 63 - v1, i - 32 - v1, v12 + v13 + 31);
+				v13 = v12 + v13 - 32;
+			}
+		}
+
+		v4 += 2;
+		v5 += 2;
+	}
+}
+
+FAIL_STUB_PATCH(maskSomething1, "starcraft");
+
 void refreshImageRange_(int top_row, int bottom_row)
 {
 	for (int i = top_row; i <= bottom_row; ++i)
@@ -5079,7 +5121,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 	}
 	else
 	{
-		maskSomething1();
+		maskSomething1_();
 		refreshImageRange_(dword_5993A4, dword_5993C0);
 		maskSomething2();
 		BWFXN_drawMapTiles_();
