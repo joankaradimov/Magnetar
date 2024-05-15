@@ -4872,7 +4872,7 @@ void blitTileCacheOnRefresh_()
 			if (*v0 == 1)
 			{
 				int v4 = 0;
-				while (i + v4 + 1 < GAME_AREA_WIDTH / 16)
+				while (v4 < GAME_AREA_WIDTH / 16 - (i + 1))
 				{
 					if (*v0 == 0)
 					{
