@@ -4837,8 +4837,6 @@ FAIL_STUB_PATCH(BWFXN_blitMapTiles, "starcraft");
 
 void maskSomething1_()
 {
-	maskSomething0();
-
 	unsigned v1 = MoveToY % 32;
 	char* v4 = (char*)dword_6D5C0C + 25;
 	char* v5 = (char*)dword_6D5C10 + 25;
@@ -5110,9 +5108,10 @@ void __fastcall DrawNullProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2)
 {
 	int v2 = ScreenLayers[5].bits & 1;
+
+	maskSomething0();
 	if (ScreenLayers[5].bits & 1)
 	{
-		maskSomething0();
 		memcpy(dword_6D5C10, dword_6D5C0C, 0x198u);
 		BWFXN_updateImageData_();
 		maskSomething2();
