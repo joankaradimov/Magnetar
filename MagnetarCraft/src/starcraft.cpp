@@ -4837,13 +4837,12 @@ FAIL_STUB_PATCH(BWFXN_blitMapTiles, "starcraft");
 
 void maskSomething1_()
 {
-	unsigned v1 = MoveToY % 32;
 	char* v4 = (char*)dword_6D5C0C + 25;
 	char* v5 = (char*)dword_6D5C10 + 25;
 
-	for (int i = 0; i < 480; i += 32)
+	for (int top = 0; top < 480; top += 32)
 	{
-		for (int v13 = -(MoveToX % 32); v13 < 704 -(MoveToX % 32); v13 += 32)
+		for (int left = 0; left < 640 + 64; left += 32)
 		{
 			char v7 = *v4;
 			char v8 = *v5;
@@ -4852,8 +4851,8 @@ void maskSomething1_()
 			if (v8 != v7)
 			{
 				*(v5 - 1) = *(v4 - 1);
-				int v12 = 32;
-				for (int v9 = v13 + 32; v9 < 704 - (MoveToX % 32); v9 += 32)
+				int width = 0;
+				for (int v9 = left; v9 < 640 + 32; v9 += 32)
 				{
 					if (*v5 == *v4)
 					{
@@ -4861,10 +4860,10 @@ void maskSomething1_()
 					}
 					*v5++ = *v4;
 					++v4;
-					v12 += 32;
+					width += 32;
 				}
-				BWFXN_RefreshTarget(v13 - 32, i + 63 - v1, i - 32 - v1, v12 + v13 + 31);
-				v13 = v12 + v13 - 32;
+				BWFXN_RefreshTarget_(left - 32 - (MoveToX % 32), top + 63 - (MoveToY % 32), top - 32 - (MoveToY % 32), left + width + 63 - (MoveToX % 32));
+				left += width;
 			}
 		}
 
