@@ -4840,9 +4840,9 @@ void maskSomething1_()
 	char* v4 = (char*)dword_6D5C0C + 25;
 	char* v5 = (char*)dword_6D5C10 + 25;
 
-	for (int top = 0; top < 480; top += 32)
+	for (int top = 0; top < SCREEN_HEIGHT / 32; top++)
 	{
-		for (int left = 0; left < 640 + 64; left += 32)
+		for (int left = 0; left < SCREEN_WIDTH / 32 + 2; left++)
 		{
 			char v7 = *v4;
 			char v8 = *v5;
@@ -4852,7 +4852,7 @@ void maskSomething1_()
 			{
 				*(v5 - 1) = *(v4 - 1);
 				int width = 0;
-				for (int v9 = left; v9 < 640 + 32; v9 += 32)
+				for (int i = left; i < SCREEN_WIDTH / 32 + 1; i++)
 				{
 					if (*v5 == *v4)
 					{
@@ -4860,9 +4860,14 @@ void maskSomething1_()
 					}
 					*v5++ = *v4;
 					++v4;
-					width += 32;
+					width++;
 				}
-				BWFXN_RefreshTarget_(left - 32 - (MoveToX % 32), top + 63 - (MoveToY % 32), top - 32 - (MoveToY % 32), left + width + 63 - (MoveToX % 32));
+				BWFXN_RefreshTarget_(
+					32 * (left - 1) - (MoveToX % 32),
+					32 * (top + 2) - (MoveToY % 32) - 1,
+					32 * (top - 1) - (MoveToY % 32),
+					32 * (left + width + 2) - (MoveToX % 32) - 1
+				);
 				left += width;
 			}
 		}
