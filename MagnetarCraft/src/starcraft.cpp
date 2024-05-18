@@ -19511,7 +19511,6 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	if (!SFileOpenFileEx(0, parallaxFilePath, 0, &hFile))
 	{
 		throw FileNotFoundException(parallaxFilePath, SErrGetLastError());
-		throw std::exception("Could not find SPK file");
 	}
 	LONG fileSize = SFileGetFileSize(hFile, 0);
 	if (fileSize == -1)
