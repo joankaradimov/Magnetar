@@ -19504,8 +19504,8 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	char parallaxFilePath[MAX_PATH];
 	sprintf_s(parallaxFilePath, "parallax\\%s.spk", parallaxFile);
 
-	parallaxSomethingWidth = 165888;
-	parallaxSomethingHeight = 124928;
+	parallaxSomethingWidth = (SCREEN_WIDTH + 8) * 256;
+	parallaxSomethingHeight = (SCREEN_HEIGHT + 8) * 256;
 
 	HANDLE hFile;
 	if (!SFileOpenFileEx(0, parallaxFilePath, 0, &hFile))
