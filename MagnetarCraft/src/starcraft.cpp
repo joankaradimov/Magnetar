@@ -8896,6 +8896,24 @@ void CreateInitialTeamMeleeUnits_()
 
 FAIL_STUB_PATCH(CreateInitialTeamMeleeUnits, "starcraft");
 
+void sub_4CD770_()
+{
+	if (!loadGameFileHandle)
+	{
+		if (multiPlayerMode && gameData.got_file_values.team_mode)
+		{
+			CreateInitialTeamMeleeUnits_();
+		}
+		else
+		{
+			CreateInitialMeleeUnits_();
+		}
+		InitialSetScreenToStartLocation();
+	}
+}
+
+FAIL_STUB_PATCH(sub_4CD770, "starcraft");
+
 signed int GameInit_()
 {
 	memset(Chat_GameText, 0, 2832u);
@@ -8923,18 +8941,11 @@ signed int GameInit_()
 		return 1;
 	if (LoadMap_())
 	{
+		sub_4CD770_();
 		if (!loadGameFileHandle)
 		{
-			if (LOBYTE(multiPlayerMode) && gameData.got_file_values.team_mode)
-				CreateInitialTeamMeleeUnits_();
-			else
-				CreateInitialMeleeUnits_();
-			InitialSetScreenToStartLocation();
-			if (!loadGameFileHandle)
-			{
-				InitRegionCaptains(1);
-				sub_446350();
-			}
+			InitRegionCaptains(1);
+			sub_446350();
 		}
 		return 1;
 	}
@@ -8946,7 +8957,6 @@ signed int GameInit_()
 }
 
 FAIL_STUB_PATCH(GameInit, "starcraft");
-FAIL_STUB_PATCH(sub_4CD770, "starcraft");
 FAIL_STUB_PATCH(sub_4A13B0, "starcraft");
 
 GotFileValues* InitUseMapSettingsTemplate_()
