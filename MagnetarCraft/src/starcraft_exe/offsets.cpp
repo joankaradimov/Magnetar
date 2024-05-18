@@ -16361,7 +16361,7 @@ void assignCenterViewProc(int a1, int a2, void (*a3)(void)) {
     }
 }
 DECL_FUNC(char (*sub_47EBB0)(), sub_47EBB0, 0x47ebb0);
-DECL_FUNC(void * (*sub_47EBC0)(), sub_47EBC0, 0x47ebc0);
+DECL_FUNC(void (__cdecl*destroy_spk_handle)(), destroy_spk_handle, 0x47ebc0);
 DECL_FUNC(void (__cdecl*refreshStars)(), refreshStars, 0x47ebf0);
 DECL_FUNC(void (__cdecl*drawStars)(), drawStars, 0x47ee20);
 void getScreenMoveState(_DWORD *vertical_delta, _DWORD *horizontal_delta) {

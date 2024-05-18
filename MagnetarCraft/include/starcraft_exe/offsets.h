@@ -2788,7 +2788,7 @@ int GetScrollSpeed(int *a1);
 extern char (*CenterCursorGameScreen)();
 void assignCenterViewProc(int a1, int a2, void (*a3)(void));
 extern char (*sub_47EBB0)();
-extern void * (*sub_47EBC0)();
+extern void (__cdecl*destroy_spk_handle)();
 extern void (__cdecl*refreshStars)();
 extern void (__cdecl*drawStars)();
 void getScreenMoveState(_DWORD *vertical_delta, _DWORD *horizontal_delta);

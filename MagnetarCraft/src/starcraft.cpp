@@ -10551,6 +10551,17 @@ void DestroyFogSightData_()
 
 FAIL_STUB_PATCH(DestroyFogSightData, "starcraft");
 
+void destroy_spk_handle_()
+{
+	if (spkHandle)
+	{
+		SMemFree(spkHandle, "Starcraft\\SWAR\\lang\\scroll.cpp", 550, 0);
+		spkHandle = nullptr;
+	}
+}
+
+FAIL_STUB_PATCH(destroy_spk_handle, "starcraft");
+
 void sub_453170_()
 {
 	if (dword_6D5CD8)
@@ -10618,11 +10629,7 @@ void DestroyMapData_()
 	ZergCreepArray = NULL;
 
 	DestroyFogSightData_();
-	if (spkHandle)
-	{
-		SMemFree(spkHandle, "Starcraft\\SWAR\\lang\\scroll.cpp", 550, 0);
-		spkHandle = NULL;
-	}
+	destroy_spk_handle_();
 	TransDestroy();
 	if (!dword_5993AC)
 	{
