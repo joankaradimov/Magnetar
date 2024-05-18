@@ -16390,7 +16390,7 @@ void sendWhisper(int result, const char *a2) {
 }
 DECL_FUNC(signed (__stdcall*chatCommandFilter)(char *text), chatCommandFilter, 0x47f8f0);
 DECL_FUNC(void (__cdecl*maskSomething0)(), maskSomething0, 0x47fc50);
-DECL_FUNC(int (*maskSomething2)(), maskSomething2, 0x47fe10);
+DECL_FUNC(void (__cdecl*maskSomething2)(), maskSomething2, 0x47fe10);
 DECL_FUNC(int (__fastcall*fogGraphicSomething)(int a1, int a2, int a3, int a4, int a5), fogGraphicSomething, 0x47ff10);
 DECL_FUNC(int (__fastcall*fogGraphicSomething_0)(_BYTE *a1, int a2), fogGraphicSomething_0, 0x480000);
 DECL_FUNC(void (__thiscall*ResetFogSomething)(_DWORD *this_), ResetFogSomething, 0x4800a0);
@@ -16402,7 +16402,7 @@ DECL_FUNC(void (__cdecl*DestroyFogSightData)(), DestroyFogSightData, 0x480350);
 DECL_FUNC(MegatileFlags * (*sub_480410)(), sub_480410, 0x480410);
 DECL_FUNC(int (*sub_480430)(), sub_480430, 0x480430);
 DECL_FUNC(int (*j_maskSomething2)(), j_maskSomething2, 0x4804c0);
-DECL_FUNC(int (*maskSomething1)(), maskSomething1, 0x4804d0);
+DECL_FUNC(void (__cdecl*maskSomething1)(), maskSomething1, 0x4804d0);
 DECL_FUNC(void (__cdecl*sub_4805D0)(), sub_4805D0, 0x4805d0);
 void updateFog(int result, signed int a2, signed int a3, signed int a4) {
     int address = 0x4805f0;
