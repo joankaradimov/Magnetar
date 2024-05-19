@@ -19514,36 +19514,27 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	parallaxSomethingWidth = (SCREEN_WIDTH + 8) * 256;
 	parallaxSomethingHeight = (SCREEN_HEIGHT + 8) * 256;
 
-	void* spkData = fastFileRead_(NULL, 0, parallaxFilePath, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
+	spkHandle = (ParallaxData*) fastFileRead_(NULL, 0, parallaxFilePath, 0, 0, "Starcraft\\SWAR\\lang\\gamedata.cpp", 210);
 
-	int numberOfLayers = *(unsigned __int16*)spkData;
 	int v8 = 0;
-	spkHandle = spkData;
-	if (numberOfLayers)
+	for (int layer_index = 0; layer_index < spkHandle->layer_count; ++layer_index)
 	{
-		u16* v10 = (u16*)spkData;
-		for (int layerIndex = 0; layerIndex < numberOfLayers; ++layerIndex) {
-			++v10;
-			spkLayer[layerIndex] = *v10;
-			v8 += *v10;
-		}
+		spkLayer[layer_index] = spkHandle->layers[layer_index];
+		v8 += spkHandle->layers[layer_index];
 	}
-	int v12 = (int)spkData + 2 * numberOfLayers + 2;
-	if (v8 > 0)
+
+	int v12 = (int)&spkHandle->layers[spkHandle->layer_count];
+	_DWORD* v13 = (_DWORD*)(v12 + 4);
+	for (int i = 0; i < v8; i++)
 	{
-		_DWORD* v13 = (_DWORD*)(v12 + 4);
-		do
-		{
-			*v13 += (int)spkData;
-			v13 += 2;
-			--v8;
-		} while (v8);
+		*v13 += (int)spkHandle;
+		v13 += 2;
 	}
-	dword_658AAC = v12 + 8 * spkLayer[0];
 	dword_658AA8 = v12;
+	dword_658AAC = dword_658AA8 + 8 * spkLayer[0];
 	dword_658AB0 = dword_658AAC + 8 * spkLayer[1];
 	dword_658AB4 = dword_658AB0 + 8 * spkLayer[2];
-	dword_658AB8 = dword_658AB0 + 8 * spkLayer[2] + 8 * spkLayer[3];
+	dword_658AB8 = dword_658AB4 + 8 * spkLayer[3];
 }
 
 FAIL_STUB_PATCH(loadParallaxStarGfx, "starcraft");

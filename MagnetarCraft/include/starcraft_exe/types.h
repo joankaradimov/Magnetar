@@ -246,6 +246,7 @@ struct struc_500F60;
 struct struc_640898;
 enum StatDataDescriptorType : unsigned __int16;
 enum ExplosionType : unsigned __int8;
+struct ParallaxLayerData;
 struct RTTIBaseClassDescriptor;
 struct _EH3_EXCEPTION_REGISTRATION;
 struct Bitmap;
@@ -371,6 +372,7 @@ struct UnitGroupRelatedInner;
 struct TSAVEGAME;
 struct GlueEffectBuffer;
 struct StatDataDescriptor;
+struct ParallaxData;
 struct CPPEH_RECORD;
 struct dialog_btn;
 struct __declspec(align(1)) dialog_list;
@@ -5105,6 +5107,12 @@ enum ExplosionType : unsigned __int8
   ET_AIR_SPLASH = 0x18,
 };
 
+struct ParallaxLayerData
+{
+  int data[2];
+};
+static_assert(sizeof(ParallaxLayerData) == 8, "Incorrect size for type `ParallaxLayerData`. Expected: 8");
+
 #pragma pack(push, 1)
 struct RTTIBaseClassDescriptor
 {
@@ -6313,6 +6321,13 @@ struct StatDataDescriptor
   u16 value;
 };
 static_assert(sizeof(StatDataDescriptor) == 12, "Incorrect size for type `StatDataDescriptor`. Expected: 12");
+
+struct ParallaxData
+{
+  u16 layer_count;
+  u16 layers[5];
+};
+static_assert(sizeof(ParallaxData) == 12, "Incorrect size for type `ParallaxData`. Expected: 12");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 

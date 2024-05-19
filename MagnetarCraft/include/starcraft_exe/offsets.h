@@ -8908,7 +8908,7 @@ extern int& dword_658AB8;
 extern int& dword_658ABC;
 extern char& byte_658AC0;
 extern int(&spkLayer)[5];
-extern void *& spkHandle;
+extern ParallaxData *& spkHandle;
 extern void *& dword_658ADC;
 extern int& dword_658AE0;
 extern int& dword_658AE4;
