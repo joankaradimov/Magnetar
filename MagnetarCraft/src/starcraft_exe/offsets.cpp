@@ -16328,7 +16328,7 @@ void open_tips_dialog(int a1) {
     }
 }
 DECL_FUNC(int (*sub_47EA50)(), sub_47EA50, 0x47ea50);
-void sub_47EA60(_BYTE *a1, int a2, int a3, u8 *a4, int a5) {
+void sub_47EA60(BYTE *a1, int a2, int a3, u8 *a4, int a5) {
     int address = 0x47ea60;
     __asm {
         push dword ptr a5
@@ -34350,7 +34350,7 @@ char& byte_657A9C = * ((decltype(&byte_657A9C)) 0x657a9c);
 int(&dword_657AA0)[1024] = * ((decltype(&dword_657AA0)) 0x657aa0);
 int& dword_658AA0 = * ((decltype(&dword_658AA0)) 0x658aa0);
 int (*&dword_658AA4)(void) = *((decltype(&dword_658AA4)) 0x658aa4);
-int(&dword_658AA8)[5] = * ((decltype(&dword_658AA8)) 0x658aa8);
+ParallaxLayerData *(&dword_658AA8)[5] = * ((decltype(&dword_658AA8)) 0x658aa8);
 int& dword_658ABC = * ((decltype(&dword_658ABC)) 0x658abc);
 char& byte_658AC0 = * ((decltype(&byte_658AC0)) 0x658ac0);
 int(&parallax_layer_size)[5] = * ((decltype(&parallax_layer_size)) 0x658ac4);

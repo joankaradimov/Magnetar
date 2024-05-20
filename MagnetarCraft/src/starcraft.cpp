@@ -19523,15 +19523,13 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 		v8 += parallax_data->layers[layer_index];
 	}
 
-	int v12 = (int)&parallax_data->layers[parallax_data->layer_count];
-	_DWORD* v13 = (_DWORD*)(v12 + 4);
+	ParallaxLayerData* parallax_layer_data = (ParallaxLayerData*) &parallax_data->layers[parallax_data->layer_count];
 	for (int i = 0; i < v8; i++)
 	{
-		*v13 += (int)parallax_data;
-		v13 += 2;
+		parallax_layer_data[i].unknown_offset = (u16*) ((int)parallax_layer_data[i].unknown_offset + (int)parallax_data);
 	}
 
-	dword_658AA8[0] = v12;
+	dword_658AA8[0] = parallax_layer_data;
 	dword_658AA8[1] = dword_658AA8[0] + 8 * parallax_layer_size[0];
 	dword_658AA8[2] = dword_658AA8[1] + 8 * parallax_layer_size[1];
 	dword_658AA8[3] = dword_658AA8[2] + 8 * parallax_layer_size[2];
