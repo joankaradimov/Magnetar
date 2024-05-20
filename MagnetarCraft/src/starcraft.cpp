@@ -5022,6 +5022,103 @@ void BWFXN_drawAllSprites_()
 
 FAIL_STUB_PATCH(BWFXN_drawAllSprites, "starcraft");
 
+void refreshStars_()
+{
+	ParallaxLayerData* v29 = dword_658AA8[0];
+
+	for (int v20 = 0; v20 < 5; v20++)
+	{
+		int v22 = dword_62846C[-v20] >> 8;
+		int v23 = dword_628484[-v20] >> 8;
+
+		for (int v24 = 0; v24 < parallax_layer_size[4 - v20]; v24++)
+		{
+			u16* unknown_offset = v29->unknown_offset;
+			const int a2 = unknown_offset[0];
+			const int v7 = unknown_offset[1];
+
+			const int v8 = v23 + v29->data1;
+			const int v9 = v8 > 648 ? v8 - 648 : v8 < 0 ? v8 + 648 : v8;
+			const int v10 = v9 - 8;
+			if (v10 >= 640 || v10 + a2 <= 0)
+			{
+				goto LABEL_33;
+			}
+
+			const int v11 = v22 + v29->data2;
+			const int v12 = v11 > 488 ? v11 - 488 : v11 < 0 ? v11 + 488 : v11;
+			const int v13 = v12 - 8;
+			if (v13 >= 400 || v13 + v7 <= 0)
+			{
+				goto LABEL_33;
+			}
+
+			if (unknown_offset[0] >= 2 || unknown_offset[1] >= 2)
+			{
+				const int v21 = (v10 + a2 - 1) / 16;
+				const int v15 = 40 * (v13 / 16);
+				int v16;
+				if (RefreshRegions[v15 + v10 / 16]
+					|| RefreshRegions[v15 + v21]
+					|| (v16 = 40 * ((v13 + v7 - 1) / 16), RefreshRegions[v16 + v10 / 16])
+					|| RefreshRegions[v16 + v21])
+				{
+				LABEL_23:
+					BYTE* v17 = (BYTE*)(v29->unknown_offset + 2);
+
+					int a3;
+					int v102;
+					if (v10 < 0)
+					{
+						v17 -= v10;
+						v102 = 0;
+						a3 = v10 + a2;
+					}
+					else if (v10 + a2 >= 640)
+					{
+						a3 = 640 - v10;
+						v102 = v10;
+					}
+					else
+					{
+						a3 = a2;
+						v102 = v10;
+					}
+
+					int a5;
+					int v132;
+					if (v13 < 0)
+					{
+						a5 = v13 + v7;
+						v17 -= v13 * a2;
+						v132 = 0;
+					}
+					else if (v13 + v7 >= 400)
+					{
+						a5 = 400 - v13;
+						v132 = v13;
+					}
+					else
+					{
+						a5 = v7;
+						v132 = v13;
+					}
+					sub_47EA60(v17, a2, a3, &GameScreenBuffer.data[640 * v132 + v102], a5);
+				}
+			}
+			else if (RefreshRegions[40 * (v13 / 16) + v10 / 16])
+			{
+				goto LABEL_23;
+			}
+
+		LABEL_33:
+			++v29;
+		}
+	}
+}
+
+FAIL_STUB_PATCH(refreshStars, "starcraft");
+
 void updateAllFog_(int a1)
 {
 	if (a1)
@@ -5136,7 +5233,7 @@ void __fastcall DrawGameProc_(int _unused1, int _unused2, Bitmap* a1, bounds* a2
 		if (v2)
 			drawStars();
 		else
-			refreshStars();
+			refreshStars_();
 	}
 	updateAllFog_(v2);
 	BWFXN_DrawHighTarget();
