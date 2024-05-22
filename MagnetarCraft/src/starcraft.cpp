@@ -4946,9 +4946,31 @@ void blitTileCacheOnRefresh_()
 
 FAIL_STUB_PATCH(blitTileCacheOnRefresh, "starcraft");
 
+int isImageRefreshable_(CImage* image)
+{
+	signed __int16 x = image->screenPosition.x;
+	int y = (__int16)image->screenPosition.y;
+	__int64 v3 = image->grpBounds.right + x - 1;
+	int v4 = image->grpBounds.bottom + y - 1;
+	int v6 = (((BYTE4(v3) & 0xF) + (int)v3) >> 4) - x / 16 + 1;
+
+	for (int v7 = 0; v7 < v4 / 16 - y / 16 + 1; v7++)
+	{
+		for (int v9 = 0; v9 < v6; v9++)
+		{
+			if (RefreshRegions[40 * (y / 16 + v7) + x / 16 + v9])
+			{
+				return 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
 void drawImage_(CImage* a1)
 {
-	if ((a1->flags & ImageFlags::IF_HIDDEN) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & ImageFlags::IF_REDRAW) || isImageRefreshable(a1)))
+	if ((a1->flags & ImageFlags::IF_HIDDEN) == 0 && a1->grpBounds.bottom > 0 && a1->grpBounds.right > 0 && ((a1->flags & ImageFlags::IF_REDRAW) || isImageRefreshable_(a1)))
 	{
 		RECT v8;
 		v8.left = a1->grpBounds.left;
