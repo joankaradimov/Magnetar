@@ -373,6 +373,7 @@ struct GlueEffectBuffer;
 struct StatDataDescriptor;
 struct ParallaxData;
 struct ParallaxLayerData;
+struct ParallaxItem;
 struct CPPEH_RECORD;
 struct dialog_btn;
 struct __declspec(align(1)) dialog_list;
@@ -6327,9 +6328,17 @@ struct ParallaxLayerData
 {
   u16 data1;
   u16 data2;
-  u16 *unknown_offset;
+  ParallaxItem *unknown_offset;
 };
 static_assert(sizeof(ParallaxLayerData) == 8, "Incorrect size for type `ParallaxLayerData`. Expected: 8");
+
+struct ParallaxItem
+{
+  u16 width;
+  u16 height;
+  u8 data[];
+};
+static_assert(sizeof(ParallaxItem) == 4, "Incorrect size for type `ParallaxItem`. Expected: 4");
 
 typedef struct _EH3_EXCEPTION_REGISTRATION EH3_EXCEPTION_REGISTRATION;
 

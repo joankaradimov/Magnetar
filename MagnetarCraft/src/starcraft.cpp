@@ -5033,77 +5033,71 @@ void refreshStars_()
 
 		for (int v24 = 0; v24 < parallax_layer_size[4 - v20]; v24++)
 		{
-			u16* unknown_offset = v29->unknown_offset;
-			const int a2 = unknown_offset[0];
-			const int v7 = unknown_offset[1];
+			const int a2 = v29->unknown_offset->width;
+			const int v7 = v29->unknown_offset->height;
 
 			const int v8 = v23 + v29->data1;
-			const int v9 = v8 > 648 ? v8 - 648 : v8 < 0 ? v8 + 648 : v8;
-			const int v10 = v9 - 8;
+			const int v10 = (v8 > 648 ? v8 - 648 : v8 < 0 ? v8 + 648 : v8) - 8;
 			if (v10 >= 640 || v10 + a2 <= 0)
 			{
 				goto LABEL_33;
 			}
 
 			const int v11 = v22 + v29->data2;
-			const int v12 = v11 > 488 ? v11 - 488 : v11 < 0 ? v11 + 488 : v11;
-			const int v13 = v12 - 8;
+			const int v13 = (v11 > 488 ? v11 - 488 : v11 < 0 ? v11 + 488 : v11) - 8;
 			if (v13 >= 400 || v13 + v7 <= 0)
 			{
 				goto LABEL_33;
 			}
 
-			if (unknown_offset[0] >= 2 || unknown_offset[1] >= 2)
+			if (v29->unknown_offset->width >= 2 || v29->unknown_offset->height >= 2)
 			{
-				const int v21 = (v10 + a2 - 1) / 16;
-				const int v15 = 40 * (v13 / 16);
-				int v16;
-				if (RefreshRegions[v15 + v10 / 16]
-					|| RefreshRegions[v15 + v21]
-					|| (v16 = 40 * ((v13 + v7 - 1) / 16), RefreshRegions[v16 + v10 / 16])
-					|| RefreshRegions[v16 + v21])
+				if (RefreshRegions[40 * (v13 / 16) + v10 / 16] ||
+					RefreshRegions[40 * (v13 / 16) + (v10 + a2 - 1) / 16] ||
+					RefreshRegions[40 * ((v13 + v7 - 1) / 16) + v10 / 16] ||
+					RefreshRegions[40 * ((v13 + v7 - 1) / 16) + (v10 + a2 - 1) / 16])
 				{
 				LABEL_23:
-					BYTE* v17 = (BYTE*)(v29->unknown_offset + 2);
+					BYTE* v17 = v29->unknown_offset->data;
 
 					int a3;
-					int v102;
+					int x;
 					if (v10 < 0)
 					{
 						v17 -= v10;
-						v102 = 0;
 						a3 = v10 + a2;
+						x = 0;
 					}
 					else if (v10 + a2 >= 640)
 					{
 						a3 = 640 - v10;
-						v102 = v10;
+						x = v10;
 					}
 					else
 					{
 						a3 = a2;
-						v102 = v10;
+						x = v10;
 					}
 
 					int a5;
-					int v132;
+					int y;
 					if (v13 < 0)
 					{
 						a5 = v13 + v7;
 						v17 -= v13 * a2;
-						v132 = 0;
+						y = 0;
 					}
 					else if (v13 + v7 >= 400)
 					{
 						a5 = 400 - v13;
-						v132 = v13;
+						y = v13;
 					}
 					else
 					{
 						a5 = v7;
-						v132 = v13;
+						y = v13;
 					}
-					sub_47EA60(v17, a2, a3, &GameScreenBuffer.data[640 * v132 + v102], a5);
+					sub_47EA60(v17, a2, a3, &GameScreenBuffer.data[640 * y + x], a5);
 				}
 			}
 			else if (RefreshRegions[40 * (v13 / 16) + v10 / 16])
@@ -19623,7 +19617,7 @@ void loadParallaxStarGfx_(const char* parallaxFile)
 	ParallaxLayerData* parallax_layer_data = (ParallaxLayerData*) &parallax_data->layers[parallax_data->layer_count];
 	for (int i = 0; i < v8; i++)
 	{
-		parallax_layer_data[i].unknown_offset = (u16*) ((int)parallax_layer_data[i].unknown_offset + (int)parallax_data);
+		parallax_layer_data[i].unknown_offset = (ParallaxItem*) ((int)parallax_layer_data[i].unknown_offset + (int)parallax_data);
 	}
 
 	dword_658AA8[0] = parallax_layer_data;
