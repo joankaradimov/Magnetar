@@ -162,6 +162,9 @@ void RefreshCursor_0_();
 void BWFXN_RefreshTarget_(int left, int bottom, int top, int right);
 void updateDialog_(dialog* dlg);
 
+extern size_t refresh_region_count;
+extern u8* refresh_regions;
+
 template <size_t TIMERS_COUNT>
 void DlgSwooshin_(dialog* dlg, swishTimer(&timers)[TIMERS_COUNT], __int16 a4)
 {

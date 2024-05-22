@@ -2928,7 +2928,7 @@ void BWFXN_RefreshTarget_(int left, int bottom, int top, int right)
 
 	for (int i = 0; i < bottom - top + 1; i++)
 	{
-		memset(&RefreshRegions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
+		memset(&refresh_regions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
 	}
 }
 
@@ -3343,7 +3343,7 @@ bool realizePalette_()
 	if (dword_6D5E1C)
 	{
 		SDrawRealizePalette();
-		memset(RefreshRegions, 1, sizeof(RefreshRegions));
+		memset(refresh_regions, 1, refresh_region_count);
 		updateAllDlgs_();
 		dword_6D5E1C = 0;
 	}
@@ -3393,9 +3393,9 @@ void sub_41E000_()
 	if (handle && dword_6D5E18)
 	{
 		STransDelete(dword_6D5E18);
-		STransIntersectDirtyArray(handle, (int)RefreshRegions, 3, (int)&dword_6D5E18);
+		STransIntersectDirtyArray(handle, (int)refresh_regions, 3, (int)&dword_6D5E18);
 		DoBltUsingMask_();
-		memset(RefreshRegions, 0, sizeof(RefreshRegions));
+		memset(refresh_regions, 0, refresh_region_count);
 	}
 }
 
@@ -3410,7 +3410,7 @@ void refreshImageData_(RECT *a1)
 
 	for (int i = 0; i <= bottom - top; i++)
 	{
-		memset(&RefreshRegions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
+		memset(&refresh_regions[(SCREEN_WIDTH / 16) * (top + i) + left], 1, right - left + 1);
 	}
 
 	ScreenLayers[5].bits |= 2;
@@ -3433,7 +3433,7 @@ char refreshRect_(int a1, int a2, int a3, int a4)
 	{
 		for (int v8 = 0; v8 < (a3 - 1) / 16 - a1 / 16 + 1; v8++)
 		{
-			if (RefreshRegions[(GAME_AREA_WIDTH / 16) * (a2 / 16 + v4) + a1 / 16 + v8])
+			if (refresh_regions[(GAME_AREA_WIDTH / 16) * (a2 / 16 + v4) + a1 / 16 + v8])
 			{
 				return 1;
 			}
@@ -4250,10 +4250,17 @@ int LoadGameTemplates_(TemplateConstructor template_constructor)
 FAIL_STUB_PATCH(LoadGameTemplates, "starcraft");
 FAIL_STUB_PATCH(sub_4AB970, "starcraft");
 
+size_t refresh_region_count;
+u8* refresh_regions;
+
 void InitializeImage_()
 {
 	memset(ScreenLayers, 0, sizeof(layer) * 8);
-	memset(RefreshRegions, 0, sizeof(RefreshRegions));
+
+	refresh_region_count = (SCREEN_WIDTH) / 16 * (SCREEN_HEIGHT / 16);
+	refresh_regions = (u8*)malloc(refresh_region_count);
+	memset(refresh_regions, 0, refresh_region_count);
+
 	GameScreenBuffer.wid = SCREEN_WIDTH;
 	GameScreenBuffer.ht = SCREEN_HEIGHT;
 	GameScreenBuffer.data = 0;
@@ -4902,7 +4909,7 @@ FAIL_STUB_PATCH(BlitTerrainCacheToGameBitmap, "starcraft");
 
 void blitTileCacheOnRefresh_()
 {
-	u8* v0 = RefreshRegions;
+	u8* v0 = refresh_regions;
 	int v1 = (MoveToX + RENDER_AREA_WIDTH * MoveToY) % TILE_CACHE_SIZE;
 
 	for (int v6 = 0; v6 < GAME_AREA_HEIGHT / 16; v6++)
@@ -4958,7 +4965,7 @@ int isImageRefreshable_(CImage* image)
 	{
 		for (int v9 = 0; v9 < v6; v9++)
 		{
-			if (RefreshRegions[40 * (y / 16 + v7) + x / 16 + v9])
+			if (refresh_regions[40 * (y / 16 + v7) + x / 16 + v9])
 			{
 				return 1;
 			}
@@ -5074,10 +5081,10 @@ void refreshStars_()
 
 			if (v29->unknown_offset->width >= 2 || v29->unknown_offset->height >= 2)
 			{
-				if (RefreshRegions[40 * (v13 / 16) + v10 / 16] ||
-					RefreshRegions[40 * (v13 / 16) + (v10 + a2 - 1) / 16] ||
-					RefreshRegions[40 * ((v13 + v7 - 1) / 16) + v10 / 16] ||
-					RefreshRegions[40 * ((v13 + v7 - 1) / 16) + (v10 + a2 - 1) / 16])
+				if (refresh_regions[40 * (v13 / 16) + v10 / 16] ||
+					refresh_regions[40 * (v13 / 16) + (v10 + a2 - 1) / 16] ||
+					refresh_regions[40 * ((v13 + v7 - 1) / 16) + v10 / 16] ||
+					refresh_regions[40 * ((v13 + v7 - 1) / 16) + (v10 + a2 - 1) / 16])
 				{
 				LABEL_23:
 					BYTE* v17 = v29->unknown_offset->data;
@@ -5122,7 +5129,7 @@ void refreshStars_()
 					sub_47EA60(v17, a2, a3, &GameScreenBuffer.data[640 * y + x], a5);
 				}
 			}
-			else if (RefreshRegions[40 * (v13 / 16) + v10 / 16])
+			else if (refresh_regions[40 * (v13 / 16) + v10 / 16])
 			{
 				goto LABEL_23;
 			}
@@ -5148,12 +5155,12 @@ void updateAllFog_(int a1)
 		{
 			for (int j = 0; j < GAME_AREA_WIDTH / 16; j++)
 			{
-				if (RefreshRegions[region_index++])
+				if (refresh_regions[region_index++])
 				{
 					int k;
 					for (k = 1; j + k < GAME_AREA_WIDTH / 16; k++)
 					{
-						if (RefreshRegions[region_index] == 0)
+						if (refresh_regions[region_index] == 0)
 						{
 							break;
 						}
@@ -5269,7 +5276,7 @@ void InitializeGameLayer_()
 	ScreenLayers[5].width = GAME_AREA_WIDTH;
 	ScreenLayers[5].height = GAME_AREA_HEIGHT;
 	ScreenLayers[5].pUpdate = has_viewport ? DrawGameProc_ : DrawNullProc_;
-	memset(RefreshRegions, 1, sizeof(RefreshRegions));
+	memset(refresh_regions, 1, refresh_region_count);
 	for (int i = 3; i <= 5; ++i)
 	{
 		ScreenLayers[i].bits |= 1;
