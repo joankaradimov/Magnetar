@@ -15966,19 +15966,23 @@ FUNCTION_PATCH((void*)0x4C2910, CMDRECV_SaveGame__, "starcraft");
 
 void replayLoop_()
 {
-	if (!InGame)
+	if (InGame)
 	{
-		return;
-	}
-	if ((int)ElapsedTimeFrames >= replay_header.ReplayFrames)
-	{
-		SetGameSpeed_maybe(registry_options.game_speed, 1, replay_speed_multiplier);
-		open_win_mission_dialog_();
-	}
-	else if ((int)ElapsedTimeFrames >= nextReplayCommandFrame)
-	{
-		if ((int)ElapsedTimeFrames <= nextReplayCommandFrame || (nextReplayCommandFrame = sub_4CDFF0(replayData, &dword_6D5BF0, byte_6554D8, dest, dword_654AA8), nextReplayCommandFrame != -1) && (int)ElapsedTimeFrames >= nextReplayCommandFrame)
+		if ((int)ElapsedTimeFrames < replay_header.ReplayFrames)
 		{
+			if ((int)ElapsedTimeFrames < nextReplayCommandFrame)
+			{
+				return;
+			}
+			else if ((int)ElapsedTimeFrames > nextReplayCommandFrame)
+			{
+				nextReplayCommandFrame = sub_4CDFF0(replayData, &dword_6D5BF0, command_player_storm_ids, command_sequence, command_sequence_length);
+				if (nextReplayCommandFrame == -1 || (int)ElapsedTimeFrames < nextReplayCommandFrame)
+				{
+					return;
+				}
+			}
+
 			if (dword_6D5BF0)
 			{
 				byte_6D5BEC = 1;
@@ -15988,7 +15992,7 @@ void replayLoop_()
 				{
 					for (int v5 = 0; v5 < 8; v5++)
 					{
-						if (Players[v5].dwStormId == (u8)byte_6554D8[v4])
+						if (Players[v5].dwStormId == (u8)command_player_storm_ids[v4])
 						{
 							dword_51267C = Players[v5].dwPlayerID;
 							g_ActiveNationID = dword_51267C;
@@ -15996,8 +16000,8 @@ void replayLoop_()
 						}
 					}
 					dword_6556E8 = 0;
-					Game_RECV(&dest[v3], dword_654AA8[v4], 1);
-					v3 += dword_654AA8[v4];
+					Game_RECV(&command_sequence[v3], command_sequence_length[v4], 1);
+					v3 += command_sequence_length[v4];
 				}
 				dword_6D5BF0 = 0;
 				g_ActiveNationID = g_LocalNationID;
@@ -16006,6 +16010,11 @@ void replayLoop_()
 				byte_6D5BEC = 0;
 				IsInGameLoop = 0;
 			}
+		}
+		else
+		{
+			SetGameSpeed_maybe(registry_options.game_speed, 1, replay_speed_multiplier);
+			open_win_mission_dialog_();
 		}
 	}
 }

@@ -25719,15 +25719,15 @@ void sub_4CDFA0(_BYTE *a1, size_t a2) {
 }
 DECL_FUNC(void (__cdecl*sub_4CDFC0)(), sub_4CDFC0, 0x4cdfc0);
 DECL_FUNC(void (__cdecl*sub_4CDFD0)(), sub_4CDFD0, 0x4cdfd0);
-int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *a2, char *a3, u8 *dest, int *a5) {
+int sub_4CDFF0(GameActionDataBlock *a1, _DWORD *action_count, char *command_player_storm_ids, u8 *command_sequence, int *command_sequence_length) {
     int address = 0x4cdff0;
     int result_;
     __asm {
         xor eax, eax
-        push dword ptr a5
-        push dword ptr dest
-        push dword ptr a3
-        push dword ptr a2
+        push dword ptr command_sequence_length
+        push dword ptr command_sequence
+        push dword ptr command_player_storm_ids
+        push dword ptr action_count
         mov esi, a1
         call address
         mov result_, eax
@@ -31607,7 +31607,7 @@ ChkSectionLoader(&chk_loaders_melee_broodwar)[5] = * ((decltype(&chk_loaders_mel
 ChkSectionLoader(&chk_loaders_ums_broodwar_1_04)[15] = * ((decltype(&chk_loaders_ums_broodwar_1_04)) 0x5004a8);
 ChkLoader(&chk_loaders)[3] = * ((decltype(&chk_loaders)) 0x500560);
 ChkLoader& dword_5005D8 = * ((decltype(&dword_5005D8)) 0x5005d8);
-size_t(&size)[120] = * ((decltype(&size)) 0x5005f8);
+size_t(&dword_5005F8)[120] = * ((decltype(&dword_5005F8)) 0x5005f8);
 char(&byte_5007D8)[256] = * ((decltype(&byte_5007D8)) 0x5007d8);
 char(&byte_5008D8)[4] = * ((decltype(&byte_5008D8)) 0x5008d8);
 int(&dword_5008EC)[] = * ((decltype(&dword_5008EC)) 0x5008ec);
@@ -34125,9 +34125,9 @@ int& ScreenX = * ((decltype(&ScreenX)) 0x628448);
 int& map_width_pixels = * ((decltype(&map_width_pixels)) 0x628450);
 byte *& GameTerrainCache = * ((decltype(&GameTerrainCache)) 0x628454);
 vx4entry *& VX4Data = * ((decltype(&VX4Data)) 0x628458);
-int(&dword_62846C)[] = * ((decltype(&dword_62846C)) 0x62846c);
+int(&dword_62846C)[1] = * ((decltype(&dword_62846C)) 0x62846c);
 int& ScreenY = * ((decltype(&ScreenY)) 0x628470);
-int(&dword_628484)[] = * ((decltype(&dword_628484)) 0x628484);
+int(&dword_628484)[1] = * ((decltype(&dword_628484)) 0x628484);
 int(&dword_628488)[] = * ((decltype(&dword_628488)) 0x628488);
 unsigned int& MoveToX = * ((decltype(&MoveToX)) 0x62848c);
 int& parallaxSomethingWidth = * ((decltype(&parallaxSomethingWidth)) 0x628490);
@@ -34273,12 +34273,12 @@ CThingy *& dword_65487C = * ((decltype(&dword_65487C)) 0x65487c);
 char(&TurnBuffer)[512] = * ((decltype(&TurnBuffer)) 0x654880);
 int(&arraydatabytes)[8] = * ((decltype(&arraydatabytes)) 0x654a80);
 unsigned int& sgdwBytesInCmdQueue = * ((decltype(&sgdwBytesInCmdQueue)) 0x654aa0);
-int(&dword_654AA8)[512] = * ((decltype(&dword_654AA8)) 0x654aa8);
+int(&command_sequence_length)[512] = * ((decltype(&command_sequence_length)) 0x654aa8);
 int& dword_6552A8 = * ((decltype(&dword_6552A8)) 0x6552a8);
-u8(&dest)[512] = * ((decltype(&dest)) 0x6552b0);
+u8(&command_sequence)[512] = * ((decltype(&command_sequence)) 0x6552b0);
 char& byte_6554B0 = * ((decltype(&byte_6554B0)) 0x6554b0);
 int(&arraydata)[9] = * ((decltype(&arraydata)) 0x6554b4);
-char(&byte_6554D8)[512] = * ((decltype(&byte_6554D8)) 0x6554d8);
+char(&command_player_storm_ids)[512] = * ((decltype(&command_player_storm_ids)) 0x6554d8);
 int& dword_6556D8 = * ((decltype(&dword_6556D8)) 0x6556d8);
 int& dword_6556DC = * ((decltype(&dword_6556DC)) 0x6556dc);
 int& InGame = * ((decltype(&InGame)) 0x6556e0);
