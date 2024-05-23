@@ -25674,12 +25674,12 @@ _DWORD * sub_4CDDC0(_DWORD *result) {
     }
     return result_;
 }
-void sub_4CDE10(GameActionDataBlock *a1, _BYTE *command_player_storm_id, size_t *command_sequence_length, void *command_sequence) {
+void sub_4CDE10(GameActionDataBlock *a1, _BYTE *player_storm_id, void *command, size_t *command_length) {
     int address = 0x4cde10;
     __asm {
-        push dword ptr command_sequence
-        mov ebx, command_sequence_length
-        mov eax, command_player_storm_id
+        mov ebx, command_length
+        push dword ptr command
+        mov eax, player_storm_id
         mov esi, a1
         call address
     }

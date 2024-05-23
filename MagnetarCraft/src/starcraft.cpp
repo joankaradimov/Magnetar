@@ -15985,6 +15985,29 @@ T read_game_action_data(GameActionDataBlock* data)
 	return result;
 }
 
+void sub_4CDE10_(GameActionDataBlock* a1, char* player_storm_id, void* command, size_t* command_length)
+{
+	*player_storm_id = -1;
+	*command_length = 0;
+	if (a1->field2)
+	{
+		*player_storm_id = read_game_action_data<char>(a1);
+		CommandId command_id = read_game_action_data<CommandId>(a1);
+		// TODO: this is inlined sub_4BF9A0
+		size_t v5 = dword_5005F8[command_id];
+		if (command_id >= CommandId::CMD_SelectUnits && command_id <= CommandId::CMD_SelectDeltaDel)
+		{
+			v5 = 2 * peek_game_action_data<BYTE>(a1) + 2;
+		}
+		if (v5)
+		{
+			SMemCopy(command, (BYTE*)a1->field8 - 1, v5);
+			*command_length = v5;
+			a1->field8 = (char*)a1->field8 + v5 - 1;
+		}
+	}
+}
+
 int sub_4CDFF0_(GameActionDataBlock* a1, _DWORD* action_count, char* player_storm_ids, u8* commands, int* command_lengths)
 {
 	if (!a1->field2 || (char*)a1->field8 >= (char*)a1->net_record_buffer + a1->field4)
@@ -16003,7 +16026,7 @@ int sub_4CDFF0_(GameActionDataBlock* a1, _DWORD* action_count, char* player_stor
 
 		for (BYTE i = 0; i < v19; ++v8)
 		{
-			sub_4CDE10(a1, player_storm_ids + v8, (size_t*)command_lengths + v8, commands);
+			sub_4CDE10_(a1, player_storm_ids + v8, commands, (size_t*)command_lengths + v8);
 			commands += command_lengths[v8];
 			i += command_lengths[v8] + 1;
 		}

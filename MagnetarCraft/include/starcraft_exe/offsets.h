@@ -4669,7 +4669,7 @@ int sub_4CDCC0(int result);
 extern char * (__thiscall*sub_4CDCE0)(GameActionDataBlock *this_);
 int sub_4CDD30(GameActionDataBlock *a1);
 _DWORD * sub_4CDDC0(_DWORD *result);
-void sub_4CDE10(GameActionDataBlock *a1, _BYTE *command_player_storm_id, size_t *command_sequence_length, void *command_sequence);
+void sub_4CDE10(GameActionDataBlock *a1, _BYTE *player_storm_id, void *command, size_t *command_length);
 void saveReplayAction(GameActionDataBlock *a1, _BYTE *a2, size_t a3, char a4);
 int sub_4CDF00(int result);
 _DWORD * sub_4CDF10(_DWORD *result);
