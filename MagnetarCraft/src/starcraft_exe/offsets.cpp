@@ -25674,13 +25674,13 @@ _DWORD * sub_4CDDC0(_DWORD *result) {
     }
     return result_;
 }
-void sub_4CDE10(_BYTE *a1, size_t *a2, int a3, void *dest) {
+void sub_4CDE10(GameActionDataBlock *a1, _BYTE *command_player_storm_id, size_t *command_sequence_length, void *command_sequence) {
     int address = 0x4cde10;
     __asm {
-        push dword ptr dest
-        mov esi, a3
-        mov ebx, a2
-        mov eax, a1
+        push dword ptr command_sequence
+        mov ebx, command_sequence_length
+        mov eax, command_player_storm_id
+        mov esi, a1
         call address
     }
 }
@@ -25694,10 +25694,50 @@ void saveReplayAction(GameActionDataBlock *a1, _BYTE *a2, size_t a3, char a4) {
         call address
     }
 }
-DECL_FUNC(int (*sub_4CDF00)(), sub_4CDF00, 0x4cdf00);
-DECL_FUNC(int (*sub_4CDF10)(), sub_4CDF10, 0x4cdf10);
-DECL_FUNC(int (*sub_4CDF20)(), sub_4CDF20, 0x4cdf20);
-DECL_FUNC(int (*sub_4CDF30)(), sub_4CDF30, 0x4cdf30);
+int sub_4CDF00(int result) {
+    int address = 0x4cdf00;
+    int result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+_DWORD * sub_4CDF10(_DWORD *result) {
+    int address = 0x4cdf10;
+    _DWORD * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+_DWORD * sub_4CDF20(_DWORD *result) {
+    int address = 0x4cdf20;
+    _DWORD * result_;
+    __asm {
+        xor eax, eax
+        mov eax, result
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
+BOOL sub_4CDF30(int a1) {
+    int address = 0x4cdf30;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 GameActionDataBlock * allocateRepGameActionMemory(GameActionDataBlock *a1) {
     int address = 0x4cdf50;
     GameActionDataBlock * result_;
@@ -25749,6 +25789,18 @@ int sub_4CE110(int *a1, char *a2, u8 *a3, _DWORD *a4) {
     return result_;
 }
 DECL_FUNC(void (__fastcall*FreeGameActionData)(bool exit_code), FreeGameActionData, 0x4ce130);
+BOOL sub_4CE170(GameActionDataBlock *a1, FILE *a2) {
+    int address = 0x4ce170;
+    BOOL result_;
+    __asm {
+        xor eax, eax
+        mov ebx, a2
+        mov eax, a1
+        call address
+        mov result_, eax
+    }
+    return result_;
+}
 int WriteGameActions(FILE *file, GameActionDataBlock *a2) {
     int address = 0x4ce1c0;
     int result_;

@@ -15964,6 +15964,61 @@ void CMDRECV_SaveGame__()
 
 FUNCTION_PATCH((void*)0x4C2910, CMDRECV_SaveGame__, "starcraft");
 
+template <typename T>
+T peek_game_action_data(GameActionDataBlock* data)
+{
+	T* result = (T*)data->field8;
+	return *result;
+}
+
+template <typename T>
+void consume_game_action_data(GameActionDataBlock* data)
+{
+	data->field8 = (T*)data->field8 + 1;
+}
+
+template <typename T>
+T read_game_action_data(GameActionDataBlock* data)
+{
+	T result = peek_game_action_data<T>(data);
+	consume_game_action_data<T>(data);
+	return result;
+}
+
+int sub_4CDFF0_(GameActionDataBlock* a1, _DWORD* action_count, char* player_storm_ids, u8* commands, int* command_lengths)
+{
+	if (!a1->field2 || (char*)a1->field8 >= (char*)a1->net_record_buffer + a1->field4)
+	{
+		return -1;
+	}
+
+	int v18 = peek_game_action_data<int>(a1);
+	int v9 = v18;
+	int v8 = 0;
+
+	while (v9 == v18)
+	{
+		consume_game_action_data<int>(a1);
+		BYTE v19 = read_game_action_data<BYTE>(a1);
+
+		for (BYTE i = 0; i < v19; ++v8)
+		{
+			sub_4CDE10(a1, player_storm_ids + v8, (size_t*)command_lengths + v8, commands);
+			commands += command_lengths[v8];
+			i += command_lengths[v8] + 1;
+		}
+		if (a1->field8 >= (char*)a1->net_record_buffer + a1->field4)
+		{
+			return -1;
+		}
+		v9 = *(_DWORD*)a1->field8;
+	}
+	*action_count = v8;
+	return v18;
+}
+
+FAIL_STUB_PATCH(sub_4CDFF0, "starcraft");
+
 void replayLoop_()
 {
 	if (InGame)
@@ -15976,7 +16031,7 @@ void replayLoop_()
 			}
 			else if ((int)ElapsedTimeFrames > nextReplayCommandFrame)
 			{
-				nextReplayCommandFrame = sub_4CDFF0(replayData, &dword_6D5BF0, command_player_storm_ids, command_sequence, command_sequence_length);
+				nextReplayCommandFrame = sub_4CDFF0_(replayData, &dword_6D5BF0, command_player_storm_ids, command_sequence, command_sequence_length);
 				if (nextReplayCommandFrame == -1 || (int)ElapsedTimeFrames < nextReplayCommandFrame)
 				{
 					return;
